@@ -17,6 +17,19 @@ header {
 /* Adjust size for larger screens */
 @media (min-width: 768px) {
     .img-fluid-large {
-        max-width: 80%; /* Adjust this value as needed for the desired scaling percentage */
+        max-width: 80%;
+        /* Adjust this value as needed for the desired scaling percentage */
     }
+}
+
+/* Pricing Section Blues */
+.text-deep-blue {
+  color: #073763 !important;
+}
+
+
+.bg-deep-blue {
+  background-color: #073763 !important;
+  border-color: #073763 !important;
+  color: white !important;
 }
