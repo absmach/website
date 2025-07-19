@@ -711,7 +711,7 @@
                 <li class="mb-2"><i class="fas fa-check-circle text-deep-blue me-2"></i>2 groups</li>
                 <li><i class="fas fa-check-circle text-deep-blue me-2"></i>10,000 messages</li>
               </ul>
-              <a href="https://stage.magistrala.abstractmachines.fr/en" target="_blank"
+              <a href="http://localhost:3000/register?sub=free" target="_blank"
                 class="btn btn-sm bg-deep-blue mt-2 ms-1 w-auto">Sign Up</a>
             </div>
           </div>
@@ -735,7 +735,7 @@
                 <li class="mb-2"><i class="fas fa-check-circle text-deep-blue me-2"></i>1,000,000 messages</li>
                 <li><i class="fas fa-check-circle text-deep-blue me-2"></i>Community support</li>
               </ul>
-              <a href="https://stage.magistrala.abstractmachines.fr/en" target="_blank"
+              <a href="http://localhost:3000/register?sub=starter" target="_blank"
                 class="btn btn-sm bg-deep-blue mt-2 ms-1 w-auto">Get Started</a>
             </div>
           </div>
@@ -759,7 +759,7 @@
                 <li class="mb-2"><i class="fas fa-check-circle text-deep-blue me-2"></i>10,000,000 messages</li>
                 <li><i class="fas fa-check-circle text-deep-blue me-2"></i>Community support</li>
               </ul>
-              <a href="https://stage.magistrala.abstractmachines.fr/en" target="_blank"
+              <a href="http://localhost:3000/register?sub=business" target="_blank"
                 class="btn btn-sm bg-deep-blue mt-2 ms-1 w-auto">Get Started</a>
             </div>
           </div>
@@ -783,7 +783,7 @@
                 <li class="mb-2"><i class="fas fa-check-circle text-deep-blue me-2"></i>Custom messages</li>
                 <li><i class="fas fa-check-circle text-deep-blue me-2"></i>Community support</li>
               </ul>
-              <a href="mailto:info@abstractmachines.fr" target="_blank"
+              <a href="http://localhost:3000/register?sub=enterprise" target="_blank"
                 class="btn btn-sm bg-deep-blue mt-2 ms-1 w-auto">Contact Us</a>
             </div>
           </div>
@@ -830,7 +830,6 @@
               infrastructure.
               Integration is facilitated via documented APIs and MQTT bridge patterns, ensuring compatibility with
               popular brokers like Mosquitto and EMQX.
-              You can also extend this setup with mProxy for custom routing logic and observability.
             </div>
           </div>
         </div>
@@ -848,9 +847,8 @@
             data-bs-parent="#faqAccordion">
             <div class="accordion-body">
               When you exceed limits, the platform will gracefully reject excess messages or block new connections
-              depending on your plan. Usage metrics are accessible via the dashboard, allowing you to forecast growth
-              and scale accordingly.
-              You can upgrade your plan instantly, and new resources are applied dynamically without downtime.
+              depending on your plan.
+              You can upgrade your plan instantly and new resources are applied dynamically without downtime.
               This ensures continued service while maintaining fair use and system stability.
             </div>
           </div>
@@ -868,13 +866,16 @@
           <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree"
             data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              Magistrala supports integration with a variety of message brokers, including MQTT, NATS, Kafka, and
-              RabbitMQ. You can choose the broker that best fits your scalability and reliability needs. In addition to
-              these, Magistrala offers support for WebSocket and HTTP protocols, making it easy to connect web
-              applications and RESTful services. For security, both TLS and mTLS (mutual TLS) are fully supported,
-              ensuring encrypted and authenticated connections. This flexibility allows you to connect diverse devices
-              and applications while meeting enterprise-grade security requirements. Whether you need event streaming,
-              message queuing, or secure web-based connectivity, Magistrala provides the tools to build and scale your
+              Magistrala supports integration with a variety of message brokers, including MQTT, NATS and
+              RabbitMQ.
+              You can choose the broker that best fits your scalability and reliability needs. In addition to
+              these, Magistrala offers support for WebSocket and HTTP protocols; making it easy to connect web
+              applications and RESTful services.
+              For security, both TLS and mTLS (mutual TLS) are fully supported. These ensure encrypted and authenticated
+              connections.
+              This flexibility allows you to connect diverse devices
+              and applications while meeting enterprise-grade security requirements. Whether you need event streaming
+              secure web-based connectivity, Magistrala provides the tools to build and scale your
               IoT solution.
             </div>
           </div>
@@ -894,12 +895,12 @@
             <div class="accordion-body">
               Absolutely. Magistrala implements a robust Role-Based Access Control (RBAC) system designed for granular
               control across the entire IoT stack.
-              You can define roles and assign permissions at various scopes, including user, group, domain, client, and
-              even dashboard level.
+              You can define roles and assign permissions at various scopes including user, group, domain, client and
+              channel level.
               The system is backed by a distributed authorization engine and supports integrations with Google
               Zanzibar-like backends such as SpiceDB.
-              RBAC policies can be managed via the UI or API, and every request is evaluated securely at runtime.
-              This makes it ideal for multi-tenant deployments, regulated industries, and organizations with complex
+              RBAC policies can be managed via the UI and every request is evaluated securely at runtime.
+              This makes it ideal for multi-tenant deployments, regulated industries and organizations with complex
               governance needs.
             </div>
           </div>
@@ -920,7 +921,7 @@
               Yes! Magistrala is open-source and released under the permissive Apache 2.0 license, allowing both
               personal and commercial use.
               This means you can modify, extend and redistribute the platform freely.
-              Businesses can integrate it into their products, deploy it at scale, or offer services built on top of it.
+              Businesses can integrate it into their products, deploy it at scale or offer services built on top of it.
               The project is maintained by Abstract Machines and an active developer community, ensuring reliability and
               longevity.
               Whether you’re a startup or a large enterprise, Magistrala offers the freedom to innovate without lock-in.
@@ -941,7 +942,8 @@
           <div id="faqCollapseSix" class="accordion-collapse collapse" aria-labelledby="faqHeadingSix"
             data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              Magistrala supports both options. You can use our fully managed cloud platform or deploy your own instance
+              Magistrala supports both options.
+              You can use our fully managed cloud platform or deploy your own instance
               using the open-source version. Helm charts and Docker support make on-premise deployments easy and
               production-ready.
             </div>
