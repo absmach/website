@@ -24,12 +24,104 @@ header {
 
 /* Pricing Section Blues */
 .text-deep-blue {
-  color: #073763 !important;
+    color: #073763 !important;
+}
+
+.bg-deep-blue {
+    background-color: #073763 !important;
+    border-color: #073763 !important;
+    color: #fff !important;
+}
+
+.bg-deep-blue:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.bg-deep-blue:hover {
+    background-color: #0a4a7a !important;
+    border-color: #0a4a7a !important;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(7, 55, 99, 0.3);
+}
+
+/* Pricing Toggle css */
+.pricing-toggle {
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 2px;
+    display: inline-flex;
+    margin: 12px auto 4px;
+}
+
+.pricing-toggle .btn {
+    border: none;
+    border-radius: 8px;
+    padding: 6px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: #6c757d;
+    margin: 0;
+}
+
+.pricing-toggle .btn.active {
+    background-color: #073763;
+    color: white;
+    box-shadow: 0 2px 8px rgba(7, 55, 99, 0.3);
+}
+
+.pricing-toggle .btn:hover:not(.active) {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.pricing-toggle .btn:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.pricing-toggle .btn:active {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Card Effects */
+.card {
+    cursor: pointer;
+}
+
+.card.border {
+    border-color: #e9ecef !important;
+}
+
+/* Price styling */
+.price-amount {
+    transition: all 0.3s ease;
 }
 
 
-.bg-deep-blue {
-  background-color: #073763 !important;
-  border-color: #073763 !important;
-  color: #fff !important;
+/* Rounded corners */
+.rounded-4 {
+    border-radius: 1rem !important;
+}
+
+/* Check icon styling */
+.fas.fa-check-circle {
+    font-size: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .pricing-toggle {
+        margin: 10px auto 5px;
+    }
+
+    .pricing-toggle .btn {
+        padding: 6px 14px;
+        font-size: 13px;
+    }
 }
