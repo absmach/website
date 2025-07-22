@@ -46,6 +46,13 @@ header {
     box-shadow: 0 4px 12px rgba(7, 55, 99, 0.3);
 }
 
+/* Button Styling */
+.btn:focus,
+.btn:active {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
 /* Pricing Toggle css */
 .pricing-toggle {
     background-color: #f8f9fa;
@@ -106,12 +113,28 @@ header {
 
 /* Rounded corners */
 .rounded-4 {
-    border-radius: 1rem !important;
+    border-radius: 0.25rem !important;
 }
 
 /* Check icon styling */
 .fas.fa-check-circle {
     font-size: 1rem;
+}
+
+/* Accordion styling */
+.accordion-button:not(.collapsed) {
+    background-color: #fff !important;
+    color: inherit !important;
+    box-shadow: none !important;
+}
+
+.accordion-button {
+    font-weight: 600 !important;
+    color: #073763 !important;
+}
+
+.accordion-button:focus {
+    box-shadow: none !important;
 }
 
 /* Responsive adjustments */

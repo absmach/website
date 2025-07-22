@@ -133,6 +133,9 @@
               platform hosts events, facilitates discussion forums, and offers extensive training and support to empower
               developers interested in leveraging its tools and technologies. By collaborating and innovating together,
               Magistrala envisions a future for IoT that is open, secure, and full of possibilities.</p>
+
+            <a href="https://app.gitter.im/#/room/#Mainflux_mainflux:gitter.im" class="btn btn-dark d-inline-block mt-3"
+              target="_blank">Join Our Community &gt;</a>
           </div>
         </div>
       </div>
@@ -673,6 +676,16 @@
           </div>
         </div>
       </div>
+
+      <!-- Request a Demo -->
+      <div class="row mb-5">
+        <div class="col-md-12 mt-4 text-center">
+          <p style="font-size: 24px;">Want to See Magistrala in Action?</p>
+          <a href="mailto:info@abstractmachines.fr?subject=Request%20a%20Magistrala%20Demo" class="btn btn-lg mt-3"
+            style="background-color: #073763; color: #fff;">Request a Demo</a>
+        </div>
+      </div>
+
     </div>
   </section>
   <!-- End of Customer Listing section -->
@@ -687,7 +700,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12 text-center mt-5 mb-3">
-          <h2>Pricing Plans</h2>
+          <h1>Pricing Plans</h1>
           <p class="text-muted">Choose the right plan for your IoT solution.</p>
         </div>
       </div>
@@ -753,8 +766,7 @@
                 <li class="mb-2"><i class="fas fa-check-circle text-deep-blue me-2"></i>1,000,000 messages</li>
                 <li><i class="fas fa-check-circle text-deep-blue me-2"></i>Community support</li>
               </ul>
-              <a href="http://localhost:3000/register?sub=starter" target="_blank"
-                class="btn btn-sm bg-deep-blue mt-2 ms-1 w-auto">Coming Soon</a>
+              <button type="button" disabled class="btn btn-sm bg-deep-blue mt-2 ms-1 w-auto">Coming Soon</button>
             </div>
           </div>
         </div>
@@ -779,8 +791,7 @@
                 <li class="mb-2"><i class="fas fa-check-circle text-deep-blue me-2"></i>10,000,000 messages</li>
                 <li><i class="fas fa-check-circle text-deep-blue me-2"></i>Community support</li>
               </ul>
-              <a href="http://localhost:3000/register?sub=business" target="_blank"
-                class="btn btn-sm bg-deep-blue mt-2 ms-1 w-auto">Coming Soon</a>
+              <button type="button" disabled class="btn btn-sm bg-deep-blue mt-2 ms-1 w-auto">Coming Soon</button>
             </div>
           </div>
         </div>
@@ -803,8 +814,7 @@
                 <li class="mb-2"><i class="fas fa-check-circle text-deep-blue me-2"></i>Custom messages</li>
                 <li><i class="fas fa-check-circle text-deep-blue me-2"></i>Community support</li>
               </ul>
-              <a href="http://localhost:3000/register?sub=enterprise" target="_blank"
-                class="btn btn-sm bg-deep-blue mt-2 ms-1 w-auto">Coming Soon</a>
+              <button type="button" disabled class="btn btn-sm bg-deep-blue mt-2 ms-1 w-auto">Coming Soon</button>
             </div>
           </div>
         </div>
@@ -828,7 +838,7 @@
         </div>
       </div>
 
-      <div class="accordion" id="faqAccordion">
+      <div class="accordion " id="faqAccordion">
 
         <!-- Question 1 -->
         <div class="accordion-item mb-3 border rounded">
@@ -836,20 +846,16 @@
             <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
               data-bs-target="#faqCollapseOne" aria-expanded="false" aria-controls="faqCollapseOne">
               <i class="fas fa-question-circle me-2 text-deep-blue"></i>
-              Can I integrate Magistrala with external MQTT brokers?
+              Is Magistrala cloud-hosted or self-hosted?
             </button>
           </h2>
           <div id="faqCollapseOne" class="accordion-collapse collapse" aria-labelledby="faqHeadingOne"
             data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              Magistrala supports seamless integration with external MQTT brokers using protocol adapters and bridge
-              configurations.
-              You can configure Magistrala to route messages from your existing broker through a secure channel,
-              enabling token-based authentication and fine-grained access control.
-              This allows for real-time data flow while maintaining the integrity and scalability of your existing
-              infrastructure.
-              Integration is facilitated via documented APIs and MQTT bridge patterns, ensuring compatibility with
-              popular brokers like Mosquitto and EMQX.
+              Magistrala supports both options.
+              You can use our fully managed cloud platform or deploy your own instance
+              using the open-source version. Helm charts and Docker support make on-premise deployments easy and
+              production-ready.
             </div>
           </div>
         </div>
@@ -860,16 +866,19 @@
             <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
               data-bs-target="#faqCollapseTwo" aria-expanded="false" aria-controls="faqCollapseTwo">
               <i class="fas fa-question-circle me-2 text-deep-blue"></i>
-              What happens when I exceed message or client limits?
+              Can I use Magistrala as an open-source project?
             </button>
           </h2>
           <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo"
             data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              When you exceed limits, the platform will gracefully reject excess messages or block new connections
-              depending on your plan.
-              You can upgrade your plan instantly and new resources are applied dynamically without downtime.
-              This ensures continued service while maintaining fair use and system stability.
+              Yes! Magistrala is open-source and released under the permissive Apache 2.0 license, allowing both
+              personal and commercial use.
+              This means you can modify, extend and redistribute the platform freely.
+              Businesses can integrate it into their products, deploy it at scale or offer services built on top of it.
+              The project is maintained by Abstract Machines and an active developer community, ensuring reliability and
+              longevity.
+              Whether you’re a startup or a large enterprise, Magistrala offers the freedom to innovate without lock-in.
             </div>
           </div>
         </div>
@@ -880,23 +889,16 @@
             <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
               data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
               <i class="fas fa-question-circle me-2 text-deep-blue"></i>
-              What other brokers are accessible to me to use?
+              What happens when I exceed message or client limits?
             </button>
           </h2>
           <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree"
             data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              Magistrala supports integration with a variety of message brokers, including MQTT, NATS and
-              RabbitMQ.
-              You can choose the broker that best fits your scalability and reliability needs. In addition to
-              these, Magistrala offers support for WebSocket and HTTP protocols; making it easy to connect web
-              applications and RESTful services.
-              For security, both TLS and mTLS (mutual TLS) are fully supported. These ensure encrypted and authenticated
-              connections.
-              This flexibility allows you to connect diverse devices
-              and applications while meeting enterprise-grade security requirements. Whether you need event streaming
-              secure web-based connectivity, Magistrala provides the tools to build and scale your
-              IoT solution.
+              When you exceed limits, the platform will gracefully reject excess messages or block new connections
+              depending on your plan.
+              You can upgrade your plan instantly and new resources are applied dynamically without downtime.
+              This ensures continued service while maintaining fair use and system stability.
             </div>
           </div>
         </div>
@@ -928,23 +930,27 @@
 
         <!-- Question 5 -->
         <div class="accordion-item mb-3 border rounded">
-          <h2 class="accordion-header" id="faqHeadingSeven">
+          <h2 class="accordion-header" id="faqHeadingFive">
             <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
-              data-bs-target="#faqCollapseSeven" aria-expanded="false" aria-controls="faqCollapseSeven">
+              data-bs-target="#faqCollapseFive" aria-expanded="false" aria-controls="faqCollapseFive">
               <i class="fas fa-question-circle me-2 text-deep-blue"></i>
-              Can I use Magistrala as an open-source project?
+              What other brokers are accessible to me to use?
             </button>
           </h2>
-          <div id="faqCollapseSeven" class="accordion-collapse collapse" aria-labelledby="faqHeadingSeven"
+          <div id="faqCollapseFive" class="accordion-collapse collapse" aria-labelledby="faqHeadingFive"
             data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              Yes! Magistrala is open-source and released under the permissive Apache 2.0 license, allowing both
-              personal and commercial use.
-              This means you can modify, extend and redistribute the platform freely.
-              Businesses can integrate it into their products, deploy it at scale or offer services built on top of it.
-              The project is maintained by Abstract Machines and an active developer community, ensuring reliability and
-              longevity.
-              Whether you’re a startup or a large enterprise, Magistrala offers the freedom to innovate without lock-in.
+              Magistrala supports integration with a variety of message brokers, including MQTT, NATS and
+              RabbitMQ.
+              You can choose the broker that best fits your scalability and reliability needs. In addition to
+              these, Magistrala offers support for WebSocket and HTTP protocols; making it easy to connect web
+              applications and RESTful services.
+              For security, both TLS and mTLS (mutual TLS) are fully supported. These ensure encrypted and authenticated
+              connections.
+              This flexibility allows you to connect diverse devices
+              and applications while meeting enterprise-grade security requirements. Whether you need event streaming
+              secure web-based connectivity, Magistrala provides the tools to build and scale your
+              IoT solution.
             </div>
           </div>
         </div>
@@ -956,16 +962,20 @@
             <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
               data-bs-target="#faqCollapseSix" aria-expanded="false" aria-controls="faqCollapseSix">
               <i class="fas fa-question-circle me-2 text-deep-blue"></i>
-              Is Magistrala cloud-hosted or self-hosted?
+              Can I integrate Magistrala with external MQTT brokers?
             </button>
           </h2>
           <div id="faqCollapseSix" class="accordion-collapse collapse" aria-labelledby="faqHeadingSix"
             data-bs-parent="#faqAccordion">
             <div class="accordion-body">
-              Magistrala supports both options.
-              You can use our fully managed cloud platform or deploy your own instance
-              using the open-source version. Helm charts and Docker support make on-premise deployments easy and
-              production-ready.
+              Magistrala supports seamless integration with external MQTT brokers using protocol adapters and bridge
+              configurations.
+              You can configure Magistrala to route messages from your existing broker through a secure channel,
+              enabling token-based authentication and fine-grained access control.
+              This allows for real-time data flow while maintaining the integrity and scalability of your existing
+              infrastructure.
+              Integration is facilitated via documented APIs and MQTT bridge patterns, ensuring compatibility with
+              popular brokers like Mosquitto and EMQX.
             </div>
           </div>
         </div>
