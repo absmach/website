@@ -97,10 +97,6 @@ header {
 }
 
 /* Card Effects */
-.card {
-    cursor: pointer;
-}
-
 .card.border {
     border-color: #e9ecef !important;
 }
