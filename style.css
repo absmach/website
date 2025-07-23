@@ -133,6 +133,25 @@ header {
     box-shadow: none !important;
 }
 
+/* Privacy Policy and Terms of Service links styling */
+.link-blue-sm {
+    font-size: 0.75rem;
+    color: #073763;
+    text-decoration: underline;
+    transition: color 0.2s ease, font-weight 0.2s ease;
+    font-weight: 400;
+}
+
+.link-blue-sm:hover {
+    color: #2a5caa;
+    font-weight: 600;
+}
+
+.link-blue-sm:active {
+    color: #6fa8dc;
+    font-weight: 600;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .pricing-toggle {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,164 +11,243 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
 </head>
+
 <body>
 
   <!-- Navbar -->
-<nav class="navbar navbar-expand-lg fixed-top navbar-light" style="background-color: #ffffff; font-size: 21px;">
-  <div class="container">
-    <a class="navbar-brand" href="index.html" style="color: black;">
-      ABSTRACT MACHINES
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black;">
-            Products
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="productsDropdown">
-            <li class="dropdown-header">Software</li>
-            <li><a class="dropdown-item" href="magistrala.html">Magistrala</a></li>
-            <li><a class="dropdown-item" href="supermq.html">SuperMQ</a></li>
-            <li><a class="dropdown-item" href="propeller.html">Propeller</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li class="dropdown-header">Hardware</li>
-            <li><a class="dropdown-item" href="s0.html">S0 Low Power Gateway</a></li>
-            <li><a class="dropdown-item" href="s1.html">S1 Linux Gateway</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="products.html">All Products</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="solutions.html" style="color: black;">Solutions</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="services.html" style="color: black;">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="company.html" style="color: black;">Company</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="careers.html" style="color: black;">Careers</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="contact.html" style="color: black;">Contact</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://medium.com/abstract-machines-blog" style="color: black;" target="_blank">Blog</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://github.com/absmach" style="color: black;" target="_blank"><i class="fab fa-github"></i></a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-
-<!-- Header section -->
-<section id="header" class="py-5 mt-5" style="font-size: 21px; min-height: 100vh; margin: 0;">
-  <div class="container">
-    <div class="row mt-5">
-      <div class="col-md-6 mt-5">
-        <h1>Empowering Your IoT Journey</h1>
-        <p>Explore a wide range of IoT services offered by Abstract Machines. We provide reliable and secure infrastructure for seamlessly connecting and managing devices and applications across the cloud and edge. Our fine-grained access control, along with a sophisticated policy and identity management system, ensures secure connectivity over constrained IoT protocols like MQTT or CoAP. Embrace the future of IoT technology confidently with our cutting-edge platform.</p>
-        <div class="mt-4">
-          <a href="products.html" class="btn btn-warning d-inline-block" target="_blank">Explore AM IoT Stack</a>
-        </div>
-      </div>
-      <div class="col-md-6 mt-5">
-        <div class="d-flex align-items-center justify-content-center">
-          <img src="img/patterns/services.png" alt="pattern-white" class="img-fluid-large">
-        </div>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light" style="background-color: #ffffff; font-size: 21px;">
+    <div class="container">
+      <a class="navbar-brand" href="index.html" style="color: black;">
+        ABSTRACT MACHINES
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false" style="color: black;">
+              Products
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="productsDropdown">
+              <li class="dropdown-header">Software</li>
+              <li><a class="dropdown-item" href="magistrala.html">Magistrala</a></li>
+              <li><a class="dropdown-item" href="supermq.html">SuperMQ</a></li>
+              <li><a class="dropdown-item" href="propeller.html">Propeller</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li class="dropdown-header">Hardware</li>
+              <li><a class="dropdown-item" href="s0.html">S0 Low Power Gateway</a></li>
+              <li><a class="dropdown-item" href="s1.html">S1 Linux Gateway</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="products.html">All Products</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="solutions.html" style="color: black;">Solutions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="services.html" style="color: black;">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="company.html" style="color: black;">Company</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="careers.html" style="color: black;">Careers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html" style="color: black;">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://medium.com/abstract-machines-blog" style="color: black;"
+              target="_blank">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/absmach" style="color: black;" target="_blank"><i
+                class="fab fa-github"></i></a>
+          </li>
+        </ul>
       </div>
     </div>
-  </div>
-</section>
+  </nav>
 
 
-
-
-
-
-
-
-<!-- Services section -->
-<section id="services" class="py-5" style="background-color: #D8EFD3; color: black;">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 text-center mt-5 mb-5">
-        <h2>Services that Abstract Machines Offer</h2>
-      </div>
-    </div>
-
-    <!-- New row with one card in the center -->
-    <div class="row mt-3 mb-4">
-      <div class="col-md-12 text-center">
-        <div class="card h-100 p-4" style="background-color: inherit;">
-          <div class="text-left">
-            <i class="fas fa-server fa-2x mb-3"></i>
+  <!-- Header section -->
+  <section id="header" class="py-5 mt-5" style="font-size: 21px; min-height: 100vh; margin: 0;">
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col-md-6 mt-5">
+          <h1>Empowering Your IoT Journey</h1>
+          <p>Explore a wide range of IoT services offered by Abstract Machines. We provide reliable and secure
+            infrastructure for seamlessly connecting and managing devices and applications across the cloud and edge.
+            Our fine-grained access control, along with a sophisticated policy and identity management system, ensures
+            secure connectivity over constrained IoT protocols like MQTT or CoAP. Embrace the future of IoT technology
+            confidently with our cutting-edge platform.</p>
+          <div class="mt-4">
+            <a href="products.html" class="btn btn-warning d-inline-block" target="_blank">Explore AM IoT Stack</a>
           </div>
-          <h5 class="card-title text-left mb-3">Managed Magistrala IoT Platform</h5>
-          <p class="card-text text-left">Simplify your IoT messaging with our managed Magistrala IoT platform. Benefit from scalable and reliable messaging services while we take care of infrastructure management and maintenance. Focus on your core IoT applications and let us handle the messaging complexity.</p>
-          <p class="card-text text-left"><strong>Experience hassle-free IoT messaging with Abstract Machines.</strong></p>
+        </div>
+        <div class="col-md-6 mt-5">
+          <div class="d-flex align-items-center justify-content-center">
+            <img src="img/patterns/services.png" alt="pattern-white" class="img-fluid-large">
+          </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="row">
-      <div class="col-md-6 mb-4">
-        <div class="card h-100 p-4" style="background-color: inherit;">
-          <div class="text-left">
-            <i class="fas fa-cogs fa-2x mb-3"></i>
-          </div>
-          <h5 class="card-title text-left mb-3">IoT Solution Design and Integration</h5>
-          <p class="card-text text-left">Let us help you design and integrate robust IoT solutions tailored to your needs. We'll assist you in effortlessly managing device registration, configuration, monitoring, and lifecycle operations through an intuitive interface.</p>
-          <p class="card-text text-left"><strong>Transform your IoT vision into reality with Abstract Machines.</strong></p>
+
+
+
+
+
+
+
+  <!-- Services section -->
+  <section id="services" class="py-5" style="background-color: #D8EFD3; color: black;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center mt-5 mb-5">
+          <h2>Services that Abstract Machines Offer</h2>
         </div>
       </div>
-      <div class="col-md-6 mb-4">
-        <div class="card h-100 p-4" style="background-color: inherit;">
-          <div class="text-left">
-            <i class="fas fa-code fa-2x mb-3"></i>
-          </div>
-          <h5 class="card-title text-left mb-3">Application and System Software Development</h5>
-          <p class="card-text text-left">Rely on us for custom software application and system development to facilitate seamless communication between IoT devices and cloud services. Ensure real-time data exchange and interactions with support for various IoT protocols.</p>
-          <p class="card-text text-left"><strong>Unlock the potential of your IoT applications with Abstract Machines.</strong></p>
-        </div>
-      </div>
-      <div class="col-md-6 mb-4">
-        <div class="card h-100 p-4" style="background-color: inherit;">
+
+      <!-- New row with one card in the center -->
+      <div class="row mt-3 mb-4">
+        <div class="col-md-12 text-center">
+          <div class="card h-100 p-4" style="background-color: inherit;">
             <div class="text-left">
-                <i class="fas fa-microchip fa-2x mb-3"></i>
+              <i class="fas fa-server fa-2x mb-3"></i>
+            </div>
+            <h5 class="card-title text-left mb-3">Managed Magistrala IoT Platform</h5>
+            <p class="card-text text-left">Simplify your IoT messaging with our managed Magistrala IoT platform. Benefit
+              from scalable and reliable messaging services while we take care of infrastructure management and
+              maintenance. Focus on your core IoT applications and let us handle the messaging complexity.</p>
+            <p class="card-text text-left"><strong>Experience hassle-free IoT messaging with Abstract Machines.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 p-4" style="background-color: inherit;">
+            <div class="text-left">
+              <i class="fas fa-cogs fa-2x mb-3"></i>
+            </div>
+            <h5 class="card-title text-left mb-3">IoT Solution Design and Integration</h5>
+            <p class="card-text text-left">Let us help you design and integrate robust IoT solutions tailored to your
+              needs. We'll assist you in effortlessly managing device registration, configuration, monitoring, and
+              lifecycle operations through an intuitive interface.</p>
+            <p class="card-text text-left"><strong>Transform your IoT vision into reality with Abstract
+                Machines.</strong></p>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 p-4" style="background-color: inherit;">
+            <div class="text-left">
+              <i class="fas fa-code fa-2x mb-3"></i>
+            </div>
+            <h5 class="card-title text-left mb-3">Application and System Software Development</h5>
+            <p class="card-text text-left">Rely on us for custom software application and system development to
+              facilitate seamless communication between IoT devices and cloud services. Ensure real-time data exchange
+              and interactions with support for various IoT protocols.</p>
+            <p class="card-text text-left"><strong>Unlock the potential of your IoT applications with Abstract
+                Machines.</strong></p>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 p-4" style="background-color: inherit;">
+            <div class="text-left">
+              <i class="fas fa-microchip fa-2x mb-3"></i>
             </div>
             <h5 class="card-title text-left mb-3">Hardware and Embedded Software Development</h5>
-            <p class="card-text text-left">Elevate your IoT infrastructure with our specialized hardware and embedded software development services. Our experts craft efficient hardware components and optimize embedded software to ensure your IoT devices operate seamlessly, whether in industrial settings or consumer applications. Count on us to deliver reliability and innovation to your IoT ecosystem.</p>
+            <p class="card-text text-left">Elevate your IoT infrastructure with our specialized hardware and embedded
+              software development services. Our experts craft efficient hardware components and optimize embedded
+              software to ensure your IoT devices operate seamlessly, whether in industrial settings or consumer
+              applications. Count on us to deliver reliability and innovation to your IoT ecosystem.</p>
             <p class="card-text text-left"><strong>Empower your IoT with Abstract Machines.</strong></p>
+          </div>
         </div>
-      </div>           
-      <div class="col-md-6 mb-4">
-        <div class="card h-100 p-4" style="background-color: inherit;">
-          <div class="text-left">
-            <i class="fas fa-tools fa-2x mb-3"></i>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 p-4" style="background-color: inherit;">
+            <div class="text-left">
+              <i class="fas fa-tools fa-2x mb-3"></i>
+            </div>
+            <h5 class="card-title text-left mb-3">Customization and Feature Development</h5>
+            <p class="card-text text-left">Customize and enhance your IoT infrastructure with our development services
+              to optimize performance. Enable local data preprocessing, decision-making, and communication between edge
+              devices and cloud services for reduced latency and improved efficiency.</p>
+            <p class="card-text text-left"><strong>Enhance your IoT capabilities with Abstract Machines.</strong></p>
           </div>
-          <h5 class="card-title text-left mb-3">Customization and Feature Development</h5>
-          <p class="card-text text-left">Customize and enhance your IoT infrastructure with our development services to optimize performance. Enable local data preprocessing, decision-making, and communication between edge devices and cloud services for reduced latency and improved efficiency.</p>
-          <p class="card-text text-left"><strong>Enhance your IoT capabilities with Abstract Machines.</strong></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center mt-5">
+          <p style="font-size: 21px;">Ready to take your IoT projects to the next level?</p>
+          <a href="contact.html" class="btn btn-success btn-lg mt-4">Contact Us</a>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12 text-center mt-5">
-        <p style="font-size: 21px;">Ready to take your IoT projects to the next level?</p>
-        <a href="contact.html" class="btn btn-success btn-lg mt-4">Contact Us</a>
+  </section>
+  <!-- End of Services section -->
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Newsletter section -->
+  <section id="newsletter" class="py-5">
+    <div class="container">
+      <div class="row mt-5 mb-5">
+        <div class="col-md-6 offset-md-3 text-center">
+          <h2>Subscribe to Our Newsletter</h2>
+          <p>Stay updated with the latest news, updates and announcements.</p>
+
+          <!-- Newsletter Subscription Form -->
+          <form
+            action="https://abstractmachines.us13.list-manage.com/subscribe/post?u=e132153c5ae8e4a113f907da5&amp;id=b454573cf1&amp;f_id=008e0ee4f0"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="mt-4"
+            target="_blank">
+            <div class="input-group">
+              <input type="email" class="form-control" name="EMAIL" placeholder="Enter your email" aria-label="Email"
+                aria-describedby="subscribe-btn" required="">
+              <button class="btn bg-deep-blue" type="submit" id="subscribe-btn">Subscribe</button>
+            </div>
+            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+              <input type="text" name="b_e132153c5ae8e4a113f907da5_b454573cf1" tabindex="-1" value="">
+            </div>
+
+            <!-- Privacy and Terms Disclaimer -->
+            <div class="mt-2">
+              <div class="mt-2">
+                <p class="mb-0" style="font-size: 0.75rem; color: #6c757d; line-height: 1.4;">
+                  By subscribing, you agree to our
+                  <a href="/privacy.html" target="_blank" class="link-blue-sm">Privacy Policy</a>
+                  and
+                  <a href="/terms.html" target="_blank" class="link-blue-sm">Terms of Service</a>.
+                  <br>You can unsubscribe at any time.
+                </p>
+              </div>
+            </div>
+
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- End of Services section -->
+  </section>
+  <!-- End of Newsletter section -->
 
 
 
@@ -177,72 +257,70 @@
 
 
 
-
-
-<!-- Newsletter section -->
-<section id="newsletter" class="py-5">
-  <div class="container">
-    <div class="row mt-5 mb-5">
-      <div class="col-md-6 offset-md-3 text-center">
-        <h2>Subscribe to Our Newsletter</h2>
-        <p>Stay updated with the latest news, updates, and announcements.</p>
-        <!-- Newsletter Subscription Form -->
-        <form action="https://abstractmachines.us13.list-manage.com/subscribe/post?u=e132153c5ae8e4a113f907da5&amp;id=b454573cf1&amp;f_id=008e0ee4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="mt-4" target="_blank">
-          <div class="input-group">
-            <input type="email" class="form-control" name="EMAIL" placeholder="Enter your email" aria-label="Email" aria-describedby="subscribe-btn" required="">
-            <button class="btn btn-primary" type="submit" id="subscribe-btn">Subscribe</button>
-          </div>
-          <div style="position: absolute; left: -5000px;" aria-hidden="true">
-            <input type="text" name="b_e132153c5ae8e4a113f907da5_b454573cf1" tabindex="-1" value="">
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End of Newsletter section -->
-
-
-
-
-
-
-<!-- Footer -->
-<footer class="bg-dark text-white py-3">
-  <div class="container">
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-3">
+    <div class="container">
       <div class="row mt-4 mb-3">
-          <div class="col-md-3">
-              <h5>About Us</h5>
-              <p>Abstract Machines is an IoT infrastructure and security company located in Paris.</p>
-          </div>
-          <div class="col-md-3">
-              <h5>Contact Us</h5>
-              <p><i class="fas fa-envelope me-2"></i><a href="mailto:info@abstractmachines.fr" class="text-white">info@abstractmachines.fr</a></p>
-              <p><i class="fab fa-gitter me-2"></i><a href="https://app.gitter.im/#/room/#Mainflux_mainflux:gitter.im" class="text-white" target="_blank">Chat on Gitter</a></p>
-              <p><i class="fas fa-map-marker-alt me-2"></i>141 Quai de Valmy, 75010 Paris, France</p>
-          </div>
-          <div class="col-md-3">
-            <h5>Products</h5>
-            <ul class="list-unstyled">
-                <li><i class="fas fa-cog me-2"></i><a href="amdm.html" class="text-white">AM:DM - Secure Device Manager</a></li>
-                <li><i class="fas fa-network-wired me-2"></i><a href="magistrala.html" class="text-white">Magistrala - IoT Platform</a></li>
-            </ul>
-          </div>
-          <div class="col-md-3">
-              <h5>Connect With Us</h5>
-              <ul class="list-unstyled">
-                <li><i class="fab fa-twitter me-2"></i><a href="https://twitter.com/absmach" class="text-white" target="_blank">Twitter</a></li>
-                <li><i class="fab fa-linkedin me-2"></i><a href="https://www.linkedin.com/company/abstract-machines" class="text-white" target="_blank">LinkedIn</a></li>
-                <li><i class="fab fa-medium me-2"></i><a href="https://medium.com/abstract-machines-blog" class="text-white" target="_blank">Medium Blog</a></li>
-                <li><i class="fab fa-github me-2"></i><a href="https://github.com/absmach" class="text-white" target="_blank">GitHub</a></li>
-              </ul>            
-          </div>
-      </div>
-  </div>
-</footer>
-<!-- End of Footer section -->
 
-  
+        <!-- About + Social Media Links -->
+        <div class="col-md-3">
+          <h5>About Us</h5>
+          <p>Abstract Machines is an IoT infrastructure and security company located in Paris.</p>
+          <div class="d-flex gap-4 mt-4">
+            <a href="https://twitter.com/absmach" class="text-white" target="_blank">
+              <i class="fab fa-twitter fa-lg"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/abstract-machines" class="text-white" target="_blank">
+              <i class="fab fa-linkedin fa-lg"></i>
+            </a>
+            <a href="https://medium.com/abstract-machines-blog" class="text-white" target="_blank">
+              <i class="fab fa-medium fa-lg"></i>
+            </a>
+            <a href="https://github.com/absmach" class="text-white" target="_blank">
+              <i class="fab fa-github fa-lg"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact us -->
+        <div class="col-md-3">
+          <h5>Contact Us</h5>
+          <p><i class="fas fa-envelope me-2"></i><a href="mailto:info@abstractmachines.fr"
+              class="text-white">info@abstractmachines.fr</a></p>
+          <p><i class="fab fa-gitter me-2"></i><a href="https://app.gitter.im/#/room/#Mainflux_mainflux:gitter.im"
+              class="text-white" target="_blank">Chat on Gitter</a></p>
+          <p><i class="fas fa-map-marker-alt me-2"></i>141 Quai de Valmy, 75010 Paris, France</p>
+        </div>
+
+        <!-- Products -->
+        <div class="col-md-3">
+          <h5>Products</h5>
+          <ul class="list-unstyled">
+            <li><i class="fas fa-cog me-2"></i><a href="amdm.html" class="text-white">AM:DM - Secure Device Manager</a>
+            </li>
+            <li><i class="fas fa-network-wired me-2"></i><a href="magistrala.html" class="text-white">Magistrala - IoT
+                Platform</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="col-md-3">
+          <h5>Legal</h5>
+          <ul class="list-unstyled">
+            <li><a href="/privacy.html" class="text-white" target="_blank">Privacy Policy</a></li>
+            <li><a href="/imprint.html" class="text-white" target="_blank">Imprint</a></li>
+            <li><a href="/terms.html" class="text-white" target="_blank">Terms of Service</a></li>
+            <li><a href="/SLA.html" class="text-white" target="_blank">SLA</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+  <!-- End of Footer section -->
+
+
+
 
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -250,5 +328,5 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 </body>
-</html>
 
+</html>
