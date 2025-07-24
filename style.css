@@ -11,7 +11,9 @@ header {
 /* Default size for smaller screens */
 .img-fluid-large {
     max-width: 100%;
+    width: 100%;
     height: auto;
+    display: block;
 }
 
 /* Adjust size for larger screens */
