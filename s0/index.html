@@ -1,11 +1,11 @@
-<!-- propeller.html -->
+<!-- s0.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Propeller - Abstract Machines</title>
+  <title>S0 - Low Power Gateway</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -17,7 +17,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg fixed-top navbar-light" style="background-color: #ffffff; font-size: 21px;">
     <div class="container">
-      <a class="navbar-brand" href="index.html" style="color: black;">
+      <a class="navbar-brand" href="/" style="color: black;">
         ABSTRACT MACHINES
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -33,35 +33,35 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="productsDropdown">
               <li class="dropdown-header">Software</li>
-              <li><a class="dropdown-item" href="magistrala.html">Magistrala</a></li>
-              <li><a class="dropdown-item" href="supermq.html">SuperMQ</a></li>
-              <li><a class="dropdown-item" href="propeller.html">Propeller</a></li>
+              <li><a class="dropdown-item" href="/magistrala">Magistrala</a></li>
+              <li><a class="dropdown-item" href="/supermq">SuperMQ</a></li>
+              <li><a class="dropdown-item" href="/propeller">Propeller</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
               <li class="dropdown-header">Hardware</li>
-              <li><a class="dropdown-item" href="s0.html">S0 Low Power Gateway</a></li>
-              <li><a class="dropdown-item" href="s1.html">S1 Linux Gateway</a></li>
+              <li><a class="dropdown-item" href="javascript:void(0)">S0 Low Power Gateway</a></li>
+              <li><a class="dropdown-item" href="/s1">S1 Linux Gateway</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="products.html">All Products</a></li>
+              <li><a class="dropdown-item" href="/products">All Products</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="solutions.html" style="color: black;">Solutions</a>
+            <a class="nav-link" href="/solutions" style="color: black;">Solutions</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="services.html" style="color: black;">Services</a>
+            <a class="nav-link" href="/services" style="color: black;">Services</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="company.html" style="color: black;">Company</a>
+            <a class="nav-link" href="/company" style="color: black;">Company</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="careers.html" style="color: black;">Careers</a>
+            <a class="nav-link" href="/careers" style="color: black;">Careers</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html" style="color: black;">Contact</a>
+            <a class="nav-link" href="/contact" style="color: black;">Contact</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="https://medium.com/abstract-machines-blog" style="color: black;"
@@ -75,86 +75,66 @@
       </div>
     </div>
   </nav>
-
-
+  <!-- End of Navbar -->
 
   <!-- Hero Section -->
   <section id="header" class="py-5 mt-5" style="font-size: 21px; min-height: 100vh; margin: 0;">
     <div class="container">
       <div class="row mt-5">
         <div class="col-md-6 mt-5">
-          <h1>Propeller</h1>
-          <p>Propeller is a WebAssembly (Wasm) orchestrator and rule engine built atop SuperMQ. It enables dynamic,
-            event-driven logic execution across distributed IoT and edge environments, allowing developers to deploy and
-            manage Wasm modules seamlessly.</p>
-          <div class="mt-4">
-            <a href="https://github.com/absmach/propeller" class="btn btn-warning d-inline-block"
-              target="_blank">Download Propeller</a>
-            <a href="https://github.com/absmach/propeller-docs" class="btn btn-dark d-inline-block" target="_blank">Read
-              the Docs &gt;</a>
-          </div>
+          <h1>S0 – Low-power Gateway</h1>
+          <p>S0 is a low-power IoT gateway based on RISC-V architecture, designed for constrained environments. It
+            provides efficient connectivity and processing for IoT devices with minimal energy consumption, making it
+            ideal for edge deployments.</p>
+          <a href="https://github.com/absmach/s0" class="btn btn-warning d-inline-block" target="_blank">Learn More</a>
+          <a href="https://absmach.github.io/s0-docs/" class="btn btn-dark d-inline-block" target="_blank">Read the Docs
+            &gt;</a>
         </div>
         <div class="col-md-6 mt-5">
           <div class="d-flex align-items-center justify-content-center">
-            <img src="img/patterns/propeller.png" alt="Propeller banner" class="img-fluid-large">
+            <img src="../img/patterns/s0.png" alt="S0 banner" class="img-fluid-large">
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- What is Propeller -->
+  <!-- What is S0 -->
   <section class="py-5" style="font-size: 21px; background-color: #F5F5F5;">
     <div class="container">
       <div class="row">
         <div class="col-md-6 d-flex align-items-center justify-content-center">
-          <img src="img/propeller-concept.png" alt="Propeller Concept" class="img-fluid">
+          <img src="../img/s0.jpg" alt="S0 Gateway" class="img-fluid" style="max-width: 300px; height: auto;">
         </div>
         <div class="col-md-6 mt-5">
-          <h1>What is Propeller</h1>
-          <p>Propeller serves as the execution engine for Abstract Machines, enabling real-time, event-driven processing
-            through WebAssembly modules. It allows developers to write portable, secure, and high-performance logic that
-            can be deployed across diverse environments.</p>
-          <p>By leveraging SuperMQ's messaging capabilities, Propeller ensures that Wasm modules can react to events,
-            process data, and enforce rules efficiently, making it ideal for complex IoT and edge computing scenarios.
-          </p>
-          <p>Propeller is open-source and designed for extensibility, supporting various use cases from simple data
-            transformations to complex decision-making workflows.</p>
+          <h1>What is S0</h1>
+          <p>S0 is optimized for low-power IoT applications, offering efficient connectivity and processing
+            capabilities. It is ideal for edge deployments where energy efficiency is critical.</p>
+          <p>With its compact design and RISC-V architecture, S0 enables seamless integration with IoT devices, ensuring
+            reliable performance in constrained environments.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Features -->
-  <section class="py-5" style="background-color: #f5e7b2; color: black;">
+  <section class="py-5" style="background-color: #e8f5e9; color: black;">
     <div class="container">
       <div class="row">
         <div class="col-md-12 text-center mt-5 mb-5">
-          <h2>Propeller Features</h2>
+          <h2>S0 Features</h2>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6 mb-4">
           <div class="row">
             <div class="col-3 text-center">
-              <i class="fas fa-cogs fa-2x mb-3"></i>
+              <i class="fas fa-battery-half fa-2x mb-3"></i>
             </div>
             <div class="col-9">
-              <h5 class="text-left mb-3">Wasm Module Orchestration</h5>
-              <p class="text-left">Deploy and manage WebAssembly modules dynamically, enabling portable logic execution
-                across devices and services.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 mb-4">
-          <div class="row">
-            <div class="col-3 text-center">
-              <i class="fas fa-bolt fa-2x mb-3"></i>
-            </div>
-            <div class="col-9">
-              <h5 class="text-left mb-3">Event-Driven Execution</h5>
-              <p class="text-left">Trigger Wasm execution in response to SuperMQ events, enabling responsive and
-                low-latency edge intelligence.</p>
+              <h5 class="text-left mb-3">Energy Efficiency</h5>
+              <p class="text-left">Designed for low-power environments, S0 minimizes energy consumption while
+                maintaining performance.</p>
             </div>
           </div>
         </div>
@@ -164,53 +144,39 @@
               <i class="fas fa-network-wired fa-2x mb-3"></i>
             </div>
             <div class="col-9">
-              <h5 class="text-left mb-3">Seamless SuperMQ Integration</h5>
-              <p class="text-left">Built to work hand-in-hand with SuperMQ for ultra-fast message-driven orchestration.
-              </p>
+              <h5 class="text-left mb-3">IoT Connectivity</h5>
+              <p class="text-left">Provides seamless connectivity for IoT devices, ensuring reliable communication in
+                constrained environments.</p>
             </div>
           </div>
         </div>
         <div class="col-md-6 mb-4">
           <div class="row">
             <div class="col-3 text-center">
-              <i class="fas fa-shield-alt fa-2x mb-3"></i>
+              <i class="fas fa-microchip fa-2x mb-3"></i>
             </div>
             <div class="col-9">
-              <h5 class="text-left mb-3">Sandboxed & Secure</h5>
-              <p class="text-left">Propeller runs each Wasm module in isolation, offering strong safety and
-                deterministic execution guarantees.</p>
+              <h5 class="text-left mb-3">RISC-V Architecture</h5>
+              <p class="text-left">Built on RISC-V architecture for efficient processing and scalability in IoT
+                applications.</p>
             </div>
           </div>
         </div>
         <div class="col-md-6 mb-4">
           <div class="row">
             <div class="col-3 text-center">
-              <i class="fas fa-chart-line fa-2x mb-3"></i>
+              <i class="fas fa-cogs fa-2x mb-3"></i>
             </div>
             <div class="col-9">
-              <h5 class="text-left mb-3">Observability</h5>
-              <p class="text-left">Integrated metrics, logs, and traces for performance monitoring and debugging across
-                Wasm executions.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 mb-4">
-          <div class="row">
-            <div class="col-3 text-center">
-              <i class="fas fa-code-branch fa-2x mb-3"></i>
-            </div>
-            <div class="col-9">
-              <h5 class="text-left mb-3">Open-Source & Extensible</h5>
-              <p class="text-left">Licensed under Apache 2.0. Extend Propeller to meet your needs, or contribute to the
-                growing Wasm community.</p>
+              <h5 class="text-left mb-3">Compact Design</h5>
+              <p class="text-left">Optimized for constrained environments, S0 features a compact design for easy
+                deployment.</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-
-
 
   <!-- Newsletter section -->
   <section id="newsletter" class="py-5">
@@ -239,9 +205,9 @@
               <div class="mt-2">
                 <p class="mb-0" style="font-size: 0.75rem; color: #6c757d; line-height: 1.4;">
                   By subscribing, you agree to our
-                  <a href="/privacy.html" target="_blank" class="link-blue-sm">Privacy Policy</a>
+                  <a href="/privacy" target="_blank" class="link-blue-sm">Privacy Policy</a>
                   and
-                  <a href="/terms.html" target="_blank" class="link-blue-sm">Terms of Service</a>.
+                  <a href="/terms" target="_blank" class="link-blue-sm">Terms of Service</a>.
                   <br>You can unsubscribe at any time.
                 </p>
               </div>
@@ -253,7 +219,6 @@
     </div>
   </section>
   <!-- End of Newsletter section -->
-
 
 
   <!-- Footer -->
@@ -297,11 +262,11 @@
           <ul class="list-unstyled">
             <li><i class="fas fa-cog me-2"></i><a href="amdm.html" class="text-white">AM:DM - Secure Device Manager</a>
             </li>
-            <li><i class="fas fa-network-wired me-2"></i><a href="magistrala.html" class="text-white">Magistrala - IoT
+            <li><i class="fas fa-network-wired me-2"></i><a href="/magistrala" class="text-white">Magistrala - IoT
                 Platform</a></li>
-            <li><i class="fas fa-bolt me-2"></i><a href="supermq.html" class="text-white">SuperMQ - Messaging Core</a>
+            <li><i class="fas fa-bolt me-2"></i><a href="/supermq" class="text-white">SuperMQ - Messaging Core</a>
             </li>
-            <li><i class="fas fa-rocket me-2"></i><a href="propeller.html" class="text-white">Propeller - Wasm
+            <li><i class="fas fa-rocket me-2"></i><a href="/propeller" class="text-white">Propeller - Wasm
                 Orchestrator</a></li>
             <li><i class="fas fa-random me-2"></i><a href="rex.html" class="text-white">Rex - Rule Engine</a></li>
           </ul>
@@ -312,10 +277,10 @@
         <div class="col-md-3">
           <h5>Legal</h5>
           <ul class="list-unstyled">
-            <li><a href="/privacy.html" class="text-white" target="_blank">Privacy Policy</a></li>
-            <li><a href="/imprint.html" class="text-white" target="_blank">Imprint</a></li>
-            <li><a href="/terms.html" class="text-white" target="_blank">Terms of Service</a></li>
-            <li><a href="/SLA.html" class="text-white" target="_blank">SLA</a></li>
+            <li><a href="/privacy" class="text-white" target="_blank">Privacy Policy</a></li>
+            <li><a href="/imprint" class="text-white" target="_blank">Imprint</a></li>
+            <li><a href="/terms" class="text-white" target="_blank">Terms of Service</a></li>
+            <li><a href="/sla" class="text-white" target="_blank">SLA</a></li>
           </ul>
         </div>
 

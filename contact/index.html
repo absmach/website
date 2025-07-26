@@ -17,7 +17,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg fixed-top navbar-light" style="background-color: #ffffff; font-size: 21px;">
     <div class="container">
-      <a class="navbar-brand" href="index.html" style="color: black;">
+      <a class="navbar-brand" href="/" style="color: black;">
         ABSTRACT MACHINES
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -32,26 +32,36 @@
               Products
             </a>
             <ul class="dropdown-menu" aria-labelledby="productsDropdown">
-              <li><a class="dropdown-item" href="magistrala.html">Magistrala</a></li>
-              <li><a class="dropdown-item" href="supermq.html">SuperMQ</a></li>
-              <li><a class="dropdown-item" href="propeller.html">Propeller</a></li>
-              <li><a class="dropdown-item" href="products.html">All Products</a></li>
+              <li class="dropdown-header">Software</li>
+              <li><a class="dropdown-item" href="/magistrala">Magistrala</a></li>
+              <li><a class="dropdown-item" href="/supermq">SuperMQ</a></li>
+              <li><a class="dropdown-item" href="/propeller">Propeller</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li class="dropdown-header">Hardware</li>
+              <li><a class="dropdown-item" href="/s0">S0 Low Power Gateway</a></li>
+              <li><a class="dropdown-item" href="/s1">S1 Linux Gateway</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="/products">All Products</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="solutions.html" style="color: black;">Solutions</a>
+            <a class="nav-link" href="/solutions" style="color: black;">Solutions</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="services.html" style="color: black;">Services</a>
+            <a class="nav-link" href="/services" style="color: black;">Services</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="company.html" style="color: black;">Company</a>
+            <a class="nav-link" href="/company" style="color: black;">Company</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" style="color: black;">Careers</a>
+            <a class="nav-link" href="/careers" style="color: black;">Careers</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html" style="color: black;">Contact</a>
+            <a class="nav-link" href="/contact" style="color: black;">Contact</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="https://medium.com/abstract-machines-blog" style="color: black;"
@@ -67,24 +77,24 @@
   </nav>
 
 
-  <!-- Header section for Careers page -->
+  <!-- Header section for Contact page -->
   <section id="header" class="py-5 mt-5" style="font-size: 21px; min-height: 100vh; margin: 0;">
     <div class="container">
       <div class="row mt-5">
         <div class="col-md-6 mt-5">
-          <h1>Join Our Team and Shape the Future of IoT</h1>
-          <p>At Abstract Machines, we are building the future of IoT technology, and you can be a part of it. We are
-            always on the lookout for talented and passionate individuals to join our team. If you are excited about
-            creating reliable and secure IoT solutions that connect the cloud and edge, we'd love to hear from you.
-            Explore our career opportunities and be part of a cutting-edge platform that simplifies IoT device
-            management.</p>
+          <h1>Get in Touch with Abstract Machines</h1>
+          <p>At Abstract Machines, we provide a reliable and secure infrastructure for the cloud-edge continuum. Our
+            platform allows you to effortlessly connect and manage devices and applications across the cloud and edge.
+            With fine-grained access control and an advanced policy and identity management system, we ensure secure
+            connections for devices over constrained IoT protocols like MQTT or CoAP. If you have any questions,
+            inquiries, or would like to reach out, we're here to assist you.</p>
           <div class="mt-4">
-            <a href="#careers" class="btn btn-warning d-inline-block" target="_blank">Explore Careers</a>
+            <a href="/products" class="btn btn-warning d-inline-block" target="_blank">Explore AM IoT Stack</a>
           </div>
         </div>
         <div class="col-md-6 mt-5">
           <div class="d-flex align-items-center justify-content-center">
-            <img src="img/patterns/careers.png" alt="pattern-white" class="img-fluid-large">
+            <img src="../img/patterns/contact.png" alt="pattern-white" class="img-fluid-large">
           </div>
         </div>
       </div>
@@ -94,87 +104,74 @@
 
 
 
-
-
-  <!-- Careers section -->
-  <section id="careers" class="py-5" style="font-size: 21px; background-color: #B5D3E7;">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2>Careers at Abstract Machines</h2>
-          <p>Join our dynamic team and be a part of shaping the future of IoT development. At Abstract Machines, we're
-            dedicated to pushing the boundaries of technology and creating innovative solutions for our clients in the
-            IoT space. We're always looking for passionate individuals who thrive in a collaborative and challenging
-            environment.</p>
-          <p>As a member of the Abstract Machines team, you'll have the opportunity to work on cutting-edge IoT
-            projects, collaborate with experts in IoT and related domains, and contribute to the growth and success of
-            our clients in the rapidly evolving IoT landscape.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-
-  <!-- Contact Mail Section with 2 Columns -->
-  <section id="careers" class="py-4" style="font-size: 24px; background-color: #B5D3E7;">
+  <!-- Contact section -->
+  <section id="contact" class="py-5" style="background-color: #F5F5F5;">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <div class="d-flex align-items-center justify-content-center">
-            <img src="img/patterns/careers-mail.png" alt="Image Placeholder" class="img-fluid-large">
-          </div>
+          <!-- Get In Touch -->
+          <h2>Get In Touch</h2>
+          <p><i class="fas fa-envelope me-2"></i><a href="mailto:info@abstractmachines.fr">info@abstractmachines.fr</a>
+          </p>
+          <p><i class="fab fa-gitter me-2"></i><a href="https://app.gitter.im/#/room/#Mainflux_mainflux:gitter.im"
+              target="_blank">Chat on Gitter</a></p>
         </div>
         <div class="col-md-6">
-          <div class="row">
-            <div class="col-md-12 mt-5">
-              <p style="text-align: left; font-size: 24px;">We are always looking for talented engineers who are excited
-                about IoT development and want to be part of our innovative team.</p>
-            </div>
-          </div>
-          <div class="row align-items-center mt-4">
-            <div class="col-md-12 text-start">
-              <div class="d-flex align-items-center">
-                <i class="fas fa-envelope fa-2x me-2"></i> <!-- Added "me-3" for right margin -->
-                <a href="mailto:careers@abstractmachines.fr" style="text-align: left; font-size: 24px;"
-                  class="ms-3">careers@abstractmachines.fr</a> <!-- Added "ms-3" for left margin -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- End of Contact Mail Section -->
-
-
-
-
-
-  <!-- Why Join Abstract Machines Section -->
-  <section class="py-4" style="font-size: 21px; background-color: #B5D3E7;">
-    <div class="container">
-      <div class="row mt-4">
-        <div class="col-md-12">
-          <h3>Why Join Abstract Machines?</h3>
-          <ul>
-            <li style="margin-bottom: 10px;"><strong>Innovative IoT Environment:</strong> Be a part of a team that's at
-              the forefront of IoT technology and development.</li>
-            <li style="margin-bottom: 10px;"><strong>Cross-Disciplinary Collaboration:</strong> Work alongside experts
-              in IoT and related domains, fostering continuous learning and growth in the IoT field.</li>
-            <li style="margin-bottom: 10px;"><strong>Impactful IoT Projects:</strong> Contribute to IoT projects that
-              drive digital transformation and shape the future of connected devices and industries.</li>
-            <li style="margin-bottom: 10px;"><strong>Professional IoT Development:</strong> We invest in our team's
-              growth through training, workshops, and skill development programs focused on IoT technologies.</li>
-            <li style="margin-bottom: 10px;"><strong>Work-Life Balance:</strong> We value work-life balance and provide
-              a flexible work environment to ensure your well-being while contributing to the exciting world of IoT
-              development.</li>
+          <!-- Follow Us -->
+          <h2>Follow Us</h2>
+          <ul class="list-unstyled d-flex flex-wrap">
+            <li class="me-4 mb-3">
+              <a href="https://twitter.com/absmach" target="_blank">
+                <i class="fab fa-twitter fa-2x me-2 text-black"></i>Twitter
+              </a>
+            </li>
+            <li class="me-4 mb-3">
+              <a href="https://www.linkedin.com/company/abstract-machines" target="_blank">
+                <i class="fab fa-linkedin fa-2x me-2 text-black"></i>LinkedIn
+              </a>
+            </li>
+            <li class="me-4 mb-3">
+              <a href="https://medium.com/abstract-machines-blog" target="_blank">
+                <i class="fab fa-medium fa-2x me-2 text-black"></i>Medium Blog
+              </a>
+            </li>
+            <li class="me-4 mb-3">
+              <a href="https://github.com/absmach" target="_blank">
+                <i class="fab fa-github fa-2x me-2 text-black"></i>GitHub
+              </a>
+            </li>
           </ul>
         </div>
       </div>
     </div>
   </section>
-  <!-- End of Why Join Abstract Machines Section -->
+  <!-- End of Contact section -->
+
+
+
+
+
+  <!-- Address section -->
+  <section id="address" class="py-5" style="background-color: #F5F5F5;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h3>ABSTRACT MACHINES</h3>
+          <p>141 Quai de Valmy<br>75010 Paris<br>France</p>
+        </div>
+        <div class="col-md-8">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2625.299640214984!2d2.3613566156752283!3d48.87114550614178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66f5a44ddaf8b%3A0xd9b8e11db185f41a!2s141%20Quai%20de%20Valmy%2C%2010%20Rue%20du%20Terrage%2C%2075010%20Paris%2C%20France!5e0!3m2!1sen!2sus!4v1661865645415!5m2!1sen!2sus"
+            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
 
 
 
@@ -208,9 +205,9 @@
               <div class="mt-2">
                 <p class="mb-0" style="font-size: 0.75rem; color: #6c757d; line-height: 1.4;">
                   By subscribing, you agree to our
-                  <a href="/privacy.html" target="_blank" class="link-blue-sm">Privacy Policy</a>
+                  <a href="/privacy" target="_blank" class="link-blue-sm">Privacy Policy</a>
                   and
-                  <a href="/terms.html" target="_blank" class="link-blue-sm">Terms of Service</a>.
+                  <a href="/terms" target="_blank" class="link-blue-sm">Terms of Service</a>.
                   <br>You can unsubscribe at any time.
                 </p>
               </div>
@@ -222,6 +219,8 @@
     </div>
   </section>
   <!-- End of Newsletter section -->
+
+
 
 
 
@@ -268,7 +267,7 @@
           <ul class="list-unstyled">
             <li><i class="fas fa-cog me-2"></i><a href="amdm.html" class="text-white">AM:DM - Secure Device Manager</a>
             </li>
-            <li><i class="fas fa-network-wired me-2"></i><a href="magistrala.html" class="text-white">Magistrala - IoT
+            <li><i class="fas fa-network-wired me-2"></i><a href="/magistrala" class="text-white">Magistrala - IoT
                 Platform</a></li>
           </ul>
         </div>
@@ -277,10 +276,10 @@
         <div class="col-md-3">
           <h5>Legal</h5>
           <ul class="list-unstyled">
-            <li><a href="/privacy.html" class="text-white" target="_blank">Privacy Policy</a></li>
-            <li><a href="/imprint.html" class="text-white" target="_blank">Imprint</a></li>
-            <li><a href="/terms.html" class="text-white" target="_blank">Terms of Service</a></li>
-            <li><a href="/SLA.html" class="text-white" target="_blank">SLA</a></li>
+            <li><a href="/privacy" class="text-white" target="_blank">Privacy Policy</a></li>
+            <li><a href="/imprint" class="text-white" target="_blank">Imprint</a></li>
+            <li><a href="/terms" class="text-white" target="_blank">Terms of Service</a></li>
+            <li><a href="/sla" class="text-white" target="_blank">SLA</a></li>
           </ul>
         </div>
 
