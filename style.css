@@ -7,6 +7,26 @@ header {
     font-size: 21px;
 }
 
+/*  Secondary Navbar */
+.navbar-secondary .nav-link {
+    color: #000;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    padding: 0.5rem 0.75rem;
+    transition: border-color 0.2s ease, color 0.2s ease;
+    box-shadow: none !important;
+}
+
+.navbar-secondary .nav-link:hover,
+.navbar-secondary .nav-link:focus {
+    color: #000;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+section[id] {
+    scroll-margin-top: 110px;
+}
 
 /* Default size for smaller screens */
 .img-fluid-large {
