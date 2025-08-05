@@ -117,9 +117,9 @@
 
 
   <!-- Header section -->
-  <section id="header" class="py-5 mt-5" style="font-size: 21px; min-height: 70vh; margin: 0;">
+  <section id="header" class="py-5 mt-md-5" style="font-size: 21px; min-height: 70vh; margin: 0;">
     <div class="container">
-      <div class="row mt-5">
+      <div class="row mt-md-5">
         <div class="col-md-6 mt-5">
           <h1>Magistrala IoT Core</h1>
           <p>Elevate your IoT ecosystem with Magistrala, the ultimate IoT core platform known for its scalability and
@@ -1201,6 +1201,29 @@
       updatePricing('yearly');
     });
   </script>
+
+  <script>
+    // Close Secondary NavBar when clicked
+    document.addEventListener('DOMContentLoaded', function () {
+      const navLinks = document.querySelectorAll('#secondaryNav .nav-link');
+      const navbarCollapse = document.querySelector('#secondaryNav');
+      const navbarToggler = document.querySelector('.navbar-toggler');
+
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          if (navbarCollapse.classList.contains('show')) {
+            const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+              toggle: false
+            });
+            bsCollapse.hide();
+
+            navbarToggler.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    });
+  </script>
+
 
 </body>
 
