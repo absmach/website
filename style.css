@@ -15,6 +15,7 @@ header {
     padding: 0.5rem 0.75rem;
     transition: border-color 0.2s ease, color 0.2s ease;
     box-shadow: none !important;
+    position: relative;
 }
 
 .navbar-secondary .nav-link:hover,
@@ -183,5 +184,17 @@ section[id] {
     .pricing-toggle .btn {
         padding: 6px 14px;
         font-size: 13px;
+    }
+}
+
+/* Ipad Pro header spacing */
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1366px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    
+   #header {
+        min-height: 70vh !important;
+        padding-top: 10rem !important;
     }
 }
