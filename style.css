@@ -14,7 +14,6 @@ header {
     border-bottom: 2px solid transparent;
     padding: 0.5rem 0.75rem;
     transition: border-color 0.2s ease, color 0.2s ease;
-    /* box-shadow: none !important; */
 }
 
 .navbar-secondary .nav-link:hover,
@@ -25,7 +24,13 @@ header {
 }
 
 section[id] {
-    scroll-margin-top: 350px;
+    scroll-margin-top: 70px;
+}
+
+@media (max-width: 991.98px) {
+    section[id] {
+        scroll-margin-top: 350px;
+    }
 }
 
 /* Default size for smaller screens */
@@ -40,7 +45,6 @@ section[id] {
 @media (min-width: 768px) {
     .img-fluid-large {
         max-width: 80%;
-        /* Adjust this value as needed for the desired scaling percentage */
     }
 }
 
