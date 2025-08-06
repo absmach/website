@@ -35,8 +35,21 @@
               Products
             </a>
             <ul class="dropdown-menu" aria-labelledby="productsDropdown">
-              <li><a class="dropdown-item" href="#">AM:DM</a></li>
+              <li class="dropdown-header">Software</li>
               <li><a class="dropdown-item" href="/magistrala">Magistrala</a></li>
+              <li><a class="dropdown-item" href="/supermq">SuperMQ</a></li>
+              <li><a class="dropdown-item" href="javascript:void(0)">AM:DM</a></li>
+              <li><a class="dropdown-item" href="/propeller">Propeller</a></li>
+              <li><a class="dropdown-item" href="/rex">Rex</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li class="dropdown-header">Hardware</li>
+              <li><a class="dropdown-item" href="/s0">S0 Low Power Gateway</a></li>
+              <li><a class="dropdown-item" href="/s1">S1 Linux Gateway</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li><a class="dropdown-item" href="/products">All Products</a></li>
             </ul>
           </li>
@@ -45,9 +58,6 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/services" style="color: black;">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://docs.mainflux.io/" style="color: black;" target="_blank">Documentation</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/company" style="color: black;">Company</a>
@@ -521,7 +531,8 @@
       <div class="row mt-5 mb-5">
         <div class="col-md-6 offset-md-3 text-center">
           <h2>Subscribe to Our Newsletter</h2>
-          <p>Stay updated with the latest news, updates, and announcements.</p>
+          <p>Stay updated with the latest news, updates and announcements.</p>
+
           <!-- Newsletter Subscription Form -->
           <form
             action="https://abstractmachines.us13.list-manage.com/subscribe/post?u=e132153c5ae8e4a113f907da5&amp;id=b454573cf1&amp;f_id=008e0ee4f0"
@@ -530,11 +541,25 @@
             <div class="input-group">
               <input type="email" class="form-control" name="EMAIL" placeholder="Enter your email" aria-label="Email"
                 aria-describedby="subscribe-btn" required="">
-              <button class="btn btn-primary" type="submit" id="subscribe-btn">Subscribe</button>
+              <button class="btn bg-deep-blue" type="submit" id="subscribe-btn">Subscribe</button>
             </div>
             <div style="position: absolute; left: -5000px;" aria-hidden="true">
               <input type="text" name="b_e132153c5ae8e4a113f907da5_b454573cf1" tabindex="-1" value="">
             </div>
+
+            <!-- Privacy and Terms Disclaimer -->
+            <div class="mt-2">
+              <div class="mt-2">
+                <p class="mb-0" style="font-size: 0.75rem; color: #6c757d; line-height: 1.4;">
+                  By subscribing, you agree to our
+                  <a href="/privacy" target="_blank" class="link-blue-sm">Privacy Policy</a>
+                  and
+                  <a href="/terms" target="_blank" class="link-blue-sm">Terms of Service</a>.
+                  <br>You can unsubscribe at any time.
+                </p>
+              </div>
+            </div>
+
           </form>
         </div>
       </div>
@@ -603,9 +628,9 @@
           <h5>Legal</h5>
           <ul class="list-unstyled">
             <li><a href="/privacy" class="text-white" target="_blank">Privacy Policy</a></li>
-            <li><a href="/imprint" class="text-white" target="_blank">Imprint</a></li>
+            <!-- <li><a href="/imprint" class="text-white" target="_blank">Imprint</a></li> -->
             <li><a href="/terms" class="text-white" target="_blank">Terms of Service</a></li>
-            <li><a href="/sla" class="text-white" target="_blank">SLA</a></li>
+            <!-- <li><a href="/sla" class="text-white" target="_blank">SLA</a></li> -->
           </ul>
         </div>
 
