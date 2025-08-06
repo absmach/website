@@ -161,7 +161,6 @@ section[id] {
 
 /* Privacy Policy and Terms of Service links styling */
 .link-blue-sm {
-    font-size: 0.75rem;
     color: #073763;
     text-decoration: underline;
     transition: color 0.2s ease, font-weight 0.2s ease;
@@ -213,4 +212,21 @@ section[id] {
   height: 100%;
   object-fit: contain; 
   display: block;
+}
+
+/* Terms Sections Styling */
+.terms-section h4 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.terms-section hr {
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border-color: #ddd;
+}
+
+.terms-section ul,
+.terms-section p {
+    margin-bottom: 1rem;
 }
