@@ -198,3 +198,19 @@ section[id] {
         padding-top: 10rem !important;
     }
 }
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 66.66%; 
+}
+
+.video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+  display: block;
+}
