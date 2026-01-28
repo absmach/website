@@ -1,6 +1,9 @@
 package main
 
-import "html/template"
+import (
+	"encoding/xml"
+	"html/template"
+)
 
 type SiteConfig struct {
 	Name        string `yaml:"name"`
@@ -76,4 +79,17 @@ type ListingData struct {
 	Site        SiteConfig
 	Config      Config
 	CurrentYear int
+}
+
+type SitemapURL struct {
+	Loc        string `xml:"loc"`
+	LastMod    string `xml:"lastmod"`
+	ChangeFreq string `xml:"changefreq"`
+	Priority   string `xml:"priority"`
+}
+
+type Sitemap struct {
+	XMLName xml.Name     `xml:"urlset"`
+	Xmlns   string       `xml:"xmlns,attr"`
+	URLs    []SitemapURL `xml:"url"`
 }

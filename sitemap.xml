@@ -49,12 +49,6 @@
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://absmach.eu/news/</loc>
-        <lastmod>2026-01-14</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
         <loc>https://absmach.eu/supermq/</loc>
         <lastmod>2026-01-14</lastmod>
         <changefreq>monthly</changefreq>
@@ -119,5 +113,35 @@
         <lastmod>2026-01-14</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://absmach.eu/blog/</loc>
+        <lastmod>2026-01-28</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://absmach.eu/blog/magistrala-user-guide/</loc>
+        <lastmod>2026-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://absmach.eu/blog/integrating-oauth2/</loc>
+        <lastmod>2026-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://absmach.eu/blog/v0-14-0-release/</loc>
+        <lastmod>2026-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://absmach.eu/blog/extending-users-repository/</loc>
+        <lastmod>2026-01-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
     </url>
 </urlset>

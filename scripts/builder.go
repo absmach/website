@@ -192,6 +192,11 @@ func (b *Builder) Build() error {
 
 	b.saveCache(newCache)
 
+	sitemapPath := filepath.Join(filepath.Dir(b.OutputDir), "sitemap.xml")
+	if err := b.updateSitemap(posts, files, sitemapPath); err != nil {
+		fmt.Printf("Warning: Failed to update sitemap: %v\n", err)
+	}
+
 	fmt.Println("\nBuild complete!")
 	fmt.Printf("   Built: %d\n", builtCount)
 	fmt.Printf("   Skipped: %d\n", skippedCount)
