@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Getting Started with Magistrala UI - Abstract Machines</title>
+  <meta name="title" content="Getting Started with Magistrala UI - Abstract Machines" />
+  <meta name="description" content="A complete guide to the Magistrala UI — manage IoT devices, domains, messaging, rules, alarms, dashboards, and reports through a powerful visual interface." />
+
+  <link rel="canonical" href="https://absmach.eu/blog/magistrala-ui-guide/" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Abstract Machines" />
+  <meta property="og:url" content="https://absmach.eu/blog/magistrala-ui-guide" />
+  <meta property="og:title" content="Getting Started with Magistrala UI" />
+  <meta property="og:description" content="A complete guide to the Magistrala UI — manage IoT devices, domains, messaging, rules, alarms, dashboards, and reports through a powerful visual interface." />
+  <meta property="og:image" content="https://absmach.eu{}" />
+
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Getting Started with Magistrala UI" />
+  <meta name="twitter:description" content="A complete guide to the Magistrala UI — manage IoT devices, domains, messaging, rules, alarms, dashboards, and reports through a powerful visual interface." />
+  <meta name="twitter:image" content="https://absmach.eu{}" />
+
+
+  
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Getting Started with Magistrala UI",
+        "image": "https:\/\/absmach.eu\/img\/blogs\/magistrala-ui-guide\/homepage.png",
+        "datePublished": "2026-01-29",
+        "author": {
+          "@type": "Person",
+          "name": "Ian Muchiri"
+        },
+        "description": "A complete guide to the Magistrala UI — manage IoT devices, domains, messaging, rules, alarms, dashboards, and reports through a powerful visual interface."
+      }
+    </script>
+
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet" />
+
+  
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <link rel="stylesheet" href="/assets/css/blog.css" />
+
+  <style>
+    body {
+      padding-top: 85px;
+    }
+
+    .navbar-nav .nav-link {
+      color: black !important;
+    }
+
+     
+    .markdown-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    .markdown-content h2,
+    .markdown-content h3 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: #212529;
+    }
+
+    .markdown-content p {
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .markdown-content pre {
+      border-radius: 6px;
+      padding: 1rem;
+    }
+
+    .markdown-content blockquote {
+      border-left: 4px solid #ddd;
+      padding-left: 1rem;
+      color: #555;
+      margin: 1.5rem 0;
+      font-style: italic;
+    }
+
+    .markdown-content table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1.5rem 0;
+    }
+
+    .markdown-content th,
+    .markdown-content td {
+      border: 1px solid #ddd;
+      padding: 0.6rem 0.8rem;
+    }
+
+    .markdown-content th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+
+    .code-wrapper {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .code-wrapper pre {
+      margin-bottom: 0;
+    }
+
+    .copy-button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .code-wrapper:hover .copy-button {
+      opacity: 1;
+    }
+
+    .copy-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .copy-button.copied {
+      background: #198754;
+      border-color: #198754;
+      color: #fff;
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white" style="font-size: 21px">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="/img/logos/abstract-machines_logo_landscape-black.jpg" alt="Magistrala" height="30" width="250" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="productsDropdown" role="button"
+              data-bs-toggle="dropdown">
+              Products
+            </a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Software</li>
+              <li>
+                <a class="dropdown-item" href="https://magistrala.absmach.eu" target="_blank"
+                  rel="noopener noreferrer">Magistrala</a>
+              </li>
+              <li><a class="dropdown-item" href="/supermq/">SuperMQ</a></li>
+              <li>
+                <a class="dropdown-item" href="/propeller/">Propeller</a>
+              </li>
+              <li><a class="dropdown-item" href="/mproxy/">mProxy</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li class="dropdown-header">Hardware</li>
+              <li>
+                <a class="dropdown-item" href="/s0/">S0 Low Power Gateway</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/s1/">S1 Linux Gateway</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="/products/">All Products</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/solutions/">Solutions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/services/">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/projects/">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/company/">Company</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/careers/">Careers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/contact/">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/blog/">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="https://github.com/absmach" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <article class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        
+        <div class="mb-4">
+          <a href="/blog" class="text-decoration-none text-muted"><i class="fas fa-arrow-left me-2"></i>Back to Blog</a>
+        </div>
+
+        <div class="mb-3">
+          <span class="badge bg-primary fs-6"></span>
+          
+        </div>
+
+        <h1 class="display-4 fw-bold mb-4">Getting Started with Magistrala UI</h1>
+
+        <div class="d-flex align-items-center mb-4 pb-4 border-bottom">
+          <img src="https://avatars.githubusercontent.com/u/100555904?v=4" alt="Ian Muchiri" class="rounded-circle me-3" width="60" height="60"
+            loading="lazy" onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+          <div>
+            <div class="fw-bold fs-5">Ian Muchiri</div>
+            <div class="text-muted">
+              January 29, 2026 · 8 min read
+            </div>
+          </div>
+        </div>
+
+        
+        <img src="/img/blogs/magistrala-ui-guide/homepage.png" alt="Getting Started with Magistrala UI" class="img-fluid rounded mb-5 w-100 shadow-sm" loading="lazy"
+          onerror="this.style.display = 'none'" />
+        
+
+        <div class="markdown-content"><h1 id="getting-started-with-magistrala-ui">Getting Started with Magistrala UI</h1>
+<p><a href="https://magistrala.absmach.eu/">Magistrala</a> has for the past decade been built to be an industrial grade, robust, scalable, and fully open-source IoT platform. With comprehensive APIs, CLI tools, and deep extensibility, it was built developer first, offering everything needed to build complex IoT solutions.</p>
+<p>But not every user wants to live in the terminal. To make Magistrala more accessible for low-code users, system operators, and teams that prefer visual workflows, we built <strong>Magistrala UI</strong> — a powerful graphical interface that brings the full capabilities of the Magistrala platform into an intuitive, browser-based experience.</p>
+<p>Through the UI, you can manage users, clients (devices and applications), organize domains (workspaces), configure real-time rules, monitor alarms, build dashboards, and visualize message data — all without writing code. It gets better, for those who want to explore quickly, we offer a free trial for our <a href="https://cloud.magistrala.absmach.eu/">cloud</a>, giving you a hands-on way to experience the platform in action. For open-source users running Magistrala on their own infrastructure, the UI is also available as a self-hosted deployment.</p>
+<p>In this guide, we’ll walk through how the Magistrala UI is structured, what each major section enables, and how it all fits together to help you manage your IoT systems more efficiently.</p>
+<h2 id="how-the-platform-is-organized">How the Platform is Organized</h2>
+<p>Before diving into specific features, it helps to understand how Magistrala UI structures your IoT infrastructure.</p>
+<p>At the top level, you have <strong>domains</strong> — isolated workspaces where your IoT projects live. Think of them as separate environments: one for production, another for testing, or different domains for different customers if you're running a multi-tenant setup.</p>
+<p>Inside each domain, you manage <strong>clients</strong> (your devices and applications), <strong>channels</strong> (communication pathways), and <strong>users</strong> (team members with specific roles and permissions). Clients connect to channels to send and receive messages. Those messages can trigger <strong>rules</strong> that automate actions, raise <strong>alarms</strong> when thresholds are breached, and feed into <strong>dashboards</strong> for visualization.</p>
+<p>This structure gives you logical isolation, role-based access control, and a clear mental model: domains contain everything, clients talk through channels, rules process data in real-time, and dashboards make sense of it all.</p>
+<p><img src="/img/blogs/magistrala-ui-guide/platform.png" alt="Platform Organization"></p>
+<h2 id="profile-management">Profile Management</h2>
+<p><strong>What it is:</strong> Your personal account settings — the starting point for using Magistrala UI.</p>
+<p><strong>Why it matters:</strong> Before you can manage devices or build dashboards, you need an account. Profile management lets you control your identity, credentials, and preferences across the platform.</p>
+<p><strong>What you can do:</strong></p>
+<ul>
+<li>Sign up and create your account</li>
+<li>Update your name, email, and password</li>
+<li>Set your preferred theme (light or dark mode)</li>
+<li>Choose your language preference</li>
+</ul>
+<p>It's straightforward, but it's also where you establish your access to everything else in the platform.</p>
+<p><img src="/img/blogs/magistrala-ui-guide/profile.png" alt="Profile"></p>
+<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/users-quick-start/">User Quick Start Guide</a></p>
+<h2 id="domain-management">Domain Management</h2>
+<p><strong>What it is:</strong> Domains are logical workspaces that provide multi-tenancy and isolation within Magistrala.</p>
+<p><strong>Why it matters:</strong> If you're managing multiple projects, customers, or environments, you need separation. Domains let you partition your infrastructure so that production doesn't mix with staging, or Customer A's data stays isolated from Customer B's.</p>
+<p><strong>What you can do:</strong></p>
+<ul>
+<li>Create and configure domains</li>
+<li>Enable or disable domains as needed</li>
+<li>Update domain details and metadata</li>
+<li>Invite team members and assign roles</li>
+<li>Control who has access to what within each domain</li>
+</ul>
+<p>Domains are the foundation of organized, scalable IoT deployments. They give you control over access, visibility, and operational boundaries.</p>
+<p><img src="/img/blogs/magistrala-ui-guide/domain-info.png" alt="Domain Info"></p>
+<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/domain-management/introduction/">Domain Management Documentation</a></p>
+<h2 id="client-management">Client Management</h2>
+<p><strong>What it is:</strong> Clients are the entities that interact with your IoT platform — split into <strong>devices</strong> (sensors, actuators, edge hardware) and <strong>applications</strong> (backend services, mobile apps, integrations).</p>
+<p><strong>Why it matters:</strong> Your clients are the core of your IoT system. Managing them efficiently means you can provision at scale, organize by function or location, and control credentials without manual overhead.</p>
+<p><strong>What you can do:</strong></p>
+<ul>
+<li>Create and provision devices and applications</li>
+<li>Organize clients into groups for easier management</li>
+<li>Generate and manage authentication credentials</li>
+<li>Assign roles and permissions to users over specific clients</li>
+<li>Connect clients to channels for messaging</li>
+<li>Bulk import and export client configurations</li>
+</ul>
+<p>The distinction between devices and applications matters: devices typically generate data, while applications consume or process it. The UI lets you manage both in one place.</p>
+<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/clients/">Client Management Guide</a></p>
+<h2 id="channels-and-messaging">Channels and Messaging</h2>
+<p><strong>What it is:</strong> Channels are communication pathways. Clients connect to channels with publish, subscribe, or both permissions to send and receive messages.</p>
+<p><strong>Why it matters:</strong> Channels define how data flows through your system. They're the pipes that connect sensors to applications, devices to dashboards, and edge nodes to cloud services.</p>
+<p><strong>What you can do:</strong></p>
+<ul>
+<li>Create channels and configure access policies</li>
+<li>Connect clients to channels with granular permissions (publish, subscribe, or both)</li>
+<li>Exchange messages using multiple protocols, including HTTP, MQTT, WebSocket, and CoAP.</li>
+<li>Save messages to internal storage using rules</li>
+<li>Monitor message flow in real-time</li>
+</ul>
+<p>Channels give you flexibility: you can have a single device publish to multiple channels, or multiple devices publish to one channel that feeds a dashboard. The UI makes these connections visual and manageable.</p>
+<p><img src="/img/blogs/magistrala-ui-guide/send-message.png" alt="Send Message"></p>
+<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/clients/channels/">Channels</a> and <a href="https://docs.magistrala.absmach.eu/user-guide/messaging/">Messaging</a> Documentation</p>
+<h2 id="rules-engine">Rules Engine</h2>
+<p><strong>What it is:</strong> A visual rule management system that lets you define real-time logic without writing backend code.</p>
+<p><strong>Why it matters:</strong> IoT systems generate continuous streams of data. Rules let you act on that data as it arrives — filtering, transforming, routing, and triggering actions based on conditions you define.</p>
+<p><strong>What you can do:</strong></p>
+<ul>
+<li>Create rules using a visual interface</li>
+<li>Save messages to the internal database</li>
+<li>Publish processed messages to other channels</li>
+<li>Store data in external PostgreSQL databases</li>
+<li>Send email notifications</li>
+<li>Post alerts to Slack</li>
+<li>Generate alarms based on thresholds or patterns</li>
+</ul>
+<p>Rules are powered by Lua or Go under the hood, while the UI helps you configure logic, triggers, and actions without needing to manage the execution layer directly.. You define conditions, actions, and outputs — the platform handles execution.</p>
+<p>This is where automation happens. A temperature sensor crosses a threshold? Trigger an alarm and send an email. A device goes offline? Log it and notify your ops team.</p>
+<p><img src="/img/blogs/magistrala-ui-guide/rule.png" alt="Rule Example"></p>
+<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/rules-engine/">Rules Engine Guide</a></p>
+<h2 id="alarm-management">Alarm Management</h2>
+<p><strong>What it is:</strong> A system for monitoring conditions, triggering alerts, and managing alarm lifecycles.</p>
+<p><strong>Why it matters:</strong> In production IoT systems, you need to know when something goes wrong — and you need to track how your team responds.</p>
+<p><strong>What you can do:</strong></p>
+<ul>
+<li>Define alarm conditions through the rules engine</li>
+<li>Monitor active alarms in real-time</li>
+<li>Acknowledge alarms to signal you're aware</li>
+<li>Assign alarms to team members for resolution</li>
+<li>Clear alarms once issues are resolved</li>
+<li>Delete alarms when no longer relevant</li>
+<li>View alarm history and audit trails</li>
+</ul>
+<p>Alarms bridge the gap between data and action. They turn abstract metrics into concrete alerts that demand attention.</p>
+<p><img src="/img/blogs/magistrala-ui-guide/alarms.png" alt="Alarms Example"></p>
+<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/alarms/">Alarm Management Documentation</a></p>
+<h2 id="dashboards-and-visualization">Dashboards and Visualization</h2>
+<p><strong>What it is:</strong> A dashboard builder that turns raw message data into charts, graphs, and real-time insights.</p>
+<p><strong>Why it matters:</strong> Data is only useful if you can understand it. Dashboards let you visualize trends, monitor live metrics, and share insights with stakeholders who don't need API access.</p>
+<p><strong>What you can do:</strong></p>
+<ul>
+<li>Build custom dashboards with drag-and-drop widgets</li>
+<li>Display live charts with near-real-time updates</li>
+<li>Query historical data and apply aggregations (min, max, avg, sum)</li>
+<li>Monitor alarms directly from dashboards</li>
+<li>Visualize entity metadata and status</li>
+<li>Share dashboards publicly (no login required)</li>
+</ul>
+<p>Dashboards are where technical data becomes business intelligence. You can track fleet health, monitor environmental conditions, or display KPIs for operations teams.</p>
+<p><img src="/img/blogs/magistrala-ui-guide/dashboard.png" alt="Dashboard Example"></p>
+<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/dashboards/introduction/">Dashboards Documentation</a></p>
+<h2 id="reports">Reports</h2>
+<p><strong>What it is:</strong> A reporting system that lets you generate, schedule, and distribute data summaries.</p>
+<p><strong>Why it matters:</strong> Not everyone needs a live dashboard. Sometimes you need a PDF report emailed weekly, or a CSV export for compliance audits.</p>
+<p><strong>What you can do:</strong></p>
+<ul>
+<li>Create instant reports on demand</li>
+<li>Schedule recurring reports (daily, weekly, monthly)</li>
+<li>Upload custom report templates</li>
+<li>Email reports automatically to stakeholders</li>
+<li>Download reports in multiple formats</li>
+</ul>
+<p>Reports are built for operational workflows: end-of-shift summaries, compliance documentation, or executive briefings. They're the structured output layer on top of your real-time data.</p>
+<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/reports/">Reports Guide</a></p>
+<h2 id="cloud-vs-self-hosted-ui">Cloud vs Self-Hosted UI</h2>
+<p>Magistrala UI is available in two deployment models, depending on your needs.</p>
+<h3 id="magistrala-cloud">Magistrala Cloud</h3>
+<p>Managed by our team, hosted infrastructure, zero setup. You sign up, and you're running within minutes.</p>
+<ul>
+<li><strong>Quick start:</strong> No installation, no configuration</li>
+<li><strong>Free trial:</strong> Explore the platform before committing</li>
+<li><strong>Enterprise options:</strong> Dedicated support, SLAs, and custom deployments</li>
+</ul>
+<p>Best for teams that want to focus on building IoT solutions, not managing infrastructure.</p>
+<p><strong>Get started:</strong> <a href="https://cloud.magistrala.absmach.eu/">Magistrala Cloud</a></p>
+<h3 id="self-hosted-ui">Self-Hosted UI</h3>
+<p>Run the UI on your own infrastructure using Docker. Full control, full ownership.</p>
+<ul>
+<li><strong>Complete control:</strong> You manage the stack, the data, and the deployment</li>
+<li><strong>Works with open-source Magistrala:</strong> Integrates seamlessly with your self-hosted Magistrala backend</li>
+<li><strong>On-premises or private cloud:</strong> Deploy wherever your security or compliance requirements demand</li>
+</ul>
+<p>The Magistrala platform itself is open source, while the UI is distributed as a packaged service component for self-hosted deployments.</p>
+<p>Best for teams with strict data residency requirements, or those already running Magistrala on-premises.</p>
+<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/dev-guide/getting-started/">Self-Hosted Deployment Guide</a></p>
+<h2 id="who-is-magistrala-ui-for">Who is Magistrala UI For?</h2>
+<p>Magistrala UI is built for teams that need production-grade IoT infrastructure without the overhead of building everything from scratch.</p>
+<p>It's for <strong>IoT platform engineers</strong> who want visual tools alongside APIs. For <strong>operations teams</strong> who need dashboards and alarms, not terminal commands. For <strong>system integrators</strong> managing multi-tenant deployments. For <strong>CTOs</strong> evaluating scalable, open-source alternatives to proprietary platforms.</p>
+<p>If you're building connected systems — whether it's industrial monitoring, smart infrastructure, fleet management, or environmental sensing — Magistrala UI gives you the tools to manage it all without writing backend code for every workflow.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Magistrala UI brings the full power of the Magistrala IoT platform into a visual, accessible interface. From provisioning devices to building dashboards, from defining real-time rules to managing alarms, it's designed to make complex IoT operations manageable.</p>
+<p>Whether you're running a proof-of-concept on Magistrala Cloud or deploying a self-hosted production system, the UI scales with you.</p>
+<p>Ready to explore? <a href="https://cloud.magistrala.absmach.eu/">Start your free trial</a> or <a href="https://docs.magistrala.absmach.eu/">dive into the docs</a>.</p>
+</div>
+
+        <div class="mt-5 pt-4 border-top">
+          
+          <div>
+            <a href="/blog" class="btn btn-outline-secondary"><i
+                class="fas fa-arrow-left me-2"></i>Back to
+              Blog</a>
+          </div>
+          <h5 class="mb-3 mt-3">Tags</h5>
+          <div>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">iot</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">magistrala</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">low-code</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">real-time-processing</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">rules-engine</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">dashboards</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">alarm-management</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">ui</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">user-guide</span>
+            
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h5 class="mb-3">Share this article</h5>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="https://twitter.com/intent/tweet?text=Getting&#43;Started&#43;with&#43;Magistrala&#43;UI&url=https%3a%2f%2fabsmach.eu/blog/magistrala-ui-guide"
+              target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
+              <i class="fab fa-twitter me-2"></i>Twitter
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fabsmach.eu/blog/magistrala-ui-guide"
+              target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
+              <i class="fab fa-linkedin me-2"></i>LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  
+  <section id="newsletter" class="py-5">
+    <div class="container">
+      <div class="row mt-5 mb-5">
+        <div class="col-md-6 offset-md-3 text-center">
+          <h2>Subscribe to Our Newsletter</h2>
+          <p>Stay updated with the latest news, updates and announcements.</p>
+
+          
+          <form
+            action="https://absmach.us11.list-manage.com/subscribe/post?u=70b43c7181d005024187bfb31&amp;id=0a319b6b63&amp;f_id=002711e1f0"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
+            target="_blank">
+            <div class="input-group">
+              <input type="email" class="form-control" name="EMAIL" id="mce-EMAIL" placeholder="Enter your email"
+                aria-label="Email" aria-describedby="subscribe-btn" required="" />
+              <div hidden="">
+                <input type="hidden" name="tags" value="8115258" />
+              </div>
+              <button class="btn bg-deep-blue" type="submit" id="subscribe-btn"
+                style="background-color: #073763; color: white;">
+                Subscribe
+              </button>
+            </div>
+            <div id="mce-responses" class="clear foot">
+              <div class="response" id="mce-error-response" style="display: none"></div>
+              <div class="response" id="mce-success-response" style="display: none"></div>
+            </div>
+            <div style="position: absolute; left: -5000px" aria-hidden="true">
+              
+              <input type="text" name="b_70b43c7181d005024187bfb31_0a319b6b63" tabindex="-1" value="" />
+            </div>
+
+            
+            <div class="mt-2">
+              <div class="mt-2">
+                <p class="mb-0" style="font-size: 0.75rem; color: #6c757d; line-height: 1.4">
+                  By subscribing, you agree to our
+                  <a href="/privacy" target="_blank" class="link-blue-sm">Privacy Policy</a>
+                  and
+                  <a href="/terms" target="_blank" class="link-blue-sm">Terms of Service</a>. <br />You can unsubscribe
+                  at any time.
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h3 class="mb-4 fw-bold">Next Read</h3>
+      <div class="row g-4">
+        
+        <div class="col-md-6 col-lg-4">
+          <article class="card h-100 shadow-sm hover-lift border-0">
+            <a href="/blog/magistrala-user-guide" class="text-decoration-none text-dark">
+              
+
+              <div class="card-body">
+                <div class="mb-2">
+                  <span class="badge bg-primary me-2">
+                    blog
+                  </span>
+                  
+                </div>
+
+                <h2 class="card-title h5 fw-bold">
+                  Revolutionizing Industrial IoT with an Open Source Platform
+                </h2>
+                <p class="card-text text-muted small">
+                  
+                </p>
+
+                <div class="d-flex align-items-center mt-3">
+                  <img src="https://avatars.githubusercontent.com/u/28790446?v=4" alt="Rodney Osodo"
+                    class="rounded-circle me-2" width="32" height="32" loading="lazy"
+                    onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+                  <div class="small">
+                    <div class="fw-semibold">
+                      Rodney Osodo
+                    </div>
+                    <div class="text-muted">
+                      September 24, 2024 · 16 min
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  
+                  <span class="badge bg-light text-dark me-1">Magistrala</span>
+                  
+                  <span class="badge bg-light text-dark me-1">IIoT</span>
+                  
+                  <span class="badge bg-light text-dark me-1">User Guide</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Industrial Automation</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Open Source</span>
+                  
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <article class="card h-100 shadow-sm hover-lift border-0">
+            <a href="/blog/integrating-oauth2" class="text-decoration-none text-dark">
+              
+
+              <div class="card-body">
+                <div class="mb-2">
+                  <span class="badge bg-primary me-2">
+                    blog
+                  </span>
+                  
+                </div>
+
+                <h2 class="card-title h5 fw-bold">
+                  Integrating OAuth2.0 with Magistrala
+                </h2>
+                <p class="card-text text-muted small">
+                  
+                </p>
+
+                <div class="d-flex align-items-center mt-3">
+                  <img src="https://avatars.githubusercontent.com/u/28790446?v=4" alt="Rodney Osodo"
+                    class="rounded-circle me-2" width="32" height="32" loading="lazy"
+                    onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+                  <div class="small">
+                    <div class="fw-semibold">
+                      Rodney Osodo
+                    </div>
+                    <div class="text-muted">
+                      April 29, 2024 · 15 min
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  
+                  <span class="badge bg-light text-dark me-1">OAuth2.0</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Authentication</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Magistrala</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Google OAuth</span>
+                  
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <article class="card h-100 shadow-sm hover-lift border-0">
+            <a href="/blog/v0-14-0-release" class="text-decoration-none text-dark">
+              
+
+              <div class="card-body">
+                <div class="mb-2">
+                  <span class="badge bg-success me-2">
+                    announcement
+                  </span>
+                  
+                </div>
+
+                <h2 class="card-title h5 fw-bold">
+                  What&#39;s New in Magistrala v0.14.0
+                </h2>
+                <p class="card-text text-muted small">
+                  
+                </p>
+
+                <div class="d-flex align-items-center mt-3">
+                  <img src="https://avatars.githubusercontent.com/u/28790446?v=4" alt="Rodney Osodo"
+                    class="rounded-circle me-2" width="32" height="32" loading="lazy"
+                    onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+                  <div class="small">
+                    <div class="fw-semibold">
+                      Rodney Osodo
+                    </div>
+                    <div class="text-muted">
+                      April 19, 2024 · 8 min
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  
+                  <span class="badge bg-light text-dark me-1">release</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Magistrala</span>
+                  
+                  <span class="badge bg-light text-dark me-1">update</span>
+                  
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  
+  <footer class="bg-dark text-white py-3">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4 mb-3">
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>About Us</h5>
+          <p>
+            Abstract Machines is an IoT infrastructure and security company
+            located in Paris.
+          </p>
+          <div class="d-flex justify-content-center justify-content-md-start gap-3 mt-4">
+            <a href="https://twitter.com/absmach" class="text-white" target="_blank" aria-label="Twitter">
+              <i class="fab fa-twitter fa-lg"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/abstract-machines" class="text-white" target="_blank"
+              aria-label="LinkedIn">
+              <i class="fab fa-linkedin fa-lg"></i>
+            </a>
+            <a href="https://github.com/absmach" class="text-white" target="_blank" aria-label="GitHub">
+              <i class="fab fa-github fa-lg"></i>
+            </a>
+            <a href="https://www.youtube.com/@absmach" class="text-white" target="_blank" aria-label="youtube">
+              <i class="fab fa-youtube fa-lg"></i>
+            </a>
+            <a href="https://matrix.to/#/#supermq:matrix.org" class="text-white" target="_blank" aria-label="matrix">
+              <i class="fas fa-comments fa-lg"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Contact Us</h5>
+          <p>
+            <i class="fas fa-envelope me-2"></i><a class="text-white" href="mailto:info@absmach.eu">info@absmach.eu</a>
+          </p>
+          <p>
+            <img alt="Matrix Logo" class="me-2" height="28" src="/img/logos/matrix-logo-white.svg" width="60" />
+            <a class="text-white" href="https://matrix.to/#/#absmach:matrix.org" target="_blank">Chat on Matrix</a>
+          </p>
+          <p>
+            <i class="fas fa-map-marker-alt me-2"></i>141 Quai de Valmy, 75010
+            Paris, France
+          </p>
+        </div>
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Products</h5>
+          <ul class="list-unstyled">
+            <li>
+              <i class="fas fa-network-wired me-2"></i><a class="text-white" href="https://magistrala.absmach.eu"
+                target="_blank">Magistrala - IoT Platform</a>
+            </li>
+            <li>
+              <i class="fas fa-bolt me-2"></i><a class="text-white" href="/supermq/">SuperMQ - Messaging Core</a>
+            </li>
+            <li>
+              <i class="fas fa-rocket me-2"></i><a class="text-white" href="/propeller/">Propeller - Wasm
+                Orchestrator</a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Legal</h5>
+          <ul class="list-unstyled">
+            <li>
+              <a class="text-white" href="/terms/" target="_blank">Terms of Service</a>
+            </li>
+            <li>
+              <a class="text-white" href="/privacy/" target="_blank">Privacy Policy</a>
+            </li>
+            <li>
+              <a class="text-white" href="/imprint/" target="_blank">Imprint</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    hljs.highlightAll();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const pres = document.querySelectorAll('.markdown-content pre');
+
+      pres.forEach(pre => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+
+        const btn = document.createElement('button');
+        btn.className = 'copy-button';
+        btn.type = 'button';
+        btn.innerHTML = '<i class="far fa-copy"></i>';
+        btn.setAttribute('aria-label', 'Copy code to clipboard');
+        btn.title = 'Copy code';
+
+        wrapper.appendChild(btn);
+      });
+    });
+
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.copy-button');
+      if (!btn) return;
+
+      const pre = btn.parentElement.querySelector('pre');
+      const code = pre.querySelector('code') || pre;
+      const text = code.textContent;
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+        }
+
+        btn.innerHTML = '<i class="fas fa-check"></i>';
+        btn.classList.add('copied');
+        btn.title = 'Copied!';
+
+        setTimeout(() => {
+          btn.innerHTML = '<i class="far fa-copy"></i>';
+          btn.classList.remove('copied');
+          btn.title = 'Copy code';
+        }, 2000);
+
+      } catch (err) {
+        console.error('Copy failed', err);
+        btn.innerHTML = '<i class="fas fa-times"></i>';
+        setTimeout(() => btn.innerHTML = '<i class="far fa-copy"></i>', 2000);
+      }
+    });
+  </script>
+
+</body>
+
+</html>
