@@ -3,7 +3,7 @@ title: Getting Started with Magistrala UI
 slug: magistrala-ui-guide
 description: A complete guide to the Magistrala UI — manage IoT devices, domains, messaging, rules, alarms, dashboards, and reports through a powerful visual interface.
 excerpt: Explore the Magistrala UI and learn how to manage devices, automate rules, monitor alarms, and build real-time IoT dashboards — all from a visual, low-code platform.
-date: "2026-01-29"
+date: "2026-01-30"
 author:
   name: "Ian Muchiri"
   picture: "https://avatars.githubusercontent.com/u/100555904?v=4"
@@ -26,7 +26,7 @@ tags:
 
 But not every user wants to live in the terminal. To make Magistrala more accessible for low-code users, system operators, and teams that prefer visual workflows, we built **Magistrala UI** — a powerful graphical interface that brings the full capabilities of the Magistrala platform into an intuitive, browser-based experience.
 
-Through the UI, you can manage users, clients (devices and applications), organize domains (workspaces), configure real-time rules, monitor alarms, build dashboards, and visualize message data — all without writing code. It gets better, for those who want to explore quickly, we offer a free trial for our [cloud](https://cloud.magistrala.absmach.eu/), giving you a hands-on way to experience the platform in action. For open-source users running Magistrala on their own infrastructure, the UI is also available as a self-hosted deployment.
+Through the UI, you can manage users, clients (devices and applications), group clients, organize domains (workspaces), configure real-time rules, monitor alarms, build dashboards, and visualize message data — all without writing code. It gets better, for those who want to explore quickly, we offer a free trial for our [cloud](https://cloud.magistrala.absmach.eu/), giving you a hands-on way to experience the platform in action. For open-source users running Magistrala on their own infrastructure, the UI is also available as a self-hosted deployment.
 
 In this guide, we’ll walk through how the Magistrala UI is structured, what each major section enables, and how it all fits together to help you manage your IoT systems more efficiently.
 
@@ -36,9 +36,9 @@ Before diving into specific features, it helps to understand how Magistrala UI s
 
 At the top level, you have **domains** — isolated workspaces where your IoT projects live. Think of them as separate environments: one for production, another for testing, or different domains for different customers if you're running a multi-tenant setup.
 
-Inside each domain, you manage **clients** (your devices and applications), **channels** (communication pathways), and **users** (team members with specific roles and permissions). Clients connect to channels to send and receive messages. Those messages can trigger **rules** that automate actions, raise **alarms** when thresholds are breached, and feed into **dashboards** for visualization.
+Inside each domain, you manage **clients** (your devices and applications), **groups** (logical collections of clients), **channels** (communication pathways), and **users** (team members with specific roles and permissions). Clients can be organized into groups for easier management at scale. Clients connect to channels to send and receive messages. Those messages can trigger **rules** that automate actions, raise **alarms** when thresholds are breached, and feed into **dashboards** for visualization.
 
-This structure gives you logical isolation, role-based access control, and a clear mental model: domains contain everything, clients talk through channels, rules process data in real-time, and dashboards make sense of it all.
+This structure gives you logical isolation, role-based access control, and a clear mental model: domains contain everything, groups organize clients, clients talk through channels, rules process data in real-time, and dashboards make sense of it all.
 
 ![Platform Organization](/img/blogs/magistrala-ui-guide/platform.png)
 
@@ -90,15 +90,43 @@ Domains are the foundation of organized, scalable IoT deployments. They give you
 **What you can do:**
 
 - Create and provision devices and applications
-- Organize clients into groups for easier management
 - Generate and manage authentication credentials
 - Assign roles and permissions to users over specific clients
 - Connect clients to channels for messaging
 - Bulk import and export client configurations
+- Organize clients into groups (see Groups section below)
 
 The distinction between devices and applications matters: devices typically generate data, while applications consume or process it. The UI lets you manage both in one place.
 
 **Learn more:** [Client Management Guide](https://docs.magistrala.absmach.eu/user-guide/clients/)
+
+## Groups
+
+**What it is:** Groups are logical collections that let you organize both clients (devices and applications) and channels into hierarchical structures.
+
+**Why it matters:** As your IoT deployment grows, managing hundreds or thousands of individual clients and channels becomes unwieldy. Groups solve this by letting you organize them by location, function, customer, or any other criteria that makes sense for your use case. More importantly, groups can contain other groups, enabling you to build hierarchical organizational structures that mirror your real-world infrastructure.
+
+**What you can do:**
+
+- Create groups to organize clients and channels logically (e.g., "Building A Sensors", "Fleet Vehicles", "Production Line 3")
+- Build hierarchical structures by nesting groups within groups (e.g., "North America" → "California" → "San Francisco Office" → "Floor 2 Sensors")
+- Add or remove clients and channels from groups dynamically
+- Assign permissions and roles at the group level instead of per-client or per-channel
+- Filter alarms and rules by group membership
+- Bulk manage clients and channels within a group
+
+**Real-world examples:**
+
+- **Geographic hierarchy:** Organize devices and their communication channels by Region → City → Building → Floor
+- **Functional grouping:** Separate temperature sensors, motion detectors, and actuators along with their respective channels into distinct groups
+- **Customer segmentation:** In multi-tenant scenarios, create top-level groups for each customer with sub-groups for their sites, containing both their devices and channels
+- **Deployment stages:** Group devices and channels by production, staging, and development environments
+
+Groups are essential for scaling your IoT operations. They transform client management from a flat list into an organized, navigable structure that matches how you think about your infrastructure.
+
+![Groups Example](/img/blogs/magistrala-ui-guide/group-view.png)
+
+**Learn more:** [Groups Documentation](https://docs.magistrala.absmach.eu/user-guide/clients/groups/)
 
 ## Channels and Messaging
 
@@ -136,7 +164,7 @@ Channels give you flexibility: you can have a single device publish to multiple 
 - Post alerts to Slack
 - Generate alarms based on thresholds or patterns
 
-Rules are powered by Lua or Go under the hood, while the UI helps you configure logic, triggers, and actions without needing to manage the execution layer directly.. You define conditions, actions, and outputs — the platform handles execution.
+Rules are powered by Lua or Go under the hood, while the UI helps you configure logic, triggers, and actions without needing to manage the execution layer directly. You define conditions, actions, and outputs — the platform handles execution.
 
 This is where automation happens. A temperature sensor crosses a threshold? Trigger an alarm and send an email. A device goes offline? Log it and notify your ops team.
 
