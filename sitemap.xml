@@ -134,7 +134,7 @@
     </url>
     <url>
         <loc>https://absmach.eu/blog/v0-14-0-release/</loc>
-        <lastmod>2026-01-28</lastmod>
+        <lastmod>2026-01-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -146,6 +146,12 @@
     </url>
     <url>
         <loc>https://absmach.eu/blog/magistrala-ui-guide/</loc>
+        <lastmod>2026-02-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://absmach.eu/blog/fluxmq-announcement/</loc>
         <lastmod>2026-02-06</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>

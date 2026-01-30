@@ -5,24 +5,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Getting Started with Magistrala UI - Abstract Machines</title>
-  <meta name="title" content="Getting Started with Magistrala UI - Abstract Machines" />
-  <meta name="description" content="A complete guide to the Magistrala UI — manage IoT devices, domains, messaging, rules, alarms, dashboards, and reports through a powerful visual interface." />
+  <title>FluxMQ: A Modern Message Broker Built for Messaging and Event Logs - Abstract Machines</title>
+  <meta name="title" content="FluxMQ: A Modern Message Broker Built for Messaging and Event Logs - Abstract Machines" />
+  <meta name="description" content="FluxMQ is a free and open-source message broker designed for modern messaging and event-driven systems." />
 
-  <link rel="canonical" href="https://absmach.eu/blog/magistrala-ui-guide/" />
+  <link rel="canonical" href="https://absmach.eu/blog/fluxmq-announcement/" />
 
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Abstract Machines" />
-  <meta property="og:url" content="https://absmach.eu/blog/magistrala-ui-guide" />
-  <meta property="og:title" content="Getting Started with Magistrala UI" />
-  <meta property="og:description" content="A complete guide to the Magistrala UI — manage IoT devices, domains, messaging, rules, alarms, dashboards, and reports through a powerful visual interface." />
-  <meta property="og:image" content="https://absmach.eu/img/blogs/magistrala-ui-guide/homepage.png" />
+  <meta property="og:url" content="https://absmach.eu/blog/fluxmq-announcement" />
+  <meta property="og:title" content="FluxMQ: A Modern Message Broker Built for Messaging and Event Logs" />
+  <meta property="og:description" content="FluxMQ is a free and open-source message broker designed for modern messaging and event-driven systems." />
+  <meta property="og:image" content="https://absmach.eu/img/logos/social-preview.png" />
 
   
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Getting Started with Magistrala UI" />
-  <meta name="twitter:description" content="A complete guide to the Magistrala UI — manage IoT devices, domains, messaging, rules, alarms, dashboards, and reports through a powerful visual interface." />
-  <meta name="twitter:image" content="https://absmach.eu/img/blogs/magistrala-ui-guide/homepage.png" />
+  <meta name="twitter:title" content="FluxMQ: A Modern Message Broker Built for Messaging and Event Logs" />
+  <meta name="twitter:description" content="FluxMQ is a free and open-source message broker designed for modern messaging and event-driven systems." />
+  <meta name="twitter:image" content="https://absmach.eu/img/logos/social-preview.png" />
 
 
   
@@ -30,14 +30,14 @@
       {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": "Getting Started with Magistrala UI",
-        "image": "https:\/\/absmach.eu\/img\/blogs\/magistrala-ui-guide\/homepage.png",
+        "headline": "FluxMQ: A Modern Message Broker Built for Messaging and Event Logs",
+        "image": "https:\/\/absmach.eu",
         "datePublished": "2026-02-06",
         "author": {
           "@type": "Person",
-          "name": "Ian Muchiri"
+          "name": "Dusan Borovcanin"
         },
-        "description": "A complete guide to the Magistrala UI — manage IoT devices, domains, messaging, rules, alarms, dashboards, and reports through a powerful visual interface."
+        "description": "FluxMQ is a free and open-source message broker designed for modern messaging and event-driven systems."
       }
     </script>
 
@@ -264,206 +264,118 @@
         </div>
 
         <div class="mb-3">
-          <span class="badge bg-primary fs-6"></span>
+          <span class="badge bg-success fs-6">announcement</span>
           
         </div>
 
-        <h1 class="display-4 fw-bold mb-4">Getting Started with Magistrala UI</h1>
+        <h1 class="display-4 fw-bold mb-4">FluxMQ: A Modern Message Broker Built for Messaging and Event Logs</h1>
 
         <div class="d-flex align-items-center mb-4 pb-4 border-bottom">
-          <img src="https://avatars.githubusercontent.com/u/100555904?v=4" alt="Ian Muchiri" class="rounded-circle me-3" width="60" height="60"
+          <img src="https://avatars.githubusercontent.com/u/17817225?v=4" alt="Dusan Borovcanin" class="rounded-circle me-3" width="60" height="60"
             loading="lazy" onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
           <div>
-            <div class="fw-bold fs-5">Ian Muchiri</div>
+            <div class="fw-bold fs-5">Dusan Borovcanin</div>
             <div class="text-muted">
-              February 06, 2026 · 10 min read
+              February 06, 2026 · 4 min read
             </div>
           </div>
         </div>
 
         
-        <img src="/img/blogs/magistrala-ui-guide/homepage.png" alt="Getting Started with Magistrala UI" class="img-fluid rounded mb-5 w-100 shadow-sm" loading="lazy"
-          onerror="this.style.display = 'none'" />
-        
 
-        <div class="markdown-content"><h1 id="getting-started-with-magistrala-ui">Getting Started with Magistrala UI</h1>
-<p><a href="https://magistrala.absmach.eu/">Magistrala</a> has for the past decade been built to be an industrial grade, robust, scalable, and fully open-source IoT platform. With comprehensive APIs, CLI tools, and deep extensibility, it was built developer first, offering everything needed to build complex IoT solutions.</p>
-<p>But not every user wants to live in the terminal. To make Magistrala more accessible for low-code users, system operators, and teams that prefer visual workflows, we built <strong>Magistrala UI</strong> — a powerful graphical interface that brings the full capabilities of the Magistrala platform into an intuitive, browser-based experience.</p>
-<p>Through the UI, you can manage users, clients (devices and applications), group clients, organize domains (workspaces), configure real-time rules, monitor alarms, build dashboards, and visualize message data — all without writing code. It gets better, for those who want to explore quickly, we offer a free trial for our <a href="https://cloud.magistrala.absmach.eu/">cloud</a>, giving you a hands-on way to experience the platform in action. For open-source users running Magistrala on their own infrastructure, the UI is also available as a self-hosted deployment.</p>
-<p>In this guide, we’ll walk through how the Magistrala UI is structured, what each major section enables, and how it all fits together to help you manage your IoT systems more efficiently.</p>
-<h2 id="how-the-platform-is-organized">How the Platform is Organized</h2>
-<p>Before diving into specific features, it helps to understand how Magistrala UI structures your IoT infrastructure.</p>
-<p>At the top level, you have <strong>domains</strong> — isolated workspaces where your IoT projects live. Think of them as separate environments: one for production, another for testing, or different domains for different customers if you're running a multi-tenant setup.</p>
-<p>Inside each domain, you manage <strong>clients</strong> (your devices and applications), <strong>groups</strong> (logical collections of clients), <strong>channels</strong> (communication pathways), and <strong>users</strong> (team members with specific roles and permissions). Clients can be organized into groups for easier management at scale. Clients connect to channels to send and receive messages. Those messages can trigger <strong>rules</strong> that automate actions, raise <strong>alarms</strong> when thresholds are breached, and feed into <strong>dashboards</strong> for visualization.</p>
-<p>This structure gives you logical isolation, role-based access control, and a clear mental model: domains contain everything, groups organize clients, clients talk through channels, rules process data in real-time, and dashboards make sense of it all.</p>
-<p><img src="/img/blogs/magistrala-ui-guide/platform.png" alt="Platform Organization"></p>
-<h2 id="profile-management">Profile Management</h2>
-<p><strong>What it is:</strong> Your personal account settings — the starting point for using Magistrala UI.</p>
-<p><strong>Why it matters:</strong> Before you can manage devices or build dashboards, you need an account. Profile management lets you control your identity, credentials, and preferences across the platform.</p>
-<p><strong>What you can do:</strong></p>
+        <div class="markdown-content"><h2 id="introducing-fluxmq">Introducing FluxMQ</h2>
+<p>We’ve been working on the open-source IoT platform <a href="https://magistrala.abmach.eu">Magistrala</a> for well over a decade. What began as a passion project by a small group of enthusiasts has grown into one of the most widely used open-source IoT platforms in the world. Along the way, our architecture evolved significantly. Eventually, we extracted its core into a more general-purpose, event-driven platform for distributed systems called <a href="https://github.com/absmach/supermq">SuperMQ</a>.</p>
+<p>Throughout that journey, one component remained absolutely central: <strong>the message broker</strong>.</p>
+<p>For years, we relied on existing brokers as the backbone of our architecture, and they served us well. But as our systems grew more complex — spanning multiple protocols, deployment models, and persistence requirements — it became clear that the broker was no longer just an interchangeable dependency. It was <em>the core</em>.</p>
+<p>That realization led us to start a new project.</p>
+<p>Meet <!-- raw HTML omitted --><strong>Flux</strong><!-- raw HTML omitted --><!-- raw HTML omitted --><strong>MQ</strong><!-- raw HTML omitted -->!</p>
+<hr>
+<h2 id="what-is-fluxmq">What Is FluxMQ?</h2>
+<p><strong>FluxMQ</strong> is a <strong>free and open-source message broker</strong> designed to serve as a <strong>high-performance messaging backbone</strong> for modern distributed systems.</p>
+<p>At its core, FluxMQ is built around five key ideas:</p>
 <ul>
-<li>Sign up and create your account</li>
-<li>Update your name, email, and password</li>
-<li>Set your preferred theme (light or dark mode)</li>
-<li>Choose your language preference</li>
+<li><strong>MQTT as a first-class protocol</strong>, not an afterthought</li>
+<li><strong>Multi-protocol support</strong>, including AMQP and HTTP-based interfaces</li>
+<li><strong>Extensibility</strong> for custom workflows and integrations</li>
+<li><strong>Protocol bridge support</strong> through dedicated front-ends</li>
+<li><strong>Optional persistence</strong>, enabling both messaging and event-driven architectures</li>
 </ul>
-<p>It's straightforward, but it's also where you establish your access to everything else in the platform.</p>
-<p><img src="/img/blogs/magistrala-ui-guide/profile.png" alt="Profile"></p>
-<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/users-quick-start/">User Quick Start Guide</a></p>
-<h2 id="domain-management">Domain Management</h2>
-<p><strong>What it is:</strong> Domains are logical workspaces that provide multi-tenancy and isolation within Magistrala.</p>
-<p><strong>Why it matters:</strong> If you're managing multiple projects, customers, or environments, you need separation. Domains let you partition your infrastructure so that production doesn't mix with staging, or Customer A's data stays isolated from Customer B's.</p>
-<p><strong>What you can do:</strong></p>
+<p>FluxMQ is designed to handle:</p>
 <ul>
-<li>Create and configure domains</li>
-<li>Enable or disable domains as needed</li>
-<li>Update domain details and metadata</li>
-<li>Invite team members and assign roles</li>
-<li>Control who has access to what within each domain</li>
+<li>classic message-based communication</li>
+<li>protocol bridging between heterogeneous clients and services</li>
+<li>persistent message storage for event replay, recovery, and auditing</li>
 </ul>
-<p>Domains are the foundation of organized, scalable IoT deployments. They give you control over access, visibility, and operational boundaries.</p>
-<p><img src="/img/blogs/magistrala-ui-guide/domain-info.png" alt="Domain Info"></p>
-<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/domain-management/introduction/">Domain Management Documentation</a></p>
-<h2 id="client-management">Client Management</h2>
-<p><strong>What it is:</strong> Clients are the entities that interact with your IoT platform — split into <strong>devices</strong> (sensors, actuators, edge hardware) and <strong>applications</strong> (backend services, mobile apps, integrations).</p>
-<p><strong>Why it matters:</strong> Your clients are the core of your IoT system. Managing them efficiently means you can provision at scale, organize by function or location, and control credentials without manual overhead.</p>
-<p><strong>What you can do:</strong></p>
+<p>All of this is delivered as a <strong>single, standalone service</strong>, without external operational dependencies.</p>
+<p>FluxMQ is <strong>actively under development</strong>. Some features are still evolving, some APIs may change, and performance characteristics will continue to improve as the project matures.</p>
+<hr>
+<h2 id="key-characteristics">Key Characteristics</h2>
+<p>FluxMQ is built with the following goals in mind:</p>
 <ul>
-<li>Create and provision devices and applications</li>
-<li>Generate and manage authentication credentials</li>
-<li>Assign roles and permissions to users over specific clients</li>
-<li>Connect clients to channels for messaging</li>
-<li>Bulk import and export client configurations</li>
-<li>Organize clients into groups (see Groups section below)</li>
+<li><strong>MQTT-first design</strong><br>
+Full support for MQTT v3.1.1 and MQTT v5, treated as a native protocol rather than a compatibility layer.</li>
+<li><strong>Standards-based, multi-protocol front-ends</strong><br>
+Support for MQTT, AMQP, HTTP, WebSockets, and CoAP, with a bridge layer between them.</li>
+<li><strong>High performance and scalability</strong><br>
+Designed to scale horizontally and handle large numbers of concurrent connections with low latency.</li>
+<li><strong>Persistent storage when needed</strong><br>
+Messages can be stored and replayed, enabling event-driven architectures and durable messaging workflows.</li>
+<li><strong>Operational simplicity</strong><br>
+A single binary that can run on one node or scale into a cluster, with sensible defaults and no required third-party services.</li>
+<li><strong>Extensibility</strong><br>
+A pluggable architecture that allows customization without modifying the broker core.</li>
 </ul>
-<p>The distinction between devices and applications matters: devices typically generate data, while applications consume or process it. The UI lets you manage both in one place.</p>
-<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/clients/">Client Management Guide</a></p>
-<h2 id="groups">Groups</h2>
-<p><strong>What it is:</strong> Groups are logical collections that let you organize both clients (devices and applications) and channels into hierarchical structures.</p>
-<p><strong>Why it matters:</strong> As your IoT deployment grows, managing hundreds or thousands of individual clients and channels becomes unwieldy. Groups solve this by letting you organize them by location, function, customer, or any other criteria that makes sense for your use case. More importantly, groups can contain other groups, enabling you to build hierarchical organizational structures that mirror your real-world infrastructure.</p>
-<p><strong>What you can do:</strong></p>
+<p>FluxMQ is intentionally more than “just an MQTT broker”, but it is also <strong>not</strong> trying to replace every specialized messaging system on the market. Its focus is flexibility, extensibility, standards compliance, and operational clarity.</p>
+<hr>
+<h2 id="who-is-fluxmq-for">Who Is FluxMQ For?</h2>
+<p>FluxMQ is for teams where <strong>messaging is a core architectural concern</strong>, not just a utility:</p>
 <ul>
-<li>Create groups to organize clients and channels logically (e.g., &quot;Building A Sensors&quot;, &quot;Fleet Vehicles&quot;, &quot;Production Line 3&quot;)</li>
-<li>Build hierarchical structures by nesting groups within groups (e.g., &quot;North America&quot; → &quot;California&quot; → &quot;San Francisco Office&quot; → &quot;Floor 2 Sensors&quot;)</li>
-<li>Add or remove clients and channels from groups dynamically</li>
-<li>Assign permissions and roles at the group level instead of per-client or per-channel</li>
-<li>Filter alarms and rules by group membership</li>
-<li>Bulk manage clients and channels within a group</li>
+<li><strong>IoT platform developers</strong> needing native MQTT V3.1.1/V5 alongside CoAP, HTTP, and WebSockets</li>
+<li><strong>Organizations running multiple brokers</strong> who want to consolidate MQTT, AMQP, and HTTP into one system</li>
+<li><strong>Distributed system architects</strong> requiring both real-time messaging and event persistence</li>
+<li><strong>Teams prioritizing operational simplicity</strong> — one binary, zero external dependencies, sensible defaults</li>
 </ul>
-<p><strong>Real-world examples:</strong></p>
+<hr>
+<h2 id="who-fluxmq-is-not-for">Who FluxMQ Is Not For</h2>
+<p>FluxMQ may not be the right choice if you:</p>
 <ul>
-<li><strong>Geographic hierarchy:</strong> Organize devices and their communication channels by Region → City → Building → Floor</li>
-<li><strong>Functional grouping:</strong> Separate temperature sensors, motion detectors, and actuators along with their respective channels into distinct groups</li>
-<li><strong>Customer segmentation:</strong> In multi-tenant scenarios, create top-level groups for each customer with sub-groups for their sites, containing both their devices and channels</li>
-<li><strong>Deployment stages:</strong> Group devices and channels by production, staging, and development environments</li>
+<li>Need only <strong>a simple, single-protocol broker</strong> for basic messaging tasks.</li>
+<li>Require <strong>zero operational responsibility</strong> and prefer a fully managed, hosted solution.</li>
+<li>Have low throughput or persistence requirements where embedded libraries are sufficient.</li>
+<li><strong>Are looking for a direct replacement for Kafka, RabbitMQ, or a time-series database</strong>.</li>
 </ul>
-<p>Groups are essential for scaling your IoT operations. They transform client management from a flat list into an organized, navigable structure that matches how you think about your infrastructure.</p>
-<p><img src="/img/blogs/magistrala-ui-guide/group-view.png" alt="Groups Example"></p>
-<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/clients/groups/">Groups Documentation</a></p>
-<h2 id="channels-and-messaging">Channels and Messaging</h2>
-<p><strong>What it is:</strong> Channels are communication pathways. Clients connect to channels with publish, subscribe, or both permissions to send and receive messages.</p>
-<p><strong>Why it matters:</strong> Channels define how data flows through your system. They're the pipes that connect sensors to applications, devices to dashboards, and edge nodes to cloud services.</p>
-<p><strong>What you can do:</strong></p>
+<p>FluxMQ is not a database and is not meant to replicate all features of mature, highly specialized systems. Its goal is to provide a <strong>flexible, multi-protocol messaging foundation with MQTT-first support and optional event persistence</strong>, not to replace every existing tool.</p>
+<hr>
+<h2 id="why-choose-fluxmq">Why Choose FluxMQ?</h2>
+<p>Most teams end up running multiple brokers: one for MQTT, another for AMQP, maybe Kafka for event logs. Each adds operational complexity, integration overhead, and infrastructure cost.<br>
+FluxMQ consolidates this into <strong>one broker, multiple protocols, optional persistence</strong> — without sacrificing performance or flexibility.</p>
+<p><strong>The result:</strong></p>
 <ul>
-<li>Create channels and configure access policies</li>
-<li>Connect clients to channels with granular permissions (publish, subscribe, or both)</li>
-<li>Exchange messages using multiple protocols, including HTTP, MQTT, WebSocket, and CoAP.</li>
-<li>Save messages to internal storage using rules</li>
-<li>Monitor message flow in real-time</li>
+<li>Fewer moving parts in production</li>
+<li>One system to monitor, secure, and scale</li>
+<li>Native MQTT support without protocol translation overhead</li>
+<li>Event replay and audit trails when you need them, pure messaging when you don't</li>
 </ul>
-<p>Channels give you flexibility: you can have a single device publish to multiple channels, or multiple devices publish to one channel that feeds a dashboard. The UI makes these connections visual and manageable.</p>
-<p><img src="/img/blogs/magistrala-ui-guide/send-message.png" alt="Send Message"></p>
-<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/clients/channels/">Channels</a> and <a href="https://docs.magistrala.absmach.eu/user-guide/messaging/">Messaging</a> Documentation</p>
-<h2 id="rules-engine">Rules Engine</h2>
-<p><strong>What it is:</strong> A visual rule management system that lets you define real-time logic without writing backend code.</p>
-<p><strong>Why it matters:</strong> IoT systems generate continuous streams of data. Rules let you act on that data as it arrives — filtering, transforming, routing, and triggering actions based on conditions you define.</p>
-<p><strong>What you can do:</strong></p>
+<p>If your architecture treats messaging as infrastructure, not just a utility, FluxMQ is built for you.</p>
+<hr>
+<h2 id="get-involved">Get Involved</h2>
+<p>This post marks the beginning of the FluxMQ journey.<br>
+FluxMQ is <strong>open source and actively developed</strong>. We're building it in public, and community feedback shapes our roadmap.</p>
+<p><strong>Start here:</strong></p>
 <ul>
-<li>Create rules using a visual interface</li>
-<li>Save messages to the internal database</li>
-<li>Publish processed messages to other channels</li>
-<li>Store data in external PostgreSQL databases</li>
-<li>Send email notifications</li>
-<li>Post alerts to Slack</li>
-<li>Generate alarms based on thresholds or patterns</li>
+<li>🌐 <strong>Website:</strong> <a href="https://fluxmq.absmach.eu">https://fluxmq.absmach.eu</a></li>
+<li>⚙️ <strong>GitHub:</strong> <a href="https://github.com/absmach/fluxmq">https://github.com/absmach/fluxmq</a></li>
+<li>📘 <strong>Documentation:</strong> <a href="https://fluxmq.absmach.eu/docs">https://fluxmq.absmach.eu/docs</a></li>
+<li>💬 <strong>Discord:</strong> <a href="https://discord.gg/HvB5QuzF">https://discord.gg/HvB5QuzF</a></li>
 </ul>
-<p>Rules are powered by Lua or Go under the hood, while the UI helps you configure logic, triggers, and actions without needing to manage the execution layer directly. You define conditions, actions, and outputs — the platform handles execution.</p>
-<p>This is where automation happens. A temperature sensor crosses a threshold? Trigger an alarm and send an email. A device goes offline? Log it and notify your ops team.</p>
-<p><img src="/img/blogs/magistrala-ui-guide/rule.png" alt="Rule Example"></p>
-<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/rules-engine/">Rules Engine Guide</a></p>
-<h2 id="alarm-management">Alarm Management</h2>
-<p><strong>What it is:</strong> A system for monitoring conditions, triggering alerts, and managing alarm lifecycles.</p>
-<p><strong>Why it matters:</strong> In production IoT systems, you need to know when something goes wrong — and you need to track how your team responds.</p>
-<p><strong>What you can do:</strong></p>
+<p><strong>Coming soon on the blog:</strong></p>
 <ul>
-<li>Define alarm conditions through the rules engine</li>
-<li>Monitor active alarms in real-time</li>
-<li>Acknowledge alarms to signal you're aware</li>
-<li>Assign alarms to team members for resolution</li>
-<li>Clear alarms once issues are resolved</li>
-<li>Delete alarms when no longer relevant</li>
-<li>View alarm history and audit trails</li>
+<li>Why we built FluxMQ (the full story)</li>
+<li>Architecture deep-dive</li>
+<li>Protocol bridging and persistence internals</li>
+<li>Performance benchmarks and comparisons</li>
 </ul>
-<p>Alarms bridge the gap between data and action. They turn abstract metrics into concrete alerts that demand attention.</p>
-<p><img src="/img/blogs/magistrala-ui-guide/alarms.png" alt="Alarms Example"></p>
-<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/alarms/">Alarm Management Documentation</a></p>
-<h2 id="dashboards-and-visualization">Dashboards and Visualization</h2>
-<p><strong>What it is:</strong> A dashboard builder that turns raw message data into charts, graphs, and real-time insights.</p>
-<p><strong>Why it matters:</strong> Data is only useful if you can understand it. Dashboards let you visualize trends, monitor live metrics, and share insights with stakeholders who don't need API access.</p>
-<p><strong>What you can do:</strong></p>
-<ul>
-<li>Build custom dashboards with drag-and-drop widgets</li>
-<li>Display live charts with near-real-time updates</li>
-<li>Query historical data and apply aggregations (min, max, avg, sum)</li>
-<li>Monitor alarms directly from dashboards</li>
-<li>Visualize entity metadata and status</li>
-<li>Share dashboards publicly (no login required)</li>
-</ul>
-<p>Dashboards are where technical data becomes business intelligence. You can track fleet health, monitor environmental conditions, or display KPIs for operations teams.</p>
-<p><img src="/img/blogs/magistrala-ui-guide/dashboard.png" alt="Dashboard Example"></p>
-<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/dashboards/introduction/">Dashboards Documentation</a></p>
-<h2 id="reports">Reports</h2>
-<p><strong>What it is:</strong> A reporting system that lets you generate, schedule, and distribute data summaries.</p>
-<p><strong>Why it matters:</strong> Not everyone needs a live dashboard. Sometimes you need a PDF report emailed weekly, or a CSV export for compliance audits.</p>
-<p><strong>What you can do:</strong></p>
-<ul>
-<li>Create instant reports on demand</li>
-<li>Schedule recurring reports (daily, weekly, monthly)</li>
-<li>Upload custom report templates</li>
-<li>Email reports automatically to stakeholders</li>
-<li>Download reports in multiple formats</li>
-</ul>
-<p>Reports are built for operational workflows: end-of-shift summaries, compliance documentation, or executive briefings. They're the structured output layer on top of your real-time data.</p>
-<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/user-guide/reports/">Reports Guide</a></p>
-<h2 id="cloud-vs-self-hosted-ui">Cloud vs Self-Hosted UI</h2>
-<p>Magistrala UI is available in two deployment models, depending on your needs.</p>
-<h3 id="magistrala-cloud">Magistrala Cloud</h3>
-<p>Managed by our team, hosted infrastructure, zero setup. You sign up, and you're running within minutes.</p>
-<ul>
-<li><strong>Quick start:</strong> No installation, no configuration</li>
-<li><strong>Free trial:</strong> Explore the platform before committing</li>
-<li><strong>Enterprise options:</strong> Dedicated support, SLAs, and custom deployments</li>
-</ul>
-<p>Best for teams that want to focus on building IoT solutions, not managing infrastructure.</p>
-<p><strong>Get started:</strong> <a href="https://cloud.magistrala.absmach.eu/">Magistrala Cloud</a></p>
-<h3 id="self-hosted-ui">Self-Hosted UI</h3>
-<p>Run the UI on your own infrastructure using Docker. Full control, full ownership.</p>
-<ul>
-<li><strong>Complete control:</strong> You manage the stack, the data, and the deployment</li>
-<li><strong>Works with open-source Magistrala:</strong> Integrates seamlessly with your self-hosted Magistrala backend</li>
-<li><strong>On-premises or private cloud:</strong> Deploy wherever your security or compliance requirements demand</li>
-</ul>
-<p>The Magistrala platform itself is open source, while the UI is distributed as a packaged service component for self-hosted deployments.</p>
-<p>Best for teams with strict data residency requirements, or those already running Magistrala on-premises.</p>
-<p><strong>Learn more:</strong> <a href="https://docs.magistrala.absmach.eu/dev-guide/getting-started/">Self-Hosted Deployment Guide</a></p>
-<h2 id="who-is-magistrala-ui-for">Who is Magistrala UI For?</h2>
-<p>Magistrala UI is built for teams that need production-grade IoT infrastructure without the overhead of building everything from scratch.</p>
-<p>It's for <strong>IoT platform engineers</strong> who want visual tools alongside APIs. For <strong>operations teams</strong> who need dashboards and alarms, not terminal commands. For <strong>system integrators</strong> managing multi-tenant deployments. For <strong>CTOs</strong> evaluating scalable, open-source alternatives to proprietary platforms.</p>
-<p>If you're building connected systems — whether it's industrial monitoring, smart infrastructure, fleet management, or environmental sensing — Magistrala UI gives you the tools to manage it all without writing backend code for every workflow.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>Magistrala UI brings the full power of the Magistrala IoT platform into a visual, accessible interface. From provisioning devices to building dashboards, from defining real-time rules to managing alarms, it's designed to make complex IoT operations manageable.</p>
-<p>Whether you're running a proof-of-concept on Magistrala Cloud or deploying a self-hosted production system, the UI scales with you.</p>
-<p>Ready to explore? <a href="https://cloud.magistrala.absmach.eu/">Start your free trial</a> or <a href="https://docs.magistrala.absmach.eu/">dive into the docs</a>.</p>
+<p>Questions, feedback, and contributions welcome. Let's build this together! 🚀</p>
 </div>
 
         <div class="mt-5 pt-4 border-top">
@@ -476,23 +388,23 @@
           <h5 class="mb-3 mt-3">Tags</h5>
           <div>
             
-            <span class="badge bg-light text-dark me-2 mb-2 fs-6">iot</span>
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">FluxMQ</span>
             
-            <span class="badge bg-light text-dark me-2 mb-2 fs-6">magistrala</span>
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Messaging</span>
             
-            <span class="badge bg-light text-dark me-2 mb-2 fs-6">low-code</span>
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">MQTT</span>
             
-            <span class="badge bg-light text-dark me-2 mb-2 fs-6">real-time-processing</span>
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">AMQP</span>
             
-            <span class="badge bg-light text-dark me-2 mb-2 fs-6">rules-engine</span>
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">HTTP</span>
             
-            <span class="badge bg-light text-dark me-2 mb-2 fs-6">dashboards</span>
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">CoAP</span>
             
-            <span class="badge bg-light text-dark me-2 mb-2 fs-6">alarm-management</span>
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">IoT</span>
             
-            <span class="badge bg-light text-dark me-2 mb-2 fs-6">ui</span>
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Event-Driven</span>
             
-            <span class="badge bg-light text-dark me-2 mb-2 fs-6">user-guide</span>
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Architecture</span>
             
           </div>
         </div>
@@ -500,11 +412,11 @@
         <div class="mt-4">
           <h5 class="mb-3">Share this article</h5>
           <div class="d-flex gap-2 flex-wrap">
-            <a href="https://twitter.com/intent/tweet?text=Getting&#43;Started&#43;with&#43;Magistrala&#43;UI&url=https%3a%2f%2fabsmach.eu/blog/magistrala-ui-guide"
+            <a href="https://twitter.com/intent/tweet?text=FluxMQ%3A&#43;A&#43;Modern&#43;Message&#43;Broker&#43;Built&#43;for&#43;Messaging&#43;and&#43;Event&#43;Logs&url=https%3a%2f%2fabsmach.eu/blog/fluxmq-announcement"
               target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
               <i class="fab fa-twitter me-2"></i>Twitter
             </a>
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fabsmach.eu/blog/magistrala-ui-guide"
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fabsmach.eu/blog/fluxmq-announcement"
               target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
               <i class="fab fa-linkedin me-2"></i>LinkedIn
             </a>
@@ -574,57 +486,60 @@
         
         <div class="col-md-6 col-lg-4">
           <article class="card h-100 shadow-sm hover-lift border-0">
-            <a href="/blog/fluxmq-announcement" class="text-decoration-none text-dark">
+            <a href="/blog/magistrala-ui-guide" class="text-decoration-none text-dark">
+              
+              <img src="/img/blogs/magistrala-ui-guide/homepage.png" class="card-img-top" alt="Getting Started with Magistrala UI"
+                loading="lazy" onerror="this.style.display = 'none'" style="height: 200px; object-fit: cover;" />
               
 
               <div class="card-body">
                 <div class="mb-2">
-                  <span class="badge bg-success me-2">
-                    announcement
+                  <span class="badge bg-primary me-2">
+                    blog
                   </span>
                   
                 </div>
 
                 <h2 class="card-title h5 fw-bold">
-                  FluxMQ: A Modern Message Broker Built for Messaging and Event Logs
+                  Getting Started with Magistrala UI
                 </h2>
                 <p class="card-text text-muted small">
-                  
+                  Explore the Magistrala UI and learn how to manage devices, automate rules, monitor alarms, and build real-time IoT dashboards — all from a visual, low-code platform.
                 </p>
 
                 <div class="d-flex align-items-center mt-3">
-                  <img src="https://avatars.githubusercontent.com/u/17817225?v=4" alt="Dusan Borovcanin"
+                  <img src="https://avatars.githubusercontent.com/u/100555904?v=4" alt="Ian Muchiri"
                     class="rounded-circle me-2" width="32" height="32" loading="lazy"
                     onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
                   <div class="small">
                     <div class="fw-semibold">
-                      Dusan Borovcanin
+                      Ian Muchiri
                     </div>
                     <div class="text-muted">
-                      February 06, 2026 · 4 min
+                      January 30, 2026 · 10 min
                     </div>
                   </div>
                 </div>
 
                 <div class="mt-3">
                   
-                  <span class="badge bg-light text-dark me-1">FluxMQ</span>
+                  <span class="badge bg-light text-dark me-1">iot</span>
                   
-                  <span class="badge bg-light text-dark me-1">Messaging</span>
+                  <span class="badge bg-light text-dark me-1">magistrala</span>
                   
-                  <span class="badge bg-light text-dark me-1">MQTT</span>
+                  <span class="badge bg-light text-dark me-1">low-code</span>
                   
-                  <span class="badge bg-light text-dark me-1">AMQP</span>
+                  <span class="badge bg-light text-dark me-1">real-time-processing</span>
                   
-                  <span class="badge bg-light text-dark me-1">HTTP</span>
+                  <span class="badge bg-light text-dark me-1">rules-engine</span>
                   
-                  <span class="badge bg-light text-dark me-1">CoAP</span>
+                  <span class="badge bg-light text-dark me-1">dashboards</span>
                   
-                  <span class="badge bg-light text-dark me-1">IoT</span>
+                  <span class="badge bg-light text-dark me-1">alarm-management</span>
                   
-                  <span class="badge bg-light text-dark me-1">Event-Driven</span>
+                  <span class="badge bg-light text-dark me-1">ui</span>
                   
-                  <span class="badge bg-light text-dark me-1">Architecture</span>
+                  <span class="badge bg-light text-dark me-1">user-guide</span>
                   
                 </div>
               </div>
