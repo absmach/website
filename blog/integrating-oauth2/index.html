@@ -300,7 +300,7 @@
 <p>This flow is demonstrated in the following diagram:</p>
 <p><img src="/img/blogs/oauth/genericflow.png" alt="Generic OAuth2.0 flow"></p>
 <p>Magistrala can now be the resource server and Google as one of the authorization servers. We have implemented the OAuth2.0 <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1">authorization code flow</a>. The authorization code flow is used to obtain an access and refresh token to authorize API requests. The UI client initiates the flow by redirecting the user to the authorization server(Google). The user authenticates and authorizes the client(Magistrala). The authorization server(Google) redirects the user back to the client(Magistrala users service) with an authorization code. The client(Magistrala users service) exchanges the authorization code for an access token and a refresh token. The access token is used to authenticate API requests(get user details). The refresh token is used to obtain a new access token when the current access token becomes invalid or expires. This flow is demonstrated in the following diagram:</p>
-<p><img src="/img/blogs/oauth/codeflow.png" alt="authorization code flow">
+<p><img src="/img/blogs/oauth/codeflow.png" alt="authorization code flow"><br>
 <em>The authorization code flow(from <a href="https://medium.com/javarevisited/oauth-2-0-authorization-code-flow-in-spring-boot-d8ff393f316d)">https://medium.com/javarevisited/oauth-2-0-authorization-code-flow-in-spring-boot-d8ff393f316d)</a></em></p>
 <p>There are different grant types in OAuth2.0. The grant type is a string representing the authorization grant type that the client is using to request the access token. It is included in the request to the token endpoint. It is used to specify the method of obtaining the access token. It is a required parameter in the request to the token endpoint. The grant types are:</p>
 <ul>
@@ -326,7 +326,7 @@
 </span></span><span style="display:flex;"><span>SMQ_GOOGLE_CLIENT_SECRET=<span style="color:#0ff;font-weight:bold">&#34;GOCSPX-_abCDEfG1hIJKl4MnO7pQRSTuvwxyz&#34;</span>
 </span></span><span style="display:flex;"><span>SMQ_GOOGLE_REDIRECT_URL=<span style="color:#0ff;font-weight:bold">&#34;http://localhost/oauth/callback/google&#34;</span>
 </span></span><span style="display:flex;"><span>SMQ_GOOGLE_STATE=<span style="color:#0ff;font-weight:bold">&#34;7NN28jSDAg4z&#34;</span>
-</span></span></code></pre><p>The state is a secret key that is shared between the client and the server. It is used to prevent CSRF attacks. The state should be a random string and should be kept secret. The state is used to verify the integrity of the response from the authorization server.
+</span></span></code></pre><p>The state is a secret key that is shared between the client and the server. It is used to prevent CSRF attacks. The state should be a random string and should be kept secret. The state is used to verify the integrity of the response from the authorization server.<br>
 Internally we prefix the state with <code>signin</code> or <code>signup</code> to differentiate between the sign-in and sign-up flows. This is to identify the flow that the user is in. This is important because the sign-in and sign-up flows are different and we need to handle them differently.</p>
 </li>
 <li>
@@ -913,16 +913,19 @@ Internally we prefix the state with <code>signin</code> or <code>signup</code> t
         <div class="col mb-4 text-center text-md-start">
           <h5>Products</h5>
           <ul class="list-unstyled">
-            <li>
-              <i class="fas fa-network-wired me-2"></i><a class="text-white" href="https://magistrala.absmach.eu"
+            <li class="my-3">
+              <i class="fas fa-cogs me-2"></i><a class="text-white" href="https://magistrala.absmach.eu"
                 target="_blank">Magistrala - IoT Platform</a>
             </li>
-            <li>
-              <i class="fas fa-bolt me-2"></i><a class="text-white" href="/supermq/">SuperMQ - Messaging Core</a>
+            <li class="my-3">
+              <i class="fas fa-comments me-2"></i><a class="text-white" href="/supermq/">SuperMQ - Messaging Core</a>
             </li>
-            <li>
-              <i class="fas fa-rocket me-2"></i><a class="text-white" href="/propeller/">Propeller - Wasm
+            <li class="my-3">
+              <i class="fas fa-network-wired me-2"></i><a class="text-white" href="/propeller/">Propeller - Wasm
                 Orchestrator</a>
+            </li>
+            <li class="my-3">
+              <i class="fas fa-shield-alt me-2"></i><a class="text-white" href="/mproxy/"> mProxy - IoT Gateway</a>
             </li>
           </ul>
         </div>
@@ -930,13 +933,13 @@ Internally we prefix the state with <code>signin</code> or <code>signup</code> t
         <div class="col mb-4 text-center text-md-start">
           <h5>Legal</h5>
           <ul class="list-unstyled">
-            <li>
+            <li class="my-3">
               <a class="text-white" href="/terms/" target="_blank">Terms of Service</a>
             </li>
-            <li>
+            <li class="my-3">
               <a class="text-white" href="/privacy/" target="_blank">Privacy Policy</a>
             </li>
-            <li>
+            <li class="my-3">
               <a class="text-white" href="/imprint/" target="_blank">Imprint</a>
             </li>
           </ul>

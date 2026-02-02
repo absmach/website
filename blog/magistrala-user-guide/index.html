@@ -650,7 +650,7 @@
 <li>Subscribe to a channel:</li>
 </ul>
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>mosquitto_sub -i magistrala -u $THINGID -P $THINGSECRET -t channels/$CHANNELID/messages -h localhost -p <span style="color:#ff0;font-weight:bold">1883</span>
-</span></span></code></pre><p>This command subscribes to messages on a specific channel. Here's what each part means:
+</span></span></code></pre><p>This command subscribes to messages on a specific channel. Here's what each part means:<br>
 <code>-i magistrala</code>: Sets the id-prefix to &quot;magistrala&quot;, <code>-u $THINGID</code>: Uses the Thing ID as the username, <code>-P $THINGSECRET</code>: Uses the Thing secret as the password, <code>-t channels/$CHANNELID/messages</code>: Specifies the topic to subscribe to, <code>-h localhost -p 1883</code>: Connects to the local MQTT broker on the default port</p>
 <ul>
 <li>Publish a message:</li>
@@ -686,8 +686,8 @@
 <li>Subscribe to a channel:</li>
 </ul>
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>coap-cli get channels/$CHANNELID/messages --auth $THINGSECRET -o
-</span></span></code></pre><p>This command retrieves messages from a specific channel. Here's what each part means:
-<code>get</code>: Specifies the GET method, <code>channels/$CHANNELID/messages</code>: Specifies the topic, <code>--auth $THINGSECRET</code>: Provides authentication using the Thing secret,
+</span></span></code></pre><p>This command retrieves messages from a specific channel. Here's what each part means:<br>
+<code>get</code>: Specifies the GET method, <code>channels/$CHANNELID/messages</code>: Specifies the topic, <code>--auth $THINGSECRET</code>: Provides authentication using the Thing secret,<br>
 <code>-o</code>: Enables observing the resource for updates</p>
 <ul>
 <li>Publish a message:</li>
@@ -727,15 +727,15 @@
 <p>We're here to support you in your journey with Magistrala. Whether you have questions, need assistance, or want to contribute to the project, we encourage you to reach out through the following channels:</p>
 <ol>
 <li>
-<p><strong>GitHub Repository</strong>:
+<p><strong>GitHub Repository</strong>:<br>
 For bug reports, feature requests, or code contributions, please visit our <a href="https://github.com/absmach/magistrala">GitHub repository</a></p>
 </li>
 <li>
-<p><strong>Documentation</strong>:
+<p><strong>Documentation</strong>:<br>
 For detailed guides and API references, check out our comprehensive <a href="https://docs.magistrala.absmach.eu">documentation</a></p>
 </li>
 <li>
-<p><strong>Social Media</strong>:
+<p><strong>Social Media</strong>:<br>
 Follow us for the latest updates, tips, and news:</p>
 <ul>
 <li>Twitter: <a href="https://x.com/absmach">Twitter handle</a></li>
@@ -743,8 +743,8 @@ Follow us for the latest updates, tips, and news:</p>
 </ul>
 </li>
 <li>
-<p><strong>Professional Services</strong>:
-For enterprise support, custom development, or consulting services, please contact:
+<p><strong>Professional Services</strong>:<br>
+For enterprise support, custom development, or consulting services, please contact:<br>
 <a href="https://github.com/drasko">@drasko</a> directly, and he will point you out to the best-matching support team.</p>
 </li>
 </ol>
@@ -1052,16 +1052,19 @@ For enterprise support, custom development, or consulting services, please conta
         <div class="col mb-4 text-center text-md-start">
           <h5>Products</h5>
           <ul class="list-unstyled">
-            <li>
-              <i class="fas fa-network-wired me-2"></i><a class="text-white" href="https://magistrala.absmach.eu"
+            <li class="my-3">
+              <i class="fas fa-cogs me-2"></i><a class="text-white" href="https://magistrala.absmach.eu"
                 target="_blank">Magistrala - IoT Platform</a>
             </li>
-            <li>
-              <i class="fas fa-bolt me-2"></i><a class="text-white" href="/supermq/">SuperMQ - Messaging Core</a>
+            <li class="my-3">
+              <i class="fas fa-comments me-2"></i><a class="text-white" href="/supermq/">SuperMQ - Messaging Core</a>
             </li>
-            <li>
-              <i class="fas fa-rocket me-2"></i><a class="text-white" href="/propeller/">Propeller - Wasm
+            <li class="my-3">
+              <i class="fas fa-network-wired me-2"></i><a class="text-white" href="/propeller/">Propeller - Wasm
                 Orchestrator</a>
+            </li>
+            <li class="my-3">
+              <i class="fas fa-shield-alt me-2"></i><a class="text-white" href="/mproxy/"> mProxy - IoT Gateway</a>
             </li>
           </ul>
         </div>
@@ -1069,13 +1072,13 @@ For enterprise support, custom development, or consulting services, please conta
         <div class="col mb-4 text-center text-md-start">
           <h5>Legal</h5>
           <ul class="list-unstyled">
-            <li>
+            <li class="my-3">
               <a class="text-white" href="/terms/" target="_blank">Terms of Service</a>
             </li>
-            <li>
+            <li class="my-3">
               <a class="text-white" href="/privacy/" target="_blank">Privacy Policy</a>
             </li>
-            <li>
+            <li class="my-3">
               <a class="text-white" href="/imprint/" target="_blank">Imprint</a>
             </li>
           </ul>
