@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Building a Scriptable Rules Engine for Real-Time IoT Message Processing - Abstract Machines</title>
+  <meta name="title" content="Building a Scriptable Rules Engine for Real-Time IoT Message Processing - Abstract Machines" />
+  <meta name="description" content="Learn how we built a dynamic, scriptable Rules Engine that enables real-time IoT message transformation using Lua and Go, complete with scheduling, observability, and a visual UI." />
+
+  <link rel="canonical" href="https://absmach.eu/blog/url-friendly-slug/" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Abstract Machines" />
+  <meta property="og:url" content="https://absmach.eu/blog/url-friendly-slug" />
+  <meta property="og:title" content="Building a Scriptable Rules Engine for Real-Time IoT Message Processing" />
+  <meta property="og:description" content="Learn how we built a dynamic, scriptable Rules Engine that enables real-time IoT message transformation using Lua and Go, complete with scheduling, observability, and a visual UI." />
+  <meta property="og:image" content="https://absmach.eu{/img/blogs/rules-engine/rules-ui.png}" />
+
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Building a Scriptable Rules Engine for Real-Time IoT Message Processing" />
+  <meta name="twitter:description" content="Learn how we built a dynamic, scriptable Rules Engine that enables real-time IoT message transformation using Lua and Go, complete with scheduling, observability, and a visual UI." />
+  <meta name="twitter:image" content="https://absmach.eu{/img/blogs/rules-engine/rules-ui.png}" />
+
+
+  
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Building a Scriptable Rules Engine for Real-Time IoT Message Processing",
+        "image": "https:\/\/absmach.eu\/img\/blogs\/rules-engine\/rules-ui.png",
+        "datePublished": "2025-02-03",
+        "author": {
+          "@type": "Person",
+          "name": "Ian Muchiri"
+        },
+        "description": "Learn how we built a dynamic, scriptable Rules Engine that enables real-time IoT message transformation using Lua and Go, complete with scheduling, observability, and a visual UI."
+      }
+    </script>
+
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet" />
+
+  
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <link rel="stylesheet" href="/assets/css/blog.css" />
+
+  <style>
+    body {
+      padding-top: 85px;
+    }
+
+    .navbar-nav .nav-link {
+      color: black !important;
+    }
+
+     
+    .markdown-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    .markdown-content h2,
+    .markdown-content h3 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: #212529;
+    }
+
+    .markdown-content p {
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .markdown-content pre {
+      border-radius: 6px;
+      padding: 1rem;
+    }
+
+    .markdown-content blockquote {
+      border-left: 4px solid #ddd;
+      padding-left: 1rem;
+      color: #555;
+      margin: 1.5rem 0;
+      font-style: italic;
+    }
+
+    .markdown-content table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1.5rem 0;
+    }
+
+    .markdown-content th,
+    .markdown-content td {
+      border: 1px solid #ddd;
+      padding: 0.6rem 0.8rem;
+    }
+
+    .markdown-content th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+
+    .code-wrapper {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .code-wrapper pre {
+      margin-bottom: 0;
+    }
+
+    .copy-button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .code-wrapper:hover .copy-button {
+      opacity: 1;
+    }
+
+    .copy-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .copy-button.copied {
+      background: #198754;
+      border-color: #198754;
+      color: #fff;
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white" style="font-size: 21px">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="/img/logos/abstract-machines_logo_landscape-black.jpg" alt="Magistrala" height="30" width="250" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="productsDropdown" role="button"
+              data-bs-toggle="dropdown">
+              Products
+            </a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Software</li>
+              <li>
+                <a class="dropdown-item" href="https://magistrala.absmach.eu" target="_blank"
+                  rel="noopener noreferrer">Magistrala</a>
+              </li>
+              <li><a class="dropdown-item" href="/supermq/">SuperMQ</a></li>
+              <li>
+                <a class="dropdown-item" href="/propeller/">Propeller</a>
+              </li>
+              <li><a class="dropdown-item" href="/mproxy/">mProxy</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li class="dropdown-header">Hardware</li>
+              <li>
+                <a class="dropdown-item" href="/s0/">S0 Low Power Gateway</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/s1/">S1 Linux Gateway</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="/products/">All Products</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/solutions/">Solutions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/services/">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/projects/">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/company/">Company</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/careers/">Careers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/contact/">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/blog/">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="https://github.com/absmach" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <article class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        
+        <div class="mb-4">
+          <a href="/blog" class="text-decoration-none text-muted"><i class="fas fa-arrow-left me-2"></i>Back to Blog</a>
+        </div>
+
+        <div class="mb-3">
+          <span class="badge bg-primary fs-6">blog</span>
+          
+        </div>
+
+        <h1 class="display-4 fw-bold mb-4">Building a Scriptable Rules Engine for Real-Time IoT Message Processing</h1>
+
+        <div class="d-flex align-items-center mb-4 pb-4 border-bottom">
+          <img src="https://avatars.githubusercontent.com/u/100555904?v=4" alt="Ian Muchiri" class="rounded-circle me-3" width="60" height="60"
+            loading="lazy" onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+          <div>
+            <div class="fw-bold fs-5">Ian Muchiri</div>
+            <div class="text-muted">
+              February 03, 2025 · 8 min read
+            </div>
+          </div>
+        </div>
+
+        
+        <img src="/img/blogs/rules-engine/rules-ui.png" alt="Building a Scriptable Rules Engine for Real-Time IoT Message Processing" class="img-fluid rounded mb-5 w-100 shadow-sm" loading="lazy"
+          onerror="this.style.display = 'none'" />
+        
+
+        <div class="markdown-content"><h1 id="building-a-scriptable-rules-engine-for-real-time-iot-message-processing">Building a Scriptable Rules Engine for Real-Time IoT Message Processing</h1>
+<p>The ability to <strong>process data on the edge</strong>, apply conditional logic, and initiate workflows <strong>without redeploying services</strong> is crucial in modern data pipelines, particularly IoT and event-driven systems.</p>
+<p>Presenting the <strong>Rules Engine</strong>, a <a href="https://magistrala.absmach.eu/">Magistrala</a> platform microservice. With extensive scheduling, observability, and an intuitive interface, it enables developers to create rules that listen for incoming messages, process them using <strong>custom logic written in Lua or Go</strong>, and output the results to various mediums.</p>
+<hr>
+<h2 id="what-problems-are-we-solving">What Problems are we solving?</h2>
+<p><img src="/img/blogs/rules-engine/problem-comparison.jpg" alt="Comparison Traditional vs Magistrala Rules Engine approach"></p>
+<p>IoT teams face critical challenges when building production systems:</p>
+<p><strong>Rigid Processing Logic</strong>: Traditional IoT platforms require code deployments to change message processing rules, creating bottlenecks and slowing response to changing business requirements.</p>
+<p><strong>Operational Complexity</strong>: Teams need separate systems for real-time processing, scheduled tasks, alerting, and data routing - increasing infrastructure complexity and maintenance overhead.</p>
+<p><strong>Multi-Tenant Isolation</strong>: Enterprise IoT platforms must safely isolate processing logic between different business units, customers, or projects without compromising security or performance.</p>
+<p><strong>Integration Friction</strong>: Connecting IoT data to existing databases, notification systems, and downstream applications often requires custom middleware and complex integration work.</p>
+<p>The Magistrala Rules Engine solves these problems by providing:</p>
+<ul>
+<li><strong>Dynamic scripting</strong> in Lua or Go without service redeployment</li>
+<li><strong>Unified processing</strong> for real-time and scheduled operations</li>
+<li><strong>Domain-based isolation</strong> for secure multi-tenancy</li>
+<li><strong>Native integrations</strong> to databases, messaging, and notification systems</li>
+</ul>
+<!-- raw HTML omitted -->
+<hr>
+<h2 id="wait-but-what-is-a-domain">Wait, but what is a &quot;Domain&quot;?</h2>
+<p>In Magistrala, a <strong>domain</strong> is a <strong>logical tenant or project namespace</strong> that separates different tenants and governs access control.</p>
+<p>Each domain has its own:</p>
+<ul>
+<li>Groups</li>
+<li>Clients (Devices and Applications)</li>
+<li>Channels</li>
+<li>Rules</li>
+</ul>
+<p>This allows isolated environments for different clients, project teams and business units. Think of it like a scoped rule engine environment. Rules and resources in one domain do not interfere with those of another domain.</p>
+<hr>
+<h2 id="rules-engine-architecture-at-aglance">Rules Engine Architecture at a Glance</h2>
+<p><img src="/img/blogs/rules-engine/architecture.png" alt="Rules Engine Architecture"></p>
+<ol>
+<li><strong>Input</strong> - This contains the channel and an optional topic that the rule will subscribe to so as to listen for incoming messages.</li>
+<li><strong>Logic</strong> - The logic contains the scripts for processing the messages. They can be in Lua or Go scripts.</li>
+<li><strong>Schedule</strong> - The rule can be scheduled to run at specific times or on a recurring basis.</li>
+<li><strong>Output</strong> - This is what will happen after the rule has been processed.</li>
+</ol>
+<h3 id="input">Input</h3>
+<p>The rule input contains a <strong>channel</strong> and an <strong>topic</strong>. Currently, Magistrala supports one input per rule. The input allows the rule to subscribe to messages in a particular channel or filtered by a specific topic.</p>
+<p><img src="/img/blogs/rules-engine/input.png" alt="Input node"></p>
+<h3 id="logic">Logic</h3>
+<p>The logic component is the core of the Rules Engine. It processes incoming messages and optionally outputs results. You can choose the language best suited to your team's experience or rule complexity.</p>
+<h4 id="lua-example">Lua Example</h4>
+<p><img src="/img/blogs/rules-engine/lua-script.png" alt="Lua Logic"></p>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">function</span> logicFunction()
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">return</span> message.payload
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">return</span> logicFunction()
+</span></span></code></pre><h4 id="go-example">Go Example</h4>
+<p><img src="/img/blogs/rules-engine/go-script.png" alt="Go Logic"></p>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">package</span> main
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> (
+</span></span><span style="display:flex;"><span>      m <span style="color:#0ff;font-weight:bold">&#34;messaging&#34;</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">func</span> logicFunction() any {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> m.message.Payload
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><blockquote>
+<p>The scripting engine safely isolates each execution, ensuring rule-specific transformation logic.</p>
+</blockquote>
+<h3 id="schedule">Schedule</h3>
+<p>The scheduler allows you to configure when the rule should execute.<br>
+The fields available are:</p>
+<ul>
+<li><strong>Start Time</strong> - This is the date and time when the schedule becomes active</li>
+<li><strong>Recurring Interval</strong> - The interval at which the rule should recur(e.g., hourly, daily, weekly, monthly)</li>
+<li><strong>Recurring Period</strong> - The frequency at which the rule should recur (e.g., 1,2 ).</li>
+</ul>
+<blockquote>
+<p>This means if <em>recurring=daily</em>, and the <em>recurring period=2</em>, then the rule will be executed <strong>once every two days</strong>.</p>
+</blockquote>
+<p>Schedule config example:</p>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;start_datetime&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;2026-02-03T09:00&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;recurring&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;weekly&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;recurring_period&#34;</span>: <span style="color:#ff0;font-weight:bold">2</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><h3 id="output">Output</h3>
+<p><img src="/img/blogs/rules-engine/outputs.png" alt="Output nodes"></p>
+<p>The outputs allow you to perform actions after the message has been successfully processed. Magistrala currently supports the following output options:</p>
+<ol>
+<li>Publish to channel</li>
+<li>Trigger an alarm</li>
+<li>Send email notification</li>
+<li>Save to external PostgreSQL database</li>
+<li>Save to internal Magistrala database</li>
+<li>Send slack notification</li>
+</ol>
+<h4 id="publish-to-channel">Publish to channel</h4>
+<p>When choosing to publish to a channel, you need to provide the <strong>channel</strong> and an <strong>optional topic</strong>. This allows you to send the response to other devices or applications.</p>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;channels&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;channel&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;0c20e05c-d580-45ed-b5d4-35e255a8a054&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;topic&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;messages&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><h4 id="trigger-an-alarm">Trigger an alarm</h4>
+<p>The trigger alarm option can be achieved by returning the result of the logic as an alarm and passing the <strong>&quot;alarms&quot;</strong> as an output. This allows you to generate alarms in the case where a threshold has been exceeded.</p>
+<p>Alarm:</p>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;alarms&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><hr>
+<h4 id="send-email-notification">Send email notification</h4>
+<p>To send an email notification, you need to pass <strong>email</strong> as one of the outputs. You need to configure the following:</p>
+<ol>
+<li><strong>To</strong></li>
+<li><strong>Subject</strong></li>
+<li><strong>Content</strong> - Data contained in the email. Magistrala allows the use of Go HTML templating in the email content.</li>
+</ol>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;email&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;to&#34;</span>: [<span style="color:#0ff;font-weight:bold">&#34;janedoe@email.com&#34;</span>],
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;subject&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Test email&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;content&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;This is the content of the email with message value {{.Message.payload.v}}&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><h4 id="save-to-external-postgresql-database">Save to external PostgreSQL database</h4>
+<p>This output option enables you to store processed message results in your own PostgreSQL database. This provides you with the flexibility of not having to store your messages on the internal Magistrala database.</p>
+<p>To set it up the following fields are required:</p>
+<ol>
+<li><strong>Host</strong></li>
+<li><strong>Port</strong></li>
+<li><strong>Username</strong></li>
+<li><strong>Password</strong></li>
+<li><strong>Database name</strong></li>
+<li><strong>Table name</strong></li>
+<li><strong>Data mapping</strong></li>
+</ol>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;save_remote_pg&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;host&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;&lt;postgres_host&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;port&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;&lt;port&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;user&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;&lt;username&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;password&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;&lt;password&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;database&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;&lt;database_name&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;table&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;&lt;table_name&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;mapping&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;&lt;json_mapping&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>An example of a mapping is:</p>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;channel&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;{{.Message.Channel}}&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;value&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;{{(index .Result 0).v}}&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;unit&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;{{(index .Result 0).u}}&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><h4 id="save-to-internal-magistrala-database">Save to internal Magistrala database</h4>
+<p>This output allows you to store messages in the internal Magistrala database. This output requires the result of your logic to be a message in <strong>SenML</strong> format. <br>
+Internal storage output:</p>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;save_senml&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><h4 id="send-slack-notification">Send slack notification</h4>
+<p>To send a slack notification, you need to pass <strong>slack</strong> as one of the outputs. You need to configure the following:</p>
+<ol>
+<li><strong>Token</strong> - Your slack app token to be used for authentication.</li>
+<li><strong>ChannelID</strong> - The ID of the slack channel where the notifications will be sent.</li>
+<li><strong>Message</strong> - A valid slack message payload in JSON format. The payload must follow Slack's structure.</li>
+</ol>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;type&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;slack&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;token&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;&lt;slack_token&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;channel_id&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;&lt;channel_id&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;message&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&#34;text&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Temperature alert for {{.Message.sensor}}&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&#34;attachments&#34;</span>: [
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&#34;pretext&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Threshold exceeded&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&#34;text&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;Current temperature is {{.Result.v}} {{.Result.u}}&#34;</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><hr>
+<h2 id="rules-api">Rules API</h2>
+<p>The Rules Engine exposes a powerful <strong>RESTful API</strong> that allows full lifecycle management of rules - making it easy to create, modify, and control rules programmatically.</p>
+<p>Here are the core API operations currently supported:</p>
+<h3 id="rule-management">Rule Management</h3>
+<ul>
+<li><strong>Create Rule</strong> - Define a new rule with Lua or Go logic, inputs, outputs and optional scheduling.</li>
+<li><strong>List Rules</strong> - Fetch all rules in a given domain, optionally with filters and pagination.</li>
+<li><strong>View Rule</strong> - Retrieve the configuration of a single rule by its ID.</li>
+</ul>
+<h3 id="rule-modification">Rule Modification</h3>
+<ul>
+<li><strong>Update Rule</strong> - Change the rule's logic, metadata, input/outputs config, and name.</li>
+<li><strong>Update Rule Tags</strong> - Add or remove rule tags for categorization and filtering.</li>
+<li><strong>Update Rule Schedule</strong> - Adjust the rule's scheduling parameters without affecting other rule attributes.</li>
+</ul>
+<h3 id="rule-lifecycle">Rule Lifecycle</h3>
+<ul>
+<li><strong>Delete Rule</strong> - Delete a rule to prevent future execution.</li>
+<li><strong>Enable Rule</strong> - Activate a rule so it begins processing messages or running on a schedule.</li>
+<li><strong>Disable Rule</strong> - Temporarily pause rule execution without deleting it.</li>
+</ul>
+<blockquote>
+<p>To dive deeper into request/response formats, authentication headers, and schema definitions, check out the <a href="https://docs.magistrala.absmach.eu/dev-guide/rules-engine/#api-operations">developers guide</a> in our documentation.</p>
+</blockquote>
+<hr>
+<h2 id="explore-managing-rules-with-ourui">Explore Managing Rules with our UI</h2>
+<p>Good news for those who prefer working with graphical tools: Magistrala ships with a <strong>powerful web-based UI</strong> that makes managing rules and other system resources intuitive and visual - no need to interact directly with the API if you don't want to.</p>
+<p><img src="/img/blogs/rules-engine/rules-ui.png" alt="Input node"></p>
+<h3 id="what-you-can-do-with-theui">What you can do with the UI</h3>
+<p>The UI provides a comprehensive management experience for the entire Magistrala platform, and includes a dedicated section for Rules Engine operations:</p>
+<ol>
+<li>Create and edit rules.</li>
+<li>Write logic in Lua or Go with syntax highlighting.</li>
+<li>Configure input and outputs.</li>
+<li>Set up rule schedules visually with date and time pickers.</li>
+<li>Rules listing and filtering.</li>
+</ol>
+<h3 id="node-based-rule-visualization">Node-Based Rule Visualization</h3>
+<p>Rules in the UI are managed and visualized using a node-based interface, where:</p>
+<ul>
+<li>Each rule contains three sections - <strong>input</strong>, <strong>logic</strong>, <strong>output nodes</strong>.</li>
+<li>The input node can only be a single node.</li>
+<li>The logic node is also a single node.</li>
+<li>We support multiple output nodes.</li>
+<li>All the nodes can be connected visually, helping users understand data flow.</li>
+</ul>
+<blockquote>
+<p>Whether you are a backend developer or a domain expert configuring automation logic, the UI provides a low-friction, high-visibility interface for interacting with your rules.</p>
+</blockquote>
+<p>To learn more about how to use the UI for Rules Engine management, please visit our <a href="https://docs.magistrala.absmach.eu/user-guide/rules-engine/">Rules Engine guide</a> in our user-guide documentation.</p>
+<hr>
+<h2 id="health-and-observability">Health and Observability</h2>
+<p>To make the service production-ready, we've added essential endpoints for monitoring the health and metrics of the service.</p>
+<h3 id="health-check">Health check</h3>
+<p>Returns the service status.</p>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>/health
+</span></span></code></pre><p>Sample response:</p>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;status&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;pass&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;version&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;unknown&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;commit&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;3cd9774a91c4889136095265bdf63ceb6b2bfb72&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;description&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;rule_engine service&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;build_time&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;2025-07-21_11:36:05&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&#34;instance_id&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;39e3a615-438f-4940-8848-b844d49ecd98&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><h3 id="metrics">Metrics</h3>
+<p>Exposes Prometheus-style metrics.</p>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span>/metrics
+</span></span></code></pre><hr>
+<h2 id="real-world-use-case-temperature-monitoring">Real-World Use Case: Temperature Monitoring</h2>
+<p>Consider a manufacturing facility monitoring equipment temperature. Here's how the Rules Engine handles this scenario:</p>
+<p><strong>Input</strong>: Temperature sensors publish to channel <code>factory-sensors</code> with topic <code>temperature</code></p>
+<p><strong>Logic</strong> (Lua):</p>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;"><code><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">function</span> logicFunction()
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">local</span> p = message.payload
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">local</span> temp = p.temperature
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">local</span> threshold = <span style="color:#ff0;font-weight:bold">85</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">if</span> temp &gt; threshold <span style="color:#fff;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> {
+</span></span><span style="display:flex;"><span>      measurement = <span style="color:#0ff;font-weight:bold">&#34;temperature&#34;</span>,
+</span></span><span style="display:flex;"><span>      value = tostring(temp),
+</span></span><span style="display:flex;"><span>      threshold = tostring(threshold),
+</span></span><span style="display:flex;"><span>      cause = <span style="color:#0ff;font-weight:bold">&#34;Equipment overheating: &#34;</span> .. temp .. <span style="color:#0ff;font-weight:bold">&#34;°C&#34;</span>,
+</span></span><span style="display:flex;"><span>      severity = <span style="color:#ff0;font-weight:bold">5</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">return</span> logicFunction()
+</span></span></code></pre><p><strong>Outputs</strong>:</p>
+<ul>
+<li>Trigger alarm for immediate response</li>
+<li>Send email to maintenance team</li>
+</ul>
+<p><img src="/img/blogs/rules-engine/use-case-rule.png" alt="Temperature monitoring rule"></p>
+<p>This eliminates the need for custom middleware while providing enterprise-grade reliability and observability.</p>
+<hr>
+<h2 id="getting-started">Getting Started</h2>
+<p>Ready to implement dynamic IoT processing in your system? The Magistrala Rules Engine is production-ready and waiting for your logic.</p>
+<p><strong>Next Steps:</strong></p>
+<ul>
+<li><a href="https://docs.magistrala.absmach.eu/user-guide/rules-engine/">Explore documentation</a></li>
+<li><a href="https://cloud.magistrala.absmach.eu/login/">Try Magistrala Cloud free trial</a> to test rules without infrastructure setup</li>
+<li><a href="https://github.com/absmach/magistrala/tree/main/re#rules-engine">View the open-source implementation</a> on GitHub</li>
+</ul>
+<p>Transform your IoT data processing from rigid deployments to dynamic, scriptable intelligence.</p>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>The Magistrala Rules Engine puts <strong>real-time decision-making power</strong> into your hands. Whether you are building an alerting system, filtering messages, or automating scheduled tasks, the Rules Engine lets you do it dynamically - with safety, flexibility, and observability built in.</p>
+<p>No redeployments. No vendor lock-in. Just write your logic and let it run.</p>
+</div>
+
+        <div class="mt-5 pt-4 border-top">
+          
+          <div>
+            <a href="/blog" class="btn btn-outline-secondary"><i
+                class="fas fa-arrow-left me-2"></i>Back to
+              Blog</a>
+          </div>
+          <h5 class="mb-3 mt-3">Tags</h5>
+          <div>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">IoT</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">IIoT</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Magistrala</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Low-code</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Real-time-processing</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Rules-engine</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Dashboards</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Observability</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">UI</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">User-guide</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Golang</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Lua</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Scheduling</span>
+            
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h5 class="mb-3">Share this article</h5>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="https://twitter.com/intent/tweet?text=Building&#43;a&#43;Scriptable&#43;Rules&#43;Engine&#43;for&#43;Real-Time&#43;IoT&#43;Message&#43;Processing&url=https%3a%2f%2fabsmach.eu/blog/url-friendly-slug"
+              target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
+              <i class="fab fa-twitter me-2"></i>Twitter
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fabsmach.eu/blog/url-friendly-slug"
+              target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
+              <i class="fab fa-linkedin me-2"></i>LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  
+  <section id="newsletter" class="py-5">
+    <div class="container">
+      <div class="row mt-5 mb-5">
+        <div class="col-md-6 offset-md-3 text-center">
+          <h2>Subscribe to Our Newsletter</h2>
+          <p>Stay updated with the latest news, updates and announcements.</p>
+
+          
+          <form
+            action="https://absmach.us11.list-manage.com/subscribe/post?u=70b43c7181d005024187bfb31&amp;id=0a319b6b63&amp;f_id=002711e1f0"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
+            target="_blank">
+            <div class="input-group">
+              <input type="email" class="form-control" name="EMAIL" id="mce-EMAIL" placeholder="Enter your email"
+                aria-label="Email" aria-describedby="subscribe-btn" required="" />
+              <div hidden="">
+                <input type="hidden" name="tags" value="8115258" />
+              </div>
+              <button class="btn bg-deep-blue" type="submit" id="subscribe-btn"
+                style="background-color: #073763; color: white;">
+                Subscribe
+              </button>
+            </div>
+            <div id="mce-responses" class="clear foot">
+              <div class="response" id="mce-error-response" style="display: none"></div>
+              <div class="response" id="mce-success-response" style="display: none"></div>
+            </div>
+            <div style="position: absolute; left: -5000px" aria-hidden="true">
+              
+              <input type="text" name="b_70b43c7181d005024187bfb31_0a319b6b63" tabindex="-1" value="" />
+            </div>
+
+            
+            <div class="mt-2">
+              <div class="mt-2">
+                <p class="mb-0" style="font-size: 0.75rem; color: #6c757d; line-height: 1.4">
+                  By subscribing, you agree to our
+                  <a href="/privacy" target="_blank" class="link-blue-sm">Privacy Policy</a>
+                  and
+                  <a href="/terms" target="_blank" class="link-blue-sm">Terms of Service</a>. <br />You can unsubscribe
+                  at any time.
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h3 class="mb-4 fw-bold">Next Read</h3>
+      <div class="row g-4">
+        
+        <div class="col-md-6 col-lg-4">
+          <article class="card h-100 shadow-sm hover-lift border-0">
+            <a href="/blog/magistrala-user-guide" class="text-decoration-none text-dark">
+              
+
+              <div class="card-body">
+                <div class="mb-2">
+                  <span class="badge bg-primary me-2">
+                    blog
+                  </span>
+                  
+                </div>
+
+                <h2 class="card-title h5 fw-bold">
+                  Revolutionizing Industrial IoT with an Open Source Platform
+                </h2>
+                <p class="card-text text-muted small">
+                  
+                </p>
+
+                <div class="d-flex align-items-center mt-3">
+                  <img src="https://avatars.githubusercontent.com/u/28790446?v=4" alt="Rodney Osodo"
+                    class="rounded-circle me-2" width="32" height="32" loading="lazy"
+                    onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+                  <div class="small">
+                    <div class="fw-semibold">
+                      Rodney Osodo
+                    </div>
+                    <div class="text-muted">
+                      September 24, 2024 · 16 min
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  
+                  <span class="badge bg-light text-dark me-1">Magistrala</span>
+                  
+                  <span class="badge bg-light text-dark me-1">IIoT</span>
+                  
+                  <span class="badge bg-light text-dark me-1">User Guide</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Industrial Automation</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Open Source</span>
+                  
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <article class="card h-100 shadow-sm hover-lift border-0">
+            <a href="/blog/integrating-oauth2" class="text-decoration-none text-dark">
+              
+
+              <div class="card-body">
+                <div class="mb-2">
+                  <span class="badge bg-primary me-2">
+                    blog
+                  </span>
+                  
+                </div>
+
+                <h2 class="card-title h5 fw-bold">
+                  Integrating OAuth2.0 with Magistrala
+                </h2>
+                <p class="card-text text-muted small">
+                  
+                </p>
+
+                <div class="d-flex align-items-center mt-3">
+                  <img src="https://avatars.githubusercontent.com/u/28790446?v=4" alt="Rodney Osodo"
+                    class="rounded-circle me-2" width="32" height="32" loading="lazy"
+                    onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+                  <div class="small">
+                    <div class="fw-semibold">
+                      Rodney Osodo
+                    </div>
+                    <div class="text-muted">
+                      April 29, 2024 · 15 min
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  
+                  <span class="badge bg-light text-dark me-1">OAuth2.0</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Authentication</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Magistrala</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Google OAuth</span>
+                  
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <article class="card h-100 shadow-sm hover-lift border-0">
+            <a href="/blog/v0-14-0-release" class="text-decoration-none text-dark">
+              
+
+              <div class="card-body">
+                <div class="mb-2">
+                  <span class="badge bg-success me-2">
+                    announcement
+                  </span>
+                  
+                </div>
+
+                <h2 class="card-title h5 fw-bold">
+                  What&#39;s New in Magistrala v0.14.0
+                </h2>
+                <p class="card-text text-muted small">
+                  
+                </p>
+
+                <div class="d-flex align-items-center mt-3">
+                  <img src="https://avatars.githubusercontent.com/u/28790446?v=4" alt="Rodney Osodo"
+                    class="rounded-circle me-2" width="32" height="32" loading="lazy"
+                    onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+                  <div class="small">
+                    <div class="fw-semibold">
+                      Rodney Osodo
+                    </div>
+                    <div class="text-muted">
+                      April 19, 2024 · 8 min
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  
+                  <span class="badge bg-light text-dark me-1">release</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Magistrala</span>
+                  
+                  <span class="badge bg-light text-dark me-1">update</span>
+                  
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  
+  <footer class="bg-dark text-white py-3">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4 mb-3">
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>About Us</h5>
+          <p>
+            Abstract Machines is an IoT infrastructure and security company
+            located in Paris.
+          </p>
+          <div class="d-flex justify-content-center justify-content-md-start gap-3 mt-4">
+            <a href="https://twitter.com/absmach" class="text-white" target="_blank" aria-label="Twitter">
+              <i class="fab fa-twitter fa-lg"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/abstract-machines" class="text-white" target="_blank"
+              aria-label="LinkedIn">
+              <i class="fab fa-linkedin fa-lg"></i>
+            </a>
+            <a href="https://github.com/absmach" class="text-white" target="_blank" aria-label="GitHub">
+              <i class="fab fa-github fa-lg"></i>
+            </a>
+            <a href="https://www.youtube.com/@absmach" class="text-white" target="_blank" aria-label="youtube">
+              <i class="fab fa-youtube fa-lg"></i>
+            </a>
+            <a href="https://matrix.to/#/#supermq:matrix.org" class="text-white" target="_blank" aria-label="matrix">
+              <i class="fas fa-comments fa-lg"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Contact Us</h5>
+          <p>
+            <i class="fas fa-envelope me-2"></i><a class="text-white" href="mailto:info@absmach.eu">info@absmach.eu</a>
+          </p>
+          <p>
+            <img alt="Matrix Logo" class="me-2" height="28" src="/img/logos/matrix-logo-white.svg" width="60" />
+            <a class="text-white" href="https://matrix.to/#/#absmach:matrix.org" target="_blank">Chat on Matrix</a>
+          </p>
+          <p>
+            <i class="fas fa-map-marker-alt me-2"></i>141 Quai de Valmy, 75010
+            Paris, France
+          </p>
+        </div>
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Products</h5>
+          <ul class="list-unstyled">
+            <li>
+              <i class="fas fa-network-wired me-2"></i><a class="text-white" href="https://magistrala.absmach.eu"
+                target="_blank">Magistrala - IoT Platform</a>
+            </li>
+            <li>
+              <i class="fas fa-bolt me-2"></i><a class="text-white" href="/supermq/">SuperMQ - Messaging Core</a>
+            </li>
+            <li>
+              <i class="fas fa-rocket me-2"></i><a class="text-white" href="/propeller/">Propeller - Wasm
+                Orchestrator</a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Legal</h5>
+          <ul class="list-unstyled">
+            <li>
+              <a class="text-white" href="/terms/" target="_blank">Terms of Service</a>
+            </li>
+            <li>
+              <a class="text-white" href="/privacy/" target="_blank">Privacy Policy</a>
+            </li>
+            <li>
+              <a class="text-white" href="/imprint/" target="_blank">Imprint</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    hljs.highlightAll();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const pres = document.querySelectorAll('.markdown-content pre');
+
+      pres.forEach(pre => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+
+        const btn = document.createElement('button');
+        btn.className = 'copy-button';
+        btn.type = 'button';
+        btn.innerHTML = '<i class="far fa-copy"></i>';
+        btn.setAttribute('aria-label', 'Copy code to clipboard');
+        btn.title = 'Copy code';
+
+        wrapper.appendChild(btn);
+      });
+    });
+
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.copy-button');
+      if (!btn) return;
+
+      const pre = btn.parentElement.querySelector('pre');
+      const code = pre.querySelector('code') || pre;
+      const text = code.textContent;
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+        }
+
+        btn.innerHTML = '<i class="fas fa-check"></i>';
+        btn.classList.add('copied');
+        btn.title = 'Copied!';
+
+        setTimeout(() => {
+          btn.innerHTML = '<i class="far fa-copy"></i>';
+          btn.classList.remove('copied');
+          btn.title = 'Copy code';
+        }, 2000);
+
+      } catch (err) {
+        console.error('Copy failed', err);
+        btn.innerHTML = '<i class="fas fa-times"></i>';
+        setTimeout(() => btn.innerHTML = '<i class="far fa-copy"></i>', 2000);
+      }
+    });
+  </script>
+
+</body>
+
+</html>
