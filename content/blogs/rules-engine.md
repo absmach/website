@@ -1,6 +1,6 @@
 ---
 title: "Building a Scriptable Rules Engine for Real-Time IoT Message Processing"
-slug: "url-friendly-slug"
+slug: "rules-engine"
 excerpt: "Learn how we built a dynamic, scriptable Rules Engine that enables real-time IoT message transformation using Lua and Go, complete with scheduling, observability, and a visual UI."
 description: "Learn how we built a dynamic, scriptable Rules Engine that enables real-time IoT message transformation using Lua and Go, complete with scheduling, observability, and a visual UI."
 date: "2025-02-03"
@@ -55,24 +55,6 @@ The Magistrala Rules Engine solves these problems by providing:
 - **Unified processing** for real-time and scheduled operations
 - **Domain-based isolation** for secure multi-tenancy
 - **Native integrations** to databases, messaging, and notification systems
-
-<!-- truncate -->
-
----
-
-## Wait, but what is a "Domain"?
-
-In Magistrala, a **domain** is a **logical tenant or project namespace** that separates different tenants and governs access control.
-
-Each domain has its own:
-
-- Groups
-- Clients (Devices and Applications)
-- Channels
-- Rules
-
-This allows isolated environments for different clients, project teams and business units. Think of it like a scoped rule engine environment. Rules and resources in one domain do not interfere with those of another domain.
-
 ---
 
 ## Rules Engine Architecture at a Glance
