@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Cold Storage Monitoring — Abstract Machines</title>
+  <meta content="Cold Storage Monitoring — Abstract Machines" name="title">
+  <meta content="Monitor temperature and humidity-sensitive environments with Abstract Machines' IoT platform, ensuring compliance, efficiency, and inventory protection." name="description">
+  <meta content="IoT, Industrial IoT, Cold Storage, Sensors, Temperature Monitoring, Humidity Monitoring, Industrial Gateway, Data Visualization, Alerts" name="keywords" />
+  <meta content="Abstract Machines" name="author" />
+  <meta content="index, follow" name="robots">
+  <link href="https://absmach.eu/solutions/cold-storage-monitoring/" rel="canonical" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&amp;display=swap" rel="stylesheet" />
+  <link href="/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body> 
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white" style="font-size: 21px">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="/img/logos/abstract-machines_logo_landscape-black.jpg" alt="Magistrala" height="30" width="250" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="productsDropdown" role="button"
+              data-bs-toggle="dropdown">
+              Products
+            </a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Software</li>
+              <li>
+                <a class="dropdown-item" href="https://magistrala.absmach.eu" target="_blank"
+                  rel="noopener noreferrer">Magistrala</a>
+              </li>
+              <li><a class="dropdown-item" href="/supermq/">SuperMQ</a></li>
+              <li>
+                <a class="dropdown-item" href="/propeller/">Propeller</a>
+              </li>
+              <li><a class="dropdown-item" href="/mproxy/">mProxy</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li class="dropdown-header">Hardware</li>
+              <li>
+                <a class="dropdown-item" href="/s0/">S0 Low Power Gateway</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/s1/">S1 Linux Gateway</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="/products/">All Products</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/solutions/">Solutions</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="usecaseDropdown" role="button"
+              data-bs-toggle="dropdown">
+              Use cases
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="/usecases/smart-water-meter/">Smart Water Meter</a>
+              </li>
+              <li><a class="dropdown-item" href="/usecases/smart-city/">Smart City</a></li>
+              <li>
+                <a class="dropdown-item" href="/usecases/industrial-gateway/">Industrial Gateway Integration</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/services/">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/projects/">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/company/">Company</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/careers/">Careers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/contact/">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/blog/">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="https://github.com/absmach" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="py-5 bg-light mt-md-5 text-center" id="header"
+  style="background: url('/img/usecases/cold-storage-hero.jpeg') center/cover no-repeat fixed; min-height: 500px; display: flex; align-items: center;">
+    <div class="container">
+     <div class="row mt-md-5">
+      <div class="mt-5">
+     <h1 class="display-5 fw-bold mb-4">Protecting High-Value Inventory with Real-Time IoT</h1>
+      <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+          <a href="#" class="btn btn-primary btn-lg px-4 shadow">View Live Demo</a>
+          <a href="/contact/" class="btn btn-light btn-lg px-4 shadow">Talk to an IoT Expert</a>
+        </div>
+      </div>
+     </div>
+    </div>
+  </section>
+
+  <!-- Overview Section -->
+   <section class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Overview</h2>
+
+      <p>
+          Prevent spoilage, ensure compliance, and reduce operational risk with real-time 
+          temperature and humidity monitoring powered by Abstract Machines’ IoT platform.
+      </p>
+      <p>
+        Cold storage failures are expensive. A single temperature excursion can destroy
+        high-value inventory, trigger regulatory violations, and damage customer trust.
+        Manual inspections and delayed reporting leave operators blind to real-time risk.
+      </p>
+      <p>
+        Abstract Machines enables continuous monitoring of temperature and humidity across
+        cold rooms, warehouses, and transport hubs. Sensor data is processed in real time
+        by a rules engine that detects anomalies, triggers alerts, and logs events for
+        audits and compliance — before losses occur.
+      </p>
+      <p>
+        Built on open standards (MQTT, CoAP, HTTP), the platform supports cloud, on-premise,
+        and edge deployments, allowing organizations to scale without vendor lock-in.
+      </p>
+    </div>
+  </section>
+
+  <!-- Business Impact -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="mb-4">Measured Business Impact</h2>
+      <div class="row g-4">
+        <div class="col-md-3">
+          <h5 class="text-primary">↓ Spoilage Loss</h5>
+          <p>Detect temperature excursions instantly, reducing inventory loss by up to 40%.</p>
+        </div>
+        <div class="col-md-3">
+          <h5 class="text-primary">⚡ Faster Response</h5>
+          <p>Automated alerts eliminate manual checks and delayed incident discovery.</p>
+        </div>
+        <div class="col-md-3">
+          <h5 class="text-primary">✔ Compliance Ready</h5>
+          <p>Audit-ready logs and reports simplify regulatory compliance.</p>
+        </div>
+        <div class="col-md-3">
+          <h5 class="text-primary">📈 Scalable</h5>
+          <p>Manage a single site or hundreds of facilities from one platform.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+  <div class="container">
+    <h2 class="mb-4 text-start fw-bold">How it Works</h2>
+    
+    <div class="p-5 bg-white rounded-4 shadow-sm text-center border">
+      <img src="/img/usecases/cold-storage.png" 
+           class="img-fluid mb-4" 
+           alt="Cold Storage IoT Architecture Flow: Sensors to Magistrala IoT Platform" 
+           style="max-height: 500px; width: auto;">
+      
+      <p class="text-muted small fw-medium mb-0">
+        A production-grade architecture that securely moves data from sensors to decisions 
+        — in real time and at scale.
+      </p>
+    </div>
+
+    <div class="row mt-5 g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="h-100">
+          <h6 class="text-primary">1. Sensing</h5>
+          <p>Continuous monitoring of Temperature and Humidity across storage zones and transport hubs.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-3">
+        <div class="h-100">
+          <h6 class="text-primary">2. Transmission</h5>
+          <p>Secure data transit via MQTT & HTTP to the Magistrala IoT platform, ensuring no vendor lock-in.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="h-100">
+          <h6 class="text-primary">3. Intelligence</h5>
+          <p>The Rules Engine processes data instantly to detect anomalies and trigger automated logic.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="h-100">
+          <h6 class="text-primary">4. Action</h5>
+          <p>Real-time Alarms, Dashboards, and Audit-Ready Reports for immediate risk mitigation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+   <!-- Dashboard Section -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="mb-4">Dashboard Previews</h2>
+      <p> Unified dashboards provide real-time visibility into storage conditions, alarms,
+        trends, and device health across all facilities.</p>
+      <div class="row g-4 mt-3">
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <img src="/img/usecases/cold-storage-dash-light.png" class="card-img-top" alt="Cold Storage Dashboard - Light Theme">
+            <div class="card-body text-center">
+              <h6 class="card-title">Light Theme</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <img src="/img/usecases/cold-storage-dash-dark.png" class="card-img-top" alt="Cold Storage Dashboard - Dark Theme">
+            <div class="card-body text-center">
+              <h6 class="card-title">Dark Theme</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution Structure Section -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Solution Structure</h2>
+      <div class="row g-4">
+        <div class="col-md-6">
+         <h6 class="text-primary">Devices & Sensors</h5>
+          <p>Continuous temperature and humidity sensing across storage zones.</p>
+        </div>
+        <div class="col-md-6">
+          <h6 class="text-primary">IoT Gateways</h5>
+          <p>Secure and reliable data transmission using standard IoT protocols.</p>
+        </div>
+        <div class="col-md-6">
+          <h6 class="text-primary">Core Platform</h5>
+          <p>Device management, rules engine, alerts, and long-term data storage.</p>
+        </div>
+        <div class="col-md-6">
+         <h6 class="text-primary">Dashboards</h5>
+          <p>Real-time monitoring, alarms, and historical analysis in one interface.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="mb-4">Benefits</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm p-3">
+            <div class="card-body text-center">
+              <i class="fas fa-box fa-2x mb-3"></i>
+              <h5 class="card-title">Inventory Protection</h5>
+              <p class="card-text">Ensures sensitive and perishable goods are stored under optimal conditions.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm p-3">
+            <div class="card-body text-center">
+              <i class="fas fa-bolt fa-2x mb-3"></i>
+              <h5 class="card-title">Operational Efficiency</h5>
+              <p class="card-text">Automation reduces manual monitoring and enables rapid response to issues.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm p-3">
+            <div class="card-body text-center">
+              <i class="fas fa-chart-line fa-2x mb-3"></i>
+              <h5 class="card-title">Real-Time Insights</h5>
+              <p class="card-text">Dashboards and alerts provide immediate visibility into environmental conditions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Applications -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="mb-4">Applications</h2>
+      <div class="row g-4">
+        <div class="col-md-3 text-center">
+          <i class="fas fa-syringe fa-2x mb-2"></i>
+          <h6 class="text-primary">Pharmaceuticals</h6>
+          <p>Protect vaccines and medicines with strict temperature control.</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <i class="fas fa-ice-cream fa-2x mb-2"></i>
+          <h6 class="text-primary">Food & Beverage</h6>
+          <p>Maintain freshness and reduce spoilage.</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <i class="fas fa-industry fa-2x mb-2"></i>
+          <h6 class="text-primary">Industrial Storage</h6>
+          <p>Safely store sensitive materials and chemicals.</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <i class="fas fa-warehouse fa-2x mb-2"></i>
+          <h6 class="text-primary">Logistics & Warehousing</h6>
+          <p>Gain full visibility across distribution hubs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- q -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Why Choose Abstract Machines?</h2>
+      <ul class="list-unstyled">
+        <li class="mb-2"><i class="fas fa-shield-alt me-2"></i>Enterprise-grade security and access control</li>
+        <li class="mb-2"><i class="fas fa-unlock me-2"></i>Open, vendor-neutral architecture</li>
+        <li class="mb-2"><i class="fas fa-cloud me-2"></i>Cloud, edge, or on-premise deployment</li>
+        <li class="mb-2"><i class="fas fa-cogs me-2"></i>Built for engineers, trusted by operators</li>
+      </ul>
+    </div>
+  </section>
+
+   <!-- Footer -->
+  <footer class="bg-dark text-white py-3">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4 mb-3">
+        <!-- About + Social Media Links -->
+        <div class="col mb-4 text-center text-md-start">
+          <h5>About Us</h5>
+          <p>
+            Abstract Machines is an IoT infrastructure and security company
+            located in Paris.
+          </p>
+          <div class="d-flex justify-content-center justify-content-md-start gap-3 mt-4">
+            <a href="https://twitter.com/absmach" class="text-white" target="_blank" aria-label="Twitter">
+              <i class="fab fa-twitter fa-lg"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/abstract-machines" class="text-white" target="_blank"
+              aria-label="LinkedIn">
+              <i class="fab fa-linkedin fa-lg"></i>
+            </a>
+            <a href="https://github.com/absmach" class="text-white" target="_blank" aria-label="GitHub">
+              <i class="fab fa-github fa-lg"></i>
+            </a>
+            <a href="https://www.youtube.com/@absmach" class="text-white" target="_blank" aria-label="youtube">
+              <i class="fab fa-youtube fa-lg"></i>
+            </a>
+            <a href="https://matrix.to/#/#supermq:matrix.org" class="text-white" target="_blank" aria-label="matrix">
+              <i class="fas fa-comments fa-lg"></i>
+            </a>
+          </div>
+        </div>
+        <!-- Contact us -->
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Contact Us</h5>
+          <p>
+            <i class="fas fa-envelope me-2"></i><a class="text-white" href="mailto:info@absmach.eu">info@absmach.eu</a>
+          </p>
+          <p>
+            <img alt="Matrix Logo" class="me-2" height="28" src="/img/logos/matrix-logo-white.svg" width="60" />
+            <a class="text-white" href="https://matrix.to/#/#absmach:matrix.org" target="_blank">Chat on Matrix</a>
+          </p>
+          <p>
+            <i class="fas fa-map-marker-alt me-2"></i>141 Quai de Valmy, 75010
+            Paris, France
+          </p>
+        </div>
+        <!-- Products -->
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Products</h5>
+          <ul class="list-unstyled">
+            <li class="my-3">
+              <i class="fas fa-cogs me-2"></i><a class="text-white" href="https://magistrala.absmach.eu"
+                target="_blank">Magistrala - IoT Platform</a>
+            </li>
+            <li class="my-3">
+              <i class="fas fa-comments me-2"></i><a class="text-white" href="/supermq/">SuperMQ - Messaging Core</a>
+            </li>
+            <li class="my-3">
+              <i class="fas fa-network-wired me-2"></i><a class="text-white" href="/propeller/">Propeller - Wasm
+                Orchestrator</a>
+            </li>
+            <li class="my-3">
+              <i class="fas fa-shield-alt me-2"></i><a class="text-white" href="/mproxy/"> mProxy - IoT Gateway</a>
+            </li>
+          </ul>
+        </div>
+        <!-- Legal -->
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Legal</h5>
+          <ul class="list-unstyled">
+            <li class="my-3">
+              <a class="text-white" href="/terms/" target="_blank">Terms of Service</a>
+            </li>
+            <li class="my-3">
+              <a class="text-white" href="/privacy/" target="_blank">Privacy Policy</a>
+            </li>
+            <li class="my-3">
+              <a class="text-white" href="/imprint/" target="_blank">Imprint</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End of Footer section -->
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+
+</html>
