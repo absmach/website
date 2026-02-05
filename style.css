@@ -319,3 +319,453 @@ section[id] {
 .news-row {
   padding-bottom: 3rem;
 }
+
+.flow-wrapper {
+  position: relative;
+  left: 50px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.05);
+}
+
+.flow-diagram {
+  position: relative;
+  height: 600px;
+}
+
+.flow-lines {
+  position: absolute;
+  inset: 0;
+}
+
+.flow-lines line {
+  stroke: #0d6efd;
+  stroke-width: 2;
+  marker-end: url(#arrow);
+  opacity: .2;
+}
+
+.flow-lines line.active {
+  opacity: 1;
+  stroke-dasharray: 5;
+  animation: flow 1s linear infinite;
+}
+
+@keyframes flow {
+  to { stroke-dashoffset: -10; }
+}
+
+.node {
+  position: absolute;
+  background: #fff;
+  border: 2px solid #e9ecef; /* Softer border like screenshots */
+  padding: 1rem;
+  border-radius: 16px; /* Increased rounding */
+  width: 210px; /* Wider to accommodate text and icon */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+.sensor-layout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sensor-details {
+  text-align: left;
+}
+
+.sensor-details h6 {
+  font-size: 0.9rem;
+  color: #1a2b3c;
+}
+
+.sensor-details .value {
+  font-size: 1.1rem;
+  color: #000;
+}
+
+/* Icon Boxes */
+.icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.temp-bg { background-color: #dbeafe; } /* Light blue from screenshot */
+.humidity-bg { background-color: #ccfbf1; } /* Light cyan from screenshot */
+
+/* Positioning */
+.sensor { left: 0; top: 80px; cursor: pointer; }
+#humidity { left: 0; top: 250px; }
+
+/* Interactive Hover Effect */
+.node:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #dee2e6;
+}
+
+.dashboard-container {
+  /* position: absolute; */
+  left: 320px;
+  top: 360px; /* Aligned below the Magistrala Cloud */
+  width: 260px;
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 20px;
+  padding: 1.25rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+}
+
+.dash-icon-bg {
+  width: 32px;
+  height: 32px;
+  background: #f0f7ff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.dash-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fixed Sparkline visibility */
+.sparkline-container {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.sparkline {
+  width: 100%;
+  height: 100%;
+  /* Removed the dasharray/offset that was hiding the line */
+  stroke-dasharray: 200; 
+  stroke-dashoffset: 0; 
+}
+
+/* Ensure the container has dimensions */
+.gauge-container {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+}
+
+/* The SVG itself */
+.circular-chart {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The Background Track (Light Grey) */
+.circle-bg {
+  fill: none;
+  stroke: #f1f3f5; /* Very light grey */
+  stroke-width: 3.8;
+}
+
+/* The Progress Bar (Blue) */
+.circle {
+  fill: none;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+/* Specific Blue Color */
+.blue .circle {
+  stroke: #0d6efd;
+}
+
+/* Sparkline Animation */
+.sparkline { stroke-dasharray: 100; stroke-dashoffset: 100; animation: dash 2s linear forwards; }
+@keyframes dash { to { stroke-dashoffset: 0; } }
+
+/* Circular Gauge */
+.circular-chart { display: block; margin: 0 auto; max-width: 35px; }
+.circle-bg { fill: none; stroke: #eee; stroke-width: 3.8; }
+.circle { fill: none; stroke-width: 2.8; stroke-linecap: round; transition: stroke-dasharray 0.3s ease; }
+.blue .circle { stroke: #3b82f6; }
+
+/* Alert State for the Dashboard */
+.dashboard-container.alert { border-color: #f69899; box-shadow: 0 0 20px rgba(246, 152, 153, 0.2); }
+.dashboard-container.alert #alarmCount { color: #dc3545; }
+
+/* .sensor { left: 0; top: 160px; cursor: pointer; }
+.platform { left: 280px; top: 160px; }
+.rule { left: 520px; top: 160px; }
+.dashboard { left: 280px; top: 350px; } */
+
+.platform-cloud {
+  position: absolute;
+  left: 260px; /* Slightly adjusted to center the wider cloud */
+  top: 130px;  /* Adjusted to align center with the flow line */
+  width: 200px;
+  height: 200px;
+  background: #f0f7ff;
+  border: 2px solid #0d6efd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  
+  /* Cloud-like shape using multiple border-radii */
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+}
+
+/* Hover Effect matching Alarm/SMS nodes */
+.platform-cloud:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(13, 110, 253, 0.2);
+  background-color: #ffffff;
+}
+
+.cloud-content {
+  text-align: center;
+  padding: 10px;
+}
+
+#platformBadge {
+  font-size: 0.7rem;
+  background-color: #e9ecef;
+  color: #495057;
+  transition: all 0.3s;
+}
+
+/* Active Processing State */
+.platform-active #platformBadge {
+  background-color: #0d6efd;
+  color: white;
+  animation: pulse-processing 1s infinite alternate;
+}
+
+@keyframes pulse-processing {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
+}
+
+/* .action { width: 140px; }
+#alarm { left: 820px; top: 40px; }
+#persist { left: 820px; top: 160px; }
+#sms { left: 820px; top: 280px; } */
+
+.action { 
+  width: 200px; /* Wider to accommodate icons and text */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+/* Background colors from reference */
+#alarm { left: 820px; top: 40px; background-color: #f69899; color: white; border: none; }
+#persist { left: 820px; top: 160px; background-color: #c7a4ff; color: white; border: none; }
+#sms { left: 820px; top: 280px; background-color: #8ce1c4; color: white; border: none; }
+
+/* Icon wrappers */
+.action-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.action-text {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.action-text strong { font-size: 0.9rem; display: block; }
+.action-text small { font-size: 0.75rem; opacity: 0.9; }
+
+/* Hover Interactive Vibe */
+.action:hover {
+  transform: translateX(10px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* Active animation class for your JS to trigger */
+.action-triggered {
+  animation: pulse-glow 1s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.2); box-shadow: 0 0 15px currentColor; }
+}
+
+.node.active { border-color: #0d6efd; }
+.node.alert { border-color: #dc3545; }
+
+.value, .dash-value {
+  font-weight: bold;
+  margin-top: .25rem;
+}
+
+.badge {
+  display: none;
+  margin-top: .25rem;
+}
+
+/* .dashboard-container {
+  position: absolute;
+  left: 310px;
+  top: 400px; 
+  width: 260px;
+  z-index: 4;
+} */
+
+.rule-diamond {
+  position: absolute;
+  left: 540px; 
+  top: 160px; /* Adjusted to keep center alignment */
+  width: 130px; /* Larger size to comfortably fit the icon and text */
+  height: 130px;
+  background: #fff9f2; /* Light orange tint */
+  border: 2px solid #ff9e42; /* Primary orange border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(45deg);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(255, 158, 66, 0.15);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.diamond-content {
+  transform: rotate(-45deg); /* Counter-rotate content */
+  text-align: center;
+  color: #1a2b3c; /* Dark navy text */
+}
+
+/* Ensure the badge doesn't look squashed */
+.rule-diamond .badge {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.rule-icon {
+  color: #ff6b00; /* Deep orange for the icon */
+}
+
+.rule-text h6 {
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+
+.rule-text small {
+  font-size: 0.8rem;
+  color: #5a7184; /* Muted slate for the variable */
+  font-weight: 500;
+}
+
+/* Hover Interaction: Pulse and Glow */
+.rule-diamond:hover {
+  transform: rotate(45deg) translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(255, 158, 66, 0.25);
+  background: #ffffff;
+}
+
+/* Logic for "Triggered" state */
+.rule-diamond.triggered {
+  animation: warning-pulse 2s infinite ease-in-out;
+}
+
+@keyframes warning-pulse {
+  0% { border-color: #ff9e42; box-shadow: 0 0 0 0 rgba(255, 158, 66, 0.4); }
+  70% { border-color: #ff6b00; box-shadow: 0 0 0 15px rgba(255, 158, 66, 0); }
+  100% { border-color: #ff9e42; box-shadow: 0 0 0 0 rgba(255, 158, 66, 0); }
+}
+
+
+.badge.danger {
+  display: none;
+  color: #dc3545;
+}
+
+.dashboard polyline {
+  fill: none;
+  stroke: #0d6efd;
+  stroke-width: 2;
+}
+
+.dashboard.alert polyline {
+  stroke: #dc3545;
+}
+
+.reset-btn {
+  float: right;
+  margin-bottom: 1rem;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #dc3545;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  display: none;
+}
+
+.app-card {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  border-color: #dee2e6;
+}
+
+/* Reusing your color palette for consistency */
+.alarm-bg-soft { background-color: #fee2e2; }
+.persist-bg-soft { background-color: #f3e8ff; }
+
+.app-card h6 {
+  color: #1a2b3c;
+  letter-spacing: -0.01em;
+}
+
+.app-card p {
+  line-height: 1.5;
+}
