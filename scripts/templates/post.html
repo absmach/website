@@ -16,13 +16,13 @@
   <meta property="og:url" content="{{ .Site.Url }}/blog/{{ .Slug }}" />
   <meta property="og:title" content="{{ .Title }}" />
   <meta property="og:description" content="{{ .Description }}" />
-  <meta property="og:image" content="{{ .Site.Url }}{{ .OgImage }}" />
+  <meta property="og:image" content="{{ .Site.Url }}{{ .OgImage.Url }}" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="{{ .Title }}" />
   <meta name="twitter:description" content="{{ .Description }}" />
-  <meta name="twitter:image" content="{{ .Site.Url }}{{ .OgImage }}" />
+  <meta name="twitter:image" content="{{ .Site.Url }}{{ .OgImage.Url }}" />
 
 
   <!-- Schema.org -->
