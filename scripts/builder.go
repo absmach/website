@@ -70,6 +70,7 @@ func (b *Builder) Build() error {
 		),
 		goldmark.WithRendererOptions(
 			html.WithHardWraps(),
+			html.WithUnsafe(),
 		),
 	)
 

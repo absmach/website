@@ -6,10 +6,22 @@ date: "2026-02-06"
 author:
   name: "Dusan Borovcanin"
   picture: "https://avatars.githubusercontent.com/u/17817225?v=4"
-tags: ["FluxMQ", "Messaging", "MQTT", "AMQP", "HTTP", "CoAP", "IoT", "Event-Driven", "Architecture"]
+coverImage: "/img/blogs/fluxmq-announcement/homepage.png"
+ogImage:
+  url: "/img/blogs/fluxmq-announcement/homepage.png"
+tags: 
+  - "FluxMQ"
+  - "Messaging"
+  - "MQTT"
+  - "AMQP"
+  - "HTTP"
+  - "CoAP"
+  - "IoT"
+  - "Event-Driven"
+  - "Architecture"
 category: announcement
+featured: true
 ---
-
 ## Introducing FluxMQ
 
 We’ve been working on the open-source IoT platform [Magistrala](https://magistrala.abmach.eu) for well over a decade. What began as a passion project by a small group of enthusiasts has grown into one of the most widely used open-source IoT platforms in the world. Along the way, our architecture evolved significantly. Eventually, we extracted its core into a more general-purpose, event-driven platform for distributed systems called [SuperMQ](https://github.com/absmach/supermq).
