@@ -162,6 +162,11 @@
       color: #fff;
       opacity: 1;
     }
+
+    .markdown-content .mermaid {
+      margin: 1.5rem 0;
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -275,7 +280,7 @@
 
         <div class="markdown-content"><h1 id="extending-magistrala-users-repository">Extending Magistrala Users Repository</h1>
 <p>For the past few months, we have been working on integrating Magistrala with <a href="https://www.ory.sh/docs/kratos/ory-kratos-intro">Ory Kratos</a> as the user management service. Ory Kratos is a cloud-native identity and user management system, which can be used as the user management service for Magistrala.</p>
-<!-- raw HTML omitted -->
+<!-- truncate -->
 <p>Let's delve deeper into the myriad capabilities that Kratos brings to the forefront:</p>
 <ul>
 <li>self-service user login and registration. This is the ability to register and log in to the system without the need for an administrator.</li>
@@ -571,7 +576,7 @@
                       Ian Muchiri
                     </div>
                     <div class="text-muted">
-                      January 30, 2026 · 10 min
+                      February 06, 2026 · 10 min
                     </div>
                   </div>
                 </div>
@@ -795,10 +800,31 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>
-    hljs.highlightAll();
-
     document.addEventListener('DOMContentLoaded', () => {
+      const mermaidBlocks = document.querySelectorAll('.markdown-content pre > code.language-mermaid');
+
+      mermaidBlocks.forEach(code => {
+        const pre = code.parentElement;
+        const container = document.createElement('div');
+        container.className = 'mermaid';
+        container.textContent = code.textContent;
+        pre.replaceWith(container);
+      });
+
+      if (window.mermaid) {
+        mermaid.initialize({ startOnLoad: false });
+        mermaid.run({ querySelector: '.mermaid' });
+      }
+
+      const codeBlocks = document.querySelectorAll('.markdown-content pre code');
+      codeBlocks.forEach(code => {
+        if (!code.classList.contains('language-mermaid')) {
+          hljs.highlightElement(code);
+        }
+      });
+
       const pres = document.querySelectorAll('.markdown-content pre');
 
       pres.forEach(pre => {
@@ -859,7 +885,5 @@
       }
     });
   </script>
-
 </body>
-
 </html>

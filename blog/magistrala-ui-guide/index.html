@@ -32,7 +32,7 @@
         "@type": "BlogPosting",
         "headline": "Getting Started with Magistrala UI",
         "image": "https:\/\/absmach.eu\/img\/blogs\/magistrala-ui-guide\/homepage.png",
-        "datePublished": "2026-01-30",
+        "datePublished": "2026-02-06",
         "author": {
           "@type": "Person",
           "name": "Ian Muchiri"
@@ -162,6 +162,11 @@
       color: #fff;
       opacity: 1;
     }
+
+    .markdown-content .mermaid {
+      margin: 1.5rem 0;
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -266,7 +271,7 @@
           <div>
             <div class="fw-bold fs-5">Ian Muchiri</div>
             <div class="text-muted">
-              January 30, 2026 · 10 min read
+              February 06, 2026 · 10 min read
             </div>
           </div>
         </div>
@@ -803,10 +808,31 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>
-    hljs.highlightAll();
-
     document.addEventListener('DOMContentLoaded', () => {
+      const mermaidBlocks = document.querySelectorAll('.markdown-content pre > code.language-mermaid');
+
+      mermaidBlocks.forEach(code => {
+        const pre = code.parentElement;
+        const container = document.createElement('div');
+        container.className = 'mermaid';
+        container.textContent = code.textContent;
+        pre.replaceWith(container);
+      });
+
+      if (window.mermaid) {
+        mermaid.initialize({ startOnLoad: false });
+        mermaid.run({ querySelector: '.mermaid' });
+      }
+
+      const codeBlocks = document.querySelectorAll('.markdown-content pre code');
+      codeBlocks.forEach(code => {
+        if (!code.classList.contains('language-mermaid')) {
+          hljs.highlightElement(code);
+        }
+      });
+
       const pres = document.querySelectorAll('.markdown-content pre');
 
       pres.forEach(pre => {
@@ -867,7 +893,5 @@
       }
     });
   </script>
-
 </body>
-
 </html>

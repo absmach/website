@@ -3,7 +3,7 @@ title: Getting Started with Magistrala UI
 slug: magistrala-ui-guide
 description: A complete guide to the Magistrala UI — manage IoT devices, domains, messaging, rules, alarms, dashboards, and reports through a powerful visual interface.
 excerpt: Explore the Magistrala UI and learn how to manage devices, automate rules, monitor alarms, and build real-time IoT dashboards — all from a visual, low-code platform.
-date: "2026-01-30"
+date: "2026-02-06"
 author:
   name: "Ian Muchiri"
   picture: "https://avatars.githubusercontent.com/u/100555904?v=4"
