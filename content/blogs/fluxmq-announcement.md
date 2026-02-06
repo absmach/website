@@ -33,7 +33,7 @@ For years, we relied on existing brokers as the backbone of our architecture, an
 
 That realization led us to start a new project.
 
-Meet <span style="color:#2F69B3">**Flux**</span><span style="color:#F9A32A">**MQ**</span>!
+Meet <a href="https://fluxmq.absmach.eu"><span style="color:#2F69B3">**Flux**</span><span style="color:#F9A32A">**MQ**</span>!</a>
 
 ---
 
