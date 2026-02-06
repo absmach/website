@@ -20,7 +20,7 @@ blog:
       tutorial: "warning"
 
 seo:
-  default_og_image: "https://absmach.eu/img/logos/social-preview.png"
+  default_og_image: "/img/logos/social-preview.png"
   twitter_handle: "@absmach"
 
 theme:
