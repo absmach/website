@@ -8,6 +8,8 @@ author:
   name: "Ian Muchiri"
   picture: "https://avatars.githubusercontent.com/u/100555904?v=4"
 coverImage: "/img/blogs/magistrala-ui-guide/homepage.png"
+ogImage:
+  url: "/img/blogs/magistrala-ui-guide/homepage.png"
 tags:
   - iot
   - magistrala
