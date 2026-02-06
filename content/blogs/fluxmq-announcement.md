@@ -44,10 +44,10 @@ Meet <a href="https://fluxmq.absmach.eu"><span style="color:#2F69B3">**Flux**</s
 At its core, FluxMQ is built around five key ideas:
 
 - **MQTT as a first-class protocol**, not an afterthought
-- **Multi-protocol support**, including AMQP and HTTP-based interfaces
+- **Multi-protocol support**, including protocols such as AMQP, CoAP and HTTP
 - **Extensibility** for custom workflows and integrations
 - **Protocol bridge support** through dedicated front-ends
-- **Optional persistence**, enabling both messaging and event-driven architectures
+- **Persistent event storage**, enabling both messaging and event-driven architectures
 
 FluxMQ is designed to handle:
 
@@ -62,51 +62,67 @@ FluxMQ is **actively under development**. Some features are still evolving, some
 ---
 
 ## Key Characteristics
+### 🔌 Multi-Protocol Support
 
-FluxMQ is built with the following goals in mind:
+FluxMQ supports multiple protocols out of the box, including:
+- MQTT v3.1.1 and v5
+- AMQP
+- HTTP
+- WebSockets
+- CoAP
 
-- **MQTT-first design**  
-  Full support for MQTT v3.1.1 and MQTT v5, treated as a native protocol rather than a compatibility layer.
-- **Standards-based, multi-protocol front-ends**
-  Support for MQTT, AMQP, HTTP, WebSockets, and CoAP, with a bridge layer between them.
-- **High performance and scalability**  
-  Designed to scale horizontally and handle large numbers of concurrent connections with low latency.
-- **Persistent storage when needed**  
-  Messages can be stored and replayed, enabling event-driven architectures and durable messaging workflows.
-- **Operational simplicity**  
-  A single binary that can run on one node or scale into a cluster, with sensible defaults and no required third-party services.
-- **Extensibility**  
-  A pluggable architecture that allows customization without modifying the broker core.
+FluxMQ is built as a **collection of protocol-specific brokers that share a common messaging core**, including shared persistence and routing.
 
-FluxMQ is intentionally more than “just an MQTT broker”, but it is also **not** trying to replace every specialized messaging system on the market. Its focus is flexibility, extensibility, standards compliance, and operational clarity.
+### 📜 Event Logs and Persistence
+
+Messages can be stored as ordered event logs, enabling:
+- Message replay
+- Late-joining consumers
+- Debugging and audit trails
+- Reliable delivery across restarts
+
+### ⚙️ Operational Simplicity
+
+FluxMQ is designed as a standalone service, without mandatory external dependencies. This makes it easier to deploy, operate, and embed into existing systems.
+
+### 🚀 Performance and Scalability
+
+The internal architecture is optimized for throughput and low latency, with a strong focus on predictable behavior under load. Benchmarks and detailed performance analysis will be published as the project matures.
 
 ---
 
 ## Who Is FluxMQ For?
 
-FluxMQ is for teams where **messaging is a core architectural concern**, not just a utility:
+FluxMQ is a good fit if you are:
 
-- **IoT platform developers** needing native MQTT V3.1.1/V5 alongside CoAP, HTTP, and WebSockets
-- **Organizations running multiple brokers** who want to consolidate MQTT, AMQP, and HTTP into one system
-- **Distributed system architects** requiring both real-time messaging and event persistence
-- **Teams prioritizing operational simplicity** — one binary, zero external dependencies, sensible defaults
+- Building IoT platforms that rely on MQTT but need more than a traditional MQTT broker
+- Designing event-driven systems with multiple producer and consumer protocols
+- Looking for a unified messaging and persistence layer
+- Willing to adopt an evolving project and help shape its future
 
----
-
-## Who FluxMQ Is Not For
-
-FluxMQ may not be the right choice if you:
-
-- Need only **a simple, single-protocol broker** for basic messaging tasks.
-- Require **zero operational responsibility** and prefer a fully managed, hosted solution.
-- Have low throughput or persistence requirements where embedded libraries are sufficient.
-- **Are looking for a direct replacement for Kafka, RabbitMQ, or a time-series database**.
-
-FluxMQ is not a database and is not meant to replicate all features of mature, highly specialized systems. Its goal is to provide a **flexible, multi-protocol messaging foundation with MQTT-first support and optional event persistence**, not to replace every existing tool.
+FluxMQ may **not** be the right choice if you are looking for a drop-in replacement for Kafka, NATS, or RabbitMQ, or if your use case is fully covered by simpler messaging models and APIs.
 
 ---
 
-## Why Choose FluxMQ?
+## Why Another Message Broker?
+
+Writing a message broker is not something you do for fun. It is a critical infrastructure component that requires deep knowledge of distributed systems, networking, storage, and performance engineering.
+
+So why build another one?
+
+Because our requirements did not align with what existing brokers offered.
+
+We needed:
+- MQTT as a first-class citizen, not a plugin or compatibility layer
+- Consistent semantics across multiple protocols
+- Native support for event logs and message persistence
+- Predictable performance under high load
+- A system we could reason about, extend, and operate long-term
+
+While excellent systems like NATS, Kafka, and RabbitMQ exist, FluxMQ is not a replacement for them. Each of those projects excels in its own domain.
+FluxMQ occupies a different space: a unified broker designed for systems that need **protocol diversity, persistent messaging, and architectural simplicity**.
+
+### Why Choose FluxMQ?
 
 Most teams end up running multiple brokers: one for MQTT, another for AMQP, maybe Kafka for event logs. Each adds operational complexity, integration overhead, and infrastructure cost.
 FluxMQ consolidates this into **one broker, multiple protocols, optional persistence** — without sacrificing performance or flexibility.
@@ -132,7 +148,9 @@ FluxMQ is **open source and actively developed**. We're building it in public, a
 - 📘 **Documentation:** https://fluxmq.absmach.eu/docs
 - 💬 **Discord:** https://discord.gg/HvB5QuzF
 
-**Coming soon on the blog:**
+## What’s Next?
+
+This announcement is just the beginning. Upcoming posts will dive deeper into:
 - Why we built FluxMQ (the full story)
 - Architecture deep-dive
 - Protocol bridging and persistence internals
