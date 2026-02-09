@@ -5,13 +5,12 @@ excerpt: "A step-by-step guide to setting up Magistrala locally or on the cloud,
 description: "A step-by-step guide to setting up Magistrala locally or on the cloud, creating your first IoT flow, and visualizing device data in real-time."
 date: "2026-02-09"
 author:
-name: "Felix Gateru"
-picture: "https://avatars.githubusercontent.com/u/57312311?v=4"
-coverImage: "/img/blogs/getting-started-with-magistrala/messages-page.png"
+  name: "Felix Gateru"
+  picture: "https://avatars.githubusercontent.com/u/57312311?v=4"
+coverImage: "/img/blogs/getting-started-with-magistrala/cover-image.png"
 ogImage:
-url: "/img/blogs/getting-started-with-magistrala/messages-page.png"
+url: "/img/blogs/getting-started-with-magistrala/cover-image.png"
 category: blog
-featured: true
 tags:
   - iot
   - magistrala
@@ -25,13 +24,9 @@ tags:
 
 Building a production-ready IoT platform is hard.
 
-Teams must handle secure device authentication, multi-protocol
-messaging, scalability, multi-tenancy, and real-time data flow across cloud and edge environments. Many solutions solve only part of
-the problem, leaving engineers to stitch together brokers,
-authentication systems, and custom services.
+Teams must handle secure device authentication, multi-protocol messaging, scalability, multi-tenancy, and real-time data flow across cloud and edge environments. Many solutions solve only part of the problem, leaving engineers to stitch together brokers, authentication systems, and custom services.
 
-Magistrala is designed to address this challenge with a modular,
-scalable, and secure IoT platform built for real-world deployments.
+Magistrala is designed to address this challenge with a modular, scalable, and secure IoT platform built for real-world deployments.
 
 ## Table of Contents
 
