@@ -7,6 +7,22 @@ import { getCollection } from "astro:content";
 
 const posts = await getCollection("blogs", ({ data }) => !data.draft);
 
+const getBadgeChips = (category = "", featured = false) => {
+  const chips = [];
+  const normalizedCategory = category.toLowerCase().trim();
+  if (normalizedCategory === "announcement") chips.push("announcement");
+  if (!normalizedCategory) chips.push("blog");
+  if (featured) chips.push("featured");
+  return chips;
+};
+
+const getBadgeClass = (tag) =>
+  tag === "featured"
+    ? "inline-flex rounded-md border border-subtle bg-surface px-2.5 py-1 text-xs font-semibold capitalize text-accent"
+    : tag === "blog"
+      ? "inline-flex rounded-md border border-subtle bg-surface-2 px-2.5 py-1 text-xs font-semibold capitalize text-muted"
+    : "inline-flex rounded-md border border-accent/35 bg-accent/15 px-2.5 py-1 text-xs font-semibold capitalize text-primary";
+
 const PRODUCT_CATEGORIES = [
   { key: "MG", label: "Magistrala", matchTags: ["mg", "magistrala"] },
   { key: "FLUXMQ", label: "FluxMQ", matchTags: ["fluxmq"] },
@@ -34,10 +50,16 @@ const normalized = posts
       date: d, // ✅ now it's Date
       dateISO: d.toISOString(),
       tags: p.data.tags ?? [],
+      category: p.data.category ?? "",
+      featured: p.data.featured ?? false,
       author: p.data.author?.name ?? "",
       slug: p.data.slug ?? p.slug,
       coverImage: p.data.coverImage ?? p.data.heroImage ?? "",
       href: `/blog/${p.data.slug ?? p.slug}/`,
+      badgeChips: getBadgeChips(
+        p.data.category ?? "",
+        p.data.featured ?? false,
+      ),
     };
   })
   .sort((a, b) => b.date.getTime() - a.date.getTime());
@@ -182,6 +204,15 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                       </div>
                     )}
                     <div class="p-6">
+                      {p.badgeChips?.length > 0 && (
+                        <div class="mb-3">
+                          <div class="flex flex-wrap gap-2">
+                            {p.badgeChips.map((chip) => (
+                              <span class={getBadgeClass(chip)}>{chip}</span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       <h2 class="text-xl font-semibold leading-snug text-primary">
                         {p.title}
                       </h2>

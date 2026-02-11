@@ -14,6 +14,8 @@ const blogs = defineCollection({
         }),
 
         tags: z.array(z.string()).default([]),
+        category: z.string().optional(),
+        featured: z.boolean().default(false),
         draft: z.boolean().default(false),
 
         coverImage: z.union([z.string().url(), z.string()]).optional(), // URL or local path
