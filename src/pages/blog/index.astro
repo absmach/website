@@ -21,7 +21,7 @@ const getBadgeClass = (tag) =>
     ? "inline-flex rounded-md border border-subtle bg-surface px-2.5 py-1 text-xs font-semibold capitalize text-accent"
     : tag === "blog"
       ? "inline-flex rounded-md border border-subtle bg-surface-2 px-2.5 py-1 text-xs font-semibold capitalize text-muted"
-    : "inline-flex rounded-md border border-accent/35 bg-accent/15 px-2.5 py-1 text-xs font-semibold capitalize text-primary";
+      : "inline-flex rounded-md border border-accent/35 bg-accent/15 px-2.5 py-1 text-xs font-semibold capitalize text-primary";
 
 const PRODUCT_CATEGORIES = [
   { key: "MG", label: "Magistrala", matchTags: ["mg", "magistrala"] },
@@ -276,7 +276,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
             const chipEls = Array.from(document.querySelectorAll(".tag-chip"));
             const PRODUCT_MATCHERS = {
               MG: ["mg", "magistrala"],
-              SMQ: ["smq", "supermq", "fluxmq"],
+              FLUXMQ: ["fluxmq"],
               PROPELLER: ["propeller", "properller"],
               S0: ["s0", "s0 gateway"],
               S1: ["s1", "s1 gateway"],

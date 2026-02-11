@@ -17,6 +17,7 @@ const navItems = [
   <div
     class="mx-auto w-full max-w-7xl
            isolate rounded-3xl
+           site-header-glass
            bg-white/10
            backdrop-blur-3xl backdrop-saturate-150
            border border-white/30
@@ -65,7 +66,7 @@ const navItems = [
         </svg>
       </button>
       <div class="hidden items-center gap-6 lg:flex">
-        <ul class="flex items-center gap-4 text-sm xl:gap-6 xl:text-base">
+        <ul class="site-header-links flex items-center gap-4 text-sm xl:gap-6 xl:text-base">
           {
             navItems.map((item) => (
               <li>
@@ -185,6 +186,97 @@ const navItems = [
     </nav>
   </aside>
 </div>
+
+<style>
+  .site-header-glass {
+    position: relative;
+    overflow: hidden;
+    border-color: color-mix(in srgb, var(--border) 62%, rgba(255, 255, 255, 0.45));
+    background:
+      linear-gradient(
+        140deg,
+        color-mix(in srgb, var(--panel) 74%, rgba(255, 255, 255, 0.22)),
+        color-mix(in srgb, var(--surface) 58%, transparent)
+      );
+    backdrop-filter: blur(18px) saturate(165%) brightness(0.96);
+    -webkit-backdrop-filter: blur(18px) saturate(165%) brightness(0.96);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.18),
+      0 12px 30px rgba(0, 0, 0, 0.24);
+  }
+
+  .site-header-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      linear-gradient(
+        110deg,
+        rgba(255, 255, 255, 0.18),
+        rgba(255, 255, 255, 0) 45%
+      ),
+      radial-gradient(
+        65% 120% at 0% 50%,
+        color-mix(in srgb, var(--accent) 10%, transparent),
+        transparent 70%
+      );
+    opacity: 0.9;
+    z-index: 0;
+  }
+
+  .site-header-glass nav {
+    position: relative;
+    z-index: 1;
+  }
+
+  :root[data-theme="dark"] .site-header-glass {
+    border-color: color-mix(in srgb, var(--border) 58%, rgba(255, 255, 255, 0.32));
+    background:
+      linear-gradient(
+        140deg,
+        color-mix(in srgb, var(--panel) 84%, rgba(255, 255, 255, 0.08)),
+        color-mix(in srgb, var(--surface) 70%, rgba(255, 255, 255, 0.03))
+      );
+    backdrop-filter: blur(18px) saturate(172%) brightness(0.7);
+    -webkit-backdrop-filter: blur(18px) saturate(172%) brightness(0.7);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+      0 16px 34px rgba(0, 0, 0, 0.38);
+  }
+
+  :root[data-theme="dark"] .site-header-glass::before {
+    background:
+      linear-gradient(
+        110deg,
+        rgba(255, 255, 255, 0.11),
+        rgba(255, 255, 255, 0) 45%
+      ),
+      radial-gradient(
+        70% 120% at 0% 50%,
+        color-mix(in srgb, var(--accent) 18%, transparent),
+        transparent 72%
+      );
+  }
+
+  :root[data-theme="dark"] .site-header-links .nav-link {
+    color: color-mix(in srgb, var(--text) 72%, var(--muted));
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  :root[data-theme="dark"] .site-header-links .nav-link:hover,
+  :root[data-theme="dark"] .site-header-links .nav-link:focus {
+    color: color-mix(in srgb, var(--text) 92%, white);
+  }
+
+  :root[data-theme="dark"] .site-header-links .github-link {
+    color: color-mix(in srgb, var(--text) 80%, var(--muted));
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+  }
+</style>
 
 <script is:inline>
   (() => {
