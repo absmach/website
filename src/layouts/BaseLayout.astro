@@ -5,7 +5,7 @@ const {
   title = "Abstract Machines",
   description = "Infrastructure for event-driven systems.",
   ogType = "website",
-  ogImage = "/img/logos/social-preview.png",
+  ogImage = "https://api.microlink.io/?url=https://astro.absmach-website.pages.dev&meta=false&screenshot=true&embed=screenshot.url",
   ogImageAlt = "Abstract Machines",
   canonical,
 } = Astro.props;
@@ -201,6 +201,43 @@ const ogImageUrl = resolveMetaUrl(ogImage);
             mq.addListener(handler);
           }
         }
+      })();
+    </script>
+    <script is:inline>
+      (() => {
+        const UTM_PARAMS = {
+          utm_source: "absmach.eu",
+          utm_medium: "referral",
+          utm_campaign: "website",
+        };
+
+        const isExternalHttpUrl = (href) => {
+          try {
+            const url = new URL(href, window.location.href);
+            if (!/^https?:$/.test(url.protocol)) return false;
+            return url.origin !== window.location.origin;
+          } catch (err) {
+            return false;
+          }
+        };
+
+        const applyUtmParams = (anchor) => {
+          const href = anchor.getAttribute("href");
+          if (!href || href.startsWith("#")) return;
+          if (anchor.hasAttribute("data-no-utm")) return;
+          if (!isExternalHttpUrl(href)) return;
+
+          const url = new URL(href, window.location.href);
+          for (const [key, value] of Object.entries(UTM_PARAMS)) {
+            if (!url.searchParams.has(key)) {
+              url.searchParams.set(key, value);
+            }
+          }
+
+          anchor.setAttribute("href", url.toString());
+        };
+
+        document.querySelectorAll("a[href]").forEach(applyUtmParams);
       })();
     </script>
   </body>
