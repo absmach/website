@@ -7,9 +7,9 @@ date: "2026-02-11"
 author:
   name: "Felix Gateru"
   picture: "https://avatars.githubusercontent.com/u/57312311?v=4"
-coverImage: "/img/blogs/getting-started-with-magistrala/cover-image.png"
+coverImage: "/img/blogs/getting-started-with-magistrala/cover-image.jpg"
 ogImage:
-url: "/img/blogs/getting-started-with-magistrala/cover-image.png"
+url: "/img/blogs/getting-started-with-magistrala/cover-image.jpg"
 category: blog
 tags:
   - iot
