@@ -85,9 +85,7 @@ With Docker installed, we can clone the Magistrala repository and quickly start 
 
 We can interact with the platform using the [Magistrala CLI](https://github.com/absmach/magistrala/cli), the API, or the [Magistrala-UI](https://www.absmach.eu/blog/magistrala-ui-guide/).
 
-> NOTE:
-> To use the Magistrala-UI, you will need to accept the [End User License Agreement (EULA)](https://github.com/absmach/eula). To do this locally, we will set the
-> `MG_UI_DOCKER_ACCEPT_EULA` environment variable to `yes` before running the `make run_stable` command.
+> NOTE: To use the Magistrala-UI, you will need to accept the [End User License Agreement (EULA)](https://github.com/absmach/eula). To do this locally, we will set the `MG_UI_DOCKER_ACCEPT_EULA` environment variable to `yes` before running the `make run_stable` command.
 
 ```bash
 git clone https://github.com/absmach/magistrala.git
