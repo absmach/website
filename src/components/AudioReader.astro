@@ -1129,6 +1129,18 @@ const { target = "#post" } = Astro.props;
       );
     };
 
+    const isEnglishVoice = (voice) => {
+      const lang = normalizeVoiceToken(voice?.lang);
+      return lang === "en" || lang.startsWith("en ");
+    };
+
+    const getVoicePool = () => {
+      if (!getSupportsSpeech()) return [];
+      const availableVoices = speechSynthesis.getVoices() || [];
+      const englishVoices = availableVoices.filter(isEnglishVoice);
+      return englishVoices.length ? englishVoices : availableVoices;
+    };
+
     const resolvePreferredVoice = (requestedName) => {
       if (!voices.length) return null;
 
@@ -1343,7 +1355,7 @@ const { target = "#post" } = Astro.props;
       utterance.pitch = 1;
 
       if (!voices.length) {
-        voices = speechSynthesis.getVoices() || [];
+        voices = getVoicePool();
       }
 
       const selected = resolvePreferredVoice(voiceEl?.value);
@@ -1495,7 +1507,7 @@ const { target = "#post" } = Astro.props;
       if (!getSupportsSpeech()) return;
 
       const currentSelection = voiceEl?.value || "";
-      voices = speechSynthesis.getVoices() || [];
+      voices = getVoicePool();
       if (!voiceEl) return;
 
       voiceEl.innerHTML = "";
