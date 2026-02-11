@@ -1,0 +1,54 @@
+---
+const { title = "Project Information", items = [], links = [] } = Astro.props;
+
+const isExternal = (href, explicit) => {
+  if (typeof explicit === "boolean") return explicit;
+  return typeof href === "string" && /^https?:\/\//.test(href);
+};
+---
+
+<div class="card-base">
+  <div
+    class="-mx-6 -mt-6 rounded-t-2xl bg-surface-2 px-6 py-4 border-b border-subtle"
+  >
+    <h3 class="text-lg font-semibold text-primary">{title}</h3>
+  </div>
+
+  <dl class="mt-6 space-y-5 text-sm text-muted">
+    {
+      items.map((item) => (
+        <div>
+          <dt class="font-semibold text-primary">{item.label}</dt>
+          <dd class={item.pill ? "mt-2" : "mt-1"}>
+            {item.pill ? (
+              <span class="nav-pill text-xs">{item.value}</span>
+            ) : (
+              item.value
+            )}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  {
+    links.length > 0 && (
+      <div class="mt-6 flex flex-wrap gap-3">
+        {links.map((link) => {
+          const external = isExternal(link.href, link.external);
+          return (
+            <a
+              class="inline-flex items-center justify-center rounded-lg border border-subtle bg-panel px-3 py-2 text-sm font-semibold text-primary transition hover:-translate-y-0.5"
+              href={link.href}
+              target={external ? "_blank" : undefined}
+              rel={external ? "noopener noreferrer" : undefined}
+            >
+              {link.label}
+            </a>
+          );
+        })}
+      </div>
+    )
+  }
+</div>
+

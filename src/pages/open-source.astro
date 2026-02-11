@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import Section from "../components/Section.astro";
+---
+
+<BaseLayout title="Open Source | Abstract Machines" description="Open-source infrastructure for event-driven systems.">
+  <Header />
+  <main>
+    <Hero
+      eyebrow="Open Source"
+      title="Infrastructure you can audit, extend, and trust"
+      subtitle="We build in the open so teams can adopt critical infrastructure without lock-in. Transparent by default and designed for long-term use."
+      primary={{ label: "View on GitHub", href: "https://github.com/absmach", external: true }}
+      secondary={{ label: "Talk to Us", href: "/contact" }}
+      backgroundClass="hero-grid"
+    >
+      <p class="section-label">Why open matters</p>
+      <p class="mt-4 text-muted">Security reviews, governance, and portability are easier when the code is open.</p>
+    </Hero>
+
+    <Section eyebrow="Principles" title="Open source is a business decision" subtitle="It protects you from risk.">
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="card-base">
+          <h3 class="text-xl font-semibold">Transparency</h3>
+          <p class="mt-3 text-muted">Audit the full stack. No hidden control planes or data paths.</p>
+        </div>
+        <div class="card-base">
+          <h3 class="text-xl font-semibold">Portability</h3>
+          <p class="mt-3 text-muted">Run on your infrastructure and keep your options open.</p>
+        </div>
+        <div class="card-base">
+          <h3 class="text-xl font-semibold">Longevity</h3>
+          <p class="mt-3 text-muted">Adopt infrastructure that will still exist in five years.</p>
+        </div>
+      </div>
+    </Section>
+
+    <Section title="Governance mindset" subtitle="We treat governance as product work.">
+      <div class="grid gap-6 md:grid-cols-2">
+        <div class="card-base">
+          <h3 class="text-xl font-semibold">Public roadmaps</h3>
+          <p class="mt-3 text-muted">Decisions are documented and shared with operators and contributors.</p>
+        </div>
+        <div class="card-base">
+          <h3 class="text-xl font-semibold">Safe adoption</h3>
+          <p class="mt-3 text-muted">Companies can adopt with clear visibility into changes and security posture.</p>
+        </div>
+      </div>
+    </Section>
+  </main>
+  <Footer />
+</BaseLayout>

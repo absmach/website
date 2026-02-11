@@ -1,0 +1,28 @@
+---
+const { title = "Project Partners", partners = [] } = Astro.props;
+---
+
+<div class="card-base">
+  <div
+    class="-mx-6 -mt-6 rounded-t-2xl bg-surface-2 px-6 py-4 border-b border-subtle"
+  >
+    <h3 class="text-lg font-semibold text-primary">{title}</h3>
+  </div>
+
+  <div class="mt-6 grid grid-cols-2 items-center justify-items-center gap-x-8 gap-y-8">
+    {
+      partners.map((partner) => (
+        <div class="flex w-full items-center justify-center rounded-xl bg-white p-3">
+          <img
+            alt={partner.alt}
+            src={partner.src}
+            class="h-10 w-auto"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      ))
+    }
+  </div>
+</div>
+

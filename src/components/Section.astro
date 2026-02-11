@@ -1,0 +1,15 @@
+---
+const { eyebrow, title, subtitle, center = false, id, className = "" } = Astro.props;
+---
+<section id={id} class={`py-16 ${className}`}>
+  <div class="container-wide">
+    <div class={center ? "text-center" : ""}>
+      {eyebrow && <p class="section-label">{eyebrow}</p>}
+      {title && <h2 class="section-title mt-4">{title}</h2>}
+      {subtitle && <p class="section-subtitle mt-4">{subtitle}</p>}
+    </div>
+    <div class="mt-10">
+      <slot />
+    </div>
+  </div>
+</section>

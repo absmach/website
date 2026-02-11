@@ -1,0 +1,130 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Hero from "../../components/Hero.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blogs", ({ data }) => !data.draft);
+
+    return posts.map((post) => ({
+        params: { slug: post.data.slug ?? post.slug },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const title = `${post.data.title} | Blog`;
+const description = post.data.description;
+const publishedAt =
+    post.data.date instanceof Date ? post.data.date : new Date(post.data.date);
+const coverImage = post.data.coverImage ?? post.data.heroImage ?? null;
+---
+
+<BaseLayout title={title} description={description}>
+    <head>
+        <meta property="og:title" content={post.data.title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="article" />
+        {
+            post.data.canonical && (
+                <link rel="canonical" href={post.data.canonical} />
+            )
+        }
+    </head>
+
+    <Header />
+    <main>
+        <Hero
+            eyebrow="Blog"
+            title={post.data.title}
+            subtitle={post.data.description}
+            tertiary={{
+                label: "← Back to Blog",
+                href: "/blog/",
+                external: false,
+            }}
+            backgroundClass="hero-grid"
+        >
+            <div class="card-base">
+                <div class="flex items-center gap-4">
+                    {
+                        post.data.author.picture ? (
+                            <img
+                                src={post.data.author.picture}
+                                alt={post.data.author.name}
+                                class="h-12 w-12 rounded-full border border-subtle bg-surface-2 object-cover"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        ) : (
+                            <div class="flex h-12 w-12 items-center justify-center rounded-full border border-subtle bg-surface-2 font-semibold text-primary">
+                                {post.data.author.name.slice(0, 1)}
+                            </div>
+                        )
+                    }
+                    <div class="min-w-0">
+                        <p class="font-semibold text-primary">
+                            {post.data.author.name}
+                        </p>
+                        <p class="mt-1 text-sm text-muted">
+                            {
+                                publishedAt.toLocaleDateString("en-US", {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                })
+                            }
+                        </p>
+                    </div>
+                </div>
+
+                {
+                    post.data.tags?.length > 0 && (
+                        <div class="mt-6 flex flex-wrap gap-2">
+                            {post.data.tags.map((t) => (
+                                <a
+                                    class="rounded-full border border-subtle bg-surface-2 px-3 py-1 text-xs font-semibold text-muted hover:text-primary"
+                                    href={`/blog/?tags=${encodeURIComponent(t)}`}
+                                >
+                                    {t}
+                                </a>
+                            ))}
+                        </div>
+                    )
+                }
+            </div>
+        </Hero>
+
+        <section class="py-16">
+            <div class="container-wide">
+                <article class="mx-auto max-w-3xl">
+                    {
+                        coverImage && (
+                            <div class="mb-10 aspect-video overflow-hidden rounded-3xl border border-subtle bg-surface-2 shadow-[var(--shadow-soft)]">
+                                <img
+                                    src={coverImage}
+                                    alt=""
+                                    class="h-full w-full object-cover"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                        )
+                    }
+                    <div
+                        class="prose prose-theme max-w-none prose-a:text-accent prose-img:rounded-2xl prose-img:border prose-img:border-[color:var(--border)]"
+                    >
+                        <Content />
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+    <Footer />
+</BaseLayout>

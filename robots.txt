@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://absmach.eu/sitemap.xml

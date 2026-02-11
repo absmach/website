@@ -1,47 +1,50 @@
 # Abstract Machines Website
 
-This repository contains the source code for the [Abstract Machines](https://absmach.eu) website and blog.
+Astro + Tailwind source for the [Abstract Machines](https://absmach.eu) website and blog.
+
+## Stack
+
+- Astro (v4)
+- Tailwind CSS
 
 ## Project Structure
 
-- `content/blogs/`: Markdown files for blog posts.
-- `img/blogs/`: Images used in blog posts.
-- `scripts/`: The Go-based static site generator.
-- `scripts/templates/`: HTML templates for the blog listing and individual posts.
-- `blog/`: Generated static files (do not edit manually).
-- `index.html`: The main landing page.
+- `src/pages/`: Routes (Astro pages).
+- `src/components/`: Shared UI components.
+- `src/layouts/`: Page layouts.
+- `src/styles/`: Global CSS (design tokens + utilities).
+- `src/content/blogs/`: Blog posts (Markdown).
+- `src/content.config.ts`: Blog frontmatter schema.
+- `public/`: Static assets (images, favicons, etc).
 
-## Prerequisites
+## Development
 
-- **Go**: Required to run the blog builder.
-- **Make**: Used for task automation.
-
-## Guidelines for Contributors
-
-To add a new blog post, follow these steps:
-
-1. Create your content in `content/blogs/` (see [WRITING.md](WRITING.md)).
-2. Build the site locally to generate the static files:
-   ```bash
-   make clean && make build
-   ```
-3. Commit both the source Markdown files **and** the generated files in the `blog/` folder.
-4. Open a Pull Request.
-
-## Running locally
-To run the built website locally, first build it with:
 ```bash
-make build
+npm install
+npm run dev
 ```
-Then, you can run it with:
+
+Astro runs on `http://localhost:4321` by default.
+
+## Build & Preview
+
 ```bash
-make serve
+npm run build
+npm run preview
 ```
-Open your browser at http://localhost:8080.
-If you want to change the port (in case 8080 is already taken), you can run:
-```bash
-PORT=8081 make serve
-```
+
+## Blog
+
+See [WRITING.md](WRITING.md) for frontmatter and writing guidelines.
+
+## Sitemap / robots.txt
+
+- `@astrojs/sitemap` generates `dist/sitemap-index.xml` (and chunk files like `dist/sitemap-0.xml`) during `npm run build`.
+- `src/pages/robots.txt.ts` is prerendered as `/robots.txt` and points to `/sitemap-index.xml`.
+
+## RSS
+
+- `src/pages/rss.xml.ts` is prerendered as `/rss.xml` (blog feed).
 
 ## Documentation
 
