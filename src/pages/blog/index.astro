@@ -8,7 +8,7 @@ import { getCollection } from "astro:content";
 const posts = await getCollection("blogs", ({ data }) => !data.draft);
 
 const PRODUCT_CATEGORIES = [
-  { key: "MG", label: "MG", matchTags: ["mg", "magistrala"] },
+  { key: "MG", label: "Magistrala", matchTags: ["mg", "magistrala"] },
   { key: "FLUXMQ", label: "FluxMQ", matchTags: ["fluxmq"] },
   {
     key: "PROPELLER",
