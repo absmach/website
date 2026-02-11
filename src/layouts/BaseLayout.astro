@@ -4,7 +4,23 @@ import "../styles/global.css";
 const {
   title = "Abstract Machines",
   description = "Infrastructure for event-driven systems.",
+  ogType = "website",
+  ogImage = "/img/logos/social-preview.png",
+  ogImageAlt = "Abstract Machines",
+  canonical,
 } = Astro.props;
+
+const resolveMetaUrl = (value) => {
+  if (!value) return undefined;
+  try {
+    return new URL(value, Astro.url).toString();
+  } catch {
+    return value;
+  }
+};
+
+const canonicalUrl = resolveMetaUrl(canonical ?? Astro.url.pathname);
+const ogImageUrl = resolveMetaUrl(ogImage);
 ---
 
 <!doctype html>
@@ -14,6 +30,21 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta property="og:site_name" content="Abstract Machines" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    {ogImageUrl && <meta property="og:image:alt" content={ogImageAlt} />}
+    <meta
+      name="twitter:card"
+      content={ogImageUrl ? "summary_large_image" : "summary"}
+    />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />

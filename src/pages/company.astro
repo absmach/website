@@ -195,19 +195,17 @@ const team = [
     </Section>
 
     <Section title="Our journey" subtitle="Key milestones in our growth." center>
-      <div class="grid gap-6">
-        {timeline.map((item) => (
-          <div class="grid gap-4 sm:grid-cols-[96px_1fr] sm:items-start">
-            <p class="text-xl font-semibold text-accent sm:text-right sm:pt-3">
-              {item.year}
-            </p>
-            <article class="card-base">
+      <ol class="journey-stepper" aria-label="Company timeline">
+        {timeline.map((item, index) => (
+          <li class={`journey-step ${index === timeline.length - 1 ? "journey-step-latest" : ""}`}>
+            <span class="journey-dot" aria-hidden="true">{item.year}</span>
+            <article class="card-base journey-card">
               <h3 class="text-xl font-semibold">{item.title}</h3>
               <p class="mt-2 text-muted">{item.description}</p>
             </article>
-          </div>
+          </li>
         ))}
-      </div>
+      </ol>
     </Section>
 
     <Section title="Based in Paris" subtitle="We work with clients and partners across Europe and globally.">
@@ -301,6 +299,175 @@ const team = [
 <style>
   .company-map-embed {
     transition: filter 180ms ease;
+  }
+
+  .journey-stepper {
+    position: relative;
+    display: grid;
+    --journey-year-w: 4.2rem;
+    --journey-year-h: 2rem;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 76rem;
+  }
+
+  .journey-stepper::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--journey-year-h) * 0.8);
+    bottom: calc(var(--journey-year-h) * 0.4);
+    left: calc(var(--journey-year-w) / 2);
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--accent) 55%, var(--border)),
+      var(--border)
+    );
+    z-index: 0;
+  }
+
+  .journey-step {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: var(--journey-year-w) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .journey-dot {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--journey-year-w);
+    height: var(--journey-year-h);
+    border-radius: 9999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
+    background: color-mix(in srgb, var(--surface-2) 78%, var(--panel));
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+    box-shadow: 0 0 0 6px var(--bg), var(--shadow-soft);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .journey-dot::selection {
+    background: transparent;
+    color: inherit;
+  }
+
+  .journey-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1.1rem;
+    min-height: 8.75rem;
+  }
+
+  @media (min-width: 1024px) {
+    .journey-stepper {
+      --journey-year-w: 5.8rem;
+      --journey-year-h: auto;
+      gap: 1.6rem;
+    }
+
+    .journey-stepper::before {
+      top: 0.25rem;
+      bottom: 0.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .journey-step {
+      grid-template-columns:
+        minmax(0, 1fr)
+        calc(var(--journey-year-w) + 1.5rem)
+        minmax(0, 1fr);
+      gap: 1.65rem;
+      align-items: center;
+    }
+
+    .journey-dot {
+      grid-column: 2;
+      justify-self: center;
+      width: 6.2rem;
+      height: 2.7rem;
+      min-width: 6.2rem;
+      border-radius: 9999px;
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
+      padding: 0 0.3rem;
+      background: color-mix(in srgb, var(--surface-2) 78%, var(--panel));
+      box-shadow: 0 0 0 8px var(--bg), var(--shadow-soft);
+      color: var(--accent);
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-align: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+
+    .journey-dot,
+    .journey-card {
+      grid-row: 1;
+    }
+
+    .journey-card {
+      width: min(100%, 29rem);
+      padding: 1.2rem 1.25rem;
+      min-height: 9.5rem;
+    }
+
+    .journey-step:nth-child(odd) .journey-card {
+      grid-column: 1;
+      justify-self: end;
+    }
+
+    .journey-step:nth-child(even) .journey-card {
+      grid-column: 3;
+      justify-self: start;
+    }
+
+    .journey-step:nth-child(odd) .journey-card::after,
+    .journey-step:nth-child(even) .journey-card::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 1.25rem;
+      height: 2px;
+      background: color-mix(in srgb, var(--accent) 58%, var(--border));
+      transform: translateY(-50%);
+      opacity: 0.9;
+    }
+
+    .journey-step:nth-child(odd) .journey-card::after {
+      right: -1.3rem;
+    }
+
+    .journey-step:nth-child(even) .journey-card::before {
+      left: -1.3rem;
+    }
+  }
+
+  .journey-step-latest .journey-dot {
+    color: color-mix(in srgb, var(--accent) 84%, var(--text));
+  }
+
+  .journey-step-latest .journey-card {
+    border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent),
+      var(--shadow-soft);
   }
 
   :global(html[data-theme="dark"]) .company-map-embed {

@@ -25,20 +25,17 @@ const description = post.data.description;
 const publishedAt =
     post.data.date instanceof Date ? post.data.date : new Date(post.data.date);
 const coverImage = post.data.coverImage ?? post.data.heroImage ?? null;
+const canonical = post.data.canonical ?? `/blog/${post.data.slug ?? post.slug}/`;
 ---
 
-<BaseLayout title={title} description={description}>
-    <head>
-        <meta property="og:title" content={post.data.title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:type" content="article" />
-        {
-            post.data.canonical && (
-                <link rel="canonical" href={post.data.canonical} />
-            )
-        }
-    </head>
-
+<BaseLayout
+    title={title}
+    description={description}
+    ogType="article"
+    ogImage={coverImage ?? "/img/logos/social-preview.png"}
+    ogImageAlt={post.data.title}
+    canonical={canonical}
+>
     <Header />
     <main>
         <Hero
