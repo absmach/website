@@ -12,6 +12,7 @@ const {
   kicker,
   logoSrc,
   logoAlt = "Product logo",
+  logoLoading = "lazy",
   logoClass = "",
   cardClass = "",
 } = Astro.props;
@@ -48,7 +49,7 @@ const articleClass = featured
               class={logoImageClass}
               width={400}
               height={160}
-              loading="lazy"
+              loading={logoLoading}
               decoding="async"
             />
           )}

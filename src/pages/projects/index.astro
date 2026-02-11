@@ -141,7 +141,7 @@ const impactStats = [
     >
       <div class="grid gap-6 lg:grid-cols-2">
         {
-          projects.map((project) => {
+          projects.map((project, index) => {
             const isExternal = project.link.startsWith("http");
             const ctaLabel = isExternal ? "Visit website" : "Learn more";
             const ctaIcon = isExternal ? "↗" : "→";
@@ -161,7 +161,7 @@ const impactStats = [
                           class={`h-16 w-full object-contain sm:h-20 lg:h-24 dark:brightness-200 ${project.logoInverted ? "invert dark:invert-0" : ""}`}
                           width={420}
                           height={160}
-                          loading="lazy"
+                          loading={index < 2 ? "eager" : "lazy"}
                           decoding="async"
                         />
                       ) : (

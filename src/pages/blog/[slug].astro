@@ -62,7 +62,7 @@ const coverImage = post.data.coverImage ?? post.data.heroImage ?? null;
                                 width={48}
                                 height={48}
                                 class="h-12 w-12 rounded-full border border-subtle bg-surface-2 object-cover"
-                                loading="lazy"
+                                loading="eager"
                                 decoding="async"
                             />
                         ) : (
@@ -116,7 +116,7 @@ const coverImage = post.data.coverImage ?? post.data.heroImage ?? null;
                                     width={1280}
                                     height={720}
                                     class="h-full w-full object-cover"
-                                    loading="lazy"
+                                    loading="eager"
                                     decoding="async"
                                 />
                             </div>

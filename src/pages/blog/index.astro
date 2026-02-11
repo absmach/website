@@ -113,7 +113,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags))).sort((a, 
           <div class="min-w-0 flex-1">
             <div class="grid gap-6 md:grid-cols-2" id="blog-results">
               {
-                normalized.map((p) => (
+                normalized.map((p, index) => (
                   <a
                     href={p.href}
                     class="card-base block overflow-hidden !p-0 hover:shadow-[var(--shadow-strong)]"
@@ -127,7 +127,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags))).sort((a, 
                           width={1280}
                           height={720}
                           class="h-full w-full object-cover"
-                          loading="lazy"
+                          loading={index < 2 ? "eager" : "lazy"}
                           decoding="async"
                         />
                       </div>
