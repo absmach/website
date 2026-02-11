@@ -53,6 +53,7 @@ const normalized = posts
       category: p.data.category ?? "",
       featured: p.data.featured ?? false,
       author: p.data.author?.name ?? "",
+      authorPicture: p.data.author?.picture ?? "",
       slug: p.data.slug ?? p.slug,
       coverImage: p.data.coverImage ?? p.data.heroImage ?? "",
       href: `/blog/${p.data.slug ?? p.slug}/`,
@@ -217,20 +218,31 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                         {p.title}
                       </h2>
                       <p class="mt-3 text-muted">{p.description}</p>
-                      <div class="mt-5 flex flex-wrap items-center gap-2 text-sm text-muted">
-                        <span>
-                          {p.date.toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          })}
-                        </span>
-                        {p.author && (
-                          <>
-                            <span>•</span>
-                            <span>{p.author}</span>
-                          </>
+                      <div class="mt-5 flex items-center gap-3 text-sm text-muted">
+                        {p.authorPicture && (
+                          <img
+                            src={p.authorPicture}
+                            alt={p.author ? `${p.author} profile photo` : "Author profile photo"}
+                            class="h-8 w-8 rounded-full border border-subtle object-cover"
+                            loading="lazy"
+                            decoding="async"
+                          />
                         )}
+                        <div class="flex flex-wrap items-center gap-2">
+                          <span>
+                            {p.date.toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </span>
+                          {p.author && (
+                            <>
+                              <span>•</span>
+                              <span>{p.author}</span>
+                            </>
+                          )}
+                        </div>
                       </div>
                       {p.tags?.length > 0 && (
                         <div class="mt-5 flex flex-wrap gap-2">
