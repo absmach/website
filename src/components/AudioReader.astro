@@ -1,0 +1,1036 @@
+---
+const { target = "#post" } = Astro.props;
+---
+
+<div
+  id="ar-shell"
+  class="audio-reader-shell z-40 my-6 rounded-2xl border border-subtle px-4 py-3 shadow-[var(--shadow-soft)]"
+>
+  <div class="audio-player">
+    <div class="audio-left">
+      <button
+        id="ar-toggle"
+        class="audio-glass-control audio-toggle inline-flex h-12 w-12 items-center justify-center rounded-full transition hover:-translate-y-0.5"
+        aria-pressed="false"
+        aria-label="Play audio"
+      >
+      <svg
+        id="ar-icon-play"
+        class="h-8 w-8"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+          <path d="M8 6.5v11L17.5 12 8 6.5z"></path>
+        </svg>
+      <svg
+        id="ar-icon-pause"
+        class="hidden h-8 w-8"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+          <rect x="7" y="5.5" width="3.2" height="13" rx="1"></rect>
+          <rect x="13.8" y="5.5" width="3.2" height="13" rx="1"></rect>
+        </svg>
+        <span id="ar-toggle-label" class="sr-only">Play</span>
+      </button>
+
+      <button
+        id="ar-mute"
+        class="audio-glass-control audio-mute inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:-translate-y-0.5"
+        aria-pressed="false"
+        aria-label="Mute audio"
+      >
+        <svg
+          id="ar-icon-volume"
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <polygon points="11 5 6 9 3 9 3 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.5 8.5a5 5 0 0 1 0 7"></path>
+          <path d="M18.5 6a9 9 0 0 1 0 12"></path>
+        </svg>
+        <svg
+          id="ar-icon-muted"
+          class="hidden h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <polygon points="11 5 6 9 3 9 3 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+        <span class="sr-only">Mute</span>
+      </button>
+
+      <span class="audio-time">
+        <span id="ar-current-time">00:00</span>
+        <span aria-hidden="true"> / </span>
+        <span id="ar-total-time">00:00</span>
+      </span>
+    </div>
+
+    <div class="audio-main">
+      <label class="sr-only" for="ar-seek">Reader progress</label>
+      <input
+        id="ar-seek"
+        type="range"
+        min="0"
+        max="100"
+        step="0.1"
+        value="0"
+        class="audio-glass-range w-full accent-[var(--accent)]"
+        aria-label="Reader progress"
+      />
+    </div>
+
+    <div class="audio-options">
+      <label class="audio-option" for="ar-rate">
+        <span>Speed</span>
+        <select id="ar-rate" class="audio-glass-control audio-select text-sm text-primary">
+          <option value="0.5">0.5x</option>
+          <option value="0.75">0.75x</option>
+          <option value="0.85">0.85x</option>
+          <option value="1">1.0x</option>
+          <option value="1.1">1.1x</option>
+          <option value="1.25" selected>1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2.0x</option>
+        </select>
+      </label>
+
+      <label class="audio-option" for="ar-voice">
+        <span>Voice</span>
+        <select
+          id="ar-voice"
+          class="audio-glass-control audio-select audio-voice-select text-sm text-primary"
+        ></select>
+      </label>
+    </div>
+  </div>
+
+  <p id="ar-status" class="sr-only" aria-live="polite">Ready</p>
+</div>
+
+<style>
+  .audio-player {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .audio-main {
+    min-width: 0;
+    align-self: center;
+  }
+
+  .audio-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex: 0 0 auto;
+  }
+
+  .audio-time {
+    font-size: 0.77rem;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--muted) 88%, var(--text));
+    white-space: nowrap;
+  }
+
+  .audio-options {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    justify-self: end;
+  }
+
+  .audio-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .audio-select {
+    padding: 0.4rem 0.48rem;
+    border-radius: 0.72rem;
+  }
+
+  #ar-rate {
+    width: 4.6rem;
+  }
+
+  .audio-voice-select {
+    width: 11.5rem;
+    max-width: 11.5rem;
+    min-width: 0;
+  }
+
+  .audio-reader-shell::-webkit-scrollbar {
+    height: 0;
+  }
+
+  .audio-reader-shell {
+    scrollbar-width: none;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative;
+    border-color: color-mix(
+      in srgb,
+      var(--border) 80%,
+      rgba(255, 255, 255, 0.25)
+    );
+    background: linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--panel) 56%, transparent),
+      color-mix(in srgb, var(--surface) 50%, transparent)
+    );
+    backdrop-filter: blur(18px) saturate(165%);
+    -webkit-backdrop-filter: blur(18px) saturate(165%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.18),
+      0 14px 34px rgba(16, 24, 38, 0.16);
+  }
+
+  .audio-reader-shell.is-floating {
+    position: sticky;
+    top: 5rem;
+  }
+
+  .audio-reader-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.26),
+        rgba(255, 255, 255, 0) 46%
+      ),
+      radial-gradient(
+        120% 110% at 4% 0%,
+        rgba(255, 255, 255, 0.22),
+        transparent 42%
+      );
+    opacity: 0.75;
+  }
+
+  .audio-reader-shell > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  :root[data-theme="dark"] .audio-reader-shell {
+    border-color: color-mix(
+      in srgb,
+      var(--border) 82%,
+      rgba(255, 255, 255, 0.24)
+    );
+    background: linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--panel) 74%, rgba(255, 255, 255, 0.04)),
+      color-mix(in srgb, var(--surface) 70%, rgba(255, 255, 255, 0.02))
+    );
+    backdrop-filter: blur(16px) saturate(155%);
+    -webkit-backdrop-filter: blur(16px) saturate(155%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+      0 18px 40px rgba(0, 0, 0, 0.42);
+  }
+
+  :root[data-theme="dark"] .audio-reader-shell::before {
+    background:
+      linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.09),
+        rgba(255, 255, 255, 0) 46%
+      ),
+      radial-gradient(
+        120% 110% at 4% 0%,
+        rgba(45, 212, 255, 0.1),
+        transparent 48%
+      );
+    opacity: 0.95;
+  }
+
+  .audio-glass-control {
+    border: 1px solid
+      color-mix(in srgb, var(--border) 75%, rgba(255, 255, 255, 0.35));
+    background: color-mix(in srgb, var(--surface-2) 48%, transparent);
+    backdrop-filter: blur(8px) saturate(130%);
+    -webkit-backdrop-filter: blur(8px) saturate(130%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  :root[data-theme="dark"] .audio-glass-control {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+
+  .audio-toggle {
+    color: color-mix(in srgb, var(--accent-contrast) 82%, var(--accent));
+    border-color: color-mix(in srgb, var(--accent) 62%, var(--border));
+    background: color-mix(in srgb, var(--accent) 46%, var(--surface-2));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.42),
+      0 6px 14px color-mix(in srgb, var(--accent) 22%, transparent);
+    flex: 0 0 auto;
+  }
+
+  .audio-toggle svg {
+    transition: transform 0.15s ease;
+  }
+
+  .audio-mute {
+    color: color-mix(in srgb, var(--muted) 80%, var(--text));
+  }
+
+  .audio-mute.is-muted {
+    color: color-mix(in srgb, var(--accent) 70%, var(--text));
+    border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+    background: color-mix(in srgb, var(--accent) 20%, var(--surface-2));
+  }
+
+  .audio-toggle.is-playing {
+    color: var(--accent-contrast);
+    background: color-mix(in srgb, var(--accent) 60%, var(--surface-2));
+    border-color: color-mix(in srgb, var(--accent) 80%, var(--border));
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #fff 34%, transparent),
+      0 9px 22px color-mix(in srgb, var(--accent) 32%, transparent);
+  }
+
+  .audio-toggle.is-playing svg {
+    transform: scale(1.05);
+  }
+
+  .audio-glass-range {
+    --ar-fill: 0%;
+    --ar-fill-color: color-mix(
+      in srgb,
+      var(--accent-contrast) 62%,
+      var(--accent)
+    );
+    --ar-track-color: color-mix(in srgb, var(--accent) 24%, var(--surface-2));
+    height: 0.35rem;
+    border-radius: 9999px;
+    background: transparent;
+  }
+
+  .audio-glass-range::-webkit-slider-runnable-track {
+    height: 0.35rem;
+    border-radius: 9999px;
+    background: linear-gradient(
+      90deg,
+      var(--ar-fill-color) 0%,
+      var(--ar-fill-color) var(--ar-fill),
+      var(--ar-track-color) var(--ar-fill),
+      var(--ar-track-color) 100%
+    );
+  }
+
+  .audio-glass-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 65%, #fff);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  .audio-glass-range::-moz-range-track {
+    height: 0.35rem;
+    border-radius: 9999px;
+    background: var(--ar-track-color);
+  }
+
+  .audio-glass-range::-moz-range-progress {
+    height: 0.35rem;
+    border-radius: 9999px;
+    background: var(--ar-fill-color);
+  }
+
+  .audio-glass-range::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 65%, #fff);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  @media (max-width: 980px) {
+    .audio-player {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.7rem;
+    }
+
+    .audio-options {
+      grid-column: 1 / -1;
+      justify-self: end;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .audio-player {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.6rem;
+      align-items: start;
+    }
+
+    .audio-options {
+      grid-column: 1 / -1;
+      width: 100%;
+      justify-content: space-between;
+      gap: 0.4rem;
+    }
+
+    .audio-option {
+      font-size: 0.72rem;
+      gap: 0.3rem;
+    }
+
+    #ar-rate {
+      width: 4.8rem;
+      font-size: 0.78rem;
+    }
+
+    .audio-voice-select {
+      width: 9.5rem;
+      max-width: 9.5rem;
+      font-size: 0.78rem;
+    }
+
+    .audio-time {
+      font-size: 0.72rem;
+    }
+  }
+</style>
+
+<style is:global>
+  .ar-sentence {
+    border-radius: 0.35rem;
+    padding: 0 0.12rem;
+    transition: background-color 0.16s ease;
+  }
+
+  .ar-sentence.ar-active {
+    background: color-mix(in srgb, var(--accent) 26%, transparent);
+    box-shadow: inset 0 0 0 1px
+      color-mix(in srgb, var(--accent) 44%, transparent);
+  }
+</style>
+
+<script define:vars={{ target }}>
+  (() => {
+    const btnToggle = document.getElementById("ar-toggle");
+    const btnToggleLabel = document.getElementById("ar-toggle-label");
+    const btnMute = document.getElementById("ar-mute");
+    const shellEl = document.getElementById("ar-shell");
+    const iconPlay = document.getElementById("ar-icon-play");
+    const iconPause = document.getElementById("ar-icon-pause");
+    const iconVolume = document.getElementById("ar-icon-volume");
+    const iconMuted = document.getElementById("ar-icon-muted");
+    const rateEl = document.getElementById("ar-rate");
+    const voiceEl = document.getElementById("ar-voice");
+    const seekEl = document.getElementById("ar-seek");
+    const currentTimeEl = document.getElementById("ar-current-time");
+    const totalTimeEl = document.getElementById("ar-total-time");
+    const statusEl = document.getElementById("ar-status");
+
+    const BASE_WPM = 165;
+
+    let root = null;
+    let voices = [];
+    let prepared = false;
+
+    let sentences = [];
+    let sentenceWordOffsets = [];
+    let totalWords = 0;
+
+    let currentSentenceIndex = -1;
+    let playheadSentenceIndex = 0;
+    let hasCompleted = false;
+    let activeUtterance = null;
+    let isUserPaused = false;
+    let isMuted = false;
+
+    let sessionId = 0;
+
+    const setStatus = (message) => {
+      if (statusEl) statusEl.textContent = message;
+    };
+
+    const getSupportsSpeech = () =>
+      typeof window !== "undefined" && "speechSynthesis" in window;
+
+    const getRateValue = () => {
+      const raw = Number(rateEl?.value || "1.25");
+      if (!Number.isFinite(raw)) return 1.25;
+      return Math.max(0.5, Math.min(2, raw));
+    };
+
+    const wordsToSeconds = (words) => {
+      const rate = getRateValue();
+      if (rate <= 0) return 0;
+      return (Math.max(0, words) * 60) / (BASE_WPM * rate);
+    };
+
+    const formatTime = (seconds) => {
+      const safe = Math.max(0, Math.round(seconds));
+      const minutes = Math.floor(safe / 60);
+      const remaining = safe % 60;
+      return `${String(minutes).padStart(2, "0")}:${String(remaining).padStart(2, "0")}`;
+    };
+
+    const getWordOffsetForSentence = (index) => {
+      if (!sentences.length) return 0;
+      const clamped = Math.max(0, Math.min(sentences.length - 1, index));
+      return sentenceWordOffsets[clamped] ?? 0;
+    };
+
+    const updateTimeUiForSentence = (sentenceIndex, complete = false) => {
+      const totalSeconds = wordsToSeconds(totalWords);
+      const elapsedWords = complete
+        ? totalWords
+        : getWordOffsetForSentence(sentenceIndex);
+      const elapsedSeconds = wordsToSeconds(elapsedWords);
+
+      if (currentTimeEl) currentTimeEl.textContent = formatTime(elapsedSeconds);
+      if (totalTimeEl) totalTimeEl.textContent = formatTime(totalSeconds);
+    };
+
+    const updateFloatingState = () => {
+      if (!shellEl) return;
+      const progress = Number(seekEl?.value || "0");
+      const isActivelyReading =
+        getSupportsSpeech() &&
+        speechSynthesis.speaking &&
+        !speechSynthesis.paused &&
+        !isUserPaused;
+      const shouldFloat = progress > 0.1 || isActivelyReading;
+      shellEl.classList.toggle("is-floating", shouldFloat);
+    };
+
+    const updateMuteButton = () => {
+      if (!btnMute) return;
+      if (!getSupportsSpeech()) {
+        btnMute.setAttribute("disabled", "true");
+        btnMute.setAttribute("aria-label", "Mute unavailable");
+        return;
+      }
+      btnMute.removeAttribute("disabled");
+      btnMute.setAttribute("aria-pressed", isMuted ? "true" : "false");
+      btnMute.setAttribute("aria-label", isMuted ? "Unmute audio" : "Mute audio");
+      btnMute.classList.toggle("is-muted", isMuted);
+      iconVolume?.classList.toggle("hidden", isMuted);
+      iconMuted?.classList.toggle("hidden", !isMuted);
+    };
+
+    const resolveRoot = () => {
+      if (root && document.contains(root)) return root;
+      root = document.querySelector(target);
+      return root;
+    };
+
+    const splitSentences = (text) => {
+      const cleaned = (text || "").replace(/\s+/g, " ").trim();
+      if (!cleaned) return [];
+      const parts = cleaned.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [cleaned];
+      return parts.map((s) => s.trim()).filter(Boolean);
+    };
+
+    const countWords = (text) => {
+      const cleaned = String(text || "").trim();
+      if (!cleaned) return 0;
+      return cleaned.split(/\s+/).filter(Boolean).length;
+    };
+
+    const normalizeVoiceToken = (value) =>
+      String(value || "")
+        .toLowerCase()
+        .replace(/[_-]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    const isGoogleUsEnUs = (voice) => {
+      const name = normalizeVoiceToken(voice?.name);
+      const lang = normalizeVoiceToken(voice?.lang);
+      return (
+        name.includes("google") &&
+        name.includes("us") &&
+        (lang === "en us" || lang.startsWith("en us") || name.includes("en us"))
+      );
+    };
+
+    const isGoogleUkFemale = (voice) => {
+      const name = normalizeVoiceToken(voice?.name);
+      return (
+        name.includes("google") &&
+        name.includes("uk") &&
+        name.includes("female")
+      );
+    };
+
+    const resolvePreferredVoice = (requestedName) => {
+      if (!voices.length) return null;
+
+      if (requestedName) {
+        const requested = voices.find((voice) => voice.name === requestedName);
+        if (requested) return requested;
+      }
+
+      return (
+        voices.find(isGoogleUsEnUs) ||
+        voices.find(isGoogleUkFemale) ||
+        voices.find((voice) => voice.default) ||
+        voices[0]
+      );
+    };
+
+    const updateSeekUi = (sentenceIndex, updateSlider = true, complete = false) => {
+      const percent =
+        sentences.length <= 1
+          ? 0
+          : (Math.max(0, Math.min(sentences.length - 1, sentenceIndex)) /
+              (sentences.length - 1)) *
+            100;
+
+      if (seekEl && updateSlider) seekEl.value = percent.toFixed(1);
+      if (seekEl) {
+        seekEl.style.setProperty("--ar-fill", `${percent.toFixed(2)}%`);
+      }
+
+      updateTimeUiForSentence(sentenceIndex, complete);
+      updateFloatingState();
+    };
+
+    const sentenceIndexFromProgress = (percent) => {
+      if (!sentences.length) return 0;
+      const clamped = Math.max(0, Math.min(100, percent));
+      return Math.round((clamped / 100) * (sentences.length - 1));
+    };
+
+    const clearActiveSentence = () => {
+      if (
+        currentSentenceIndex >= 0 &&
+        sentences[currentSentenceIndex] &&
+        sentences[currentSentenceIndex].span
+      ) {
+        sentences[currentSentenceIndex].span.classList.remove("ar-active");
+      }
+      currentSentenceIndex = -1;
+    };
+
+    const setActiveSentence = (index, scroll = true) => {
+      if (index === currentSentenceIndex) return;
+      clearActiveSentence();
+
+      const entry = sentences[index];
+      if (!entry || !entry.span) return;
+
+      currentSentenceIndex = index;
+      entry.span.classList.add("ar-active");
+
+      if (scroll) {
+        entry.span.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+      }
+    };
+
+    const updateToggleButton = () => {
+      if (!btnToggle || !btnToggleLabel) return;
+      if (!getSupportsSpeech()) {
+        btnToggle.setAttribute("disabled", "true");
+        btnToggle.setAttribute("aria-label", "Text to speech unavailable");
+        setStatus("Text to speech is unavailable in this browser.");
+        updateFloatingState();
+        return;
+      }
+
+      if (isUserPaused || speechSynthesis.paused) {
+        btnToggleLabel.textContent = "Play";
+        btnToggle.setAttribute("aria-label", "Play audio");
+        btnToggle.setAttribute("aria-pressed", "false");
+        btnToggle.classList.remove("is-playing");
+        iconPlay?.classList.remove("hidden");
+        iconPause?.classList.add("hidden");
+        setStatus("Paused");
+        updateFloatingState();
+        return;
+      }
+
+      if (speechSynthesis.speaking) {
+        btnToggleLabel.textContent = "Pause";
+        btnToggle.setAttribute("aria-label", "Pause audio");
+        btnToggle.setAttribute("aria-pressed", "true");
+        btnToggle.classList.add("is-playing");
+        iconPlay?.classList.add("hidden");
+        iconPause?.classList.remove("hidden");
+        setStatus("Reading...");
+        updateFloatingState();
+        return;
+      }
+
+      btnToggleLabel.textContent = "Play";
+      btnToggle.setAttribute("aria-label", "Play audio");
+      btnToggle.setAttribute("aria-pressed", "false");
+      btnToggle.classList.remove("is-playing");
+      iconPlay?.classList.remove("hidden");
+      iconPause?.classList.add("hidden");
+      setStatus("Ready");
+      updateFloatingState();
+    };
+
+    const cancelSpeech = () => {
+      sessionId += 1;
+      if (
+        getSupportsSpeech() &&
+        (speechSynthesis.speaking ||
+          speechSynthesis.pending ||
+          speechSynthesis.paused)
+      ) {
+        speechSynthesis.cancel();
+      }
+      activeUtterance = null;
+      updateToggleButton();
+    };
+
+    const prepare = () => {
+      const readingRoot = resolveRoot();
+      if (!readingRoot) return false;
+
+      if (prepared) return sentences.length > 0;
+
+      const selectors = "p, li, h1, h2, h3, h4, blockquote";
+      const nodes = readingRoot.querySelectorAll(selectors);
+
+      sentences = [];
+
+      nodes.forEach((node) => {
+        const text = (node.textContent || "").replace(/\s+/g, " ").trim();
+        if (!text) return;
+
+        const parts = splitSentences(text);
+        if (!parts.length) return;
+
+        const fragment = document.createDocumentFragment();
+        parts.forEach((sentence, index) => {
+          const span = document.createElement("span");
+          span.className = "ar-sentence";
+          span.textContent = sentence;
+          fragment.appendChild(span);
+
+          sentences.push({ text: sentence, span, words: countWords(sentence) });
+
+          if (index < parts.length - 1) {
+            fragment.appendChild(document.createTextNode(" "));
+          }
+        });
+
+        node.innerHTML = "";
+        node.appendChild(fragment);
+      });
+
+      if (!sentences.length) {
+        splitSentences(readingRoot.textContent || "").forEach((sentence) => {
+          sentences.push({ text: sentence, span: null, words: countWords(sentence) });
+        });
+      }
+
+      sentenceWordOffsets = [];
+      totalWords = 0;
+      sentences.forEach((entry, index) => {
+        sentenceWordOffsets[index] = totalWords;
+        totalWords += entry.words;
+      });
+
+      prepared = true;
+      playheadSentenceIndex = 0;
+      hasCompleted = false;
+      isUserPaused = false;
+      updateSeekUi(playheadSentenceIndex, true, false);
+
+      return sentences.length > 0;
+    };
+
+    const speakSentenceFrom = (startIndex) => {
+      if (!getSupportsSpeech()) return;
+
+      const idx = Math.max(0, Math.min(sentences.length - 1, startIndex));
+      if (!sentences[idx]) {
+        hasCompleted = true;
+        isUserPaused = false;
+        updateSeekUi(Math.max(0, sentences.length - 1), true, true);
+        updateToggleButton();
+        return;
+      }
+
+      sessionId += 1;
+      const currentSession = sessionId;
+
+      const utterance = new SpeechSynthesisUtterance(sentences[idx].text);
+      utterance.rate = getRateValue();
+      utterance.volume = isMuted ? 0 : 1;
+      utterance.pitch = 1;
+
+      if (!voices.length) {
+        voices = speechSynthesis.getVoices() || [];
+      }
+
+      const selected = resolvePreferredVoice(voiceEl?.value);
+      if (selected) {
+        utterance.voice = selected;
+        utterance.lang = selected.lang || "en-US";
+        if (voiceEl) voiceEl.value = selected.name;
+      } else {
+        utterance.lang = document.documentElement.lang || "en-US";
+      }
+
+      activeUtterance = utterance;
+
+      let didStart = false;
+
+      utterance.onstart = () => {
+        if (currentSession !== sessionId) return;
+        didStart = true;
+        playheadSentenceIndex = idx;
+        hasCompleted = false;
+        isUserPaused = false;
+        setActiveSentence(idx);
+        updateSeekUi(idx, true, false);
+        setStatus("Reading...");
+        updateToggleButton();
+      };
+
+      utterance.onend = () => {
+        if (currentSession !== sessionId) return;
+
+        const nextIndex = idx + 1;
+        if (nextIndex >= sentences.length) {
+          clearActiveSentence();
+          playheadSentenceIndex = Math.max(0, sentences.length - 1);
+          hasCompleted = true;
+          isUserPaused = false;
+          updateSeekUi(playheadSentenceIndex, true, true);
+          activeUtterance = null;
+          setStatus("Completed");
+          updateToggleButton();
+          return;
+        }
+
+        playheadSentenceIndex = nextIndex;
+        speakSentenceFrom(nextIndex);
+      };
+
+      utterance.onerror = () => {
+        if (currentSession !== sessionId) return;
+        clearActiveSentence();
+        activeUtterance = null;
+        isUserPaused = false;
+        setStatus("Could not play audio. Try another voice.");
+        updateToggleButton();
+      };
+
+      speechSynthesis.speak(utterance);
+      window.setTimeout(() => {
+        if (didStart || currentSession !== sessionId) return;
+        if (!getSupportsSpeech()) return;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
+      }, 900);
+      updateToggleButton();
+    };
+
+    const play = (fromIndex = playheadSentenceIndex) => {
+      if (!getSupportsSpeech()) {
+        alert("Text-to-speech is not supported in this browser.");
+        setStatus("Text to speech is unavailable in this browser.");
+        return;
+      }
+
+      if (!prepare()) {
+        alert("No readable content found for audio playback.");
+        setStatus("No readable content found.");
+        return;
+      }
+
+      if (speechSynthesis.paused || isUserPaused) {
+        isUserPaused = false;
+        speechSynthesis.resume();
+        updateToggleButton();
+        return;
+      }
+
+      if (speechSynthesis.speaking) return;
+
+      const start = hasCompleted ? 0 : fromIndex;
+      setStatus("Starting...");
+      speakSentenceFrom(start);
+    };
+
+    const pause = () => {
+      if (!getSupportsSpeech()) return;
+      if (speechSynthesis.speaking) {
+        isUserPaused = true;
+        speechSynthesis.pause();
+        updateToggleButton();
+      }
+    };
+
+    const seekToProgress = (percent) => {
+      if (!prepare()) return;
+
+      const nextIndex = sentenceIndexFromProgress(percent);
+      playheadSentenceIndex = nextIndex;
+      hasCompleted = false;
+      updateSeekUi(nextIndex, true, false);
+      setActiveSentence(nextIndex, false);
+
+      if (!getSupportsSpeech()) return;
+
+      const wasPaused = isUserPaused || speechSynthesis.paused;
+      const wasActive =
+        speechSynthesis.speaking || speechSynthesis.paused || isUserPaused;
+
+      if (!wasActive) return;
+
+      cancelSpeech();
+      speakSentenceFrom(nextIndex);
+      if (wasPaused) {
+        isUserPaused = true;
+        speechSynthesis.pause();
+        updateToggleButton();
+      }
+    };
+
+    const loadVoices = () => {
+      if (!getSupportsSpeech()) return;
+
+      const currentSelection = voiceEl?.value || "";
+      voices = speechSynthesis.getVoices() || [];
+      if (!voiceEl) return;
+
+      voiceEl.innerHTML = "";
+      voices.forEach((voice) => {
+        const option = document.createElement("option");
+        option.value = voice.name;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        voiceEl.appendChild(option);
+      });
+
+      const preferred = resolvePreferredVoice(currentSelection);
+      if (preferred) voiceEl.value = preferred.name;
+    };
+
+    btnToggle?.addEventListener("click", () => {
+      if (!getSupportsSpeech()) return;
+
+      if (isUserPaused || speechSynthesis.paused) {
+        isUserPaused = false;
+        speechSynthesis.resume();
+        updateToggleButton();
+        return;
+      }
+
+      if (speechSynthesis.speaking) {
+        pause();
+        return;
+      }
+
+      play();
+    });
+
+    btnMute?.addEventListener("click", () => {
+      isMuted = !isMuted;
+      updateMuteButton();
+
+      if (!getSupportsSpeech()) return;
+      const wasPaused = isUserPaused || speechSynthesis.paused;
+      const wasActive =
+        speechSynthesis.speaking || speechSynthesis.paused || isUserPaused;
+      if (!wasActive) return;
+
+      cancelSpeech();
+      speakSentenceFrom(playheadSentenceIndex);
+      if (wasPaused) {
+        isUserPaused = true;
+        speechSynthesis.pause();
+        updateToggleButton();
+      }
+    });
+
+    rateEl?.addEventListener("change", () => {
+      updateTimeUiForSentence(playheadSentenceIndex, hasCompleted);
+      if (!getSupportsSpeech()) return;
+      if (speechSynthesis.speaking || speechSynthesis.paused || isUserPaused) {
+        const wasPaused = isUserPaused || speechSynthesis.paused;
+        cancelSpeech();
+        speakSentenceFrom(playheadSentenceIndex);
+        if (wasPaused) {
+          isUserPaused = true;
+          speechSynthesis.pause();
+          updateToggleButton();
+        }
+      }
+    });
+
+    voiceEl?.addEventListener("change", () => {
+      if (!getSupportsSpeech()) return;
+      if (speechSynthesis.speaking || speechSynthesis.paused || isUserPaused) {
+        const wasPaused = isUserPaused || speechSynthesis.paused;
+        cancelSpeech();
+        speakSentenceFrom(playheadSentenceIndex);
+        if (wasPaused) {
+          isUserPaused = true;
+          speechSynthesis.pause();
+          updateToggleButton();
+        }
+      }
+    });
+
+    seekEl?.addEventListener("input", () => {
+      if (!prepare()) return;
+      const preview = sentenceIndexFromProgress(Number(seekEl.value || "0"));
+      updateSeekUi(preview, false, false);
+    });
+
+    seekEl?.addEventListener("change", () => {
+      seekToProgress(Number(seekEl?.value || "0"));
+    });
+
+    if (getSupportsSpeech()) {
+      loadVoices();
+      speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
+    updateSeekUi(0, true, false);
+    updateMuteButton();
+    updateToggleButton();
+    updateFloatingState();
+  })();
+</script>

@@ -7,6 +7,7 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import Hero from "../../components/Hero.astro";
 import { getCollection } from "astro:content";
+import AudioReader from "../../components/AudioReader.astro";
 
 export async function getStaticPaths() {
     const posts = await getCollection("blogs", ({ data }) => !data.draft);
@@ -25,7 +26,8 @@ const description = post.data.description;
 const publishedAt =
     post.data.date instanceof Date ? post.data.date : new Date(post.data.date);
 const coverImage = post.data.coverImage ?? post.data.heroImage ?? null;
-const canonical = post.data.canonical ?? `/blog/${post.data.slug ?? post.slug}/`;
+const canonical =
+    post.data.canonical ?? `/blog/${post.data.slug ?? post.slug}/`;
 ---
 
 <BaseLayout
@@ -119,7 +121,9 @@ const canonical = post.data.canonical ?? `/blog/${post.data.slug ?? post.slug}/`
                             </div>
                         )
                     }
+                    <AudioReader target="#post" />
                     <div
+                        id="post"
                         class="prose prose-theme max-w-none prose-a:text-accent prose-img:rounded-2xl prose-img:border prose-img:border-[color:var(--border)]"
                     >
                         <Content />
