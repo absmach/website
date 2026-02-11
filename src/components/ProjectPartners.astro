@@ -1,29 +1,36 @@
 ---
 import { Image } from "astro:assets";
 
-const { title = "Project Partners", partners = [] } = Astro.props;
+const { title = "Project Partners", partners = [], logoClass = "" } =
+  Astro.props;
 ---
 
-<div class="card-base">
-  <div
-    class="-mx-6 -mt-6 rounded-t-2xl bg-surface-2 px-6 py-4 border-b border-subtle"
-  >
-    <h3 class="text-lg font-semibold text-primary">{title}</h3>
+<div class="card-base project-partners">
+  <div class="border-b border-subtle pb-4">
+    <p class="section-label">Network</p>
+    <h3 class="mt-1 text-xl font-semibold text-primary">{title}</h3>
+    <p class="mt-1 text-sm text-muted">
+      Organizations collaborating across this project.
+    </p>
   </div>
 
-  <div
-    class="mt-6 grid grid-cols-2 items-center justify-items-center gap-x-8 gap-y-8"
-  >
+  <div class="mt-5 grid grid-cols-2 items-stretch gap-3">
     {
-      partners.map((partner) => (
-        <div class="flex w-full items-center justify-center rounded-xl bg-white p-3">
+      partners.map((partner, index) => (
+        <div class="partner-tile flex w-full items-center justify-center rounded-xl p-3">
           <Image
             alt={partner.alt}
             src={partner.src}
-            class="h-10 w-auto"
+            class={[
+              "h-9 w-auto max-w-full object-contain sm:h-10",
+              logoClass,
+              partner.logoClass,
+            ]
+              .filter(Boolean)
+              .join(" ")}
             width={280}
             height={100}
-            loading="lazy"
+            loading={index < 2 ? "eager" : "lazy"}
             decoding="async"
           />
         </div>
@@ -31,3 +38,40 @@ const { title = "Project Partners", partners = [] } = Astro.props;
     }
   </div>
 </div>
+
+<style>
+  .project-partners {
+    background: linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--panel) 74%, transparent),
+      color-mix(in srgb, var(--surface) 78%, transparent)
+    );
+    border-color: color-mix(
+      in srgb,
+      var(--border) 84%,
+      rgba(255, 255, 255, 0.2)
+    );
+    backdrop-filter: blur(14px) saturate(145%);
+    -webkit-backdrop-filter: blur(14px) saturate(145%);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #fff 22%, transparent),
+      var(--shadow-soft);
+  }
+
+  .partner-tile {
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--surface) 76%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 14%, transparent);
+    min-height: 4.75rem;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .partner-tile:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #fff 14%, transparent),
+      var(--shadow-soft);
+  }
+</style>

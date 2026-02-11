@@ -1,0 +1,190 @@
+---
+import { Image } from "astro:assets";
+
+const featuredProject = {
+  name: "CONFIDENTIAL6G",
+  tagline: "Quantum-Resistant Security for 6G Networks",
+  description:
+    "Developing cryptographic protocols and secure architectures for next-generation 6G systems.",
+  duration: "2023-2025",
+  program: "EU Horizon Europe",
+  href: "/projects/confidential6g/",
+  logoSrc: "/img/logos/confidential6G.jpg",
+  logoAlt: "CONFIDENTIAL6G logo",
+  external: false,
+};
+
+const secondaryProjects = [
+  {
+    name: "Elastic",
+    tagline: "Next-Gen Network Orchestration",
+    description:
+      "WebAssembly-based orchestration with confidential computing for cloud-edge workloads.",
+    duration: "2023-2027",
+    program: "EU Horizon Europe",
+    href: "/projects/elastic/",
+    logoSrc: "/img/logos/elastic.png",
+    logoAlt: "Elastic project logo",
+    logoClass: "invert dark:invert-0",
+    external: false,
+  },
+  {
+    name: "EdgeX Foundry",
+    tagline: "Open Source Edge Platform",
+    description:
+      "Open ecosystem contribution for interoperable edge deployments and cloud-edge connectivity.",
+    duration: "2017-Present",
+    program: "Linux Foundation",
+    href: "https://www.edgexfoundry.org",
+    logoSrc: "/img/logos/lf.png",
+    logoAlt: "Linux Foundation logo",
+    external: true,
+  },
+];
+---
+
+<section
+  id="projects-preview"
+  class="my-4 box-border py-5 lg:my-6 lg:py-6 scroll-mt-16"
+>
+  <div
+    class="container-wide flex h-full min-h-full flex-col pt-5 pb-8 lg:pt-7 lg:pb-10"
+  >
+    <div>
+      <p class="section-label">Projects</p>
+      <h2 class="section-title mt-0.5">Research and collaborations</h2>
+      <p class="section-subtitle mt-0.5">
+        Ongoing EU and open-source initiatives shaping secure cloud-edge
+        systems.
+      </p>
+    </div>
+
+    <div class="mt-5 grid gap-3 lg:mt-6 lg:grid-cols-2">
+      <article class="project-card lg:col-span-2">
+        <div class="grid gap-4 md:grid-cols-[9.5rem_1fr_auto] md:items-center">
+          <div class="project-logo-wrap h-24 md:h-28">
+            <Image
+              src={featuredProject.logoSrc}
+              alt={featuredProject.logoAlt}
+              width={420}
+              height={180}
+              loading="lazy"
+              decoding="async"
+              class="h-16 w-full object-contain md:h-20 dark:brightness-[2]"
+            />
+          </div>
+
+          <div>
+            <p class="section-label">{featuredProject.program}</p>
+            <h3 class="mt-1 text-2xl font-semibold leading-tight">
+              {featuredProject.name}
+            </h3>
+            <p class="mt-1 text-sm font-medium text-muted">
+              {featuredProject.tagline}
+            </p>
+            <p class="mt-2 text-sm leading-snug text-muted">
+              {featuredProject.description}
+            </p>
+          </div>
+
+          <div
+            class="flex flex-wrap items-center gap-2 md:flex-col md:items-end md:gap-3"
+          >
+            <span
+              class="nav-pill border border-subtle bg-surface-2 px-3 py-1 text-xs font-semibold text-primary"
+            >
+              {featuredProject.duration}
+            </span>
+            <a
+              class="inline-flex font-semibold text-accent"
+              href={featuredProject.href}
+            >
+              Read project →
+            </a>
+          </div>
+        </div>
+      </article>
+
+      {
+        secondaryProjects.map((project) => (
+          <article class="project-card">
+            <div class="grid h-full gap-4 sm:grid-cols-[8rem_1fr] sm:items-center">
+              <div class="project-logo-wrap h-20 sm:h-24">
+                <Image
+                  src={project.logoSrc}
+                  alt={project.logoAlt}
+                  width={360}
+                  height={150}
+                  loading="lazy"
+                  decoding="async"
+                  class={`h-12 w-full object-contain sm:h-14 dark:brightness-[2] ${project.logoClass ?? ""}`}
+                />
+              </div>
+
+              <div class="flex h-full flex-col">
+                <p class="section-label">{project.program}</p>
+                <h3 class="mt-1 text-xl font-semibold leading-tight">
+                  {project.name}
+                </h3>
+                <p class="mt-1 text-sm font-medium text-muted">
+                  {project.tagline}
+                </p>
+                <p class="project-preview-desc mt-2 text-sm leading-snug text-muted">
+                  {project.description}
+                </p>
+                <div class="mt-3 flex flex-wrap items-center gap-2">
+                  <span class="nav-pill border border-subtle bg-surface-2 px-3 py-1 text-xs font-semibold text-primary">
+                    {project.duration}
+                  </span>
+                  <a
+                    class="inline-flex font-semibold text-accent"
+                    href={project.href}
+                    target={project.external ? "_blank" : undefined}
+                    rel={project.external ? "noopener noreferrer" : undefined}
+                  >
+                    {project.external ? "Visit website ↗" : "Read project →"}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 flex justify-center">
+      <a class="button-primary w-fit" href="/projects/">View all projects</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .project-card {
+    border: 1px solid var(--border);
+    background: linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--panel) 86%, var(--accent) 8%),
+      var(--panel)
+    );
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .project-logo-wrap {
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--surface-2) 80%, transparent);
+    border-radius: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 1rem;
+  }
+
+  .project-preview-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

@@ -188,7 +188,10 @@ import Footer from "../../../components/Footer.astro";
                 { label: "Status", value: "Active", pill: true },
               ]}
               links={[
-                { label: "Visit Project Site", href: "https://confidential6g.eu/" },
+                {
+                  label: "Visit Project Site",
+                  href: "https://confidential6g.eu/",
+                },
                 {
                   label: "View on CORDIS",
                   href: "https://cordis.europa.eu/project/id/101096435",
@@ -198,15 +201,26 @@ import Footer from "../../../components/Footer.astro";
 
             <ProjectPartners
               partners={[
-                { alt: "Wings", src: "/img/logos/wings-logo.png" },
+                {
+                  alt: "Wings",
+                  src: "/img/logos/wings-logo.png",
+                  logoClass: "dark:brightness-[1.3]",
+                },
                 { alt: "Nokia", src: "/img/logos/nokia-1.png" },
-                { alt: "Nokia Bell Labs", src: "/img/logos/nokia-bellLabs.png" },
+                {
+                  alt: "Nokia Bell Labs",
+                  src: "/img/logos/nokia-bellLabs.png",
+                },
                 { alt: "Telefonica", src: "/img/logos/telefonica.png" },
                 { alt: "TU/e", src: "/img/logos/tue.png" },
                 { alt: "Ultraviolet", src: "/img/logos/ultraviolet.png" },
                 { alt: "Zen", src: "/img/logos/zen.png" },
                 { alt: "VTT", src: "/img/logos/vtt.png" },
-                { alt: "TNO", src: "/img/logos/tno.png" },
+                {
+                  alt: "TNO",
+                  src: "/img/logos/tno.png",
+                  logoClass: "dark:brightness-200",
+                },
                 { alt: "IMDEA", src: "/img/logos/imdea.png" },
                 { alt: "TU Graz", src: "/img/logos/tu-gratz.png" },
                 { alt: "UCD", src: "/img/logos/ucd-1.png" },
