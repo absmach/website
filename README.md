@@ -4,7 +4,7 @@ Astro + Tailwind source for the [Abstract Machines](https://absmach.eu) website 
 
 ## Stack
 
-- Astro (v4)
+- Astro (v5)
 - Tailwind CSS
 
 ## Project Structure
