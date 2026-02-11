@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 
+import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
@@ -55,9 +56,11 @@ const coverImage = post.data.coverImage ?? post.data.heroImage ?? null;
                 <div class="flex items-center gap-4">
                     {
                         post.data.author.picture ? (
-                            <img
-                                src={post.data.author.picture}
+                            <Image
+                                src={post.data.author.picture!}
                                 alt={post.data.author.name}
+                                width={48}
+                                height={48}
                                 class="h-12 w-12 rounded-full border border-subtle bg-surface-2 object-cover"
                                 loading="lazy"
                                 decoding="async"
@@ -107,9 +110,11 @@ const coverImage = post.data.coverImage ?? post.data.heroImage ?? null;
                     {
                         coverImage && (
                             <div class="mb-10 aspect-video overflow-hidden rounded-3xl border border-subtle bg-surface-2 shadow-[var(--shadow-soft)]">
-                                <img
-                                    src={coverImage}
+                                <Image
+                                    src={coverImage!}
                                     alt=""
+                                    width={1280}
+                                    height={720}
                                     class="h-full w-full object-cover"
                                     loading="lazy"
                                     decoding="async"

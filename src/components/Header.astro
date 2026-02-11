@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 const navItems = [
   { label: "Products", href: "/products", external: false },
   { label: "Solutions", href: "/solutions", external: false },
@@ -33,11 +35,11 @@ const navItems = [
       aria-label="Primary"
     >
       <a href="/" class="flex items-center gap-3 text-primary font-semibold">
-        <img
+        <Image
           src="/img/logos/abstract-machines_logo_landscape-black.png"
           alt="Abstract Machines"
-          width="249"
-          height="30"
+          width={249}
+          height={30}
           class="header-logo block h-auto w-auto max-h-[30px] max-w-[min(250px,55vw)] object-contain"
         />
       </a>

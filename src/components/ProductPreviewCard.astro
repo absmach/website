@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 const {
   title,
   description,
@@ -31,10 +33,12 @@ const defaultLogoClass = featured
                 <slot name="logo" />
               </div>
             ) : (
-              <img
-                src={logoSrc}
+              <Image
+                src={logoSrc!}
                 alt={logoAlt}
                 class={`${defaultLogoClass} ${logoClass}`}
+                width={400}
+                height={160}
                 loading="lazy"
                 decoding="async"
               />
@@ -64,10 +68,12 @@ const defaultLogoClass = featured
                 <slot name="logo" />
               </div>
             ) : (
-              <img
-                src={logoSrc}
+              <Image
+                src={logoSrc!}
                 alt={logoAlt}
                 class={`${defaultLogoClass} ${logoClass}`}
+                width={400}
+                height={160}
                 loading="lazy"
                 decoding="async"
               />

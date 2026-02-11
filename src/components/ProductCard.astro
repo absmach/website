@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 const {
   title,
   description,
@@ -40,10 +42,12 @@ const articleClass = featured
               <slot name="logo" />
             </div>
           ) : (
-            <img
-              src={logoSrc}
+            <Image
+              src={logoSrc!}
               alt={logoAlt}
               class={logoImageClass}
+              width={400}
+              height={160}
               loading="lazy"
               decoding="async"
             />

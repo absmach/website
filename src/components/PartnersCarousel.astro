@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 type Logo = { src: string; alt: string; href?: string };
 
 const logos: Logo[] = [
@@ -65,18 +67,22 @@ const stats: Stat[] = [
                                     rel="noopener noreferrer"
                                     aria-label={l.alt}
                                 >
-                                    <img
+                                    <Image
                                         src={l.src}
                                         alt={l.alt}
+                                        width={320}
+                                        height={120}
                                         loading="lazy"
                                         decoding="async"
                                         class="dark:brightness-[2]"
                                     />
                                 </a>
                             ) : (
-                                <img
+                                <Image
                                     src={l.src}
                                     alt={l.alt}
+                                    width={320}
+                                    height={120}
                                     loading="lazy"
                                     decoding="async"
                                     class="dark:brightness-[2]"
@@ -105,18 +111,22 @@ const stats: Stat[] = [
                                         aria-label={stat.alt ?? stat.label}
                                         class="inline-flex items-center justify-center"
                                     >
-                                        <img
+                                        <Image
                                             src={stat.src}
                                             alt={stat.alt ?? ""}
+                                            width={360}
+                                            height={140}
                                             loading="lazy"
                                             decoding="async"
                                             class="h-12 w-auto md:h-14 dark:brightness-[2]"
                                         />
                                     </a>
                                 ) : (
-                                    <img
+                                    <Image
                                         src={stat.src}
                                         alt={stat.alt ?? ""}
+                                        width={360}
+                                        height={140}
                                         loading="lazy"
                                         decoding="async"
                                         class="mx-auto h-12 w-auto md:h-14 dark:brightness-[2]"

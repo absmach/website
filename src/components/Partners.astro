@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 type Logo = { src: string; alt: string; href?: string };
 
 const featured: Logo = {
@@ -47,9 +49,11 @@ const logos: Logo[] = [
                     aria-label={featured.alt}
                     class="group inline-flex items-center justify-center"
                 >
-                    <img
+                    <Image
                         src={featured.src}
                         alt={featured.alt}
+                        width={420}
+                        height={160}
                         loading="lazy"
                         decoding="async"
                         class="h-20 w-auto transition md:h-24 lg:h-28"
@@ -73,9 +77,11 @@ const logos: Logo[] = [
                     logos.map((l) => (
                         <li class="w-full">
                             <div class="flex h-16 items-center justify-center">
-                                <img
+                                <Image
                                     src={l.src}
                                     alt={l.alt}
+                                    width={320}
+                                    height={120}
                                     loading="lazy"
                                     decoding="async"
                                     class="max-h-12 w-auto max-w-[200px] opacity-90 transition hover:opacity-100"

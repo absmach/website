@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
@@ -154,10 +155,12 @@ const impactStats = [
   sm:h-24 sm:w-52 lg:h-28 lg:w-60"
                     >
                       {project.logo ? (
-                        <img
-                          src={project.logo}
+                        <Image
+                          src={project.logo!}
                           alt={`${project.name} logo`}
                           class={`h-16 w-full object-contain sm:h-20 lg:h-24 dark:brightness-200 ${project.logoInverted ? "invert dark:invert-0" : ""}`}
+                          width={420}
+                          height={160}
                           loading="lazy"
                           decoding="async"
                         />

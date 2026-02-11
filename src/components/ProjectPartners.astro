@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 const { title = "Project Partners", partners = [] } = Astro.props;
 ---
 
@@ -13,10 +15,12 @@ const { title = "Project Partners", partners = [] } = Astro.props;
     {
       partners.map((partner) => (
         <div class="flex w-full items-center justify-center rounded-xl bg-white p-3">
-          <img
+          <Image
             alt={partner.alt}
             src={partner.src}
             class="h-10 w-auto"
+            width={280}
+            height={100}
             loading="lazy"
             decoding="async"
           />
@@ -25,4 +29,3 @@ const { title = "Project Partners", partners = [] } = Astro.props;
     }
   </div>
 </div>
-

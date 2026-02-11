@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Header from "../../../components/Header.astro";
 import Hero from "../../../components/Hero.astro";
@@ -25,10 +26,12 @@ import Footer from "../../../components/Footer.astro";
 
       <div class="flex justify-center lg:justify-end">
         <div class="rounded-2xl border border-subtle bg-panel p-4">
-          <img
+          <Image
             src="/img/logos/elastic.png"
             alt="Elastic Project Logo"
             class="h-24 w-auto md:h-28 invert dark:invert-0"
+            width={360}
+            height={140}
             loading="lazy"
             decoding="async"
           />
