@@ -32,7 +32,7 @@
         "@type": "BlogPosting",
         "headline": "Getting Started with Magistrala: From Zero to Your First Connected Device",
         "image": "https:\/\/absmach.eu\/img\/blogs\/getting-started-with-magistrala\/cover-image.png",
-        "datePublished": "2026-02-09",
+        "datePublished": "2026-02-11",
         "author": {
           "@type": "Person",
           "name": "Felix Gateru"
@@ -276,7 +276,7 @@
           <div>
             <div class="fw-bold fs-5">Felix Gateru</div>
             <div class="text-muted">
-              February 09, 2026 · 12 min read
+              February 11, 2026 · 11 min read
             </div>
           </div>
         </div>
@@ -289,11 +289,10 @@
         <div class="markdown-content"><p>Building a production-ready IoT platform is hard.</p>
 <p>Teams must handle secure device authentication, multi-protocol messaging, scalability, multi-tenancy, and real-time data flow across cloud and edge environments. Many solutions solve only part of the problem.This leaves engineers to stitch together brokers, authentication systems, and custom services.</p>
 <p>For engineering leads looking at IoT platforms, the choice involves more than just features. It focuses on long-term maintenance, overall cost, and lowering operational risk. A platform that ties you to proprietary protocols or a single architecture builds up technical debt as your fleet grows. Open-source, modular platforms help prevent this. They give teams complete control over their setup.They allow swapping components without rewriting integrations. Further, they provide a straightforward route from proof-of-concept to production without being locked into a vendor.</p>
-<p>Magistrala is designed to address this challenge with a modular, scalable, and secure IoT platform built for real-world deployments. Unlike managed IoT clouds such as AWS IoT Core or Azure IoT Hub, Magistrala can be self-hosted. This keeps infrastructure costs predictable and data sovereignty under your control. Compared to lightweight brokers like Mosquitto or EMQX, Magistrala provides a full application layer — device identity, multi-tenancy, access control, rules engine, and dashboards. This is all out of the box! This reduces the custom glue code teams would otherwise need to build and maintain.</p>
+<p>Magistrala is designed to address this challenge with a modular, scalable, and secure IoT platform built for real-world deployments. Unlike managed IoT clouds such as AWS IoT Core or Azure IoT Hub, Magistrala can be self-hosted. This keeps infrastructure costs predictable and data sovereignty under your control. Compared to lightweight brokers like Mosquitto, Magistrala provides a full application layer — device identity, multi-tenancy, access control, rules engine, and dashboards. All this with support for multiple protocols. This is all out of the box! This reduces the custom glue code teams would otherwise need to build and maintain.</p>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ul>
 <li><a href="#why-magistralas-architecture-matters">Why Magistrala's Architecture Matters</a></li>
-<li><a href="#how-magistrala-compares">How Magistrala Compares</a></li>
 <li><a href="#core-concepts">Core Concepts</a></li>
 <li><a href="#prerequisites">Prerequisites</a></li>
 <li><a href="#running-magistrala-locally">Running Magistrala Locally</a></li>
@@ -320,63 +319,26 @@
 <li><strong>Multi-tenancy</strong> — Domains provide hard isolation between tenants, their devices, channels, and data. This is critical for B2B SaaS providers or large organizations with multiple business units sharing a single deployment.</li>
 <li><strong>Open-source and extensible</strong> — The entire codebase is Apache-2.0 licensed. Teams can audit the code, contribute upstream, and extend the platform without waiting on a vendor roadmap.</li>
 </ul>
-<p>Core components include Users &amp; Domains, Clients (devices), Channels, Groups, Protocol Adapters, and a Message Broker with Event Streaming.</p>
-<h2 id="how-magistrala-compares">How Magistrala Compares</h2>
-<p>When evaluating IoT platforms, teams typically weigh three categories of trade-offs:</p>
-<table>
-<thead>
-<tr>
-<th>Concern</th>
-<th>Managed Cloud (AWS IoT, Azure IoT Hub)</th>
-<th>Lightweight Broker (Mosquitto, EMQX)</th>
-<th>Magistrala</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Hosting &amp; data sovereignty</strong></td>
-<td>Vendor-managed; data resides in provider's cloud</td>
-<td>Self-hosted</td>
-<td>Self-hosted or <a href="https://cloud.magistrala.io">Magistrala Cloud</a></td>
-</tr>
-<tr>
-<td><strong>Cost model</strong></td>
-<td>Per-message / per-device pricing that grows with scale</td>
-<td>Free, but operational burden is on you</td>
-<td>Predictable infrastructure cost; open-source core</td>
-</tr>
-<tr>
-<td><strong>Built-in application layer</strong></td>
-<td>Partial — identity, rules, and dashboards often require additional services</td>
-<td>Minimal — broker only</td>
-<td>Full — identity, multi-tenancy, rules engine, dashboards included</td>
-</tr>
-<tr>
-<td><strong>Vendor lock-in risk</strong></td>
-<td>High — proprietary SDKs and APIs</td>
-<td>Low</td>
-<td>Low — standard protocols, open-source</td>
-</tr>
-<tr>
-<td><strong>Long-term maintainability</strong></td>
-<td>Dependent on provider roadmap</td>
-<td>Community-maintained broker</td>
-<td>Active open-source community + commercial support option</td>
-</tr>
-</tbody>
-</table>
-<p>Magistrala sits in a sweet spot: it offers the operational completeness of a managed platform while preserving the flexibility and cost control of self-hosted open-source software.</p>
 <h2 id="core-concepts">Core Concepts</h2>
-<h3 id="clients">Clients</h3>
-<p>Represent physical or virtual devices with unique credentials. Can be an IoT device, application, or service.</p>
-<h3 id="channels">Channels</h3>
-<p>Secure communication paths controlling message flow.</p>
-<h3 id="groups">Groups</h3>
-<p>Logical collections of clients and channels for easier management.</p>
-<h3 id="domains">Domains</h3>
-<p>Multi-tenant environments isolating groups, clients, and channels.</p>
-<h3 id="protocol-adapters">Protocol Adapters</h3>
-<p>Support MQTT, HTTP, CoAP, and WebSocket, feeding into a unified broker.</p>
+<p>Magistrala's architecture revolves around a few core concepts that are helpful to understand when getting started:</p>
+<ol>
+<li>
+<p><strong>Clients</strong> - Represent physical or virtual devices with unique credentials. Can be an IoT device, application, or service.</p>
+</li>
+<li>
+<p><strong>Channels</strong> - Secure communication paths controlling message flow.</p>
+</li>
+<li>
+<p><strong>Groups</strong> - Logical collections of clients and channels for easier management.<br>
+Logical collections of clients and channels for easier management.</p>
+</li>
+<li>
+<p><strong>Domains</strong> - Multi-tenant environments isolating groups, clients, and channels.</p>
+</li>
+<li>
+<p><strong>Protocol Adapters</strong> - Support MQTT, HTTP, CoAP, and WebSocket, feeding into a unified broker.</p>
+</li>
+</ol>
 <p>In this guide, we will walk through setting up a local Magistrala instance, creating a simple IoT flow, and understanding the architecture in action.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
