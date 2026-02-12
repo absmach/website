@@ -36,51 +36,6 @@ const benefits = [
     icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
   },
 ];
-
-const positions = [
-  {
-    title: "Senior Backend Engineer",
-    department: "Engineering",
-    location: "Remote (EU)",
-    type: "Full-time",
-    description:
-      "Build high-performance distributed systems in Go and Rust. Work on MQTT brokers, WebAssembly orchestration, and edge computing platforms.",
-    requirements: [
-      "5+ years backend development",
-      "Go or Rust expertise",
-      "Distributed systems experience",
-      "Open source contributor",
-    ],
-  },
-  {
-    title: "IoT Solutions Architect",
-    department: "Solutions",
-    location: "Paris / Remote",
-    type: "Full-time",
-    description:
-      "Design and implement IoT architectures for enterprise clients. Lead technical discussions and drive solution adoption.",
-    requirements: [
-      "IoT/embedded systems experience",
-      "MQTT, CoAP protocols",
-      "Customer-facing skills",
-      "Architecture design",
-    ],
-  },
-  {
-    title: "Research Engineer",
-    department: "Research",
-    location: "Remote (EU)",
-    type: "Full-time",
-    description:
-      "Contribute to EU research projects on 6G, edge computing, and confidential computing. Publish papers and build prototypes.",
-    requirements: [
-      "MSc/PhD in CS or related",
-      "Research publication record",
-      "Edge computing knowledge",
-      "WebAssembly experience",
-    ],
-  },
-];
 ---
 
 <BaseLayout title="Careers">
@@ -143,107 +98,15 @@ const positions = [
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-16">
         <h2 class="text-5xl font-display font-bold mb-4">Open Positions</h2>
-        <p class="text-xl text-muted">Find your next opportunity</p>
+        <p class="text-xl text-muted">We are not hiring right now</p>
       </div>
 
-      <div class="space-y-6">
-        {
-          positions.map((position) => (
-            <div class="p-8 rounded-2xl border border-subtle bg-panel transition-all hover:border-accent hover:shadow-[var(--shadow-soft)]">
-              <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
-                <div>
-                  <h3 class="text-2xl font-display font-bold mb-2">
-                    {position.title}
-                  </h3>
-                  <div class="flex flex-wrap gap-3 text-sm text-muted">
-                    <span class="flex items-center gap-1">
-                      <svg
-                        class="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                      </svg>
-                      {position.department}
-                    </span>
-                    <span class="flex items-center gap-1">
-                      <svg
-                        class="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                        />
-                      </svg>
-                      {position.location}
-                    </span>
-                    <span class="flex items-center gap-1">
-                      <svg
-                        class="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      {position.type}
-                    </span>
-                  </div>
-                </div>
-                <a
-                  href="/contact"
-                  class="inline-flex items-center rounded-lg border border-subtle px-6 py-2 font-medium text-primary transition-all hover:border-accent"
-                >
-                  Apply Now
-                </a>
-              </div>
-
-              <p class="text-muted mb-6">{position.description}</p>
-
-              <div>
-                <div class="text-sm font-semibold text-primary mb-3">
-                  Requirements:
-                </div>
-                <ul class="grid md:grid-cols-2 gap-2">
-                  {position.requirements.map((req) => (
-                    <li class="flex items-start gap-2 text-sm text-muted">
-                      <svg
-                        class="w-4 h-4 text-electric-cyan flex-shrink-0 mt-0.5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                      {req}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))
-        }
+      <div class="max-w-3xl mx-auto rounded-2xl border border-subtle bg-panel p-8 text-center">
+        <p class="text-muted">
+          There are currently no open positions. You can still reach out via
+          our
+          <a href="/contact/" class="text-primary underline-offset-4 hover:underline"> contact page</a>.
+        </p>
       </div>
     </div>
   </section>
@@ -266,9 +129,7 @@ const positions = [
             >
           </div>
           <h3 class="font-display font-bold mb-2">Apply</h3>
-          <p class="text-sm text-muted">
-            Submit your application via email
-          </p>
+          <p class="text-sm text-muted">Submit your application via email</p>
         </div>
 
         <div class="text-center">
@@ -280,9 +141,7 @@ const positions = [
             >
           </div>
           <h3 class="font-display font-bold mb-2">Screen</h3>
-          <p class="text-sm text-muted">
-            Initial conversation with our team
-          </p>
+          <p class="text-sm text-muted">Initial conversation with our team</p>
         </div>
 
         <div class="text-center">
