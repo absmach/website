@@ -9,7 +9,7 @@ author:
   picture: "https://avatars.githubusercontent.com/u/57312311?v=4"
 coverImage: "/img/blogs/getting-started-with-magistrala/cover-image.jpg"
 ogImage:
-url: "/img/blogs/getting-started-with-magistrala/cover-image.jpg"
+  url: "/img/blogs/getting-started-with-magistrala/cover-image.jpg"
 category: blog
 tags:
   - iot
