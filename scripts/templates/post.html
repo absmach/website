@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>{{ .Title }} - {{ .Site.Name }}</title>
-  <meta name="title" content="{{ .Title }} - {{ .Site.Name }}" />
+  <meta name="title" property="og:title" content="{{ .Title }} - {{ .Site.Name }}" />
   <meta name="description" content="{{ .Description }}" />
 
   <link rel="canonical" href="{{ .CanonicalUrl }}" />
@@ -14,9 +14,8 @@
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="{{ .Site.Name }}" />
   <meta property="og:url" content="{{ .Site.Url }}/blog/{{ .Slug }}" />
-  <meta property="og:title" content="{{ .Title }}" />
-  <meta property="og:description" content="{{ .Description }}" />
-  <meta property="og:image" content="{{ .Site.Url }}{{ .OgImage.Url }}" />
+  <meta name="description" property="og:description" content="{{ .Description }}" />
+  <meta name="image" property="og:image" content="{{ .Site.Url }}{{ .OgImage.Url }}" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
