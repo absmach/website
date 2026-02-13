@@ -26,6 +26,7 @@ author:
 tags:
   - fluxmq
   - mqtt
+featured: false # optional (featured posts are pinned above non-featured posts on /blog/)
 draft: false # optional (set true to hide from /blog/)
 coverImage: "/img/blogs/my-new-post/cover.png" # optional (URL or local path)
 canonical: "https://absmach.eu/blog/my-new-post/" # optional
@@ -37,6 +38,8 @@ Notes:
 
 - `date` / `updatedAt` accept `YYYY-MM-DD` (they are coerced into real dates by the schema).
 - Tags are case-sensitive on the blog filter UI. Pick one convention and stick to it.
+- `featured: true` should be temporary. Featured posts are always shown before non-featured posts, regardless of publish date.
+- Writers/editors must remove old `featured: true` flags after a campaign/release window. If many posts stay featured, newer non-featured posts will not appear near the top of `/blog/`.
 
 ## 3) Add images
 

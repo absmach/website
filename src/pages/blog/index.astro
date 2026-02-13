@@ -63,7 +63,12 @@ const normalized = posts
       ),
     };
   })
-  .sort((a, b) => b.date.getTime() - a.date.getTime());
+  .sort((a, b) => {
+    if (a.featured !== b.featured) {
+      return Number(b.featured) - Number(a.featured);
+    }
+    return b.date.getTime() - a.date.getTime();
+  });
 
 const blogData = JSON.stringify(normalized).replace(/</g, "\\u003c");
 
@@ -110,7 +115,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                 <p class="text-sm font-semibold text-muted">Categories</p>
                 <div
                   id="category-chips"
-                  class="mt-2 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible"
+                  class="mt-2 flex gap-1 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible"
                 >
                   {
                     PRODUCT_CATEGORIES.map((category) => (
@@ -188,11 +193,19 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                 normalized.map((p, index) => (
                   <a
                     href={p.href}
-                    class="card-base block overflow-hidden !p-0 hover:shadow-[var(--shadow-strong)]"
+                    class={`card-base block overflow-hidden !p-0 hover:shadow-[var(--shadow-strong)] ${
+                      p.featured ? "md:col-span-2" : ""
+                    }`}
                     data-post-href={p.href}
                   >
                     {p.coverImage && (
-                      <div class="aspect-video overflow-hidden border-b border-subtle bg-surface-2">
+                      <div
+                        class={`overflow-hidden border-b border-subtle bg-surface-2 ${
+                          p.featured
+                            ? "aspect-[16/7] md:aspect-[16/6]"
+                            : "aspect-video"
+                        }`}
+                      >
                         <Image
                           src={p.coverImage}
                           alt=""
@@ -222,7 +235,11 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                         {p.authorPicture && (
                           <img
                             src={p.authorPicture}
-                            alt={p.author ? `${p.author} profile photo` : "Author profile photo"}
+                            alt={
+                              p.author
+                                ? `${p.author} profile photo`
+                                : "Author profile photo"
+                            }
                             class="h-8 w-8 rounded-full border border-subtle object-cover"
                             loading="lazy"
                             decoding="async"
