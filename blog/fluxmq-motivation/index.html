@@ -5,24 +5,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>FluxMQ: A Modern Message Broker Built for Messaging and Event Logs - Abstract Machines</title>
-  <meta name="title" content="FluxMQ: A Modern Message Broker Built for Messaging and Event Logs - Abstract Machines" />
-  <meta name="description" content="FluxMQ is a free and open-source message broker designed for modern messaging and event-driven systems." />
+  <title>FluxMQ: Why We’re Building It - Abstract Machines</title>
+  <meta name="title" content="FluxMQ: Why We’re Building It - Abstract Machines" />
+  <meta name="description" content="The organizational, technical, and architectural motivations behind building a new message broker." />
 
-  <link rel="canonical" href="https://absmach.eu/blog/fluxmq-announcement/" />
+  <link rel="canonical" href="https://absmach.eu/blog/fluxmq-motivation/" />
 
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Abstract Machines" />
-  <meta property="og:url" content="https://absmach.eu/blog/fluxmq-announcement" />
-  <meta property="og:title" content="FluxMQ: A Modern Message Broker Built for Messaging and Event Logs" />
-  <meta property="og:description" content="FluxMQ is a free and open-source message broker designed for modern messaging and event-driven systems." />
-  <meta property="og:image" content="https://absmach.eu/img/blogs/fluxmq-announcement/homepage.png" />
+  <meta property="og:url" content="https://absmach.eu/blog/fluxmq-motivation" />
+  <meta property="og:title" content="FluxMQ: Why We’re Building It" />
+  <meta property="og:description" content="The organizational, technical, and architectural motivations behind building a new message broker." />
+  <meta property="og:image" content="https://absmach.eu/img/blogs/fluxmq-motivation/homepage.jpg" />
 
   
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="FluxMQ: A Modern Message Broker Built for Messaging and Event Logs" />
-  <meta name="twitter:description" content="FluxMQ is a free and open-source message broker designed for modern messaging and event-driven systems." />
-  <meta name="twitter:image" content="https://absmach.eu/img/blogs/fluxmq-announcement/homepage.png" />
+  <meta name="twitter:title" content="FluxMQ: Why We’re Building It" />
+  <meta name="twitter:description" content="The organizational, technical, and architectural motivations behind building a new message broker." />
+  <meta name="twitter:image" content="https://absmach.eu/img/blogs/fluxmq-motivation/homepage.jpg" />
 
 
   
@@ -30,14 +30,14 @@
       {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": "FluxMQ: A Modern Message Broker Built for Messaging and Event Logs",
-        "image": "https:\/\/absmach.eu\/img\/blogs\/fluxmq-announcement\/homepage.png",
-        "datePublished": "2026-02-06",
+        "headline": "FluxMQ: Why We’re Building It",
+        "image": "https:\/\/absmach.eu\/img\/blogs\/fluxmq-motivation\/homepage.jpg",
+        "datePublished": "2026-02-13",
         "author": {
           "@type": "Person",
           "name": "Dusan Borovcanin"
         },
-        "description": "FluxMQ is a free and open-source message broker designed for modern messaging and event-driven systems."
+        "description": "The organizational, technical, and architectural motivations behind building a new message broker."
       }
     </script>
 
@@ -264,11 +264,11 @@
         </div>
 
         <div class="mb-3">
-          <span class="badge bg-success fs-6">announcement</span>
+          <span class="badge bg-primary fs-6">blog</span>
           
         </div>
 
-        <h1 class="display-4 fw-bold mb-4">FluxMQ: A Modern Message Broker Built for Messaging and Event Logs</h1>
+        <h1 class="display-4 fw-bold mb-4">FluxMQ: Why We’re Building It</h1>
 
         <div class="d-flex align-items-center mb-4 pb-4 border-bottom">
           <img src="https://avatars.githubusercontent.com/u/17817225?v=4" alt="Dusan Borovcanin" class="rounded-circle me-3" width="60" height="60"
@@ -276,121 +276,183 @@
           <div>
             <div class="fw-bold fs-5">Dusan Borovcanin</div>
             <div class="text-muted">
-              February 06, 2026 · 4 min read
+              February 13, 2026 · 9 min read
             </div>
           </div>
         </div>
 
         
-        <img src="/img/blogs/fluxmq-announcement/homepage.png" alt="FluxMQ: A Modern Message Broker Built for Messaging and Event Logs" class="img-fluid rounded mb-5 w-100 shadow-sm" loading="lazy"
+        <img src="/img/blogs/fluxmq-motivation/homepage.jpg" alt="FluxMQ: Why We’re Building It" class="img-fluid rounded mb-5 w-100 shadow-sm" loading="lazy"
           onerror="this.style.display = 'none'" />
         
 
-        <div class="markdown-content"><h2 id="introducing-fluxmq">Introducing FluxMQ</h2>
-<p>We’ve been working on the open-source IoT platform <a href="https://magistrala.abmach.eu">Magistrala</a> for well over a decade. What began as a passion project by a small group of enthusiasts has grown into one of the most widely used open-source IoT platforms in the world. Along the way, our architecture evolved significantly. Eventually, we extracted its core into a more general-purpose, event-driven platform for distributed systems called <a href="https://github.com/absmach/supermq">SuperMQ</a>.</p>
-<p>Throughout that journey, one component remained absolutely central: <strong>the message broker</strong>.</p>
-<p>For years, we relied on existing brokers as the backbone of our architecture, and they served us well. But as our systems grew more complex — spanning multiple protocols, deployment models, and persistence requirements — it became clear that the broker was no longer just an interchangeable dependency. It was <em>the core</em>.</p>
-<p>That realization led us to start a new project.</p>
-<p>Meet <a href="https://fluxmq.absmach.eu"><span style="color:#2F69B3"><strong>Flux</strong></span><span style="color:#F9A32A"><strong>MQ</strong></span>!</a></p>
-<hr>
-<h2 id="what-is-fluxmq">What Is FluxMQ?</h2>
-<p><strong>FluxMQ</strong> is a <strong>free and open-source message broker</strong> designed to serve as a <strong>high-performance messaging backbone</strong> for modern distributed systems.</p>
-<p>At its core, FluxMQ is built around five key ideas:</p>
-<ul>
-<li><strong>MQTT as a first-class protocol</strong>, not an afterthought</li>
-<li><strong>Multi-protocol support</strong>, including protocols such as AMQP, CoAP and HTTP</li>
-<li><strong>Extensibility</strong> for custom workflows and integrations</li>
-<li><strong>Protocol bridge support</strong> through dedicated front-ends</li>
-<li><strong>Persistent event storage</strong>, enabling both messaging and event-driven architectures</li>
-</ul>
-<p>FluxMQ is designed to handle:</p>
-<ul>
-<li>classic message-based communication</li>
-<li>protocol bridging between heterogeneous clients and services</li>
-<li>persistent message storage for event replay, recovery, and auditing</li>
-</ul>
-<p>All of this is delivered as a <strong>single, standalone service</strong>, without external operational dependencies.</p>
-<p>FluxMQ is <strong>actively under development</strong>. Some features are still evolving, some APIs may change, and performance characteristics will continue to improve as the project matures.</p>
-<hr>
-<h2 id="key-characteristics">Key Characteristics</h2>
-<h3 id="-multi-protocol-support">🔌 Multi-Protocol Support</h3>
-<p>FluxMQ supports multiple protocols out of the box, including:</p>
-<ul>
-<li>MQTT v3.1.1 and v5</li>
-<li>AMQP</li>
-<li>HTTP</li>
-<li>WebSockets</li>
-<li>CoAP</li>
-</ul>
-<p>FluxMQ is built as a <strong>collection of protocol-specific brokers that share a common messaging core</strong>, including shared persistence and routing.</p>
-<h3 id="-event-logs-and-persistence">📜 Event Logs and Persistence</h3>
-<p>Messages can be stored as ordered event logs, enabling:</p>
-<ul>
-<li>Message replay</li>
-<li>Late-joining consumers</li>
-<li>Debugging and audit trails</li>
-<li>Reliable delivery across restarts</li>
-</ul>
-<h3 id="-operational-simplicity">⚙️ Operational Simplicity</h3>
-<p>FluxMQ is designed as a standalone service, without mandatory external dependencies. This makes it easier to deploy, operate, and embed into existing systems.</p>
-<h3 id="-performance-and-scalability">🚀 Performance and Scalability</h3>
-<p>The internal architecture is optimized for throughput and low latency, with a strong focus on predictable behavior under load. Benchmarks and detailed performance analysis will be published as the project matures.</p>
-<hr>
-<h2 id="who-is-fluxmq-for">Who Is FluxMQ For?</h2>
-<p>FluxMQ is a good fit if you are:</p>
-<ul>
-<li>Building IoT platforms that rely on MQTT but need more than a traditional MQTT broker</li>
-<li>Designing event-driven systems with multiple producer and consumer protocols</li>
-<li>Looking for a unified messaging and persistence layer</li>
-<li>Willing to adopt an evolving project and help shape its future</li>
-</ul>
-<p>FluxMQ may <strong>not</strong> be the right choice if you are looking for a drop-in replacement for Kafka, NATS, or RabbitMQ, or if your use case is fully covered by simpler messaging models and APIs.</p>
-<hr>
-<h2 id="why-another-message-broker">Why Another Message Broker?</h2>
-<p>Writing a message broker is not something you do for fun. It is a critical infrastructure component that requires deep knowledge of distributed systems, networking, storage, and performance engineering.</p>
+        <div class="markdown-content"><h2 id="why-another-message-broker">Why Another Message Broker?</h2>
+<p>This is the obvious question — and a fair one.</p>
+<p>Message brokers are not weekend projects. They are complex, foundational pieces of infrastructure that sit at the heart of distributed systems. They are difficult to design, harder to implement correctly, and even harder to operate at scale.</p>
 <p>So why build another one?</p>
-<p>Because our requirements did not align with what existing brokers offered.</p>
-<p>We needed:</p>
-<ul>
-<li>MQTT as a first-class citizen, not a plugin or compatibility layer</li>
-<li>Consistent semantics across multiple protocols</li>
-<li>Native support for event logs and message persistence</li>
-<li>Predictable performance under high load</li>
-<li>A system we could reason about, extend, and operate long-term</li>
-</ul>
-<p>While excellent systems like NATS, Kafka, and RabbitMQ exist, FluxMQ is not a replacement for them. Each of those projects excels in its own domain.<br>
-FluxMQ occupies a different space: a unified broker designed for systems that need <strong>protocol diversity, persistent messaging, and architectural simplicity</strong>.</p>
-<h3 id="why-choose-fluxmq">Why Choose FluxMQ?</h3>
-<p>Most teams end up running multiple brokers: one for MQTT, another for AMQP, maybe Kafka for event logs. Each adds operational complexity, integration overhead, and infrastructure cost.<br>
-FluxMQ consolidates this into <strong>one broker, multiple protocols, optional persistence</strong> — without sacrificing performance or flexibility.</p>
-<p><strong>The result:</strong></p>
-<ul>
-<li>Fewer moving parts in production</li>
-<li>One system to monitor, secure, and scale</li>
-<li>Native MQTT support without protocol translation overhead</li>
-<li>Event replay and audit trails when you need them, pure messaging when you don't</li>
-</ul>
-<p>If your architecture treats messaging as infrastructure, not just a utility, FluxMQ is built for you.</p>
+<p>The short answer is: <strong>because we need it</strong>.<br>
+The longer answer is what this post is about.</p>
+<p>FluxMQ is not an experiment, a toy, or a “because we can” project. It is the result of years of operating real systems, hitting real limitations, and repeatedly running into the same architectural friction points.</p>
 <hr>
-<h2 id="get-involved">Get Involved</h2>
-<p>This post marks the beginning of the FluxMQ journey.<br>
-FluxMQ is <strong>open source and actively developed</strong>. We're building it in public, and community feedback shapes our roadmap.</p>
-<p><strong>Start here:</strong></p>
+<h2 id="context-messaging-as-a-core-not-a-dependency">Context: Messaging as a Core, Not a Dependency</h2>
+<p>As mentioned in the <a href="https://www.absmach.eu/blog/fluxmq-announcement/">announcement post</a>, FluxMQ grew out of our work on <a href="https://github.com/absmach/supermq">SuperMQ</a>, a core for event-driven distributed systems that itself evolved from the IoT platform <a href="https://magistrala.abmach.eu">Magistrala</a>.</p>
+<p>In most systems, messaging is treated as <em>plumbing</em> — something you wire up and forget about.<br>
+In our case, messaging is <strong>the product</strong>.<br>
+For us, routing, protocol translation, access control, persistence, replay, fan-out, and backpressure are not <em>peripheral concerns</em>; they are the system. That distinction matters a lot when choosing (or building) a broker. For a long time, we successfully relied on existing brokers — most notably NATS — and we still consider them excellent tools. But as our requirements evolved, we increasingly found ourselves building <em>around</em> the broker instead of <em>with</em> it.</p>
+<hr>
+<h2 id="organizational-and-strategic-motivation">Organizational and Strategic Motivation</h2>
+<p>One of the most important realizations we made is that <strong>the broker defines the shape of the system built on top of it</strong>.</p>
+<p>Using an external broker means:</p>
+<ul>
+<li>accepting its internal abstractions</li>
+<li>adapting to its operational model</li>
+<li>working around its limitations</li>
+<li>and living with decisions you do not control</li>
+</ul>
+<p>This is often a perfectly reasonable trade-off — until messaging becomes your core value proposition.</p>
+<p>In our case:</p>
+<ul>
+<li>we do not control the roadmap</li>
+<li>we do not control architectural decisions</li>
+<li>we do not control long-term licensing risk (What if the broker license changes?)</li>
+<li>and we cannot easily move functionality <em>into</em> the broker where it naturally belongs</li>
+</ul>
+<p>Building and maintaining a deep integration or a long-lived fork would require the same level of effort and risk as building a purpose-built broker — without the benefits of ownership or architectural freedom.</p>
+<p>Since FluxMQ is intended to become part of a commercial, messaging-centric offering, <strong>owning the core technology</strong> became a strategic requirement. Not for differentiation alone, but to be able to evolve the system as a whole, instead of accumulating architectural debt at its boundaries.</p>
+<p>Just as importantly, we want that core to remain <strong>free and open-source</strong>, with a healthy community and transparent governance.</p>
+<hr>
+<h2 id="technical-motivation-mqtt-is-not-a-second-class-citizen">Technical Motivation: MQTT Is Not a Second-Class Citizen</h2>
+<p>A major technical driver behind FluxMQ is MQTT.</p>
+<p>MQTT is one of the most important protocols in IoT and edge systems. It is lightweight, efficient, and well-suited for constrained environments. Yet in many general-purpose brokers, MQTT support is either incomplete, layered on top of another proprietary protocol, or treated as a compatibility feature rather than a design constraint.</p>
+<p>In practice, this often leads to architectures where:</p>
+<ul>
+<li>one broker handles MQTT</li>
+<li>another broker handles internal messaging or queues</li>
+<li>yet another system is introduced for event logs or persistence</li>
+<li>and protocol bridges glue everything together</li>
+</ul>
+<p>We have built and operated such systems. They work — but they are expensive to deploy, difficult to reason about, and fragile to evolve. They are also difficult to debug.</p>
+<p>FluxMQ takes a different approach:<br>
+<strong>MQTT is the first-class citizen</strong>, not just an edge protocol.</p>
+<p>Other protocols are mapped <em>into</em> this model through well-defined front-ends, rather than forcing MQTT traffic through abstractions that were never designed for MQTT in the first place.</p>
+<p>At the same time, <strong>MQTT is not suitable for every messaging pattern</strong>.<br>
+MQTT’s consumer model is intentionally simple: topic-based subscriptions with limited delivery semantics. This simplicity is a strength for IoT workloads, but it becomes a limitation for use cases that require:</p>
+<ul>
+<li>stronger delivery semantics (acks/settlement/transactions), idempotent processing patterns, and better consumer control)</li>
+<li>richer consumer interaction with the broker</li>
+<li>explicit acknowledgements, settlement, or transactional flows</li>
+<li>advanced filtering or message selection beyond topic hierarchies</li>
+</ul>
+<p>For these scenarios, FluxMQ introduces support for <strong>AMQP</strong>.<br>
+AMQP complements MQTT by providing a more expressive consumer and delivery model, better suited for internal service-to-service communication, work queues, and advanced processing pipelines. Importantly, AMQP support in FluxMQ is not an alternative to MQTT, but an extension of the same messaging core, sharing routing, persistence, and operational semantics.</p>
+<p>By treating <strong>MQTT and AMQP as peer</strong>, standards-based protocols — each used where it makes architectural sense — FluxMQ avoids inventing artificial semantics or overloading MQTT with special topics to emulate features it was never designed to provide. That said, FluxMQ <em>does</em> make deliberate use of a few special topics. An engineering compromise we accepted since MQTT spec is very generous towards special reserved topics, even suggests them as the implementation tips.</p>
+<p>To avoid protocol collisions and to preserve long-term extensibility, FluxMQ does not rely on a single shared messaging engine with multiple protocol adapters layered on top.<br>
+Instead, each supported protocol is implemented <em>independently</em>, with its own native semantics and expectations. These protocol implementations are connected through an <strong>integration layer</strong>, which we refer to internally as a <code>queue</code>. This layer is responsible for interoperability, message flow, and persistence, without forcing one protocol’s semantics onto another.<br>
+This approach provides two key benefits:</p>
+<ul>
+<li><strong>Isolation</strong>: Protocols do not leak assumptions or behaviors into each other, reducing accidental coupling and semantic mismatches.</li>
+<li><strong>Extensibility</strong>: New, more advanced protocols can be added in the future with a reasonable degree of isolation, while still participating in the same messaging workflows.</li>
+</ul>
+<p>As a result, FluxMQ is architecturally closer to a monolith composed of <strong>multiple cooperating brokers</strong> than to a single messaging engine with multiple protocol skins. This design allows each protocol to remain true to its specification, while still enabling controlled interoperability where it makes sense.</p>
+<hr>
+<h2 id="messaging-queues-and-logs-are-not-the-same-thing">Messaging, Queues, and Logs Are Not the Same Thing</h2>
+<p>One of the hardest problems in broker design is reconciling fundamentally different messaging models. At a high level, many systems talk about “messages” and “consumers”, but the similarities largely end there.</p>
+<p>Where things go wrong is when a broker tries to force a single abstraction to cover all workloads. You end up encoding queue semantics into topic conventions, bolting replay on as an afterthought, or relying on external state to get the delivery behavior you need. FluxMQ makes some compromises, but keeps these models explicit: different workloads get different semantics and operational knobs, even if they share routing and persistence primitives.</p>
+<h3 id="iot-messaging">IoT Messaging</h3>
+<ul>
+<li>messages are small, frequent, and ephemeral</li>
+<li>message loss is often acceptable</li>
+<li>routing is complex and semantic (topics matter)</li>
+<li>consumers are simple and resource-constrained</li>
+<li>delivery guarantees are configurable, not mandatory</li>
+</ul>
+<h3 id="work-queues">Work Queues</h3>
+<ul>
+<li>messages represent units of work</li>
+<li>reliable delivery is essential</li>
+<li>messages are removed after processing</li>
+<li>consumers are capable but interaction is limited</li>
+<li>routing often maps external topics to internal queues</li>
+</ul>
+<h3 id="event-logs">Event Logs</h3>
+<ul>
+<li>messages are immutable records</li>
+<li>loss is unacceptable</li>
+<li>storage and throughput dominate design</li>
+<li>consumers are sophisticated (seek, replay, rewind)</li>
+<li>routing is relatively static and simple</li>
+</ul>
+<p>Trying to support all three models equally — on the same data — usually results in a system that is complex, opaque, and difficult to operate.<br>
+FluxMQ is explicitly designed to <strong>acknowledge these differences</strong>, not erase them. The goal is not to be everything to everyone, but to support <em>well-defined use cases</em> with explicit, visible trade-offs.<br>
+Concretely, FluxMQ is designed around:</p>
+<ul>
+<li>IoT and edge messaging (MQTT-first, high fan-out, lossy by design)</li>
+<li>internal service-to-service messaging and work queues (AMQP, explicit delivery semantics)</li>
+<li>persistent event streams with replay and inspection (log-oriented storage)</li>
+</ul>
+<p>These use cases overlap, but they are not the same — and FluxMQ does not try to flatten them into a single abstraction.</p>
+<hr>
+<h2 id="why-not-just-use-existing-solutions">Why Not Just Use Existing Solutions?</h2>
+<p>We looked — extensively.<br>
+There are excellent MQTT brokers, excellent queueing systems, and excellent log-based platforms. There are also ways to stitch them together using adapters, bridges, and custom glue code.<br>
+We’ve done that too. The problem is not that existing tools are bad. The problem is that <strong>none of them align cleanly with our combined requirements</strong>:</p>
+<ul>
+<li>MQTT-first design</li>
+<li>multi-protocol support</li>
+<li>optional persistence</li>
+<li>embedded clustering</li>
+<li>operational simplicity</li>
+<li>open-source licensing</li>
+<li>extensibility without core modification</li>
+</ul>
+<p>FluxMQ is not meant to replace Kafka, NATS, or RabbitMQ in their natural domains.<br>
+Running multiple brokers, each with its own scaling, persistence, and operational model, introduces cost and complexity that compounds over time.<br>
+FluxMQ is an attempt to <em>reduce</em> that complexity by collapsing the architecture around a single, well-defined messaging core. In the next blog post, we will talk about that and why our naive initial approach did not work.<br>
+We will also talk about protocol standards and challenges in interoperability and compromises and design decisions anyone who writes the broker needs to make.</p>
+<hr>
+<h2 id="whats-in-it-for-us">What’s In It for Us?</h2>
+<p>Building a message broker is a long-term commitment.<br>
+We do it because:</p>
+<ul>
+<li>we gain full control over a critical component</li>
+<li>we can design for our real-world use cases</li>
+<li>we can simplify deployment and operation</li>
+<li>we can build services and tooling <em>around</em> the broker instead of fighting it</li>
+<li>we can build features we think belong to the broker <em>in</em> the broker, rather than <em>around</em> it</li>
+</ul>
+<p>Our long-term business model is centered around <strong>services, support, and expertise</strong>, not locking core features behind a paywall.<br>
+<em>Extensibility exists to enable customization and experimentation</em>, not to fragment the ecosystem.</p>
+<hr>
+<h2 id="still-early-still-evolving">Still Early, Still Evolving</h2>
+<p>FluxMQ is in active development.</p>
+<ul>
+<li>Some design decisions will change.</li>
+<li>Some APIs will evolve.</li>
+<li>Some early implementations will be replaced.</li>
+<li><strong>Some statements from the README are goals, not achievements.</strong></li>
+<li>Even logo and branding may change.</li>
+</ul>
+<p>That’s intentional.</p>
+<p>We use AI tools early on, so expect some slop, rapid iterations and rough edges. That’s part of moving fast at this stage. We prototype, experiment, and iterate aggressively to learn what actually works. As things solidify, we clean it up, measure it, and replace shortcuts with proper implementations.</p>
+<hr>
+<h2 id="whats-next">What’s Next?</h2>
+<p>In the next post, we’ll move from <em>why</em> to <em>how</em>.</p>
+<p>We’ll outline:</p>
+<ul>
+<li>the high-level architecture</li>
+<li>the core components of FluxMQ</li>
+<li>how protocol front-ends, routing, and storage fit together</li>
+<li>and the design constraints that shaped these choices</li>
+</ul>
+<p>If you care about messaging systems, protocol design, or distributed architecture — now is the perfect time to get involved:</p>
 <ul>
 <li>🌐 <strong>Website:</strong> <a href="https://fluxmq.absmach.eu">https://fluxmq.absmach.eu</a></li>
 <li>⚙️ <strong>GitHub:</strong> <a href="https://github.com/absmach/fluxmq">https://github.com/absmach/fluxmq</a></li>
 <li>📘 <strong>Documentation:</strong> <a href="https://fluxmq.absmach.eu/docs">https://fluxmq.absmach.eu/docs</a></li>
 <li>💬 <strong>Discord:</strong> <a href="https://discord.gg/HvB5QuzF">https://discord.gg/HvB5QuzF</a></li>
 </ul>
-<h2 id="whats-next">What’s Next?</h2>
-<p>This announcement is just the beginning. Upcoming posts will dive deeper into:</p>
-<ul>
-<li>Why we built FluxMQ (the full story)</li>
-<li>Architecture deep-dive</li>
-<li>Protocol bridging and persistence internals</li>
-<li>Performance benchmarks and comparisons</li>
-</ul>
-<p>Questions, feedback, and contributions welcome. Let's build this together! 🚀</p>
+<p>We’re building this in the open.<br>
+And we’re just getting started.</p>
 </div>
 
         <div class="mt-5 pt-4 border-top">
@@ -427,11 +489,11 @@ FluxMQ is <strong>open source and actively developed</strong>. We're building it
         <div class="mt-4">
           <h5 class="mb-3">Share this article</h5>
           <div class="d-flex gap-2 flex-wrap">
-            <a href="https://twitter.com/intent/tweet?text=FluxMQ%3A&#43;A&#43;Modern&#43;Message&#43;Broker&#43;Built&#43;for&#43;Messaging&#43;and&#43;Event&#43;Logs&url=https%3a%2f%2fabsmach.eu/blog/fluxmq-announcement"
+            <a href="https://twitter.com/intent/tweet?text=FluxMQ%3A&#43;Why&#43;We%E2%80%99re&#43;Building&#43;It&url=https%3a%2f%2fabsmach.eu/blog/fluxmq-motivation"
               target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
               <i class="fab fa-twitter me-2"></i>Twitter
             </a>
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fabsmach.eu/blog/fluxmq-announcement"
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fabsmach.eu/blog/fluxmq-motivation"
               target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
               <i class="fab fa-linkedin me-2"></i>LinkedIn
             </a>
@@ -501,69 +563,6 @@ FluxMQ is <strong>open source and actively developed</strong>. We're building it
         
         <div class="col-md-6 col-lg-4">
           <article class="card h-100 shadow-sm hover-lift border-0">
-            <a href="/blog/fluxmq-motivation" class="text-decoration-none text-dark">
-              
-              <img src="/img/blogs/fluxmq-motivation/homepage.jpg" class="card-img-top" alt="FluxMQ: Why We’re Building It"
-                loading="lazy" onerror="this.style.display = 'none'" style="height: 200px; object-fit: cover;" />
-              
-
-              <div class="card-body">
-                <div class="mb-2">
-                  <span class="badge bg-primary me-2">
-                    blog
-                  </span>
-                  
-                </div>
-
-                <h2 class="card-title h5 fw-bold">
-                  FluxMQ: Why We’re Building It
-                </h2>
-                <p class="card-text text-muted small">
-                  
-                </p>
-
-                <div class="d-flex align-items-center mt-3">
-                  <img src="https://avatars.githubusercontent.com/u/17817225?v=4" alt="Dusan Borovcanin"
-                    class="rounded-circle me-2" width="32" height="32" loading="lazy"
-                    onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
-                  <div class="small">
-                    <div class="fw-semibold">
-                      Dusan Borovcanin
-                    </div>
-                    <div class="text-muted">
-                      February 13, 2026 · 9 min
-                    </div>
-                  </div>
-                </div>
-
-                <div class="mt-3">
-                  
-                  <span class="badge bg-light text-dark me-1">FluxMQ</span>
-                  
-                  <span class="badge bg-light text-dark me-1">Messaging</span>
-                  
-                  <span class="badge bg-light text-dark me-1">MQTT</span>
-                  
-                  <span class="badge bg-light text-dark me-1">AMQP</span>
-                  
-                  <span class="badge bg-light text-dark me-1">HTTP</span>
-                  
-                  <span class="badge bg-light text-dark me-1">CoAP</span>
-                  
-                  <span class="badge bg-light text-dark me-1">IoT</span>
-                  
-                  <span class="badge bg-light text-dark me-1">Event-Driven</span>
-                  
-                  <span class="badge bg-light text-dark me-1">Architecture</span>
-                  
-                </div>
-              </div>
-            </a>
-          </article>
-        </div>
-        
-        <div class="col-md-6 col-lg-4">
-          <article class="card h-100 shadow-sm hover-lift border-0">
             <a href="/blog/getting-started-with-magistrala" class="text-decoration-none text-dark">
               
               <img src="/img/blogs/getting-started-with-magistrala/cover-image.jpg" class="card-img-top" alt="Getting Started with Magistrala: From Zero to Your First Connected Device"
@@ -616,6 +615,69 @@ FluxMQ is <strong>open source and actively developed</strong>. We're building it
                   <span class="badge bg-light text-dark me-1">multi-tenancy</span>
                   
                   <span class="badge bg-light text-dark me-1">multiple-protocols</span>
+                  
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <article class="card h-100 shadow-sm hover-lift border-0">
+            <a href="/blog/fluxmq-announcement" class="text-decoration-none text-dark">
+              
+              <img src="/img/blogs/fluxmq-announcement/homepage.png" class="card-img-top" alt="FluxMQ: A Modern Message Broker Built for Messaging and Event Logs"
+                loading="lazy" onerror="this.style.display = 'none'" style="height: 200px; object-fit: cover;" />
+              
+
+              <div class="card-body">
+                <div class="mb-2">
+                  <span class="badge bg-success me-2">
+                    announcement
+                  </span>
+                  
+                </div>
+
+                <h2 class="card-title h5 fw-bold">
+                  FluxMQ: A Modern Message Broker Built for Messaging and Event Logs
+                </h2>
+                <p class="card-text text-muted small">
+                  
+                </p>
+
+                <div class="d-flex align-items-center mt-3">
+                  <img src="https://avatars.githubusercontent.com/u/17817225?v=4" alt="Dusan Borovcanin"
+                    class="rounded-circle me-2" width="32" height="32" loading="lazy"
+                    onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+                  <div class="small">
+                    <div class="fw-semibold">
+                      Dusan Borovcanin
+                    </div>
+                    <div class="text-muted">
+                      February 06, 2026 · 4 min
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  
+                  <span class="badge bg-light text-dark me-1">FluxMQ</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Messaging</span>
+                  
+                  <span class="badge bg-light text-dark me-1">MQTT</span>
+                  
+                  <span class="badge bg-light text-dark me-1">AMQP</span>
+                  
+                  <span class="badge bg-light text-dark me-1">HTTP</span>
+                  
+                  <span class="badge bg-light text-dark me-1">CoAP</span>
+                  
+                  <span class="badge bg-light text-dark me-1">IoT</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Event-Driven</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Architecture</span>
                   
                 </div>
               </div>

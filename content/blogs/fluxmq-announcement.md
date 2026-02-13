@@ -20,7 +20,7 @@ tags:
   - "Event-Driven"
   - "Architecture"
 category: announcement
-featured: true
+featured: false
 ---
 ## Introducing FluxMQ
 
