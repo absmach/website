@@ -33,6 +33,77 @@ npm run build
 npm run preview
 ```
 
+## Cloudflare Scripts
+
+Use the package scripts for Pages Functions workflows:
+
+```bash
+npm run cf:dev
+npm run cf:deploy
+```
+
+- `cf:dev`: Builds the site and starts `wrangler pages dev` with `nodejs_compat`.
+- `cf:deploy`: Builds the site and deploys `dist/` to the `absmach-website` Cloudflare Pages project.
+
+## Contact Form API (Cloudflare Pages Function)
+
+The contact page submits to `POST /api/contact` via `functions/api/contact.js`.
+The endpoint uses `nodemailer` over SMTP (Google SMTP supported).
+Each successful submission sends:
+
+- one email to your team inbox (`CONTACT_TO_EMAIL`)
+- one confirmation copy to the user who submitted the form
+
+Required environment variables:
+
+- `SMTP_HOST`: SMTP server host (for Google: `smtp.gmail.com`).
+- `SMTP_PORT`: SMTP server port (`465` for SSL, `587` for STARTTLS).
+- `SMTP_SECURE`: `true` when using SSL port (usually `465`), otherwise `false`.
+- `SMTP_USER`: SMTP username (for Google: full Gmail/Workspace email).
+- `SMTP_PASS`: SMTP password (for Google: app password).
+- `CONTACT_FROM_EMAIL`: From address shown in emails.
+- `CONTACT_TO_EMAIL`: Recipient address for team notifications.
+
+For local `smtp4dev` testing (Docker `-p 2525:25`), use:
+
+```bash
+SMTP_HOST=127.0.0.1
+SMTP_PORT=2525
+SMTP_SECURE=false
+SMTP_USER=
+SMTP_PASS=
+CONTACT_FROM_EMAIL=info@absmach.eu
+CONTACT_TO_EMAIL=info@absmach.eu
+```
+
+`SMTP_USER` and `SMTP_PASS` are optional for local test servers.
+
+For Cloudflare Pages production, set secrets on the project:
+
+```bash
+wrangler pages secret put SMTP_HOST
+wrangler pages secret put SMTP_PORT
+wrangler pages secret put SMTP_SECURE
+wrangler pages secret put SMTP_USER
+wrangler pages secret put SMTP_PASS
+wrangler pages secret put CONTACT_FROM_EMAIL
+wrangler pages secret put CONTACT_TO_EMAIL
+```
+
+Production does not use `.dev.vars`.
+
+- `.dev.vars` is local-only for `wrangler pages dev`.
+- For production, configure values in Cloudflare Pages:
+Dashboard -> Pages -> your project -> Settings -> Variables and Secrets -> Production.
+- No separate production env file is required in the repo.
+
+For local Cloudflare Pages function testing, copy `.dev.vars.example` to `.dev.vars` and fill the values.
+
+`nodemailer` requires Node compatibility in Cloudflare Workers. Enable `nodejs_compat`:
+
+- In Cloudflare Pages project settings: Workers runtime compatibility flags.
+- Or in local dev: `wrangler pages dev dist --compatibility-flag=nodejs_compat`.
+
 ## Blog
 
 See [WRITING.md](WRITING.md) for frontmatter and writing guidelines.

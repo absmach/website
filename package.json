@@ -6,12 +6,15 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "cf:dev": "npm run build && npx wrangler pages dev dist --compatibility-date=2026-01-14 --compatibility-flag=nodejs_compat",
+    "cf:deploy": "npm run build && npx wrangler pages deploy dist --project-name=absmach-website --compatibility-date=2026-01-14 --compatibility-flag=nodejs_compat"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.15",
     "@astrojs/tailwind": "^5.1.4",
-    "astro": "^5.17.1"
+    "astro": "^5.17.1",
+    "nodemailer": "^6.10.1"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.0",

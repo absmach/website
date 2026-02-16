@@ -173,9 +173,14 @@ const matrix = "https://matrix.to/#/#supermq:matrix.org";
     <!-- Message form -->
     <Section
       title="Send a message"
-      subtitle="If your email client blocks forms, just click “Email us” above."
+      subtitle="Send details directly from the form. If delivery fails, use email fallback."
     >
-      <form class="grid gap-4 md:grid-cols-2" onsubmit="return true;">
+      <form
+        class="grid gap-4 md:grid-cols-2"
+        method="post"
+        action="/api/contact"
+        data-contact-form
+      >
         <label class="flex flex-col gap-2">
           <span class="text-sm text-muted">Name</span>
           <input
@@ -207,10 +212,25 @@ const matrix = "https://matrix.to/#/#supermq:matrix.org";
           ></textarea>
         </label>
 
-        <div class="flex flex-wrap items-center gap-3">
-          <!-- mailto fallback -->
+        <div class="hidden" aria-hidden="true">
+          <label for="company">
+            Company
+          </label>
+          <input
+            id="company"
+            name="company"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="md:col-span-2 flex flex-wrap items-center gap-3">
+          <button class="button-primary" type="submit" data-contact-submit>
+            Send message
+          </button>
+
           <a
-            class="button-primary"
+            class="button-secondary"
             href={`mailto:${email}?subject=${encodeURIComponent("Abstract Machines — Inquiry")}`}
           >
             Send via email
@@ -221,14 +241,98 @@ const matrix = "https://matrix.to/#/#supermq:matrix.org";
             <a
               href="https://github.com/absmach"
               target="_blank"
+              rel="noopener noreferrer"
               class="font-semibold"
             >
               repositories
             </a>.
           </p>
         </div>
+
+        <p
+          class="md:col-span-2 min-h-6 text-sm text-muted"
+          role="status"
+          aria-live="polite"
+          data-contact-status
+        ></p>
       </form>
     </Section>
+    <script is:inline>
+      (() => {
+        const form = document.querySelector("[data-contact-form]");
+        if (!(form instanceof HTMLFormElement)) return;
+
+        const statusEl = document.querySelector("[data-contact-status]");
+        const submitButton = form.querySelector("[data-contact-submit]");
+        if (!(statusEl instanceof HTMLElement)) return;
+        if (!(submitButton instanceof HTMLButtonElement)) return;
+
+        const defaultLabel = submitButton.textContent?.trim() || "Send message";
+
+        const setStatus = (text, tone = "muted") => {
+          statusEl.textContent = text;
+          statusEl.classList.remove("text-muted", "text-primary", "text-accent");
+          if (tone === "success") {
+            statusEl.classList.add("text-accent");
+            return;
+          }
+          if (tone === "error") {
+            statusEl.classList.add("text-primary");
+            return;
+          }
+          statusEl.classList.add("text-muted");
+        };
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          submitButton.disabled = true;
+          submitButton.setAttribute("aria-busy", "true");
+          submitButton.textContent = "Sending...";
+          setStatus("Sending your message...");
+
+          try {
+            const response = await fetch(form.action, {
+              method: "POST",
+              body: new FormData(form),
+              headers: {
+                Accept: "application/json",
+              },
+            });
+
+            let payload = null;
+            try {
+              payload = await response.json();
+            } catch {
+              payload = null;
+            }
+
+            if (!response.ok || !payload?.ok) {
+              throw new Error(
+                payload?.error ||
+                  "Unable to send your message. Please use direct email.",
+              );
+            }
+
+            form.reset();
+            setStatus(
+              payload?.message || "Thanks. Your message has been sent.",
+              "success",
+            );
+          } catch (error) {
+            setStatus(
+              error instanceof Error
+                ? error.message
+                : "Unable to send your message. Please use direct email.",
+              "error",
+            );
+          } finally {
+            submitButton.disabled = false;
+            submitButton.removeAttribute("aria-busy");
+            submitButton.textContent = defaultLabel;
+          }
+        });
+      })();
+    </script>
     <!-- Registered office -->
     <!-- <Section
       title="Registered office"
