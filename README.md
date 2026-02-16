@@ -42,8 +42,18 @@ npm run cf:dev
 npm run cf:deploy
 ```
 
-- `cf:dev`: Builds the site and starts `wrangler pages dev` with `nodejs_compat`.
-- `cf:deploy`: Builds the site and deploys `dist/` to the `absmach-website` Cloudflare Pages project.
+- `cf:dev`: Builds the site and starts local Pages dev server from `dist/` using `wrangler.jsonc`.
+- `cf:deploy`: Builds and deploys `dist/` to the `absmach` Cloudflare Pages project using `wrangler.jsonc`.
+
+Note: `wrangler pages deploy` does not accept compatibility flags as CLI arguments. Keep them in `wrangler.jsonc` and in Cloudflare Pages project settings.
+
+`wrangler.jsonc` (project config):
+
+- `name`: Cloudflare Pages project name (`absmach`).
+- `pages_build_output_dir`: deploy output directory (`./dist`).
+- `compatibility_date` and `compatibility_flags` (for example `nodejs_compat`) for Functions runtime.
+
+Wrangler automatically reads `wrangler.jsonc` when commands are run from the project root.
 
 ## Contact Form API (Cloudflare Pages Function)
 
