@@ -1,6 +1,6 @@
 ---
-title: "Tracking Things with Magistrala"
-slug: "tracking-things-with-magistrala"
+title: "Asset Tracking with Magistrala"
+slug: "tracking-assets-with-magistrala"
 excerpt: "Real-time asset tracking for construction equipment, vehicle fleets, and logistics operations with automated geofencing and Rules Engine."
 description: "Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking, automated geofencing alerts, and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with boundary alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in."
 date: "2026-02-17"
@@ -23,7 +23,7 @@ tags:
   - Real-time Tracking
 ---
 
-# Tracking Things with Magistrala
+# Asset Tracking with Magistrala
 
 Businesses need real-time visibility into their valuable assets through IoT asset tracking. Delivery trucks navigate city routes, construction equipment shifts between job sites, shipping containers cross oceans, medical devices circulate through hospitals. Without GPS tracking and real-time monitoring, businesses face theft, inefficiency, billing disputes, and customer service failures.
 

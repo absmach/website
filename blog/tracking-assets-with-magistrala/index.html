@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Asset Tracking with Magistrala - Abstract Machines</title>
+  <meta name="title" property="og:title" content="Asset Tracking with Magistrala - Abstract Machines" />
+  <meta name="description" content="Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking, automated geofencing alerts, and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with boundary alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in." />
+
+  <link rel="canonical" href="https://absmach.eu/blog/tracking-assets-with-magistrala/" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Abstract Machines" />
+  <meta property="og:url" content="https://absmach.eu/blog/tracking-assets-with-magistrala" />
+  <meta name="description" property="og:description" content="Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking, automated geofencing alerts, and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with boundary alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in." />
+  <meta name="image" property="og:image" content="https://absmach.eu/img/blogs/tracking-usecase/cover_page.png" />
+
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Asset Tracking with Magistrala" />
+  <meta name="twitter:description" content="Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking, automated geofencing alerts, and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with boundary alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in." />
+  <meta name="twitter:image" content="https://absmach.eu/img/blogs/tracking-usecase/cover_page.png" />
+
+
+  
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Asset Tracking with Magistrala",
+        "image": "https:\/\/absmach.eu\/img\/blogs\/tracking-usecase\/cover_page.png",
+        "datePublished": "2026-02-17",
+        "author": {
+          "@type": "Person",
+          "name": "Steve Munene"
+        },
+        "description": "Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking, automated geofencing alerts, and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with boundary alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in."
+      }
+    </script>
+
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet" />
+
+  
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <link rel="stylesheet" href="/assets/css/blog.css" />
+
+  <style>
+    body {
+      padding-top: 85px;
+    }
+
+    .navbar-nav .nav-link {
+      color: black !important;
+    }
+
+     
+    .markdown-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    .markdown-content h2,
+    .markdown-content h3 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: #212529;
+    }
+
+    .markdown-content p {
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .markdown-content pre {
+      border-radius: 6px;
+      padding: 1rem;
+    }
+
+    .markdown-content blockquote {
+      border-left: 4px solid #ddd;
+      padding-left: 1rem;
+      color: #555;
+      margin: 1.5rem 0;
+      font-style: italic;
+    }
+
+    .markdown-content table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1.5rem 0;
+    }
+
+    .markdown-content th,
+    .markdown-content td {
+      border: 1px solid #ddd;
+      padding: 0.6rem 0.8rem;
+    }
+
+    .markdown-content th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+
+    .code-wrapper {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .code-wrapper pre {
+      margin-bottom: 0;
+    }
+
+    .copy-button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .code-wrapper:hover .copy-button {
+      opacity: 1;
+    }
+
+    .copy-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .copy-button.copied {
+      background: #198754;
+      border-color: #198754;
+      color: #fff;
+      opacity: 1;
+    }
+
+    .markdown-content .mermaid {
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white" style="font-size: 21px">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="/img/logos/abstract-machines_logo_landscape-black.jpg" alt="Magistrala" height="30" width="250" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="productsDropdown" role="button"
+              data-bs-toggle="dropdown">
+              Products
+            </a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Software</li>
+              <li>
+                <a class="dropdown-item" href="https://magistrala.absmach.eu" target="_blank"
+                  rel="noopener noreferrer">Magistrala</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/supermq/">SuperMQ</a>
+              </li>
+              <li>
+              <li>
+                <a class="dropdown-item" href="https://fluxmq.absmach.eu">FluxMQ</a>
+              </li>
+                <a class="dropdown-item" href="/propeller/">Propeller</a>
+              </li>
+              <li><a class="dropdown-item" href="/mproxy/">mProxy</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li class="dropdown-header">Hardware</li>
+              <li>
+                <a class="dropdown-item" href="/s0/">S0 Low Power Gateway</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/s1/">S1 Linux Gateway</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="/products/">All Products</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/solutions/">Solutions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/services/">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/projects/">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/company/">Company</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/careers/">Careers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/contact/">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/blog/">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="https://github.com/absmach" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <article class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        
+        <div class="mb-4">
+          <a href="/blog" class="text-decoration-none text-muted"><i class="fas fa-arrow-left me-2"></i>Back to Blog</a>
+        </div>
+
+        <div class="mb-3">
+          <span class="badge bg-primary fs-6">blog</span>
+          
+        </div>
+
+        <h1 class="display-4 fw-bold mb-4">Asset Tracking with Magistrala</h1>
+
+        <div class="d-flex align-items-center mb-4 pb-4 border-bottom">
+          <img src="https://avatars.githubusercontent.com/u/61874077?v=4" alt="Steve Munene" class="rounded-circle me-3" width="60" height="60"
+            loading="lazy" onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+          <div>
+            <div class="fw-bold fs-5">Steve Munene</div>
+            <div class="text-muted">
+              February 17, 2026 · 6 min read
+            </div>
+          </div>
+        </div>
+
+        
+        <img src="/img/blogs/tracking-usecase/cover_page.png" alt="Asset Tracking with Magistrala" class="img-fluid rounded mb-5 w-100 shadow-sm" loading="lazy"
+          onerror="this.style.display = 'none'" />
+        
+
+        <div class="markdown-content"><h1 id="asset-tracking-with-magistrala">Asset Tracking with Magistrala</h1>
+<p>Businesses need real-time visibility into their valuable assets through IoT asset tracking. Delivery trucks navigate city routes, construction equipment shifts between job sites, shipping containers cross oceans, medical devices circulate through hospitals. Without GPS tracking and real-time monitoring, businesses face theft, inefficiency, billing disputes, and customer service failures.</p>
+<p>Traditional asset management relies on manual check-ins, phone calls, and guesswork. Modern fleet management and equipment tracking demand automated IoT monitoring that shows exactly where assets are, how they're being used, and when they need attention.</p>
+<p>Magistrala connects IoT devices to provide instant visibility into any trackable asset. Geofencing alerts you to unauthorized movement. Rules Engine automates actions based on location, usage patterns, or equipment status. All telemetry stores securely for compliance and analytics—whether you're managing logistics fleets, rental equipment, or industrial machinery.</p>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#solution-structure-tracking-things">Solution Structure: Tracking Things</a>
+<ul>
+<li><a href="#how-it-works">How It Works</a></li>
+<li><a href="#key-capabilities">Key Capabilities</a></li>
+</ul>
+</li>
+<li><a href="#use-cases-in-action">Use Cases in Action</a>
+<ul>
+<li><a href="#logistics--shipment-tracking">Logistics &amp; Shipment Tracking</a></li>
+<li><a href="#fleet-management">Fleet Management</a></li>
+</ul>
+</li>
+<li><a href="#industry-applications">Industry Applications</a></li>
+<li><a href="#why-magistrala">Why Magistrala</a></li>
+<li><a href="#why-choose-magistrala-over-other-platforms">Why Choose Magistrala Over Other Platforms</a></li>
+<li><a href="#start-tracking-today">Start Tracking Today</a></li>
+</ul>
+<hr>
+<h2 id="solution-structure-tracking-things">Solution Structure: Tracking Things</h2>
+<p>Building an asset tracking solution with Magistrala treats all valuable items—vehicles, equipment, containers—as trackable assets with location, status, and performance data.</p>
+<h3 id="how-it-works">How It Works</h3>
+<ol>
+<li><strong>Assets equipped with trackers</strong>: GPS trackers, sensors, or OBD-II devices fitted to each asset</li>
+<li><strong>Trackers connect as Clients</strong>: Each device registers in Magistrala with unique credentials</li>
+<li><strong>Clients publish to Channels</strong>: Devices send data to specific <strong>Topics</strong> (location, telemetry, alarms) using MQTT, HTTP, or CoAP</li>
+<li><strong>Rules Engine processes data</strong>: Automated logic monitors topics and triggers actions (geofencing, alerts, calculations)</li>
+<li><strong>Users gain insights</strong>: Real-time dashboards, mobile apps, and API integrations deliver actionable intelligence</li>
+</ol>
+<p><img src="../../img/blogs/tracking-usecase/tracking_things.png" alt="Tracking Things Architecture"></p>
+<h3 id="key-capabilities">Key Capabilities</h3>
+<p><strong>Multi-Protocol Connectivity</strong>: Connect devices via MQTT, HTTP, CoAP, WebSocket, LoRa, or OPC-UA. Magistrala handles cellular, Wi-Fi, LoRaWAN, and industrial protocols seamlessly.</p>
+<p><strong>Intelligent Rules Engine</strong>: Automate geofencing, threshold monitoring, usage-based billing calculations, and predictive maintenance—no code changes required.</p>
+<p>Geofencing creates virtual boundaries around physical locations. When assets cross these boundaries, the system automatically triggers alerts—ideal for theft prevention (equipment leaving job sites), compliance (vehicles staying in authorized zones), or safety (detecting entry into restricted areas).</p>
+<p><strong>Real-Time Alarms</strong>: Configure instant alerts for theft, tampering, environmental thresholds, idle time, or maintenance needs. Deliver notifications via email and Slack.</p>
+<p><strong>Enterprise Security</strong>: Mutual TLS authentication, fine-grained access control (ABAC/RBAC), and complete audit logs protect your assets and data.</p>
+<hr>
+<h2 id="use-cases-in-action">Use Cases in Action</h2>
+<h3 id="logistics--shipment-tracking">Logistics &amp; Shipment Tracking</h3>
+<p>Logistics companies managing hundreds of delivery vehicles and shipments need real-time visibility across their entire fleet. Magistrala with IoT trackers enables:</p>
+<ul>
+<li><strong>Real-time location tracking</strong> of all vehicles and shipments across routes</li>
+<li><strong>Geofence alerts</strong> when vehicles deviate from planned routes or enter restricted areas</li>
+<li><strong>Automated delivery verification</strong> with timestamp and location confirmation</li>
+<li><strong>Route optimization</strong> based on traffic patterns and delivery windows</li>
+<li><strong>Proof of delivery</strong> with location-stamped delivery confirmations</li>
+<li><strong>Customer notifications</strong> with accurate ETAs based on real-time vehicle position</li>
+</ul>
+<h3 id="fleet-management">Fleet Management</h3>
+<p>Fleet operators need to monitor vehicle health, driver behavior, and operational efficiency across diverse vehicle types. Magistrala enables:</p>
+<ul>
+<li><strong>Real-time vehicle telemetry</strong> monitoring engine diagnostics, fuel consumption, and battery health</li>
+<li><strong>Driver behavior analytics</strong> tracking harsh braking, rapid acceleration, and idle time</li>
+<li><strong>Predictive maintenance scheduling</strong> based on engine hours, mileage, and diagnostic codes</li>
+<li><strong>Usage-based insights</strong> for cost allocation, billing, and resource optimization</li>
+<li><strong>Compliance monitoring</strong> ensuring vehicles stay within authorized zones and operating hours</li>
+<li><strong>Fuel efficiency tracking</strong> identifying wasteful patterns and optimization opportunities</li>
+</ul>
+<hr>
+<h2 id="industry-applications">Industry Applications</h2>
+<p><strong>Construction &amp; Heavy Equipment</strong>: Track excavators, bulldozers, cranes across multiple job sites. Prevent theft with geofence alerts when equipment leaves authorized boundaries. Optimize utilization by identifying idle machinery that could be reallocated. Automate billing based on actual engine hours rather than manual logs.</p>
+<p><strong>Vehicle Leasing</strong>: Enable usage-based leasing models with accurate mileage tracking. Verify contract compliance and monitor vehicle condition throughout the lease period. Analyze driver behavior to reduce insurance costs and improve safety. Optimize routes to reduce fuel consumption and vehicle wear.</p>
+<p><strong>Logistics &amp; Supply Chain</strong>: Monitor shipping containers, trailers, and cargo across global supply chains. Ensure cold-chain compliance for temperature-sensitive goods with continuous monitoring. Verify deliveries with timestamp and location proof. Track assets across multiple carriers and transportation modes.</p>
+<p><strong>Healthcare</strong>: Track medical equipment across hospital departments, clinics, and mobile units. Monitor environmental conditions for sensitive equipment. Ensure compliance with medical device regulations through complete audit trails. Optimize equipment allocation to reduce purchasing costs and improve patient care.</p>
+<p><strong>Car Sharing &amp; Mobility</strong>: Enable seamless mobile app integration for vehicle reservations and unlocking. Implement dynamic pricing based on demand, location, and vehicle type. Manage EV charging stations and battery levels. Track usage patterns to optimize fleet composition and positioning.</p>
+<p><strong>Rental Services</strong>: Monitor tools, equipment, and recreational vehicles rented to customers. Implement usage-based billing that reflects actual utilization rather than fixed rental periods. Prevent theft with instant alerts when assets move outside expected areas. Optimize inventory by understanding demand patterns across locations.</p>
+<p><strong>Industrial Manufacturing</strong>: Track specialized equipment, calibrated instruments, and production tools across facilities. Maintain compliance records for regulated equipment with complete location and usage history. Schedule calibration and maintenance based on actual usage rather than time intervals. Prevent bottlenecks by locating critical tools quickly.</p>
+<p><strong>Insurance Telematics</strong>: Power usage-based insurance programs with accurate driving data. Reward safe driving behavior with lower premiums based on real metrics. Assess risk more accurately by understanding actual vehicle usage patterns. Detect potential fraud with location and behavior verification.</p>
+<p><strong>EV Infrastructure</strong>: Manage charging networks with real-time availability and usage monitoring. Track battery health across EV fleets to optimize replacement schedules. Enable grid optimization by understanding charging patterns and load distribution. Support vehicle-to-grid programs that balance energy demand.</p>
+<p><strong>Public Transportation</strong>: Provide passengers with real-time vehicle tracking and accurate arrival predictions. Optimize routes based on actual traffic patterns and ridership data. Monitor vehicle health to reduce breakdowns and improve service reliability. Improve operational efficiency with data-driven scheduling.</p>
+<hr>
+<h2 id="why-magistrala">Why Magistrala</h2>
+<ul>
+<li><strong>Open Source Freedom</strong>: Apache 2.0 license with no vendor lock-in. Active community and extensible architecture.</li>
+<li><strong>Enterprise-Grade Security</strong>: Mutual TLS authentication, fine-grained access control, complete audit logs.</li>
+<li><strong>Scalable Architecture</strong>: Handle millions of devices and messages. Deploy on cloud or edge infrastructure.</li>
+<li><strong>Multi-Tenancy</strong>: Single instance serves multiple organizations with isolated domains and shared infrastructure.</li>
+<li><strong>Data Persistence</strong>: Store telemetry in Timescale, PostgreSQL, or integrate with analytics frameworks.</li>
+</ul>
+<hr>
+<h2 id="why-choose-magistrala-over-other-platforms">Why Choose Magistrala Over Other Platforms</h2>
+<ul>
+<li><strong>True Open Source, No Vendor Lock-In</strong>: Unlike proprietary IoT platforms, Magistrala uses the Apache 2.0 license.</li>
+<li><strong>Cloud-Native &amp; Self-Hostable</strong>: Run on Magistrala Cloud for zero infrastructure management, or self-host on your own servers for complete control.</li>
+<li><strong>Built for Developers</strong>: Clean REST APIs, comprehensive documentation, and standard protocols (MQTT, HTTP, CoAP, WS) mean faster integration.</li>
+<li><strong>Production-Ready Out of the Box</strong>: Enterprise authentication (mutual TLS), fine-grained access control, audit logs, and multi-tenancy are included—not expensive add-ons.</li>
+<li><strong>Active Community &amp; Professional Support</strong>: Open development on GitHub means transparency and community contributions. Need help? Direct access to the engineering team at <a href="mailto:info@absmach.eu">info@absmach.eu</a>.</li>
+</ul>
+<hr>
+<h2 id="start-tracking-today">Start Tracking Today</h2>
+<p>Ready to transform your asset tracking operations? Our team will help you design and implement a solution tailored to your specific needs.</p>
+<p><strong><a href="mailto:info@absmach.eu">Contact us today for a demo →</a></strong></p>
+<p>Or <a href="https://cloud.magistrala.absmach.eu/en/login">start building with a free trial</a> – no credit card required.</p>
+</div>
+
+        <div class="mt-5 pt-4 border-top">
+          
+          <div>
+            <a href="/blog" class="btn btn-outline-secondary"><i
+                class="fas fa-arrow-left me-2"></i>Back to
+              Blog</a>
+          </div>
+          <h5 class="mb-3 mt-3">Tags</h5>
+          <div>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">IoT Platform</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Magistrala</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Asset Tracking</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">GPS Tracking</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Fleet Management</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Geofencing</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Rules Engine</span>
+            
+            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Real-time Tracking</span>
+            
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h5 class="mb-3">Share this article</h5>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="https://twitter.com/intent/tweet?text=Asset&#43;Tracking&#43;with&#43;Magistrala&url=https%3a%2f%2fabsmach.eu/blog/tracking-assets-with-magistrala"
+              target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
+              <i class="fab fa-twitter me-2"></i>Twitter
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fabsmach.eu/blog/tracking-assets-with-magistrala"
+              target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
+              <i class="fab fa-linkedin me-2"></i>LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  
+  <section id="newsletter" class="py-5">
+    <div class="container">
+      <div class="row mt-5 mb-5">
+        <div class="col-md-6 offset-md-3 text-center">
+          <h2>Subscribe to Our Newsletter</h2>
+          <p>Stay updated with the latest news, updates and announcements.</p>
+
+          
+          <form
+            action="https://absmach.us11.list-manage.com/subscribe/post?u=70b43c7181d005024187bfb31&amp;id=0a319b6b63&amp;f_id=002711e1f0"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
+            target="_blank">
+            <div class="input-group">
+              <input type="email" class="form-control" name="EMAIL" id="mce-EMAIL" placeholder="Enter your email"
+                aria-label="Email" aria-describedby="subscribe-btn" required="" />
+              <div hidden="">
+                <input type="hidden" name="tags" value="8115258" />
+              </div>
+              <button class="btn bg-deep-blue" type="submit" id="subscribe-btn"
+                style="background-color: #073763; color: white;">
+                Subscribe
+              </button>
+            </div>
+            <div id="mce-responses" class="clear foot">
+              <div class="response" id="mce-error-response" style="display: none"></div>
+              <div class="response" id="mce-success-response" style="display: none"></div>
+            </div>
+            <div style="position: absolute; left: -5000px" aria-hidden="true">
+              
+              <input type="text" name="b_70b43c7181d005024187bfb31_0a319b6b63" tabindex="-1" value="" />
+            </div>
+
+            
+            <div class="mt-2">
+              <div class="mt-2">
+                <p class="mb-0" style="font-size: 0.75rem; color: #6c757d; line-height: 1.4">
+                  By subscribing, you agree to our
+                  <a href="/privacy" target="_blank" class="link-blue-sm">Privacy Policy</a>
+                  and
+                  <a href="/terms" target="_blank" class="link-blue-sm">Terms of Service</a>. <br />You can unsubscribe
+                  at any time.
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h3 class="mb-4 fw-bold">Next Read</h3>
+      <div class="row g-4">
+        
+        <div class="col-md-6 col-lg-4">
+          <article class="card h-100 shadow-sm hover-lift border-0">
+            <a href="/blog/fluxmq-motivation" class="text-decoration-none text-dark">
+              
+              <img src="/img/blogs/fluxmq-motivation/homepage.jpg" class="card-img-top" alt="FluxMQ: Why We’re Building It"
+                loading="lazy" onerror="this.style.display = 'none'" style="height: 200px; object-fit: cover;" />
+              
+
+              <div class="card-body">
+                <div class="mb-2">
+                  <span class="badge bg-primary me-2">
+                    blog
+                  </span>
+                  
+                </div>
+
+                <h2 class="card-title h5 fw-bold">
+                  FluxMQ: Why We’re Building It
+                </h2>
+                <p class="card-text text-muted small">
+                  
+                </p>
+
+                <div class="d-flex align-items-center mt-3">
+                  <img src="https://avatars.githubusercontent.com/u/17817225?v=4" alt="Dusan Borovcanin"
+                    class="rounded-circle me-2" width="32" height="32" loading="lazy"
+                    onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+                  <div class="small">
+                    <div class="fw-semibold">
+                      Dusan Borovcanin
+                    </div>
+                    <div class="text-muted">
+                      February 13, 2026 · 9 min
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  
+                  <span class="badge bg-light text-dark me-1">FluxMQ</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Messaging</span>
+                  
+                  <span class="badge bg-light text-dark me-1">MQTT</span>
+                  
+                  <span class="badge bg-light text-dark me-1">AMQP</span>
+                  
+                  <span class="badge bg-light text-dark me-1">HTTP</span>
+                  
+                  <span class="badge bg-light text-dark me-1">CoAP</span>
+                  
+                  <span class="badge bg-light text-dark me-1">IoT</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Event-Driven</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Architecture</span>
+                  
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <article class="card h-100 shadow-sm hover-lift border-0">
+            <a href="/blog/getting-started-with-magistrala" class="text-decoration-none text-dark">
+              
+              <img src="/img/blogs/getting-started-with-magistrala/cover-image.jpg" class="card-img-top" alt="Getting Started with Magistrala: From Zero to Your First Connected Device"
+                loading="lazy" onerror="this.style.display = 'none'" style="height: 200px; object-fit: cover;" />
+              
+
+              <div class="card-body">
+                <div class="mb-2">
+                  <span class="badge bg-primary me-2">
+                    blog
+                  </span>
+                  
+                </div>
+
+                <h2 class="card-title h5 fw-bold">
+                  Getting Started with Magistrala: From Zero to Your First Connected Device
+                </h2>
+                <p class="card-text text-muted small">
+                  A step-by-step guide to setting up Magistrala locally or on the cloud, creating your first IoT flow, and visualizing device data in real-time.
+                </p>
+
+                <div class="d-flex align-items-center mt-3">
+                  <img src="https://avatars.githubusercontent.com/u/57312311?v=4" alt="Felix Gateru"
+                    class="rounded-circle me-2" width="32" height="32" loading="lazy"
+                    onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+                  <div class="small">
+                    <div class="fw-semibold">
+                      Felix Gateru
+                    </div>
+                    <div class="text-muted">
+                      February 11, 2026 · 11 min
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  
+                  <span class="badge bg-light text-dark me-1">iot</span>
+                  
+                  <span class="badge bg-light text-dark me-1">magistrala</span>
+                  
+                  <span class="badge bg-light text-dark me-1">getting started</span>
+                  
+                  <span class="badge bg-light text-dark me-1">dashboards</span>
+                  
+                  <span class="badge bg-light text-dark me-1">ui</span>
+                  
+                  <span class="badge bg-light text-dark me-1">rules-engine</span>
+                  
+                  <span class="badge bg-light text-dark me-1">multi-tenancy</span>
+                  
+                  <span class="badge bg-light text-dark me-1">multiple-protocols</span>
+                  
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+        
+        <div class="col-md-6 col-lg-4">
+          <article class="card h-100 shadow-sm hover-lift border-0">
+            <a href="/blog/fluxmq-announcement" class="text-decoration-none text-dark">
+              
+              <img src="/img/blogs/fluxmq-announcement/homepage.png" class="card-img-top" alt="FluxMQ: A Modern Message Broker Built for Messaging and Event Logs"
+                loading="lazy" onerror="this.style.display = 'none'" style="height: 200px; object-fit: cover;" />
+              
+
+              <div class="card-body">
+                <div class="mb-2">
+                  <span class="badge bg-success me-2">
+                    announcement
+                  </span>
+                  
+                </div>
+
+                <h2 class="card-title h5 fw-bold">
+                  FluxMQ: A Modern Message Broker Built for Messaging and Event Logs
+                </h2>
+                <p class="card-text text-muted small">
+                  
+                </p>
+
+                <div class="d-flex align-items-center mt-3">
+                  <img src="https://avatars.githubusercontent.com/u/17817225?v=4" alt="Dusan Borovcanin"
+                    class="rounded-circle me-2" width="32" height="32" loading="lazy"
+                    onerror="this.onerror=null; this.src = '/assets/team/default-avatar.jpg'" />
+                  <div class="small">
+                    <div class="fw-semibold">
+                      Dusan Borovcanin
+                    </div>
+                    <div class="text-muted">
+                      February 06, 2026 · 4 min
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  
+                  <span class="badge bg-light text-dark me-1">FluxMQ</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Messaging</span>
+                  
+                  <span class="badge bg-light text-dark me-1">MQTT</span>
+                  
+                  <span class="badge bg-light text-dark me-1">AMQP</span>
+                  
+                  <span class="badge bg-light text-dark me-1">HTTP</span>
+                  
+                  <span class="badge bg-light text-dark me-1">CoAP</span>
+                  
+                  <span class="badge bg-light text-dark me-1">IoT</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Event-Driven</span>
+                  
+                  <span class="badge bg-light text-dark me-1">Architecture</span>
+                  
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  
+  <footer class="bg-dark text-white py-3">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4 mb-3">
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>About Us</h5>
+          <p>
+            Abstract Machines is an IoT infrastructure and security company
+            located in Paris.
+          </p>
+          <div class="d-flex justify-content-center justify-content-md-start gap-3 mt-4">
+            <a href="https://twitter.com/absmach" class="text-white" target="_blank" aria-label="Twitter">
+              <i class="fab fa-twitter fa-lg"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/abstract-machines" class="text-white" target="_blank"
+              aria-label="LinkedIn">
+              <i class="fab fa-linkedin fa-lg"></i>
+            </a>
+            <a href="https://github.com/absmach" class="text-white" target="_blank" aria-label="GitHub">
+              <i class="fab fa-github fa-lg"></i>
+            </a>
+            <a href="https://www.youtube.com/@absmach" class="text-white" target="_blank" aria-label="youtube">
+              <i class="fab fa-youtube fa-lg"></i>
+            </a>
+            <a href="https://matrix.to/#/#supermq:matrix.org" class="text-white" target="_blank" aria-label="matrix">
+              <i class="fas fa-comments fa-lg"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Contact Us</h5>
+          <p>
+            <i class="fas fa-envelope me-2"></i><a class="text-white" href="mailto:info@absmach.eu">info@absmach.eu</a>
+          </p>
+          <p>
+            <img alt="Matrix Logo" class="me-2" height="28" src="/img/logos/matrix-logo-white.svg" width="60" />
+            <a class="text-white" href="https://matrix.to/#/#absmach:matrix.org" target="_blank">Chat on Matrix</a>
+          </p>
+          <p>
+            <i class="fas fa-map-marker-alt me-2"></i>141 Quai de Valmy, 75010
+            Paris, France
+          </p>
+        </div>
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Products</h5>
+          <ul class="list-unstyled">
+            <li class="my-3">
+              <i class="fas fa-cogs me-2"></i><a class="text-white" href="https://magistrala.absmach.eu"
+                target="_blank">Magistrala - IoT Platform</a>
+            </li>
+            <li class="my-3">
+              <i class="fas fa-comments me-2"></i><a class="text-white" href="/supermq/">SuperMQ - Messaging Core</a>
+            </li>
+            <li class="my-3">
+              <i class="fas fa-network-wired me-2"></i><a class="text-white" href="/propeller/">Propeller - Wasm
+                Orchestrator</a>
+            </li>
+            <li class="my-3">
+              <i class="fas fa-shield-alt me-2"></i><a class="text-white" href="/mproxy/"> mProxy - IoT Gateway</a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="col mb-4 text-center text-md-start">
+          <h5>Legal</h5>
+          <ul class="list-unstyled">
+            <li class="my-3">
+              <a class="text-white" href="/terms/" target="_blank">Terms of Service</a>
+            </li>
+            <li class="my-3">
+              <a class="text-white" href="/privacy/" target="_blank">Privacy Policy</a>
+            </li>
+            <li class="my-3">
+              <a class="text-white" href="/imprint/" target="_blank">Imprint</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mermaidBlocks = document.querySelectorAll('.markdown-content pre > code.language-mermaid');
+
+      mermaidBlocks.forEach(code => {
+        const pre = code.parentElement;
+        const container = document.createElement('div');
+        container.className = 'mermaid';
+        container.textContent = code.textContent;
+        pre.replaceWith(container);
+      });
+
+      if (window.mermaid) {
+        mermaid.initialize({ startOnLoad: false });
+        mermaid.run({ querySelector: '.mermaid' });
+      }
+
+      const codeBlocks = document.querySelectorAll('.markdown-content pre code');
+      codeBlocks.forEach(code => {
+        if (!code.classList.contains('language-mermaid')) {
+          hljs.highlightElement(code);
+        }
+      });
+
+      const pres = document.querySelectorAll('.markdown-content pre');
+
+      pres.forEach(pre => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+
+        const btn = document.createElement('button');
+        btn.className = 'copy-button';
+        btn.type = 'button';
+        btn.innerHTML = '<i class="far fa-copy"></i>';
+        btn.setAttribute('aria-label', 'Copy code to clipboard');
+        btn.title = 'Copy code';
+
+        wrapper.appendChild(btn);
+      });
+    });
+
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.copy-button');
+      if (!btn) return;
+
+      const pre = btn.parentElement.querySelector('pre');
+      const code = pre.querySelector('code') || pre;
+      const text = code.textContent;
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+        }
+
+        btn.innerHTML = '<i class="fas fa-check"></i>';
+        btn.classList.add('copied');
+        btn.title = 'Copied!';
+
+        setTimeout(() => {
+          btn.innerHTML = '<i class="far fa-copy"></i>';
+          btn.classList.remove('copied');
+          btn.title = 'Copy code';
+        }, 2000);
+
+      } catch (err) {
+        console.error('Copy failed', err);
+        btn.innerHTML = '<i class="fas fa-times"></i>';
+        setTimeout(() => btn.innerHTML = '<i class="far fa-copy"></i>', 2000);
+      }
+    });
+  </script>
+</body>
+</html>
