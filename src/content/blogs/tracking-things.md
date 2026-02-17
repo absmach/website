@@ -150,6 +150,4 @@ Fleet operators need to monitor vehicle health, driver behavior, and operational
 
 Ready to transform your asset tracking operations? Our team will help you design and implement a solution tailored to your specific needs.
 
-**[Contact us today for a demo →](mailto:info@absmach.eu)**
-
-Or [start building with a free trial](https://cloud.magistrala.absmach.eu/en/login) – no credit card required.
+**[Contact us today for a demo](mailto:info@absmach.eu)** or [start building with a free trial](https://cloud.magistrala.absmach.eu/en/login) – no credit card required.
