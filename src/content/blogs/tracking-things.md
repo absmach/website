@@ -1,8 +1,8 @@
 ---
 title: "Asset Tracking with Magistrala"
 slug: "tracking-assets-with-magistrala"
-excerpt: "Real-time asset tracking for construction equipment, vehicle fleets, and logistics operations with automated geofencing and Rules Engine."
-description: "Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking, automated geofencing alerts, and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with boundary alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in."
+excerpt: "Real-time asset tracking for construction equipment, vehicle fleets, and logistics operations with Rules Engine automation."
+description: "Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in."
 date: "2026-02-17"
 author:
   name: "Steve Munene"
@@ -18,7 +18,6 @@ tags:
   - Asset Tracking
   - GPS Tracking
   - Fleet Management
-  - Geofencing
   - Rules Engine
   - Real-time Tracking
 ---
@@ -29,7 +28,7 @@ Businesses need real-time visibility into their valuable assets through IoT asse
 
 Traditional asset management relies on manual check-ins, phone calls, and guesswork. Modern fleet management and equipment tracking demand automated IoT monitoring that shows exactly where assets are, how they're being used, and when they need attention.
 
-Magistrala connects IoT devices to provide instant visibility into any trackable asset. Geofencing alerts you to unauthorized movement. Rules Engine automates actions based on location, usage patterns, or equipment status. All telemetry stores securely for compliance and analytics—whether you're managing logistics fleets, rental equipment, or industrial machinery.
+Magistrala connects IoT devices to provide instant visibility into any trackable asset. Rules Engine automates actions based on location, usage patterns, or equipment status. All telemetry stores securely for compliance and analytics—whether you're managing logistics fleets, rental equipment, or industrial machinery.
 
 ---
 
@@ -57,7 +56,7 @@ Building an asset tracking solution with Magistrala treats all valuable items—
 1. **Assets equipped with trackers**: GPS trackers, sensors, or OBD-II devices fitted to each asset
 2. **Trackers connect as Clients**: Each device registers in Magistrala with unique credentials
 3. **Clients publish to Channels**: Devices send data to specific **Topics** (location, telemetry, alarms) using MQTT, HTTP, or CoAP
-4. **Rules Engine processes data**: Automated logic monitors topics and triggers actions (geofencing, alerts, calculations)
+4. **Rules Engine processes data**: Automated logic monitors topics and triggers actions (alerts, calculations, automations)
 5. **Users gain insights**: Real-time dashboards, mobile apps, and API integrations deliver actionable intelligence
 
 ![Tracking Things Architecture](../../img/blogs/tracking-usecase/tracking_things.png)
@@ -66,9 +65,7 @@ Building an asset tracking solution with Magistrala treats all valuable items—
 
 **Multi-Protocol Connectivity**: Connect devices via MQTT, HTTP, CoAP, WebSocket, LoRa, or OPC-UA. Magistrala handles cellular, Wi-Fi, LoRaWAN, and industrial protocols seamlessly.
 
-**Intelligent Rules Engine**: Automate geofencing, threshold monitoring, usage-based billing calculations, and predictive maintenance—no code changes required.
-
-Geofencing creates virtual boundaries around physical locations. When assets cross these boundaries, the system automatically triggers alerts—ideal for theft prevention (equipment leaving job sites), compliance (vehicles staying in authorized zones), or safety (detecting entry into restricted areas).
+**Intelligent Rules Engine**: Automate threshold monitoring, usage-based billing calculations, and predictive maintenance—no code changes required.
 
 **Real-Time Alarms**: Configure instant alerts for theft, tampering, environmental thresholds, idle time, or maintenance needs. Deliver notifications via email and Slack.
 
@@ -83,7 +80,6 @@ Geofencing creates virtual boundaries around physical locations. When assets cro
 Logistics companies managing hundreds of delivery vehicles and shipments need real-time visibility across their entire fleet. Magistrala with IoT trackers enables:
 
 - **Real-time location tracking** of all vehicles and shipments across routes
-- **Geofence alerts** when vehicles deviate from planned routes or enter restricted areas
 - **Automated delivery verification** with timestamp and location confirmation
 - **Route optimization** based on traffic patterns and delivery windows
 - **Proof of delivery** with location-stamped delivery confirmations
@@ -104,7 +100,7 @@ Fleet operators need to monitor vehicle health, driver behavior, and operational
 
 ## Industry Applications
 
-**Construction & Heavy Equipment**: Track excavators, bulldozers, cranes across multiple job sites. Prevent theft with geofence alerts when equipment leaves authorized boundaries. Optimize utilization by identifying idle machinery that could be reallocated. Automate billing based on actual engine hours rather than manual logs.
+**Construction & Heavy Equipment**: Track excavators, bulldozers, cranes across multiple job sites. Monitor equipment location and movement to prevent theft. Optimize utilization by identifying idle machinery that could be reallocated. Automate billing based on actual engine hours rather than manual logs.
 
 **Vehicle Leasing**: Enable usage-based leasing models with accurate mileage tracking. Verify contract compliance and monitor vehicle condition throughout the lease period. Analyze driver behavior to reduce insurance costs and improve safety. Optimize routes to reduce fuel consumption and vehicle wear.
 
