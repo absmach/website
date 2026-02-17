@@ -3,7 +3,7 @@ title: "Tracking Things with Magistrala"
 slug: "tracking-things-with-magistrala"
 excerpt: "Real-time asset tracking for construction equipment, vehicle fleets, and logistics operations with automated geofencing and Rules Engine."
 description: "Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking, automated geofencing alerts, and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with boundary alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in."
-date: "2026-02-09"
+date: "2026-02-17"
 author:
   name: "Steve Munene"
   picture: "https://avatars.githubusercontent.com/u/61874077?v=4"
@@ -70,7 +70,7 @@ Building an asset tracking solution with Magistrala treats all valuable items—
 
 Geofencing creates virtual boundaries around physical locations. When assets cross these boundaries, the system automatically triggers alerts—ideal for theft prevention (equipment leaving job sites), compliance (vehicles staying in authorized zones), or safety (detecting entry into restricted areas).
 
-**Real-Time Alarms**: Configure instant alerts for theft, tampering, environmental thresholds, idle time, or maintenance needs. Deliver notifications via webhooks, SMS, or email.
+**Real-Time Alarms**: Configure instant alerts for theft, tampering, environmental thresholds, idle time, or maintenance needs. Deliver notifications via email and Slack.
 
 **Enterprise Security**: Mutual TLS authentication, fine-grained access control (ABAC/RBAC), and complete audit logs protect your assets and data.
 
@@ -80,7 +80,7 @@ Geofencing creates virtual boundaries around physical locations. When assets cro
 
 ### Logistics & Shipment Tracking
 
-Logistics companies managing hundreds of delivery vehicles and shipments need real-time visibility across their entire fleet. Magistrala with GPS trackers enables:
+Logistics companies managing hundreds of delivery vehicles and shipments need real-time visibility across their entire fleet. Magistrala with IoT trackers enables:
 
 - **Real-time location tracking** of all vehicles and shipments across routes
 - **Geofence alerts** when vehicles deviate from planned routes or enter restricted areas
@@ -106,7 +106,7 @@ Fleet operators need to monitor vehicle health, driver behavior, and operational
 
 **Construction & Heavy Equipment**: Track excavators, bulldozers, cranes across multiple job sites. Prevent theft with geofence alerts when equipment leaves authorized boundaries. Optimize utilization by identifying idle machinery that could be reallocated. Automate billing based on actual engine hours rather than manual logs.
 
-**Vehicle Leasing & Fleet Management**: Enable usage-based leasing models with accurate mileage tracking. Verify contract compliance and monitor vehicle condition throughout the lease period. Analyze driver behavior to reduce insurance costs and improve safety. Optimize routes to reduce fuel consumption and vehicle wear.
+**Vehicle Leasing**: Enable usage-based leasing models with accurate mileage tracking. Verify contract compliance and monitor vehicle condition throughout the lease period. Analyze driver behavior to reduce insurance costs and improve safety. Optimize routes to reduce fuel consumption and vehicle wear.
 
 **Logistics & Supply Chain**: Monitor shipping containers, trailers, and cargo across global supply chains. Ensure cold-chain compliance for temperature-sensitive goods with continuous monitoring. Verify deliveries with timestamp and location proof. Track assets across multiple carriers and transportation modes.
 
@@ -128,29 +128,21 @@ Fleet operators need to monitor vehicle health, driver behavior, and operational
 
 ## Why Magistrala
 
-**Open Source Freedom**: Apache 2.0 license with no vendor lock-in. Active community and extensible architecture.
-
-**Enterprise-Grade Security**: Mutual TLS authentication, fine-grained access control, complete audit logs.
-
-**Scalable Architecture**: Handle millions of devices and messages. Deploy on cloud or edge infrastructure.
-
-**Multi-Tenancy**: Single instance serves multiple organizations with isolated domains and shared infrastructure.
-
-**Data Persistence**: Store telemetry in Timescale, PostgreSQL, or integrate with analytics frameworks.
+- **Open Source Freedom**: Apache 2.0 license with no vendor lock-in. Active community and extensible architecture.
+- **Enterprise-Grade Security**: Mutual TLS authentication, fine-grained access control, complete audit logs.
+- **Scalable Architecture**: Handle millions of devices and messages. Deploy on cloud or edge infrastructure.
+- **Multi-Tenancy**: Single instance serves multiple organizations with isolated domains and shared infrastructure.
+- **Data Persistence**: Store telemetry in Timescale, PostgreSQL, or integrate with analytics frameworks.
 
 ---
 
 ## Why Choose Magistrala Over Other Platforms
 
-**True Open Source, No Vendor Lock-In**: Unlike proprietary IoT platforms, Magistrala uses the Apache 2.0 license. You own your deployment, control your data, and can modify the platform to fit your exact needs. No licensing fees as you scale.
-
-**Cloud-Native & Self-Hostable**: Run on Magistrala Cloud for zero infrastructure management, or self-host on your own servers for complete control. Switch between deployment models without rewriting your solution.
-
-**Built for Developers**: Clean REST APIs, comprehensive documentation, and standard protocols (MQTT, HTTP, CoAP) mean faster integration. No proprietary SDKs or vendor-specific tooling required.
-
-**Production-Ready Out of the Box**: Enterprise authentication (mutual TLS), fine-grained access control, audit logs, and multi-tenancy are included—not expensive add-ons.
-
-**Active Community & Professional Support**: Open development on GitHub means transparency and community contributions. Need help? Direct access to the engineering team at [info@absmach.eu](mailto:info@absmach.eu).
+- **True Open Source, No Vendor Lock-In**: Unlike proprietary IoT platforms, Magistrala uses the Apache 2.0 license.
+- **Cloud-Native & Self-Hostable**: Run on Magistrala Cloud for zero infrastructure management, or self-host on your own servers for complete control.
+- **Built for Developers**: Clean REST APIs, comprehensive documentation, and standard protocols (MQTT, HTTP, CoAP, WS) mean faster integration.
+- **Production-Ready Out of the Box**: Enterprise authentication (mutual TLS), fine-grained access control, audit logs, and multi-tenancy are included—not expensive add-ons.
+- **Active Community & Professional Support**: Open development on GitHub means transparency and community contributions. Need help? Direct access to the engineering team at [info@absmach.eu](mailto:info@absmach.eu).
 
 ---
 

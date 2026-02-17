@@ -32,7 +32,7 @@
         "@type": "BlogPosting",
         "headline": "Tracking Things with Magistrala",
         "image": "https:\/\/absmach.eu\/img\/blogs\/tracking-usecase\/cover_page.png",
-        "datePublished": "2026-02-09",
+        "datePublished": "2026-02-17",
         "author": {
           "@type": "Person",
           "name": "Steve Munene"
@@ -276,7 +276,7 @@
           <div>
             <div class="fw-bold fs-5">Steve Munene</div>
             <div class="text-muted">
-              February 09, 2026 · 6 min read
+              February 17, 2026 · 6 min read
             </div>
           </div>
         </div>
@@ -326,12 +326,12 @@
 <p><strong>Multi-Protocol Connectivity</strong>: Connect devices via MQTT, HTTP, CoAP, WebSocket, LoRa, or OPC-UA. Magistrala handles cellular, Wi-Fi, LoRaWAN, and industrial protocols seamlessly.</p>
 <p><strong>Intelligent Rules Engine</strong>: Automate geofencing, threshold monitoring, usage-based billing calculations, and predictive maintenance—no code changes required.</p>
 <p>Geofencing creates virtual boundaries around physical locations. When assets cross these boundaries, the system automatically triggers alerts—ideal for theft prevention (equipment leaving job sites), compliance (vehicles staying in authorized zones), or safety (detecting entry into restricted areas).</p>
-<p><strong>Real-Time Alarms</strong>: Configure instant alerts for theft, tampering, environmental thresholds, idle time, or maintenance needs. Deliver notifications via webhooks, SMS, or email.</p>
+<p><strong>Real-Time Alarms</strong>: Configure instant alerts for theft, tampering, environmental thresholds, idle time, or maintenance needs. Deliver notifications via email and Slack.</p>
 <p><strong>Enterprise Security</strong>: Mutual TLS authentication, fine-grained access control (ABAC/RBAC), and complete audit logs protect your assets and data.</p>
 <hr>
 <h2 id="use-cases-in-action">Use Cases in Action</h2>
 <h3 id="logistics--shipment-tracking">Logistics &amp; Shipment Tracking</h3>
-<p>Logistics companies managing hundreds of delivery vehicles and shipments need real-time visibility across their entire fleet. Magistrala with GPS trackers enables:</p>
+<p>Logistics companies managing hundreds of delivery vehicles and shipments need real-time visibility across their entire fleet. Magistrala with IoT trackers enables:</p>
 <ul>
 <li><strong>Real-time location tracking</strong> of all vehicles and shipments across routes</li>
 <li><strong>Geofence alerts</strong> when vehicles deviate from planned routes or enter restricted areas</li>
@@ -353,7 +353,7 @@
 <hr>
 <h2 id="industry-applications">Industry Applications</h2>
 <p><strong>Construction &amp; Heavy Equipment</strong>: Track excavators, bulldozers, cranes across multiple job sites. Prevent theft with geofence alerts when equipment leaves authorized boundaries. Optimize utilization by identifying idle machinery that could be reallocated. Automate billing based on actual engine hours rather than manual logs.</p>
-<p><strong>Vehicle Leasing &amp; Fleet Management</strong>: Enable usage-based leasing models with accurate mileage tracking. Verify contract compliance and monitor vehicle condition throughout the lease period. Analyze driver behavior to reduce insurance costs and improve safety. Optimize routes to reduce fuel consumption and vehicle wear.</p>
+<p><strong>Vehicle Leasing</strong>: Enable usage-based leasing models with accurate mileage tracking. Verify contract compliance and monitor vehicle condition throughout the lease period. Analyze driver behavior to reduce insurance costs and improve safety. Optimize routes to reduce fuel consumption and vehicle wear.</p>
 <p><strong>Logistics &amp; Supply Chain</strong>: Monitor shipping containers, trailers, and cargo across global supply chains. Ensure cold-chain compliance for temperature-sensitive goods with continuous monitoring. Verify deliveries with timestamp and location proof. Track assets across multiple carriers and transportation modes.</p>
 <p><strong>Healthcare</strong>: Track medical equipment across hospital departments, clinics, and mobile units. Monitor environmental conditions for sensitive equipment. Ensure compliance with medical device regulations through complete audit trails. Optimize equipment allocation to reduce purchasing costs and improve patient care.</p>
 <p><strong>Car Sharing &amp; Mobility</strong>: Enable seamless mobile app integration for vehicle reservations and unlocking. Implement dynamic pricing based on demand, location, and vehicle type. Manage EV charging stations and battery levels. Track usage patterns to optimize fleet composition and positioning.</p>
@@ -364,18 +364,22 @@
 <p><strong>Public Transportation</strong>: Provide passengers with real-time vehicle tracking and accurate arrival predictions. Optimize routes based on actual traffic patterns and ridership data. Monitor vehicle health to reduce breakdowns and improve service reliability. Improve operational efficiency with data-driven scheduling.</p>
 <hr>
 <h2 id="why-magistrala">Why Magistrala</h2>
-<p><strong>Open Source Freedom</strong>: Apache 2.0 license with no vendor lock-in. Active community and extensible architecture.</p>
-<p><strong>Enterprise-Grade Security</strong>: Mutual TLS authentication, fine-grained access control, complete audit logs.</p>
-<p><strong>Scalable Architecture</strong>: Handle millions of devices and messages. Deploy on cloud or edge infrastructure.</p>
-<p><strong>Multi-Tenancy</strong>: Single instance serves multiple organizations with isolated domains and shared infrastructure.</p>
-<p><strong>Data Persistence</strong>: Store telemetry in Timescale, PostgreSQL, or integrate with analytics frameworks.</p>
+<ul>
+<li><strong>Open Source Freedom</strong>: Apache 2.0 license with no vendor lock-in. Active community and extensible architecture.</li>
+<li><strong>Enterprise-Grade Security</strong>: Mutual TLS authentication, fine-grained access control, complete audit logs.</li>
+<li><strong>Scalable Architecture</strong>: Handle millions of devices and messages. Deploy on cloud or edge infrastructure.</li>
+<li><strong>Multi-Tenancy</strong>: Single instance serves multiple organizations with isolated domains and shared infrastructure.</li>
+<li><strong>Data Persistence</strong>: Store telemetry in Timescale, PostgreSQL, or integrate with analytics frameworks.</li>
+</ul>
 <hr>
 <h2 id="why-choose-magistrala-over-other-platforms">Why Choose Magistrala Over Other Platforms</h2>
-<p><strong>True Open Source, No Vendor Lock-In</strong>: Unlike proprietary IoT platforms, Magistrala uses the Apache 2.0 license. You own your deployment, control your data, and can modify the platform to fit your exact needs. No licensing fees as you scale.</p>
-<p><strong>Cloud-Native &amp; Self-Hostable</strong>: Run on Magistrala Cloud for zero infrastructure management, or self-host on your own servers for complete control. Switch between deployment models without rewriting your solution.</p>
-<p><strong>Built for Developers</strong>: Clean REST APIs, comprehensive documentation, and standard protocols (MQTT, HTTP, CoAP) mean faster integration. No proprietary SDKs or vendor-specific tooling required.</p>
-<p><strong>Production-Ready Out of the Box</strong>: Enterprise authentication (mutual TLS), fine-grained access control, audit logs, and multi-tenancy are included—not expensive add-ons.</p>
-<p><strong>Active Community &amp; Professional Support</strong>: Open development on GitHub means transparency and community contributions. Need help? Direct access to the engineering team at <a href="mailto:info@absmach.eu">info@absmach.eu</a>.</p>
+<ul>
+<li><strong>True Open Source, No Vendor Lock-In</strong>: Unlike proprietary IoT platforms, Magistrala uses the Apache 2.0 license.</li>
+<li><strong>Cloud-Native &amp; Self-Hostable</strong>: Run on Magistrala Cloud for zero infrastructure management, or self-host on your own servers for complete control.</li>
+<li><strong>Built for Developers</strong>: Clean REST APIs, comprehensive documentation, and standard protocols (MQTT, HTTP, CoAP, WS) mean faster integration.</li>
+<li><strong>Production-Ready Out of the Box</strong>: Enterprise authentication (mutual TLS), fine-grained access control, audit logs, and multi-tenancy are included—not expensive add-ons.</li>
+<li><strong>Active Community &amp; Professional Support</strong>: Open development on GitHub means transparency and community contributions. Need help? Direct access to the engineering team at <a href="mailto:info@absmach.eu">info@absmach.eu</a>.</li>
+</ul>
 <hr>
 <h2 id="start-tracking-today">Start Tracking Today</h2>
 <p>Ready to transform your asset tracking operations? Our team will help you design and implement a solution tailored to your specific needs.</p>
