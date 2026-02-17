@@ -392,9 +392,9 @@ Ready to implement dynamic IoT processing in your system? The Magistrala Rules E
 
 **Next Steps:**
 
-- [Explore documentation](https://docs.magistrala.absmach.eu/user-guide/rules-engine/)
-- [Try Magistrala Cloud free trial](https://cloud.magistrala.absmach.eu/login/) to test rules without infrastructure setup
-- [View the open-source implementation](https://github.com/absmach/magistrala/tree/main/re#rules-engine) on GitHub
+- 📘 [Explore documentation](https://docs.magistrala.absmach.eu/user-guide/rules-engine/)
+- ☁️ [Try Magistrala Cloud free trial](https://cloud.magistrala.absmach.eu/login/) to test rules without infrastructure setup
+- 🐙 [View the open-source implementation](https://github.com/absmach/magistrala/tree/main/re#rules-engine) on GitHub
 
 Transform your IoT data processing from rigid deployments to dynamic, scriptable intelligence.
 
