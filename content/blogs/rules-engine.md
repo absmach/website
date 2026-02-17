@@ -3,7 +3,7 @@ title: "Building a Scriptable Rules Engine for Real-Time IoT Message Processing"
 slug: "rules-engine"
 excerpt: "Learn how we built a dynamic, scriptable Rules Engine that enables real-time IoT message transformation using Lua and Go, complete with scheduling, observability, and a visual UI."
 description: "Learn how we built a dynamic, scriptable Rules Engine that enables real-time IoT message transformation using Lua and Go, complete with scheduling, observability, and a visual UI."
-date: "2025-02-03"
+date: "2026-02-17"
 author:
   name: "Ian Muchiri"
   picture: "https://avatars.githubusercontent.com/u/100555904?v=4"
@@ -11,17 +11,14 @@ coverImage: "/img/blogs/rules-engine/rules-ui.png"
 ogImage:
   url: "/img/blogs/rules-engine/rules-ui.png"
 category: blog
+featured: false
 tags:
   - IoT
   - IIoT
   - Magistrala
-  - Low-code
   - Real-time-processing
   - Rules-engine
-  - Dashboards
   - Observability
-  - UI
-  - User-guide
   - Golang
   - Lua
   - Scheduling
@@ -55,6 +52,7 @@ The Magistrala Rules Engine solves these problems by providing:
 - **Unified processing** for real-time and scheduled operations
 - **Domain-based isolation** for secure multi-tenancy
 - **Native integrations** to databases, messaging, and notification systems
+
 ---
 
 ## Rules Engine Architecture at a Glance
