@@ -7,9 +7,9 @@ date: "2026-02-17"
 author:
   name: "Ian Muchiri"
   picture: "https://avatars.githubusercontent.com/u/100555904?v=4"
-coverImage: "/img/blogs/rules-engine/rules-ui.png"
+coverImage: "/img/blogs/rules-engine/hero.png"
 ogImage:
-  url: "/img/blogs/rules-engine/rules-ui.png"
+  url: "/img/blogs/rules-engine/hero.png"
 category: blog
 featured: false
 tags:
