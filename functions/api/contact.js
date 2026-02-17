@@ -64,6 +64,12 @@ const normalizeInput = (payload) => ({
   company: getString(payload.company),
 });
 
+const getTeamContactEmail = (env) =>
+  getString(env?.TEAM_CONTACT_EMAIL || env?.CONTACT_TO_EMAIL);
+
+const getMailFromEmail = (env) =>
+  getString(env?.MAIL_FROM_EMAIL || env?.NO_REPLY_EMAIL || env?.CONTACT_FROM_EMAIL);
+
 const validateInput = ({ name, email, message }) => {
   if (name.length < NAME_MIN_LENGTH || name.length > NAME_MAX_LENGTH) {
     return ERROR_MESSAGES.invalidName;
@@ -218,11 +224,15 @@ const handlePost = async (context) => {
     return json({ ok: false, error: validationError }, 400);
   }
 
-  const contactFrom = getString(env?.CONTACT_FROM_EMAIL);
-  const contactTo = getString(env?.CONTACT_TO_EMAIL);
+  // API contract:
+  // 1) Request body contains name, email, message.
+  // 2) Send inquiry to TEAM_CONTACT_EMAIL.
+  // 3) Send confirmation copy to request email, from MAIL_FROM_EMAIL.
+  const mailFromEmail = getMailFromEmail(env);
+  const teamContactEmail = getTeamContactEmail(env);
   const transport = createTransporter(env);
 
-  if (!transport.ok || !contactFrom || !contactTo) {
+  if (!transport.ok || !mailFromEmail || !teamContactEmail) {
     return json({ ok: false, error: ERROR_MESSAGES.notConfigured }, 503);
   }
 
@@ -237,8 +247,8 @@ const handlePost = async (context) => {
   try {
     await sendEmail({
       transporter: transport.transporter,
-      from: contactFrom,
-      to: contactTo,
+      from: mailFromEmail,
+      to: teamContactEmail,
       subject: inquiry.subject,
       html: inquiry.html,
       text: inquiry.text,
@@ -254,12 +264,12 @@ const handlePost = async (context) => {
   try {
     await sendEmail({
       transporter: transport.transporter,
-      from: contactFrom,
+      from: mailFromEmail,
       to: email,
       subject: confirmation.subject,
       html: confirmation.html,
       text: confirmation.text,
-      replyTo: contactTo,
+      replyTo: teamContactEmail,
     });
   } catch (error) {
     console.error("Contact form confirmation delivery failed", error);

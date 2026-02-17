@@ -5,8 +5,8 @@ SMTP_PORT=2525
 SMTP_SECURE=false
 SMTP_USER=
 SMTP_PASS=
-CONTACT_FROM_EMAIL=info@absmach.eu
-CONTACT_TO_EMAIL=info@absmach.eu
+MAIL_FROM_EMAIL=info@absmach.eu
+TEAM_CONTACT_EMAIL=info@absmach.eu
 
 # Production example (Google SMTP / Gmail Workspace)
 # SMTP_HOST=smtp.gmail.com
@@ -14,5 +14,5 @@ CONTACT_TO_EMAIL=info@absmach.eu
 # SMTP_SECURE=true
 # SMTP_USER=your-production-email@yourdomain.com
 # SMTP_PASS=your-google-app-password
-# CONTACT_FROM_EMAIL=your-production-email@yourdomain.com
-# CONTACT_TO_EMAIL=info@absmach.eu
+# MAIL_FROM_EMAIL=your-production-email@yourdomain.com
+# TEAM_CONTACT_EMAIL=info@absmach.eu

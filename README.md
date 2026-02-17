@@ -52,6 +52,7 @@ Note: `wrangler pages deploy` does not accept compatibility flags as CLI argumen
 - `name`: Cloudflare Pages project name (`absmach`).
 - `pages_build_output_dir`: deploy output directory (`./dist`).
 - `compatibility_date` and `compatibility_flags` (for example `nodejs_compat`) for Functions runtime.
+- `vars`: non-secret defaults for Functions (for contact form, use `TEAM_CONTACT_EMAIL` and `MAIL_FROM_EMAIL`).
 
 Wrangler automatically reads `wrangler.jsonc` when commands are run from the project root.
 
@@ -61,8 +62,14 @@ The contact page submits to `POST /api/contact` via `functions/api/contact.js`.
 The endpoint uses `nodemailer` over SMTP (Google SMTP supported).
 Each successful submission sends:
 
-- one email to your team inbox (`CONTACT_TO_EMAIL`)
-- one confirmation copy to the user who submitted the form
+- one email to your team inbox (`TEAM_CONTACT_EMAIL`)
+- one confirmation copy to the user who submitted the form email
+
+Request payload fields:
+
+- `name`
+- `email`
+- `message`
 
 Required environment variables:
 
@@ -71,8 +78,8 @@ Required environment variables:
 - `SMTP_SECURE`: `true` when using SSL port (usually `465`), otherwise `false`.
 - `SMTP_USER`: SMTP username (for Google: full Gmail/Workspace email).
 - `SMTP_PASS`: SMTP password (for Google: app password).
-- `CONTACT_FROM_EMAIL`: From address shown in emails.
-- `CONTACT_TO_EMAIL`: Recipient address for team notifications.
+- `MAIL_FROM_EMAIL`: From address used when sending both emails.
+- `TEAM_CONTACT_EMAIL`: Team inbox that receives contact requests.
 
 For local `smtp4dev` testing (Docker `-p 2525:25`), use:
 
@@ -82,23 +89,24 @@ SMTP_PORT=2525
 SMTP_SECURE=false
 SMTP_USER=
 SMTP_PASS=
-CONTACT_FROM_EMAIL=info@absmach.eu
-CONTACT_TO_EMAIL=info@absmach.eu
+MAIL_FROM_EMAIL=info@absmach.eu
+TEAM_CONTACT_EMAIL=info@absmach.eu
 ```
 
 `SMTP_USER` and `SMTP_PASS` are optional for local test servers.
 
-For Cloudflare Pages production, set secrets on the project:
+For Cloudflare Pages production:
+
+- Non-secret values are already in `wrangler.jsonc` under `vars`:
+  `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `MAIL_FROM_EMAIL`, `TEAM_CONTACT_EMAIL`.
+- Set only SMTP credentials as secrets on the project:
 
 ```bash
-wrangler pages secret put SMTP_HOST
-wrangler pages secret put SMTP_PORT
-wrangler pages secret put SMTP_SECURE
 wrangler pages secret put SMTP_USER
 wrangler pages secret put SMTP_PASS
-wrangler pages secret put CONTACT_FROM_EMAIL
-wrangler pages secret put CONTACT_TO_EMAIL
 ```
+
+Backward compatibility: `NO_REPLY_EMAIL`, `CONTACT_FROM_EMAIL`, and `CONTACT_TO_EMAIL` are still accepted, but new projects should use `MAIL_FROM_EMAIL` and `TEAM_CONTACT_EMAIL`.
 
 Production does not use `.dev.vars`.
 
