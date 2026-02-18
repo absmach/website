@@ -43,7 +43,7 @@ Notes:
 
 ## 3) Add images
 
-Put blog images under `public/img/blogs/<slug>/` and reference them with an absolute path:
+Put blog images under `public/img/blogs/<slug>/` and reference them with a relative path:
 
 - File: `public/img/blogs/my-new-post/diagram.png`
 - Markdown: `![Diagram](/img/blogs/my-new-post/diagram.png)`

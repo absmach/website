@@ -20,7 +20,6 @@ tags:
   - "Event-Driven"
   - "Architecture"
 category: blog
-featured: true
 ---
 
 ## Why Another Message Broker?
