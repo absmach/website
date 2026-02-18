@@ -1,0 +1,312 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/Header.astro";
+import Hero from "../../../components/Hero.astro";
+import ProjectInformation from "../../../components/ProjectInformation.astro";
+import ProjectPartners from "../../../components/ProjectPartners.astro";
+import Footer from "../../../components/Footer.astro";
+---
+
+<BaseLayout
+  title="Confidential6G Project | Abstract Machines"
+  description="Confidential Computing and Privacy-preserving Technologies for 6G. Ensuring secure and private computation in the cloud-edge continuum."
+>
+  <Header />
+  <main>
+    <Hero
+      eyebrow="Research Project"
+      title="Confidential6G"
+      subtitle="Confidential Computing and Privacy-preserving Technologies for 6G"
+      backgroundClass="hero-grid"
+    >
+      <p slot="meta" class="text-sm font-semibold tracking-wide text-muted">
+        2023-2025
+      </p>
+
+      <div class="flex justify-center lg:justify-end">
+        <div class="rounded-2xl border border-subtle bg-panel p-4">
+          <Image
+            src="/img/logos/confidential6G.jpg"
+            alt="Confidential6G Project Logo"
+            class="h-24 w-auto md:h-28"
+            width={360}
+            height={140}
+            priority
+            decoding="async"
+          />
+        </div>
+      </div>
+    </Hero>
+
+    <section class="py-16">
+      <div class="mx-auto w-full max-w-6xl px-6">
+        <div class="grid gap-12 lg:grid-cols-[2fr_1fr]">
+          <div class="space-y-16">
+            <section aria-labelledby="project-description">
+              <h2
+                id="project-description"
+                class="text-3xl font-semibold tracking-tight md:text-4xl"
+              >
+                Project Description
+              </h2>
+              <p class="mt-6 text-muted md:text-lg leading-relaxed">
+                In CONFIDENTIAL6G, our goal is to ensure secure and private
+                computation in the cloud-edge continuum of 6G by developing
+                modern cryptographic techniques, tools, and libraries. We
+                recognize the importance of implementing privacy preservation
+                and security of data in heterogeneous environments and contexts,
+                and thus, we prioritize researching security enablers. We aim to
+                tackle the potential danger posed by near-future quantum
+                computers, which can break contemporary encryptions, by
+                exploring novel cryptographic operations.
+              </p>
+            </section>
+
+            <section aria-labelledby="project-summary">
+              <h2
+                id="project-summary"
+                class="text-3xl font-semibold tracking-tight md:text-4xl"
+              >
+                Project Summary
+              </h2>
+              <div class="mt-10 grid gap-10 md:grid-cols-2">
+                <div>
+                  <h3 class="text-lg font-semibold">Key Objectives</h3>
+                  <ul
+                    class="mt-4 list-disc space-y-2 pl-5 text-muted md:text-base"
+                  >
+                    <li>
+                      <strong>Quantum-resistant security:</strong> Develop security
+                      tools and cryptographic libraries for 6G confidential computing
+                      and networking
+                    </li>
+                    <li>
+                      <strong>Privacy-preserving AI/ML:</strong> Create secure, GDPR-compliant
+                      methods in multi-stakeholder environments
+                    </li>
+                    <li>
+                      <strong>Edge-cloud networking:</strong> Build secure networking
+                      for confidential computing and federated machine learning
+                    </li>
+                    <li>
+                      <strong>Modular framework:</strong> Integrate all tools and
+                      test with real 6G use cases
+                    </li>
+                    <li>
+                      <strong>Standardization support:</strong> Support 6G security
+                      standards and promote EU capabilities in future cloud technologies
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 class="text-lg font-semibold">Expected Outcomes</h3>
+                  <ul
+                    class="mt-4 list-disc space-y-2 pl-5 text-muted md:text-base"
+                  >
+                    <li>
+                      <strong>Cryptographic libraries:</strong> Post-quantum libraries
+                      and SDKs for 6G
+                    </li>
+                    <li>
+                      <strong>Computing framework:</strong> Confidential computing
+                      framework for cloud-edge environments
+                    </li>
+                    <li>
+                      <strong>Privacy protocols:</strong> Privacy-preserving protocols
+                      for heterogeneous 6G networks
+                    </li>
+                    <li>
+                      <strong>Security tools:</strong> Quantum-resistant security
+                      tools and artifacts
+                    </li>
+                    <li>
+                      <strong>Security standards:</strong> Enhanced security standards
+                      for future 6G deployments
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section aria-labelledby="our-involvement">
+              <h2
+                id="our-involvement"
+                class="text-3xl font-semibold tracking-tight md:text-4xl"
+              >
+                Our Involvement
+              </h2>
+              <p class="mt-6 text-muted md:text-lg leading-relaxed">
+                Abstract Machines serves as the technical manager of the
+                Confidential6G project, leading the coordination of technical
+                activities and ensuring successful delivery of project
+                objectives. Our expertise in IoT infrastructure and security
+                makes us uniquely positioned to address the privacy challenges
+                in 6G networks.
+              </p>
+
+              <h3 class="mt-10 text-lg font-semibold">Our Responsibilities</h3>
+              <ul class="mt-4 list-disc space-y-2 pl-5 text-muted md:text-base">
+                <li>
+                  <strong>Technical Management:</strong> Coordinating technical activities
+                  and ensuring project milestone delivery
+                </li>
+                <li>
+                  <strong>Secure IoT Integration:</strong> Developing privacy-preserving
+                  IoT protocols for 6G networks
+                </li>
+                <li>
+                  <strong>Edge Security:</strong> Implementing confidential computing
+                  at the network edge
+                </li>
+                <li>
+                  <strong>Platform Development:</strong> Creating secure platforms
+                  for privacy-preserving applications
+                </li>
+                <li>
+                  <strong>Cryptographic Implementation:</strong> Integrating advanced
+                  cryptographic protocols into IoT systems
+                </li>
+              </ul>
+            </section>
+          </div>
+
+          <aside class="space-y-8">
+            <ProjectInformation
+              items={[
+                {
+                  label: "Duration",
+                  value: "1 January 2023 - 31 December 2025",
+                },
+                { label: "Funding Program", value: "Horizon Europe" },
+                { label: "Total Budget", value: "€5 Million" },
+                {
+                  label: "Project Coordinator",
+                  value: "WINGS ICT SOLUTIONS TECHNOLOGIES",
+                },
+                { label: "Status", value: "Active", pill: true },
+              ]}
+              links={[
+                {
+                  label: "Visit Project Site",
+                  href: "https://confidential6g.eu/",
+                },
+                {
+                  label: "View on CORDIS",
+                  href: "https://cordis.europa.eu/project/id/101096435",
+                },
+              ]}
+            />
+
+            <ProjectPartners
+              partners={[
+                {
+                  alt: "Wings",
+                  src: "/img/logos/wings-logo.png",
+                  logoClass: "dark:brightness-[1.3]",
+                },
+                { alt: "Nokia", src: "/img/logos/nokia-1.png" },
+                {
+                  alt: "Nokia Bell Labs",
+                  src: "/img/logos/nokia-bellLabs.png",
+                },
+                { alt: "Telefonica", src: "/img/logos/telefonica.png" },
+                { alt: "TU/e", src: "/img/logos/tue.png" },
+                { alt: "Ultraviolet", src: "/img/logos/ultraviolet.png" },
+                { alt: "Zen", src: "/img/logos/zen.png" },
+                { alt: "VTT", src: "/img/logos/vtt.png" },
+                {
+                  alt: "TNO",
+                  src: "/img/logos/tno.png",
+                  logoClass: "dark:brightness-200",
+                },
+                { alt: "IMDEA", src: "/img/logos/imdea.png" },
+                { alt: "TU Graz", src: "/img/logos/tu-gratz.png" },
+                { alt: "UCD", src: "/img/logos/ucd-1.png" },
+                { alt: "TU Wien", src: "/img/logos/tuw.png" },
+                { alt: "AMA", src: "/img/logos/AMA.png" },
+              ]}
+            />
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="mx-auto w-full max-w-6xl px-6">
+        <h2
+          class="text-center text-3xl font-semibold tracking-tight md:text-4xl"
+        >
+          Project Goals &amp; Impact
+        </h2>
+
+        <div class="mt-12 grid gap-10 md:grid-cols-3">
+          <div class="text-center">
+            <div
+              class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-surface-2"
+            >
+              <Image
+                src="/img/icons/icon01-2.png"
+                alt="Cryptography"
+                class="h-8 w-auto"
+                width={64}
+                height={64}
+                loading="lazy"
+              />
+            </div>
+            <h3 class="mt-6 text-xl font-semibold">Cryptography</h3>
+            <p class="mt-4 text-muted">
+              Cryptographic enablers for confidential computing (FHE, SMPC, TEE)
+              and post-quantum networking. DLT privacy enablers (ZKP). Support
+              for embedded edge devices and hardware.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div
+              class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-surface-2"
+            >
+              <Image
+                src="/img/icons/icon02.png"
+                alt="Confidential Computing"
+                class="h-8 w-auto"
+                width={64}
+                height={64}
+                loading="lazy"
+              />
+            </div>
+            <h3 class="mt-6 text-xl font-semibold">Confidential Computing</h3>
+            <p class="mt-4 text-muted">
+              Confidential Computing via FHE, SMPC and HW TEEs. Collaborative
+              AI/ML. Confidential containers. Remote attestations. Secure
+              enclave abstractions. Secure key distribution.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div
+              class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-surface-2"
+            >
+              <Image
+                src="/img/icons/icon03.png"
+                alt="Confidential Networking"
+                class="h-8 w-auto"
+                width={64}
+                height={64}
+                loading="lazy"
+              />
+            </div>
+            <h3 class="mt-6 text-xl font-semibold">Confidential Networking</h3>
+            <p class="mt-4 text-muted">
+              Post-quantum secure network protocols. Secure data sharing and
+              access control. Private blockchain smart contracts, DIDs and VCs.
+              Federated AI/ML orchestration.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,45 @@
+---
+const {
+  title,
+  subtitle,
+  primary,
+  secondary,
+  backgroundClass = "",
+} = Astro.props;
+---
+
+<section class={`pt-10 pb-10 ${backgroundClass}`}>
+  <div class="container-wide">
+    <div class="mx-auto max-w-4xl text-center my-5 py-5">
+      <h1 class="text-4xl font-semibold md:text-5xl">{title}</h1>
+      {subtitle && <p class="mt-6 text-lg text-muted">{subtitle}</p>}
+      {
+        (primary || secondary) && (
+          <div class="mt-14 flex flex-wrap items-center justify-center gap-4">
+            {primary && (
+              <a
+                class="button-primary"
+                href={primary.href}
+                target={primary.external ? "_blank" : undefined}
+                rel={primary.external ? "noopener noreferrer" : undefined}
+              >
+                {primary.label}
+              </a>
+            )}
+            {secondary && (
+              <a
+                class="button-secondary"
+                href={secondary.href}
+                target={secondary.external ? "_blank" : undefined}
+                rel={secondary.external ? "noopener noreferrer" : undefined}
+              >
+                {secondary.label}
+              </a>
+            )}
+          </div>
+        )
+      }
+    </div>
+    <slot />
+  </div>
+</section>

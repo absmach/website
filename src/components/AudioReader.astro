@@ -1,0 +1,1670 @@
+---
+const { target = "#post" } = Astro.props;
+---
+
+<div
+  id="ar-shell"
+  class="audio-reader-shell z-40 my-6 rounded-2xl border border-subtle px-4 py-3 shadow-[var(--shadow-soft)]"
+>
+  <div class="audio-player">
+    <div class="audio-left">
+      <button
+        id="ar-toggle"
+        class="audio-glass-control audio-toggle inline-flex h-12 w-12 items-center justify-center rounded-full transition hover:-translate-y-0.5"
+        aria-pressed="false"
+        aria-label="Play audio"
+      >
+        <svg
+          id="ar-icon-play"
+          class="h-8 w-8"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M8 6.5v11L17.5 12 8 6.5z"></path>
+        </svg>
+        <svg
+          id="ar-icon-pause"
+          class="hidden h-8 w-8"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <rect x="7" y="5.5" width="3.2" height="13" rx="1"></rect>
+          <rect x="13.8" y="5.5" width="3.2" height="13" rx="1"></rect>
+        </svg>
+        <span id="ar-toggle-label" class="sr-only">Play</span>
+      </button>
+
+      <button
+        id="ar-mute"
+        class="audio-glass-control audio-mute inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:-translate-y-0.5"
+        aria-pressed="false"
+        aria-label="Mute audio"
+      >
+        <svg
+          id="ar-icon-volume"
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <polygon points="11 5 6 9 3 9 3 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.5 8.5a5 5 0 0 1 0 7"></path>
+          <path d="M18.5 6a9 9 0 0 1 0 12"></path>
+        </svg>
+        <svg
+          id="ar-icon-muted"
+          class="hidden h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <polygon points="11 5 6 9 3 9 3 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+        <span class="sr-only">Mute</span>
+      </button>
+
+      <span class="audio-time">
+        <span id="ar-current-time">00:00</span>
+        <span aria-hidden="true"> / </span>
+        <span id="ar-total-time">00:00</span>
+      </span>
+    </div>
+
+    <div class="audio-main">
+      <label class="sr-only" for="ar-seek">Reader progress</label>
+      <input
+        id="ar-seek"
+        type="range"
+        min="0"
+        max="100"
+        step="0.1"
+        value="0"
+        class="audio-glass-range w-full accent-[var(--accent)]"
+        aria-label="Reader progress"
+      />
+    </div>
+
+    <div class="audio-options">
+      <button
+        id="ar-settings"
+        class="audio-glass-control audio-settings-btn inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:-translate-y-0.5"
+        aria-expanded="false"
+        aria-controls="ar-settings-panel"
+        aria-label="Open audio settings"
+        title="Settings"
+      >
+        <svg
+          id="ar-icon-settings"
+          class="audio-settings-icon"
+          viewBox="0 0 512 512"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            d="M0 0 C1.2684375 -0.00765381 2.536875 -0.01530762 3.84375 -0.02319336 C6.52566515 -0.0286377 9.20173452 -0.01794829 11.8828125 0.01953125 C15.31081256 0.06512935 18.73380473 0.03886995 22.16162109 -0.00904846 C25.44125782 -0.04498989 28.72029774 -0.01978987 32 0 C33.2271875 -0.01619385 34.454375 -0.0323877 35.71875 -0.04907227 C43.98392089 0.13300815 43.98392089 0.13300815 46.82191467 2.72915649 C48.14426227 4.79242084 49.09942923 6.78690422 50 9.0625 C50.47751709 9.97177246 50.95503418 10.88104492 51.44702148 11.81787109 C52.78504068 14.68755919 54.11638989 17.55998001 55.4375 20.4375 C55.96351807 21.54367676 56.48953613 22.64985352 57.03149414 23.78955078 C60.11129199 30.39956068 62.68265368 36.95119282 64.875 43.90625 C70.17776735 61.67469025 70.17776735 61.67469025 83.1640625 73.92578125 C90.97863434 77.7213378 101.38609566 82.65873512 110 80.0625 C112.18833007 79.18730761 114.35462248 78.25618686 116.50390625 77.2890625 C117.80200975 76.71036552 119.10019018 76.13184106 120.3984375 75.5534668 C121.07745117 75.24887543 121.75646484 74.94428406 122.45605469 74.63046265 C134.04532022 69.4424597 145.69936183 64.4379356 157.5 59.75 C158.64283447 59.28867676 159.78566895 58.82735352 160.96313477 58.35205078 C172.07715727 53.98978653 172.07715727 53.98978653 178 54.0625 C180.46875 55.6875 180.46875 55.6875 182.5 58.0625 C185.04800623 60.96330709 187.60316498 63.64852535 190.5234375 66.16796875 C195.65689029 70.60249511 200.64992443 75.16794248 205.54003906 79.86791992 C206.60346507 80.87909194 207.67828057 81.87840948 208.76367188 82.8659668 C217.58426718 90.9095979 217.58426718 90.9095979 218.45800781 95.43432617 C218.01014516 98.22171285 217.11942966 100.46656973 216 103.0625 C215.32735107 104.88914185 215.32735107 104.88914185 214.64111328 106.75268555 C213.02358894 111.125252 211.26450032 115.43514497 209.5 119.75 C208.87103317 121.31069993 208.24270175 122.87165609 207.61499023 124.43286133 C204.79866043 131.40558934 201.91846409 138.33666904 198.81640625 145.1875 C198.3471875 146.22688721 197.87796875 147.26627441 197.39453125 148.3371582 C196.53389996 150.21915819 195.65610149 152.09344421 194.7578125 153.95776367 C191.15311875 161.79600032 192.2129292 166.96184136 194.86328125 174.91796875 C195.66842969 177.03296589 196.48512324 179.14359913 197.3125 181.25 C197.68439453 182.31669922 198.05628906 183.38339844 198.43945312 184.48242188 C200.15129775 188.80665497 201.53600384 192.09358402 205.48999023 194.71044922 C208.61793392 196.03787049 211.75237371 197.06388783 215 198.0625 C216.83967749 198.74493905 218.6792345 199.42786277 220.51245117 200.12747192 C222.46013681 200.86948718 224.4136962 201.59343585 226.36987305 202.31274414 C237.39710607 206.37461784 248.38521129 210.48999968 259.1875 215.125 C260.02273193 215.48239258 260.85796387 215.83978516 261.71850586 216.20800781 C265.94246133 218.05180142 265.94246133 218.05180142 268 219.0625 C268.85428589 219.46080017 269.70857178 219.85910034 270.58874512 220.26947021 C273 222.0625 273 222.0625 273.60127258 224.62516785 C273.59016953 225.64886978 273.57906647 226.67257172 273.56762695 227.72729492 C273.5672493 228.88827194 273.56687164 230.04924896 273.56648254 231.2454071 C273.54067612 232.49860245 273.51486969 233.75179779 273.48828125 235.04296875 C273.48120651 236.32609451 273.47413177 237.60922028 273.46684265 238.93122864 C273.44776759 242.33967922 273.39866571 245.7470614 273.34332275 249.15509033 C273.29213925 252.63384548 273.26933074 256.11277359 273.24414062 259.59179688 C273.19054505 266.415803 273.10522794 273.23910019 273 280.0625 C263.26869773 285.02363311 253.50308292 289.74387164 243.4375 294 C242.25164307 294.5043457 241.06578613 295.00869141 239.84399414 295.52832031 C231.91182585 298.8818951 223.94682409 302.14763377 215.9375 305.3125 C214.97448975 305.695271 214.01147949 306.07804199 213.01928711 306.47241211 C212.1350708 306.81667236 211.25085449 307.16093262 210.33984375 307.515625 C209.57019287 307.81629883 208.80054199 308.11697266 208.00756836 308.42675781 C206 309.0625 206 309.0625 203 309.0625 C202.83274414 309.60052246 202.66548828 310.13854492 202.49316406 310.69287109 C201.16085705 314.84627115 199.70469697 318.86883635 197.921875 322.8515625 C197.38820313 324.04652344 197.38820313 324.04652344 196.84375 325.265625 C196.10899186 326.89258946 195.3640205 328.51497659 194.609375 330.1328125 C194.25875 330.926875 193.908125 331.7209375 193.546875 332.5390625 C193.22557617 333.24111816 192.90427734 333.94317383 192.57324219 334.66650391 C191.11982177 340.74140508 193.64964039 346.13224248 196.24609375 351.5234375 C196.57319839 352.22335312 196.90030304 352.92326874 197.23731995 353.64439392 C197.93611274 355.1392589 198.63859909 356.632402 199.34448242 358.12393188 C201.19030511 362.0309473 203.00037543 365.95437526 204.80859375 369.87890625 C205.34895767 371.05101906 205.34895767 371.05101906 205.90023804 372.24681091 C209.10184797 379.22303919 212.1237145 386.25744876 215 393.375 C215.62152954 394.88296143 215.62152954 394.88296143 216.25561523 396.42138672 C216.62501221 397.35096191 216.99440918 398.28053711 217.375 399.23828125 C217.69210937 400.03145752 218.00921875 400.82463379 218.3359375 401.6418457 C219.19450947 404.77152991 219.49949042 406.82291884 219 410.0625 C217.28361355 412.60427985 215.15004514 414.63461923 212.9375 416.74609375 C212.31278809 417.36468765 211.68807617 417.98328156 211.04443359 418.62062073 C209.04326618 420.59488454 207.02201619 422.54711875 205 424.5 C203.66925481 425.80920843 202.33981278 427.11974287 201.01171875 428.43164062 C188.18521821 441.05435228 188.18521821 441.05435228 182 446.0625 C181.19433594 446.75472656 180.38867188 447.44695312 179.55859375 448.16015625 C175.3588356 449.64129233 172.11397466 448.00169294 168.0625 446.5 C167.16370117 446.18353516 166.26490234 445.86707031 165.33886719 445.54101562 C150.23031757 440.12158952 135.23663501 434.09445723 120.515625 427.69921875 C119.73477539 427.36341797 118.95392578 427.02761719 118.14941406 426.68164062 C116.77548467 426.08612557 115.40694101 425.47792196 114.04589844 424.85351562 C108.84364077 422.59609223 105.31172913 423.25262806 100.05566406 425.09399414 C99.05245117 425.50770264 98.04923828 425.92141113 97.015625 426.34765625 C95.36626953 427.01958008 95.36626953 427.01958008 93.68359375 427.70507812 C92.55050781 428.17365234 91.41742188 428.64222656 90.25 429.125 C87.98562075 430.05641975 85.72005447 430.98496065 83.453125 431.91015625 C82.45442383 432.32273682 81.45572266 432.73531738 80.42675781 433.16040039 C78 434.0625 78 434.0625 76 434.0625 C75.84217041 434.63137939 75.68434082 435.20025879 75.52172852 435.78637695 C73.41350147 443.11518424 70.74680094 450.16430782 67.9375 457.25 C67.45651855 458.46655273 66.97553711 459.68310547 66.47998047 460.93652344 C63.30119294 468.93990653 60.02597467 476.90075892 56.625 484.8125 C56.03706665 486.19344849 56.03706665 486.19344849 55.43725586 487.60229492 C55.05835205 488.47088135 54.67944824 489.33946777 54.2890625 490.234375 C53.96631348 490.9778418 53.64356445 491.72130859 53.31103516 492.48730469 C52.87839355 493.33711914 52.44575195 494.18693359 52 495.0625 C51.73628601 495.73680054 51.47257202 496.41110107 51.2008667 497.10583496 C50.03528602 499.58294393 49.02408729 501.20540505 47 503.0625 C42.68417013 504.2834905 38.46152049 504.18387379 34 504.125 C32.7315625 504.13265381 31.463125 504.14030762 30.15625 504.14819336 C27.47433485 504.1536377 24.79826548 504.14294829 22.1171875 504.10546875 C18.68918744 504.05987065 15.26619527 504.08613005 11.83837891 504.13404846 C8.55874218 504.16998989 5.27970226 504.14478987 2 504.125 C0.7728125 504.14119385 -0.454375 504.1573877 -1.71875 504.17407227 C-9.98392089 503.99199185 -9.98392089 503.99199185 -12.82191467 501.39584351 C-14.14426227 499.33257916 -15.09942923 497.33809578 -16 495.0625 C-16.47751709 494.15322754 -16.95503418 493.24395508 -17.44702148 492.30712891 C-18.78504068 489.43744081 -20.11638989 486.56501999 -21.4375 483.6875 C-21.96351807 482.58132324 -22.48953613 481.47514648 -23.03149414 480.33544922 C-26.11129199 473.72543932 -28.68265368 467.17380718 -30.875 460.21875 C-36.17776735 442.45030975 -36.17776735 442.45030975 -49.1640625 430.19921875 C-57.23030868 426.28142336 -67.06552825 421.85686253 -76 424.0625 C-77.45215254 424.60064128 -78.8879376 425.18475923 -80.30517578 425.80908203 C-81.53398972 426.3456694 -81.53398972 426.3456694 -82.78762817 426.89309692 C-83.664664 427.28157806 -84.54169983 427.6700592 -85.4453125 428.0703125 C-86.36980194 428.47402069 -87.29429138 428.87772888 -88.24679565 429.29367065 C-92.18200822 431.01214614 -96.11229635 432.7417409 -100.04248047 434.47167969 C-110.15484984 438.91558867 -120.27278339 443.29907018 -130.6171875 447.1796875 C-131.3932132 447.47553741 -132.16923889 447.77138733 -132.96878052 448.07620239 C-136.71489941 449.44788168 -139.95080456 450.61434388 -144 450.0625 C-146.17578125 448.33984375 -146.17578125 448.33984375 -148.3125 446 C-150.94081674 443.15791997 -153.60792327 440.4891057 -156.53515625 437.9609375 C-161.65911884 433.51953016 -166.65176739 428.95528622 -171.54003906 424.25708008 C-172.60346507 423.24590806 -173.67828057 422.24659052 -174.76367188 421.2590332 C-183.64764706 413.15760505 -183.64764706 413.15760505 -184.41625977 408.58740234 C-183.95337652 405.84585967 -183.10526319 403.61456392 -182 401.0625 C-181.62939453 400.03664795 -181.25878906 399.0107959 -180.87695312 397.95385742 C-179.79524298 395.00960423 -178.65063838 392.10165515 -177.46017456 389.19992065 C-176.66847887 387.26603687 -175.89304859 385.3261706 -175.11938477 383.38500977 C-172.33179139 376.44590972 -169.36810673 369.63258093 -166.140625 362.88671875 C-165.20886758 360.89795953 -164.27991923 358.90790841 -163.35147095 356.91760254 C-162.45840429 355.04385928 -161.51849644 353.19928456 -160.57495117 351.35058594 C-157.46653678 344.74486479 -157.46653678 344.74486479 -157.67407227 337.62158203 C-158.94279834 334.32141091 -160.413756 331.22019724 -162 328.0625 C-162.56437502 326.46925073 -163.10117161 324.86569348 -163.59765625 323.25 C-164.085599 321.8540483 -164.57386878 320.45821086 -165.0625 319.0625 C-165.27326172 318.35222656 -165.48402344 317.64195312 -165.70117188 316.91015625 C-166.99009286 313.40559641 -168.15472679 311.5613008 -171.41821289 309.63549805 C-174.57353375 308.29222163 -177.75044093 307.15797158 -181 306.0625 C-183.30926593 305.21667669 -185.61784303 304.3689707 -187.92578125 303.51953125 C-190.3878478 302.63753767 -192.85009319 301.75604317 -195.3125 300.875 C-205.01673882 297.37147869 -214.60155116 293.68919064 -224.0625 289.5625 C-225.0006958 289.15362549 -225.9388916 288.74475098 -226.90551758 288.32348633 C-231.67819177 286.20500566 -231.67819177 286.20500566 -234 285.0625 C-234.85872711 284.66197922 -235.71745422 284.26145844 -236.60220337 283.84880066 C-239 282.0625 -239 282.0625 -239.60127258 279.49983215 C-239.584618 277.96427925 -239.584618 277.96427925 -239.56762695 276.39770508 C-239.5672493 275.23672806 -239.56687164 274.07575104 -239.56648254 272.8795929 C-239.54067612 271.62639755 -239.51486969 270.37320221 -239.48828125 269.08203125 C-239.48120651 267.79890549 -239.47413177 266.51577972 -239.46684265 265.19377136 C-239.44776759 261.78532078 -239.39866571 258.3779386 -239.34332275 254.96990967 C-239.29213925 251.49115452 -239.26933074 248.01222641 -239.24414062 244.53320312 C-239.19054505 237.709197 -239.10522794 230.88589981 -239 224.0625 C-229.26869773 219.10136689 -219.50308292 214.38112836 -209.4375 210.125 C-208.25164307 209.6206543 -207.06578613 209.11630859 -205.84399414 208.59667969 C-197.91182585 205.2431049 -189.94682409 201.97736623 -181.9375 198.8125 C-180.97448975 198.429729 -180.01147949 198.04695801 -179.01928711 197.65258789 C-178.1350708 197.30832764 -177.25085449 196.96406738 -176.33984375 196.609375 C-175.57019287 196.30870117 -174.80054199 196.00802734 -174.00756836 195.69824219 C-172 195.0625 -172 195.0625 -169 195.0625 C-168.83274414 194.52447754 -168.66548828 193.98645508 -168.49316406 193.43212891 C-167.16085705 189.27872885 -165.70469697 185.25616365 -163.921875 181.2734375 C-163.56609375 180.47679687 -163.2103125 179.68015625 -162.84375 178.859375 C-162.10899186 177.23241054 -161.3640205 175.61002341 -160.609375 173.9921875 C-160.25875 173.198125 -159.908125 172.4040625 -159.546875 171.5859375 C-159.22557617 170.88388184 -158.90427734 170.18182617 -158.57324219 169.45849609 C-157.11982177 163.38359492 -159.64964039 157.99275752 -162.24609375 152.6015625 C-162.73675072 151.55168907 -162.73675072 151.55168907 -163.23731995 150.48060608 C-163.93611274 148.9857411 -164.63859909 147.492598 -165.34448242 146.00106812 C-167.19030511 142.0940527 -169.00037543 138.17062474 -170.80859375 134.24609375 C-171.16883636 133.46468521 -171.52907898 132.68327667 -171.90023804 131.87818909 C-175.10184797 124.90196081 -178.1237145 117.86755124 -181 110.75 C-181.41435303 109.74469238 -181.82870605 108.73938477 -182.25561523 107.70361328 C-182.62501221 106.77403809 -182.99440918 105.84446289 -183.375 104.88671875 C-183.69210938 104.09354248 -184.00921875 103.30036621 -184.3359375 102.4831543 C-185.1836842 99.39293059 -185.45671613 97.25849798 -185 94.0625 C-183.25524533 91.77957824 -181.65291374 89.98890133 -179.59375 88.03515625 C-179.03562622 87.48315048 -178.47750244 86.93114471 -177.90246582 86.3624115 C-176.11524726 84.6020746 -174.30807235 82.86388345 -172.5 81.125 C-171.31378519 79.96032623 -170.12887476 78.79432237 -168.9453125 77.62695312 C-163.6140665 72.3922575 -158.24320753 67.2370874 -152.52563477 62.42138672 C-150.73869743 60.88697981 -150.73869743 60.88697981 -148.4375 58.125 C-145.12979993 55.32617687 -143.25971971 55.77835121 -139 56.0625 C-135.9909668 56.85009766 -135.9909668 56.85009766 -132.94921875 57.9765625 C-131.79164063 58.40163086 -130.6340625 58.82669922 -129.44140625 59.26464844 C-128.18997716 59.73859708 -126.93867847 60.21289015 -125.6875 60.6875 C-124.38037615 61.1726529 -123.07308074 61.65734379 -121.765625 62.14160156 C-114.33466002 64.91768905 -106.98684033 67.86789731 -99.67578125 70.9453125 C-98.52320076 71.42872604 -98.52320076 71.42872604 -97.34733582 71.92190552 C-93.58691491 73.50193686 -89.83592574 75.1000468 -86.09643555 76.72900391 C-84.72071387 77.31453542 -83.34482679 77.89967853 -81.96875 78.484375 C-80.76669922 79.00612305 -79.56464844 79.52787109 -78.32617188 80.06542969 C-72.61180591 81.77839729 -68.36405315 79.98294755 -63.015625 77.77734375 C-61.91605469 77.32939453 -60.81648437 76.88144531 -59.68359375 76.41992188 C-58.55050781 75.95134766 -57.41742188 75.48277344 -56.25 75 C-53.98562075 74.06858025 -51.72005447 73.14003935 -49.453125 72.21484375 C-48.45442383 71.80226318 -47.45572266 71.38968262 -46.42675781 70.96459961 C-44 70.0625 -44 70.0625 -42 70.0625 C-41.84217041 69.49362061 -41.68434082 68.92474121 -41.52172852 68.33862305 C-39.41350147 61.00981576 -36.74680094 53.96069218 -33.9375 46.875 C-33.45651855 45.65844727 -32.97553711 44.44189453 -32.47998047 43.18847656 C-29.30119294 35.18509347 -26.02597467 27.22424108 -22.625 19.3125 C-22.23304443 18.39186768 -21.84108887 17.47123535 -21.43725586 16.52270508 C-21.05835205 15.65411865 -20.67944824 14.78553223 -20.2890625 13.890625 C-19.80493896 12.7754248 -19.80493896 12.7754248 -19.31103516 11.63769531 C-18.66207275 10.36297363 -18.66207275 10.36297363 -18 9.0625 C-17.73628601 8.38819946 -17.47257202 7.71389893 -17.2008667 7.01916504 C-13.54149632 -0.75778199 -7.87636414 -0.10393574 0 0 Z M-42 197.0625 C-42.7734375 197.81144531 -43.546875 198.56039062 -44.34375 199.33203125 C-58.31907763 213.76203563 -64.47962421 233.25381505 -65 253.0625 C-64.58997468 275.63984355 -54.65951805 294.56537695 -39 310.0625 C-38.05060547 311.04476562 -38.05060547 311.04476562 -37.08203125 312.046875 C-22.88796219 325.7082748 -2.52642723 331.77014621 16.75 332.375 C39.55778224 331.89293327 59.81413268 323.19423399 76 307.0625 C76.77085937 306.31484375 77.54171875 305.5671875 78.3359375 304.796875 C91.28302569 291.45209468 98.49093095 272.57410169 99 254.0625 C98.61526306 230.21854975 89.83314996 210.69673534 73 194.0625 C72.34386719 193.39605469 71.68773437 192.72960937 71.01171875 192.04296875 C56.18936551 177.98236386 34.37846362 171.36635852 14.28515625 171.81640625 C-7.78852279 173.46996366 -26.0899879 181.43659526 -42 197.0625 Z"
+            transform="translate(239,3.9375)"></path>
+        </svg>
+        <span class="sr-only">Open settings</span>
+      </button>
+
+      <div
+        id="ar-settings-panel"
+        class="audio-settings-panel"
+        role="dialog"
+        aria-label="Audio settings"
+      >
+        <label class="audio-option" for="ar-rate">
+          <span>Speed</span>
+          <select
+            id="ar-rate"
+            class="audio-glass-control audio-select text-sm text-primary"
+          >
+            <option value="0.5">0.5x</option>
+            <option value="0.75">0.75x</option>
+            <option value="0.85">0.85x</option>
+            <option value="1">1.0x</option>
+            <option value="1.1" selected>1.1x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2.0x</option>
+          </select>
+        </label>
+
+        <label class="audio-option" for="ar-voice">
+          <span>Voice</span>
+          <select
+            id="ar-voice"
+            class="audio-glass-control audio-select audio-voice-select text-sm text-primary"
+          ></select>
+        </label>
+      </div>
+
+      <button
+        id="ar-pin"
+        class="audio-glass-control audio-pin inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:-translate-y-0.5"
+        aria-pressed="true"
+        aria-label="Unpin audio bar"
+        title="Unpin"
+        data-tooltip="Unpin"
+      >
+        <svg
+          id="ar-icon-pin"
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M8 4h8l-1.2 5a2 2 0 0 0 .46 1.77L17 13H7l1.74-2.23A2 2 0 0 0 9.2 9L8 4z"
+          ></path>
+          <path d="M12 13v7"></path>
+        </svg>
+        <svg
+          id="ar-icon-unpin"
+          class="hidden h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M8 4h8l-1.2 5a2 2 0 0 0 .46 1.77L17 13H7l1.74-2.23A2 2 0 0 0 9.2 9L8 4z"
+          ></path>
+          <path d="M12 13v7"></path>
+          <line x1="4" y1="4" x2="20" y2="20"></line>
+        </svg>
+        <span id="ar-pin-label" class="sr-only">Unpin</span>
+      </button>
+    </div>
+  </div>
+
+  <p id="ar-status" class="sr-only" aria-live="polite">Ready</p>
+</div>
+
+<style>
+  .audio-player {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .audio-main {
+    min-width: 0;
+    align-self: center;
+  }
+
+  .audio-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex: 0 0 auto;
+  }
+
+  .audio-time {
+    font-size: 0.77rem;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--muted) 88%, var(--text));
+    white-space: nowrap;
+  }
+
+  .audio-options {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    justify-self: end;
+    min-width: 0;
+    flex: 0 0 auto;
+    position: relative;
+  }
+
+  .audio-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  .audio-select {
+    padding: 0.4rem 0.48rem;
+    border-radius: 0.72rem;
+    color: var(--text);
+    color-scheme: light;
+  }
+
+  .audio-select option,
+  .audio-select optgroup {
+    color: #0f172a;
+    background: #ffffff;
+  }
+
+  :root[data-theme="dark"] .audio-select {
+    color: color-mix(in srgb, #fff 92%, var(--text));
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] .audio-select option,
+  :root[data-theme="dark"] .audio-select optgroup {
+    color: #e8eef8;
+    background: #0f172a;
+  }
+
+  #ar-rate {
+    width: 4.6rem;
+  }
+
+  .audio-voice-select {
+    width: 11.5rem;
+    max-width: 11.5rem;
+    min-width: 0;
+  }
+
+  .audio-settings-btn {
+    color: color-mix(in srgb, var(--muted) 84%, var(--text));
+    flex: 0 0 auto;
+  }
+
+  .audio-settings-icon {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .audio-settings-btn.is-open {
+    color: color-mix(in srgb, var(--accent) 72%, var(--text));
+    border-color: color-mix(in srgb, var(--accent) 56%, var(--border));
+    background: color-mix(in srgb, var(--accent) 18%, var(--surface-2));
+  }
+
+  .audio-settings-panel {
+    position: absolute;
+    right: 2.9rem;
+    bottom: calc(100% + 0.55rem);
+    top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 0.78rem;
+    border: 1px solid
+      color-mix(in srgb, var(--border) 90%, transparent);
+    background: color-mix(in srgb, var(--panel) 98%, var(--surface));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.2);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.2rem) scale(0.98);
+    transform-origin: bottom right;
+    transition:
+      opacity 0.16s ease,
+      transform 0.16s ease;
+    z-index: 20;
+  }
+
+  .audio-settings-panel.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  .audio-reader-shell::-webkit-scrollbar {
+    height: 0;
+  }
+
+  .audio-reader-shell {
+    scrollbar-width: none;
+    overflow: visible;
+    position: relative;
+    isolation: isolate;
+    border-color: color-mix(
+      in srgb,
+      var(--border) 66%,
+      rgba(255, 255, 255, 0.4)
+    );
+    background:
+      linear-gradient(
+        140deg,
+        color-mix(in srgb, var(--panel) 50%, rgba(255, 255, 255, 0.46)),
+        color-mix(in srgb, var(--surface) 52%, rgba(255, 255, 255, 0.2)) 52%,
+        color-mix(in srgb, var(--panel) 60%, transparent)
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.18),
+        rgba(255, 255, 255, 0) 40%
+      );
+    backdrop-filter: blur(24px) saturate(178%);
+    -webkit-backdrop-filter: blur(24px) saturate(178%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.64),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.26),
+      0 2px 10px rgba(15, 23, 42, 0.08),
+      0 18px 40px rgba(15, 23, 42, 0.18);
+  }
+
+  .audio-reader-shell.is-floating {
+    position: sticky;
+    top: 6.25rem;
+  }
+
+  .audio-reader-shell.is-settings-open {
+    z-index: 70;
+  }
+
+  .audio-reader-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.26),
+        rgba(255, 255, 255, 0) 46%
+      ),
+      radial-gradient(
+        120% 110% at 4% 0%,
+        rgba(255, 255, 255, 0.26),
+        transparent 42%
+      );
+    opacity: 0.82;
+  }
+
+  .audio-reader-shell::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        68% 120% at 12% 100%,
+        color-mix(in srgb, var(--accent) 16%, transparent),
+        transparent 68%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.16),
+        rgba(255, 255, 255, 0) 45%
+      );
+    opacity: 0.72;
+  }
+
+  .audio-reader-shell > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  :root[data-theme="dark"] .audio-reader-shell {
+    border-color: color-mix(
+      in srgb,
+      var(--border) 76%,
+      rgba(255, 255, 255, 0.28)
+    );
+    background:
+      linear-gradient(
+        145deg,
+        color-mix(in srgb, var(--panel) 74%, rgba(255, 255, 255, 0.08)),
+        color-mix(in srgb, var(--surface) 70%, rgba(255, 255, 255, 0.03))
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08),
+        rgba(255, 255, 255, 0) 38%
+      );
+    backdrop-filter: blur(22px) saturate(168%);
+    -webkit-backdrop-filter: blur(22px) saturate(168%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+      0 3px 12px rgba(0, 0, 0, 0.24),
+      0 20px 46px rgba(0, 0, 0, 0.46);
+  }
+
+  :root[data-theme="dark"] .audio-reader-shell::before {
+    background:
+      linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.09),
+        rgba(255, 255, 255, 0) 46%
+      ),
+      radial-gradient(
+        120% 110% at 4% 0%,
+        rgba(45, 212, 255, 0.14),
+        transparent 48%
+      );
+    opacity: 0.98;
+  }
+
+  :root[data-theme="dark"] .audio-reader-shell::after {
+    background:
+      radial-gradient(
+        70% 110% at 10% 100%,
+        color-mix(in srgb, var(--accent) 20%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.08),
+        rgba(255, 255, 255, 0) 45%
+      );
+    opacity: 0.92;
+  }
+
+  .audio-glass-control {
+    border: 1px solid
+      color-mix(in srgb, var(--border) 70%, rgba(255, 255, 255, 0.42));
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in srgb, var(--surface-2) 44%, rgba(255, 255, 255, 0.2)),
+        color-mix(in srgb, var(--surface) 38%, transparent)
+      );
+    backdrop-filter: blur(13px) saturate(152%);
+    -webkit-backdrop-filter: blur(13px) saturate(152%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.44),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.18),
+      0 5px 12px rgba(15, 23, 42, 0.1);
+  }
+
+  :root[data-theme="dark"] .audio-glass-control {
+    border-color: color-mix(in srgb, var(--border) 74%, rgba(255, 255, 255, 0.2));
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in srgb, var(--surface-2) 34%, rgba(255, 255, 255, 0.05)),
+        color-mix(in srgb, var(--surface) 32%, transparent)
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+      0 6px 14px rgba(0, 0, 0, 0.22);
+  }
+
+  .audio-toggle {
+    color: color-mix(in srgb, var(--accent-contrast) 90%, var(--accent));
+    border-color: color-mix(in srgb, var(--accent) 62%, var(--border));
+    background: color-mix(in srgb, var(--accent) 46%, var(--surface-2));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.42),
+      0 6px 14px color-mix(in srgb, var(--accent) 22%, transparent);
+    flex: 0 0 auto;
+  }
+
+  .audio-toggle svg {
+    transition: transform 0.15s ease;
+  }
+
+  .audio-mute {
+    color: color-mix(in srgb, var(--muted) 80%, var(--text));
+  }
+
+  .audio-mute.is-unmuted {
+    color: color-mix(in srgb, var(--accent) 70%, var(--text));
+    border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+    background: color-mix(in srgb, var(--accent) 20%, var(--surface-2));
+  }
+
+  .audio-pin {
+    position: relative;
+    color: color-mix(in srgb, var(--muted) 84%, var(--text));
+    flex: 0 0 auto;
+  }
+
+  #ar-icon-pin,
+  #ar-icon-unpin {
+    transform: rotate(45deg);
+    transform-origin: center;
+  }
+
+  .audio-pin::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.45rem);
+    transform: translate(-50%, 0.2rem);
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: color-mix(in srgb, var(--text) 90%, var(--muted));
+    border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+    background: color-mix(in srgb, var(--panel) 88%, transparent);
+    border-radius: 0.45rem;
+    padding: 0.2rem 0.42rem;
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.18);
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
+    z-index: 30;
+  }
+
+  .audio-pin:hover::after,
+  .audio-pin:focus-visible::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .audio-pin.is-pinned {
+    color: color-mix(in srgb, var(--accent) 72%, var(--text));
+    border-color: color-mix(in srgb, var(--accent) 56%, var(--border));
+    background: color-mix(in srgb, var(--accent) 18%, var(--surface-2));
+  }
+
+  .audio-toggle.is-playing {
+    color: var(--accent-contrast);
+    background: color-mix(in srgb, var(--accent) 60%, var(--surface-2));
+    border-color: color-mix(in srgb, var(--accent) 80%, var(--border));
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #fff 34%, transparent),
+      0 9px 22px color-mix(in srgb, var(--accent) 32%, transparent);
+  }
+
+  .audio-toggle.is-playing svg {
+    transform: scale(1.05);
+  }
+
+  :root[data-theme="dark"] .audio-toggle {
+    color: color-mix(in srgb, #ffffff 88%, var(--accent) 12%);
+    border-color: color-mix(in srgb, var(--border) 72%, rgba(255, 255, 255, 0.28));
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in srgb, var(--surface-2) 48%, rgba(45, 212, 255, 0.08)),
+        color-mix(in srgb, var(--surface) 44%, transparent)
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.34),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+      0 6px 14px rgba(0, 0, 0, 0.24);
+  }
+
+  :root[data-theme="dark"] .audio-toggle.is-playing {
+    color: #ffffff;
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in srgb, var(--accent) 48%, var(--surface-2)),
+        color-mix(in srgb, var(--surface) 52%, transparent)
+      );
+    border-color: color-mix(in srgb, var(--accent) 62%, rgba(255, 255, 255, 0.34));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.42),
+      0 8px 16px color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+
+  .audio-glass-range {
+    --ar-fill: 0%;
+    --ar-fill-color: color-mix(
+      in srgb,
+      var(--accent-contrast) 62%,
+      var(--accent)
+    );
+    --ar-track-color: color-mix(
+      in srgb,
+      var(--surface-2) 66%,
+      rgba(255, 255, 255, 0.42)
+    );
+    height: 0.35rem;
+    border-radius: 9999px;
+    background: transparent;
+  }
+
+  .audio-glass-range::-webkit-slider-runnable-track {
+    height: 0.35rem;
+    border-radius: 9999px;
+    border: 1px solid
+      color-mix(in srgb, var(--border) 72%, rgba(255, 255, 255, 0.34));
+    background: linear-gradient(
+      90deg,
+      var(--ar-fill-color) 0%,
+      var(--ar-fill-color) var(--ar-fill),
+      var(--ar-track-color) var(--ar-fill),
+      var(--ar-track-color) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  .audio-glass-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 65%, #fff);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  .audio-glass-range::-moz-range-track {
+    height: 0.35rem;
+    border-radius: 9999px;
+    background: var(--ar-track-color);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  .audio-glass-range::-moz-range-progress {
+    height: 0.35rem;
+    border-radius: 9999px;
+    background: var(--ar-fill-color);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+
+  .audio-glass-range::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 65%, #fff);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  @media (max-width: 980px) {
+    .audio-player {
+      grid-template-columns: auto minmax(7rem, 1fr) auto;
+      gap: 0.55rem;
+    }
+
+    .audio-left {
+      gap: 0.45rem;
+    }
+
+    .audio-main {
+      min-width: 7rem;
+    }
+
+    .audio-options {
+      gap: 0.35rem;
+    }
+
+    .audio-time {
+      font-size: 0.72rem;
+    }
+
+    .audio-settings-panel {
+      right: 0;
+      transform-origin: bottom right;
+      flex-wrap: wrap;
+      width: min(24rem, calc(100vw - 2.2rem));
+      justify-content: flex-end;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .audio-player {
+      grid-template-columns: auto minmax(4.8rem, 1fr) auto;
+      gap: 0.45rem;
+      align-items: center;
+    }
+
+    .audio-left {
+      gap: 0.35rem;
+    }
+
+    .audio-main {
+      min-width: 4.8rem;
+    }
+
+    .audio-options {
+      gap: 0.32rem;
+    }
+
+    #ar-toggle {
+      height: 2.35rem;
+      width: 2.35rem;
+    }
+
+    #ar-mute,
+    #ar-settings,
+    #ar-pin {
+      height: 2.2rem;
+      width: 2.2rem;
+    }
+
+    #ar-icon-play,
+    #ar-icon-pause {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+
+    .audio-glass-range {
+      height: 0.3rem;
+    }
+
+    .audio-glass-range::-webkit-slider-runnable-track,
+    .audio-glass-range::-moz-range-track,
+    .audio-glass-range::-moz-range-progress {
+      height: 0.3rem;
+    }
+
+    .audio-glass-range::-webkit-slider-thumb {
+      margin-top: -4.5px;
+      width: 12px;
+      height: 12px;
+    }
+
+    .audio-glass-range::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+    }
+
+    #ar-rate {
+      width: 4.2rem;
+      font-size: 0.74rem;
+    }
+
+    .audio-voice-select {
+      width: 8.8rem;
+      max-width: 100%;
+      font-size: 0.74rem;
+    }
+
+    .audio-option {
+      font-size: 0.7rem;
+      gap: 0.28rem;
+    }
+
+    .audio-settings-panel {
+      right: 0;
+      width: min(18.5rem, calc(100vw - 1.2rem));
+      padding: 0.45rem;
+      gap: 0.35rem;
+    }
+
+    .audio-time {
+      font-size: 0.68rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .audio-reader-shell {
+      padding: 0.5rem 0.55rem;
+    }
+
+    .audio-player {
+      grid-template-columns: auto minmax(5.6rem, 1fr) auto;
+      gap: 0.3rem;
+    }
+
+    .audio-left {
+      gap: 0.22rem;
+    }
+
+    .audio-options {
+      gap: 0.22rem;
+    }
+
+    #ar-toggle {
+      height: 2.15rem;
+      width: 2.15rem;
+    }
+
+    #ar-mute,
+    #ar-settings,
+    #ar-pin {
+      height: 1.9rem;
+      width: 1.9rem;
+    }
+
+    #ar-icon-play,
+    #ar-icon-pause {
+      height: 1.3rem;
+      width: 1.3rem;
+    }
+
+    .audio-settings-icon {
+      width: 0.9rem;
+      height: 0.9rem;
+    }
+
+    .audio-time {
+      font-size: 0.62rem;
+      letter-spacing: 0;
+    }
+
+    .audio-time #ar-current-time,
+    .audio-time span[aria-hidden="true"] {
+      display: none;
+    }
+
+    .audio-main {
+      min-width: 5.6rem;
+    }
+
+    .audio-glass-range {
+      height: 0.28rem;
+    }
+
+    .audio-glass-range::-webkit-slider-runnable-track,
+    .audio-glass-range::-moz-range-track,
+    .audio-glass-range::-moz-range-progress {
+      height: 0.28rem;
+    }
+
+    .audio-glass-range::-webkit-slider-thumb {
+      margin-top: -4px;
+      width: 11px;
+      height: 11px;
+    }
+
+    .audio-glass-range::-moz-range-thumb {
+      width: 11px;
+      height: 11px;
+    }
+
+    .audio-settings-panel {
+      width: min(17rem, calc(100vw - 0.9rem));
+      padding: 0.4rem;
+      gap: 0.3rem;
+    }
+  }
+</style>
+
+<style is:global>
+  .ar-sentence {
+    border-radius: 0.35rem;
+    padding: 0 0.12rem;
+    transition: background-color 0.16s ease;
+  }
+
+  .ar-sentence.ar-active {
+    background: color-mix(in srgb, var(--accent) 26%, transparent);
+    box-shadow: inset 0 0 0 1px
+      color-mix(in srgb, var(--accent) 44%, transparent);
+  }
+</style>
+
+<script define:vars={{ target }}>
+  (() => {
+    const btnToggle = document.getElementById("ar-toggle");
+    const btnToggleLabel = document.getElementById("ar-toggle-label");
+    const btnMute = document.getElementById("ar-mute");
+    const btnSettings = document.getElementById("ar-settings");
+    const btnPin = document.getElementById("ar-pin");
+    const settingsPanelEl = document.getElementById("ar-settings-panel");
+    const shellEl = document.getElementById("ar-shell");
+    const iconPlay = document.getElementById("ar-icon-play");
+    const iconPause = document.getElementById("ar-icon-pause");
+    const iconVolume = document.getElementById("ar-icon-volume");
+    const iconMuted = document.getElementById("ar-icon-muted");
+    const iconPin = document.getElementById("ar-icon-pin");
+    const iconUnpin = document.getElementById("ar-icon-unpin");
+    const rateEl = document.getElementById("ar-rate");
+    const voiceEl = document.getElementById("ar-voice");
+    const seekEl = document.getElementById("ar-seek");
+    const currentTimeEl = document.getElementById("ar-current-time");
+    const totalTimeEl = document.getElementById("ar-total-time");
+    const statusEl = document.getElementById("ar-status");
+    const pinLabelEl = document.getElementById("ar-pin-label");
+
+    const BASE_WPM = 165;
+
+    let root = null;
+    let voices = [];
+    let prepared = false;
+
+    let sentences = [];
+    let sentenceWordOffsets = [];
+    let totalWords = 0;
+
+    let currentSentenceIndex = -1;
+    let playheadSentenceIndex = 0;
+    let hasCompleted = false;
+    let activeUtterance = null;
+    let isUserPaused = false;
+    let isMuted = false;
+    let isPinned = false;
+    let hasManualPinOverride = false;
+    let isSettingsOpen = false;
+
+    let sessionId = 0;
+
+    const setStatus = (message) => {
+      if (statusEl) statusEl.textContent = message;
+    };
+
+    const getSupportsSpeech = () =>
+      typeof window !== "undefined" && "speechSynthesis" in window;
+
+    const getRateValue = () => {
+      const raw = Number(rateEl?.value || "1.1");
+      if (!Number.isFinite(raw)) return 1.1;
+      return Math.max(0.5, Math.min(2, raw));
+    };
+
+    const wordsToSeconds = (words) => {
+      const rate = getRateValue();
+      if (rate <= 0) return 0;
+      return (Math.max(0, words) * 60) / (BASE_WPM * rate);
+    };
+
+    const formatTime = (seconds) => {
+      const safe = Math.max(0, Math.round(seconds));
+      const minutes = Math.floor(safe / 60);
+      const remaining = safe % 60;
+      return `${String(minutes).padStart(2, "0")}:${String(remaining).padStart(2, "0")}`;
+    };
+
+    const getWordOffsetForSentence = (index) => {
+      if (!sentences.length) return 0;
+      const clamped = Math.max(0, Math.min(sentences.length - 1, index));
+      return sentenceWordOffsets[clamped] ?? 0;
+    };
+
+    const updateTimeUiForSentence = (sentenceIndex, complete = false) => {
+      const totalSeconds = wordsToSeconds(totalWords);
+      const elapsedWords = complete
+        ? totalWords
+        : getWordOffsetForSentence(sentenceIndex);
+      const elapsedSeconds = wordsToSeconds(elapsedWords);
+
+      if (currentTimeEl) currentTimeEl.textContent = formatTime(elapsedSeconds);
+      if (totalTimeEl) totalTimeEl.textContent = formatTime(totalSeconds);
+    };
+
+    const setPinnedState = (nextPinned) => {
+      if (isPinned === nextPinned) return;
+      isPinned = nextPinned;
+      updatePinButton();
+    };
+
+    const updateFloatingState = () => {
+      if (!shellEl) return;
+
+      // Keep the control state in sync with player state:
+      // idle at 0% => unpinned, playing/resumed => pinned.
+      const progress = Number(seekEl?.value || "0");
+      const isActivelyReading =
+        getSupportsSpeech() &&
+        speechSynthesis.speaking &&
+        !speechSynthesis.paused &&
+        !isUserPaused;
+      const isStarting =
+        getSupportsSpeech() &&
+        speechSynthesis.pending &&
+        !speechSynthesis.paused;
+
+      // If playback is paused and user seeks back to 0, auto-unpin in auto mode.
+      if (
+        !hasManualPinOverride &&
+        progress <= 0.1 &&
+        !isActivelyReading &&
+        !isStarting
+      ) {
+        setPinnedState(false);
+      }
+
+      if (!isPinned) {
+        shellEl.classList.remove("is-floating");
+        return;
+      }
+      const shouldFloat =
+        hasManualPinOverride || progress > 0.1 || isActivelyReading;
+      shellEl.classList.toggle("is-floating", shouldFloat);
+    };
+
+    const updatePinButton = () => {
+      if (!btnPin) return;
+      const actionLabel = isPinned ? "Unpin" : "Pin";
+      btnPin.setAttribute("aria-pressed", isPinned ? "true" : "false");
+      btnPin.setAttribute("aria-label", `${actionLabel} audio bar`);
+      btnPin.setAttribute("title", actionLabel);
+      btnPin.setAttribute("data-tooltip", actionLabel);
+      if (pinLabelEl) pinLabelEl.textContent = actionLabel;
+      iconPin?.classList.toggle("hidden", !isPinned);
+      iconUnpin?.classList.toggle("hidden", isPinned);
+      btnPin.classList.toggle("is-pinned", isPinned);
+    };
+
+    const updateMuteButton = () => {
+      if (!btnMute) return;
+      if (!getSupportsSpeech()) {
+        btnMute.setAttribute("disabled", "true");
+        btnMute.setAttribute("aria-label", "Mute unavailable");
+        return;
+      }
+      btnMute.removeAttribute("disabled");
+      btnMute.setAttribute("aria-pressed", isMuted ? "true" : "false");
+      btnMute.setAttribute(
+        "aria-label",
+        isMuted ? "Unmute audio" : "Mute audio",
+      );
+      btnMute.classList.toggle("is-unmuted", !isMuted);
+      iconVolume?.classList.toggle("hidden", isMuted);
+      iconMuted?.classList.toggle("hidden", !isMuted);
+    };
+
+    const setSettingsOpen = (nextOpen) => {
+      isSettingsOpen = Boolean(nextOpen);
+      settingsPanelEl?.classList.toggle("is-open", isSettingsOpen);
+      shellEl?.classList.toggle("is-settings-open", isSettingsOpen);
+      btnSettings?.setAttribute(
+        "aria-expanded",
+        isSettingsOpen ? "true" : "false",
+      );
+      btnSettings?.setAttribute(
+        "aria-label",
+        isSettingsOpen ? "Close audio settings" : "Open audio settings",
+      );
+      btnSettings?.setAttribute(
+        "title",
+        isSettingsOpen ? "Close settings" : "Settings",
+      );
+      btnSettings?.classList.toggle("is-open", isSettingsOpen);
+    };
+
+    const resolveRoot = () => {
+      if (root && document.contains(root)) return root;
+      root = document.querySelector(target);
+      return root;
+    };
+
+    const splitSentences = (text) => {
+      const cleaned = (text || "").replace(/\s+/g, " ").trim();
+      if (!cleaned) return [];
+      const parts = cleaned.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [cleaned];
+      return parts.map((s) => s.trim()).filter(Boolean);
+    };
+
+    const countWords = (text) => {
+      const cleaned = String(text || "").trim();
+      if (!cleaned) return 0;
+      return cleaned.split(/\s+/).filter(Boolean).length;
+    };
+
+    const normalizeVoiceToken = (value) =>
+      String(value || "")
+        .toLowerCase()
+        .replace(/[_-]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    const isGoogleUsEnUs = (voice) => {
+      const name = normalizeVoiceToken(voice?.name);
+      const lang = normalizeVoiceToken(voice?.lang);
+      return (
+        name.includes("google") &&
+        name.includes("us") &&
+        (lang === "en us" || lang.startsWith("en us") || name.includes("en us"))
+      );
+    };
+
+    const isGoogleUkFemale = (voice) => {
+      const name = normalizeVoiceToken(voice?.name);
+      return (
+        name.includes("google") &&
+        name.includes("uk") &&
+        name.includes("female")
+      );
+    };
+
+    const isEnglishVoice = (voice) => {
+      const lang = normalizeVoiceToken(voice?.lang);
+      return lang === "en" || lang.startsWith("en ");
+    };
+
+    const getVoicePool = () => {
+      if (!getSupportsSpeech()) return [];
+      const availableVoices = speechSynthesis.getVoices() || [];
+      const englishVoices = availableVoices.filter(isEnglishVoice);
+      return englishVoices.length ? englishVoices : availableVoices;
+    };
+
+    const resolvePreferredVoice = (requestedName) => {
+      if (!voices.length) return null;
+
+      if (requestedName) {
+        const requested = voices.find((voice) => voice.name === requestedName);
+        if (requested) return requested;
+      }
+
+      return (
+        voices.find(isGoogleUsEnUs) ||
+        voices.find(isGoogleUkFemale) ||
+        voices.find((voice) => voice.default) ||
+        voices[0]
+      );
+    };
+
+    const updateSeekUi = (
+      sentenceIndex,
+      updateSlider = true,
+      complete = false,
+    ) => {
+      const percent =
+        sentences.length <= 1
+          ? 0
+          : (Math.max(0, Math.min(sentences.length - 1, sentenceIndex)) /
+              (sentences.length - 1)) *
+            100;
+
+      if (seekEl && updateSlider) seekEl.value = percent.toFixed(1);
+      if (seekEl) {
+        seekEl.style.setProperty("--ar-fill", `${percent.toFixed(2)}%`);
+      }
+
+      updateTimeUiForSentence(sentenceIndex, complete);
+      updateFloatingState();
+    };
+
+    const sentenceIndexFromProgress = (percent) => {
+      if (!sentences.length) return 0;
+      const clamped = Math.max(0, Math.min(100, percent));
+      return Math.round((clamped / 100) * (sentences.length - 1));
+    };
+
+    const clearActiveSentence = () => {
+      if (
+        currentSentenceIndex >= 0 &&
+        sentences[currentSentenceIndex] &&
+        sentences[currentSentenceIndex].span
+      ) {
+        sentences[currentSentenceIndex].span.classList.remove("ar-active");
+      }
+      currentSentenceIndex = -1;
+    };
+
+    const setActiveSentence = (index, scroll = true) => {
+      if (index === currentSentenceIndex) return;
+      clearActiveSentence();
+
+      const entry = sentences[index];
+      if (!entry || !entry.span) return;
+
+      currentSentenceIndex = index;
+      entry.span.classList.add("ar-active");
+
+      if (scroll) {
+        entry.span.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "nearest",
+        });
+      }
+    };
+
+    const updateToggleButton = () => {
+      if (!btnToggle || !btnToggleLabel) return;
+      if (!getSupportsSpeech()) {
+        btnToggle.setAttribute("disabled", "true");
+        btnToggle.setAttribute("aria-label", "Text to speech unavailable");
+        setStatus("Text to speech is unavailable in this browser.");
+        updateFloatingState();
+        return;
+      }
+
+      if (isUserPaused || speechSynthesis.paused) {
+        btnToggleLabel.textContent = "Play";
+        btnToggle.setAttribute("aria-label", "Play audio");
+        btnToggle.setAttribute("aria-pressed", "false");
+        btnToggle.classList.remove("is-playing");
+        iconPlay?.classList.remove("hidden");
+        iconPause?.classList.add("hidden");
+        setStatus("Paused");
+        updateFloatingState();
+        return;
+      }
+
+      if (speechSynthesis.speaking) {
+        btnToggleLabel.textContent = "Pause";
+        btnToggle.setAttribute("aria-label", "Pause audio");
+        btnToggle.setAttribute("aria-pressed", "true");
+        btnToggle.classList.add("is-playing");
+        iconPlay?.classList.add("hidden");
+        iconPause?.classList.remove("hidden");
+        setStatus("Reading...");
+        updateFloatingState();
+        return;
+      }
+
+      btnToggleLabel.textContent = "Play";
+      btnToggle.setAttribute("aria-label", "Play audio");
+      btnToggle.setAttribute("aria-pressed", "false");
+      btnToggle.classList.remove("is-playing");
+      iconPlay?.classList.remove("hidden");
+      iconPause?.classList.add("hidden");
+      setStatus("Ready");
+      updateFloatingState();
+    };
+
+    const cancelSpeech = () => {
+      sessionId += 1;
+      if (
+        getSupportsSpeech() &&
+        (speechSynthesis.speaking ||
+          speechSynthesis.pending ||
+          speechSynthesis.paused)
+      ) {
+        speechSynthesis.cancel();
+      }
+      activeUtterance = null;
+      updateToggleButton();
+    };
+
+    const prepare = () => {
+      const readingRoot = resolveRoot();
+      if (!readingRoot) return false;
+
+      if (prepared) return sentences.length > 0;
+
+      const selectors = "p, li, h1, h2, h3, h4, blockquote";
+      const nodes = readingRoot.querySelectorAll(selectors);
+
+      sentences = [];
+
+      nodes.forEach((node) => {
+        const text = (node.textContent || "").replace(/\s+/g, " ").trim();
+        if (!text) return;
+
+        const parts = splitSentences(text);
+        if (!parts.length) return;
+
+        const fragment = document.createDocumentFragment();
+        parts.forEach((sentence, index) => {
+          const span = document.createElement("span");
+          span.className = "ar-sentence";
+          span.textContent = sentence;
+          fragment.appendChild(span);
+
+          sentences.push({ text: sentence, span, words: countWords(sentence) });
+
+          if (index < parts.length - 1) {
+            fragment.appendChild(document.createTextNode(" "));
+          }
+        });
+
+        node.innerHTML = "";
+        node.appendChild(fragment);
+      });
+
+      if (!sentences.length) {
+        splitSentences(readingRoot.textContent || "").forEach((sentence) => {
+          sentences.push({
+            text: sentence,
+            span: null,
+            words: countWords(sentence),
+          });
+        });
+      }
+
+      sentenceWordOffsets = [];
+      totalWords = 0;
+      sentences.forEach((entry, index) => {
+        sentenceWordOffsets[index] = totalWords;
+        totalWords += entry.words;
+      });
+
+      prepared = true;
+      playheadSentenceIndex = 0;
+      hasCompleted = false;
+      isUserPaused = false;
+      updateSeekUi(playheadSentenceIndex, true, false);
+
+      return sentences.length > 0;
+    };
+
+    const speakSentenceFrom = (startIndex) => {
+      if (!getSupportsSpeech()) return;
+
+      const idx = Math.max(0, Math.min(sentences.length - 1, startIndex));
+      if (!sentences[idx]) {
+        hasCompleted = true;
+        isUserPaused = false;
+        updateSeekUi(Math.max(0, sentences.length - 1), true, true);
+        updateToggleButton();
+        return;
+      }
+
+      sessionId += 1;
+      const currentSession = sessionId;
+
+      const utterance = new SpeechSynthesisUtterance(sentences[idx].text);
+      utterance.rate = getRateValue();
+      utterance.volume = isMuted ? 0 : 1;
+      utterance.pitch = 1;
+
+      if (!voices.length) {
+        voices = getVoicePool();
+      }
+
+      const selected = resolvePreferredVoice(voiceEl?.value);
+      if (selected) {
+        utterance.voice = selected;
+        utterance.lang = selected.lang || "en-US";
+        if (voiceEl) voiceEl.value = selected.name;
+      } else {
+        utterance.lang = document.documentElement.lang || "en-US";
+      }
+
+      activeUtterance = utterance;
+
+      let didStart = false;
+
+      utterance.onstart = () => {
+        if (currentSession !== sessionId) return;
+        didStart = true;
+        playheadSentenceIndex = idx;
+        hasCompleted = false;
+        isUserPaused = false;
+        setActiveSentence(idx);
+        updateSeekUi(idx, true, false);
+        setStatus("Reading...");
+        updateToggleButton();
+      };
+
+      utterance.onend = () => {
+        if (currentSession !== sessionId) return;
+
+        const nextIndex = idx + 1;
+        if (nextIndex >= sentences.length) {
+          clearActiveSentence();
+          playheadSentenceIndex = Math.max(0, sentences.length - 1);
+          hasCompleted = true;
+          isUserPaused = false;
+          updateSeekUi(playheadSentenceIndex, true, true);
+          activeUtterance = null;
+          setStatus("Completed");
+          updateToggleButton();
+          return;
+        }
+
+        playheadSentenceIndex = nextIndex;
+        speakSentenceFrom(nextIndex);
+      };
+
+      utterance.onerror = () => {
+        if (currentSession !== sessionId) return;
+        clearActiveSentence();
+        activeUtterance = null;
+        isUserPaused = false;
+        setStatus("Could not play audio. Try another voice.");
+        updateToggleButton();
+      };
+
+      speechSynthesis.speak(utterance);
+      window.setTimeout(() => {
+        if (didStart || currentSession !== sessionId) return;
+        if (!getSupportsSpeech()) return;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
+      }, 900);
+      updateToggleButton();
+    };
+
+    const play = (fromIndex = playheadSentenceIndex) => {
+      if (!getSupportsSpeech()) {
+        alert("Text-to-speech is not supported in this browser.");
+        setStatus("Text to speech is unavailable in this browser.");
+        return;
+      }
+
+      if (!prepare()) {
+        alert("No readable content found for audio playback.");
+        setStatus("No readable content found.");
+        return;
+      }
+
+      if (isUserPaused) {
+        hasManualPinOverride = false;
+        setPinnedState(true);
+        isUserPaused = false;
+        setStatus("Starting...");
+        speakSentenceFrom(playheadSentenceIndex);
+        return;
+      }
+
+      if (speechSynthesis.paused) {
+        hasManualPinOverride = false;
+        setPinnedState(true);
+        isUserPaused = false;
+        speechSynthesis.resume();
+        updateToggleButton();
+        return;
+      }
+
+      if (speechSynthesis.speaking) return;
+
+      const start = hasCompleted ? 0 : fromIndex;
+      hasManualPinOverride = false;
+      setPinnedState(true);
+      setStatus("Starting...");
+      speakSentenceFrom(start);
+    };
+
+    const pause = () => {
+      if (!getSupportsSpeech()) return;
+      if (
+        speechSynthesis.speaking ||
+        speechSynthesis.pending ||
+        speechSynthesis.paused
+      ) {
+        isUserPaused = true;
+        cancelSpeech();
+        setStatus("Paused");
+      }
+    };
+
+    const seekToProgress = (percent) => {
+      if (!prepare()) return;
+
+      const nextIndex = sentenceIndexFromProgress(percent);
+      playheadSentenceIndex = nextIndex;
+      hasCompleted = false;
+      updateSeekUi(nextIndex, true, false);
+      setActiveSentence(nextIndex, false);
+
+      if (!getSupportsSpeech()) return;
+
+      const wasPaused = isUserPaused || speechSynthesis.paused;
+      const wasActive =
+        speechSynthesis.speaking || speechSynthesis.paused || isUserPaused;
+
+      if (!wasActive) return;
+
+      cancelSpeech();
+      if (wasPaused) {
+        isUserPaused = true;
+        setStatus("Paused");
+        updateToggleButton();
+        return;
+      }
+
+      speakSentenceFrom(nextIndex);
+    };
+
+    const loadVoices = () => {
+      if (!getSupportsSpeech()) return;
+
+      const currentSelection = voiceEl?.value || "";
+      voices = getVoicePool();
+      if (!voiceEl) return;
+
+      voiceEl.innerHTML = "";
+      voices.forEach((voice) => {
+        const option = document.createElement("option");
+        option.value = voice.name;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        option.style.color = "#0f172a";
+        option.style.backgroundColor = "#ffffff";
+        voiceEl.appendChild(option);
+      });
+
+      const preferred = resolvePreferredVoice(currentSelection);
+      if (preferred) voiceEl.value = preferred.name;
+    };
+
+    btnToggle?.addEventListener("click", () => {
+      if (!getSupportsSpeech()) return;
+
+      if (isUserPaused || speechSynthesis.paused) {
+        hasManualPinOverride = false;
+        setPinnedState(true);
+        isUserPaused = false;
+        speechSynthesis.resume();
+        updateToggleButton();
+        return;
+      }
+
+      if (speechSynthesis.speaking) {
+        pause();
+        return;
+      }
+
+      play();
+    });
+
+    btnPin?.addEventListener("click", () => {
+      hasManualPinOverride = true;
+      setPinnedState(!isPinned);
+      updateFloatingState();
+    });
+
+    btnSettings?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      setSettingsOpen(!isSettingsOpen);
+    });
+
+    settingsPanelEl?.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+
+    document.addEventListener("click", (event) => {
+      const targetNode = event.target;
+      if (!(targetNode instanceof Node)) return;
+      if (
+        btnSettings?.contains(targetNode) ||
+        settingsPanelEl?.contains(targetNode)
+      )
+        return;
+      setSettingsOpen(false);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setSettingsOpen(false);
+      }
+    });
+
+    btnMute?.addEventListener("click", () => {
+      isMuted = !isMuted;
+      updateMuteButton();
+
+      if (!getSupportsSpeech()) return;
+      const wasPaused = isUserPaused || speechSynthesis.paused;
+      const wasActive =
+        speechSynthesis.speaking || speechSynthesis.paused || isUserPaused;
+      if (!wasActive) return;
+
+      cancelSpeech();
+      speakSentenceFrom(playheadSentenceIndex);
+      if (wasPaused) {
+        isUserPaused = true;
+        speechSynthesis.pause();
+        updateToggleButton();
+      }
+    });
+
+    rateEl?.addEventListener("change", () => {
+      updateTimeUiForSentence(playheadSentenceIndex, hasCompleted);
+      if (!getSupportsSpeech()) return;
+      if (speechSynthesis.speaking || speechSynthesis.paused || isUserPaused) {
+        const wasPaused = isUserPaused || speechSynthesis.paused;
+        cancelSpeech();
+        speakSentenceFrom(playheadSentenceIndex);
+        if (wasPaused) {
+          isUserPaused = true;
+          speechSynthesis.pause();
+          updateToggleButton();
+        }
+      }
+    });
+
+    voiceEl?.addEventListener("change", () => {
+      if (!getSupportsSpeech()) return;
+      if (speechSynthesis.speaking || speechSynthesis.paused || isUserPaused) {
+        const wasPaused = isUserPaused || speechSynthesis.paused;
+        cancelSpeech();
+        speakSentenceFrom(playheadSentenceIndex);
+        if (wasPaused) {
+          isUserPaused = true;
+          speechSynthesis.pause();
+          updateToggleButton();
+        }
+      }
+    });
+
+    seekEl?.addEventListener("input", () => {
+      if (!prepare()) return;
+      const preview = sentenceIndexFromProgress(Number(seekEl.value || "0"));
+      updateSeekUi(preview, false, false);
+    });
+
+    seekEl?.addEventListener("change", () => {
+      seekToProgress(Number(seekEl?.value || "0"));
+    });
+
+    if (getSupportsSpeech()) {
+      loadVoices();
+      speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
+    const precomputeDurationOnLoad = () => {
+      if (prepared) return;
+      if (!prepare()) return;
+      updateSeekUi(playheadSentenceIndex, true, false);
+      updateToggleButton();
+      updateFloatingState();
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+          window.setTimeout(precomputeDurationOnLoad, 0);
+        },
+        { once: true },
+      );
+    } else {
+      window.setTimeout(precomputeDurationOnLoad, 0);
+    }
+
+    updateSeekUi(0, true, false);
+    updateMuteButton();
+    setSettingsOpen(false);
+    updatePinButton();
+    updateToggleButton();
+    updateFloatingState();
+  })();
+</script>

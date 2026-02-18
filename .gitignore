@@ -5,3 +5,9 @@ vendor/
 *.test
 *.prof
 *.out
+node_modules
+.astro
+dist
+.wrangler
+.dev.vars
+.env*

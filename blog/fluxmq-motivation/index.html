@@ -294,7 +294,7 @@ The longer answer is what this post is about.</p>
 <p>FluxMQ is not an experiment, a toy, or a “because we can” project. It is the result of years of operating real systems, hitting real limitations, and repeatedly running into the same architectural friction points.</p>
 <hr>
 <h2 id="context-messaging-as-a-core-not-a-dependency">Context: Messaging as a Core, Not a Dependency</h2>
-<p>As mentioned in the <a href="https://www.absmach.eu/blog/fluxmq-announcement/">announcement post</a>, FluxMQ grew out of our work on <a href="https://github.com/absmach/supermq">SuperMQ</a>, a core for event-driven distributed systems that itself evolved from the IoT platform <a href="https://magistrala.abmach.eu">Magistrala</a>.</p>
+<p>As mentioned in the <a href="https://absmach.eu/blog/fluxmq-announcement/">announcement post</a>, FluxMQ grew out of our work on <a href="https://github.com/absmach/supermq">SuperMQ</a>, a core for event-driven distributed systems that itself evolved from the IoT platform <a href="https://magistrala.abmach.eu">Magistrala</a>.</p>
 <p>In most systems, messaging is treated as <em>plumbing</em> — something you wire up and forget about.<br>
 In our case, messaging is <strong>the product</strong>.<br>
 For us, routing, protocol translation, access control, persistence, replay, fan-out, and backpressure are not <em>peripheral concerns</em>; they are the system. That distinction matters a lot when choosing (or building) a broker. For a long time, we successfully relied on existing brokers — most notably NATS — and we still consider them excellent tools. But as our requirements evolved, we increasingly found ourselves building <em>around</em> the broker instead of <em>with</em> it.</p>

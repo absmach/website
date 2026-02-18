@@ -1,0 +1,299 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/Header.astro";
+import Hero from "../../../components/Hero.astro";
+import ProjectInformation from "../../../components/ProjectInformation.astro";
+import ProjectPartners from "../../../components/ProjectPartners.astro";
+import Footer from "../../../components/Footer.astro";
+---
+
+<BaseLayout
+  title="Elastic Project | Abstract Machines"
+  description="ELASTIC: Efficient, portabLe And Secure orchesTration for reLIable serviCes in 6G networks."
+>
+  <Header />
+  <main>
+    <Hero
+      eyebrow="Research Project"
+      title="ELASTIC"
+      subtitle="Efficient, portabLe And Secure orchesTration for reliable servICes"
+      backgroundClass="hero-grid"
+    >
+      <p slot="meta" class="text-sm font-semibold tracking-wide text-muted">
+        2024-2027
+      </p>
+
+      <div class="flex justify-center lg:justify-end">
+        <div class="rounded-2xl border border-subtle bg-panel p-4">
+          <Image
+            src="/img/logos/elastic.png"
+            alt="Elastic Project Logo"
+            class="h-24 w-auto md:h-28 invert dark:invert-0"
+            width={360}
+            height={140}
+            priority
+            decoding="async"
+          />
+        </div>
+      </div>
+    </Hero>
+
+    <section class="py-16">
+      <div class="mx-auto w-full max-w-6xl px-6">
+        <div class="grid gap-12 lg:grid-cols-[2fr_1fr]">
+          <div class="space-y-16">
+            <section aria-labelledby="project-description">
+              <h2
+                id="project-description"
+                class="text-3xl font-semibold tracking-tight md:text-4xl"
+              >
+                Project Description
+              </h2>
+              <p class="mt-6 text-muted md:text-lg leading-relaxed">
+                ELASTIC redefines service orchestration within 6G networks,
+                integrating cutting-edge technologies like WebAssembly and
+                Confidential Computing to optimize network functionality and
+                security. Our project not only aims to advance the capabilities
+                and reach of connectivity services but also ensures robust
+                security measures across diverse infrastructures.
+              </p>
+            </section>
+
+            <section aria-labelledby="project-summary">
+              <h2
+                id="project-summary"
+                class="text-3xl font-semibold tracking-tight md:text-4xl"
+              >
+                Project Summary
+              </h2>
+              <div class="mt-10 grid gap-10 md:grid-cols-2">
+                <div>
+                  <h3 class="text-lg font-semibold">Key Objectives</h3>
+                  <ul
+                    class="mt-4 list-disc space-y-2 pl-5 text-muted md:text-base"
+                  >
+                    <li>
+                      <strong>Executable Isolation Techniques:</strong> Enhance efficiency,
+                      portability, and security in in-network cloud and edge computing
+                      by analyzing and improving executable isolation across the entire
+                      lifecycle
+                    </li>
+                    <li>
+                      <strong>6G Edge Workload Orchestration:</strong> Develop secure
+                      and efficient orchestration for edge and far-edge IoT workloads
+                      in critical 6G infrastructure, ensuring reliability, trust,
+                      and resilience
+                    </li>
+                    <li>
+                      <strong>Secure Serverless FaaS Orchestration:</strong> Design
+                      architecture-agnostic, secure serverless FaaS orchestration
+                      to support diverse artifacts and workloads, ensuring data authenticity
+                      and trusted digital interactions
+                    </li>
+                    <li>
+                      <strong
+                        >6G Standardization and Technology Dissemination:</strong
+                      > Support the standardization and dissemination of 6G technologies,
+                      aligning with EU supply capabilities for efficient, secure service
+                      deployment
+                    </li>
+                    <li>
+                      <strong
+                        >Confidential and Privacy-Preserving Execution:</strong
+                      > Implement secure, architecture-agnostic execution environments
+                      using confidential computing and privacy-enhancing technologies
+                      for multi-stakeholders
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 class="text-lg font-semibold">Expected Outcomes</h3>
+                  <ul
+                    class="mt-4 list-disc space-y-2 pl-5 text-muted md:text-base"
+                  >
+                    <li>
+                      <strong>Cryptographic libraries:</strong> Post-quantum libraries
+                      and SDKs for 6G
+                    </li>
+                    <li>
+                      <strong>Computing framework:</strong> Confidential computing
+                      framework for cloud-edge environments
+                    </li>
+                    <li>
+                      <strong>Privacy protocols:</strong> Privacy-preserving protocols
+                      for heterogeneous 6G networks
+                    </li>
+                    <li>
+                      <strong>Security tools:</strong> Quantum-resistant security
+                      tools and artifacts
+                    </li>
+                    <li>
+                      <strong>Security standards:</strong> Enhanced security standards
+                      for future 6G deployments
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section aria-labelledby="our-involvement">
+              <h2
+                id="our-involvement"
+                class="text-3xl font-semibold tracking-tight md:text-4xl"
+              >
+                Our Involvement
+              </h2>
+              <p class="mt-6 text-muted md:text-lg leading-relaxed">
+                Abstract Machines supports FaaS and workload orchestration at
+                the edge in ELASTIC, enhancing IoT security and monitoring
+                capabilities. Our expertise in IoT security, fine-grained access
+                control, and the Mainflux platform makes us uniquely positioned
+                to advance edge computing and secure orchestration in 6G
+                networks.
+              </p>
+
+              <h3 class="mt-10 text-lg font-semibold">Our Responsibilities</h3>
+              <ul class="mt-4 list-disc space-y-2 pl-5 text-muted md:text-base">
+                <li>
+                  <strong>Task 2.1 Leadership (WP2):</strong> Design and development
+                  of lightweight FaaS orchestration, including workload scheduling
+                  and supervision
+                </li>
+                <li>
+                  <strong>Access Control Implementation:</strong> Implementing distributed
+                  access control policies for secure edge computing
+                </li>
+                <li>
+                  <strong>Wasm Optimization:</strong> Assessing efficiency of Wasm
+                  workload execution and exploring eBPF/XDP for low-latency networking
+                </li>
+                <li>
+                  <strong>Task 4.4 Leadership (WP4):</strong> Leveraging OP-TEE protocol
+                  expertise to enhance workload orchestration on constrained IoT devices
+                </li>
+                <li>
+                  <strong>Edge Security Enhancement:</strong> Improving Wasm support
+                  on embedded devices and strengthening Mainflux edge security features
+                </li>
+              </ul>
+            </section>
+          </div>
+
+          <aside class="space-y-8">
+            <ProjectInformation
+              items={[
+                {
+                  label: "Duration",
+                  value: "1 March 2024 - 28 February 2027",
+                },
+                { label: "Funding Program", value: "Horizon Europe" },
+                { label: "Total Budget", value: "€4 Million" },
+                {
+                  label: "Project Coordinator",
+                  value: "Technical University of Crete",
+                },
+                { label: "Status", value: "Active", pill: true },
+              ]}
+              links={[
+                {
+                  label: "Visit Project Site",
+                  href: "https://elasticproject.eu/",
+                },
+                {
+                  label: "View on CORDIS",
+                  href: "https://cordis.europa.eu/project/id/101139067",
+                },
+              ]}
+            />
+
+            <ProjectPartners
+              partners={[
+                {
+                  alt: "Technical University of Crete",
+                  src: "/img/logos/TUC.png",
+                  logoClass: "dark:bg-white",
+                },
+
+                {
+                  alt: "Ericsson",
+                  src: "/img/logos/ericsson.png",
+                  logoClass: "dark:bg-white",
+                },
+                {
+                  alt: "Telefonica",
+                  src: "/img/logos/telefonica.png",
+                  logoClass: "dark:bg-white",
+                },
+                { alt: "Thales", src: "/img/logos/THALES.png" },
+                {
+                  alt: "IMEC",
+                  src: "/img/logos/IMEC.png",
+                  logoClass: "dark:bg-white",
+                },
+                { alt: "Ultraviolet", src: "/img/logos/ultraviolet.png" },
+                {
+                  alt: "Aalto University",
+                  src: "/img/logos/AAL.png",
+                  logoClass: "dark:bg-white",
+                },
+                {
+                  alt: "Lund University",
+                  src: "/img/logos/LUND.png",
+                  logoClass: "dark:bg-white",
+                },
+                { alt: "Zentriz Lab", src: "/img/logos/zen.png" },
+                {
+                  alt: "Politecnico di Torino",
+                  src: "/img/logos/POLITO.png",
+                  logoClass: "dark:bg-white",
+                },
+                { alt: "AMA", src: "/img/logos/AMA.png" },
+              ]}
+            />
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="mx-auto w-full max-w-6xl px-6">
+        <h2
+          class="text-center text-3xl font-semibold tracking-tight md:text-4xl"
+        >
+          Project Goals &amp; Impact
+        </h2>
+
+        <div class="mt-12">
+          <div class="text-center">
+            <h3 class="text-xl font-semibold md:text-2xl">
+              Elevating Cloud-to-Edge Orchestration with Security and Privacy at
+              its Core
+            </h3>
+            <p
+              class="mx-auto mt-6 max-w-3xl text-muted md:text-lg leading-relaxed"
+            >
+              ELASTIC addresses key challenges in orchestrating secure,
+              efficient services across cloud, fog, and edge infrastructures. By
+              combining emerging technologies like WebAssembly, eBPF, Trusted
+              Execution Environments (TEEs), and Federated Learning, ELASTIC
+              optimizes latency, throughput, and cybersecurity resilience.
+            </p>
+            <p
+              class="mx-auto mt-4 max-w-3xl text-muted md:text-lg leading-relaxed"
+            >
+              Through targeted research and innovation, the project strengthens
+              data privacy and integrity, enabling secure collaboration and
+              scalable service delivery across digital and physical domains.
+              These technologies form the backbone of ELASTIC's approach to
+              revolutionizing 6G service orchestration, aiming to create a more
+              secure, efficient, and flexible networking environment.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

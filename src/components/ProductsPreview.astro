@@ -1,0 +1,142 @@
+---
+import ProductPreviewCard from "./ProductPreviewCard.astro";
+
+const featured = {
+  name: "Magistrala",
+  description:
+    "Secure IoT platform for identity, access control, and event-driven connectivity.",
+  href: "https://magistrala.absmach.eu",
+  logoSrc: "/img/logos/Magistrala_logo_web_4_btb.png",
+  logoAlt: "Magistrala logo",
+  logoClass: "dark:invert",
+};
+
+const cards = [
+  {
+    name: "Propeller",
+    description:
+      "WebAssembly orchestration and IoT rule engine for cloud-edge workloads.",
+    href: "https://propeller.absmach.eu",
+    logoSrc: "/img/logos/Propeller_logo_web_4_btw.png",
+    logoAlt: "Propeller logo",
+    logoClass: "dark:invert",
+  },
+  {
+    name: "FluxMQ",
+    description: "Durable low-latency broker for distributed event streams.",
+    href: "https://fluxmq.absmach.eu",
+    fluxLogo: true,
+  },
+  {
+    name: "S0 Gateway",
+    description: "Low-power RISC-V gateway for lightweight edge deployments.",
+    href: "https://hardware.absmach.eu",
+    logoSrc: "/img/s0.png",
+    logoAlt: "S0 Gateway board",
+    logoClass: "!h-16 !w-auto !max-w-none sm:!h-[4.5rem]  md:!h-32 xl:!h-40",
+  },
+  {
+    name: "S1 Gateway",
+    description: "Industrial RISC-V gateway for high-reliability deployments.",
+    href: "https://hardware.absmach.eu",
+    logoSrc: "/img/s1.png",
+    logoAlt: "S1 Gateway board",
+    logoClass: "!h-16 !w-auto !max-w-none sm:!h-[4.5rem] md:!h-32 xl:!h-36 ",
+  },
+];
+
+const softwareCards = cards.slice(0, 2);
+const hardwareCards = cards.slice(2);
+---
+
+<section
+  id="products"
+  class="scroll-mt-16 my-4 min-h-[500px] box-border py-5 lg:my-6 lg:h-[calc(100dvh-7rem)] lg:min-h-[44rem] lg:py-6"
+>
+  <div
+    class="container-wide flex h-full min-h-full flex-col pt-5 pb-8 lg:pt-7 lg:pb-10"
+  >
+    <div class="flex flex-col gap-2">
+      <div>
+        <p class="section-label">Products</p>
+        <h2 class="section-title mt-0.5">Core platform and hardware</h2>
+        <p class="section-subtitle mt-0.5">
+          Software and edge hardware designed to work as one system.
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="mt-5 flex flex-col gap-2.5 sm:gap-3 md:gap-4 lg:mt-6 lg:flex-1 lg:justify-between lg:gap-[clamp(0.75rem,2dvh,2rem)] xl:gap-[clamp(1rem,2.4dvh,2.5rem)]"
+    >
+      <ProductPreviewCard
+        featured
+        title={featured.name}
+        description={featured.description}
+        href={featured.href}
+        logoSrc={featured.logoSrc}
+        logoAlt={featured.logoAlt}
+        logoClass={featured.logoClass}
+      />
+
+      <div
+        class="grid gap-2.5 sm:gap-3 md:grid-cols-2 md:gap-4 lg:gap-[clamp(0.75rem,1.6dvh,1.5rem)]"
+      >
+        {
+          softwareCards.map((card) =>
+            card.fluxLogo ? (
+              <ProductPreviewCard
+                title={card.name}
+                description={card.description}
+                href={card.href}
+              >
+                <span
+                  slot="logo"
+                  class="text-flux-blue font-fluxmq-logo text-[1.55rem] font-bold leading-none md:text-[1.7rem]"
+                >
+                  Flux
+                </span>
+                <span
+                  slot="logo"
+                  class="text-flux-orange font-fluxmq-logo text-[1.55rem] font-bold leading-none md:text-[1.7rem]"
+                >
+                  MQ
+                </span>
+              </ProductPreviewCard>
+            ) : (
+              <ProductPreviewCard
+                title={card.name}
+                description={card.description}
+                href={card.href}
+                logoSrc={card.logoSrc}
+                logoAlt={card.logoAlt}
+                logoClass={card.logoClass}
+              />
+            ),
+          )
+        }
+      </div>
+
+      <div
+        class="grid gap-2.5 sm:gap-3 md:grid-cols-2 md:gap-4 lg:gap-[clamp(0.75rem,1.6dvh,1.5rem)]"
+      >
+        {
+          hardwareCards.map((card) => (
+            <ProductPreviewCard
+              title={card.name}
+              description={card.description}
+              href={card.href}
+              logoSrc={card.logoSrc}
+              logoAlt={card.logoAlt}
+              logoClass={card.logoClass}
+            />
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-10 flex justify-center">
+      <a class="button-primary w-fit" href="/products/">View all products</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,531 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blogs", ({ data }) => !data.draft);
+
+const getBadgeChips = (category = "", featured = false) => {
+  const chips = [];
+  const normalizedCategory = category.toLowerCase().trim();
+  if (normalizedCategory === "announcement") chips.push("announcement");
+  if (!normalizedCategory) chips.push("blog");
+  if (featured) chips.push("featured");
+  return chips;
+};
+
+const getBadgeClass = (tag) =>
+  tag === "featured"
+    ? "inline-flex rounded-md border border-subtle bg-surface px-2.5 py-1 text-xs font-semibold capitalize text-accent"
+    : tag === "blog"
+      ? "inline-flex rounded-md border border-subtle bg-surface-2 px-2.5 py-1 text-xs font-semibold capitalize text-muted"
+      : "inline-flex rounded-md border border-accent/35 bg-accent/15 px-2.5 py-1 text-xs font-semibold capitalize text-primary";
+
+const PRODUCT_CATEGORIES = [
+  { key: "MG", label: "Magistrala", matchTags: ["mg", "magistrala"] },
+  { key: "FLUXMQ", label: "FluxMQ", matchTags: ["fluxmq"] },
+  {
+    key: "PROPELLER",
+    label: "Propeller",
+    matchTags: ["propeller"],
+  },
+  { key: "S0", label: "S0", matchTags: ["s0", "s0 gateway"] },
+  { key: "S1", label: "S1", matchTags: ["s1", "s1 gateway"] },
+];
+
+const categoryTagSet = new Set(
+  PRODUCT_CATEGORIES.flatMap((category) => category.matchTags).map((tag) =>
+    tag.toLowerCase().trim(),
+  ),
+);
+
+const normalized = posts
+  .map((p) => {
+    const d = new Date(p.data.date); // ✅ convert once
+    return {
+      title: p.data.title,
+      description: p.data.description,
+      date: d, // ✅ now it's Date
+      dateISO: d.toISOString(),
+      tags: p.data.tags ?? [],
+      category: p.data.category ?? "",
+      featured: p.data.featured ?? false,
+      author: p.data.author?.name ?? "",
+      authorPicture: p.data.author?.picture ?? "",
+      slug: p.data.slug ?? p.slug,
+      coverImage: p.data.coverImage ?? p.data.heroImage ?? "",
+      href: `/blog/${p.data.slug ?? p.slug}/`,
+      badgeChips: getBadgeChips(
+        p.data.category ?? "",
+        p.data.featured ?? false,
+      ),
+    };
+  })
+  .sort((a, b) => {
+    if (a.featured !== b.featured) {
+      return Number(b.featured) - Number(a.featured);
+    }
+    return b.date.getTime() - a.date.getTime();
+  });
+
+const blogData = JSON.stringify(normalized).replace(/</g, "\\u003c");
+
+// all tags
+const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
+  .filter((tag) => !categoryTagSet.has(tag.toLowerCase().trim()))
+  .sort((a, b) => a.localeCompare(b));
+---
+
+<BaseLayout
+  title="Blog | Abstract Machines"
+  description="Technical articles, product updates, and engineering deep dives from the Abstract Machines team."
+>
+  <Header />
+  <main>
+    <section class="py-16">
+      <div class="container-wide">
+        <div class="flex flex-col gap-10 lg:flex-row lg:items-start">
+          <aside
+            class="w-full self-start lg:sticky lg:top-24 lg:z-40 lg:w-[22rem] xl:w-[24rem] lg:flex-shrink-0"
+          >
+            <div class="card-base p-4 lg:p-6">
+              <h1 class="text-2xl font-semibold tracking-tight">Blog</h1>
+              <p class="mt-2 text-sm text-muted">
+                Search posts and filter by product category and tags.
+              </p>
+
+              <div class="mt-6">
+                <label
+                  class="text-sm font-semibold text-muted"
+                  for="blog-search"
+                >
+                  Search
+                </label>
+                <input
+                  id="blog-search"
+                  type="text"
+                  placeholder="Search title, description, author..."
+                  class="input-base mt-2 w-full rounded-xl px-4 py-3 outline-none focus:outline-2 focus:outline-accent focus:outline-offset-2"
+                />
+              </div>
+
+              <div class="mt-5">
+                <p class="text-sm font-semibold text-muted">Categories</p>
+                <div
+                  id="category-chips"
+                  class="mt-2 flex gap-1 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible"
+                >
+                  {
+                    PRODUCT_CATEGORIES.map((category) => (
+                      <button
+                        type="button"
+                        class="product-chip flex-none whitespace-nowrap rounded-full border border-subtle bg-surface-2 px-3 py-2 text-xs font-semibold text-muted transition-colors hover:text-primary"
+                        data-product={category.key}
+                        aria-pressed="false"
+                      >
+                        {category.label}
+                      </button>
+                    ))
+                  }
+                </div>
+              </div>
+
+              <div class="mt-6 flex items-center justify-between gap-3">
+                <p id="result-count" class="text-sm font-semibold text-muted">
+                  {normalized.length} post(s)
+                </p>
+                <button
+                  id="clear-filters"
+                  type="button"
+                  class="rounded-xl border border-subtle bg-panel px-3 py-2 text-sm font-semibold text-muted hover:text-primary"
+                >
+                  Clear
+                </button>
+              </div>
+
+              <div class="mt-4">
+                <p
+                  id="applied-tags-label"
+                  class="hidden text-xs font-semibold text-muted"
+                >
+                  Selected filters
+                </p>
+                <div
+                  id="applied-tags"
+                  class="hidden mt-2 flex flex-wrap items-center gap-2"
+                >
+                </div>
+              </div>
+
+              <div
+                id="tag-panel"
+                class="mt-5 rounded-2xl border border-subtle bg-surface-2 p-3 overflow-x-auto overflow-y-hidden lg:p-4 lg:max-h-72 lg:overflow-auto"
+              >
+                <p class="hidden text-sm font-semibold text-muted lg:block">
+                  Tags
+                </p>
+                <div
+                  class="flex flex-nowrap gap-2 whitespace-nowrap lg:mt-3 lg:flex-wrap"
+                  id="tag-chips"
+                >
+                  {
+                    allTags.map((t) => (
+                      <button
+                        type="button"
+                        class="tag-chip flex-none whitespace-nowrap rounded-full border border-subtle bg-surface-2 px-3 py-2 text-xs font-semibold text-muted transition-colors hover:text-primary"
+                        data-tag={t}
+                        aria-pressed="false"
+                      >
+                        {t}
+                      </button>
+                    ))
+                  }
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <div class="min-w-0 flex-1">
+            <div class="grid gap-6 md:grid-cols-2" id="blog-results">
+              {
+                normalized.map((p, index) => (
+                  <a
+                    href={p.href}
+                    class={`card-base block overflow-hidden !p-0 hover:shadow-[var(--shadow-strong)] ${
+                      p.featured ? "md:col-span-2" : ""
+                    }`}
+                    data-post-href={p.href}
+                  >
+                    {p.coverImage && (
+                      <div
+                        class={`overflow-hidden border-b border-subtle bg-surface-2 ${
+                          p.featured
+                            ? "aspect-[16/7] md:aspect-[16/6]"
+                            : "aspect-video"
+                        }`}
+                      >
+                        <Image
+                          src={p.coverImage}
+                          alt=""
+                          width={1280}
+                          height={720}
+                          class="h-full w-full object-cover"
+                          loading={index < 2 ? "eager" : "lazy"}
+                          decoding="async"
+                        />
+                      </div>
+                    )}
+                    <div class="p-6">
+                      {p.badgeChips?.length > 0 && (
+                        <div class="mb-3">
+                          <div class="flex flex-wrap gap-2">
+                            {p.badgeChips.map((chip) => (
+                              <span class={getBadgeClass(chip)}>{chip}</span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      <h2 class="text-xl font-semibold leading-snug text-primary">
+                        {p.title}
+                      </h2>
+                      <p class="mt-3 text-muted">{p.description}</p>
+                      <div class="mt-5 flex items-center gap-3 text-sm text-muted">
+                        {p.authorPicture && (
+                          <img
+                            src={p.authorPicture}
+                            alt={
+                              p.author
+                                ? `${p.author} profile photo`
+                                : "Author profile photo"
+                            }
+                            class="h-8 w-8 rounded-full border border-subtle object-cover"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        )}
+                        <div class="flex flex-wrap items-center gap-2">
+                          <span>
+                            {p.date.toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </span>
+                          {p.author && (
+                            <>
+                              <span>•</span>
+                              <span>{p.author}</span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      {p.tags?.length > 0 && (
+                        <div class="mt-5 flex flex-wrap gap-2">
+                          {p.tags.map((t) => (
+                            <span class="rounded-full border border-subtle bg-surface-2 px-3 py-1 text-xs font-semibold text-muted">
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </a>
+                ))
+              }
+              <div id="blog-empty-state" class="card-base md:col-span-2 hidden">
+                <p class="text-muted">No posts match your filters.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script type="application/json" id="blog-data" set:html={blogData} />
+
+        <script is:inline>
+          (() => {
+            const $ = (s) => document.querySelector(s);
+
+            const data = JSON.parse($("#blog-data")?.textContent || "[]");
+            const resultsEl = $("#blog-results");
+            const searchEl = $("#blog-search");
+            const countEl = $("#result-count");
+            const clearBtn = $("#clear-filters");
+            const appliedTagsLabelEl = $("#applied-tags-label");
+            const appliedTagsEl = $("#applied-tags");
+            const emptyStateEl = $("#blog-empty-state");
+            const productChipEls = Array.from(
+              document.querySelectorAll(".product-chip"),
+            );
+            const cardEls = Array.from(
+              resultsEl?.querySelectorAll("[data-post-href]") || [],
+            );
+
+            const chipEls = Array.from(document.querySelectorAll(".tag-chip"));
+            const PRODUCT_MATCHERS = {
+              MG: ["mg", "magistrala"],
+              FLUXMQ: ["fluxmq"],
+              PROPELLER: ["propeller", "properller"],
+              S0: ["s0", "s0 gateway"],
+              S1: ["s1", "s1 gateway"],
+            };
+            const PRODUCT_KEYS = new Set(Object.keys(PRODUCT_MATCHERS));
+            const normalize = (value) =>
+              (value || "").toString().trim().toLowerCase();
+            const state = { q: "", tags: new Set(), product: "" };
+
+            function syncAppliedTags() {
+              if (!appliedTagsEl) return;
+
+              const tags = Array.from(state.tags);
+              const filters = state.product
+                ? [`Category: ${state.product}`, ...tags]
+                : tags;
+              appliedTagsEl.replaceChildren();
+
+              if (!filters.length) {
+                appliedTagsEl.classList.add("hidden");
+                appliedTagsLabelEl?.classList.add("hidden");
+                return;
+              }
+
+              appliedTagsEl.classList.remove("hidden");
+              appliedTagsLabelEl?.classList.remove("hidden");
+
+              const limit = window.matchMedia("(min-width: 640px)").matches
+                ? 4
+                : 2;
+              const shown = filters.slice(0, limit);
+              const remaining = filters.length - shown.length;
+
+              shown.forEach((filter) => {
+                const el = document.createElement("span");
+                el.className =
+                  "rounded-full border border-subtle bg-surface-2 px-2 py-0.5 text-xs font-semibold text-muted";
+                el.textContent = filter;
+                appliedTagsEl.appendChild(el);
+              });
+
+              if (remaining > 0) {
+                const el = document.createElement("span");
+                el.className =
+                  "rounded-full border border-subtle bg-surface-2 px-2 py-0.5 text-xs font-semibold text-muted";
+                el.textContent = `+${remaining}`;
+                appliedTagsEl.appendChild(el);
+              }
+            }
+
+            function applyChipState(el, on) {
+              el.setAttribute("aria-pressed", on ? "true" : "false");
+              el.classList.toggle("bg-accent/10", on);
+              el.classList.toggle("border-accent/30", on);
+              el.classList.toggle("border-subtle", !on);
+              el.classList.toggle("shadow-sm", on);
+              el.classList.toggle("text-primary", on);
+              el.classList.toggle("bg-surface-2", !on);
+              el.classList.toggle("text-muted", !on);
+            }
+
+            function applyProductChipState(el, on) {
+              el.setAttribute("aria-pressed", on ? "true" : "false");
+              el.classList.toggle("bg-accent/10", on);
+              el.classList.toggle("border-accent/30", on);
+              el.classList.toggle("border-subtle", !on);
+              el.classList.toggle("shadow-sm", on);
+              el.classList.toggle("text-primary", on);
+              el.classList.toggle("bg-surface-2", !on);
+              el.classList.toggle("text-muted", !on);
+            }
+
+            function postMatchesCategory(post, productKey) {
+              const matchers = PRODUCT_MATCHERS[productKey] || [];
+              if (!matchers.length) return true;
+
+              const tagSet = new Set((post.tags || []).map(normalize));
+              const searchableText = normalize(
+                `${post.title} ${post.description} ${(post.tags || []).join(" ")}`,
+              );
+
+              return matchers.some(
+                (matcher) =>
+                  tagSet.has(matcher) || searchableText.includes(matcher),
+              );
+            }
+
+            // --- URL helpers ---
+            function readFromURL() {
+              const params = new URLSearchParams(location.search);
+              state.q = params.get("q") || "";
+              const tags = (params.get("tags") || "")
+                .split(",")
+                .map((s) => s.trim())
+                .filter(Boolean);
+              state.tags = new Set(tags);
+              const product = (params.get("product") || "").toUpperCase();
+              state.product = PRODUCT_KEYS.has(product) ? product : "";
+              if (searchEl) searchEl.value = state.q;
+
+              chipEls.forEach((el) => {
+                const tag = el.dataset.tag;
+                applyChipState(el, state.tags.has(tag));
+              });
+              productChipEls.forEach((el) => {
+                const productKey = (el.dataset.product || "").toUpperCase();
+                applyProductChipState(el, state.product === productKey);
+              });
+
+              syncAppliedTags();
+            }
+
+            function writeToURL() {
+              const params = new URLSearchParams();
+              if (state.q) params.set("q", state.q);
+              if (state.tags.size)
+                params.set("tags", Array.from(state.tags).join(","));
+              if (state.product) params.set("product", state.product);
+              const qs = params.toString();
+              const base = location.pathname.endsWith("/")
+                ? location.pathname
+                : location.pathname + "/";
+              history.replaceState(null, "", qs ? `${base}?${qs}` : base);
+            }
+
+            // --- render ---
+            function matches(post) {
+              const q = state.q.toLowerCase().trim();
+              const hay = (
+                post.title +
+                " " +
+                post.description +
+                " " +
+                post.author +
+                " " +
+                (post.tags || []).join(" ")
+              ).toLowerCase();
+              if (q && !hay.includes(q)) return false;
+
+              if (state.product && !postMatchesCategory(post, state.product)) {
+                return false;
+              }
+
+              if (state.tags.size) {
+                const ptags = new Set(post.tags || []);
+                for (const t of state.tags) if (!ptags.has(t)) return false;
+              }
+              return true;
+            }
+
+            function render() {
+              const filtered = data.filter(matches);
+              if (countEl) countEl.textContent = `${filtered.length} post(s)`;
+
+              if (!resultsEl) return;
+              const visibleHrefs = new Set(filtered.map((p) => p.href));
+
+              cardEls.forEach((card) => {
+                const href = card.dataset.postHref;
+                const isVisible = href ? visibleHrefs.has(href) : false;
+                card.classList.toggle("hidden", !isVisible);
+              });
+
+              if (emptyStateEl) {
+                emptyStateEl.classList.toggle("hidden", filtered.length !== 0);
+              }
+
+              writeToURL();
+            }
+
+            // --- events ---
+            searchEl?.addEventListener("input", () => {
+              state.q = searchEl.value;
+              render();
+            });
+
+            chipEls.forEach((el) => {
+              el.addEventListener("click", () => {
+                const tag = el.dataset.tag;
+                if (state.tags.has(tag)) state.tags.delete(tag);
+                else state.tags.add(tag);
+
+                applyChipState(el, state.tags.has(tag));
+                syncAppliedTags();
+                render();
+              });
+            });
+
+            productChipEls.forEach((el) => {
+              el.addEventListener("click", () => {
+                const productKey = (el.dataset.product || "").toUpperCase();
+                state.product = state.product === productKey ? "" : productKey;
+
+                productChipEls.forEach((chip) => {
+                  const chipKey = (chip.dataset.product || "").toUpperCase();
+                  applyProductChipState(chip, state.product === chipKey);
+                });
+                syncAppliedTags();
+                render();
+              });
+            });
+
+            clearBtn?.addEventListener("click", () => {
+              state.q = "";
+              state.tags.clear();
+              state.product = "";
+              if (searchEl) searchEl.value = "";
+              chipEls.forEach((el) => applyChipState(el, false));
+              productChipEls.forEach((el) => applyProductChipState(el, false));
+              syncAppliedTags();
+              render();
+            });
+
+            // init
+            readFromURL();
+            render();
+          })();
+        </script>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,101 @@
+---
+import { Image } from "astro:assets";
+
+type Logo = { src: string; alt: string; href?: string };
+
+const featured: Logo = {
+    src: "/partners/6g-ia-long.png",
+    alt: "6G SNS member",
+    href: "https://6gsns.eu/", // optional — only if you want it clickable
+};
+
+const logos: Logo[] = [
+    { src: "/partners/target.png", alt: "Target" },
+    { src: "/partners/greennet.png", alt: "GreenNet" },
+    { src: "/partners/eu.png", alt: "European Commission" },
+    { src: "/partners/telefonica.png", alt: "Telefónica" },
+    {
+        src: "/partners/tue.png",
+        alt: "Eindhoven University of Technology (TU/e)",
+    },
+    { src: "/partners/tno.png", alt: "TNO" },
+    { src: "/partners/parc.png", alt: "PARC" },
+    { src: "/partners/vtt.png", alt: "VTT" },
+];
+---
+
+<section id="partners" class="py-20">
+    <div class="container-wide">
+        <header class="mx-auto max-w-3xl text-center">
+            <p class="section-label">CLIENTS & PARTNERS</p>
+            <h2 class="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+                Trusted by industry and research across Europe
+            </h2>
+            <p class="mt-4 text-base text-muted md:text-lg">
+                Logos represent research collaborations, memberships, and
+                industry partnerships.
+            </p>
+        </header>
+
+        <div
+            class="mt-10 rounded-2xl border border-subtle bg-panel p-6 shadow-sm md:p-10"
+        >
+            <!-- Featured badge -->
+            <div class="flex flex-col items-center justify-center gap-3 py-4">
+                <a
+                    href={featured.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={featured.alt}
+                    class="group inline-flex items-center justify-center"
+                >
+                    <Image
+                        src={featured.src}
+                        alt={featured.alt}
+                        width={420}
+                        height={160}
+                        loading="lazy"
+                        decoding="async"
+                        class="h-20 w-auto transition md:h-24 lg:h-28"
+                    />
+                </a>
+                <span class="text-sm font-medium text-muted">
+                    Official member of the 6G Smart Networks and Services
+                    Industry Association
+                </span>
+            </div>
+
+            <div class="mt-8 border-t border-subtle"></div>
+
+            <!-- Logo grid -->
+            <ul
+                class="mt-10 grid items-center justify-items-center gap-x-12 gap-y-10
+         sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                aria-label="Clients and partners logos"
+            >
+                {
+                    logos.map((l) => (
+                        <li class="w-full">
+                            <div class="flex h-16 items-center justify-center">
+                                <Image
+                                    src={l.src}
+                                    alt={l.alt}
+                                    width={320}
+                                    height={120}
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="max-h-12 w-auto max-w-[200px] opacity-90 transition hover:opacity-100"
+                                />
+                            </div>
+                        </li>
+                    ))
+                }
+            </ul>
+
+            <p class="mt-8 text-center text-xs text-muted">
+                *Logos shown for recognition only. Ownership of trademarks
+                belongs to their respective holders.
+            </p>
+        </div>
+    </div>
+</section>

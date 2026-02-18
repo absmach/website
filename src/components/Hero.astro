@@ -1,0 +1,67 @@
+---
+const {
+  eyebrow,
+  title,
+  subtitle,
+  primary,
+  secondary,
+  tertiary,
+  backgroundClass = "",
+} = Astro.props;
+---
+
+<section class={`py-20 ${backgroundClass}`}>
+  <div class="container-wide">
+    <div class="grid gap-10 lg:grid-cols-12 lg:items-center">
+      <div class="lg:col-span-7">
+        {eyebrow && <p class="section-label">{eyebrow}</p>}
+        <h1 class="mt-4 text-4xl font-semibold md:text-5xl">{title}</h1>
+        {subtitle && <p class="mt-6 text-lg text-muted">{subtitle}</p>}
+        {Astro.slots.meta && <div class="mt-4"><slot name="meta" /></div>}
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          {
+            primary && (
+              <a
+                class="button-primary"
+                href={primary.href}
+                target={primary.external ? "_blank" : undefined}
+                rel={primary.external ? "noopener noreferrer" : undefined}
+              >
+                {primary.label}
+              </a>
+            )
+          }
+          {
+            secondary && (
+              <a
+                class="button-secondary"
+                href={secondary.href}
+                target={secondary.external ? "_blank" : undefined}
+                rel={secondary.external ? "noopener noreferrer" : undefined}
+              >
+                {secondary.label}
+              </a>
+            )
+          }
+          {
+            tertiary && (
+              <a
+                class="nav-link"
+                href={tertiary.href}
+                target={tertiary.external ? "_blank" : undefined}
+                rel={tertiary.external ? "noopener noreferrer" : undefined}
+              >
+                {tertiary.label}
+              </a>
+            )
+          }
+        </div>
+      </div>
+      <div class="lg:col-span-5">
+        <!-- <div class="card-base"> -->
+        <slot />
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+</section>

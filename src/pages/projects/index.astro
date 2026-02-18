@@ -1,0 +1,292 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import HeroBig from "../../components/HeroBig.astro";
+import Section from "../../components/Section.astro";
+import FinalCTA from "../../components/FinalCTA.astro";
+
+type Project = {
+  name: string;
+  tagline: string;
+  description: string;
+  status: string;
+  year: string;
+  funding: string;
+  areas: string[];
+  logo?: string;
+  logoInverted?: boolean;
+  link: string;
+};
+
+const projects: Project[] = [
+  {
+    name: "CONFIDENTIAL6G",
+    tagline: "Quantum-Resistant Security for 6G Networks",
+    description:
+      "Developing cutting-edge cryptographic protocols and security mechanisms to ensure confidentiality in next-generation 6G networks. Building quantum-resistant libraries and architectural blueprints for secure telecommunications.",
+    status: "Competed",
+    year: "2023-2025",
+    funding: "EU Horizon Europe",
+    areas: [
+      "6G Security",
+      "Quantum Cryptography",
+      "Network Architecture",
+      "Privacy",
+    ],
+    logo: "/img/logos/confidential6G.jpg",
+    logoInverted: false,
+    link: "/projects/confidential6g/",
+  },
+  {
+    name: "Elastic",
+    tagline: "Next-Gen Network Orchestration",
+    description:
+      "Pioneering WebAssembly-based network orchestration with Confidential Computing for efficient, secure service delivery across 6G infrastructures. Enabling dynamic workload distribution from cloud to edge.",
+    status: "Active",
+    year: "2023-2027",
+    funding: "EU Horizon Europe",
+    areas: ["WebAssembly", "Edge Computing", "Confidential Computing", "6G"],
+    logo: "/img/logos/elastic.png",
+    logoInverted: true,
+    link: "/projects/elastic/",
+  },
+  {
+    name: "EdgeX Foundry",
+    tagline: "Open Source Edge Platform",
+    description:
+      "Contributing to the Linux Foundation's EdgeX Foundry project, providing edge intelligence and interoperability for IoT deployments. Magistrala integration enables seamless edge-cloud communication.",
+    status: "Ongoing",
+    year: "2017-Present",
+    funding: "Linux Foundation",
+    areas: ["Edge Computing", "IoT", "Open Source", "Interoperability"],
+    logo: "/img/logos/lf.png",
+    logoInverted: false,
+    link: "https://www.edgexfoundry.org",
+  },
+  {
+    name: "6G-IA",
+    tagline: "European 6G Industry Association",
+    description:
+      "Active participation in shaping Europe's 6G vision and standards. Contributing to industrial IoT use cases, security frameworks, and edge computing architectures for next-gen networks.",
+    status: "Member",
+    year: "2021-Present",
+    funding: "Industry Consortium",
+    areas: ["6G Standards", "Industry Collaboration", "Policy", "Innovation"],
+    logo: "/img/logos/6g-ia-long.png",
+    logoInverted: false,
+    link: "https://6g-ia.eu",
+  },
+];
+
+const researchAreas = [
+  {
+    title: "Edge Intelligence",
+    description: "Distributed AI and machine learning at the network edge",
+    icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
+  },
+  {
+    title: "Confidential Computing",
+    description: "Secure execution environments for sensitive workloads",
+    icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
+  },
+  {
+    title: "Network Slicing",
+    description: "Dynamic resource allocation for heterogeneous services",
+    icon: "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4",
+  },
+  {
+    title: "Zero Trust Architecture",
+    description: "Security models for distributed systems",
+    icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+  },
+];
+
+const impactStats = [
+  { value: "5+", label: "Open-source Products" },
+  { value: "5+", label: "EU-Funded Projects" },
+  { value: "15+", label: "Research Partners" },
+];
+---
+
+<BaseLayout
+  title="Projects | Abstract Machines"
+  description="Explore research projects and collaborations involving Abstract Machines across edge computing, 6G, and secure distributed systems."
+>
+  <Header />
+
+  <main>
+    <HeroBig
+      title="Research & Innovation"
+      subtitle="Advancing edge computing, 6G networks, and secure distributed systems through European research programs"
+      primary={{
+        label: "Explore projects",
+        href: "#projects",
+        external: false,
+      }}
+      secondary={{
+        label: "Partner with us",
+        href: "/contact/",
+        external: false,
+      }}
+      backgroundClass="hero-grid"
+    />
+
+    <Section
+      title="Projects & Collaborations"
+      subtitle="EU-funded research initiatives and open-source ecosystem participation."
+      center
+      id="projects"
+    >
+      <div class="grid gap-6 lg:grid-cols-2">
+        {
+          projects.map((project, index) => {
+            const isExternal = project.link.startsWith("http");
+            const ctaLabel = isExternal ? "Visit website" : "Learn more";
+            const ctaIcon = isExternal ? "↗" : "→";
+
+            return (
+              <article class="card-base group flex h-full flex-col">
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex min-w-0 items-start gap-4">
+                    <div
+                      class="flex h-20 w-44 flex-none items-center justify-center overflow-hidden rounded-2xl px-4 py-3 bg-gradient-to-br from-[#2dd4ff]/10 to-transparent
+  sm:h-24 sm:w-52 lg:h-28 lg:w-60"
+                    >
+                      {project.logo ? (
+                        <Image
+                          src={project.logo!}
+                          alt={`${project.name} logo`}
+                          class={`h-16 w-full object-contain sm:h-20 lg:h-24 dark:brightness-200 ${project.logoInverted ? "invert dark:invert-0" : ""}`}
+                          width={420}
+                          height={160}
+                          loading={index < 2 ? "eager" : "lazy"}
+                          decoding="async"
+                        />
+                      ) : (
+                        <span class="text-base font-semibold text-slate-900">
+                          {project.name.slice(0, 3)}
+                        </span>
+                      )}
+                    </div>
+                    <div class="min-w-0">
+                      <h3 class="text-xl font-semibold">{project.name}</h3>
+                      <p class="mt-2 text-sm font-medium text-muted">
+                        {project.tagline}
+                      </p>
+                    </div>
+                  </div>
+
+                  <span class="nav-pill border border-subtle bg-surface-2 text-xs font-semibold text-primary">
+                    {project.status}
+                  </span>
+                </div>
+
+                <p class="mt-4 text-muted">{project.description}</p>
+
+                <div class="mt-5 flex flex-wrap gap-2">
+                  {project.areas.map((area) => (
+                    <span class="rounded-full border border-subtle bg-surface-2 px-3 py-1 text-xs font-semibold text-muted">
+                      {area}
+                    </span>
+                  ))}
+                </div>
+
+                <dl class="mt-6 grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <dt class="text-xs font-semibold uppercase tracking-[0.2em] text-muted">
+                      Duration
+                    </dt>
+                    <dd class="mt-2 font-semibold text-primary">
+                      {project.year}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-xs font-semibold uppercase tracking-[0.2em] text-muted">
+                      Funding
+                    </dt>
+                    <dd class="mt-2 font-semibold text-primary">
+                      {project.funding}
+                    </dd>
+                  </div>
+                </dl>
+
+                <div class="mt-auto pt-6 flex items-center justify-between gap-4">
+                  <a
+                    class="inline-flex font-semibold text-accent"
+                    href={project.link}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noopener noreferrer" : undefined}
+                  >
+                    {ctaLabel} {ctaIcon}
+                  </a>
+                </div>
+              </article>
+            );
+          })
+        }
+      </div>
+    </Section>
+
+    <Section
+      title="Research Focus Areas"
+      subtitle="Core competencies driving our innovation."
+      center
+    >
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {
+          researchAreas.map((area) => (
+            <article class="card-base text-center">
+              <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-subtle bg-surface-2 text-accent">
+                <svg
+                  class="h-7 w-7"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d={area.icon}
+                  />
+                </svg>
+              </div>
+              <h3 class="mt-6 text-xl font-semibold">{area.title}</h3>
+              <p class="mt-3 text-muted">{area.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </Section>
+
+    <Section
+      title="Impact & Recognition"
+      subtitle="Our work in the research community."
+      center
+    >
+      <div class="grid gap-6 md:grid-cols-3">
+        {
+          impactStats.map((stat) => (
+            <article class="card-base text-center">
+              <p class="text-5xl font-semibold tracking-tight text-accent">
+                {stat.value}
+              </p>
+              <p class="mt-3 text-muted">{stat.label}</p>
+            </article>
+          ))
+        }
+      </div>
+    </Section>
+
+    <FinalCTA
+      title="Collaborate With Us"
+      subtitle="Interested in partnering on research or joining a consortium?"
+      primary={{ label: "Get in Touch", href: "/contact/", external: false }}
+      secondary={null}
+    />
+  </main>
+  <Footer />
+</BaseLayout>

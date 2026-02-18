@@ -1,0 +1,477 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import Section from "../components/Section.astro";
+import FinalCTA from "../components/FinalCTA.astro";
+
+const address = "141 Quai de Valmy, 75010 Paris, France";
+const email = "info@absmach.eu";
+
+const facts = [
+  { label: "Founded", value: "2017" },
+  { label: "Headquarters", value: "Paris, France" },
+  {
+    label: "Open source",
+    value: "github.com/absmach",
+    href: "https://github.com/absmach",
+    external: true,
+  },
+  { label: "Research", value: "EU Horizon Europe projects", href: "/projects/" },
+];
+
+const timeline = [
+  {
+    year: "2017",
+    title: "Founded",
+    description: "Abstract Machines established in Paris, launching Mainflux (now Magistrala).",
+  },
+  {
+    year: "2020",
+    title: "Enterprise adoption",
+    description: "Deployed at Nokia, Intel, and Ericsson for production workloads.",
+  },
+  {
+    year: "2023",
+    title: "Research leadership",
+    description: "Leading EU Horizon projects CONFIDENTIAL6G and Elastic.",
+  },
+  {
+    year: "2025",
+    title: "Hardware launch",
+    description: "Introducing S0 and S1 RISC-V gateways for edge deployment.",
+  },
+];
+
+const values = [
+  {
+    title: "Open Source First",
+    description: "We believe in transparency and community-driven innovation",
+    icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+  },
+  {
+    title: "Security by Design",
+    description: "Security is fundamental, not an afterthought",
+    icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+  },
+  {
+    title: "Innovation at the Edge",
+    description: "Pushing boundaries in distributed systems",
+    icon: "M13 10V3L4 14h7v7l9-11h-7z",
+  },
+  {
+    title: "Pragmatic Excellence",
+    description: "Building production-ready solutions that work",
+    icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+];
+
+const team = [
+  {
+    role: "Engineering",
+    description:
+      "Expert developers building high-performance distributed systems",
+    count: "10+",
+  },
+  {
+    role: "Research",
+    description: "PhDs and researchers advancing IoT and edge computing",
+    count: "2+",
+  },
+  {
+    role: "Solutions",
+    description: "Architects and consultants delivering customer success",
+    count: "4+",
+  },
+];
+---
+
+<BaseLayout
+  title="Company | Abstract Machines"
+  description="Learn about Abstract Machines: an open-source infrastructure company building secure IoT and edge computing systems."
+>
+  <Header />
+
+  <main>
+    <Hero
+      title="Company"
+      subtitle="Since 2017, Abstract Machines has been delivering secure, open-source infrastructure for IoT and edge computing. Based in Paris, we serve enterprises, research institutions, and innovators across Europe and beyond."
+      primary={{ label: "Get in touch", href: "/contact/", external: false }}
+      secondary={{ label: "Explore projects", href: "/projects/", external: false }}
+      backgroundClass="hero-grid"
+    >
+      <div class="rounded-2xl border border-subtle bg-panel p-6 shadow-[var(--shadow-soft)] md:p-8">
+        <p class="section-label">At a glance</p>
+        <dl class="mt-6 space-y-4 text-sm">
+          {facts.map((item) => (
+            <div class="flex items-center justify-between gap-4">
+              <dt class="text-muted">{item.label}</dt>
+              <dd class="text-right font-semibold text-primary">
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    target={item.external ? "_blank" : undefined}
+                    rel={item.external ? "noopener noreferrer" : undefined}
+                    class="hover:underline"
+                  >
+                    {item.value}
+                  </a>
+                ) : (
+                  item.value
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <div class="my-6 border-t border-subtle"></div>
+
+        <p class="text-sm text-muted">
+          Want to collaborate on research or deploy at scale? We’d love to hear from you.
+        </p>
+      </div>
+    </Hero>
+
+    <Section title="Our mission" center>
+      <div class="mx-auto max-w-4xl rounded-3xl border border-subtle bg-panel p-8 text-center shadow-[var(--shadow-soft)] md:p-12">
+        <p class="text-lg text-muted md:text-xl leading-relaxed">
+          To democratize access to enterprise-grade infrastructure through open-source
+          innovation, enabling organizations of all sizes to build secure, scalable
+          distributed systems.
+        </p>
+      </div>
+    </Section>
+
+    <Section
+      title="What drives us"
+      subtitle="Core principles guiding our work."
+      center
+    >
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {values.map((value) => (
+          <article class="card-base">
+            <div class="flex items-start gap-4">
+              <div class="flex h-12 w-12 flex-none items-center justify-center rounded-2xl border border-subtle bg-surface-2 text-accent">
+                <svg
+                  class="h-6 w-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d={value.icon}></path>
+                </svg>
+              </div>
+              <div class="min-w-0">
+                <h3 class="text-xl font-semibold">{value.title}</h3>
+                <p class="mt-2 text-muted">{value.description}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </Section>
+
+    <Section
+      title="Expert team"
+      subtitle="Distributed across Europe, united by mission."
+      center
+    >
+      <div class="grid gap-6 md:grid-cols-3">
+        {team.map((dept) => (
+          <article class="card-base text-center">
+            <p class="text-5xl font-semibold tracking-tight text-accent">
+              {dept.count}
+            </p>
+            <h3 class="mt-4 text-xl font-semibold">{dept.role}</h3>
+            <p class="mt-2 text-muted">{dept.description}</p>
+          </article>
+        ))}
+      </div>
+    </Section>
+
+    <Section title="Our journey" subtitle="Key milestones in our growth." center>
+      <ol class="journey-stepper" aria-label="Company timeline">
+        {timeline.map((item, index) => (
+          <li class={`journey-step ${index === timeline.length - 1 ? "journey-step-latest" : ""}`}>
+            <span class="journey-dot" aria-hidden="true">{item.year}</span>
+            <article class="card-base journey-card">
+              <h3 class="text-xl font-semibold">{item.title}</h3>
+              <p class="mt-2 text-muted">{item.description}</p>
+            </article>
+          </li>
+        ))}
+      </ol>
+    </Section>
+
+    <Section title="Based in Paris" subtitle="We work with clients and partners across Europe and globally.">
+      <div class="grid gap-6 lg:grid-cols-2 lg:items-start">
+        <div class="card-base">
+          <div class="space-y-5 text-sm">
+            <div class="flex items-start gap-3">
+              <svg
+                class="mt-0.5 h-5 w-5 flex-none text-accent"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"></path>
+                <path d="M12 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
+              </svg>
+              <div>
+                <p class="font-semibold text-primary">Address</p>
+                <p class="mt-1 text-muted">{address}</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <svg
+                class="mt-0.5 h-5 w-5 flex-none text-accent"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 4h16v16H4z"></path>
+                <path d="m22 6-10 7L2 6"></path>
+              </svg>
+              <div>
+                <p class="font-semibold text-primary">Email</p>
+                <a class="mt-1 inline-block text-muted hover:underline" href={`mailto:${email}`}>
+                  {email}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-base">
+          <div class="overflow-hidden rounded-2xl border border-subtle bg-surface-2">
+            <iframe
+              title="Map showing Abstract Machines office in Paris"
+              class="company-map-embed aspect-video w-full"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <p class="mt-4 text-sm text-muted">
+            Prefer async? Email is best. For open-source questions, reach out on GitHub.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a class="button-secondary" href={`mailto:${email}`}>Email us</a>
+            <a
+              class="button-secondary"
+              href="https://github.com/absmach"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </Section>
+
+    <FinalCTA
+      title="Join Our Mission"
+      subtitle="We're always looking for talented people who share our values"
+      primary={{ label: "View openings", href: "/careers/", external: false }}
+      secondary={{ label: "Get in touch", href: "/contact/", external: false }}
+    />
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .company-map-embed {
+    transition: filter 180ms ease;
+  }
+
+  .journey-stepper {
+    position: relative;
+    display: grid;
+    --journey-year-w: 4.2rem;
+    --journey-year-h: 2rem;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 76rem;
+  }
+
+  .journey-stepper::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--journey-year-h) * 0.8);
+    bottom: calc(var(--journey-year-h) * 0.4);
+    left: calc(var(--journey-year-w) / 2);
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--accent) 55%, var(--border)),
+      var(--border)
+    );
+    z-index: 0;
+  }
+
+  .journey-step {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: var(--journey-year-w) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .journey-dot {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--journey-year-w);
+    height: var(--journey-year-h);
+    border-radius: 9999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
+    background: color-mix(in srgb, var(--surface-2) 78%, var(--panel));
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+    box-shadow: 0 0 0 6px var(--bg), var(--shadow-soft);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .journey-dot::selection {
+    background: transparent;
+    color: inherit;
+  }
+
+  .journey-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1.1rem;
+    min-height: 8.75rem;
+  }
+
+  @media (min-width: 1024px) {
+    .journey-stepper {
+      --journey-year-w: 5.8rem;
+      --journey-year-h: auto;
+      gap: 1.6rem;
+    }
+
+    .journey-stepper::before {
+      top: 0.25rem;
+      bottom: 0.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .journey-step {
+      grid-template-columns:
+        minmax(0, 1fr)
+        calc(var(--journey-year-w) + 1.5rem)
+        minmax(0, 1fr);
+      gap: 1.65rem;
+      align-items: center;
+    }
+
+    .journey-dot {
+      grid-column: 2;
+      justify-self: center;
+      width: 6.2rem;
+      height: 2.7rem;
+      min-width: 6.2rem;
+      border-radius: 9999px;
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
+      padding: 0 0.3rem;
+      background: color-mix(in srgb, var(--surface-2) 78%, var(--panel));
+      box-shadow: 0 0 0 8px var(--bg), var(--shadow-soft);
+      color: var(--accent);
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-align: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+
+    .journey-dot,
+    .journey-card {
+      grid-row: 1;
+    }
+
+    .journey-card {
+      width: min(100%, 29rem);
+      padding: 1.2rem 1.25rem;
+      min-height: 9.5rem;
+    }
+
+    .journey-step:nth-child(odd) .journey-card {
+      grid-column: 1;
+      justify-self: end;
+    }
+
+    .journey-step:nth-child(even) .journey-card {
+      grid-column: 3;
+      justify-self: start;
+    }
+
+    .journey-step:nth-child(odd) .journey-card::after,
+    .journey-step:nth-child(even) .journey-card::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 1.25rem;
+      height: 2px;
+      background: color-mix(in srgb, var(--accent) 58%, var(--border));
+      transform: translateY(-50%);
+      opacity: 0.9;
+    }
+
+    .journey-step:nth-child(odd) .journey-card::after {
+      right: -1.3rem;
+    }
+
+    .journey-step:nth-child(even) .journey-card::before {
+      left: -1.3rem;
+    }
+  }
+
+  .journey-step-latest .journey-dot {
+    color: color-mix(in srgb, var(--accent) 84%, var(--text));
+  }
+
+  .journey-step-latest .journey-card {
+    border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent),
+      var(--shadow-soft);
+  }
+
+  :global(html[data-theme="dark"]) .company-map-embed {
+    filter: grayscale(0.2) invert(0.92) hue-rotate(180deg) saturate(0.75)
+      brightness(0.92) contrast(0.95);
+  }
+</style>

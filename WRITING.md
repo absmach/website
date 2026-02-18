@@ -1,125 +1,70 @@
-# How to Write and Publish a Blog Post
+# Writing Blog Posts
 
-This guide explains the process of creating a new blog post, testing it locally, and submitting it for publication.
+Blog posts live in `src/content/blogs/` and are rendered by Astro using the content schema in `src/content.config.ts`.
 
-## 1. Create the Content
+## 1) Create a new post
 
-### Create the Markdown File
+Create a new Markdown file:
 
-Add a new `.md` file in the `content/blogs/` directory. The filename should be descriptive (e.g., `my-new-feature.md`).
+- `src/content/blogs/my-new-post.md`
 
-### Add Frontmatter
+The filename becomes the URL slug by default (you can override it with `slug` in frontmatter).
 
-Every post **must** start with YAML frontmatter between `---` markers:
+## 2) Add frontmatter
+
+Each post must start with YAML frontmatter:
 
 ```yaml
 ---
-title: "Your Post Title"
-slug: "url-friendly-slug"
-excerpt: "A compelling 2-3 sentence summary"
-description: "SEO meta description (150-160 characters)"
-date: "2024-01-15"
+title: "Getting Started with FluxMQ"
+description: "A short summary used for SEO and the blog listing."
+date: "2026-02-10"
+updatedAt: "2026-02-11" # optional
 author:
-  name: "Jane Doe"
-  picture: "/assets/team/jane-doe.jpg"
-coverImage: "/assets/blog/my-post-cover.jpg"
-ogImage:
-  url: "/assets/blog/my-post-og.jpg"
-category: blog
-featured: true
+  name: "Your Name"
+  picture: "https://example.com/avatar.png" # optional (URL or local path)
 tags:
-  - Web Development
-  - Magistrala
+  - fluxmq
+  - mqtt
+featured: false # optional (featured posts are pinned above non-featured posts on /blog/)
+draft: false # optional (set true to hide from /blog/)
+coverImage: "/img/blogs/my-new-post/cover.png" # optional (URL or local path)
+canonical: "https://absmach.eu/blog/my-new-post/" # optional
+slug: "my-new-post" # optional override
 ---
 ```
 
-### Write the Post
+Notes:
 
-Below the closing `---`, write in standard Markdown.
+- `date` / `updatedAt` accept `YYYY-MM-DD` (they are coerced into real dates by the schema).
+- Tags are case-sensitive on the blog filter UI. Pick one convention and stick to it.
+- `featured: true` should be temporary. Featured posts are always shown before non-featured posts, regardless of publish date.
+- Writers/editors must remove old `featured: true` flags after a campaign/release window. If many posts stay featured, newer non-featured posts will not appear near the top of `/blog/`.
 
-## Frontmatter Reference
+## 3) Add images
 
-### Required Fields
+Put blog images under `public/img/blogs/<slug>/` and reference them with an absolute path:
 
-| Field            | Format               | Description              | Example                      |
-| ---------------- | -------------------- | ------------------------ | ---------------------------- |
-| `title`          | String               | Post title (50-60 chars) | `"How to Build a Blog"`      |
-| `slug`           | lowercase-hyphenated | URL identifier           | `"how-to-build-blog"`        |
-| `excerpt`        | 2-3 sentences        | Listing page summary     | `"Learn how to..."`          |
-| `description`    | 150-160 chars        | SEO meta description     | `"A comprehensive guide..."` |
-| `date`           | YYYY-MM-DD           | Publication date         | `"2024-01-15"`               |
-| `author.name`    | String               | Author's full name       | `"John Smith"`               |
-| `author.picture` | Path                 | Avatar image path        | `"/assets/team/john.jpg"`    |
+- File: `public/img/blogs/my-new-post/diagram.png`
+- Markdown: `![Diagram](/img/blogs/my-new-post/diagram.png)`
 
-### Optional Fields
+## 4) Preview locally
 
-| Field          | Options                                           | Default          | Description           |
-| -------------- | ------------------------------------------------- | ---------------- | --------------------- |
-| `category`     | blog, announcement, news, tutorial                | `blog`           | Post category         |
-| `featured`     | `true` or omit                                    | -                | Featured badge        |
-| `tags`         | List of strings (e.g Magistrala, SuperMQ, FluxMQ) | `[]`             | Post tags             |
-| `readingTime`  | `"5 min"`                                         | Auto-calculated  | Reading time estimate |
-| `coverImage`   | Path                                              | None             | Header image          |
-| `ogImage.url`  | Path                                              | Cover or default | Social media image    |
-| `canonicalUrl` | Full URL                                          | Auto-generated   | Canonical URL         |
+```bash
+npm install
+npm run dev
+```
 
-## 2. Add Images (Optional)
+Open:
 
-If your post includes images:
+- `http://localhost:4321/blog/` (listing + search + tags)
+- `http://localhost:4321/blog/<slug>/` (your post)
 
-1. Create a directory named after your post's slug in `img/blogs/`. For example: `img/blogs/my-new-feature/`.
-2. Place your images there.
-3. Reference them in your Markdown: `![Description](/img/blogs/my-new-feature/screenshot.png)`.
+## 5) Publish
 
-## 3. Test Locally
+Commit the Markdown file + any images you added under `public/`:
 
-After writing your post, you should build the site and preview the generated HTML.
-
-1. **Build the blog:**
-
-   ```bash
-   make build
-   ```
-
-This generates the static site into the output folder (e.g. blog/).
-
-2. **Open with a Live Server**
-   Use a live server to preview the generated files.
-   - Option A - VS Code Live Server (recommended)
-     - Install the Live Server extension in VS Code
-     - Open the project folder in VS Code
-     - Navigate to the generated output directory (e.g. blog/)
-     - Right-click index.html → “Open with Live Server”
-   - Option B - Any static file server  
-     You can also use other tools, for example:
-   ```bash
-   python3 -m http.server 8000
-   ```
-3. **Verify Your Post**  
-   Open the local URL shown by the Live Server and check:
-   - Your post appears on the blog listing page
-   - The post page renders correctly
-   - Images load
-   - Links work
-
-If something looks off, fix your Markdown or frontmatter and run make build again.
-
-## 4. Publish via Pull Request
-
-1. **Create a new branch:**
-   ```bash
-   git checkout -b blog/my-new-feature
-   ```
-2. **Build the blog:**
-   ```bash
-   make build
-   ```
-   This ensures the `blog/` directory is updated with your new post and reflects any changes in the listing pages.
-3. **Commit your changes:**
-   ```bash
-   git add content/blogs/my-new-feature.md img/blogs/my-new-feature/ blog/ .blogcache
-   git commit -m "Add blog post: My New Feature"
-   ```
-   **Note:** It is important to include the `blog/` folder and `.blogcache` in your commit so that the static site is updated upon merging.
-4. **Push and open a PR:**
-   Push your branch to GitHub and open a Pull Request against the `main` branch.
+```bash
+git add src/content/blogs/my-new-post.md public/img/blogs/my-new-post/
+git commit -m "Add blog post: Getting Started with FluxMQ"
+```

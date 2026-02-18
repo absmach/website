@@ -1,0 +1,18 @@
+# Cloudflare Pages Function secrets for /api/contact
+# Local default (smtp4dev)
+SMTP_HOST=127.0.0.1
+SMTP_PORT=2525
+SMTP_SECURE=false
+SMTP_USER=
+SMTP_PASS=
+MAIL_FROM_EMAIL=info@absmach.eu
+TEAM_CONTACT_EMAIL=info@absmach.eu
+
+# Production example (Google SMTP / Gmail Workspace)
+# SMTP_HOST=smtp.gmail.com
+# SMTP_PORT=465
+# SMTP_SECURE=true
+# SMTP_USER=your-production-email@yourdomain.com
+# SMTP_PASS=your-google-app-password
+# MAIL_FROM_EMAIL=your-production-email@yourdomain.com
+# TEAM_CONTACT_EMAIL=info@absmach.eu

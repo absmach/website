@@ -1,0 +1,90 @@
+---
+const { title = "Project Information", items = [], links = [] } = Astro.props;
+
+const isExternal = (href, explicit) => {
+  if (typeof explicit === "boolean") return explicit;
+  return typeof href === "string" && /^https?:\/\//.test(href);
+};
+---
+
+<div class="card-base project-information">
+  <div class="border-b border-subtle pb-4">
+    <p class="section-label">Project</p>
+    <h3 class="mt-1 text-xl font-semibold text-primary">{title}</h3>
+  </div>
+
+  <dl class="mt-5 space-y-3">
+    {
+      items.map((item) => (
+        <div class="project-info-item rounded-xl border border-subtle px-4 py-3">
+          <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-muted">
+            {item.label}
+          </dt>
+          <dd class={item.pill ? "mt-2" : "mt-1"}>
+            {item.pill ? (
+              <span class="nav-pill border border-subtle bg-surface-2 px-3 py-1 text-xs font-semibold text-primary">
+                {item.value}
+              </span>
+            ) : (
+              <span class="block text-sm font-medium leading-relaxed text-primary">
+                {item.value}
+              </span>
+            )}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  {
+    links.length > 0 && (
+      <div class="mt-6 flex flex-col gap-2.5">
+        {links.map((link) => {
+          const external = isExternal(link.href, link.external);
+          return (
+            <a
+              class="project-info-link group flex w-full min-h-[3rem] items-center justify-between gap-3 rounded-xl border border-subtle px-4 py-2.5 text-[0.95rem] font-semibold text-primary transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+              href={link.href}
+              target={external ? "_blank" : undefined}
+              rel={external ? "noopener noreferrer" : undefined}
+            >
+              <span class="whitespace-nowrap">{link.label}</span>
+              <span
+                class="shrink-0 text-xs transition-transform group-hover:translate-x-0.5"
+                aria-hidden="true"
+              >
+                {external ? "↗" : "→"}
+              </span>
+            </a>
+          );
+        })}
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .project-information {
+    background: linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--panel) 74%, transparent),
+      color-mix(in srgb, var(--surface) 78%, transparent)
+    );
+    border-color: color-mix(in srgb, var(--border) 84%, rgba(255, 255, 255, 0.2));
+    backdrop-filter: blur(14px) saturate(145%);
+    -webkit-backdrop-filter: blur(14px) saturate(145%);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #fff 22%, transparent),
+      var(--shadow-soft);
+  }
+
+  .project-info-item {
+    background: color-mix(in srgb, var(--surface) 76%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 14%, transparent);
+  }
+
+  .project-info-link {
+    background: color-mix(in srgb, var(--surface) 76%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 14%, transparent);
+  }
+</style>

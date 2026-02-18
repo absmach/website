@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets";
+
+const {
+  title,
+  description,
+  ctaLabel,
+  href,
+  featured = false,
+  featuredSpan = "md:col-span-2",
+  subtitle,
+  kicker,
+  logoSrc,
+  logoAlt = "Product logo",
+  logoLoading = "lazy",
+  logoClass = "",
+  cardClass = "",
+} = Astro.props;
+
+const hasLogo = logoSrc || Astro.slots.has("logo");
+const splitClass = featured
+  ? "flex flex-col gap-5 md:flex-row md:gap-0"
+  : "flex flex-col gap-5 lg:flex-row lg:gap-0";
+const logoColClass = featured
+  ? "flex min-h-[5.5rem] items-center overflow-hidden md:w-44 md:flex-shrink-0 md:border-r md:border-[rgba(16,24,38,0.12)] dark:md:border-[rgba(255,255,255,0.18)] md:pr-6"
+  : "flex min-h-[5.5rem] items-center overflow-hidden lg:w-44 lg:flex-shrink-0 lg:border-r lg:border-[rgba(16,24,38,0.12)] dark:lg:border-[rgba(255,255,255,0.18)] lg:pr-6";
+const contentColClass = featured ? "md:flex-1 md:pl-6" : "lg:flex-1 lg:pl-6";
+const logoImageClass = featured
+  ? `h-20 w-full max-w-full object-contain md:h-24 ${logoClass}`
+  : `h-16 w-full max-w-full object-contain lg:h-20 ${logoClass}`;
+const articleClass = featured
+  ? `card-base ${featuredSpan} ${cardClass}`.trim()
+  : `card-base ${cardClass}`.trim();
+---
+
+<article class={articleClass}>
+  {
+    hasLogo ? (
+      <div class={splitClass}>
+        <div class={logoColClass}>
+          {Astro.slots.has("logo") ? (
+            <div class="flex max-w-full items-center gap-1 overflow-hidden">
+              <slot name="logo" />
+            </div>
+          ) : (
+            <Image
+              src={logoSrc!}
+              alt={logoAlt}
+              class={logoImageClass}
+              width={400}
+              height={160}
+              loading={logoLoading}
+              decoding="async"
+            />
+          )}
+        </div>
+        <div class={contentColClass}>
+          {kicker && <p class="section-label">{kicker}</p>}
+          <h3 class="mt-3 text-xl font-semibold">{title}</h3>
+          {subtitle && <p class="mt-2 text-sm text-muted">{subtitle}</p>}
+          <p class="mt-4 text-muted">{description}</p>
+          {ctaLabel && href && (
+            <a
+              class="mt-6 inline-flex text-accent font-semibold"
+              href={href}
+              target={href.startsWith("http") ? "_blank" : undefined}
+              rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+            >
+              {ctaLabel}
+            </a>
+          )}
+        </div>
+      </div>
+    ) : (
+      <>
+        {kicker && <p class="section-label">{kicker}</p>}
+        <h3 class="mt-3 text-xl font-semibold">{title}</h3>
+        {subtitle && <p class="mt-2 text-sm text-muted">{subtitle}</p>}
+        <p class="mt-4 text-muted">{description}</p>
+        {ctaLabel && href && (
+          <a
+            class="mt-6 inline-flex text-accent font-semibold"
+            href={href}
+            target={href.startsWith("http") ? "_blank" : undefined}
+            rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+          >
+            {ctaLabel}
+          </a>
+        )}
+      </>
+    )
+  }
+</article>

@@ -1,0 +1,108 @@
+---
+import { Image } from "astro:assets";
+
+const {
+  title,
+  description,
+  href,
+  featured = false,
+  logoSrc,
+  logoAlt = "Product logo",
+  logoClass = "",
+  className = "",
+} = Astro.props;
+
+const hasLogo = logoSrc || Astro.slots.has("logo");
+const cardClass = featured
+  ? "rounded-2xl border border-subtle bg-panel p-3 shadow-[var(--shadow-soft)] md:p-4"
+  : "rounded-2xl border border-subtle bg-panel p-3 shadow-[var(--shadow-soft)] min-h-[10rem]";
+const mergedCardClass = `${cardClass} ${className}`.trim();
+const defaultLogoClass = featured
+  ? "h-9 w-auto max-w-full object-contain md:h-11"
+  : "h-9 w-auto max-w-full object-contain";
+---
+
+{
+  featured ? (
+    <article class={mergedCardClass}>
+      <div class="grid gap-2 md:grid-cols-[9rem_1fr] md:items-center">
+        <div class="flex items-center md:min-h-[3.75rem] md:pr-3 md:border-r md:border-[rgba(16,24,38,0.12)] dark:md:border-[rgba(255,255,255,0.18)]">
+          {hasLogo &&
+            (Astro.slots.has("logo") ? (
+              <div class="flex max-w-full items-center gap-1 overflow-hidden">
+                <slot name="logo" />
+              </div>
+            ) : (
+              <Image
+                src={logoSrc!}
+                alt={logoAlt}
+                class={`${defaultLogoClass} ${logoClass}`}
+                width={400}
+                height={160}
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
+        </div>
+
+        <div class="flex flex-col justify-center gap-1.5">
+          <h3 class="text-lg font-semibold leading-tight md:text-xl">
+            {title}
+          </h3>
+          <p class="product-preview-desc text-sm leading-snug text-muted">
+            {description}
+          </p>
+          <a class="inline-flex font-semibold text-accent" href={href}>
+            Learn more
+          </a>
+        </div>
+      </div>
+    </article>
+  ) : (
+    <article class={mergedCardClass}>
+      <div class="grid h-full gap-2 sm:grid-cols-[8.5rem_1fr] md:grid-cols-[9.5rem_1fr] sm:items-center">
+        <div class="flex h-10 items-center sm:h-full sm:min-h-[4rem] sm:justify-center sm:overflow-hidden sm:pr-3 sm:border-r sm:border-[rgba(16,24,38,0.12)] dark:sm:border-[rgba(255,255,255,0.18)]">
+          {hasLogo &&
+            (Astro.slots.has("logo") ? (
+              <div class="flex max-w-full items-center gap-1 overflow-hidden">
+                <slot name="logo" />
+              </div>
+            ) : (
+              <Image
+                src={logoSrc!}
+                alt={logoAlt}
+                class={`${defaultLogoClass} ${logoClass}`}
+                width={400}
+                height={160}
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
+        </div>
+        <div class="flex h-full flex-col gap-1.5">
+          <h3 class="text-lg font-semibold leading-tight md:text-xl">
+            {title}
+          </h3>
+          <p class="product-preview-desc text-sm leading-snug text-muted">
+            {description}
+          </p>
+          <a
+            class="mt-auto inline-flex pt-1 font-semibold text-accent"
+            href={href}
+          >
+            Learn more
+          </a>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+<style>
+  .product-preview-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

@@ -1,0 +1,457 @@
+---
+import { Image } from "astro:assets";
+
+type Logo = {
+    src: string;
+    darkSrc?: string;
+    alt: string;
+    href?: string;
+    logoClass?: string;
+};
+
+const logos: Logo[] = [
+    {
+        alt: "Wings",
+        src: "/img/logos/wings-logo.png",
+        logoClass: "dark:brightness-[1.3]",
+    },
+    { alt: "Nokia", src: "/img/logos/nokia.svg", logoClass: "!h-6" },
+    {
+        alt: "Nokia Bell Labs",
+        src: "/img/logos/nokia-bellLabs.svg",
+        logoClass: " ",
+    },
+
+    {
+        alt: "Aalto University",
+        src: "/img/logos/AAL.png",
+        logoClass: "dark:invert ",
+    },
+    {
+        alt: "Telefonica",
+        src: "/img/logos/telefonica.png",
+        logoClass: "",
+    },
+    {
+        alt: "Zen",
+        src: "/img/logos/zen.svg",
+        logoClass: "dark:invert !h-10 ",
+    },
+    { alt: "VTT", src: "/img/logos/vtt.png", logoClass: "" },
+    {
+        alt: "TNO",
+        src: "/img/logos/tno.png",
+        darkSrc: "/img/logos/tno-dark.png",
+        logoClass: "!h-4",
+    },
+
+    {
+        alt: "Technical University of Crete",
+        src: "/img/logos/TUC.png",
+        logoClass: "!h-16 dark:brightness-[1.25] ",
+    },
+
+    {
+        alt: "Ericsson",
+        src: "/img/logos/ericsson.png",
+        logoClass: "!h-10 dark:brightness-200 ",
+    },
+    {
+        alt: "Thales",
+        src: "/img/logos/THALES.png",
+        logoClass: "dark:brightness-[1.5] !h-6",
+    },
+    {
+        alt: "IMEC",
+        src: "/img/logos/IMEC.png",
+        logoClass: "dark:brightness-200 !h-6 ",
+    },
+    {
+        alt: "Lund University",
+        src: "/img/logos/LUND.png",
+        darkSrc: "/img/logos/LUND-dark.png",
+        logoClass: "!h-16 dark:brightness-[1.5] ",
+    },
+    {
+        alt: "Politecnico di Torino",
+        src: "/img/logos/POLITO.png",
+        logoClass: "!h-16 dark:invert ",
+    },
+    {
+        alt: "IMDEA",
+        src: "/img/logos/imdea.png",
+        darkSrc: "/img/logos/imdea-dark.png",
+        logoClass: "dark:brightness-[1.3]",
+    },
+    {
+        alt: "TU Graz",
+        src: "/img/logos/tu-gratz.svg",
+        darkSrc: "/img/logos/tu-gratz-dark.svg",
+        logoClass: "text-black dark:text-white",
+    },
+    {
+        alt: "UCD",
+        src: "/img/logos/ucd.png",
+        logoClass: "dark:brightness-[1.3] !h-10",
+    },
+    {
+        alt: "TU Wien",
+        src: "/img/logos/tuw.png",
+        logoClass: "dark:brightness-[1.3] !h-12",
+    },
+
+    { src: "/partners/target.png", alt: "Target", logoClass: "!h-14" },
+    {
+        src: "/partners/greennet.png",
+        alt: "GreenNet",
+        logoClass: "dark:brightness-[1.5] ",
+    },
+    {
+        src: "/partners/eu.png",
+        alt: "European Commission",
+        logoClass: " !h-16",
+    },
+    {
+        src: "/partners/parc.png",
+        alt: "PARC",
+        logoClass: "dark:brightness-[1.2]",
+    },
+    {
+        src: "/partners/tue.png",
+        alt: "Eindhoven University of Technology (TU/e)",
+        logoClass: "dark:brightness-[1.5] ",
+    },
+];
+
+// Duplicate once for a seamless loop
+const loop = [...logos, ...logos];
+
+type Stat = {
+    value?: string;
+    label: string;
+    src?: string;
+    alt?: string;
+    href?: string;
+};
+
+const stats: Stat[] = [
+    { value: "15+", label: "Partners" },
+    { value: "4+", label: "Projects" },
+    {
+        src: "/partners/6g-ia-long.png",
+        alt: "6G SNS member",
+        href: "https://6gsns.eu/",
+        label: "Official member of the 6G Smart Networks and Services Industry Association",
+    },
+    { value: "50+", label: "Active Deployments" },
+    { value: "6+", label: "Open Source Products" },
+];
+---
+
+<div id="partners" class="py-10">
+    <div class="container-wide">
+        <header class="mx-auto max-w-4xl text-center">
+            <h2 class="mt-3 tracking-tight">
+                Trusted by industry and research across Europe
+            </h2>
+        </header>
+
+        <!-- Carousel / marquee -->
+        <div
+            class="logo-carousel mt-10"
+            aria-label="Clients and partners logos"
+        >
+            <div class="logo-track">
+                {
+                    loop.map((l) => (
+                        <div class="logo-item">
+                            {l.href ? (
+                                <a
+                                    href={l.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={l.alt}
+                                >
+                                    {l.darkSrc ? (
+                                        <>
+                                            <Image
+                                                src={l.src}
+                                                alt={l.alt}
+                                                width={320}
+                                                height={120}
+                                                loading="eager"
+                                                decoding="async"
+                                                class={`logo-image-light w-auto h-8 object-contain ${l.logoClass ?? ""}`}
+                                            />
+                                            <Image
+                                                src={l.darkSrc}
+                                                alt={l.alt}
+                                                width={320}
+                                                height={120}
+                                                loading="eager"
+                                                decoding="async"
+                                                class={`logo-image-dark w-auto h-8 object-contain ${l.logoClass ?? ""}`}
+                                            />
+                                        </>
+                                    ) : (
+                                        <Image
+                                            src={l.src}
+                                            alt={l.alt}
+                                            width={320}
+                                            height={120}
+                                            loading="eager"
+                                            decoding="async"
+                                            class={`w-auto h-8 object-contain ${l.logoClass ?? ""}`}
+                                        />
+                                    )}
+                                </a>
+                            ) : l.darkSrc ? (
+                                <>
+                                    <Image
+                                        src={l.src}
+                                        alt={l.alt}
+                                        width={320}
+                                        height={120}
+                                        loading="eager"
+                                        decoding="async"
+                                        class={`logo-image-light w-auto h-8 object-contain${l.logoClass ?? ""}`}
+                                    />
+                                    <Image
+                                        src={l.darkSrc}
+                                        alt={l.alt}
+                                        width={320}
+                                        height={120}
+                                        loading="eager"
+                                        decoding="async"
+                                        class={`logo-image-dark w-auto h-8 object-contain ${l.logoClass ?? ""}`}
+                                    />
+                                </>
+                            ) : (
+                                <Image
+                                    src={l.src}
+                                    alt={l.alt}
+                                    width={320}
+                                    height={120}
+                                    loading="eager"
+                                    decoding="async"
+                                    class={`w-auto h-8  object-contain ${l.logoClass ?? ""}`}
+                                />
+                            )}
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+
+        <ul
+            class="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-6"
+            aria-label="Key stats"
+        >
+            {
+                stats.map((stat) =>
+                    stat.src ? (
+                        <li class="sm:col-span-2 md:col-span-2 lg:col-span-2">
+                            <div class="flex h-full flex-col items-center justify-center gap-3 rounded-2xl border border-subtle bg-panel p-6 text-center shadow-sm">
+                                {stat.href ? (
+                                    <a
+                                        href={stat.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={stat.alt ?? stat.label}
+                                        class="inline-flex items-center justify-center"
+                                    >
+                                        <Image
+                                            src={stat.src}
+                                            alt={stat.alt ?? ""}
+                                            width={360}
+                                            height={140}
+                                            loading="eager"
+                                            decoding="async"
+                                            class="h-12 w-auto md:h-14"
+                                        />
+                                    </a>
+                                ) : (
+                                    <Image
+                                        src={stat.src}
+                                        alt={stat.alt ?? ""}
+                                        width={360}
+                                        height={140}
+                                        loading="eager"
+                                        decoding="async"
+                                        class="mx-auto h-12 w-auto md:h-14"
+                                    />
+                                )}
+                                <p class="text-sm font-medium text-muted">
+                                    {stat.label}
+                                </p>
+                            </div>
+                        </li>
+                    ) : (
+                        <li>
+                            <div class="flex h-full flex-col items-center justify-center rounded-2xl border border-subtle bg-panel p-6 text-center shadow-sm">
+                                <p class="text-3xl font-semibold tracking-tight text-primary">
+                                    {stat.value}
+                                </p>
+                                <p class="mt-2 text-sm font-medium text-muted">
+                                    {stat.label}
+                                </p>
+                            </div>
+                        </li>
+                    ),
+                )
+            }
+        </ul>
+        <!--
+	        <p class="mt-8 text-center text-xs text-muted">
+	            *Logos shown for recognition only. Ownership of trademarks belongs
+	            to their respective holders.
+	        </p> -->
+    </div>
+</div>
+
+<style>
+    .logo-carousel {
+        position: relative;
+        overflow: hidden;
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.14),
+            rgba(255, 255, 255, 0.06)
+        );
+        backdrop-filter: blur(16px) saturate(160%);
+        -webkit-backdrop-filter: blur(16px) saturate(160%);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.28),
+            0 20px 48px rgba(0, 0, 0, 0.16);
+        padding: 18px 14px;
+    }
+
+    :root[data-theme="dark"] .logo-carousel {
+        border-color: rgba(255, 255, 255, 0.18);
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.09),
+            rgba(255, 255, 255, 0.03)
+        );
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.12),
+            0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Soft edge fade like premium marquees */
+    .logo-carousel::before,
+    .logo-carousel::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 72px;
+        height: 100%;
+        z-index: 2;
+        pointer-events: none;
+    }
+    .logo-carousel::before {
+        left: 0;
+        background: linear-gradient(
+            to right,
+            rgba(245, 247, 251, 0.9),
+            transparent
+        );
+    }
+    .logo-carousel::after {
+        right: 0;
+        background: linear-gradient(
+            to left,
+            rgba(245, 247, 251, 0.9),
+            transparent
+        );
+    }
+
+    :root[data-theme="dark"] .logo-carousel::before {
+        background: linear-gradient(
+            to right,
+            rgba(7, 11, 18, 0.7),
+            transparent
+        );
+    }
+
+    :root[data-theme="dark"] .logo-carousel::after {
+        background: linear-gradient(to left, rgba(7, 11, 18, 0.7), transparent);
+    }
+
+    .logo-track {
+        display: flex;
+        align-items: center;
+        gap: 56px;
+        width: max-content;
+        animation: marquee 40s linear infinite;
+        will-change: transform;
+    }
+
+    .logo-item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 42px;
+    }
+
+    .logo-item img {
+        max-height: none;
+        width: auto;
+        max-width: 160px;
+        opacity: 0.92;
+        transition: opacity 160ms ease;
+    }
+
+    .logo-image-dark {
+        display: none;
+    }
+
+    :root[data-theme="dark"] .logo-image-light {
+        display: none;
+    }
+
+    :root[data-theme="dark"] .logo-image-dark {
+        display: inline-block;
+    }
+
+    .logo-item a:hover img,
+    .logo-item:hover img {
+        opacity: 1;
+    }
+
+    .logo-carousel:hover .logo-track {
+        animation-play-state: paused;
+    }
+
+    @keyframes marquee {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .logo-track {
+            animation: none;
+        }
+        .logo-carousel {
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .logo-track {
+            gap: 36px;
+            animation-duration: 28s;
+        }
+        .logo-item img {
+            max-height: none;
+            max-width: 140px;
+        }
+    }
+</style>

@@ -1,0 +1,19 @@
+{
+    "$schema": "./node_modules/wrangler/config-schema.json",
+    "name": "absmach",
+    "compatibility_date": "2026-01-14",
+    "pages_build_output_dir": "./dist",
+    "compatibility_flags": [
+        "nodejs_compat"
+    ],
+    "observability": {
+        "enabled": true
+    },
+    "vars": {
+        "TEAM_CONTACT_EMAIL": "info@absmach.eu",
+        "MAIL_FROM_EMAIL": "noreply@absmach.eu",
+        "SMTP_HOST": "ssl0.ovh.net",
+        "SMTP_PORT": "465",
+        "SMTP_SECURE": "true"
+    }
+}

@@ -1,0 +1,110 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import HeroBig from "../components/HeroBig.astro";
+import Section from "../components/Section.astro";
+import ProductCard from "../components/ProductCard.astro";
+import FinalCTA from "../components/FinalCTA.astro";
+---
+
+<BaseLayout
+  title="Products | Abstract Machines"
+  description="Open-source software and custom hardware for building secure, distributed systems."
+>
+  <Header />
+  <main>
+    <HeroBig
+      title="Complete Infrastructure Stack"
+      subtitle="Open-source software and custom hardware for building secure, distributed systems"
+      backgroundClass="hero-grid"
+    />
+
+    <Section
+      title="Software"
+      subtitle="Production-ready platforms for IoT and edge computing"
+      id="products"
+    >
+      <div class="grid gap-6 md:grid-cols-2">
+        <ProductCard
+          featured
+          kicker="Magistrala"
+          title="Secure IoT Platform"
+          description="Secure and open source IoT platform for device management, identity and access control, enabling reliable data flows across cloud and edge using MQTT and CoAP."
+          ctaLabel="Explore Magistrala"
+          href="https://magistrala.absmach.eu"
+          logoSrc="/img/logos/Magistrala_logo_web_4_btb.png"
+          logoAlt="Magistrala logo"
+          logoLoading="eager"
+          logoClass="dark:invert "
+        />
+        <ProductCard
+          kicker="Propeller"
+          title="WebAssembly Orchestrator & IoT Rule Engine"
+          description="Serverless WebAssembly orchestration platform for secure IoT workloads, running across cloud, edge devices and microcontrollers."
+          ctaLabel="Learn more"
+          href="https://propeller.absmach.eu"
+          logoSrc="/img/logos/Propeller_logo_web_4_btw.png"
+          logoAlt="Propeller logo"
+          logoLoading="eager"
+          logoClass="dark:invert "
+        />
+        <ProductCard
+          kicker="FluxMQ"
+          title="FluxMQ - Distributed Message Broker"
+          description="FluxMQ is a durable message broker for event-driven systems, built for low-latency routing across cloud and edge."
+          ctaLabel="Learn more"
+          href="https://fluxmq.absmach.eu"
+        >
+          <span
+            slot="logo"
+            class="text-flux-blue font-fluxmq-logo text-3xl font-bold"
+            >Flux</span
+          >
+          <span
+            slot="logo"
+            class="text-flux-orange font-fluxmq-logo text-3xl font-bold"
+            >MQ</span
+          >
+        </ProductCard>
+      </div>
+    </Section>
+
+    <Section
+      title="Hardware"
+      subtitle="RISC-V gateways for edge deployment"
+      id="hardware"
+    >
+      <div class="grid gap-6 md:grid-cols-2">
+        <ProductCard
+          kicker="S0 Gateway"
+          title="S0 Gateway"
+          description="Low-power RISC-V gateway designed for lightweight, distributed edge deployments."
+          ctaLabel="Learn more"
+          href="https://hardware.absmach.eu"
+          logoSrc="/img/s0.png"
+          logoAlt="S0 logo"
+          logoClass="!h-full !w-full !max-w-full !object-contain mx-auto"
+        />
+        <ProductCard
+          kicker="S1 Gateway"
+          title="S1 Gateway"
+          description="Industrial RISC-V gateway built for reliable edge deployments in harsh environments."
+          ctaLabel="Learn more"
+          href="https://hardware.absmach.eu"
+          logoSrc="/img/s1.png"
+          logoAlt="S1 logo"
+          logoClass="!h-full !w-full !max-w-full !object-contain mx-auto"
+        />
+      </div>
+    </Section>
+
+    <FinalCTA
+      title="Need Custom Solutions?"
+      subtitle="We provide tailored implementations, integrations, and managed services"
+      primary={{ label: "Get in Touch", href: "/contact/", external: false }}
+      secondary={null}
+    />
+  </main>
+  <Footer />
+</BaseLayout>

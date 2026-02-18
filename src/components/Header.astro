@@ -1,0 +1,373 @@
+---
+import { Image } from "astro:assets";
+
+const navItems = [
+  { label: "Products", href: "/products", external: false },
+  { label: "Solutions", href: "/solutions", external: false },
+  { label: "Services", href: "/services", external: false },
+  { label: "Projects", href: "/projects", external: false },
+  { label: "Company", href: "/company", external: false },
+  { label: "Careers", href: "/careers", external: false },
+  { label: "Blog", href: "/blog", external: false },
+  { label: "Contact Us", href: "/contact", external: false },
+];
+---
+
+<header class="sticky top-4 z-50 px-4 sm:px-6">
+  <div
+    class="mx-auto w-full max-w-7xl
+           isolate rounded-3xl
+           site-header-glass
+           bg-white/10
+           backdrop-blur-3xl backdrop-saturate-150
+           border border-white/30
+           shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_12px_32px_rgba(0,0,0,0.25)]"
+  >
+    <!-- <div
+      class="mx-auto w-full max-w-6xl isolate rounded-2xl
+    bg-gradient-to-b from-white/70 to-white/40 backdrop-blur-md border
+    border-black/10 shadow-[0_10px_30px_rgba(0,0,0,0.12)]
+    dark:bg-slate-950/55 dark:backdrop-brightness-50
+    dark:backdrop-saturate-100 dark:border-white/10
+    dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)] dark:[background-image:none]"
+    > -->
+    <nav
+      class="flex items-center justify-between py-3 px-4 sm:py-4 sm:px-6"
+      aria-label="Primary"
+    >
+      <a href="/" class="flex items-center gap-3 text-primary font-semibold">
+        <Image
+          src="/img/logos/abstract-machines_logo_landscape-black.png"
+          alt="Abstract Machines"
+          width={249}
+          height={30}
+          priority
+          class="header-logo block h-auto w-auto max-h-[30px] max-w-[min(250px,55vw)] object-contain"
+        />
+      </a>
+      <button
+        type="button"
+        class="nav-pill inline-flex flex-shrink-0 items-center justify-center lg:hidden"
+        aria-label="Open menu"
+        aria-controls="site-menu"
+        aria-expanded="false"
+        data-mobile-menu-open
+      >
+        <svg
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+      <div class="hidden items-center gap-6 lg:flex">
+        <ul class="site-header-links flex items-center gap-4 text-sm xl:gap-6 xl:text-base">
+          {
+            navItems.map((item) => (
+              <li>
+                <a
+                  class="nav-link whitespace-nowrap"
+                  href={item.href}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a
+              href="https://github.com/absmach"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Abstract Machines on GitHub"
+              class="github-link"
+            >
+              <svg
+                fill="currentColor"
+                fill-rule="evenodd"
+                height="1em"
+                style="flex:none;line-height:1"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Abstract Machines on GitHub</title>
+                <path
+                  d="M12 0c6.63 0 12 5.276 12 11.79-.001 5.067-3.29 9.567-8.175 11.187-.6.118-.825-.25-.825-.56 0-.398.015-1.665.015-3.242 0-1.105-.375-1.813-.81-2.181 2.67-.295 5.475-1.297 5.475-5.822 0-1.297-.465-2.344-1.23-3.169.12-.295.54-1.503-.12-3.125 0 0-1.005-.324-3.3 1.209a11.32 11.32 0 00-3-.398c-1.02 0-2.04.133-3 .398-2.295-1.518-3.3-1.209-3.3-1.209-.66 1.622-.24 2.83-.12 3.125-.765.825-1.23 1.887-1.23 3.169 0 4.51 2.79 5.527 5.46 5.822-.345.294-.66.81-.765 1.577-.69.31-2.415.81-3.495-.973-.225-.354-.9-1.223-1.845-1.209-1.005.015-.405.56.015.781.51.28 1.095 1.327 1.23 1.666.24.663 1.02 1.93 4.035 1.385 0 .988.015 1.916.015 2.196 0 .31-.225.664-.825.56C3.303 21.374-.003 16.867 0 11.791 0 5.276 5.37 0 12 0z"
+                >
+                </path>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div
+  id="site-menu"
+  class="fixed inset-0 z-[70] hidden lg:hidden"
+  aria-hidden="true"
+  data-mobile-menu
+>
+  <div
+    class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-200 motion-reduce:transition-none"
+    data-mobile-menu-overlay
+    data-mobile-menu-close
+  >
+  </div>
+  <aside
+    class="absolute left-0 top-0 h-full w-[min(20rem,85vw)] rounded-r-3xl overflow-hidden bg-[color:var(--drawer-bg)] backdrop-blur-2xl backdrop-saturate-150 border-r border-white/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_24px_60px_rgba(0,0,0,0.25)] -translate-x-full transition-transform duration-300 ease-out motion-reduce:transition-none"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Site menu"
+    data-mobile-menu-panel
+  >
+    <div
+      class="flex items-center justify-between border-b border-subtle px-4 py-4"
+    >
+      <span class="text-base font-semibold">Menu</span>
+      <button
+        type="button"
+        class="nav-pill inline-flex items-center justify-center"
+        aria-label="Close menu"
+        data-mobile-menu-close
+      >
+        <svg
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
+    <nav class="px-4 py-4">
+      <ul class="space-y-1">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                class="block rounded-xl px-4 py-3 text-primary hover:bg-[color:var(--surface-2)] focus-visible:bg-[color:var(--surface-2)]"
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noopener noreferrer" : undefined}
+                data-mobile-menu-link
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li class="mt-2 border-t border-subtle pt-2">
+          <a
+            class="block rounded-xl px-4 py-3 text-primary hover:bg-[color:var(--surface-2)] focus-visible:bg-[color:var(--surface-2)]"
+            href="https://github.com/absmach"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-mobile-menu-link
+          >
+            GitHub
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+</div>
+
+<style>
+  .site-header-glass {
+    position: relative;
+    overflow: hidden;
+    border-color: color-mix(in srgb, var(--border) 62%, rgba(255, 255, 255, 0.45));
+    background:
+      linear-gradient(
+        140deg,
+        color-mix(in srgb, var(--panel) 74%, rgba(255, 255, 255, 0.22)),
+        color-mix(in srgb, var(--surface) 58%, transparent)
+      );
+    backdrop-filter: blur(18px) saturate(165%) brightness(0.96);
+    -webkit-backdrop-filter: blur(18px) saturate(165%) brightness(0.96);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.18),
+      0 12px 30px rgba(0, 0, 0, 0.24);
+  }
+
+  .site-header-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      linear-gradient(
+        110deg,
+        rgba(255, 255, 255, 0.18),
+        rgba(255, 255, 255, 0) 45%
+      ),
+      radial-gradient(
+        65% 120% at 0% 50%,
+        color-mix(in srgb, var(--accent) 10%, transparent),
+        transparent 70%
+      );
+    opacity: 0.9;
+    z-index: 0;
+  }
+
+  .site-header-glass nav {
+    position: relative;
+    z-index: 1;
+  }
+
+  :root[data-theme="dark"] .site-header-glass {
+    border-color: color-mix(in srgb, var(--border) 58%, rgba(255, 255, 255, 0.32));
+    background:
+      linear-gradient(
+        140deg,
+        color-mix(in srgb, var(--panel) 84%, rgba(255, 255, 255, 0.08)),
+        color-mix(in srgb, var(--surface) 70%, rgba(255, 255, 255, 0.03))
+      );
+    backdrop-filter: blur(18px) saturate(172%) brightness(0.7);
+    -webkit-backdrop-filter: blur(18px) saturate(172%) brightness(0.7);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+      0 16px 34px rgba(0, 0, 0, 0.38);
+  }
+
+  :root[data-theme="dark"] .site-header-glass::before {
+    background:
+      linear-gradient(
+        110deg,
+        rgba(255, 255, 255, 0.11),
+        rgba(255, 255, 255, 0) 45%
+      ),
+      radial-gradient(
+        70% 120% at 0% 50%,
+        color-mix(in srgb, var(--accent) 18%, transparent),
+        transparent 72%
+      );
+  }
+
+  :root[data-theme="dark"] .site-header-links .nav-link {
+    color: color-mix(in srgb, var(--text) 72%, var(--muted));
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  :root[data-theme="dark"] .site-header-links .nav-link:hover,
+  :root[data-theme="dark"] .site-header-links .nav-link:focus {
+    color: color-mix(in srgb, var(--text) 92%, white);
+  }
+
+  :root[data-theme="dark"] .site-header-links .github-link {
+    color: color-mix(in srgb, var(--text) 80%, var(--muted));
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const menu = document.querySelector("[data-mobile-menu]");
+    const openButton = document.querySelector("[data-mobile-menu-open]");
+    if (!menu || !openButton) return;
+
+    const overlay = menu.querySelector("[data-mobile-menu-overlay]");
+    const panel = menu.querySelector("[data-mobile-menu-panel]");
+    const closeButtons = menu.querySelectorAll("[data-mobile-menu-close]");
+    const links = menu.querySelectorAll("[data-mobile-menu-link]");
+
+    let isOpen = false;
+    let lastFocused = null;
+    let previousOverflow = "";
+
+    const setOpen = (nextOpen) => {
+      if (nextOpen === isOpen) return;
+      isOpen = nextOpen;
+
+      if (isOpen) {
+        lastFocused = document.activeElement;
+        previousOverflow = document.documentElement.style.overflow;
+        document.documentElement.style.overflow = "hidden";
+
+        menu.classList.remove("hidden");
+        menu.setAttribute("aria-hidden", "false");
+        openButton.setAttribute("aria-expanded", "true");
+
+        requestAnimationFrame(() => {
+          overlay?.classList.remove("opacity-0");
+          overlay?.classList.add("opacity-100");
+          panel?.classList.remove("-translate-x-full");
+          panel?.classList.add("translate-x-0");
+        });
+
+        const focusTarget = panel?.querySelector(
+          "button, a, [tabindex]:not([tabindex='-1'])",
+        );
+        focusTarget?.focus?.();
+        return;
+      }
+
+      openButton.setAttribute("aria-expanded", "false");
+      menu.setAttribute("aria-hidden", "true");
+      document.documentElement.style.overflow = previousOverflow;
+
+      overlay?.classList.remove("opacity-100");
+      overlay?.classList.add("opacity-0");
+      panel?.classList.remove("translate-x-0");
+      panel?.classList.add("-translate-x-full");
+
+      const finish = () => {
+        menu.classList.add("hidden");
+        if (lastFocused && typeof lastFocused.focus === "function") {
+          lastFocused.focus();
+        } else {
+          openButton.focus();
+        }
+      };
+
+      if (!panel) return finish();
+
+      const fallback = window.setTimeout(finish, 350);
+      panel.addEventListener(
+        "transitionend",
+        () => {
+          window.clearTimeout(fallback);
+          finish();
+        },
+        { once: true },
+      );
+    };
+
+    openButton.addEventListener("click", () => setOpen(true));
+    closeButtons.forEach((button) =>
+      button.addEventListener("click", () => setOpen(false)),
+    );
+    links.forEach((link) =>
+      link.addEventListener("click", () => setOpen(false)),
+    );
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setOpen(false);
+    });
+
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const handleChange = (event) => {
+      if (event.matches) setOpen(false);
+    };
+    if (mq.addEventListener) mq.addEventListener("change", handleChange);
+    else if (mq.addListener) mq.addListener(handleChange);
+  })();
+</script>

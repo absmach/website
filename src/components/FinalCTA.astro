@@ -1,0 +1,46 @@
+---
+type CtaLink = { label: string; href: string; external?: boolean };
+
+const {
+  title = "Build secure cloud–edge systems with us.",
+  subtitle = "Work with us to design a solution that fits your infrastructure.",
+  primary = { label: "Contact Us", href: "/contact/", external: false },
+  secondary = { label: "Explore Products", href: "#products", external: false },
+} = Astro.props as {
+  title?: string;
+  subtitle?: string;
+  primary?: CtaLink;
+  secondary?: CtaLink | null;
+};
+---
+
+<section class="my-10 flex items-center justify-center py-10">
+  <div class="mx-auto max-w-4xl px-6 text-center">
+    <h2 class="text-4xl font-semibold leading-tight md:text-6xl">{title}</h2>
+
+    {subtitle && <p class="mt-6 text-lg text-muted md:text-xl">{subtitle}</p>}
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-6">
+      {primary && (
+        <a
+          class="button-primary px-8 py-4 text-lg"
+          href={primary.href}
+          target={primary.external ? "_blank" : undefined}
+          rel={primary.external ? "noopener noreferrer" : undefined}
+        >
+          {primary.label}
+        </a>
+      )}
+      {secondary && (
+        <a
+          class="button-secondary px-8 py-4 text-lg"
+          href={secondary.href}
+          target={secondary.external ? "_blank" : undefined}
+          rel={secondary.external ? "noopener noreferrer" : undefined}
+        >
+          {secondary.label}
+        </a>
+      )}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import HeroBig from "../components/HeroBig.astro";
+import ProductsPreview from "../components/ProductsPreview.astro";
+import ProjectsPreview from "../components/ProjectsPreview.astro";
+import FinalCTA from "../components/FinalCTA.astro";
+import PartnersCarousel from "../components/PartnersCarousel.astro";
+---
+
+<BaseLayout
+  title="Abstract Machines | Secure Event-Driven Connectivity"
+  description="Secure, open-source infrastructure for distributed cloud and edge systems."
+>
+  <Header />
+  <main>
+    <HeroBig
+      title="Secure Event-Driven Connectivity, Everywhere"
+      subtitle="Builds secure, open-source infrastructure for distributed cloud and edge systems—combining Magistrala with messaging, orchestration, and gateway technologies."
+      backgroundClass="hero-grid"
+      primary={{
+        label: "Explore Products",
+        href: "#products",
+        external: false,
+      }}
+      secondary={{
+        label: "Get Started",
+        href: "/contact/",
+        external: false,
+      }}
+    >
+      <PartnersCarousel />
+    </HeroBig>
+    <ProductsPreview />
+    <ProjectsPreview />
+    <FinalCTA />
+  </main>
+  <Footer />
+</BaseLayout>
