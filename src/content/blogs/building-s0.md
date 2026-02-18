@@ -94,7 +94,7 @@ The issue? SPI domain and SD card domain use different pin naming conventions an
 
 The takeaway: Don’t rely on “looks right” when dealing with protocol conversions. Verify with datasheets, reference designs, and if possible, official application notes. SPI-to-SD interfacing has specific requirements that must be met.
 
-### Challenge #6: The Power Circuit Journey
+## Challenge #6: The Power Circuit Journey
 
 This challenge taught us perhaps the most important lesson of the entire project. On the Baseboard, we designed what we thought was a clever overvoltage protection circuit using a MOSFET. We were proud of the design — it was elegant, compact, and theoretically sound.
 
