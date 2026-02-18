@@ -4,7 +4,7 @@ import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://www.absmach.eu",
+  site: "https://absmach.eu",
   output: "static",
   integrations: [
     tailwind(),

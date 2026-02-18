@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 
 export const prerender = true;
 
-const DEFAULT_SITE = "https://www.absmach.eu";
+const DEFAULT_SITE = "https://absmach.eu";
 
 export async function GET(context: APIContext) {
   const posts = await getCollection("blogs", ({ data }) => !data.draft);
