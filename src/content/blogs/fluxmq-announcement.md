@@ -9,7 +9,7 @@ author:
 coverImage: "/img/blogs/fluxmq-announcement/homepage.png"
 ogImage:
   url: "/img/blogs/fluxmq-announcement/homepage.png"
-tags: 
+tags:
   - "FluxMQ"
   - "Messaging"
   - "MQTT"
@@ -22,14 +22,14 @@ tags:
 category: announcement
 featured: false
 ---
+
 ## Introducing FluxMQ
 
 We’ve been working on the open-source IoT platform [Magistrala](https://magistrala.abmach.eu) for well over a decade. What began as a passion project by a small group of enthusiasts has grown into one of the most widely used open-source IoT platforms in the world. Along the way, our architecture evolved significantly. Eventually, we extracted its core into a more general-purpose, event-driven platform for distributed systems called [SuperMQ](https://github.com/absmach/supermq).
 
-
 Throughout that journey, one component remained absolutely central: **the message broker**.
 
-For years, we relied on existing brokers as the backbone of our architecture, and they served us well. But as our systems grew more complex — spanning multiple protocols, deployment models, and persistence requirements — it became clear that the broker was no longer just an interchangeable dependency. It was *the core*.
+For years, we relied on existing brokers as the backbone of our architecture, and they served us well. But as our systems grew more complex — spanning multiple protocols, deployment models, and persistence requirements — it became clear that the broker was no longer just an interchangeable dependency. It was _the core_.
 
 That realization led us to start a new project.
 
@@ -62,9 +62,11 @@ FluxMQ is **actively under development**. Some features are still evolving, some
 ---
 
 ## Key Characteristics
+
 ### 🔌 Multi-Protocol Support
 
 FluxMQ supports multiple protocols out of the box, including:
+
 - MQTT v3.1.1 and v5
 - AMQP
 - HTTP
@@ -76,6 +78,7 @@ FluxMQ is built as a **collection of protocol-specific brokers that share a comm
 ### 📜 Event Logs and Persistence
 
 Messages can be stored as ordered event logs, enabling:
+
 - Message replay
 - Late-joining consumers
 - Debugging and audit trails
@@ -113,6 +116,7 @@ So why build another one?
 Because our requirements did not align with what existing brokers offered.
 
 We needed:
+
 - MQTT as a first-class citizen, not a plugin or compatibility layer
 - Consistent semantics across multiple protocols
 - Native support for event logs and message persistence
@@ -128,6 +132,7 @@ Most teams end up running multiple brokers: one for MQTT, another for AMQP, mayb
 FluxMQ consolidates this into **one broker, multiple protocols, optional persistence** — without sacrificing performance or flexibility.
 
 **The result:**
+
 - Fewer moving parts in production
 - One system to monitor, secure, and scale
 - Native MQTT support without protocol translation overhead
@@ -143,6 +148,7 @@ This post marks the beginning of the FluxMQ journey.
 FluxMQ is **open source and actively developed**. We're building it in public, and community feedback shapes our roadmap.
 
 **Start here:**
+
 - 🌐 **Website:** https://fluxmq.absmach.eu
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
 - 📘 **Documentation:** https://fluxmq.absmach.eu/docs
@@ -151,6 +157,7 @@ FluxMQ is **open source and actively developed**. We're building it in public, a
 ## What’s Next?
 
 This announcement is just the beginning. Upcoming posts will dive deeper into:
+
 - Why we built FluxMQ (the full story)
 - Architecture deep-dive
 - Protocol bridging and persistence internals

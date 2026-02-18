@@ -9,7 +9,7 @@ author:
 coverImage: "/img/blogs/fluxmq-motivation/homepage.jpg"
 ogImage:
   url: "/img/blogs/fluxmq-motivation/homepage.jpg"
-tags: 
+tags:
   - "FluxMQ"
   - "Messaging"
   - "MQTT"
@@ -42,9 +42,9 @@ FluxMQ is not an experiment, a toy, or a “because we can” project. It is the
 
 As mentioned in the [announcement post](https://www.absmach.eu/blog/fluxmq-announcement/), FluxMQ grew out of our work on [SuperMQ](https://github.com/absmach/supermq), a core for event-driven distributed systems that itself evolved from the IoT platform [Magistrala](https://magistrala.abmach.eu).
 
-In most systems, messaging is treated as *plumbing* — something you wire up and forget about.
+In most systems, messaging is treated as _plumbing_ — something you wire up and forget about.
 In our case, messaging is **the product**.
-For us, routing, protocol translation, access control, persistence, replay, fan-out, and backpressure are not _peripheral concerns_; they are the system. That distinction matters a lot when choosing (or building) a broker. For a long time, we successfully relied on existing brokers — most notably NATS — and we still consider them excellent tools. But as our requirements evolved, we increasingly found ourselves building *around* the broker instead of *with* it.
+For us, routing, protocol translation, access control, persistence, replay, fan-out, and backpressure are not _peripheral concerns_; they are the system. That distinction matters a lot when choosing (or building) a broker. For a long time, we successfully relied on existing brokers — most notably NATS — and we still consider them excellent tools. But as our requirements evolved, we increasingly found ourselves building _around_ the broker instead of _with_ it.
 
 ---
 
@@ -61,10 +61,11 @@ Using an external broker means:
 This is often a perfectly reasonable trade-off — until messaging becomes your core value proposition.
 
 In our case:
+
 - we do not control the roadmap
 - we do not control architectural decisions
 - we do not control long-term licensing risk (What if the broker license changes?)
-- and we cannot easily move functionality *into* the broker where it naturally belongs
+- and we cannot easily move functionality _into_ the broker where it naturally belongs
 
 Building and maintaining a deep integration or a long-lived fork would require the same level of effort and risk as building a purpose-built broker — without the benefits of ownership or architectural freedom.
 
@@ -92,19 +93,20 @@ We have built and operated such systems. They work — but they are expensive to
 FluxMQ takes a different approach:  
 **MQTT is the first-class citizen**, not just an edge protocol.
 
-Other protocols are mapped *into* this model through well-defined front-ends, rather than forcing MQTT traffic through abstractions that were never designed for MQTT in the first place.
+Other protocols are mapped _into_ this model through well-defined front-ends, rather than forcing MQTT traffic through abstractions that were never designed for MQTT in the first place.
 
 At the same time, **MQTT is not suitable for every messaging pattern**.
 MQTT’s consumer model is intentionally simple: topic-based subscriptions with limited delivery semantics. This simplicity is a strength for IoT workloads, but it becomes a limitation for use cases that require:
+
 - stronger delivery semantics (acks/settlement/transactions), idempotent processing patterns, and better consumer control)
 - richer consumer interaction with the broker
 - explicit acknowledgements, settlement, or transactional flows
 - advanced filtering or message selection beyond topic hierarchies
- 
+
 For these scenarios, FluxMQ introduces support for **AMQP**.
 AMQP complements MQTT by providing a more expressive consumer and delivery model, better suited for internal service-to-service communication, work queues, and advanced processing pipelines. Importantly, AMQP support in FluxMQ is not an alternative to MQTT, but an extension of the same messaging core, sharing routing, persistence, and operational semantics.
 
-By treating **MQTT and AMQP as peer**, standards-based protocols — each used where it makes architectural sense — FluxMQ avoids inventing artificial semantics or overloading MQTT with special topics to emulate features it was never designed to provide. That said, FluxMQ *does* make deliberate use of a few special topics. An engineering compromise we accepted since MQTT spec is very generous towards special reserved topics, even suggests them as the implementation tips.
+By treating **MQTT and AMQP as peer**, standards-based protocols — each used where it makes architectural sense — FluxMQ avoids inventing artificial semantics or overloading MQTT with special topics to emulate features it was never designed to provide. That said, FluxMQ _does_ make deliberate use of a few special topics. An engineering compromise we accepted since MQTT spec is very generous towards special reserved topics, even suggests them as the implementation tips.
 
 To avoid protocol collisions and to preserve long-term extensibility, FluxMQ does not rely on a single shared messaging engine with multiple protocol adapters layered on top.
 Instead, each supported protocol is implemented _independently_, with its own native semantics and expectations. These protocol implementations are connected through an **integration layer**, which we refer to internally as a `queue`. This layer is responsible for interoperability, message flow, and persistence, without forcing one protocol’s semantics onto another.
@@ -147,8 +149,9 @@ Where things go wrong is when a broker tries to force a single abstraction to co
 - routing is relatively static and simple
 
 Trying to support all three models equally — on the same data — usually results in a system that is complex, opaque, and difficult to operate.
-FluxMQ is explicitly designed to **acknowledge these differences**, not erase them. The goal is not to be everything to everyone, but to support *well-defined use cases* with explicit, visible trade-offs.
+FluxMQ is explicitly designed to **acknowledge these differences**, not erase them. The goal is not to be everything to everyone, but to support _well-defined use cases_ with explicit, visible trade-offs.
 Concretely, FluxMQ is designed around:
+
 - IoT and edge messaging (MQTT-first, high fan-out, lossy by design)
 - internal service-to-service messaging and work queues (AMQP, explicit delivery semantics)
 - persistent event streams with replay and inspection (log-oriented storage)
@@ -173,7 +176,7 @@ We’ve done that too. The problem is not that existing tools are bad. The probl
 
 FluxMQ is not meant to replace Kafka, NATS, or RabbitMQ in their natural domains.
 Running multiple brokers, each with its own scaling, persistence, and operational model, introduces cost and complexity that compounds over time.
-FluxMQ is an attempt to *reduce* that complexity by collapsing the architecture around a single, well-defined messaging core. In the next blog post, we will talk about that and why our naive initial approach did not work.
+FluxMQ is an attempt to _reduce_ that complexity by collapsing the architecture around a single, well-defined messaging core. In the next blog post, we will talk about that and why our naive initial approach did not work.
 We will also talk about protocol standards and challenges in interoperability and compromises and design decisions anyone who writes the broker needs to make.
 
 ---
@@ -186,8 +189,8 @@ We do it because:
 - we gain full control over a critical component
 - we can design for our real-world use cases
 - we can simplify deployment and operation
-- we can build services and tooling *around* the broker instead of fighting it
-- we can build features we think belong to the broker *in* the broker, rather than *around* it
+- we can build services and tooling _around_ the broker instead of fighting it
+- we can build features we think belong to the broker _in_ the broker, rather than _around_ it
 
 Our long-term business model is centered around **services, support, and expertise**, not locking core features behind a paywall.
 _Extensibility exists to enable customization and experimentation_, not to fragment the ecosystem.
@@ -198,7 +201,7 @@ _Extensibility exists to enable customization and experimentation_, not to fragm
 
 FluxMQ is in active development.
 
-- Some design decisions will change. 
+- Some design decisions will change.
 - Some APIs will evolve.
 - Some early implementations will be replaced.
 - **Some statements from the README are goals, not achievements.**
@@ -212,7 +215,7 @@ We use AI tools early on, so expect some slop, rapid iterations and rough edges.
 
 ## What’s Next?
 
-In the next post, we’ll move from *why* to *how*.
+In the next post, we’ll move from _why_ to _how_.
 
 We’ll outline:
 
