@@ -37,10 +37,22 @@ Magistrala connects IoT devices to provide instant visibility into any trackable
 - [Solution Structure: Tracking Things](#solution-structure-tracking-things)
   - [How It Works](#how-it-works)
   - [Key Capabilities](#key-capabilities)
+- [Tracking Demo: Fleet Tracking in Action](#tracking-demo-fleet-tracking-in-action)
+  - [Step 1: Create Fleet Channel](#step-1-create-fleet-channel)
+  - [Step 2: Create Vehicle Clients](#step-2-create-vehicle-clients)
+  - [Step 3: Connect Clients to Channel](#step-3-connect-clients-to-channel)
+  - [Step 4: Configure IoT Simulator](#step-4-configure-iot-simulator)
+  - [Step 5: Set Up Rules Engine](#step-5-set-up-rules-engine)
+  - [Step 6: Start Simulation](#step-6-start-simulation)
+  - [Step 7: Build Real-Time Dashboards](#step-7-build-real-time-dashboards)
+  - [Step 8: Generate Reports](#step-8-generate-reports)
 - [Use Cases in Action](#use-cases-in-action)
   - [Logistics & Shipment Tracking](#logistics--shipment-tracking)
   - [Fleet Management](#fleet-management)
-- [Industry Applications](#industry-applications)
+- [Other Applications in Tracking Assets](#other-applications-in-tracking-assets)
+- [Why Magistrala](#why-magistrala)
+- [Why Choose Magistrala Over Other Platforms](#why-choose-magistrala-over-other-platforms)
+- [Start Tracking Today](#start-tracking-today)
 - [Why Magistrala](#why-magistrala)
 - [Why Choose Magistrala Over Other Platforms](#why-choose-magistrala-over-other-platforms)
 - [Start Tracking Today](#start-tracking-today)
@@ -73,6 +85,161 @@ Building an asset tracking solution with Magistrala treats all valuable items—
 
 ---
 
+## Tracking Demo: Fleet Tracking in Action
+
+Let's walk through a practical example of tracking two delivery vans in real-time. This guide demonstrates how to set up the entire solution from creating digital assets to visualizing live telemetry data.
+
+### Step 1: Create Fleet Channel
+
+First, create a Channel to represent your fleet. Channels group related devices and their data streams together.
+
+In the Magistrala platform, navigate to Channels and create a new channel called `fleet_channel`. This will serve as the communication hub for all your vehicles.
+
+![Fleet Channel](../../img/blogs/tracking-usecase/fleet_channel.png)
+
+### Step 2: Create Vehicle Clients
+
+Next, create Clients (digital twins) for each vehicle. Each Client has unique credentials that authenticate the physical device.
+
+Create two clients:
+- **van_001** - First delivery van
+- **van_002** - Second delivery van
+
+Each client is assigned a unique ID and secret (password) that the physical IoT tracker will use to authenticate.
+
+![Fleet Clients](../../img/blogs/tracking-usecase/fleet_clients.png)
+
+### Step 3: Connect Clients to Channel
+
+Connect both van clients to the fleet channel. This authorization allows the vehicles to publish telemetry data to the channel.
+
+![Connect Clients to Channel](../../img/blogs/tracking-usecase/connect_clients_channels.png)
+
+### Step 4: Configure IoT Simulator
+
+Now configure the IoT device emulator to simulate real GPS trackers sending data from both vans. Each simulator instance represents a physical tracking device installed in a vehicle.
+
+**Configuration settings:**
+- **Broker URL**: `messaging.magistrala.absmach.eu`
+- **Username**: Client ID from Magistrala
+- **Password**: Client secret from Magistrala
+- **Message Format**: SenML (Sensor Measurement Lists)
+- **Topic Pattern**: `m/{{domain}}/c/{{channelid}}`
+- **Data Points**: GPS coordinates, speed, temperature, humidity, fuel consumption
+
+Configure two simulator instances—one for each van.
+
+![IoT Device Emulator](../../img/blogs/tracking-usecase/iot_device_emulator.png)
+
+### Step 5: Set Up Rules Engine
+
+Create two rules to process incoming vehicle telemetry:
+
+**Rule 1: Save Telemetry Data**
+
+This rule processes SenML-formatted messages and stores them in the database for historical analysis and reporting.
+
+![Rule to Save SenML Data](../../img/blogs/tracking-usecase/rule_to_save_senml.png)
+
+**Rule 2: Generate Alarms**
+
+This rule monitors vehicle data and creates alarms when thresholds are exceeded (e.g., high temperature, low fuel, excessive speed).
+
+![Rule to Save Alarms](../../img/blogs/tracking-usecase/rule_to_save_alarm.png)
+
+Both rules are now active and ready to process data:
+
+![Created Rules](../../img/blogs/tracking-usecase/create_2_rules.png)
+
+### Step 6: Start Simulation
+
+Start both IoT simulator instances. The vans immediately begin transmitting telemetry data:
+- GPS coordinates updating in real-time
+- Speed measurements
+- Temperature and humidity readings
+- Fuel consumption metrics
+
+Messages flow from the simulators through MQTT to Magistrala, where the Rules Engine processes and stores them.
+
+![Fleet Saved Messages](../../img/blogs/tracking-usecase/fleet_saved_messages.png)
+
+Your fleet tracking system is now operational! The platform is receiving, processing, and storing real-time data from both vehicles.
+
+### Step 7: Build Real-Time Dashboards
+
+With data flowing into the platform, create interactive dashboards to visualize fleet operations in real-time. Magistrala provides multiple widget types for comprehensive monitoring.
+
+**Available Dashboard Widgets:**
+
+Choose from various widget types to build your custom dashboard:
+
+![Available Dashboard Widgets](../../img/blogs/tracking-usecase/available_dashboard_widgets.png)
+
+**Create Route Map Widget:**
+
+Start by adding a map widget to visualize vehicle locations and routes in real-time:
+
+![Create Dashboard Route Map](../../img/blogs/tracking-usecase/create_dashboard_route_map.png)
+
+**Add Alarm Table:**
+
+Create an alarm table widget to display critical alerts when thresholds are exceeded—fuel consumption limits, speed violations, temperature extremes, and other important events:
+
+![Create Dashboard Alarm Table](../../img/blogs/tracking-usecase/create_dashbaord_alarm_table.png)
+
+**Complete Dashboard View:**
+
+Your operational dashboard now displays:
+- **Route Map**: Real-time vehicle locations with movement trails
+- **Alarm Table**: Active alerts for fuel consumption, speed limits, temperature thresholds
+- Take immediate action based on alerts—dispatch maintenance, contact drivers, reroute vehicles
+
+![Route Map and Alarm Table](../../img/blogs/tracking-usecase/route_map_alarm_table.png)
+
+**Add Performance Metrics:**
+
+Enrich your dashboard with additional widgets:
+- **Line Graphs**: Track humidity and speed trends over time
+- **Value Cards**: Monitor current fuel consumption levels
+- **Gauges**: Display speed with visual indicators for safe/warning/danger zones
+
+![Dashboard Line, Bar, and Value Cards](../../img/blogs/tracking-usecase/dashboard_line_bar_value_card.png)
+
+**Temperature Monitoring:**
+
+Add gauge widgets to monitor critical environmental conditions:
+
+![Dashboard Temperature Gauge](../../img/blogs/tracking-usecase/dashboard_temperature_gauge.png)
+
+With these dashboards, you have complete visibility into your fleet operations, enabling data-driven decisions and rapid response to issues.
+
+### Step 8: Generate Reports
+
+Transform raw telemetry data into actionable business reports. Use the reporting engine to analyze fleet performance, optimize operations, and support billing.
+
+**Create Custom Reports:**
+
+Build reports for specific business needs—fuel consumption analysis, route efficiency, maintenance schedules, or usage-based billing:
+
+![Create Fuel Consumption Report](../../img/blogs/tracking-usecase/create_fuel_consumption_report.png)
+
+**Sample Generated Reports:**
+
+Automated reports provide insights across your fleet:
+- Fuel consumption by vehicle and time period
+- Speed compliance and safety metrics  
+- Temperature exposure for sensitive cargo
+- Route efficiency and delivery performance
+- Usage-based billing calculations
+
+![Sample Reports](../../img/blogs/tracking-usecase/reports_sample.png)
+
+Reports can be scheduled for automatic generation and delivered via email, supporting operational reviews, customer billing, and compliance documentation.
+
+Your complete fleet tracking solution is now operational—from device connectivity through data visualization to business reporting.
+
+---
+
 ## Use Cases in Action
 
 ### Logistics & Shipment Tracking
@@ -98,27 +265,18 @@ Fleet operators need to monitor vehicle health, driver behavior, and operational
 
 ---
 
-## Industry Applications
+## Other Applications in Tracking Assets
 
-**Construction & Heavy Equipment**: Track excavators, bulldozers, cranes across multiple job sites. Monitor equipment location and movement to prevent theft. Optimize utilization by identifying idle machinery that could be reallocated. Automate billing based on actual engine hours rather than manual logs.
+Beyond delivery fleets and logistics, Magistrala's asset tracking capabilities extend across diverse industries:
 
-**Vehicle Leasing**: Enable usage-based leasing models with accurate mileage tracking. Verify contract compliance and monitor vehicle condition throughout the lease period. Analyze driver behavior to reduce insurance costs and improve safety. Optimize routes to reduce fuel consumption and vehicle wear.
-
-**Logistics & Supply Chain**: Monitor shipping containers, trailers, and cargo across global supply chains. Ensure cold-chain compliance for temperature-sensitive goods with continuous monitoring. Verify deliveries with timestamp and location proof. Track assets across multiple carriers and transportation modes.
-
-**Healthcare**: Track medical equipment across hospital departments, clinics, and mobile units. Monitor environmental conditions for sensitive equipment. Ensure compliance with medical device regulations through complete audit trails. Optimize equipment allocation to reduce purchasing costs and improve patient care.
-
-**Car Sharing & Mobility**: Enable seamless mobile app integration for vehicle reservations and unlocking. Implement dynamic pricing based on demand, location, and vehicle type. Manage EV charging stations and battery levels. Track usage patterns to optimize fleet composition and positioning.
-
-**Rental Services**: Monitor tools, equipment, and recreational vehicles rented to customers. Implement usage-based billing that reflects actual utilization rather than fixed rental periods. Prevent theft with instant alerts when assets move outside expected areas. Optimize inventory by understanding demand patterns across locations.
-
-**Industrial Manufacturing**: Track specialized equipment, calibrated instruments, and production tools across facilities. Maintain compliance records for regulated equipment with complete location and usage history. Schedule calibration and maintenance based on actual usage rather than time intervals. Prevent bottlenecks by locating critical tools quickly.
-
-**Insurance Telematics**: Power usage-based insurance programs with accurate driving data. Reward safe driving behavior with lower premiums based on real metrics. Assess risk more accurately by understanding actual vehicle usage patterns. Detect potential fraud with location and behavior verification.
-
-**EV Infrastructure**: Manage charging networks with real-time availability and usage monitoring. Track battery health across EV fleets to optimize replacement schedules. Enable grid optimization by understanding charging patterns and load distribution. Support vehicle-to-grid programs that balance energy demand.
-
-**Public Transportation**: Provide passengers with real-time vehicle tracking and accurate arrival predictions. Optimize routes based on actual traffic patterns and ridership data. Monitor vehicle health to reduce breakdowns and improve service reliability. Improve operational efficiency with data-driven scheduling.
+- **Construction & Heavy Equipment**: Track excavators, bulldozers, and cranes across job sites with theft prevention and automated usage-based billing
+- **Vehicle Leasing**: Monitor mileage, vehicle condition, and driver behavior for usage-based leasing models
+- **Healthcare**: Track medical equipment across departments and facilities with compliance audit trails
+- **Car Sharing & Mobility**: Enable reservations, dynamic pricing, and EV charging management
+- **Rental Services**: Monitor tools and equipment with usage-based billing and theft prevention
+- **Industrial Manufacturing**: Locate specialized equipment and schedule maintenance based on actual usage
+- **Insurance Telematics**: Power usage-based insurance with real driving data and behavior analytics
+- **Public Transportation**: Provide real-time vehicle tracking and arrival predictions for passengers
 
 ---
 

@@ -7,20 +7,20 @@
 
   <title>Asset Tracking with Magistrala - Abstract Machines</title>
   <meta name="title" property="og:title" content="Asset Tracking with Magistrala - Abstract Machines" />
-  <meta name="description" content="Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking, automated geofencing alerts, and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with boundary alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in." />
+  <meta name="description" content="Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in." />
 
   <link rel="canonical" href="https://absmach.eu/blog/tracking-assets-with-magistrala/" />
 
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Abstract Machines" />
   <meta property="og:url" content="https://absmach.eu/blog/tracking-assets-with-magistrala" />
-  <meta name="description" property="og:description" content="Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking, automated geofencing alerts, and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with boundary alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in." />
+  <meta name="description" property="og:description" content="Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in." />
   <meta name="image" property="og:image" content="https://absmach.eu/img/blogs/tracking-usecase/cover_page.png" />
 
   
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Asset Tracking with Magistrala" />
-  <meta name="twitter:description" content="Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking, automated geofencing alerts, and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with boundary alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in." />
+  <meta name="twitter:description" content="Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in." />
   <meta name="twitter:image" content="https://absmach.eu/img/blogs/tracking-usecase/cover_page.png" />
 
 
@@ -36,7 +36,7 @@
           "@type": "Person",
           "name": "Steve Munene"
         },
-        "description": "Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking, automated geofencing alerts, and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with boundary alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in."
+        "description": "Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in."
       }
     </script>
 
@@ -275,7 +275,7 @@
           <div>
             <div class="fw-bold fs-5">Steve Munene</div>
             <div class="text-muted">
-              February 17, 2026 · 6 min read
+              February 17, 2026 · 8 min read
             </div>
           </div>
         </div>
@@ -288,7 +288,7 @@
         <div class="markdown-content"><h1 id="asset-tracking-with-magistrala">Asset Tracking with Magistrala</h1>
 <p>Businesses need real-time visibility into their valuable assets through IoT asset tracking. Delivery trucks navigate city routes, construction equipment shifts between job sites, shipping containers cross oceans, medical devices circulate through hospitals. Without GPS tracking and real-time monitoring, businesses face theft, inefficiency, billing disputes, and customer service failures.</p>
 <p>Traditional asset management relies on manual check-ins, phone calls, and guesswork. Modern fleet management and equipment tracking demand automated IoT monitoring that shows exactly where assets are, how they're being used, and when they need attention.</p>
-<p>Magistrala connects IoT devices to provide instant visibility into any trackable asset. Geofencing alerts you to unauthorized movement. Rules Engine automates actions based on location, usage patterns, or equipment status. All telemetry stores securely for compliance and analytics—whether you're managing logistics fleets, rental equipment, or industrial machinery.</p>
+<p>Magistrala connects IoT devices to provide instant visibility into any trackable asset. Rules Engine automates actions based on location, usage patterns, or equipment status. All telemetry stores securely for compliance and analytics—whether you're managing logistics fleets, rental equipment, or industrial machinery.</p>
 <hr>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ul>
@@ -298,13 +298,28 @@
 <li><a href="#key-capabilities">Key Capabilities</a></li>
 </ul>
 </li>
+<li><a href="#tracking-demo-fleet-tracking-in-action">Tracking Demo: Fleet Tracking in Action</a>
+<ul>
+<li><a href="#step-1-create-fleet-channel">Step 1: Create Fleet Channel</a></li>
+<li><a href="#step-2-create-vehicle-clients">Step 2: Create Vehicle Clients</a></li>
+<li><a href="#step-3-connect-clients-to-channel">Step 3: Connect Clients to Channel</a></li>
+<li><a href="#step-4-configure-iot-simulator">Step 4: Configure IoT Simulator</a></li>
+<li><a href="#step-5-set-up-rules-engine">Step 5: Set Up Rules Engine</a></li>
+<li><a href="#step-6-start-simulation">Step 6: Start Simulation</a></li>
+<li><a href="#step-7-build-real-time-dashboards">Step 7: Build Real-Time Dashboards</a></li>
+<li><a href="#step-8-generate-reports">Step 8: Generate Reports</a></li>
+</ul>
+</li>
 <li><a href="#use-cases-in-action">Use Cases in Action</a>
 <ul>
 <li><a href="#logistics--shipment-tracking">Logistics &amp; Shipment Tracking</a></li>
 <li><a href="#fleet-management">Fleet Management</a></li>
 </ul>
 </li>
-<li><a href="#industry-applications">Industry Applications</a></li>
+<li><a href="#other-applications-in-tracking-assets">Other Applications in Tracking Assets</a></li>
+<li><a href="#why-magistrala">Why Magistrala</a></li>
+<li><a href="#why-choose-magistrala-over-other-platforms">Why Choose Magistrala Over Other Platforms</a></li>
+<li><a href="#start-tracking-today">Start Tracking Today</a></li>
 <li><a href="#why-magistrala">Why Magistrala</a></li>
 <li><a href="#why-choose-magistrala-over-other-platforms">Why Choose Magistrala Over Other Platforms</a></li>
 <li><a href="#start-tracking-today">Start Tracking Today</a></li>
@@ -317,23 +332,122 @@
 <li><strong>Assets equipped with trackers</strong>: GPS trackers, sensors, or OBD-II devices fitted to each asset</li>
 <li><strong>Trackers connect as Clients</strong>: Each device registers in Magistrala with unique credentials</li>
 <li><strong>Clients publish to Channels</strong>: Devices send data to specific <strong>Topics</strong> (location, telemetry, alarms) using MQTT, HTTP, or CoAP</li>
-<li><strong>Rules Engine processes data</strong>: Automated logic monitors topics and triggers actions (geofencing, alerts, calculations)</li>
+<li><strong>Rules Engine processes data</strong>: Automated logic monitors topics and triggers actions (alerts, calculations, automations)</li>
 <li><strong>Users gain insights</strong>: Real-time dashboards, mobile apps, and API integrations deliver actionable intelligence</li>
 </ol>
 <p><img src="../../img/blogs/tracking-usecase/tracking_things.png" alt="Tracking Things Architecture"></p>
 <h3 id="key-capabilities">Key Capabilities</h3>
 <p><strong>Multi-Protocol Connectivity</strong>: Connect devices via MQTT, HTTP, CoAP, WebSocket, LoRa, or OPC-UA. Magistrala handles cellular, Wi-Fi, LoRaWAN, and industrial protocols seamlessly.</p>
-<p><strong>Intelligent Rules Engine</strong>: Automate geofencing, threshold monitoring, usage-based billing calculations, and predictive maintenance—no code changes required.</p>
-<p>Geofencing creates virtual boundaries around physical locations. When assets cross these boundaries, the system automatically triggers alerts—ideal for theft prevention (equipment leaving job sites), compliance (vehicles staying in authorized zones), or safety (detecting entry into restricted areas).</p>
+<p><strong>Intelligent Rules Engine</strong>: Automate threshold monitoring, usage-based billing calculations, and predictive maintenance—no code changes required.</p>
 <p><strong>Real-Time Alarms</strong>: Configure instant alerts for theft, tampering, environmental thresholds, idle time, or maintenance needs. Deliver notifications via email and Slack.</p>
 <p><strong>Enterprise Security</strong>: Mutual TLS authentication, fine-grained access control (ABAC/RBAC), and complete audit logs protect your assets and data.</p>
+<hr>
+<h2 id="tracking-demo-fleet-tracking-in-action">Tracking Demo: Fleet Tracking in Action</h2>
+<p>Let's walk through a practical example of tracking two delivery vans in real-time. This guide demonstrates how to set up the entire solution from creating digital assets to visualizing live telemetry data.</p>
+<h3 id="step-1-create-fleet-channel">Step 1: Create Fleet Channel</h3>
+<p>First, create a Channel to represent your fleet. Channels group related devices and their data streams together.</p>
+<p>In the Magistrala platform, navigate to Channels and create a new channel called <code>fleet_channel</code>. This will serve as the communication hub for all your vehicles.</p>
+<p><img src="../../img/blogs/tracking-usecase/fleet_channel.png" alt="Fleet Channel"></p>
+<h3 id="step-2-create-vehicle-clients">Step 2: Create Vehicle Clients</h3>
+<p>Next, create Clients (digital twins) for each vehicle. Each Client has unique credentials that authenticate the physical device.</p>
+<p>Create two clients:</p>
+<ul>
+<li><strong>van_001</strong> - First delivery van</li>
+<li><strong>van_002</strong> - Second delivery van</li>
+</ul>
+<p>Each client is assigned a unique ID and secret (password) that the physical IoT tracker will use to authenticate.</p>
+<p><img src="../../img/blogs/tracking-usecase/fleet_clients.png" alt="Fleet Clients"></p>
+<h3 id="step-3-connect-clients-to-channel">Step 3: Connect Clients to Channel</h3>
+<p>Connect both van clients to the fleet channel. This authorization allows the vehicles to publish telemetry data to the channel.</p>
+<p><img src="../../img/blogs/tracking-usecase/connect_clients_channels.png" alt="Connect Clients to Channel"></p>
+<h3 id="step-4-configure-iot-simulator">Step 4: Configure IoT Simulator</h3>
+<p>Now configure the IoT device emulator to simulate real GPS trackers sending data from both vans. Each simulator instance represents a physical tracking device installed in a vehicle.</p>
+<p><strong>Configuration settings:</strong></p>
+<ul>
+<li><strong>Broker URL</strong>: <code>messaging.magistrala.absmach.eu</code></li>
+<li><strong>Username</strong>: Client ID from Magistrala</li>
+<li><strong>Password</strong>: Client secret from Magistrala</li>
+<li><strong>Message Format</strong>: SenML (Sensor Measurement Lists)</li>
+<li><strong>Topic Pattern</strong>: <code>m/{{domain}}/c/{{channelid}}</code></li>
+<li><strong>Data Points</strong>: GPS coordinates, speed, temperature, humidity, fuel consumption</li>
+</ul>
+<p>Configure two simulator instances—one for each van.</p>
+<p><img src="../../img/blogs/tracking-usecase/iot_device_emulator.png" alt="IoT Device Emulator"></p>
+<h3 id="step-5-set-up-rules-engine">Step 5: Set Up Rules Engine</h3>
+<p>Create two rules to process incoming vehicle telemetry:</p>
+<p><strong>Rule 1: Save Telemetry Data</strong></p>
+<p>This rule processes SenML-formatted messages and stores them in the database for historical analysis and reporting.</p>
+<p><img src="../../img/blogs/tracking-usecase/rule_to_save_senml.png" alt="Rule to Save SenML Data"></p>
+<p><strong>Rule 2: Generate Alarms</strong></p>
+<p>This rule monitors vehicle data and creates alarms when thresholds are exceeded (e.g., high temperature, low fuel, excessive speed).</p>
+<p><img src="../../img/blogs/tracking-usecase/rule_to_save_alarm.png" alt="Rule to Save Alarms"></p>
+<p>Both rules are now active and ready to process data:</p>
+<p><img src="../../img/blogs/tracking-usecase/create_2_rules.png" alt="Created Rules"></p>
+<h3 id="step-6-start-simulation">Step 6: Start Simulation</h3>
+<p>Start both IoT simulator instances. The vans immediately begin transmitting telemetry data:</p>
+<ul>
+<li>GPS coordinates updating in real-time</li>
+<li>Speed measurements</li>
+<li>Temperature and humidity readings</li>
+<li>Fuel consumption metrics</li>
+</ul>
+<p>Messages flow from the simulators through MQTT to Magistrala, where the Rules Engine processes and stores them.</p>
+<p><img src="../../img/blogs/tracking-usecase/fleet_saved_messages.png" alt="Fleet Saved Messages"></p>
+<p>Your fleet tracking system is now operational! The platform is receiving, processing, and storing real-time data from both vehicles.</p>
+<h3 id="step-7-build-real-time-dashboards">Step 7: Build Real-Time Dashboards</h3>
+<p>With data flowing into the platform, create interactive dashboards to visualize fleet operations in real-time. Magistrala provides multiple widget types for comprehensive monitoring.</p>
+<p><strong>Available Dashboard Widgets:</strong></p>
+<p>Choose from various widget types to build your custom dashboard:</p>
+<p><img src="../../img/blogs/tracking-usecase/available_dashboard_widgets.png" alt="Available Dashboard Widgets"></p>
+<p><strong>Create Route Map Widget:</strong></p>
+<p>Start by adding a map widget to visualize vehicle locations and routes in real-time:</p>
+<p><img src="../../img/blogs/tracking-usecase/create_dashboard_route_map.png" alt="Create Dashboard Route Map"></p>
+<p><strong>Add Alarm Table:</strong></p>
+<p>Create an alarm table widget to display critical alerts when thresholds are exceeded—fuel consumption limits, speed violations, temperature extremes, and other important events:</p>
+<p><img src="../../img/blogs/tracking-usecase/create_dashbaord_alarm_table.png" alt="Create Dashboard Alarm Table"></p>
+<p><strong>Complete Dashboard View:</strong></p>
+<p>Your operational dashboard now displays:</p>
+<ul>
+<li><strong>Route Map</strong>: Real-time vehicle locations with movement trails</li>
+<li><strong>Alarm Table</strong>: Active alerts for fuel consumption, speed limits, temperature thresholds</li>
+<li>Take immediate action based on alerts—dispatch maintenance, contact drivers, reroute vehicles</li>
+</ul>
+<p><img src="../../img/blogs/tracking-usecase/route_map_alarm_table.png" alt="Route Map and Alarm Table"></p>
+<p><strong>Add Performance Metrics:</strong></p>
+<p>Enrich your dashboard with additional widgets:</p>
+<ul>
+<li><strong>Line Graphs</strong>: Track humidity and speed trends over time</li>
+<li><strong>Value Cards</strong>: Monitor current fuel consumption levels</li>
+<li><strong>Gauges</strong>: Display speed with visual indicators for safe/warning/danger zones</li>
+</ul>
+<p><img src="../../img/blogs/tracking-usecase/dashboard_line_bar_value_card.png" alt="Dashboard Line, Bar, and Value Cards"></p>
+<p><strong>Temperature Monitoring:</strong></p>
+<p>Add gauge widgets to monitor critical environmental conditions:</p>
+<p><img src="../../img/blogs/tracking-usecase/dashboard_temperature_gauge.png" alt="Dashboard Temperature Gauge"></p>
+<p>With these dashboards, you have complete visibility into your fleet operations, enabling data-driven decisions and rapid response to issues.</p>
+<h3 id="step-8-generate-reports">Step 8: Generate Reports</h3>
+<p>Transform raw telemetry data into actionable business reports. Use the reporting engine to analyze fleet performance, optimize operations, and support billing.</p>
+<p><strong>Create Custom Reports:</strong></p>
+<p>Build reports for specific business needs—fuel consumption analysis, route efficiency, maintenance schedules, or usage-based billing:</p>
+<p><img src="../../img/blogs/tracking-usecase/create_fuel_consumption_report.png" alt="Create Fuel Consumption Report"></p>
+<p><strong>Sample Generated Reports:</strong></p>
+<p>Automated reports provide insights across your fleet:</p>
+<ul>
+<li>Fuel consumption by vehicle and time period</li>
+<li>Speed compliance and safety metrics</li>
+<li>Temperature exposure for sensitive cargo</li>
+<li>Route efficiency and delivery performance</li>
+<li>Usage-based billing calculations</li>
+</ul>
+<p><img src="../../img/blogs/tracking-usecase/reports_sample.png" alt="Sample Reports"></p>
+<p>Reports can be scheduled for automatic generation and delivered via email, supporting operational reviews, customer billing, and compliance documentation.</p>
+<p>Your complete fleet tracking solution is now operational—from device connectivity through data visualization to business reporting.</p>
 <hr>
 <h2 id="use-cases-in-action">Use Cases in Action</h2>
 <h3 id="logistics--shipment-tracking">Logistics &amp; Shipment Tracking</h3>
 <p>Logistics companies managing hundreds of delivery vehicles and shipments need real-time visibility across their entire fleet. Magistrala with IoT trackers enables:</p>
 <ul>
 <li><strong>Real-time location tracking</strong> of all vehicles and shipments across routes</li>
-<li><strong>Geofence alerts</strong> when vehicles deviate from planned routes or enter restricted areas</li>
 <li><strong>Automated delivery verification</strong> with timestamp and location confirmation</li>
 <li><strong>Route optimization</strong> based on traffic patterns and delivery windows</li>
 <li><strong>Proof of delivery</strong> with location-stamped delivery confirmations</li>
@@ -350,17 +464,18 @@
 <li><strong>Fuel efficiency tracking</strong> identifying wasteful patterns and optimization opportunities</li>
 </ul>
 <hr>
-<h2 id="industry-applications">Industry Applications</h2>
-<p><strong>Construction &amp; Heavy Equipment</strong>: Track excavators, bulldozers, cranes across multiple job sites. Prevent theft with geofence alerts when equipment leaves authorized boundaries. Optimize utilization by identifying idle machinery that could be reallocated. Automate billing based on actual engine hours rather than manual logs.</p>
-<p><strong>Vehicle Leasing</strong>: Enable usage-based leasing models with accurate mileage tracking. Verify contract compliance and monitor vehicle condition throughout the lease period. Analyze driver behavior to reduce insurance costs and improve safety. Optimize routes to reduce fuel consumption and vehicle wear.</p>
-<p><strong>Logistics &amp; Supply Chain</strong>: Monitor shipping containers, trailers, and cargo across global supply chains. Ensure cold-chain compliance for temperature-sensitive goods with continuous monitoring. Verify deliveries with timestamp and location proof. Track assets across multiple carriers and transportation modes.</p>
-<p><strong>Healthcare</strong>: Track medical equipment across hospital departments, clinics, and mobile units. Monitor environmental conditions for sensitive equipment. Ensure compliance with medical device regulations through complete audit trails. Optimize equipment allocation to reduce purchasing costs and improve patient care.</p>
-<p><strong>Car Sharing &amp; Mobility</strong>: Enable seamless mobile app integration for vehicle reservations and unlocking. Implement dynamic pricing based on demand, location, and vehicle type. Manage EV charging stations and battery levels. Track usage patterns to optimize fleet composition and positioning.</p>
-<p><strong>Rental Services</strong>: Monitor tools, equipment, and recreational vehicles rented to customers. Implement usage-based billing that reflects actual utilization rather than fixed rental periods. Prevent theft with instant alerts when assets move outside expected areas. Optimize inventory by understanding demand patterns across locations.</p>
-<p><strong>Industrial Manufacturing</strong>: Track specialized equipment, calibrated instruments, and production tools across facilities. Maintain compliance records for regulated equipment with complete location and usage history. Schedule calibration and maintenance based on actual usage rather than time intervals. Prevent bottlenecks by locating critical tools quickly.</p>
-<p><strong>Insurance Telematics</strong>: Power usage-based insurance programs with accurate driving data. Reward safe driving behavior with lower premiums based on real metrics. Assess risk more accurately by understanding actual vehicle usage patterns. Detect potential fraud with location and behavior verification.</p>
-<p><strong>EV Infrastructure</strong>: Manage charging networks with real-time availability and usage monitoring. Track battery health across EV fleets to optimize replacement schedules. Enable grid optimization by understanding charging patterns and load distribution. Support vehicle-to-grid programs that balance energy demand.</p>
-<p><strong>Public Transportation</strong>: Provide passengers with real-time vehicle tracking and accurate arrival predictions. Optimize routes based on actual traffic patterns and ridership data. Monitor vehicle health to reduce breakdowns and improve service reliability. Improve operational efficiency with data-driven scheduling.</p>
+<h2 id="other-applications-in-tracking-assets">Other Applications in Tracking Assets</h2>
+<p>Beyond delivery fleets and logistics, Magistrala's asset tracking capabilities extend across diverse industries:</p>
+<ul>
+<li><strong>Construction &amp; Heavy Equipment</strong>: Track excavators, bulldozers, and cranes across job sites with theft prevention and automated usage-based billing</li>
+<li><strong>Vehicle Leasing</strong>: Monitor mileage, vehicle condition, and driver behavior for usage-based leasing models</li>
+<li><strong>Healthcare</strong>: Track medical equipment across departments and facilities with compliance audit trails</li>
+<li><strong>Car Sharing &amp; Mobility</strong>: Enable reservations, dynamic pricing, and EV charging management</li>
+<li><strong>Rental Services</strong>: Monitor tools and equipment with usage-based billing and theft prevention</li>
+<li><strong>Industrial Manufacturing</strong>: Locate specialized equipment and schedule maintenance based on actual usage</li>
+<li><strong>Insurance Telematics</strong>: Power usage-based insurance with real driving data and behavior analytics</li>
+<li><strong>Public Transportation</strong>: Provide real-time vehicle tracking and arrival predictions for passengers</li>
+</ul>
 <hr>
 <h2 id="why-magistrala">Why Magistrala</h2>
 <ul>
@@ -382,8 +497,7 @@
 <hr>
 <h2 id="start-tracking-today">Start Tracking Today</h2>
 <p>Ready to transform your asset tracking operations? Our team will help you design and implement a solution tailored to your specific needs.</p>
-<p><strong><a href="mailto:info@absmach.eu">Contact us today for a demo →</a></strong></p>
-<p>Or <a href="https://cloud.magistrala.absmach.eu/en/login">start building with a free trial</a> – no credit card required.</p>
+<p><strong><a href="mailto:info@absmach.eu">Contact us today for a demo</a></strong> or <a href="https://cloud.magistrala.absmach.eu/en/login">start building with a free trial</a> – no credit card required.</p>
 </div>
 
         <div class="mt-5 pt-4 border-top">
@@ -405,8 +519,6 @@
             <span class="badge bg-light text-dark me-2 mb-2 fs-6">GPS Tracking</span>
             
             <span class="badge bg-light text-dark me-2 mb-2 fs-6">Fleet Management</span>
-            
-            <span class="badge bg-light text-dark me-2 mb-2 fs-6">Geofencing</span>
             
             <span class="badge bg-light text-dark me-2 mb-2 fs-6">Rules Engine</span>
             
