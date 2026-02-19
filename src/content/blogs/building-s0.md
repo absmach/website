@@ -2,14 +2,14 @@
 title: "Building the S0: The IoT Gateway of the future"
 slug: "building_the_s0"
 excerpt: "The design journey of the S0 IoT gateway."
-description: "Challenges faced and solutions imlemented during the S0 design"
+description: "Challenges faced and solutions implemented during the S0 design"
 date: "2026-02-06"
 author:
   name: "Kisaka the Jones"
-  picture: "<https://avatars.githubusercontent.com/u/57312311?v=4>"
-coverImage: "/public/img/blogs/building-the-s0/s0.jpg"
+  picture: "<https://avatars.githubusercontent.com/u/85192767?v=4>"
+coverImage: "/public/img/blogs/building-the-s0/s0.png"
 ogImage:
-  url: "/public/img/blogs/building-the-s0/s0.jpg"
+  url: "/public/img/blogs/building-the-s0/s0.png"
 category: blog
 tags:
 
@@ -17,6 +17,7 @@ tags:
 - s0
 - iot gateway
 - pcb design
+- hardware
 
 ---
 
@@ -24,9 +25,9 @@ tags:
 
 The journey of a thousand miles begins with the first step. When we set out to design the S0 gateway board, we had a clear vision: create a comprehensive solution for aggregating smart meter data from both wireless and wired M-Bus meters. What followed was an educational journey through PCB design challenges, debugging sessions, and valuable lessons that shaped not just our board, but our approach to hardware design.
 
-![S0 board](/public/img/blogs/building-the-s0/s0.jpg)
+![S0 board](/public/img/blogs/building-the-s0/s0.png)
 
-![Baseboard](/public/img/blogs/building-the-s0/baseboard.jpg)
+![Baseboard](/public/img/blogs/building-the-s0/baseboard.png)
 
 ## The Vision
 
