@@ -892,16 +892,28 @@ const { target = "#post" } = Astro.props;
 </style>
 
 <style is:global>
-  .ar-sentence {
-    border-radius: 0.35rem;
-    padding: 0 0.12rem;
-    transition: background-color 0.16s ease;
+  .ar-highlight-root {
+    position: relative;
   }
 
-  .ar-sentence.ar-active {
+  .ar-highlight-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .ar-highlight-chip {
+    position: absolute;
+    border-radius: 0.35rem;
     background: color-mix(in srgb, var(--accent) 26%, transparent);
     box-shadow: inset 0 0 0 1px
       color-mix(in srgb, var(--accent) 44%, transparent);
+    transition:
+      top 0.12s ease,
+      left 0.12s ease,
+      width 0.12s ease,
+      height 0.12s ease;
   }
 </style>
 
@@ -937,6 +949,7 @@ const { target = "#post" } = Astro.props;
     let sentences = [];
     let sentenceWordOffsets = [];
     let totalWords = 0;
+    let highlightLayer = null;
 
     let currentSentenceIndex = -1;
     let playheadSentenceIndex = 0;
@@ -1090,6 +1103,133 @@ const { target = "#post" } = Astro.props;
       return root;
     };
 
+    const ensureHighlightLayer = () => {
+      const readingRoot = resolveRoot();
+      if (!readingRoot) return null;
+
+      readingRoot.classList.add("ar-highlight-root");
+
+      if (!highlightLayer || !readingRoot.contains(highlightLayer)) {
+        highlightLayer = document.createElement("div");
+        highlightLayer.className = "ar-highlight-layer";
+        highlightLayer.setAttribute("aria-hidden", "true");
+        readingRoot.prepend(highlightLayer);
+      }
+
+      return highlightLayer;
+    };
+
+    const clearSentenceHighlight = () => {
+      if (highlightLayer) highlightLayer.replaceChildren();
+    };
+
+    const normalizeTextWithMap = (value) => {
+      const source = String(value || "");
+      let normalized = "";
+      const map = [];
+      let pendingSpace = false;
+
+      for (let i = 0; i < source.length; i += 1) {
+        const char = source[i];
+        if (/\s/.test(char)) {
+          pendingSpace = normalized.length > 0;
+          continue;
+        }
+
+        if (pendingSpace) {
+          normalized += " ";
+          map.push(i);
+          pendingSpace = false;
+        }
+
+        normalized += char;
+        map.push(i);
+      }
+
+      return { text: normalized, map };
+    };
+
+    const findTextPosition = (textNodes, rawOffset, preferEnd = false) => {
+      let traversed = 0;
+
+      for (let i = 0; i < textNodes.length; i += 1) {
+        const textNode = textNodes[i];
+        const length = textNode.nodeValue?.length ?? 0;
+        const next = traversed + length;
+
+        if (rawOffset < next) {
+          return { node: textNode, offset: Math.max(0, rawOffset - traversed) };
+        }
+
+        if (rawOffset === next) {
+          if (preferEnd && i + 1 < textNodes.length) {
+            return { node: textNodes[i + 1], offset: 0 };
+          }
+          return { node: textNode, offset: length };
+        }
+
+        traversed = next;
+      }
+
+      const last = textNodes[textNodes.length - 1];
+      if (!last) return null;
+      return { node: last, offset: last.nodeValue?.length ?? 0 };
+    };
+
+    const buildSentenceRange = (entry) => {
+      if (!entry?.rangeStart || !entry?.rangeEnd) return null;
+      if (
+        !document.contains(entry.rangeStart.node) ||
+        !document.contains(entry.rangeEnd.node)
+      ) {
+        return null;
+      }
+
+      try {
+        const range = document.createRange();
+        range.setStart(entry.rangeStart.node, entry.rangeStart.offset);
+        range.setEnd(entry.rangeEnd.node, entry.rangeEnd.offset);
+        if (range.collapsed) return null;
+        return range;
+      } catch {
+        return null;
+      }
+    };
+
+    const renderSentenceHighlight = (entry) => {
+      const readingRoot = resolveRoot();
+      const layer = ensureHighlightLayer();
+      if (!readingRoot || !layer) return null;
+
+      layer.replaceChildren();
+      const range = buildSentenceRange(entry);
+      if (!range) return null;
+
+      const rootRect = readingRoot.getBoundingClientRect();
+      const rects = Array.from(range.getClientRects()).filter(
+        (rect) => rect.width > 0.5 && rect.height > 0.5,
+      );
+
+      rects.forEach((rect) => {
+        const chip = document.createElement("span");
+        chip.className = "ar-highlight-chip";
+        chip.style.left = `${rect.left - rootRect.left + readingRoot.scrollLeft}px`;
+        chip.style.top = `${rect.top - rootRect.top + readingRoot.scrollTop}px`;
+        chip.style.width = `${rect.width}px`;
+        chip.style.height = `${rect.height}px`;
+        layer.appendChild(chip);
+      });
+
+      return range;
+    };
+
+    const refreshActiveSentenceHighlight = () => {
+      if (currentSentenceIndex < 0) return;
+      const entry = sentences[currentSentenceIndex];
+      if (!entry) return;
+      renderSentenceHighlight(entry);
+    };
+
     const splitSentences = (text) => {
       const cleaned = (text || "").replace(/\s+/g, " ").trim();
       if (!cleaned) return [];
@@ -1185,32 +1325,39 @@ const { target = "#post" } = Astro.props;
     };
 
     const clearActiveSentence = () => {
-      if (
-        currentSentenceIndex >= 0 &&
-        sentences[currentSentenceIndex] &&
-        sentences[currentSentenceIndex].span
-      ) {
-        sentences[currentSentenceIndex].span.classList.remove("ar-active");
-      }
+      clearSentenceHighlight();
       currentSentenceIndex = -1;
     };
 
     const setActiveSentence = (index, scroll = true) => {
-      if (index === currentSentenceIndex) return;
+      if (index === currentSentenceIndex) {
+        const currentEntry = sentences[index];
+        if (currentEntry) renderSentenceHighlight(currentEntry);
+        return;
+      }
       clearActiveSentence();
 
       const entry = sentences[index];
-      if (!entry || !entry.span) return;
+      if (!entry) return;
 
       currentSentenceIndex = index;
-      entry.span.classList.add("ar-active");
+      const range = renderSentenceHighlight(entry);
 
       if (scroll) {
-        entry.span.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-          inline: "nearest",
-        });
+        let shouldScroll = true;
+        if (range) {
+          const rect = range.getBoundingClientRect();
+          const margin = Math.max(96, window.innerHeight * 0.18);
+          shouldScroll =
+            rect.top < margin || rect.bottom > window.innerHeight - margin;
+        }
+        if (shouldScroll && entry.anchor instanceof Element) {
+          entry.anchor.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "nearest",
+          });
+        }
       }
     };
 
@@ -1278,42 +1425,69 @@ const { target = "#post" } = Astro.props;
 
       if (prepared) return sentences.length > 0;
 
+      ensureHighlightLayer();
+      clearSentenceHighlight();
+
       const selectors = "p, li, h1, h2, h3, h4, blockquote";
       const nodes = readingRoot.querySelectorAll(selectors);
 
       sentences = [];
 
       nodes.forEach((node) => {
-        const text = (node.textContent || "").replace(/\s+/g, " ").trim();
-        if (!text) return;
+        const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        let textNode = walker.nextNode();
+        while (textNode) {
+          if (textNode.nodeValue) textNodes.push(textNode);
+          textNode = walker.nextNode();
+        }
+        if (!textNodes.length) return;
 
-        const parts = splitSentences(text);
+        const rawText = textNodes.map((entry) => entry.nodeValue || "").join("");
+        const normalized = normalizeTextWithMap(rawText);
+        if (!normalized.text) return;
+
+        const parts = splitSentences(normalized.text);
         if (!parts.length) return;
 
-        const fragment = document.createDocumentFragment();
-        parts.forEach((sentence, index) => {
-          const span = document.createElement("span");
-          span.className = "ar-sentence";
-          span.textContent = sentence;
-          fragment.appendChild(span);
+        let cursor = 0;
+        parts.forEach((sentence) => {
+          const startIndex = normalized.text.indexOf(sentence, cursor);
+          if (startIndex < 0) return;
 
-          sentences.push({ text: sentence, span, words: countWords(sentence) });
-
-          if (index < parts.length - 1) {
-            fragment.appendChild(document.createTextNode(" "));
+          const endIndex = startIndex + sentence.length;
+          cursor = endIndex;
+          while (
+            cursor < normalized.text.length &&
+            normalized.text[cursor] === " "
+          ) {
+            cursor += 1;
           }
-        });
 
-        node.innerHTML = "";
-        node.appendChild(fragment);
+          const rawStart = normalized.map[startIndex];
+          const rawEnd = normalized.map[endIndex - 1] + 1;
+          if (!Number.isFinite(rawStart) || !Number.isFinite(rawEnd)) return;
+          const rangeStart = findTextPosition(textNodes, rawStart, false);
+          const rangeEnd = findTextPosition(textNodes, rawEnd, true);
+
+          sentences.push({
+            text: sentence,
+            words: countWords(sentence),
+            anchor: node,
+            rangeStart,
+            rangeEnd,
+          });
+        });
       });
 
       if (!sentences.length) {
         splitSentences(readingRoot.textContent || "").forEach((sentence) => {
           sentences.push({
             text: sentence,
-            span: null,
             words: countWords(sentence),
+            anchor: readingRoot,
+            rangeStart: null,
+            rangeEnd: null,
           });
         });
       }
@@ -1634,6 +1808,9 @@ const { target = "#post" } = Astro.props;
     seekEl?.addEventListener("change", () => {
       seekToProgress(Number(seekEl?.value || "0"));
     });
+
+    window.addEventListener("resize", refreshActiveSentenceHighlight);
+    window.addEventListener("orientationchange", refreshActiveSentenceHighlight);
 
     if (getSupportsSpeech()) {
       loadVoices();
