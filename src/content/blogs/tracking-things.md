@@ -20,6 +20,7 @@ tags:
   - Fleet Management
   - Rules Engine
   - Real-time Tracking
+  - Telematics
 ---
 
 # Asset Tracking with Magistrala
@@ -53,9 +54,6 @@ Magistrala connects IoT devices to provide instant visibility into any trackable
 - [Why Magistrala](#why-magistrala)
 - [Why Choose Magistrala Over Other Platforms](#why-choose-magistrala-over-other-platforms)
 - [Start Tracking Today](#start-tracking-today)
-- [Why Magistrala](#why-magistrala)
-- [Why Choose Magistrala Over Other Platforms](#why-choose-magistrala-over-other-platforms)
-- [Start Tracking Today](#start-tracking-today)
 
 ---
 
@@ -71,7 +69,7 @@ Building an asset tracking solution with Magistrala treats all valuable items—
 4. **Rules Engine processes data**: Automated logic monitors topics and triggers actions (alerts, calculations, automations)
 5. **Users gain insights**: Real-time dashboards, mobile apps, and API integrations deliver actionable intelligence
 
-![Tracking Things Architecture](../../img/blogs/tracking-usecase/tracking_things.png)
+![Tracking Things Architecture](/img/blogs/tracking-usecase/tracking_things.png)
 
 ### Key Capabilities
 
@@ -95,7 +93,7 @@ First, create a Channel to represent your fleet. Channels group related devices 
 
 In the Magistrala platform, navigate to Channels and create a new channel called `fleet_channel`. This will serve as the communication hub for all your vehicles.
 
-![Fleet Channel](../../img/blogs/tracking-usecase/fleet_channel.png)
+![Fleet Channel](/img/blogs/tracking-usecase/fleet_channel.png)
 
 ### Step 2: Create Vehicle Clients
 
@@ -107,13 +105,13 @@ Create two clients:
 
 Each client is assigned a unique ID and secret (password) that the physical IoT tracker will use to authenticate.
 
-![Fleet Clients](../../img/blogs/tracking-usecase/fleet_clients.png)
+![Fleet Clients](/img/blogs/tracking-usecase/fleet_clients.png)
 
 ### Step 3: Connect Clients to Channel
 
 Connect both van clients to the fleet channel. This authorization allows the vehicles to publish telemetry data to the channel.
 
-![Connect Clients to Channel](../../img/blogs/tracking-usecase/connect_clients_channels.png)
+![Connect Clients to Channel](/img/blogs/tracking-usecase/connect_clients_channels.png)
 
 ### Step 4: Configure IoT Simulator
 
@@ -129,7 +127,7 @@ Now configure the IoT device emulator to simulate real GPS trackers sending data
 
 Configure two simulator instances—one for each van.
 
-![IoT Device Emulator](../../img/blogs/tracking-usecase/iot_device_emulator.png)
+![IoT Device Emulator](/img/blogs/tracking-usecase/iot_device_emulator.png)
 
 ### Step 5: Set Up Rules Engine
 
@@ -139,17 +137,17 @@ Create two rules to process incoming vehicle telemetry:
 
 This rule processes SenML-formatted messages and stores them in the database for historical analysis and reporting.
 
-![Rule to Save SenML Data](../../img/blogs/tracking-usecase/rule_to_save_senml.png)
+![Rule to Save SenML Data](/img/blogs/tracking-usecase/rule_to_save_senml.png)
 
 **Rule 2: Generate Alarms**
 
 This rule monitors vehicle data and creates alarms when thresholds are exceeded (e.g., high temperature, low fuel, excessive speed).
 
-![Rule to Save Alarms](../../img/blogs/tracking-usecase/rule_to_save_alarm.png)
+![Rule to Save Alarms](/img/blogs/tracking-usecase/rule_to_save_alarm.png)
 
 Both rules are now active and ready to process data:
 
-![Created Rules](../../img/blogs/tracking-usecase/create_2_rules.png)
+![Created Rules](/img/blogs/tracking-usecase/create_2_rules.png)
 
 ### Step 6: Start Simulation
 
@@ -161,7 +159,7 @@ Start both IoT simulator instances. The vans immediately begin transmitting tele
 
 Messages flow from the simulators through MQTT to Magistrala, where the Rules Engine processes and stores them.
 
-![Fleet Saved Messages](../../img/blogs/tracking-usecase/fleet_saved_messages.png)
+![Fleet Saved Messages](/img/blogs/tracking-usecase/fleet_saved_messages.png)
 
 Your fleet tracking system is now operational! The platform is receiving, processing, and storing real-time data from both vehicles.
 
@@ -173,19 +171,19 @@ With data flowing into the platform, create interactive dashboards to visualize 
 
 Choose from various widget types to build your custom dashboard:
 
-![Available Dashboard Widgets](../../img/blogs/tracking-usecase/available_dashboard_widgets.png)
+![Available Dashboard Widgets](/img/blogs/tracking-usecase/available_dashboard_widgets.png)
 
 **Create Route Map Widget:**
 
 Start by adding a map widget to visualize vehicle locations and routes in real-time:
 
-![Create Dashboard Route Map](../../img/blogs/tracking-usecase/create_dashboard_route_map.png)
+![Create Dashboard Route Map](/img/blogs/tracking-usecase/create_dashboard_route_map.png)
 
 **Add Alarm Table:**
 
 Create an alarm table widget to display critical alerts when thresholds are exceeded—fuel consumption limits, speed violations, temperature extremes, and other important events:
 
-![Create Dashboard Alarm Table](../../img/blogs/tracking-usecase/create_dashbaord_alarm_table.png)
+![Create Dashboard Alarm Table](/img/blogs/tracking-usecase/create_dashbaord_alarm_table.png)
 
 **Complete Dashboard View:**
 
@@ -194,22 +192,21 @@ Your operational dashboard now displays:
 - **Alarm Table**: Active alerts for fuel consumption, speed limits, temperature thresholds
 - Take immediate action based on alerts—dispatch maintenance, contact drivers, reroute vehicles
 
-![Route Map and Alarm Table](../../img/blogs/tracking-usecase/route_map_alarm_table.png)
+![Route Map and Alarm Table](/img/blogs/tracking-usecase/route_map_alarm_table.png)
 
 **Add Performance Metrics:**
 
 Enrich your dashboard with additional widgets:
 - **Line Graphs**: Track humidity and speed trends over time
 - **Value Cards**: Monitor current fuel consumption levels
-- **Gauges**: Display speed with visual indicators for safe/warning/danger zones
 
-![Dashboard Line, Bar, and Value Cards](../../img/blogs/tracking-usecase/dashboard_line_bar_value_card.png)
+![Dashboard Line, Bar, and Value Cards](/img/blogs/tracking-usecase/dashboard_line_bar_value_card.png)
 
 **Temperature Monitoring:**
 
 Add gauge widgets to monitor critical environmental conditions:
 
-![Dashboard Temperature Gauge](../../img/blogs/tracking-usecase/dashboard_temperature_gauge.png)
+![Dashboard Temperature Gauge](/img/blogs/tracking-usecase/dashboard_temperature_gauge.png)
 
 With these dashboards, you have complete visibility into your fleet operations, enabling data-driven decisions and rapid response to issues.
 
@@ -221,7 +218,7 @@ Transform raw telemetry data into actionable business reports. Use the reporting
 
 Build reports for specific business needs—fuel consumption analysis, route efficiency, maintenance schedules, or usage-based billing:
 
-![Create Fuel Consumption Report](../../img/blogs/tracking-usecase/create_fuel_consumption_report.png)
+![Create Fuel Consumption Report](/img/blogs/tracking-usecase/create_fuel_consumption_report.png)
 
 **Sample Generated Reports:**
 
@@ -232,7 +229,7 @@ Automated reports provide insights across your fleet:
 - Route efficiency and delivery performance
 - Usage-based billing calculations
 
-![Sample Reports](../../img/blogs/tracking-usecase/reports_sample.png)
+![Sample Reports](/img/blogs/tracking-usecase/reports_sample.png)
 
 Reports can be scheduled for automatic generation and delivered via email, supporting operational reviews, customer billing, and compliance documentation.
 
