@@ -242,8 +242,6 @@ Beyond the fleet tracking demo, Magistrala's asset tracking capabilities extend 
 
 **Logistics & Shipment Tracking**: Track hundreds of delivery vehicles and shipments with real-time location monitoring, automated delivery verification, route optimization, proof of delivery, and customer notifications with accurate ETAs.
 
-**Fleet Management**: Monitor vehicle health, driver behavior, and operational efficiency with real-time telemetry, predictive maintenance scheduling, usage-based insights for billing, compliance monitoring, and fuel efficiency tracking.
-
 **Construction & Heavy Equipment**: Track excavators, bulldozers, and cranes across job sites with theft prevention and automated usage-based billing.
 
 **Vehicle Leasing**: Monitor mileage, vehicle condition, and driver behavior for usage-based leasing models.
