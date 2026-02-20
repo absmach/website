@@ -40,13 +40,7 @@ Proplet leverages TDX and SEV-SNP to provide VM-level isolation, enabling entire
 
 ## Why WebAssembly in TEEs?
 
-WebAssembly offers several compelling advantages for confidential computing workloads:
-
-1. **Minimal TCB** — WebAssembly's compact runtime keeps the Trusted Computing Base small and auditable
-2. **Portability** — Wasm modules run consistently across different TEE implementations
-3. **Performance** — Near-native execution speed with hardware acceleration
-4. **Sandboxing** — Built-in isolation model complements TEE security boundaries
-5. **Lightweight** — Reduced memory footprint compared to container-based solutions
+WebAssembly offers several compelling advantages for confidential computing workloads. Its compact runtime keeps the **Trusted Computing Base** small and auditable, making security verification practical. Wasm modules demonstrate exceptional **portability**, running consistently across different TEE implementations without modification. The technology delivers **near-native execution speed** with hardware acceleration, while built-in **sandboxing** complements TEE security boundaries for defense-in-depth protection. Additionally, WebAssembly's **lightweight** nature results in a significantly reduced memory footprint compared to container-based solutions.
 
 By combining Wasm with hardware TEEs, Proplet provides defense-in-depth: software-level sandboxing within hardware-enforced isolation.
 
@@ -58,14 +52,7 @@ Proplet's TEE integration follows a layered security model:
 
 ### Component Interaction Flow
 
-1. **Detection** — Proplet detects TEE capabilities at startup (`/dev/tdx_guest`, `/dev/sev-guest`, TSM support)
-2. **Task Receipt** — Manager publishes encrypted workload requests via MQTT
-3. **Image Pull** — Proplet downloads encrypted OCI images from container registries
-4. **Attestation** — Attestation Agent generates hardware-backed proof of TEE environment
-5. **Key Retrieval** — Key Broker Service validates attestation and releases decryption keys
-6. **Decryption** — Image layers are decrypted inside the protected memory region
-7. **Execution** — Wasmtime executes the Wasm module within the TEE
-8. **Results** — Encrypted results are published back to Manager via MQTT
+The workflow begins with **detection** as Proplet identifies TEE capabilities at startup by checking for `/dev/tdx_guest`, `/dev/sev-guest`, and TSM support. When the Manager publishes encrypted workload requests via MQTT, Proplet receives the **task** and proceeds to download encrypted OCI images from container registries. The **Attestation Agent** then generates hardware-backed proof of the TEE environment, allowing the **Key Broker Service** to validate this attestation and release decryption keys. Once authenticated, image layers are **decrypted** inside the protected memory region, enabling Wasmtime to **execute** the Wasm module within the TEE. Finally, encrypted results are published back to the Manager via MQTT, completing the secure execution cycle.
 
 ![Attestation Flow](/images/tee/attestation.svg)
 
@@ -81,15 +68,7 @@ The script operates in two phases controlled by positional arguments:
 - **`run`** — Detects TDX/SEV support, assembles QEMU command for confidential mode, boots the VM
 - **`all`** (default) — Executes both phases sequentially
 
-On first boot, cloud-init automatically:
-
-1. Installs system packages (`build-essential`, `libssl-dev`, `protobuf-compiler`, `libtss2-dev`, `tpm2-tools`)
-2. Installs latest Wasmtime release from GitHub
-3. Compiles Attestation Agent with all attesters enabled
-4. Compiles CoCo Keyprovider from source
-5. Compiles Proplet from source
-6. Verifies all binaries exist before enabling services
-7. Enables and starts three systemd services in dependency order: `attestation-agent` → `coco-keyprovider` → `proplet`
+On first boot, cloud-init automatically orchestrates the complete build and deployment process. It begins by installing essential system packages including `build-essential`, `libssl-dev`, `protobuf-compiler`, `libtss2-dev`, and `tpm2-tools`. The setup continues by pulling the latest Wasmtime release from GitHub, then compiling the Attestation Agent with all attesters enabled, followed by building both the CoCo Keyprovider and Proplet from source. Before proceeding, the system verifies that all binaries exist successfully. Finally, it enables and starts three systemd services in strict dependency order: `attestation-agent` → `coco-keyprovider` → `proplet`.
 
 First boot takes 10–15 minutes for compilation. Subsequent boots start all services immediately.
 
@@ -163,22 +142,11 @@ ENABLE_CVM=none ./qemu.sh
 
 #### Intel TDX Mode
 
-When TDX is active, the script configures:
-
-- `memory-backend-memfd` shared memory object
-- `tdx-guest` machine object with vsock quote generation on CID 2, port 4050
-- `q35` machine with `confidential-guest-support=tdx0` and `kernel-irqchip=split`
-- `virtio-net-pci` with `iommu_platform=true`
-- OVMF firmware via `-bios /usr/share/ovmf/OVMF.fd`
+When TDX is active, the script configures a comprehensive confidential computing environment. It sets up a `memory-backend-memfd` shared memory object and creates a `tdx-guest` machine object with vsock quote generation on CID 2, port 4050. The `q35` machine type is configured with `confidential-guest-support=tdx0` and `kernel-irqchip=split` for proper interrupt handling. Network virtualization uses `virtio-net-pci` with `iommu_platform=true` for DMA protection, and the system boots with OVMF firmware via `-bios /usr/share/ovmf/OVMF.fd`.
 
 #### AMD SEV Mode
 
-When SEV is active, the script configures:
-
-- `sev-guest` object with `cbitpos=47` and `reduced-phys-bits=1`
-- `q35` machine with `memory-encryption=sev0`
-- `EPYC` CPU model
-- Pflash OVMF code and per-VM OVMF vars copy
+When SEV is active, the script configures an environment optimized for AMD's confidential computing. It creates a `sev-guest` object with `cbitpos=47` and `reduced-phys-bits=1` for memory encryption, then boots a `q35` machine with `memory-encryption=sev0` to enable hardware-level protection. The system uses the `EPYC` CPU model for proper virtualization support and configures pflash OVMF firmware with per-VM OVMF variables for secure boot and configuration isolation.
 
 #### Regular Mode
 
@@ -186,7 +154,7 @@ Without CVM, the script uses `q35` with `host` CPU passthrough and the same pfla
 
 ### Port Forwarding
 
-All modes forward these ports from host to guest:
+All TEE modes automatically forward specific ports from the host to the guest VM for communication and management. The SSH service is accessible on port 2222 (host) to port 22 (guest), while the Attestation Agent gRPC API is available on port 50010 on both host and guest. The CoCo Keyprovider gRPC API uses port 50011 similarly for secure key exchange operations.
 
 | Host Port | Guest Port | Service                    |
 | --------- | ---------- | -------------------------- |
@@ -196,11 +164,7 @@ All modes forward these ports from host to guest:
 
 ## Key Broker Service (KBS) Setup
 
-The server-side attestation stack is provided by [Trustee](https://github.com/confidential-containers/trustee), consisting of three components:
-
-- **KBS** (Key Broker Service) — Stores encryption keys and validates attestation reports
-- **AS** (Attestation Service) — Verifies TEE evidence submitted by guests
-- **RVPS** (Reference Value Provider Service) — Manages reference values for evidence verification
+The server-side attestation stack is provided by [Trustee](https://github.com/confidential-containers/trustee), consisting of three integrated components. The **Key Broker Service (KBS)** stores encryption keys and validates attestation reports before releasing secrets. The **Attestation Service (AS)** verifies TEE evidence submitted by guests, ensuring that the environment meets security requirements. Completing the stack, the **Reference Value Provider Service (RVPS)** manages reference values for evidence verification, providing the baseline against which guest attestations are compared.
 
 ### Starting Trustee with Docker Compose
 
@@ -244,7 +208,7 @@ Upload the key to KBS:
 
 ### Configuring Resource Policy
 
-For testing outside a TEE, set a permissive policy (production deployments should use strict attestation policies):
+For testing outside a TEE, you can set a permissive policy. However, production deployments should always use strict attestation policies to maintain security:
 
 ```bash
 ./target/release/kbs-client \
@@ -389,25 +353,11 @@ Create a task manifest for the encrypted Wasm workload:
 }
 ```
 
-Critical fields for encrypted workloads:
-
-- `encrypted: true` — Instructs Proplet to use TEE runtime and attestation
-- `image_url` — Location of encrypted OCI image
-- `kbs_resource_path` — Path to decryption key in KBS (must match the path used during encryption)
-- Omit `file` field for encrypted workloads (use `image_url` instead)
+Critical fields for encrypted workloads ensure proper security and execution. The `encrypted: true` field instructs Proplet to use the TEE runtime and attestation, while `image_url` specifies the location of the encrypted OCI image. The `kbs_resource_path` field defines the path to the decryption key in KBS, which must match the exact path used during encryption. Importantly, you should omit the `file` field for encrypted workloads and use `image_url` instead.
 
 ### Execution Flow
 
-When the Manager publishes this task:
-
-1. Proplet receives the task via MQTT
-2. Downloads encrypted OCI image from registry
-3. Attestation Agent generates TEE evidence from hardware
-4. CoCo Keyprovider contacts KBS with attestation proof
-5. KBS validates attestation and releases decryption key
-6. Keyprovider decrypts image layers inside TEE memory
-7. Wasmtime executes the decrypted Wasm module
-8. Results are encrypted and published back to Manager
+When the Manager publishes this task, the secure execution begins. Proplet receives the task via MQTT and immediately downloads the encrypted OCI image from the registry. The Attestation Agent then generates TEE evidence directly from the hardware, creating cryptographic proof of the trusted environment. The CoCo Keyprovider contacts the KBS with this attestation proof, and upon successful validation, KBS releases the decryption key. The Keyprovider then decrypts the image layers exclusively inside TEE memory, ensuring they never exist in plaintext outside the protected region. Wasmtime executes the decrypted Wasm module securely, and finally, the results are encrypted and published back to the Manager via MQTT.
 
 ![Encrypted Task Execution](/images/tee/encrypted-task-execution.svg)
 
@@ -451,39 +401,25 @@ Running Proplet inside TEEs provides multiple layers of security:
 
 ### Confidentiality
 
-- Code and data remain encrypted until loaded into TEE memory
-- Encryption keys are released only after successful remote attestation
-- Memory pages are hardware-encrypted (TDX/SEV memory encryption)
-- Untrusted host OS cannot inspect or modify TEE memory
+Running Proplet inside TEEs ensures that code and data remain encrypted until they are loaded into TEE memory. Encryption keys are released only after successful remote attestation, preventing unauthorized access. Memory pages benefit from hardware encryption through TDX or SEV memory encryption technologies, and even the untrusted host OS cannot inspect or modify TEE memory contents.
 
 ### Integrity
 
-- Attestation reports prove the exact code running inside the TEE
-- Hardware measurements detect tampering with bootloader, firmware, or kernel
-- Cryptographic hashes verify Wasm module integrity before execution
-- TEE boundaries prevent unauthorized code injection
+The TEE architecture guarantees integrity through multiple mechanisms. Attestation reports provide cryptographic proof of the exact code running inside the TEE, while hardware measurements immediately detect any tampering with bootloader, firmware, or kernel components. Cryptographic hashes verify Wasm module integrity before execution, and TEE boundaries effectively prevent unauthorized code injection or modification.
 
 ### Isolation
 
-- Hardware enforces memory access controls
-- DMA protection prevents peripheral devices from accessing TEE memory
-- Interrupt and exception handlers are isolated from untrusted components
-- Network and storage I/O can be encrypted end-to-end
+Hardware-enforced memory access controls form the foundation of isolation, with DMA protection preventing peripheral devices from accessing TEE memory regions. Interrupt and exception handlers are completely isolated from untrusted components, and network and storage I/O can be encrypted end-to-end for additional security.
 
 ### Verifiability
 
-- Remote attestation allows third parties to verify TEE configuration
-- Attestation reports include firmware versions, CPU microcode, and loaded code hashes
-- Reproducible builds enable verification of Wasm module binaries
-- Audit logs track workload lifecycle and attestation events
+Remote attestation enables third parties to independently verify TEE configuration and ensure the environment meets security requirements. Attestation reports include comprehensive details such as firmware versions, CPU microcode, and loaded code hashes. Reproducible builds allow verification of Wasm module binaries, and comprehensive audit logs track the complete workload lifecycle and all attestation events for compliance and monitoring.
 
 ## Hardware Requirements
 
 ### Intel TDX
 
-- **CPU**: Intel Xeon Scalable (Sapphire Rapids or later)
-- **BIOS**: TDX enabled in firmware settings
-- **Kernel**: Linux kernel 5.19+ with TDX support and `tdx_guest` module
+To run TDX, you need an Intel Xeon Scalable processor (Sapphire Rapids or later) with TDX enabled in the BIOS firmware settings. The system requires a Linux kernel version 5.19 or later that includes TDX support and the `tdx_guest` module.
 
 Verify TDX availability:
 
@@ -495,9 +431,7 @@ dmesg | grep "virt/tdx: module initialized"
 
 ### AMD SEV
 
-- **CPU**: AMD EPYC processor (Milan, Genoa, or later)
-- **BIOS**: SEV enabled in firmware settings
-- **Kernel**: Linux kernel with SEV support
+For AMD SEV support, you need an AMD EPYC processor (Milan, Genoa, or later) with SEV enabled in the BIOS firmware settings. The system must run a Linux kernel with SEV support enabled.
 
 Verify SEV availability:
 
@@ -529,26 +463,11 @@ export PROPLET_CLIENT_KEY="key-02"
 
 Adjust port forwarding in each copy of the script to avoid host port conflicts (e.g., use ports 2223/2224 for SSH, 50012/50013 for Attestation Agent).
 
-## Best Practices
-
-1. **Key Management** — Rotate encryption keys regularly and use different keys for different workloads
-2. **Attestation Policies** — Use strict OPA policies in production (avoid `allow_all.rego`)
-3. **Network Isolation** — Use TLS for MQTT connections and encrypt all network traffic
-4. **Logging** — Aggregate logs to external SIEM for security monitoring
-5. **Updates** — Keep OVMF firmware, guest kernel, and attestation components updated
-6. **Testing** — Verify attestation flows in non-production environments before deploying sensitive workloads
-7. **Monitoring** — Track attestation failures, service restarts, and resource utilization
-
 ## Conclusion
 
 Running Proplet inside Trusted Execution Environments combines the portability and efficiency of WebAssembly with hardware-based confidential computing. This architecture enables secure execution of sensitive workloads in untrusted environments, with cryptographic verification that your code and data remain protected even from privileged attackers.
 
-The integration of Proplet with Intel TDX and AMD SEV provides:
-
-- **End-to-end confidentiality** — From encrypted image distribution to in-memory execution
-- **Verifiable security** — Remote attestation proves TEE configuration before releasing secrets
-- **Operational simplicity** — Automated deployment via HAL with minimal manual configuration
-- **Platform independence** — Wasm portability across different TEE implementations
+The integration of Proplet with Intel TDX and AMD SEV provides comprehensive security capabilities. It delivers **end-to-end confidentiality** from encrypted image distribution through to in-memory execution, ensuring protection throughout the entire workload lifecycle. **Verifiable security** is achieved through remote attestation that proves TEE configuration before releasing any secrets. **Operational simplicity** is enabled by automated deployment via HAL with minimal manual configuration required. Finally, **platform independence** allows Wasm portability across different TEE implementations, providing flexibility in deployment choices.
 
 As confidential computing becomes critical for AI/ML workloads, federated learning, and privacy-preserving computation, Proplet's TEE integration positions it as a robust platform for secure WebAssembly execution at scale.
 
