@@ -5,19 +5,20 @@ excerpt: "Road to S0: The IoT gateway for the future. "
 description: "This blog describes our journey of building the S0 IoT gateway, the challenges faced and the solutions we implemented. "
 date: "2026-02-20"
 author:
-  name: "Kisaka the Jones"
+  name: "Jones Kisaka"
   picture: "https://avatars.githubusercontent.com/u/85192767?v=4"
-coverImage: "/img/blogs/building-the-s0/s0-rev2-resize.png"
+coverImage: "/img/blogs/building-the-s0/s0-rev2-v2.png"
 ogImage:
-  url: "/img/blogs/building-the-s0/s0-rev2-resize.png"
+  url: "/img/blogs/building-the-s0/s0-rev2-v2.png"
 category: blog
 tags:
 
-- abstract machines
-- s0
-- iot gateway
-- pcb design
-- hardware
+- S0
+- Baseboard
+- IoT
+- Gateway
+- PCB design
+- Hardware
 
 ---
 
@@ -52,13 +53,13 @@ Both boards connect via 92-pin headers, creating a compact yet powerful gateway 
 
 Just like any design, we had our fair share of challenges, which has made this journey a learning experience
 
-## Challenge #1: The Form Factor Puzzle
+## Challenge 1: The Form Factor Puzzle
 
 Our first major hurdle hit us during component placement. We wanted the S0 to be pin-to-pin compatible with the BeagleV-Fire while maintaining a compact form factor. It sounds simple on paper, but when you’re trying to fit multiple radio modules, power circuits, and connectors onto a constrained PCB while maintaining proper spacing for RF performance, reality sets in quickly.
 
 The ESP32C6, SIM7080G, and RC-S2LP modules each had their own keep-out zones and antenna requirements. We found ourselves playing 3D Tetris, rotating components, trying different orientations, and constantly checking clearances. The lesson? Start with your largest and most constrained components first, then build around them. And always, always verify mechanical compatibility early in the design phase.
 
-## Challenge #2: The Impedance Matching Reality
+## Challenge 2: The Impedance Matching Reality
 
 Routing the Baseboard introduced us to the critical world of impedance matching. We knew differential pairs needed careful routing, but understanding it theoretically and implementing it practically are two different things.
 
@@ -66,7 +67,7 @@ The Ethernet circuit with the W5500 was particularly demanding. Those differenti
 
 What we learned: Use your PCB manufacturer’s stackup calculator. Don’t guess at trace widths for controlled impedance. And yes, all those differential signals — USB, Ethernet, high-speed SPI — they all need proper impedance matching for reliable communication.
 
-## Challenge #3: The SPI Bus Sharing Saga
+## Challenge 3: The SPI Bus Sharing Saga
 
 This one caught us off guard. We designed the Baseboard with both the Ethernet chip and SD card sharing the SPI bus — a common and reasonable approach. Different chip selects would handle arbitration, right?
 
@@ -78,7 +79,7 @@ We discovered that our SD card was holding the MISO line even after being desele
 
 The solution: We implemented a tri-state buffer (essentially an SPI isolator) on the SD card’s MISO line. The buffer’s enable pin connects to the SD card’s chip select, ensuring that when the SD card is deselected, it truly releases the MISO line. Problem solved, and we gained a deeper understanding of proper SPI bus sharing techniques.
 
-## Challenge #4: The Bootstrap Pin Blunder
+## Challenge 4: The Bootstrap Pin Blunder
 
 This was a facepalm moment. On the first revision of the S0, we connected SPI lines to the ESP32-C6’s bootstrapping pins. For those unfamiliar, bootstrap pins are sampled during power-up to determine boot mode and configuration.
 
@@ -86,7 +87,7 @@ The result? A completely non-functional SPI bus. The ESP32-C6 was fighting with 
 
 The fix: We moved the SPI connections to regular GPIO pins in Rev2. The lesson: Always check your microcontroller’s datasheet for special-purpose pins, especially bootstrap, strapping, and configuration pins. Don’t assume any GPIO is fair game.
 
-## Challenge #5: SPI vs. SD Card Pin Mapping
+## Challenge 5: SPI vs. SD Card Pin Mapping
 
 Here’s a subtle one that cost us some debugging time. We thought we had correctly connected the SD card to the SPI bus on the Baseboard. The pinout looked right, the connections were there, but nothing worked.
 The issue? SPI domain and SD card domain use different pin naming conventions and mapping. What’s MOSI in SPI world isn’t necessarily CMD in SD card world without proper mapping. We had made assumptions about pin compatibility without verifying the actual protocol requirements.
@@ -95,7 +96,7 @@ The issue? SPI domain and SD card domain use different pin naming conventions an
 
 The takeaway: Don’t rely on “looks right” when dealing with protocol conversions. Verify with datasheets, reference designs, and if possible, official application notes. SPI-to-SD interfacing has specific requirements that must be met.
 
-## Challenge #6: The Power Circuit Journey
+## Challenge 6: The Power Circuit Journey
 
 This challenge taught us perhaps the most important lesson of the entire project. On the Baseboard, we designed what we thought was a clever overvoltage protection circuit using a MOSFET. We were proud of the design — it was elegant, compact, and theoretically sound.
 
