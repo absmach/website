@@ -32,11 +32,11 @@ The journey of a thousand miles begins with the first step. When we set out to d
 
 ## The Vision
 
-The S0 is a dual-board system designed to act as a smart meter gateway with impressive connectivity options:
+The [S0](https://hardware.absmach.eu/s0) is a dual-board system designed to act as a smart meter gateway with impressive connectivity options:
 
 The S0 Main Board features:
 
-- ESP32-C6 microcontroller (RISC-V powered, USB-C programmable)
+- [ESP32-C6](https://www.espressif.com/en/products/socs/esp32-c6) microcontroller (RISC-V powered, USB-C programmable)
 - SIM7080G NB-IoT module for cellular connectivity
 - RC-S2LP Wireless M-Bus module (868MHz) for reading wireless meters
 - Battery power support via JST connector
@@ -55,7 +55,7 @@ Just like any design, we had our fair share of challenges, which has made this j
 
 ## Challenge 1: The Form Factor Puzzle
 
-Our first major hurdle hit us during component placement. We wanted the S0 to be pin-to-pin compatible with the BeagleV-Fire while maintaining a compact form factor. It sounds simple on paper, but when you’re trying to fit multiple radio modules, power circuits, and connectors onto a constrained PCB while maintaining proper spacing for RF performance, reality sets in quickly.
+Our first major hurdle hit us during component placement. We wanted the S0 to be pin-to-pin compatible with the [BeagleV-Fire](https://www.beagleboard.org/boards/beaglev-fire) while maintaining a compact form factor. It sounds simple on paper, but when you’re trying to fit multiple radio modules, power circuits, and connectors onto a constrained PCB while maintaining proper spacing for RF performance, reality sets in quickly.
 
 The ESP32C6, SIM7080G, and RC-S2LP modules each had their own keep-out zones and antenna requirements. We found ourselves playing 3D Tetris, rotating components, trying different orientations, and constantly checking clearances. The lesson? Start with your largest and most constrained components first, then build around them. And always, always verify mechanical compatibility early in the design phase.
 
@@ -124,10 +124,10 @@ The lesson: Simulate before you fabricate. And remember: a working simple circui
 Looking back at this journey, here’s what we’d change:
 
 - More upfront mechanical planning — Create a 3D model early with all components placed before starting routing
-- Impedance calculator from day one — Don’t wait until routing to think about controlled impedance
+- [Impedance calculator](https://jlcpcb.com/pcb-impedance-calculator) from day one — Don’t wait until routing to think about controlled impedance
 - Bus sharing validation — Test SPI bus sharing scenarios on a breadboard first
 - Pin assignment review — Have a dedicated review session for all microcontroller pin assignments checking for   conflicts
-- Reference design study — Spend more time with reference designs, especially for SD card interfaces
+- Reference design study — Spend more time with reference designs, especially for SD card interfaces and [Ethernet W5500](https://docs.wiznet.io/Product/Chip/Ethernet/W5500/ref-schematic)
 - Circuit simulation mandatory — Make LTSpice simulation a requirement before any new circuit enters the schematic
 - Simplicity first — Start with the simplest working solution, then optimize only if needed
 
