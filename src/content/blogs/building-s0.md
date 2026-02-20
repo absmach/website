@@ -37,15 +37,15 @@ The [S0](https://hardware.absmach.eu/s0) is a dual-board system designed to act 
 The S0 Main Board features:
 
 - [ESP32-C6](https://www.espressif.com/en/products/socs/esp32-c6) microcontroller (RISC-V powered, USB-C programmable)
-- SIM7080G NB-IoT module for cellular connectivity
-- RC-S2LP Wireless M-Bus module (868MHz) for reading wireless meters
+- [SIM7080G](https://www.simcom.com/product/SIM7080G.html) NB-IoT module for cellular connectivity
+- [RC-S2LP](https://www.radiocontrolli.com/rc-s2lp-868) Wireless M-Bus module (868MHz) for reading wireless meters
 - Battery power support via JST connector
 - JTAG debugging capability
 
 The S0 Baseboard extends functionality with:
 
 - W5500 Ethernet chip with RJ45 Jack and Magnetics
-- TSS721ADR Wired M-Bus module for reading wired meters
+- [TSS721ADR] (https://www.digikey.com/en/products/detail/texas-instruments/TSS721ADR/1910054) Wired M-Bus module for reading wired meters
 - SD card slot for local data logging
 - Power management and distribution
 
