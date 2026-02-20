@@ -7,9 +7,9 @@ date: "2026-02-20"
 author:
   name: "Jones Kisaka"
   picture: "https://avatars.githubusercontent.com/u/85192767?v=4"
-coverImage: "/img/blogs/building-the-s0/s0-rev2-v2.png"
+coverImage: "/img/blogs/building-the-s0/s0.png"
 ogImage:
-  url: "/img/blogs/building-the-s0/s0-rev2-v2.png"
+  url: "/img/blogs/building-the-s0/s0.png"
 category: blog
 tags:
 
