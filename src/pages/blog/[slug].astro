@@ -184,13 +184,13 @@ const nextReadPosts = allPosts
                 <div class="mx-auto max-w-4xl">
                     {
                         coverImage && (
-                            <div class="mb-8 aspect-video overflow-hidden rounded-3xl border border-subtle bg-surface-2 shadow-[var(--shadow-soft)]">
+                            <div class="mb-8 aspect-video overflow-hidden rounded-3xl border border-subtle bg-transparent shadow-[var(--shadow-soft)]">
                                 <Image
                                     src={coverImage!}
                                     alt=""
                                     width={1280}
                                     height={720}
-                                    class="h-full w-full object-cover"
+                                    class="h-full w-full object-contain"
                                     loading="eager"
                                     decoding="async"
                                 />
@@ -342,13 +342,13 @@ const nextReadPosts = allPosts
                                     >
                                         {
                                             entry.coverImage && (
-                                                <div class="aspect-[16/9] overflow-hidden border-b border-subtle bg-surface-2">
+                                                <div class="aspect-[16/9] overflow-hidden border-b border-subtle bg-transparent">
                                                     <Image
                                                         src={entry.coverImage}
                                                         alt=""
                                                         width={1280}
                                                         height={720}
-                                                        class="h-full w-full object-cover"
+                                                        class="h-full w-full object-contain"
                                                         loading={index === 0
                                                             ? "eager"
                                                             : "lazy"}

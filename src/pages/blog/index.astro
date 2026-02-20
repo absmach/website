@@ -200,7 +200,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                   >
                     {p.coverImage && (
                       <div
-                        class={`overflow-hidden border-b border-subtle bg-surface-2 ${
+                        class={`overflow-hidden border-b border-subtle bg-transparent ${
                           p.featured
                             ? "aspect-[16/7] md:aspect-[16/6]"
                             : "aspect-video"
@@ -211,7 +211,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                           alt=""
                           width={1280}
                           height={720}
-                          class="h-full w-full object-cover"
+                          class="h-full w-full object-contain"
                           loading={index < 2 ? "eager" : "lazy"}
                           decoding="async"
                         />
