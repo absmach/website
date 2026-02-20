@@ -20,7 +20,7 @@ category: blog
 
 In today's cloud-native landscape, securing sensitive workloads during execution is paramount. Organizations require not just encryption at rest and in transit, but also protection during computation. This is where Trusted Execution Environments (TEEs) combined with WebAssembly (Wasm) runtimes create a powerful paradigm for confidential computing. Proplet, built on this foundation, enables secure execution of WebAssembly workloads within hardware-protected enclaves, ensuring that even cloud providers cannot access your data during processing.
 
-![Proplet TEE Architecture](/images/tee/architecture.svg)
+![Proplet TEE Architecture](/img/blogs/running-proplet-in-tee/architecture.svg)
 
 This guide explores how to deploy Proplet inside TEE environments, leveraging hardware-based isolation to execute WebAssembly workloads with confidentiality and integrity guarantees.
 
@@ -54,7 +54,7 @@ Proplet's TEE integration follows a layered security model:
 
 The workflow begins with **detection** as Proplet identifies TEE capabilities at startup by checking for `/dev/tdx_guest`, `/dev/sev-guest`, and TSM support. When the Manager publishes encrypted workload requests via MQTT, Proplet receives the **task** and proceeds to download encrypted OCI images from container registries. The **Attestation Agent** then generates hardware-backed proof of the TEE environment, allowing the **Key Broker Service** to validate this attestation and release decryption keys. Once authenticated, image layers are **decrypted** inside the protected memory region, enabling Wasmtime to **execute** the Wasm module within the TEE. Finally, encrypted results are published back to the Manager via MQTT, completing the secure execution cycle.
 
-![Attestation Flow](/images/tee/attestation.svg)
+![Attestation Flow](/img/blogs/running-proplet-in-tee/attestation.svg)
 
 ## Hardware Abstraction Layer (HAL)
 
@@ -178,7 +178,7 @@ docker compose up -d
 
 This starts KBS on `http://localhost:8080` (configurable in `docker-compose.yml`).
 
-![KBS Setup](/images/tee/kbs-setup.svg)
+![KBS Setup](/img/blogs/running-proplet-in-tee/kbs-setup.svg)
 
 ### Generating and Uploading Encryption Keys
 
@@ -265,7 +265,7 @@ output/
 └── version
 ```
 
-![Image Encryption](/images/tee/image-encryption.svg)
+![Image Encryption](/img/blogs/running-proplet-in-tee/image-encryption.svg)
 
 ### Pushing Encrypted Image to Registry
 
@@ -359,7 +359,7 @@ Critical fields for encrypted workloads ensure proper security and execution. Th
 
 When the Manager publishes this task, the secure execution begins. Proplet receives the task via MQTT and immediately downloads the encrypted OCI image from the registry. The Attestation Agent then generates TEE evidence directly from the hardware, creating cryptographic proof of the trusted environment. The CoCo Keyprovider contacts the KBS with this attestation proof, and upon successful validation, KBS releases the decryption key. The Keyprovider then decrypts the image layers exclusively inside TEE memory, ensuring they never exist in plaintext outside the protected region. Wasmtime executes the decrypted Wasm module securely, and finally, the results are encrypted and published back to the Manager via MQTT.
 
-![Encrypted Task Execution](/images/tee/encrypted-task-execution.svg)
+![Encrypted Task Execution](/img/blogs/running-proplet-in-tee/encrypted-task-execution.svg)
 
 ### Verifying Execution
 
