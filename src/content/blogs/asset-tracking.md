@@ -73,9 +73,9 @@ Building an asset tracking solution with Magistrala treats all valuable items—
 
 ### Key Capabilities
 
-**Multi-Protocol Connectivity**: Connect devices via MQTT, HTTP, CoAP, WebSocket, LoRa, or OPC-UA. Magistrala handles cellular, Wi-Fi, LoRaWAN, and industrial protocols seamlessly.
+**Multi-Protocol Connectivity**: Connect devices via MQTT, HTTP, CoAP, WebSocket or LoRa
 
-**Intelligent Rules Engine**: Automate threshold monitoring, usage-based billing calculations, and predictive maintenance—no code changes required.
+**Intelligent Rules Engine**: Automate threshold monitoring, usage-based billing calculations, and predictive maintenance.
 
 **Real-Time Alarms**: Configure instant alerts for theft, tampering, environmental thresholds, idle time, or maintenance needs. Deliver notifications via email and Slack.
 
