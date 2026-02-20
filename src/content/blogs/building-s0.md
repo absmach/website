@@ -51,7 +51,7 @@ The S0 Baseboard extends functionality with:
 
 Both boards connect via 92-pin headers, creating a compact yet powerful gateway system. Our ambitious goal for S0? Make it pin-compatible with the BeagleV-Fire development board.
 
-Just like any design, we had our fair share of challenges, which has made this journey a learning experience
+Just like any design, we had our fair share of challenges, which has made this journey a learning experience.
 
 ## Challenge 1: The Form Factor Puzzle
 
