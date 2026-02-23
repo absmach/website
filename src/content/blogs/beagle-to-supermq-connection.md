@@ -23,16 +23,15 @@ tags:
 
 ---
 
-Today, the [BeagleV-Fire](https://www.beagleboard.org/boards/beaglev-fire) is one of the most exciting RISC-V development boards today - built for experiments in AI acceleration, FPGAs, Linux, and real hardware exploration. But one of its biggest strengths is how easily it can integrate with modern IoT platforms.
+Today, the [BeagleV-Fire](https://www.beagleboard.org/boards/beaglev-fire) is one of the most exciting RISC-V development boards built for experiments in AI acceleration, FPGAs, Linux, and real hardware exploration. But one of its biggest strengths is how easily it can integrate with modern IoT platforms.
 
 [SuperMQ](https://github.com/absmach/supermq/blob/main/README.md) is a modern, scalable, secure open source and patent-free IoT cloud platform written in Go.
-It accepts user and client connections over various network protocols (i.e. HTTP, MQTT, WebSocket, CoAP), thus making a seamless bridge between them. It is used as the IoT middleware for building complex IoT solutions.
+It accepts user and client connections over various network protocols (i.e. HTTP, MQTT, WebSocket, CoAP), thus making a seamless bridge between them. It is used as the IoT middleware for building IoT solutions.
 
 In this guide, I'll walk you step-by-step through how to connect the BeagleV-Fire to SuperMQ using MQTT and CoAP, authenticate your client, and publish messages to a topic.
 
-By the end, you'll be able to send MQTT and CoAP messages directly from your BeagleV-Fire Linux terminal.
 
-🖥️ What You Need
+## What You Need
 
 - The BeagleV-Fire running Linux/RISC-V
 - SuperMQ cloned and running in your PC.
@@ -60,7 +59,7 @@ make cli
 
 ### Create a User
 
-We start of by creating a user.
+We start off by creating a user.
 
 ```bash
 ./build/cli users create <first_name> <last_name> <email> <username> <password>
