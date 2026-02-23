@@ -9,8 +9,8 @@ export default defineConfig({
   integrations: [
     tailwind(),
     sitemap({
-      filenameBase: 'sitemap', // This will output sitemap.xml
-      changefreq: 'hourly',
+      filenameBase: "sitemap", // This will output sitemap.xml
+      changefreq: "hourly",
       priority: 1.0,
       serialize(item) {
         // Example: Get last modified date from frontmatter for content collections
@@ -31,5 +31,6 @@ export default defineConfig({
 
         return item;
       },
-    }),],
+    }),
+  ],
 });

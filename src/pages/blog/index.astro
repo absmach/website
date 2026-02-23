@@ -200,7 +200,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                   >
                     {p.coverImage && (
                       <div
-                        class={`overflow-hidden border-b border-subtle bg-surface-2 ${
+                        class={`overflow-hidden border-b border-subtle ${
                           p.featured
                             ? "aspect-[16/7] md:aspect-[16/6]"
                             : "aspect-video"
@@ -211,7 +211,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                           alt=""
                           width={1280}
                           height={720}
-                          class="h-full w-full object-cover"
+                          class="cover-image h-full w-full"
                           loading={index < 2 ? "eager" : "lazy"}
                           decoding="async"
                         />
@@ -529,3 +529,37 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+    .cover-image {
+        object-fit: cover;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const coverImages = document.querySelectorAll('.cover-image');
+        
+        coverImages.forEach((img) => {
+            if (img instanceof HTMLImageElement) {
+                const checkOrientation = () => {
+                    if (img.naturalHeight > img.naturalWidth) {
+                        img.style.objectFit = 'contain';
+                        const parent = img.parentElement;
+                        if (parent) {
+                            parent.style.backgroundColor = 'transparent';
+                        }
+                    } else {
+                        img.style.objectFit = 'cover';
+                    }
+                };
+                
+                if (img.complete) {
+                    checkOrientation();
+                } else {
+                    img.addEventListener('load', checkOrientation);
+                }
+            }
+        });
+    });
+</script>

@@ -184,13 +184,13 @@ const nextReadPosts = allPosts
                 <div class="mx-auto max-w-4xl">
                     {
                         coverImage && (
-                            <div class="mb-8 aspect-video overflow-hidden rounded-3xl border border-subtle bg-surface-2 shadow-[var(--shadow-soft)]">
+                            <div class="mb-8 aspect-video overflow-hidden rounded-3xl border border-subtle shadow-[var(--shadow-soft)]">
                                 <Image
                                     src={coverImage!}
                                     alt=""
                                     width={1280}
                                     height={720}
-                                    class="h-full w-full object-cover"
+                                    class="cover-image h-full w-full"
                                     loading="eager"
                                     decoding="async"
                                 />
@@ -342,13 +342,13 @@ const nextReadPosts = allPosts
                                     >
                                         {
                                             entry.coverImage && (
-                                                <div class="aspect-[16/9] overflow-hidden border-b border-subtle bg-surface-2">
+                                                <div class="aspect-[16/9] overflow-hidden border-b border-subtle">
                                                     <Image
                                                         src={entry.coverImage}
                                                         alt=""
                                                         width={1280}
                                                         height={720}
-                                                        class="h-full w-full object-cover"
+                                                        class="cover-image h-full w-full"
                                                         loading={index === 0
                                                             ? "eager"
                                                             : "lazy"}
@@ -428,3 +428,37 @@ const nextReadPosts = allPosts
     </main>
     <Footer />
 </BaseLayout>
+
+<style>
+    .cover-image {
+        object-fit: cover;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const coverImages = document.querySelectorAll('.cover-image');
+        
+        coverImages.forEach((img) => {
+            if (img instanceof HTMLImageElement) {
+                const checkOrientation = () => {
+                    if (img.naturalHeight > img.naturalWidth) {
+                        img.style.objectFit = 'contain';
+                        const parent = img.parentElement;
+                        if (parent) {
+                            parent.style.backgroundColor = 'transparent';
+                        }
+                    } else {
+                        img.style.objectFit = 'cover';
+                    }
+                };
+                
+                if (img.complete) {
+                    checkOrientation();
+                } else {
+                    img.addEventListener('load', checkOrientation);
+                }
+            }
+        });
+    });
+</script>
