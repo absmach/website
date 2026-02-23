@@ -3,7 +3,7 @@ title: "Building the S0: The IoT Gateway of the future"
 slug: "building_the_s0"
 excerpt: "Road to S0: The IoT gateway for the future."
 description: "The journey to building the S0 IoT gateway, the challenges faced and the solutions implemented. "
-date: "2026-02-20"
+date: "2026-02-23"
 author:
   name: "Jones Kisaka"
   picture: "https://avatars.githubusercontent.com/u/85192767?v=4"
