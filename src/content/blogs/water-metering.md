@@ -27,9 +27,9 @@ tags:
 
 Water utilities and facility managers face mounting pressure to reduce waste, detect leaks early, and respond to unsafe conditions before they escalate. Traditional water meters require manual readings, provide no real-time visibility, and cannot react automatically to abnormal flow or quality conditions.
 
-Smart water metering changes this. By connecting meters and valves to an IoT platform, utilities gain continuous visibility into consumption, instant alerts on anomalies, and the ability to shut off water automatically when conditions exceed safe limits—all without manual intervention.
+Smart water metering changes this. By connecting smart meters to an IoT platform, utilities gain continuous visibility into consumption, instant alerts on anomalies, and automated responses to abnormal conditions—all without manual intervention.
 
-Magistrala connects water meters and smart valves to deliver real-time flow monitoring, automated safety shutoffs, and actionable analytics. Rules Engine processes incoming readings and triggers valve control, alarms, or reporting automatically. All telemetry is stored securely for compliance, billing, and operational insight—whether you're managing a single building, a campus, or a city-wide distribution network.
+Magistrala connects smart water meters to deliver real-time flow monitoring, leak detection, and actionable analytics. By enabling precise consumption tracking and early anomaly detection, it helps utilities, cities, municipalities, campuses, and industrial facilities cut water waste and reduce operational costs significantly. This directly supports **SDG 6: Clean Water and Sanitation**—ensuring efficient, sustainable use of water resources at every scale. All telemetry is stored securely for compliance, billing, and operational insight—whether you're managing a single building, a campus, or a city-wide distribution network.
 
 ---
 
@@ -55,23 +55,21 @@ Magistrala connects water meters and smart valves to deliver real-time flow moni
 
 ## Solution Structure: Smart Water Metering
 
-A smart water metering solution with Magistrala models each physical device—meter or valve—as a Client. Meters publish consumption and quality data; valves subscribe to commands and respond automatically based on Rules Engine decisions.
+A smart water metering solution with Magistrala models each water meter as a Client. Meters publish consumption and quality data continuously, giving operators real-time visibility into flow, pressure, and water quality across the network.
 
 ### How It Works
 
-1. **Devices registered as Clients**: Water meters and smart valves each get unique credentials in Magistrala
-2. **Clients connected to a Channel**: All devices communicate through a shared Channel, enabling both publishing and subscribing
+1. **Meters registered as Clients**: Each water meter gets unique credentials in Magistrala
+2. **Clients connected to a Channel**: Meters communicate through a shared Channel, publishing telemetry in real-time
 3. **Meters publish telemetry**: Flow rate, pressure, temperature, and quality readings sent via MQTT, HTTP, or CoAP
-4. **Rules Engine processes data**: Automated rules store readings, trigger alarms, and send close commands to valves when limits are exceeded
+4. **Rules Engine processes data**: Automated rules store readings and trigger alarms when thresholds are exceeded
 5. **Users gain insights**: Real-time dashboards, maps, and reports deliver operational intelligence
 
 ### Key Capabilities
 
 **Multi-Protocol Connectivity**: Connect water meters and valves via MQTT, HTTP, CoAP, WebSocket, or LoRa. Magistrala handles both cellular and LoRaWAN deployments seamlessly.
 
-**Intelligent Rules Engine**: Automate valve control, threshold monitoring, leak detection, and usage-based billing calculations—no code changes required.
-
-**Automated Valve Control**: When readings exceed safe limits—high pressure, abnormal flow, or contamination detected—the Rules Engine sends a close command directly to the smart valve. Water is shut off automatically before damage occurs.
+**Intelligent Rules Engine**: Automate threshold monitoring, leak detection, and usage-based billing calculations—no code changes required.
 
 **Real-Time Alarms**: Instant alerts for high consumption, pressure anomalies, potential leaks, or water quality issues. Deliver notifications via email and Slack.
 
@@ -218,7 +216,7 @@ Beyond single-meter monitoring, Magistrala's capabilities extend across diverse 
 
 ![Group of Water Departments Supporting Multi-Tenancy](/img/blogs/water-metering/group_of_water_department_support_multitenacy.png)
 
-**Leak Detection**: Detect abnormal consumption patterns at night (minimum night flow analysis) to identify leaks before they become visible. Trigger alarms and valve actions automatically.
+**Leak Detection**: Detect abnormal consumption patterns at night (minimum night flow analysis) to identify leaks before they become visible. By comparing readings across multiple meters on the same pipeline, you can pinpoint exactly where loss is occurring between any two points in the network. Stored telemetry can also feed AI and machine learning models that learn normal consumption patterns over time—flagging subtle anomalies that rule-based thresholds alone would miss, such as slow micro-leaks or gradual pressure decay.
 
 **Industrial Water Management**: Monitor cooling towers, process water circuits, and wastewater treatment plants with the same platform. Track quality parameters and automate responses to out-of-spec readings.
 
