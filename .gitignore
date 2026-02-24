@@ -1,13 +1,9 @@
-blogs-builder
-local-server
-vendor/
-*.exe
 *.test
-*.prof
-*.out
 node_modules
 .astro
 dist
-.wrangler
-.dev.vars
 .env*
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example

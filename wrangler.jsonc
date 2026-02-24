@@ -1,6 +1,6 @@
 {
     "$schema": "./node_modules/wrangler/config-schema.json",
-    "name": "absmach-website",
+    "name": "website",
     "compatibility_date": "2026-01-14",
     "pages_build_output_dir": "./dist",
     "compatibility_flags": [
@@ -8,9 +8,6 @@
     ],
     "observability": {
         "enabled": true
-    },
-    "assets": {
-        "directory": "./dist"
     },
     "vars": {
         "TEAM_CONTACT_EMAIL": "info@absmach.eu",
