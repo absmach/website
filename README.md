@@ -49,7 +49,7 @@ Note: `wrangler pages deploy` does not accept compatibility flags as CLI argumen
 
 `wrangler.jsonc` (project config):
 
-- `name`: Cloudflare Pages project name (`absmach`).
+- `name`: Cloudflare Pages project name (the `*.pages.dev` subdomain).
 - `pages_build_output_dir`: deploy output directory (`./dist`).
 - `compatibility_date` and `compatibility_flags` (for example `nodejs_compat`) for Functions runtime.
 - `vars`: non-secret defaults for Functions (for contact form, use `TEAM_CONTACT_EMAIL` and `MAIL_FROM_EMAIL`).
