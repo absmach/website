@@ -9,6 +9,9 @@
     "observability": {
         "enabled": true
     },
+    "assets": {
+        "directory": "./dist"
+    },
     "vars": {
         "TEAM_CONTACT_EMAIL": "info@absmach.eu",
         "MAIL_FROM_EMAIL": "noreply@absmach.eu",
