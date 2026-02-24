@@ -7,8 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "cf:dev": "astro build && wrangler pages dev dist",
-    "deploy": "astro build && wrangler pages deploy dist"
+    "cf:dev": "astro build && npx wrangler@latest pages dev dist",
+    "deploy": "astro build && npx wrangler@latest pages deploy dist"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.15",

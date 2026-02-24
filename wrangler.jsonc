@@ -4,8 +4,7 @@
     "compatibility_date": "2026-02-24",
     "pages_build_output_dir": "dist",
     "compatibility_flags": [
-        "global_fetch_strictly_public",
-        "nodejs_compat"
+        "nodejs_compat_v2"
     ],
     "observability": {
         "enabled": true
