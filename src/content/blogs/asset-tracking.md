@@ -3,7 +3,7 @@ title: "Asset Tracking with Magistrala"
 slug: "tracking-assets-with-magistrala"
 excerpt: "Real-time asset tracking for construction equipment, vehicle fleets, and logistics operations with Rules Engine automation."
 description: "Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in."
-date: "2026-02-20"
+date: "2026-02-24"
 author:
   name: "Steve Munene"
   picture: "https://avatars.githubusercontent.com/u/61874077?v=4"
