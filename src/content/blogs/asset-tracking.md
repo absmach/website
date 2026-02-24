@@ -7,11 +7,10 @@ date: "2026-02-20"
 author:
   name: "Steve Munene"
   picture: "https://avatars.githubusercontent.com/u/61874077?v=4"
-coverImage: "/img/blogs/tracking-usecase/cover_page.png"
+coverImage: "/img/blogs/tracking-usecase/route_map_line_graph.png"
 ogImage:
-  url: "/img/blogs/tracking-usecase/cover_page.png"
+  url: "/img/blogs/tracking-usecase/route_map_line_graph.png"
 category: blog
-featured: true
 tags:
   - IoT Platform
   - Magistrala
@@ -38,15 +37,10 @@ Magistrala connects IoT devices to provide instant visibility into any trackable
 - [Solution Structure: Tracking Things](#solution-structure-tracking-things)
   - [How It Works](#how-it-works)
   - [Key Capabilities](#key-capabilities)
-- [Tracking Demo: Fleet Tracking in Action](#tracking-demo-fleet-tracking-in-action)
-  - [Step 1: Create Fleet Channel](#step-1-create-fleet-channel)
-  - [Step 2: Create Vehicle Clients](#step-2-create-vehicle-clients)
-  - [Step 3: Connect Clients to Channel](#step-3-connect-clients-to-channel)
-  - [Step 4: Configure IoT Simulator](#step-4-configure-iot-simulator)
-  - [Step 5: Set Up Rules Engine](#step-5-set-up-rules-engine)
-  - [Step 6: Start Simulation](#step-6-start-simulation)
-  - [Step 7: Build Real-Time Dashboards](#step-7-build-real-time-dashboards)
-  - [Step 8: Generate Reports](#step-8-generate-reports)
+- [Fleet Tracking in Action](#fleet-tracking-in-action)
+  - [Real-Time Dashboard](#real-time-dashboard)
+  - [Automated Alarms](#automated-alarms)
+  - [Business Reports](#business-reports)
 - [Other Applications in Tracking Assets](#other-applications-in-tracking-assets)
 - [Why Magistrala](#why-magistrala)
 - [Why Choose Magistrala Over Other Platforms](#why-choose-magistrala-over-other-platforms)
@@ -62,7 +56,7 @@ Building an asset tracking solution with Magistrala treats all valuable items—
 
 1. **Assets equipped with trackers**: GPS trackers, sensors, or OBD-II devices fitted to each asset
 2. **Trackers connect as Clients**: Each device registers in Magistrala with unique credentials
-3. **Clients publish to Channels**: Devices send data to specific **Topics** (location, telemetry, alarms) using MQTT, HTTP, or CoAP
+3. **Clients publish to Channels**: Devices send data to specific **Topics** (location, telemetry, alarms) using MQTT, HTTP, WS or CoAP
 4. **Rules Engine processes data**: Automated logic monitors topics and triggers actions (alerts, calculations, automations)
 5. **Users gain insights**: Real-time dashboards, mobile apps, and API integrations deliver actionable intelligence
 
@@ -80,159 +74,52 @@ Building an asset tracking solution with Magistrala treats all valuable items—
 
 ---
 
-## Tracking Demo: Fleet Tracking in Action
+## Fleet Tracking in Action
 
-Let's walk through a practical example of tracking two delivery vans in real-time. This guide demonstrates how to set up the entire solution from creating digital assets to visualizing live telemetry data.
+In this demo, we simulate two delivery vans transmitting GPS coordinates, speed, temperature, and fuel data in real time through Magistrala. As data streams in, the platform processes every reading instantly—updating live maps, triggering alarms when thresholds are breached, and persisting all telemetry for reporting and analytics.
 
-### Step 1: Create Fleet Channel
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe
+    src="https://drive.google.com/file/d/1rJh_2hMR2-lkgvDCquOLSH3GYFfspVUJ/preview"
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+    allow="autoplay"
+    allowfullscreen
+  ></iframe>
+</div>
 
-First, create a Channel to represent your fleet. Channels group related devices and their data streams together.
+### Real-Time Dashboard
 
-In the Magistrala platform, navigate to Channels and create a new channel called `fleet_channel`. This will serve as the communication hub for all your vehicles.
+The dashboard gives operators a live, unified view of the entire fleet. Vehicle locations update continuously on the route map. Speed trends, humidity levels, fuel consumption, and temperature readings stream into line graphs, value cards, and gauges—all in real time.
 
-![Fleet Channel](/img/blogs/tracking-usecase/fleet_channel.png)
+![Route Map and Line Graph](/img/blogs/tracking-usecase/route_map_line_graph.png)
 
-### Step 2: Create Vehicle Clients
+![Dashboard Temperature Gauge, Alarms and Value Card](/img/blogs/tracking-usecase/dashboard_temp_gauge_alarms_value_card.png)
 
-Next, create Clients (digital twins) for each vehicle. Each Client has unique credentials that authenticate the physical device.
+![Dashboard Bar Graph and Count Card](/img/blogs/tracking-usecase/dashboard_bar_graph_count_card.png)
 
-Create two clients:
-- **van_001** - First delivery van
-- **van_002** - Second delivery van
+### Automated Alarms
 
-Each client is assigned a unique ID and secret (password) that the physical IoT tracker will use to authenticate.
+The Rules Engine monitors every incoming reading and raises alarms automatically when conditions are exceeded—no manual checking required. Alerts appear instantly in the alarm table and are delivered via email and Slack:
 
-![Fleet Clients](/img/blogs/tracking-usecase/fleet_clients.png)
+- **Speed > 90 km/h** → speeding alarm triggered
+- **Fuel below threshold** → low fuel alert raised
+- **High temperature** → environmental alert for sensitive cargo
 
-### Step 3: Connect Clients to Channel
+Operators can take immediate action directly from the dashboard—dispatching maintenance, contacting drivers, or rerouting vehicles based on live alerts.
 
-Connect both van clients to the fleet channel. This authorization allows the vehicles to publish telemetry data to the channel.
+![Route Map and line graph](/img/blogs/tracking-usecase/route_map_line_graph.png)
 
-![Connect Clients to Channel](/img/blogs/tracking-usecase/connect_clients_channels.png)
+### Business Reports
 
-### Step 4: Configure IoT Simulator
+All stored telemetry feeds directly into the reporting engine. Reports can be scheduled for automatic generation and delivered via email, supporting operational reviews, customer billing, and compliance documentation:
 
-Now configure the IoT device emulator to simulate real GPS trackers sending data from both vans. Each simulator instance represents a physical tracking device installed in a vehicle.
-
-**Configuration settings:**
-- **Broker URL**: `messaging.magistrala.absmach.eu`
-- **Username**: Client ID from Magistrala
-- **Password**: Client secret from Magistrala
-- **Message Format**: SenML (Sensor Measurement Lists)
-- **Topic Pattern**: `m/{{domain}}/c/{{channelid}}`
-- **Data Points**: GPS coordinates, speed, temperature, humidity, fuel consumption
-
-Configure two simulator instances—one for each van.
-
-![IoT Device Emulator](/img/blogs/tracking-usecase/iot_device_emulator.png)
-
-### Step 5: Set Up Rules Engine
-
-Create two rules to process incoming vehicle telemetry:
-
-**Rule 1: Save Telemetry Data**
-
-This rule processes SenML-formatted messages and stores them in the database for historical analysis and reporting.
-
-![Rule to Save SenML Data](/img/blogs/tracking-usecase/rule_to_save_senml.png)
-
-**Rule 2: Generate Alarms**
-
-This rule monitors vehicle data and creates alarms when thresholds are exceeded (e.g., high temperature, low fuel, excessive speed).
-
-![Rule to Save Alarms](/img/blogs/tracking-usecase/rule_to_save_alarm.png)
-
-Both rules are now active and ready to process data:
-
-![Created Rules](/img/blogs/tracking-usecase/create_2_rules.png)
-
-### Step 6: Start Simulation
-
-Start both IoT simulator instances. The vans immediately begin transmitting telemetry data:
-- GPS coordinates updating in real-time
-- Speed measurements
-- Temperature and humidity readings
-- Fuel consumption metrics
-
-Messages flow from the simulators through MQTT to Magistrala, where the Rules Engine processes and stores them.
-
-![Fleet Saved Messages](/img/blogs/tracking-usecase/fleet_saved_messages.png)
-
-Your fleet tracking system is now operational! The platform is receiving, processing, and storing real-time data from both vehicles.
-
-### Step 7: Build Real-Time Dashboards
-
-With data flowing into the platform, create interactive dashboards to visualize fleet operations in real-time. Magistrala provides multiple widget types for comprehensive monitoring.
-
-**Available Dashboard Widgets:**
-
-Choose from various widget types to build your custom dashboard:
-
-![Available Dashboard Widgets](/img/blogs/tracking-usecase/available_dashboard_widgets.png)
-
-**Create Route Map Widget:**
-
-Start by adding a map widget to visualize vehicle locations and routes in real-time:
-
-![Create Dashboard Route Map](/img/blogs/tracking-usecase/create_dashboard_route_map.png)
-
-**Add Alarm Table:**
-
-Create an alarm table widget to display critical alerts when thresholds are exceeded—fuel consumption limits, speed violations, temperature extremes, and other important events:
-
-![Create Dashboard Alarm Table](/img/blogs/tracking-usecase/create_dashbaord_alarm_table.png)
-
-**Complete Dashboard View:**
-
-Your operational dashboard now displays:
-- **Route Map**: Real-time vehicle locations with movement trails
-- **Alarm Table**: Active alerts for fuel consumption, speed limits, temperature thresholds
-- Take immediate action based on alerts—dispatch maintenance, contact drivers, reroute vehicles
-
-![Route Map and Alarm Table](/img/blogs/tracking-usecase/route_map_alarm_table.png)
-
-**Add Performance Metrics:**
-
-Enrich your dashboard with additional widgets:
-- **Line Graphs**: Track humidity and speed trends over time
-- **Value Cards**: Monitor current fuel consumption levels
-
-![Dashboard Line, Bar, and Value Cards](/img/blogs/tracking-usecase/dashboard_line_bar_value_card.png)
-
-**Temperature Monitoring:**
-
-Add gauge widgets to monitor critical environmental conditions:
-
-![Dashboard Temperature Gauge](/img/blogs/tracking-usecase/dashboard_temperature_gauge.png)
-
-With these dashboards, you have complete visibility into your fleet operations, enabling data-driven decisions and rapid response to issues.
-
-### Step 8: Generate Reports
-
-Transform raw telemetry data into actionable business reports. Use the reporting engine to analyze fleet performance, optimize operations, and support billing.
-
-**Create Custom Reports:**
-
-Build reports for specific business needs—fuel consumption analysis, route efficiency, maintenance schedules, or usage-based billing:
-
-![Create Fuel Consumption Report](/img/blogs/tracking-usecase/create_fuel_consumption_report.png)
-
-**Sample Generated Reports:**
-
-Reports can be customized to show various insights across your fleet:
-- Fuel consumption by vehicle and time period
-- Speed compliance and safety metrics  
-- Temperature exposure for sensitive cargo
-- Route efficiency and delivery performance
-- Usage-based billing calculations
-
-In this sample, we're showing fuel consumption analysis:
+- **Fuel usage per vehicle and time period**
+- **Route efficiency and delivery performance**
+- **Speed compliance and safety metrics**
+- **Temperature exposure for sensitive cargo**
+- **Usage-based billing calculations**
 
 ![Sample Reports](/img/blogs/tracking-usecase/reports_sample.png)
-
-Reports can be scheduled for automatic generation and delivered via email, supporting operational reviews, customer billing, and compliance documentation.
-
-Your complete fleet tracking solution is now operational—from device connectivity through data visualization to business reporting.
 
 ---
 
@@ -276,7 +163,7 @@ Beyond the fleet tracking demo, Magistrala's asset tracking capabilities extend 
 - **Cloud-Native & Self-Hostable**: Run on Magistrala Cloud for zero infrastructure management, or self-host on your own servers for complete control.
 - **Built for Developers**: Clean REST APIs, comprehensive documentation, and standard protocols (MQTT, HTTP, CoAP, WS) mean faster integration.
 - **Production-Ready Out of the Box**: Enterprise authentication (mutual TLS), fine-grained access control, audit logs, and multi-tenancy are included—not expensive add-ons.
-- **Active Community & Professional Support**: Open development on GitHub means transparency and community contributions. Need help? Direct access to the engineering team at [info@absmach.eu](mailto:info@absmach.eu).
+- **Active Community & Professional Support**: Open development on GitHub means transparency and community contributions. Need help? [Contact our engineering team directly](/contact).
 
 ---
 
@@ -284,4 +171,4 @@ Beyond the fleet tracking demo, Magistrala's asset tracking capabilities extend 
 
 Ready to transform your asset tracking operations? Our team will help you design and implement a solution tailored to your specific needs.
 
-**[Contact us today for a demo](mailto:info@absmach.eu)** or [start building with a free trial](https://cloud.magistrala.absmach.eu/en/login) – no credit card required.
+**[Contact us today for a demo](/contact)** or [start building with a free trial](https://cloud.magistrala.absmach.eu/en/login) – no credit card required.
