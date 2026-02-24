@@ -30,13 +30,12 @@ It accepts user and client connections over various network protocols (i.e. HTTP
 
 In this guide, I'll walk you step-by-step through how to connect the BeagleV-Fire to SuperMQ using MQTT and CoAP, authenticate your client, and publish messages to a topic.
 
-
 ## What You Need
 
 - The BeagleV-Fire running Linux/RISC-V
 - SuperMQ cloned and running in your PC.
 
-## 1. Setting up and running SuperMQ on your PC. 
+## 1. Setting up and running SuperMQ on your PC
 
 Setting up SuperMQ is easy. Clone the repository from Github to your PC.
 
@@ -87,8 +86,9 @@ export USER_TOKEN=<your-user-token>
 # command: ./build/cli domains create <my-domain-name> <route-name> $USER_TOKEN
 # This returns the domain ID
 # Then save the domain ID as DOMAIN_ID
+# export DOMAIN_ID=<your-domain-id>
 ./build/cli domains "mydomain" create "myroute" $USER_TOKEN
-export DOMAIN_ID=<your-domain-id>
+export DOMAIN_ID="56a4462e-5001-4bcf-b421-dbbe3d59c53c"
 ```
 
 ### Create a Client
@@ -97,9 +97,11 @@ export DOMAIN_ID=<your-domain-id>
 # command: ./build/cli clients create '{"name":"client-name"}' $DOMAIN_ID $USER_TOKEN 
 # This command returns the client id and the client key
 # Then save the client ID and client secret as CLIENT_ID and CLIENT_KEY
+# export CLIENT_ID=<your-client-id>
+# export CLIENT_KEY=<your-client-secret>
 ./build/cli clients create '{"name":"myClient"}' $DOMAIN_ID $USER_TOKEN
-export CLIENT_ID=<your-client-id>
-export CLIENT_KEY=<your-client-secret>
+export CLIENT_ID="bd2733d1-fcda-4974-bd7b-63b87a2e150f"
+export CLIENT_KEY="6b648c99-d753-4ccb-9954-db6a504f0737"
 ```
 
 ### Create a Channel
@@ -108,11 +110,12 @@ export CLIENT_KEY=<your-client-secret>
 # command: ./build/cli channels create '{"name":"channel-name"}' $DOMAIN_ID $USER_TOKEN 
 # This command returns the channel id
 # Then save the channel ID as CHANNEL_ID
+# export CHANNEL_ID=<your-channel-id>
 ./build/cli channels create '{"name":"mychannel"}' $DOMAIN_ID $USER_TOKEN
-export CHANNEL_ID=<your-channel-id>
+export CHANNEL_ID="0efb859c-f606-442d-9c9e-fd924cfee654"
 ```
 
-### Connect Client to Channel.
+### Connect Client to Channel
 
 ```bash
 ./build/cli clients connect $CLIENT_ID $CHANNEL_ID '["publisher","subscriber"]' $DOMAIN_ID $USER_TOKEN
@@ -120,7 +123,7 @@ export CHANNEL_ID=<your-channel-id>
 
 SuperMQ setup is now complete. We now setup BeagleV Fire.
 
-## Setup the BeagleV Fire.
+## Setup the BeagleV Fire
 
 Power the BeagleV-Fire using the USB cable. Find the serial device and connect with your board using screen
 
@@ -159,14 +162,13 @@ Set the environment variables by configuring the connection details from the cre
 ```bash
 export SUPERMQ_HOST=<your-computer-ip>
 # SuperMQ runs in your PC Therefore use your PC's IP  
-export DOMAIN_ID=<your-domain-id>           
-export CHANNEL_ID=<your-channel-id>         
-export CLIENT_ID=<your-client-id>           
-export CLIENT_KEY=<your-client-secret>
+export DOMAIN_ID="56a4462e-5001-4bcf-b421-dbbe3d59c53c"
+export CHANNEL_ID="0efb859c-f606-442d-9c9e-fd924cfee654"
+export CLIENT_ID="bd2733d1-fcda-4974-bd7b-63b87a2e150f"
+export CLIENT_KEY="6b648c99-d753-4ccb-9954-db6a504f0737"
 ```
 
-Test the connection. It should result to: 
-
+Test the connection. It should result to:
 
 ```bash
 ping -c 4 $SUPERMQ_HOST
@@ -194,7 +196,7 @@ mosquitto_sub -u $CLIENT_KEY -P "" -t "m/$DOMAIN_ID/c/$CHANNEL_ID/messages" -h l
 
 In this case, we have created a topic called messages and are subscribing to it . This will wait and display any messages published to this channel.
 
-### To publish messages on the BeagleV Fire terminal:
+### To publish messages on the BeagleV Fire terminal
 
 ```bash
 mosquitto_pub -u $CLIENT_KEY -P "" -t "m/$DOMAIN_ID/c/$CHANNEL_ID/messages" -h $SUPERMQ_HOST -m '{"temperature": 25.5, "humidity": 60}'
