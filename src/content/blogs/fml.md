@@ -6,9 +6,9 @@ date: "2026-02-23"
 author:
   name: "Jeff Mboya"
   picture: "https://avatars.githubusercontent.com/u/44696487?s=96&v=4"
-coverImage: "/img/blogs/federated-ml/federated-ml-simple-who-does-what.svg"
+coverImage: "/img/blogs/federated-ml/Federated__Machine_Learning.jpg"
 ogImage:
-  url: "/img/blogs/federated-ml/federated-ml-simple-who-does-what.svg"
+  url: "/img/blogs/federated-ml/Federated__Machine_Learning.jpg"
 tags:
   - "Federated Learning"
   - "Machine Learning"
