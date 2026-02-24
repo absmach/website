@@ -68,7 +68,7 @@ const matrix = "https://matrix.to/#/#supermq:matrix.org";
           <div class="flex items-center justify-between">
             <span class="text-muted">LinkedIn</span>
             <a
-              href="https://www.linkedin.com/company/abstract-machines"
+              href={linkedin}
               target="_blank"
               rel="noopener noreferrer"
               class="font-medium hover:underline"
@@ -80,7 +80,7 @@ const matrix = "https://matrix.to/#/#supermq:matrix.org";
           <div class="flex items-center justify-between">
             <span class="text-muted">Twitter</span>
             <a
-              href="https://twitter.com/absmach"
+              href={twitter}
               target="_blank"
               rel="noopener noreferrer"
               class="font-medium hover:underline"
@@ -92,7 +92,7 @@ const matrix = "https://matrix.to/#/#supermq:matrix.org";
           <div class="flex items-center justify-between">
             <span class="text-muted">YouTube</span>
             <a
-              href="https://www.youtube.com/@absmach"
+              href={youtube}
               target="_blank"
               rel="noopener noreferrer"
               class="font-medium hover:underline"
@@ -104,7 +104,7 @@ const matrix = "https://matrix.to/#/#supermq:matrix.org";
           <div class="flex items-center justify-between">
             <span class="text-muted">Matrix</span>
             <a
-              href="https://matrix.to/#/#supermq:matrix.org"
+              href={matrix}
               target="_blank"
               rel="noopener noreferrer"
               class="font-medium hover:underline"
@@ -254,7 +254,8 @@ const matrix = "https://matrix.to/#/#supermq:matrix.org";
           role="status"
           aria-live="polite"
           data-contact-status
-        ></p>
+        >
+        </p>
       </form>
     </Section>
     <script is:inline>
@@ -271,7 +272,11 @@ const matrix = "https://matrix.to/#/#supermq:matrix.org";
 
         const setStatus = (text, tone = "muted") => {
           statusEl.textContent = text;
-          statusEl.classList.remove("text-muted", "text-primary", "text-accent");
+          statusEl.classList.remove(
+            "text-muted",
+            "text-primary",
+            "text-accent",
+          );
           if (tone === "success") {
             statusEl.classList.add("text-accent");
             return;
