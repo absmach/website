@@ -465,7 +465,6 @@ Start the task:
 TASK_ID="<task-id-from-response>"
 curl -sS -X POST http://localhost:7070/tasks/$TASK_ID/start | jq .
 ```
-
 For task lifecycle and API details, see the
 [Propeller docs](https://propeller.absmach.eu/).
 
