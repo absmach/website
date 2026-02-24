@@ -22,9 +22,7 @@ draft: false
 
 # Running Federated Machine Learning on Propeller (Docker Compose Edition)
 
-You have machine learning models running on factory sensors, roadside traffic
-cameras, and mobile devices. The data they produce is too large to move, too
-sensitive to centralize, or collected in places that are not always online.
+You have machine learning models running on factory sensors, roadside traffic cameras, and mobile devices. The data they produce is too large to move, too sensitive to centralize, or collected in places that are not always online.
 
 But you still need a single base model that improves over time.
 
