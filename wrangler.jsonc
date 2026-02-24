@@ -6,7 +6,6 @@
     "compatibility_flags": [
         "global_fetch_strictly_public",
         "nodejs_compat_v2",
-        "nodejs_compat"
     ],
     "observability": {
         "enabled": true
