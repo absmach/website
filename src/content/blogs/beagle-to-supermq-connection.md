@@ -74,7 +74,8 @@ example:
 
 ```bash
 # command: ./build/cli users token <username> <password>
-# The command returns the user token.
+# The command returns the user token.git status
+
 # Then save the access token as USER_TOKEN
 ./build/cli users token johndoe 12345678
 export USER_TOKEN=<your-user-token>
