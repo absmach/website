@@ -22,66 +22,36 @@ draft: false
 
 # Running Federated Machine Learning on Propeller (Docker Compose Edition)
 
-You have machine learning models running on factory sensors, roadside traffic cameras, and mobile devices. The data they produce is too large to move, too sensitive to centralize, or collected in places that are not always online.
+You have machine learning models running on factory sensors, roadside traffic cameras, and mobile devices. That data is often too sensitive to share, too large to move, or simply unavailable.
 
-But you still need a single base model that improves over time.
+But you still need one shared base model that continuously improves across all those devices.
 
-This is the problem federated machine learning (FML) solves. In this post, you
-will see how [Propeller](https://propeller.absmach.eu/) runs federated learning
-end to end using [Docker Compose](https://docs.docker.com/compose/).
+This is exactly the problem that federated machine learning, or FML, was designed to solve. Here you will see [Propeller](https://propeller.absmach.eu/) run full federated learning end to end with [Docker Compose](https://docs.docker.com/compose/).
 
 ## What you need to know
 
 [Propeller](https://propeller.absmach.eu/) is a
-[WebAssembly](https://webassembly.org/) (WASM) orchestrator. You write your
-workloads as WASM modules, push them to an
-[OCI registry](https://opencontainers.org/), and Propeller takes care of running them
-wherever they make sense - on edge devices or in the cloud. It handles the
-unglamorous parts for you: scheduling work to the right place, moving messages
-around, and managing the lifecycle of each task.
+[WebAssembly](https://webassembly.org/) (WASM) orchestrator designed to run your workloads reliably at the edge. You write WASM modules, push them to an [OCI registry](https://opencontainers.org/), and Propeller runs them everywhere. It handles scheduling, message routing, and task lifecycle management so you do not have to.
 
-Federated machine learning builds on a simple idea: learning stays close to
-where the data is created. A good example is autocomplete and predictive text
-on your phone. Your device learns from how you type, and that data never leaves
-your phone. Instead, it occasionally sends a small update describing what it
-learned - never the actual text. Those updates are combined with updates from
-millions of other phones to improve a shared model, which is then sent back
-out. The model gets better for everyone, without collecting private data or
-moving large datasets across the network.
+Federated machine learning is built on one simple idea: keep learning close to the data. Think of autocomplete and predictive text on your phone as a perfect illustrative example here. Your device learns from your typing patterns, and that personal data never leaves your phone. Instead, it occasionally sends a small update describing what it learned, never the actual text. Those updates from millions of phones are combined together to improve one shared global model. The model improves for everyone without collecting private data or moving large datasets across networks.
 
-The most important thing to understand is that federated learning in Propeller
-is not a separate execution mode. There is not a special "FML runner" hidden
-somewhere in the system. It is the same WASM task runner you would use for any
-other workload.
+The key point is that federated learning in Propeller is not a separate execution mode. There is no special "FML runner" hiding somewhere deep inside the Propeller system at all. It is simply the same WASM task runner you would use for any other workload.
 
-What changes is the context. When a task is started with a small set of
-environment variables - such as `ROUND_ID`, `MODEL_URI`, and `HYPERPARAMS` - the
-[Proplet](https://propeller.absmach.eu/) (the edge worker)
-recognizes that it is participating in a federated learning round. Instead of
-just executing a one-off workload, it fetches the current model, runs your
-training code locally using a local dataset, and sends the resulting update to
-the coordinator. From the operator's point of view, it is still just running a
-WASM task; the federated learning behavior comes automatically from the
-information you pass in.
+The only thing that changes between a regular task and a federated one is context. When those variables are set, the [Proplet](https://propeller.absmach.eu/) immediately knows it is in a federated round. It fetches the model, trains locally on its own dataset, and sends the resulting update. For the operator, it looks like any ordinary WASM task running on the edge device.
 
-For detailed component behavior and configuration, refer to the
-[Propeller docs](https://propeller.absmach.eu/).
+For more detailed information about all component behavior and configuration, refer to the [Propeller docs](https://propeller.absmach.eu/).
 
 ![Simple view of who does what in federated learning: operator, devices, coordinator, and model store](/img/blogs/federated-ml/federated-ml-simple-who-does-what.svg)
 
-This diagram shows the main roles in plain terms: you start a round, devices learn locally, the coordinator combines updates, and the model store keeps the improved version.
+This diagram shows four roles: operator, devices, coordinator, and the model store that saves progress.
 
 ## The key idea
 
-When a task starts with `ROUND_ID` set in its environment, the Proplet
-immediately knows it is taking part in a federated learning round. There is no
-special execution mode to enable. From the Proplet's point of view, it is still
-just running a WASM task.
+Any task that launches with `ROUND_ID` in its environment is automatically a federated learning round. There is absolutely no special or separate execution mode that you need to enable here. From the Proplet's own point of view, it is still just running a WASM task.
 
-What changes is the context.
+What actually changes between a normal workload and a federated one is only the context.
 
-With `ROUND_ID`, `MODEL_URI`, and `HYPERPARAMS` present, the Proplet follows a
-slightly different flow:
+When `ROUND_ID`, `MODEL_URI`, and `HYPERPARAMS` are all present, the Proplet follows this slightly different flow:
 
 - it fetches the base model from the model registry using `MODEL_URI`
 - if a local training dataset is available, it loads that too
@@ -93,32 +63,23 @@ slightly different flow:
 
 Propeller keeps this simple by building everything on three objects:
 
-- Task: one piece of WASM code running on one device. In federated learning,
-  that task happens to be a training workload, started with a few extra
-  environment variables.
-- Round: the same task running across many devices once. Each device trains
-  locally, sends its update, and stops.
-- Experiment: stitches multiple rounds together. It defines which devices
-  participate, how training is configured, how many updates are required to move
-  forward, and when the whole process is done.
+- Task: one piece of WASM code that runs a single training job on one device. In federated learning, it is a training workload started with a few extra environment variables.
+- Round: the same training task deployed and run across many devices at the same time. Each participating device trains on local data, sends back one small update, and then stops.
+- Experiment: the high-level structure that stitches multiple rounds together into a full federated learning process. It defines participating devices, training configuration, how many updates are needed, and the stopping condition.
 
 ![Simple decision flow showing when a task runs normally versus federated learning mode](/img/blogs/federated-ml/federated-ML-fml-simple-decision-flow.svg)
 
-This means the system checks one thing first: if it is a learning round, it trains locally and sends a small update; otherwise it runs as a normal task.
+With `ROUND_ID` set, the Proplet trains locally and sends an update; otherwise it runs normally.
 
-That is the core model: the same task runner you already use, applied repeatedly
-with a bit more coordination.
+The same task runner you already use is applied repeatedly with just a little coordination.
 
 ## Minimal model used in this demo
 
-To keep things simple, this example uses a
+To keep things simple, this demo example uses a
 [logistic regression](https://en.wikipedia.org/wiki/Logistic_regression) model
 for binary classification.
 
-The model itself is small and easy to reason about. It is represented as a JSON
-object with two parts: a set of weights and a bias term. In this case, there
-are three input features, so the model starts with three weights and a single
-bias, all initialized to zero.
+The model itself is intentionally small and straightforward, making it very easy to reason about. Represented as a JSON object, it has two parts: a weights array and a bias. For three input features, the model starts with three weights and one bias, all zero.
 
 ```json
 {
@@ -127,51 +88,34 @@ bias, all initialized to zero.
 }
 ```
 
-The model is stored in a model registry - a simple HTTP service that keeps
-track of different versions of the global model. Each version is referenced by
-a URI, such as `fl/models/global_model_v0`. When a training round finishes and
-updates are combined, a new version of the model is created and stored. Over
-time, this gives you a clear, versioned history of how the model evolves.
+The model lives in a model registry, an HTTP service that tracks global model versions. Each stored version of the global model is uniquely referenced by a URI like `fl/models/global_model_v0`. After each round, combined updates are saved as a new version of the global model. Over time, this gives you a clear, versioned history showing exactly how the model evolves.
 
 ## How training works
 
-Each Proplet receives the current version of the model and trains it locally
-using its own data. The training process follows standard logistic regression
-with
-[stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent).
+Each Proplet receives the current model and trains it locally using only its own data. The training process follows standard logistic regression updated via
+[stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) on each example.
 
-For each training example, the Proplet makes a prediction, compares it to the
-true label, and adjusts the model slightly. This happens entirely on the
-device, using only local data. No raw samples are shared.
+For each example, the Proplet predicts, compares to the label, and adjusts the model slightly. All of this happens entirely on the device itself, using only the local data available. Critically, no raw training samples from the device are ever shared with any other participant.
 
-Once training is done, the Proplet sends back an update. That update contains
-the trained weights and bias, along with some basic metadata like how many
-samples were used and which model version the training started from.
+Once training is complete, the Proplet sends its learned update back to the central coordinator. It includes the trained weights and bias, the sample count, and the starting model version.
 
 ![Simple round loop: share model, train locally, send updates, combine updates, and repeat](/img/blogs/federated-ml/federated-ml-simple-round-loop.svg)
 
-This is the full round in one line: send model out, learn on devices, collect updates, combine them, then start the next round with a better model.
+Send model out, train locally, collect updates, combine them, then repeat with the improved model.
 
 ## How aggregation works
 
-The coordinator collects updates from all participating Proplets. Once enough
-updates have arrived, it combines them using
-[Federated Averaging](https://arxiv.org/abs/1602.05629).
+The coordinator's primary job is to collect model updates from all of the participating Proplets. Once the required number of updates arrive, it combines them using the [Federated Averaging](https://arxiv.org/abs/1602.05629) algorithm.
 
-Each update contributes in proportion to the amount of data used during
-training. The result is a new set of weights and a new bias that reflect what
-was learned across all devices in that round.
-
-That aggregated model is then stored back in the registry as the next version
-of the global model, ready to be sent out again.
+Devices that trained on more data always contribute proportionally more to the final aggregated result. Aggregation produces new weights and a bias capturing everything all devices collectively learned that round. The aggregated model is then saved in the registry as the new global model version.
 
 ![Simple privacy and bandwidth story comparing raw data upload with federated updates](/img/blogs/federated-ml/federated-ml-simple-privacy-story.svg)
 
-The key takeaway here is that raw data stays on devices, while only lightweight learning updates move over the network.
+Raw data stays put on devices; only lightweight model update payloads move across the network.
 
 ## Run the FML demo with Docker Compose
 
-Use the repo root for all commands. First, set a reusable compose command:
+Use the repo root as your working directory for every command shown in this guide. First, set a reusable compose command:
 
 ```bash
 COMPOSE="docker compose -f docker/compose.yaml -f examples/fl-demo/compose.yaml --env-file docker/.env"
@@ -189,8 +133,7 @@ curl -sS http://localhost:7070/health | jq .
 curl -sS http://localhost:8086/health | jq .
 ```
 
-If things are working, you should see your containers in `Up` state and both
-health endpoints returning JSON.
+When things are working, containers appear in `Up` state and both health endpoints return JSON.
 
 ### 2. Provision [SuperMQ](https://docs.supermq.absmach.eu/) resources
 
@@ -211,7 +154,7 @@ $COMPOSE ps manager coordinator-http proplet proplet-2 proplet-3 proxy
 
 ### 3. Build and push the FL WASM client image
 
-If you already have a usable image, reuse it. Otherwise, build the WASM binary:
+If a usable image from a previous build exists, skip ahead and just reuse it. Otherwise, build the WASM binary:
 
 ```bash
 cd examples/fl-demo/client-wasm
@@ -255,8 +198,7 @@ List Proplets and confirm they are alive:
 curl -sS http://localhost:7070/proplets | jq '.proplets[] | {id,name,alive}'
 ```
 
-Use the `id` values (UUIDs) as participants. Do not use instance labels like
-`proplet-1`.
+Always use the `id` values, which are UUIDs, when specifying participants in your experiment payload. Instance labels like `proplet-1` are only for Docker and will not work as participant identifiers.
 
 If you want to pull them directly from `docker/.env`, export them like this:
 
@@ -272,7 +214,7 @@ echo "$PROPLET_3_CLIENT_ID"
 
 ### 5. Initialize the model registry (v0)
 
-This demo starts from a simple all-zero model. Create it once:
+This demo always begins from a simple all-zero model so each training round starts clean. Create it once:
 
 ```bash
 curl -sS -X POST http://localhost:8084/models \
@@ -292,8 +234,7 @@ Then confirm it exists:
 curl -sS http://localhost:8084/models/0 | jq .
 ```
 
-If you re-run the demo a lot, you may already have a v0. In that case, you can
-also guard the create step:
+Rerunning this demo often means a v0 model may already exist from an earlier session. In that case, you can also guard the create step:
 
 ```bash
 if ! curl -fsS http://localhost:8084/models/0 >/dev/null; then
@@ -311,8 +252,7 @@ fi
 
 ### 6. Configure and start an experiment
 
-Now you are ready to kick off a federated training round. Create a unique round
-ID and experiment ID, then call the manager API:
+At this point you are fully ready to kick off a real federated training round. Create a unique round ID and experiment ID, then call the manager API:
 
 ```bash
 TS=$(date +%s)
@@ -334,10 +274,7 @@ curl -sS -X POST http://localhost:7070/fl/experiments \
   }" | jq .
 ```
 
-You should get back a response indicating the experiment was configured. At
-this point, the manager does the fan-out for you: it tells the coordinator
-about the round, creates one task per participant, and injects the federated
-learning environment variables each Proplet needs.
+You should receive a response confirming that the experiment has been successfully configured and accepted. The manager handles the fan-out by notifying the coordinator and creating one task per Proplet.
 
 ### 7. Watch the round run
 
@@ -348,7 +285,7 @@ curl -sS http://localhost:7070/tasks \
   | jq --arg rid "$ROUND_ID" '.tasks[] | select(.name | startswith("fl-round-"+$rid)) | {id,name,state,proplet_id}'
 ```
 
-You should see three tasks, one per participant.
+You should see exactly three tasks listed in the output, one task for each participant.
 
 You can also watch the manager logs for that round ID:
 
@@ -374,8 +311,7 @@ When the round is done, you will see a response like:
 
 ### 8. Verify aggregation and the new global model
 
-Once the round completes, aggregation should have happened and a new model
-version should exist.
+Once the round completes, aggregation should have happened and a new model version should exist.
 
 Check the coordinator logs for this round:
 
@@ -399,13 +335,11 @@ echo "Model v1:"
 curl -sS http://localhost:8084/models/1 | jq .
 ```
 
-If everything worked, the weights and bias in v1 should differ from the all
-zero values in v0.
+Success means the weights and bias values in v1 will differ from the all-zero v0.
 
 ### 9. Run a second round
 
-Federated learning gets interesting when you repeat the process. Start a second
-round from `v1` to produce `v2`:
+Federated learning gets more interesting and useful when you run it through multiple successive rounds. Start a second round from `v1` to produce `v2`:
 
 ```bash
 TS2=$(date +%s)
@@ -436,9 +370,7 @@ curl -sS http://localhost:8084/models/2 | jq .
 
 ## Optional: run one federated task manually
 
-Sometimes you want full control over a single device, or you are debugging one
-participant. In that case, you can bypass experiment orchestration and run a
-single federated task directly.
+Sometimes you want full control over a single device, or you are debugging one participant. In that case, you can bypass experiment orchestration and run a single federated task directly.
 
 Create the task:
 
@@ -465,35 +397,20 @@ Start the task:
 TASK_ID="<task-id-from-response>"
 curl -sS -X POST http://localhost:7070/tasks/$TASK_ID/start | jq .
 ```
-For task lifecycle and API details, see the
-[Propeller docs](https://propeller.absmach.eu/).
+For complete task lifecycle documentation and full API details, please refer to the [Propeller docs](https://propeller.absmach.eu/).
 
 ## Limitations and good practices
 
-Federated learning assumes devices can reach both the coordinator and the model
-registry. If a device is offline or intermittently connected, it will not
-contribute to that round. Choose timeout values that reflect real network
-conditions.
+Federated learning assumes every device in a round can reach the coordinator and model registry. If a device is offline or intermittently connected, it will not contribute to that round. Always choose timeout values that accurately reflect the real network conditions of your deployment environment.
 
-Each Proplet typically runs one task at a time. If a device is already busy,
-new tasks will wait. For higher throughput, avoid overloading individual
-devices.
+Keep in mind that each individual Proplet typically runs only one task at a time. When a device is already busy, newly scheduled tasks will simply wait until it finishes. For higher system throughput in production, try to avoid scheduling too many tasks per device.
 
-Model size matters. Large models take longer to fetch and produce larger
-updates. Start with small models, then scale up once the flow is stable.
+Model size has a significant impact on how quickly rounds can complete across your devices. Large models take considerably longer to fetch and they produce much larger update payloads too. Start with small models first, then scale up gradually once the training flow is stable.
 
-Be careful with `k_of_n`. If it equals the total number of participants, a
-single failure will block the round. Lowering it gives you fault tolerance.
+You should be very careful when choosing the `k_of_n` setting, as it affects fault tolerance. If it equals the total number of participants, a single failure will block the round. Lowering `k_of_n` below the total participant count gives your system practical and valuable fault tolerance.
 
-Timeouts should account for model fetch time, training time, and network
-latency. Short timeouts are fine for small experiments, but production workloads
-usually need more headroom.
+Timeout values should account for model fetch time, local training time, and overall network latency. Short timeouts are fine for small local experiments, but production workloads usually need more headroom.
 
-If your WASM registry requires authentication, make sure credentials are
-configured correctly. Proplets must be able to fetch training images and models
-without manual intervention.
+If your WASM image registry requires authentication, make absolutely sure your credentials are configured correctly. Proplets must be fully able to fetch training images and model files without manual intervention.
 
-Finally, the coordinator matters. If it is unavailable, training rounds simply
-do not finish. In production, this means planning for failure - whether that is
-redundancy, recovery, or both - so model training can continue even when parts
-of the system go down.
+Finally, the coordinator is a critical component and therefore deserves very careful operational attention always. If the coordinator goes down, all active training rounds will simply stall and never complete. In production, plan for coordinator failure through redundancy or recovery so training can always continue.
