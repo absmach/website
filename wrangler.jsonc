@@ -9,6 +9,7 @@
     "observability": {
         "enabled": true
     },
+    "workers_dev": false,
     "vars": {
         "TEAM_CONTACT_EMAIL": "info@absmach.eu",
         "MAIL_FROM_EMAIL": "noreply@absmach.eu",
