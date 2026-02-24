@@ -45,7 +45,7 @@ The S0 Main Board features:
 The S0 Baseboard extends functionality with:
 
 - W5500 Ethernet chip with RJ45 Jack and Magnetics
-- [TSS721ADR] (https://www.digikey.com/en/products/detail/texas-instruments/TSS721ADR/1910054) Wired M-Bus module for reading wired meters
+- [TSS721ADR](https://www.digikey.com/en/products/detail/texas-instruments/TSS721ADR/1910054) Wired M-Bus module for reading wired meters
 - SD card slot for local data logging
 - Power management and distribution
 
