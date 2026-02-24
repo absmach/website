@@ -16,6 +16,7 @@
         "MAIL_FROM_EMAIL": "noreply@absmach.eu",
         "SMTP_HOST": "ssl0.ovh.net",
         "SMTP_PORT": "465",
-        "SMTP_SECURE": "true"
+        "SMTP_SECURE": "true",
+        "WRANGLER_VERSION": "latest"
     }
 }
