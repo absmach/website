@@ -2,7 +2,7 @@
 title: "Asset Tracking with Magistrala"
 slug: "tracking-assets-with-magistrala"
 excerpt: "Real-time asset tracking for construction equipment, vehicle fleets, and logistics operations with Rules Engine automation."
-description: "Learn how Magistrala IoT platform enables real-time asset tracking for construction equipment, vehicle fleets, and logistics operations. Magistrala is an open-source IoT platform that connects GPS trackers and sensors through multiple protocols (MQTT, HTTP, CoAP, LoRaWAN) to deliver real-time location tracking and intelligent rules-based automation. Track assets anywhere, monitor equipment health, prevent theft with alerts, automate usage-based billing, and gain actionable insights from your tracking data—all with enterprise-grade security and no vendor lock-in."
+description: "Magistrala is an open-source IoT platform for real-time asset tracking across fleets, equipment, and logistics. Connect GPS trackers via MQTT, HTTP, CoAP, or WebSocket, automate alerts and reports with the Rules Engine, and gain actionable insights—with enterprise-grade security and no vendor lock-in."
 date: "2026-02-24"
 author:
   name: "Steve Munene"
@@ -24,27 +24,11 @@ tags:
 
 # Asset Tracking with Magistrala
 
-Businesses need real-time visibility into their valuable assets through IoT asset tracking. Delivery trucks navigate city routes, construction equipment shifts between job sites, shipping containers cross oceans, medical devices circulate through hospitals. Without GPS tracking and real-time monitoring, businesses face theft, inefficiency, billing disputes, and customer service failures.
+Businesses that rely on valuable assets—delivery trucks navigating city routes, construction equipment shifting between job sites, shipping containers crossing oceans, medical devices circulating through hospitals—have always found ways to operate. But real-time visibility transforms how they operate: faster decisions, less waste, and better service.
 
-Traditional asset management relies on manual check-ins, phone calls, and guesswork. Modern fleet management and equipment tracking demand automated IoT monitoring that shows exactly where assets are, how they're being used, and when they need attention.
+Traditional asset management relies on manual check-ins, phone calls, and scheduled reports. This works—but it leaves value on the table. Modern fleet management and equipment tracking unlock a new level of efficiency: knowing exactly where assets are, how they're being used, and when they need attention—without waiting for someone to report back.
 
-Magistrala connects IoT devices to provide instant visibility into any trackable asset. Rules Engine automates actions based on location, usage patterns, or equipment status. All telemetry stores securely for compliance and analytics—whether you're managing logistics fleets, rental equipment, or industrial machinery.
-
----
-
-## Table of Contents
-
-- [Solution Structure: Tracking Things](#solution-structure-tracking-things)
-  - [How It Works](#how-it-works)
-  - [Key Capabilities](#key-capabilities)
-- [Fleet Tracking in Action](#fleet-tracking-in-action)
-  - [Real-Time Dashboard](#real-time-dashboard)
-  - [Automated Alarms](#automated-alarms)
-  - [Business Reports](#business-reports)
-- [Other Applications in Tracking Assets](#other-applications-in-tracking-assets)
-- [Why Magistrala](#why-magistrala)
-- [Why Choose Magistrala Over Other Platforms](#why-choose-magistrala-over-other-platforms)
-- [Start Tracking Today](#start-tracking-today)
+Magistrala connects IoT devices to provide instant visibility into any trackable asset. The Rules Engine can automate actions based on location, usage patterns, or equipment status. All telemetry is stored securely for compliance and analytics—whether you're managing logistics fleets, rental equipment, or industrial machinery.
 
 ---
 
@@ -80,7 +64,7 @@ In this demo, we simulate two delivery vans transmitting GPS coordinates, speed,
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe
-    src="https://drive.google.com/file/d/1rJh_2hMR2-lkgvDCquOLSH3GYFfspVUJ/preview"
+    src="https://drive.google.com/file/d/16UuFYM7VtJGxvTIr_CKeIRBSvepJ6B97/preview"
     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
     allow="autoplay"
     allowfullscreen
@@ -125,25 +109,19 @@ All stored telemetry feeds directly into the reporting engine. Reports can be sc
 
 ## Other Applications in Tracking Assets
 
-Beyond the fleet tracking demo, Magistrala's asset tracking capabilities extend across diverse use cases and industries:
+Magistrala's asset tracking capabilities extend well beyond fleet management:
 
-**Logistics & Shipment Tracking**: Track hundreds of delivery vehicles and shipments with real-time location monitoring, automated delivery verification, route optimization, proof of delivery, and customer notifications with accurate ETAs.
-
-**Construction & Heavy Equipment**: Track excavators, bulldozers, and cranes across job sites with theft prevention and automated usage-based billing.
-
-**Vehicle Leasing**: Monitor mileage, vehicle condition, and driver behavior for usage-based leasing models.
-
-**Healthcare**: Track medical equipment across departments and facilities with compliance audit trails.
-
-**Car Sharing & Mobility**: Enable reservations, dynamic pricing, and EV charging management.
-
-**Rental Services**: Monitor tools and equipment with usage-based billing and theft prevention.
-
-**Industrial Manufacturing**: Locate specialized equipment and schedule maintenance based on actual usage.
-
-**Insurance Telematics**: Power usage-based insurance with real driving data and behavior analytics.
-
-**Public Transportation**: Provide real-time vehicle tracking and arrival predictions for passengers.
+| Use Case | What You Can Do |
+|---|---|
+| 🚛 **Logistics & Shipments** | Real-time location, proof of delivery, and accurate ETAs across hundreds of vehicles |
+| 🏗️ **Construction Equipment** | Track excavators and cranes across job sites, prevent theft, and monitor idle time |
+| 🚗 **Vehicle Leasing** | Monitor mileage, vehicle condition, and driver behavior for usage-based models |
+| 🏥 **Healthcare** | Locate medical equipment across departments with full compliance audit trails |
+| 🚲 **Car Sharing & Mobility** | Enable reservations, dynamic pricing, and EV charging management |
+| 🔧 **Rental Services** | Track tools and equipment with usage monitoring and theft prevention |
+| 🏭 **Industrial Manufacturing** | Locate specialized machinery and trigger maintenance based on actual usage |
+| 📋 **Insurance Telematics** | Power usage-based insurance with real driving data and behavior analytics |
+| 🚌 **Public Transportation** | Deliver real-time vehicle tracking and arrival predictions for passengers |
 
 ---
 
