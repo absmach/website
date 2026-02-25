@@ -29,6 +29,7 @@ tags:
 featured: false # optional (featured posts are pinned above non-featured posts on /blog/)
 draft: false # optional (set true to hide from /blog/)
 coverImage: "/img/blogs/my-new-post/cover.png" # optional (URL or local path)
+coverVideo: "https://www.youtube.com/watch?v=R3GfuzLMPkA" # optional (YouTube only, hero video)
 canonical: "https://absmach.eu/blog/my-new-post/" # optional
 slug: "my-new-post" # optional override
 ---
@@ -40,6 +41,9 @@ Notes:
 - Tags are case-sensitive on the blog filter UI. Pick one convention and stick to it.
 - `featured: true` should be temporary. Featured posts are always shown before non-featured posts, regardless of publish date.
 - Writers/editors must remove old `featured: true` flags after a campaign/release window. If many posts stay featured, newer non-featured posts will not appear near the top of `/blog/`.
+- `coverVideo` is for the hero video and currently supports YouTube links only (not Google Drive). It renders as an embedded iframe with autoplay (muted).
+- `coverImage` is still used as the hero fallback image (and can also act as the poster image when applicable).
+- Accepted `coverVideo` YouTube formats include `youtube.com/watch?v=...`, `youtu.be/...`, `youtube.com/shorts/...`, and `youtube.com/embed/...`.
 
 ## 3) Add images
 

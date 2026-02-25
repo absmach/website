@@ -26,6 +26,46 @@ const currentSlug = post.data.slug ?? post.slug;
 const publishedAt =
     post.data.date instanceof Date ? post.data.date : new Date(post.data.date);
 const coverImage = post.data.coverImage ?? post.data.heroImage ?? null;
+const coverVideo = post.data.coverVideo ?? null;
+const getYouTubeEmbedSrc = (rawUrl) => {
+    try {
+        const url = new URL(rawUrl);
+        const hostname = url.hostname.replace(/^www\./, "");
+        let videoId = "";
+
+        if (hostname === "youtu.be") {
+            videoId = url.pathname.slice(1);
+        } else if (
+            hostname === "youtube.com" ||
+            hostname === "m.youtube.com" ||
+            hostname === "youtube-nocookie.com"
+        ) {
+            if (url.pathname === "/watch") {
+                videoId = url.searchParams.get("v") ?? "";
+            } else if (url.pathname.startsWith("/embed/")) {
+                videoId = url.pathname.split("/")[2] ?? "";
+            } else if (url.pathname.startsWith("/shorts/")) {
+                videoId = url.pathname.split("/")[2] ?? "";
+            }
+        }
+
+        if (!videoId) return null;
+
+        const embedBase =
+            hostname === "youtube-nocookie.com"
+                ? "https://www.youtube-nocookie.com"
+                : "https://www.youtube.com";
+        const embedUrl = new URL(`${embedBase}/embed/${videoId}`);
+        embedUrl.searchParams.set("autoplay", "1");
+        embedUrl.searchParams.set("mute", "1");
+        embedUrl.searchParams.set("playsinline", "1");
+        embedUrl.searchParams.set("rel", "0");
+        return embedUrl.toString();
+    } catch {
+        return null;
+    }
+};
+const coverVideoIframeSrc = coverVideo ? getYouTubeEmbedSrc(coverVideo) : null;
 const canonical =
     post.data.canonical ?? `/blog/${post.data.slug ?? post.slug}/`;
 const normalizedCategory = (post.data.category ?? "").toLowerCase().trim();
@@ -183,17 +223,43 @@ const nextReadPosts = allPosts
             <div class="container-wide">
                 <div class="mx-auto max-w-4xl">
                     {
-                        coverImage && (
+                        (coverVideo || coverImage) && (
                             <div class="mb-8 aspect-video overflow-hidden rounded-3xl border border-subtle shadow-[var(--shadow-soft)]">
-                                <Image
-                                    src={coverImage!}
-                                    alt=""
-                                    width={1280}
-                                    height={720}
-                                    class="cover-image h-full w-full"
-                                    loading="eager"
-                                    decoding="async"
-                                />
+                                {coverVideo ? (
+                                    coverVideoIframeSrc ? (
+                                        <iframe
+                                            src={coverVideoIframeSrc}
+                                            class="h-full w-full border-0"
+                                            title={`${post.data.title} cover video`}
+                                            allow="autoplay; encrypted-media; picture-in-picture; web-share"
+                                            allowfullscreen
+                                        />
+                                    ) : (
+                                        <video
+                                            src={coverVideo}
+                                            class="h-full w-full object-cover"
+                                            controls
+                                            autoplay
+                                            muted
+                                            playsinline
+                                            preload="metadata"
+                                            poster={coverImage ?? undefined}
+                                        >
+                                            Your browser does not support the
+                                            video tag.
+                                        </video>
+                                    )
+                                ) : (
+                                    <Image
+                                        src={coverImage!}
+                                        alt=""
+                                        width={1280}
+                                        height={720}
+                                        class="cover-image h-full w-full"
+                                        loading="eager"
+                                        decoding="async"
+                                    />
+                                )}
                             </div>
                         )
                     }
