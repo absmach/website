@@ -8,6 +8,7 @@ author:
   name: "Steve Munene"
   picture: "https://avatars.githubusercontent.com/u/61874077?v=4"
 coverImage: "/img/blogs/tracking-usecase/route_map_line_graph.png"
+coverVideo: "https://youtu.be/jk53867LUo8?si=ulhLVFbtDyKeBmBS"
 ogImage:
   url: "/img/blogs/tracking-usecase/route_map_line_graph.png"
 category: blog
@@ -32,7 +33,7 @@ Magistrala connects IoT devices to provide instant visibility into any trackable
 
 ---
 
-## Solution Structure: Tracking Things
+## Solution Structure
 
 Building an asset tracking solution with Magistrala treats all valuable items—vehicles, equipment, containers—as trackable assets with location, status, and performance data.
 
@@ -62,24 +63,15 @@ Building an asset tracking solution with Magistrala treats all valuable items—
 
 In this demo, we simulate two delivery vans transmitting GPS coordinates, speed, temperature, and fuel data in real time through Magistrala. As data streams in, the platform processes every reading instantly—updating live maps, triggering alarms when thresholds are breached, and persisting all telemetry for reporting and analytics.
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe
-    src="https://drive.google.com/file/d/16UuFYM7VtJGxvTIr_CKeIRBSvepJ6B97/preview"
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
-    allow="autoplay"
-    allowfullscreen
-  ></iframe>
-</div>
-
 ### Real-Time Dashboard
 
 The dashboard gives operators a live, unified view of the entire fleet. Vehicle locations update continuously on the route map. Speed trends, humidity levels, fuel consumption, and temperature readings stream into line graphs, value cards, and gauges—all in real time.
 
-![Route Map and Line Graph](/img/blogs/tracking-usecase/route_map_line_graph.png)
+![Dashboard Route Map and Line Graph](/img/blogs/tracking-usecase/Dashboard_route_map_line_graph.png)
 
-![Dashboard Temperature Gauge, Alarms and Value Card](/img/blogs/tracking-usecase/dashboard_temp_gauge_alarms_value_card.png)
+![Dashboard Count Card, Value Card and Alarms](/img/blogs/tracking-usecase/Dashboard_count_card_value_card_alarms.png)
 
-![Dashboard Bar Graph and Count Card](/img/blogs/tracking-usecase/dashboard_bar_graph_count_card.png)
+
 
 ### Automated Alarms
 
@@ -90,8 +82,6 @@ The Rules Engine monitors every incoming reading and raises alarms automatically
 - **High temperature** → environmental alert for sensitive cargo
 
 Operators can take immediate action directly from the dashboard—dispatching maintenance, contacting drivers, or rerouting vehicles based on live alerts.
-
-![Route Map and line graph](/img/blogs/tracking-usecase/route_map_line_graph.png)
 
 ### Business Reports
 
