@@ -8,7 +8,7 @@ author:
   name: "Steve Munene"
   picture: "https://avatars.githubusercontent.com/u/61874077?v=4"
 coverImage: "/img/blogs/tracking-usecase/route_map_line_graph.png"
-coverVideo: "https://youtu.be/jk53867LUo8?si=ulhLVFbtDyKeBmBS"
+coverVideo: "https://youtu.be/MuOrX6tpa7Q"
 ogImage:
   url: "/img/blogs/tracking-usecase/route_map_line_graph.png"
 category: blog
