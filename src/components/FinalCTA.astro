@@ -1,42 +1,86 @@
 ---
-type CtaLink = { label: string; href: string; external?: boolean };
+type CtaLink = {
+  label: string;
+  href: string;
+  external?: boolean;
+  ariaLabel?: string;
+};
 
 const {
   title = "Build secure cloud–edge systems with us.",
-  subtitle = "Work with us to design a solution that fits your infrastructure.",
-  primary = { label: "Contact Us", href: "/contact/", external: false },
-  secondary = { label: "Explore Products", href: "#products", external: false },
+  subtitle = "Design secure cloud-edge and IoT solutions tailored to your infrastructure.",
+  primary = {
+    label: "Contact our experts",
+    href: "/contact/",
+    external: false,
+  },
+  secondary = {
+    label: "Explore products",
+    href: "#products",
+    external: false,
+  },
+  headingTag = "h2",
 } = Astro.props as {
   title?: string;
   subtitle?: string;
   primary?: CtaLink;
   secondary?: CtaLink | null;
+  headingTag?: "h1" | "h2" | "h3" | "h4";
 };
+
+const Heading = headingTag;
 ---
 
-<section class="my-10 flex items-center justify-center py-10">
+<section
+  class="my-10 flex items-center justify-center py-10"
+  aria-labelledby="cta-title"
+  role="region"
+  data-section="cta"
+>
   <div class="mx-auto max-w-4xl px-6 text-center">
-    <h2 class="text-4xl font-semibold leading-tight md:text-6xl">{title}</h2>
+    <Heading
+      id="cta-title"
+      class="text-4xl font-semibold leading-tight md:text-6xl"
+    >
+      {title}
+    </Heading>
 
-    {subtitle && <p class="mt-6 text-lg text-muted md:text-xl">{subtitle}</p>}
+    {subtitle && (
+      <p class="mt-6 text-lg text-muted md:text-xl">
+        {subtitle}
+      </p>
+    )}
 
     <div class="mt-10 flex flex-wrap items-center justify-center gap-6">
       {primary && (
         <a
           class="button-primary px-8 py-4 text-lg"
           href={primary.href}
+          aria-label={primary.ariaLabel ?? primary.label}
+          data-cta="primary"
           target={primary.external ? "_blank" : undefined}
-          rel={primary.external ? "noopener noreferrer" : undefined}
+          rel={
+            primary.external
+              ? "noopener noreferrer external"
+              : undefined
+          }
         >
           {primary.label}
         </a>
       )}
+
       {secondary && (
         <a
           class="button-secondary px-8 py-4 text-lg"
           href={secondary.href}
+          aria-label={secondary.ariaLabel ?? secondary.label}
+          data-cta="secondary"
           target={secondary.external ? "_blank" : undefined}
-          rel={secondary.external ? "noopener noreferrer" : undefined}
+          rel={
+            secondary.external
+              ? "noopener noreferrer external"
+              : undefined
+          }
         >
           {secondary.label}
         </a>
