@@ -172,9 +172,12 @@ You’re not just collecting GPS coordinates—you’re building an operational 
 
 Magistrala gives you the building blocks to design a production-ready asset tracking platform—secure device connectivity, real-time telemetry processing, automated rules, and structured reporting.
 Whether you're managing fleets, heavy equipment, medical devices, or logistics operations, you can start small and scale to millions of messages without changing architecture.
+
 * Connect your first GPS tracker in minutes
 * Stream data over MQTT, HTTP, CoAP, or WebSocket
 * Configure real-time alarms with the Rules Engine
 * Build dashboards and reports on persisted telemetry
+
 Deploy in the cloud or self-host on your own infrastructure. No vendor lock-in. Full control.
-Explore the **[documentation](https://magistrala.absmach.eu/docs?utm_source=absmach.eu&utm_medium=website&utm_campaign=blog)**, clone the **[repository](https://github.com/absmach/magistrala)**, or start with a **[free cloud trial](https://cloud.magistrala.absmach.eu/?utm_source=absmach.eu&utm_medium=website&utm_campaign=blog)** to see it in action.
+
+Explore the **[documentation](https://magistrala.absmach.eu/docs?utm_source=absmach.eu&utm_medium=website&utm_campaign=blog)**, deploy it yourself by cloning the **[repository](https://github.com/absmach/magistrala)**, or start with a **[free cloud trial](https://cloud.magistrala.absmach.eu/?utm_source=absmach.eu&utm_medium=website&utm_campaign=blog)** to see it in action.
