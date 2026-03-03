@@ -180,9 +180,17 @@ Whether you're managing fleets, heavy equipment, medical devices, or logistics o
 
 Deploy in the cloud or self-host on your own infrastructure. No vendor lock-in. Full control.
 
-Ready to explore or join the community?
-
-📘 **Documentation**: https://magistrala.absmach.eu/docs?utm_source=absmach.eu&utm_medium=website&utm_campaign=blog  
-⚙️ **GitHub**: https://github.com/absmach/magistrala  
-☁️ **Free Cloud Trial**: https://cloud.magistrala.absmach.eu/?utm_source=absmach.eu&utm_medium=website&utm_campaign=blog  
-💬 **Discord**: https://discord.gg/HvB5QuzF
+<section class="not-prose mt-10 overflow-hidden rounded-2xl border border-subtle bg-panel shadow-[var(--shadow-soft)]">
+<div class="border-b border-subtle bg-surface px-6 py-5">
+<p class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Next step</p>
+<h3 class="mt-2 text-2xl font-semibold text-primary">Launch your asset tracking stack with Magistrala</h3>
+<p class="mt-2 text-sm text-muted">Start in the cloud for fast onboarding, or self-host on your own infrastructure with full control and no vendor lock-in.</p>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+<a href="https://cloud.magistrala.absmach.eu" class="button-primary !flex !w-full !justify-center !rounded-xl !px-5 !py-3.5 text-sm">Start Free Cloud Trial</a>
+<a href="https://github.com/absmach/magistrala" class="button-secondary !flex !w-full !justify-center !rounded-xl !px-5 !py-3.5 text-sm">Self-Host Open Source (GitHub)</a>
+</div>
+<p class="mt-4 text-sm text-muted">Need implementation help? <a href="https://magistrala.absmach.eu/docs" class="font-semibold text-accent hover:underline">Read the documentation</a> or <a href="https://matrix.to/#/!zhoyNzJKBUyyhHtgPr" class="font-semibold text-accent hover:underline">join the community</a>.</p>
+</div>
+</section>
