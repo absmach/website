@@ -180,4 +180,9 @@ Whether you're managing fleets, heavy equipment, medical devices, or logistics o
 
 Deploy in the cloud or self-host on your own infrastructure. No vendor lock-in. Full control.
 
-Explore the **[documentation](https://magistrala.absmach.eu/docs?utm_source=absmach.eu&utm_medium=website&utm_campaign=blog)**, deploy it yourself by cloning the **[repository](https://github.com/absmach/magistrala)**, or start with a **[free cloud trial](https://cloud.magistrala.absmach.eu/?utm_source=absmach.eu&utm_medium=website&utm_campaign=blog)** to see it in action.
+Ready to explore or join the community?
+
+📘 **Documentation**: https://magistrala.absmach.eu/docs?utm_source=absmach.eu&utm_medium=website&utm_campaign=blog  
+⚙️ **GitHub**: https://github.com/absmach/magistrala  
+☁️ **Free Cloud Trial**: https://cloud.magistrala.absmach.eu/?utm_source=absmach.eu&utm_medium=website&utm_campaign=blog  
+💬 **Discord**: https://discord.gg/HvB5QuzF
