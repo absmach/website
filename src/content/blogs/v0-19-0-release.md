@@ -4,7 +4,7 @@ author:
   picture: "https://avatars.githubusercontent.com/u/17817225?v=4"
 category: announcement
 coverImage: /img/blogs/v0-19-0-release/homepage.png
-date: 2026-03-04
+date: 2026-03-05
 description: Release details for Magistrala and SuperMQ v0.19.0,
   including security improvements, advanced filtering, and MQTT TLS
   support.
