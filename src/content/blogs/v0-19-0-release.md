@@ -29,20 +29,12 @@ title: Magistrala v0.19.0 is Here!
 
 We are happy to announce the release of **Magistrala v0.19.0**!
 
-Magistrala is an **open-source IoT platform** designed for building
-secure, scalable, and distributed IoT solutions. It provides identity
-management, device connectivity, and messaging infrastructure that
-integrates with protocols such as **MQTT, HTTP, WebSockets, and CoAP**.
+Magistrala is an **open-source IoT platform** designed for building secure, scalable, and distributed IoT solutions.
+It provides identity management, device connectivity, and messaging infrastructure that integrates with protocols such as **MQTT, HTTP, WebSockets, and CoAP**.
 
-Over the past month we've focused on improving **security, filtering
-capabilities, and developer experience**, while also continuing to
-refine the architecture that powers Magistrala and the wider messaging
-ecosystem around it.
+Over the past month we've focused on improving **security, filtering capabilities, and developer experience**, while also continuing to refine the architecture that powers Magistrala and the wider messaging ecosystem around it.
 
-This release brings several important improvements - particularly
-around **authentication security** and **API filtering**, both of which
-were necessary steps for upcoming platform features and improvements in
-the Magistrala UI.
+This release brings several important improvements - particularly around **authentication security** and **API filtering**, both of which were necessary steps for upcoming platform features and improvements in the Magistrala UI.
 
 ---
 
@@ -50,31 +42,23 @@ the Magistrala UI.
 
 ## Secure MQTT Connectivity with TLS & mTLS
 
-The MQTT adapter (mGate) now supports **TLS and mutual TLS (mTLS)
-termination**, making it easier to securely connect devices and services
-to Magistrala.
+The MQTT adapter (mGate) now supports **TLS and mutual TLS (mTLS) termination**, making it easier to securely connect devices and services to Magistrala.
 
-Security is essential in IoT deployments, especially when devices
-communicate over public or semi-trusted networks. With TLS support in
-the adapter itself, operators can now:
+Security is essential in IoT deployments, especially when devices communicate over public or semi-trusted networks. With TLS support in the adapter itself, operators can now:
 
 -   enable encrypted MQTT communication
 -   authenticate devices with client certificates
 -   configure TLS behavior entirely via **environment variables**
 
-This simplifies deployments while significantly improving the security
-posture of IoT infrastructure.
+This simplifies deployments while significantly improving the security posture of IoT infrastructure.
 
 ---
 
 ## Refresh Token Revocation
 
-This release introduces **refresh-token revocation**, an important
-security feature for any modern distributed system.
+This release introduces **refresh-token revocation**, an important security feature for any modern distributed system.
 
-Previously, refresh tokens remained valid until expiration. With token
-revocation, Magistrala can now explicitly invalidate refresh tokens when
-necessary.
+Previously, refresh tokens remained valid until expiration. With token revocation, Magistrala can now explicitly invalidate refresh tokens when necessary.
 
 This enables several important capabilities:
 
@@ -83,23 +67,17 @@ This enables several important capabilities:
 -   **Security response after password changes**
 -   **Administrative session management**
 
-In practice, this means that authentication state can now be **actively
-controlled**, not just passively expired.
-
-This feature lays the groundwork for upcoming improvements such as
-**session management in the Magistrala UI**.
+In practice, this means that authentication state can now be **actively controlled**, not just passively expired.
+This feature lays the groundwork for upcoming improvements such as **session management in the Magistrala UI**.
 
 ---
 
 ## More Powerful Entity Filtering
 
-Another major improvement in this release is **advanced filtering for
-entity listing APIs**.
+Another major improvement in this release is **advanced filtering for entity listing APIs**.
 
-As IoT systems grow, users need better ways to browse and manage
-devices, users, domains, and groups. These improvements were primarily
-driven by the needs of the **Magistrala UI**, which requires flexible
-querying of entities.
+As IoT systems grow, users need better ways to browse and manage devices, users, domains, and groups.
+These improvements were primarily driven by the needs of the **Magistrala UI**, which requires flexible querying of entities.
 
 ### Filtering by Creation Time
 
@@ -108,9 +86,9 @@ Entities can now be filtered by creation timestamp using:
     - created_to
 
 Example:
-
+```bash
     GET /clients?created_from=2026-01-01
-
+```
 This is particularly useful for:
 
 -   UI pagination
@@ -128,10 +106,10 @@ Tag filtering has been extended with logical semantics:
 -   `-` represents **AND**
 
 Examples:
-
+```bash
     tag=sensor,device
     tag=sensor-temperature
-
+```
 This allows building expressive queries while keeping the API simple.
 
 The feature is supported across multiple entities including:
@@ -142,16 +120,13 @@ The feature is supported across multiple entities including:
 -   groups
 -   domains
 
-These improvements make the Magistrala API significantly more
-**UI-friendly and operationally powerful**.
+These improvements make the Magistrala API significantly more **UI-friendly and operationally powerful**.
 
 ---
 
 ## Personal Access Token (PAT) Architecture Improvements
 
-We also performed an internal refactor of **Personal Access Tokens
-(PATs)** to align them with Magistrala's evolving authentication
-architecture.
+We also performed an internal refactor of **Personal Access Tokens (PATs)** to align them with Magistrala's evolving authentication architecture.
 
 Changes include:
 
@@ -159,8 +134,7 @@ Changes include:
 -   simplified authorization flow
 -   removal of redundant auth checks
 
-This reduces internal overhead and results in **fewer authorization
-calls**, improving performance and maintainability.
+This reduces internal overhead and results in **fewer authorization calls**, improving performance and maintainability.
 
 ---
 
@@ -168,21 +142,16 @@ calls**, improving performance and maintainability.
 
 ## Authorization & Invitations
 
-We fixed several issues in the **invitation flow**, improving
-reliability when onboarding new users to domains and groups.
+We fixed several issues in the **invitation flow**, improving reliability when onboarding new users to domains and groups.
 
-Additionally, an unnecessary domain validation check was removed in the
-authorization path, simplifying the authorization logic.
+Additionally, an unnecessary domain validation check was removed in the authorization path, simplifying the authorization logic.
 
 ---
 
-## UI Metadata Support
+## UI Metadata Support Improvement
 
-Database migrations were updated to properly support **UI metadata
-storage** across PostgreSQL initialization paths.
-
-This enables the UI to attach richer metadata to entities without
-affecting the core data model.
+Database migrations were updated to properly support **UI metadata storage** across PostgreSQL initialization paths.
+This enables the UI to attach richer and cleaner metadata to entities without affecting the core data model.
 
 ---
 
@@ -200,8 +169,7 @@ The **Makefile** was refactored to improve:
 
 ## Updated Docker Images
 
-Docker images now use the **latest stable Go version (1.26.0)** instead of a
-release candidate, improving build stability and security.
+Docker images now use the **latest stable Go version (1.26.0)** instead of a release candidate, improving build stability and security.
 
 ---
 
@@ -237,8 +205,7 @@ Magistrala continues to evolve alongside other projects in the **Abstract Machin
 -   **FluxMQ** focuses on **large-scale distributed messaging and stream
     processing**
 
-Together, these projects aim to provide a **modular and scalable
-foundation for modern IoT platforms and distributed messaging systems**.
+Together, these projects aim to provide a **modular and scalable foundation for modern IoT platforms and distributed messaging systems**.
 
 This release continues to move the ecosystem forward by improving
 **security, observability, and usability**.
@@ -249,6 +216,6 @@ This release continues to move the ecosystem forward by improving
 
 We would love to hear your feedback and ideas.
 
-🌐 Website: https://magistrala.absmach.eu\
-⚙️ GitHub: https://github.com/absmach/magistrala\
+🌐 Website: https://magistrala.absmach.eu
+⚙️ GitHub: https://github.com/absmach/magistrala
 📘 Documentation: https://magistrala.absmach.eu/docs
