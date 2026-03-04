@@ -103,12 +103,12 @@ This is particularly useful for:
 Tag filtering has been extended with logical semantics:
 
 -   `,` represents **OR**
--   `-` represents **AND**
+-   `+` represents **AND**
 
 Examples:
 ```bash
     tag=sensor,device
-    tag=sensor-temperature
+    tag=sensor+temperature
 ```
 This allows building expressive queries while keeping the API simple.
 
