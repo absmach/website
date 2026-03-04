@@ -146,6 +146,8 @@ We fixed several issues in the **invitation flow**, improving reliability when o
 
 Additionally, an unnecessary domain validation check was removed in the authorization path, simplifying the authorization logic.
 
+Also, a lot of internal updates in Magistrala access control handling have been added, such as simplifications of access control for Alarms and Rules Engine.
+
 ---
 
 ## UI Metadata Support Improvement
