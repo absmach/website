@@ -229,8 +229,7 @@ stability improvements**.
 
 # Magistrala, SuperMQ, and FluxMQ
 
-Magistrala continues to evolve alongside other projects in the **AbsMACH
-ecosystem**.
+Magistrala continues to evolve alongside other projects in the **Abstract Machines ecosystem**.
 
 -   **Magistrala** focuses on **device management, identity, and access
     control**
