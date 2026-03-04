@@ -212,6 +212,24 @@ This release continues to move the ecosystem forward by improving
 
 ---
 
+# Contributors
+
+Thanks to everyone who contributed to **Magistrala v0.19.0**:
+
+- Felix — https://github.com/felixgateru
+- Aravindh — https://github.com/arvindh123
+- Steve — https://github.com/nyagamunene
+- Ian — https://github.com/ianmuchyri
+- Felister — https://github.com/wambui-pixel
+- Nataly — https://github.com/Musilah
+- Dusan — https://github.com/dborovcanin
+
+As well as [@sansmoraxz](https://github.com/sansmoraxz), [@bbokun](https://github.com/bbokun), and many others.
+
+Your work makes Magistrala better with every release. ❤️
+
+---
+
 # Leave Your Feedback
 
 We would love to hear your feedback and ideas.
