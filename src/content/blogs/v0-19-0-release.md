@@ -216,6 +216,6 @@ This release continues to move the ecosystem forward by improving
 
 We would love to hear your feedback and ideas.
 
-🌐 Website: https://magistrala.absmach.eu
-⚙️ GitHub: https://github.com/absmach/magistrala
-📘 Documentation: https://magistrala.absmach.eu/docs
+- 🌐 Website: https://magistrala.absmach.eu
+- ⚙️ GitHub: https://github.com/absmach/magistrala
+- 📘 Documentation: https://magistrala.absmach.eu/docs
