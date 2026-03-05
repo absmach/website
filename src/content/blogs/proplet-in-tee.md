@@ -419,7 +419,7 @@ Remote attestation enables third parties to independently verify TEE configurati
 
 ### Intel TDX
 
-To run TDX, you need an Intel Xeon Scalable processor (Sapphire Rapids or later) with TDX enabled in the BIOS firmware settings. The system requires a Linux kernel version 5.19 or later that includes TDX support and the `tdx_guest` module.
+To run TDX, you need an Intel Xeon Scalable processor (Sapphire Rapids or later) with TDX enabled in the BIOS firmware settings. The system requires a [Linux kernel version 6.2](https://www.phoronix.com/news/Intel-TDX-Guest-Driver-Linux) or later that includes TDX support and the `tdx_guest` module.
 
 Verify TDX availability:
 
