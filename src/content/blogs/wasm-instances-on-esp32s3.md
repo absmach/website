@@ -209,8 +209,6 @@ The workload runs 1,000 producer iterations:
 
 This models an IoT message pipeline where a sensor or protocol decoder produces messages into a ring buffer and a downstream consumer drains them. The flow-control check prevents the producer from running infinitely ahead. The 64-slot threshold means the buffer is kept at most 25% full (64/256), which is a typical real-world backpressure threshold.
 
-**Why does this matter for edge computing?** In a Propeller deployment, a WASM function might receive MQTT messages, decode them, and pass results to another stage. The MSG workload tests whether the interpreter handles the pointer arithmetic, modular addressing, and conditional branching of such patterns efficiently.
-
 ```wat
 (module
   (memory 1 1)  ;; slots[0..255] at addr 0..1023, head at 1024, tail at 1028
@@ -531,14 +529,16 @@ The ESP32-S3 achieves **29 concurrent WASM containers** in 512 KB — 29 isolate
 
 ---
 
-## Practical Implications
+## What This Means for Propeller
 
-This benchmark was motivated by [Propeller](https://github.com/absmach/propeller) — a project for deploying WASM workloads on distributed embedded devices. Key takeaways:
+Propeller's model is straightforward: a manager node dispatches compiled WASM binaries over MQTT to a fleet of embedded devices. Each device — running the Propeller proplet — receives the binary, loads it via WAMR, and runs it. A device might be running functions from several different deployments simultaneously: a temperature aggregator from one pipeline, a protocol decoder from another, a checksum validator from a third.
 
-- **CPU-bound workloads**: ~25–29 concurrent WASM functions per ESP32-S3, ~397 calls/second total
-- **Memory-intensive workloads**: 3 instances max (64 KB page minimum)
-- **Isolation**: one crashing or looping function cannot corrupt another's state
-- **Binary size matters**: our 90-byte workload is a best-case; real 50–200 KB TinyGo/Rust modules increase per-instance overhead
+This benchmark characterises the limits of that model on the ESP32-S3:
+
+- **Up to 29 concurrent stateless functions** per device (~16 KB each). A fleet of 100 ESP32-S3 boards can sustain nearly 3,000 concurrent WASM executions with commodity hardware totalling ~$400.
+- **Up to 3 concurrent stateful functions** per device (64 KB linear memory page each). If your pipeline stages maintain local state, budget accordingly — or target ESP32-S3R8 (8 MB PSRAM) for 40+ concurrent stateful instances.
+- **Isolation is real**: across every experiment — 29 homogeneous instances, 10 heterogeneous instances — zero errors, zero cross-contamination. A crashing or looping function cannot corrupt another instance's memory or execution state. Propeller's per-function isolation guarantee holds down to bare metal.
+- **Binary size matters for load time**: our hand-crafted WASM binaries are 72–170 bytes. A real TinyGo or Rust binary is 50–200 KB, which increases load time and shared-module memory cost. For production, keep function binaries small and strip debug info.
 
 ---
 
@@ -546,10 +546,12 @@ This benchmark was motivated by [Propeller](https://github.com/absmach/propeller
 
 A $4 microcontroller with 512 KB of SRAM can run 29 concurrent WebAssembly instances. Each instance is fully isolated — its own linear memory, its own execution state, its own call stack — yet they share a single parsed module and coexist peacefully on two CPU cores under FreeRTOS. When we swapped in five different task types, the system handled 10 simultaneous instances of mixed workloads without a single error.
 
-The constraint is not CPU cycles; it is memory. Linear memory pages cost 64 KB each, which is why memory-intensive workloads top out at three instances while CPU-bound workloads scale to 29. PSRAM variants of the ESP32-S3 could push this further, but even on the base hardware, the numbers are striking: multi-tenant, sandboxed code execution on a chip smaller than a thumbnail, drawing 240 mW.
+Memory is the binding constraint, not CPU cycles. Linear memory pages cost 64 KB each, which is why memory-intensive workloads top out at three instances while CPU-bound workloads scale to 29. PSRAM variants of the ESP32-S3 could push this further, but even on the base hardware, the numbers are striking: multi-tenant, sandboxed code execution on a chip smaller than a thumbnail, drawing 240 mW.
 
 This is what edge computing looks like when you strip away the operating system, the container runtime, and the orchestrator. Just a microcontroller, a WASM interpreter, and the functions you need to run.
 
+Propeller is open source. If you are building distributed WASM applications for constrained hardware — or just want to see the benchmark code — it is at [github.com/absmach/propeller](https://github.com/absmach/propeller).
+
 ---
 
-*ESP32-S3-WROOM-1, ESP-IDF v5.3.2, WAMR fast-interpreter.*
+*All measurements taken on ESP32-S3-WROOM-1 with ESP-IDF v5.3.2, WAMR commit from the idf-component-manager registry circa early 2026. Timings are wall-clock as measured by `esp_timer_get_time()` from within the FreeRTOS task.*
