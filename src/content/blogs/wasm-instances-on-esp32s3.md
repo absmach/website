@@ -550,7 +550,7 @@ Memory is the binding constraint, not CPU cycles. Linear memory pages cost 64 KB
 
 This is what edge computing looks like when you strip away the operating system, the container runtime, and the orchestrator. Just a microcontroller, a WASM interpreter, and the functions you need to run.
 
-Propeller is open source. If you are building distributed WASM applications for constrained hardware — or just want to see the benchmark code — it is at [github.com/absmach/propeller](https://github.com/absmach/propeller).
+Propeller is open source. If you are building distributed WASM applications for constrained hardware — or just want to run this benchmark yourself — the full source is at [examples/esp32s3-wasm-benchmark](https://github.com/absmach/propeller/tree/main/examples/esp32s3-wasm-benchmark).
 
 ---
 
