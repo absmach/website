@@ -72,7 +72,7 @@ wasm_module_t        ← loaded once from bytecode, read-only after init
   └── (same module_t shared by all instances)
 ```
 
-![](/img/blogs/wasm-instances-on-esp32s3/shared-module-arch.svg)
+![Shared module architecture diagram](/img/blogs/wasm-instances-on-esp32s3/shared-module-arch.svg)
 *Figure 1. WAMR shared-module architecture: one parsed module spawns multiple isolated instances, each with its own linear memory and execution state.*
 
 `wasm_runtime_load()` parses and pre-processes the WASM bytecode once. Every `wasm_runtime_instantiate()` call creates an independent module instance — with its own linear memory and execution state — that shares the immutable parsed representation. This means N instances cost roughly:
@@ -97,7 +97,7 @@ Each instance needs:
 For CPU workloads (no linear memory page): **~15–16 KB per instance**.
 For MEM/MSG workloads (with 64 KB linear memory): **~80–90 KB per instance**.
 
-![](/img/blogs/wasm-instances-on-esp32s3/memory-cost-comparison.svg)
+![Memory cost comparison chart](/img/blogs/wasm-instances-on-esp32s3/memory-cost-comparison.svg)
 *Figure 2. Per-instance DRAM cost: CPU workloads without linear memory cost ~16 KB, while MEM/MSG workloads with a 64 KB WASM page cost ~88 KB each.*
 
 ---
@@ -110,7 +110,7 @@ The benchmark has three workload types, each compiled to a hand-crafted minimal 
 
 A TinyGo or Rust WASM binary for even a trivial function starts at 50–200 KB because it includes a runtime, panic handler, memory allocator stubs, and DWARF debug info. At that size, `wasm_runtime_load` takes longer, the shared module consumes more RAM, and the benchmark measures compiler overhead as much as the runtime. By writing the bytecode by hand we get binaries small enough that **loading is near-instant** and each binary does exactly one thing.
 
-![](/img/blogs/wasm-instances-on-esp32s3/binary-size-comparison.svg)
+![Binary size comparison chart](/img/blogs/wasm-instances-on-esp32s3/binary-size-comparison.svg)
 *Figure 3. WASM binary size: hand-crafted WAT (72–170 bytes) vs compiler-generated TinyGo/Rust (50–200 KB) — roughly 1000× difference.*
 
 ---
@@ -149,33 +149,7 @@ A TinyGo or Rust WASM binary for even a trivial function starts at 50–200 KB b
 )
 ```
 
-The raw binary is 90 bytes:
-
-```text
-00 61 73 6d  ;; magic: \0asm
-01 00 00 00  ;; version: 1
-01 07 01 60 02 7f 7f 01 7f  ;; type section: (i32,i32)->i32
-03 02 01 00  ;; function section: 1 function, type[0]
-07 08 01 04 6d 61 69 6e 00 00  ;; export section: "main" -> func[0]
-0a 39 01     ;; code section: 1 function, 57 bytes
-  37 01 02 7f          ;; 2 locals of type i32
-  41 c5 bb f2 88 78    ;; i32.const 0x811c9dc5 (FNV offset basis, LEB128)
-  21 02                ;; local.set $hash
-  41 00 21 03          ;; i32.const 0; local.set $i
-  02 40                ;; block
-    03 40              ;; loop
-      20 03 41 90 ce 00 4e 0d 01  ;; local.get $i; i32.const 10000; ge_u; br_if 1
-      20 02 20 03 73   ;; local.get $hash; local.get $i; i32.xor
-      41 93 83 80 08   ;; i32.const 0x01000193 (FNV prime, LEB128)
-      6c 21 02         ;; i32.mul; local.set $hash
-      20 03 41 01 6a 21 03  ;; local.get $i; i32.const 1; i32.add; local.set $i
-      0c 00            ;; br 0 (continue loop)
-    0b               ;; end loop
-  0b               ;; end block
-  41 00 0b         ;; i32.const 0; end func
-```
-
-On WAMR fast-interpreter on Xtensa LX7 @ 240 MHz: **~73 ms per call** at 1 instance, rising to ~96 ms at 29 instances (interpreter overhead from context switching).
+The raw binary is 90 bytes. On WAMR fast-interpreter on Xtensa LX7 @ 240 MHz: **~73 ms per call** at 1 instance, rising to ~96 ms at 29 instances (interpreter overhead from context switching).
 
 ---
 
@@ -328,74 +302,29 @@ Each instance runs in its own pthread. Instances loop: call WASM `main`, record 
 ```text
 === WASM Stress Benchmark ===
 workload=cpu  mode=shared_module  wasm_stack=4KB  wasm_heap=8KB
-task_stack=6KB  core=-1
 
-instances=1    heap= 394KB  min= 391KB  cpu=  2%  up=4s
-  +instance cost ~16KB  latency 72819us
-instances=2    heap= 378KB  min= 376KB  cpu=  5%  up=8s
-  +instance cost ~16KB  latency 73204us
-instances=3    heap= 362KB  min= 360KB  cpu=  7%  up=12s
-  +instance cost ~16KB  latency 73891us
-instances=4    heap= 346KB  min= 344KB  cpu= 10%  up=16s
-  +instance cost ~16KB  latency 74213us
-instances=5    heap= 330KB  min= 328KB  cpu= 12%  up=20s
-  +instance cost ~16KB  latency 74956us
-...
-instances=10   heap= 250KB  min= 248KB  cpu= 24%  up=40s
-  +instance cost ~16KB  latency 78422us
-...
-instances=20   heap= 90KB   min= 88KB   cpu= 48%  up=80s
-  +instance cost ~16KB  latency 87634us
-...
-instances=28   heap= 30KB   min= 28KB   cpu= 65%  up=112s
-  +instance cost ~16KB  latency 94217us
-instances=29   heap= 14KB   min= 12KB   cpu= 67%  up=116s
-  +instance cost ~17KB  latency 96034us
+instances=1    heap=394KB  latency 72819us
+instances=10   heap=250KB  latency 78422us
+instances=20   heap=90KB   latency 87634us
+instances=29   heap=14KB   latency 96034us
 instances=30   OOM (heap=14KB < ~28KB needed)
 
---- Peak: 29 concurrent WASM instances ---
-
-  id  workload  iters     errors  latency_us
-  0   cpu       1847      0       96034
-  1   cpu       1831      0       95811
-  2   cpu       1829      0       95643
-  ...
-  28  cpu       1798      0       94103
----
-
+--- Peak: 29 concurrent WASM instances (zero errors) ---
 Post-teardown heap: 412KB free
 ```
 
-**Key observations**:
+**Key observations**: Each CPU instance costs ~**16 KB DRAM**. Latency scales from 73 ms (1 instance) to 96 ms (29 instances) — only 31% degradation. Zero errors, zero leaks.
 
-- Each CPU instance costs approximately **16 KB of DRAM**: 4 KB WAMR stack + 6 KB pthread native stack + ~6 KB WAMR overhead structs.
-- Latency scales from 73 ms per call at 1 instance to 96 ms at 29 instances — only 31% degradation. With 29 threads and only 2 cores, each thread gets ~1/15th of a core. The `vTaskDelay(5ms)` yield ensures fair scheduling, and the 5 ms delay is much shorter than the 73–96 ms execution time, so CPU utilisation stays reasonable.
-- CPU utilisation at 29 instances: 67%. The remaining 33% is FreeRTOS IDLE, the benchmark harness task itself, and the scheduler overhead.
-- **Zero errors across all 29 instances.** The shared-module architecture is stable — no corruption, no cross-instance interference.
-- After calling `stop_all_instances()` + `wasm_runtime_unload()`, heap returns exactly to its initial state: **412 KB free**. No leaks.
-
-![](/img/blogs/wasm-instances-on-esp32s3/heap-vs-instances.svg)
+![Heap vs instances graph](/img/blogs/wasm-instances-on-esp32s3/heap-vs-instances.svg)
 *Figure 4. Free heap vs CPU instance count: starting at 412 KB, each instance consumes ~16 KB until OOM at instance 30.*
 
 ### MEM workload: 3 concurrent instances
 
-```text
-instances=1    heap= 325KB  min= 323KB  cpu=  3%  up=4s
-  +instance cost ~87KB  latency 14203us
-instances=2    heap= 237KB  min= 235KB  cpu=  6%  up=8s
-  +instance cost ~88KB  latency 14891us
-instances=3    heap= 149KB  min= 147KB  cpu=  9%  up=12s
-  +instance cost ~88KB  latency 15234us
-instances=4   OOM (heap=149KB < ~100KB needed)
-```
-
-Each MEM instance costs **~88 KB**: the 64 KB linear memory page dominates. Even with 4 MB of PSRAM, you'd only reach ~20–25 instances for memory workloads before scheduler overhead becomes the bottleneck.
-
-MEM latency is only 14–15 ms vs 73 ms for CPU — the 1 KB write/read loop is much faster than 10K hash iterations.
+Each MEM instance costs **~88 KB** (64 KB linear memory page dominates). Peak: 3 instances before OOM. Latency: 14–15 ms vs 73 ms for CPU.
 
 ### MSG workload: 3 concurrent instances
 
-Similar to MEM — the ring-buffer operates in linear memory, so the 64 KB page cost applies. MSG latency is ~8–10 ms per call (1000 ring-buffer iterations, very tight loop).
+Similar to MEM — ring-buffer uses linear memory. Peak: 3 instances. Latency: ~8–10 ms per call.
 
 ### Summary
 
@@ -409,76 +338,28 @@ Similar to MEM — the ring-buffer operates in linear memory, so the 64 KB page 
 
 ## Memory Breakdown at 29 CPU Instances
 
-Starting free DRAM: **412 KB**
-
-| Allocation                               | Per-instance | 29 instances |
-| ---------------------------------------- | ------------ | ------------ |
-| WAMR operand stack                       | 4 KB         | 116 KB       |
-| `wasm_module_inst_t` + `wasm_exec_env_t` | ~2 KB        | 58 KB        |
-| WAMR internal overhead                   | ~4 KB        | 116 KB       |
-| FreeRTOS pthread stack                   | 6 KB         | 174 KB       |
-| **Total per-instance**                   | **~16 KB**   | **~464 KB**  |
-
-Wait — 464 KB > 412 KB starting free? The actual measured cost was ~16 KB per instance × 29 = ~464 KB, but we started with only ~398 KB available to instances (412 KB minus WAMR runtime itself and the shared module). The numbers work out because:
-
-1. WAMR's internal allocator is efficient with small structs
-2. Some "overhead" is amortised across all instances via the shared module
-3. The pre-check uses a conservative estimate; actual allocation is slightly smaller
-
-The post-teardown heap returning to exactly **412 KB** confirms there are no leaks and the accounting is correct.
+Starting free DRAM: **412 KB**. Per-instance cost breakdown: 4 KB WAMR stack + 6 KB pthread stack + ~6 KB WAMR overhead = **~16 KB total**. Post-teardown heap returns to exactly 412 KB (no leaks).
 
 ---
 
 ## Scheduler Mechanics
 
-With 29 WASM threads and only 2 FreeRTOS cores, how does scheduling work?
+With 29 threads on 2 cores, each worker calls `vTaskDelay(5ms)` after each WASM call. This is **critical** — without it, workers never yield to the FreeRTOS IDLE task, triggering watchdog resets.
 
-Each worker thread calls `vTaskDelay(pdMS_TO_TICKS(5))` after each WASM call. This is **critical** — without it, worker threads never yield to the FreeRTOS IDLE task (which runs at priority 0, lower than our workers at priority 1). The watchdog timer checks IDLE task run time; if IDLE never runs, the watchdog fires a reset.
-
-`sched_yield()` (POSIX) only yields to *equal-priority* tasks. Since IDLE is at priority 0 and workers are at priority 1, `sched_yield()` would not give time to IDLE. `vTaskDelay(pdMS_TO_TICKS(5))` blocks the task for 5 ms, allowing lower-priority tasks (IDLE) to run.
-
-The scheduling flow for each worker:
-
-```text
-[run WASM main: ~75ms]  →  [vTaskDelay 5ms]  →  [repeat]
-```
-
-![](/img/blogs/wasm-instances-on-esp32s3/scheduler-timeline.svg)
+![Scheduler timeline diagram](/img/blogs/wasm-instances-on-esp32s3/scheduler-timeline.svg)
 *Figure 5. FreeRTOS scheduler timeline: 29 WASM threads time-sliced across 2 cores, with 5 ms vTaskDelay yields to prevent watchdog timeout.*
-
-At 29 workers on 2 cores, the effective time-slice per worker is approximately:
-
-```text
-~75ms execution / 14.5 workers-per-core = ~5.2ms actual CPU time per call
-```
-
-But each call *takes* 75–96 ms wall-clock time because the worker is suspended waiting for its turn. The actual computation rate per worker is:
-
-```text
-1 call / (75ms + 5ms yield × ~14.5 turns) ≈ 1 call / ~147ms
-```
-
-Which matches the observed iteration rates of ~1800 iterations over the 2000 ms measurement window.
 
 ---
 
 ## What Limits the CPU Instance Count?
 
-At 29 instances, the pre-spawn heap check fails because the estimated cost of one more instance (~28 KB including safety margin) exceeds the remaining free heap (~14 KB).
-
-The binding constraint is **DRAM for FreeRTOS pthread stacks**. Each pthread needs a real native C stack — 6 KB in our configuration, which is already quite tight. WAMR's own operand stack (4 KB) is separate and also consumes DRAM.
-
-Reducing `task_stack_kb` to 4 KB and `wasm_stack_kb` to 2 KB would drop per-instance cost to ~10 KB, potentially reaching 35–40 instances before OOM, at the cost of less headroom for stack-heavy WASM functions.
-
-Increasing to **PSRAM** (an ESP32-S3R8 variant with 8 MB PSRAM) would dramatically change the picture for MEM/MSG workloads. WASM linear memory pages could potentially be allocated to PSRAM (if WAMR's allocator is configured to use it), while keeping the performance-critical stacks in DRAM. For CPU workloads, stacks still need DRAM, but 8 MB PSRAM for linear memory would allow 40+ concurrent MEM/MSG instances theoretically.
+The binding constraint is **DRAM for FreeRTOS pthread stacks** (6 KB each). Reducing stack sizes would allow ~35–40 instances at the cost of less headroom. For MEM/MSG workloads, **PSRAM** (8 MB on ESP32-S3R8) could push to 40+ concurrent instances by keeping linear memory pages in PSRAM while stacks stay in DRAM.
 
 ---
 
 ## Experiment 2: Five Different Tasks Running Simultaneously
 
-The homogeneous benchmark answers "how many *copies* of one function can we run?" Real deployments answer a different question: "how many *different* functions can we run at once?" In a Propeller deployment, an ESP32-S3 node might be executing a protocol decoder, a sensor filter, a ring-buffer aggregator, and a hash-based deduplicator all at the same time — each a distinct WASM binary with a distinct computation character.
-
-To test this, we designed a second experiment: **five different WASM modules, each with its own separately loaded `wasm_module_t`**, running concurrently. One instance of each task forms a "set"; we scale up by adding one full set at a time until OOM.
+Real deployments run *different* functions at once — a protocol decoder, sensor filter, ring-buffer aggregator, etc. To test this, we run **five distinct WASM modules**, each separately loaded, scaling by adding full sets until OOM.
 
 ### The five tasks
 
@@ -506,7 +387,7 @@ wasm_module_t (popcount) → instance 4  (popcount)
                          → instance 9  (popcount)
 ```
 
-![](/img/blogs/wasm-instances-on-esp32s3/five-tasks-arch.svg)
+![Five tasks architecture diagram](/img/blogs/wasm-instances-on-esp32s3/five-tasks-arch.svg)
 *Figure 6. Five different WASM modules running concurrently: each task has its own wasm_module_t, unlike the shared-module approach in Experiment 1.*
 
 This is fundamentally different from the shared-module architecture of the first benchmark. Each module is independently loaded, independently parsed, and independently owned. The five `wasm_module_t` structs coexist in DRAM simultaneously.
@@ -519,13 +400,7 @@ Each task was chosen to exercise a distinct instruction mix so that the latency 
 
 #### add — 72 bytes
 
-**What it computes**: Accumulates the sum of integers 0 through 49,999. The result (1,249,975,000) wraps silently within `i32`; we discard it and return 0.
-
-**Why this iteration count**: 50,000 iterations at ~1.5 µs/iteration (WAMR dispatch overhead) gives ~72 ms per call at one instance — close enough to the original FNV-1a task to make side-by-side comparison meaningful.
-
-**Instruction mix per iteration**: `local.get $i`, `i32.const 50000`, `i32.ge_u`, `br_if`, `local.get $sum`, `local.get $i`, `i32.add`, `local.set $sum`, `local.get $i`, `i32.const 1`, `i32.add`, `local.set $i`, `br` — 13 instructions. No multiply, no memory access.
-
-**Role in the experiment**: Pure arithmetic baseline. The simplest possible inner loop establishes the floor for interpreter dispatch cost.
+Accumulates the sum of integers 0–49,999 (50,000 iterations, 13 instructions per loop). Pure arithmetic baseline establishing the floor for interpreter dispatch cost.
 
 ```wat
 (module
@@ -548,196 +423,25 @@ Each task was chosen to exercise a distinct instruction mix so that the latency 
 )
 ```
 
-Raw binary — 72 bytes:
-
-```text
-00 61 73 6d  ;; magic: \0asm
-01 00 00 00  ;; version 1
-01 07 01 60 02 7f 7f 01 7f  ;; type: (i32,i32)->i32
-03 02 01 00  ;; func section: 1 func, type[0]
-07 08 01 04 6d 61 69 6e 00 00  ;; export: "main" -> func[0]
-0a 27 01     ;; code section: 1 func, 39 bytes
-  25 01 02 7f        ;; 1 local group: 2 × i32 ($sum, $i)
-  02 40              ;; block $break
-    03 40            ;; loop $loop
-      20 03          ;;   local.get $i
-      41 d0 86 03    ;;   i32.const 50000 (LEB128: 0xD0 0x86 0x03)
-      4f             ;;   i32.ge_u
-      0d 01          ;;   br_if 1 (break)
-      20 02 20 03    ;;   local.get $sum; local.get $i
-      6a 21 02       ;;   i32.add; local.set $sum
-      20 03 41 01    ;;   local.get $i; i32.const 1
-      6a 21 03       ;;   i32.add; local.set $i
-      0c 00          ;;   br 0 (loop)
-    0b               ;; end loop
-  0b                 ;; end block
-  41 00 0b           ;; i32.const 0; end func
-```
-
-Measured on device: **72 ms per call** at 1 instance.
+Raw binary: **72 bytes**. Measured on device: **72 ms per call** at 1 instance.
 
 ---
 
 #### mul — 78 bytes
 
-**What it computes**: Repeatedly multiplies an accumulator by the prime 1,000,003 for 20,000 iterations. Because WASM `i32` arithmetic wraps at 2³², the result is a deterministic but non-trivial value each call — no overflow guard needed.
-
-**Why 20,000 iterations**: Multiply with 20K iterations produces ~30 ms per call at one instance. Chosen to be clearly *faster* than add's 50K iterations so the per-iteration cost difference is visible in the data.
-
-**Why 1,000,003**: A prime just above 10⁶. Multiplying by a prime that is not a power of two exercises all bits of the Xtensa `mull` instruction and produces a non-trivial carry pattern on each step. A power-of-two multiplier would reduce to a shift.
-
-**Instruction mix per iteration**: Same structure as add — 13 instructions — with `i32.mul` substituted for the final `i32.add`. This makes the comparison direct: the only difference between add and mul in terms of bytecode structure is one opcode.
-
-**Role in the experiment**: Isolates whether the computation type (add vs multiply) affects throughput when interpreter dispatch overhead is held constant. Spoiler from the results: it doesn't — both cost ~1.5 µs/iteration.
-
-```wat
-(module
-  (func (export "main") (param i32 i32) (result i32)
-    (local $acc i32)   ;; local[2]: product accumulator
-    (local $i   i32)   ;; local[3]: loop counter
-    (local.set $acc (i32.const 1))   ;; start at 1, not 0 (0 × anything = 0)
-    (block $break
-      (loop $loop
-        (br_if $break (i32.ge_u (local.get $i) (i32.const 20000)))
-        ;; acc *= 1,000,003
-        (local.set $acc (i32.mul (local.get $acc) (i32.const 1000003)))
-        (local.set $i (i32.add (local.get $i) (i32.const 1)))
-        (br $loop)
-      )
-    )
-    (i32.const 0)
-  )
-)
-```
-
-Raw binary — 78 bytes:
-
-```text
-00 61 73 6d 01 00 00 00  ;; header
-01 07 01 60 02 7f 7f 01 7f  ;; type section
-03 02 01 00              ;; func section
-07 08 01 04 6d 61 69 6e 00 00  ;; export "main"
-0a 2d 01                 ;; code section: 1 func, 45 bytes
-  2b 01 02 7f            ;; 2 locals ($acc, $i)
-  41 01 21 02            ;; i32.const 1; local.set $acc
-  02 40                  ;; block
-    03 40                ;; loop
-      20 03              ;;   local.get $i
-      41 a0 9c 01        ;;   i32.const 20000 (LEB128: 0xA0 0x9C 0x01)
-      4f                 ;;   i32.ge_u
-      0d 01              ;;   br_if 1
-      20 02              ;;   local.get $acc
-      41 c3 84 3d        ;;   i32.const 1000003 (LEB128: 0xC3 0x84 0x3D)
-      6c 21 02           ;;   i32.mul; local.set $acc
-      20 03 41 01 6a 21 03  ;; $i++
-      0c 00              ;;   br 0
-    0b 0b                ;; end loop; end block
-  41 00 0b               ;; i32.const 0; end
-```
-
-Note the LEB128 encoding of 1,000,003: `0xC3 0x84 0x3D` — three bytes because 1,000,003 > 2¹⁴ (16,384). The decoder computes: `(0x43) | (0x04 << 7) | (0x3D << 14)` = 67 + 512 + 999,424 = 1,000,003. ✓
-
-Measured on device: **30 ms per call** at 1 instance.
+Multiplies an accumulator by prime 1,000,003 for 20,000 iterations. Same 13-instruction structure as add with `i32.mul` substituted — tests whether multiply vs add affects throughput (spoiler: no, both cost ~1.5 µs/iteration). **30 ms per call**.
 
 ---
 
 #### fib — 113 bytes
 
-**What it computes**: Iterative Fibonacci. The outer loop runs 500 times; each pass resets `a=0, b=1` and computes fib(30) by advancing the sequence 30 steps. The final value of `b` after 30 steps is fib(30) = 832,040. The result is discarded; 0 is returned.
-
-**Why fib(30) × 500**: fib(30) requires 30 inner iterations with 3-local swap (`c = a+b; a = b; b = c`). 500 × 30 = 15,000 inner iterations total per call. This gives ~45 ms at one instance — between add and checksum, filling out the latency range.
-
-**Why not recursive Fibonacci**: Recursive fib in WASM requires `call` instructions and grows the WAMR call stack exponentially. Iterative fib tests nested loops and local-variable swap without any function call overhead, which is what we want to measure.
-
-**Instruction mix**: The outer loop has 7 instructions (including 3 `local.set` to reset `a`, `b`, `j`). The inner loop has 11 instructions: `local.get $j`, compare, `br_if`, `local.get $a`, `local.get $b`, `i32.add`, `local.set $c`, `local.set $a` (from `$b`), `local.set $b` (from `$c`), increment `$j`, `br`. The swap requires two temporaries within one iteration, stressing the operand stack.
-
-**Role in the experiment**: Tests nested-loop overhead and multi-local-variable access patterns, which are typical of real algorithms (sorting, parsing, state machines).
-
-```wat
-(module
-  (func (export "main") (param i32 i32) (result i32)
-    (local $round i32)   ;; local[2]: outer counter
-    (local $a     i32)   ;; local[3]: fib(n-2)
-    (local $b     i32)   ;; local[4]: fib(n-1)
-    (local $c     i32)   ;; local[5]: temp for swap
-    (local $j     i32)   ;; local[6]: inner counter
-    (block $outer_break
-      (loop $outer
-        (br_if $outer_break (i32.ge_u (local.get $round) (i32.const 500)))
-        ;; reset sequence: a=0, b=1, j=0
-        (local.set $a (i32.const 0))
-        (local.set $b (i32.const 1))
-        (local.set $j (i32.const 0))
-        (block $inner_break
-          (loop $inner
-            (br_if $inner_break (i32.ge_u (local.get $j) (i32.const 30)))
-            ;; c = a + b; a = b; b = c
-            (local.set $c (i32.add (local.get $a) (local.get $b)))
-            (local.set $a (local.get $b))
-            (local.set $b (local.get $c))
-            (local.set $j (i32.add (local.get $j) (i32.const 1)))
-            (br $inner)
-          )
-        )
-        (local.set $round (i32.add (local.get $round) (i32.const 1)))
-        (br $outer)
-      )
-    )
-    (i32.const 0)
-  )
-)
-```
-
-Raw binary — 113 bytes. The larger size vs add/mul comes entirely from more instructions in the code section: 5 locals (vs 2), a nested block structure, and the 3-way swap requiring 3 `local.set` calls per inner iteration instead of 1.
-
-```text
-00 61 73 6d 01 00 00 00  ;; header
-01 07 01 60 02 7f 7f 01 7f  ;; type section
-03 02 01 00              ;; func section
-07 08 01 04 6d 61 69 6e 00 00  ;; export "main"
-0a 50 01                 ;; code section: 1 func, 78 bytes
-  4e 01 05 7f            ;; 5 locals (round, a, b, c, j) — all i32
-  02 40                  ;; block $outer_break
-    03 40                ;; loop $outer
-      20 02 41 f4 03 4f 0d 01  ;; round >= 500? break (500 = 0xF4 0x03)
-      41 00 21 03        ;; a = 0
-      41 01 21 04        ;; b = 1
-      41 00 21 06        ;; j = 0
-      02 40              ;; block $inner_break
-        03 40            ;; loop $inner
-          20 06 41 1e 4f 0d 01  ;; j >= 30? break
-          20 03 20 04 6a 21 05  ;; c = a + b
-          20 04 21 03    ;; a = b
-          20 05 21 04    ;; b = c
-          20 06 41 01 6a 21 06  ;; j++
-          0c 00          ;; br $inner
-        0b 0b            ;; end inner loop; end inner block
-      20 02 41 01 6a 21 02  ;; round++
-      0c 00              ;; br $outer
-    0b 0b                ;; end outer loop; end outer block
-  41 00 0b               ;; return 0
-```
-
-Measured on device: **45 ms per call** at 1 instance.
+Iterative Fibonacci: 500 outer rounds × 30 inner steps = 15,000 inner iterations per call. Tests nested-loop overhead and multi-local-variable access patterns (5 locals, 3-way swap per iteration). **45 ms per call**.
 
 ---
 
 #### checksum — 145 bytes
 
-**What it computes**: 100 outer rounds, each consisting of two sequential passes over 4,096 bytes of WASM linear memory:
-
-1. **Write pass**: `mem[i] = i & 0xFF` for i in 0..4095. Fills the buffer with a sawtooth pattern (0,1,2,...,255,0,1,...).
-2. **XOR-read pass**: `acc ^= mem[i]` for i in 0..4095. Accumulates an XOR checksum. The result is discarded.
-
-Total memory operations per call: 100 × 4096 × 2 = **819,200 bounds-checked memory accesses**.
-
-**Why 4 KB (not 1 KB like the MEM workload)**: The MEM workload in the homogeneous benchmark uses 1 KB to keep latency around 14 ms. At 4 KB, checksum produces ~1,779 ms per call — a deliberate extreme that makes it the dominant consumer of CPU time and exposes scheduler interaction effects.
-
-**Why XOR rather than sum**: XOR is self-inverse (`a ^ a = 0`), so after the write pass the XOR of all bytes equals `(0 ^ 1 ^ 2 ^ ... ^ 255) × 16 rounds` — a predictable non-zero value that would catch any memory corruption if we chose to verify it.
-
-**The bounds-checking cost**: Every `i32.store8` and `i32.load8_u` in WAMR's fast-interpreter goes through a bounds check: `if (offset + 1 > memory_size) trap`. At 819,200 accesses × ~2.2 µs each (measured from the 1,779 ms total) = 1.8s. Compare to the 72 ms for add's 50,000 arithmetic operations — memory access through WAMR costs ~50× more per operation than arithmetic.
-
-**Linear memory requirement**: `(memory 1 1)` — one 64 KB page, fixed. This is why checksum costs ~88 KB per instance (64 KB page + 4 KB WAMR stack + 6 KB pthread stack + overhead) while the arithmetic tasks cost only ~16 KB.
+100 rounds of write-then-XOR over 4,096 bytes of linear memory = **819,200 bounds-checked memory accesses** per call. Requires one 64 KB WASM memory page, making each instance cost ~88 KB (vs ~16 KB for arithmetic-only tasks). Memory access through WAMR costs ~50× more per operation than pure arithmetic.
 
 ```wat
 (module
@@ -779,113 +483,13 @@ Total memory operations per call: 100 × 4096 × 2 = **819,200 bounds-checked me
 )
 ```
 
-Raw binary — 145 bytes. The memory section (`05 04 01 01 01 01`) appears between the function and export sections. Its 6 bytes declare one memory with minimum and maximum of 1 page.
-
-```text
-00 61 73 6d 01 00 00 00       ;; header
-01 07 01 60 02 7f 7f 01 7f    ;; type section
-03 02 01 00                   ;; func section
-05 04 01 01 01 01             ;; memory section: 1 memory, min=1, max=1
-07 08 01 04 6d 61 69 6e 00 00 ;; export "main"
-0a 6a 01                      ;; code section: 1 func, 104 bytes
-  68 01 03 7f                 ;; 3 locals (round, i, acc)
-  02 40                       ;; block $break
-    03 40                     ;; loop $outer
-      20 02 41 e4 00 4f 0d 01 ;;   round >= 100? break
-      41 00 21 03             ;;   i = 0
-      02 40 03 40             ;;   block $wb; loop $wl
-        20 03 41 80 20 4f 0d 01  ;; i >= 4096? break (4096 = 0x80 0x20)
-        20 03 20 03 41 ff 01 71 3a 00 00  ;; store8: mem[i] = i & 0xFF
-        20 03 41 01 6a 21 03  ;; i++
-        0c 00 0b 0b           ;; br; end loop; end block
-      41 00 21 03             ;;   i = 0
-      02 40 03 40             ;;   block $rb; loop $rl
-        20 03 41 80 20 4f 0d 01  ;; i >= 4096? break
-        20 04 20 03 2d 00 00 73 21 04  ;; acc ^= load8_u(i)
-        20 03 41 01 6a 21 03  ;; i++
-        0c 00 0b 0b           ;; br; end loop; end block
-      20 02 41 01 6a 21 02    ;; round++
-      0c 00                   ;; br $outer
-    0b 0b                     ;; end outer loop; end block
-  41 00 0b                    ;; return 0
-```
-
-Measured on device: **1,779 ms per call** at 1 instance (25× slower than add).
+Raw binary: **145 bytes** (includes 64 KB memory section). Measured on device: **1,779 ms per call** at 1 instance (25× slower than add).
 
 ---
 
 #### popcount — 99 bytes
 
-**What it computes**: Counts the total number of set bits across all integers from 0 to 49,999, using [Kernighan's bit-counting algorithm](https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetKernighan). For each outer value `n`, an inner loop strips one set bit per iteration with `val &= val - 1`, incrementing a counter each time. When `val` reaches 0, the inner loop exits.
-
-The total accumulated bit count for 0..49,999 is 349,992 (sum of popcount of each integer in that range). This is discarded; 0 is returned.
-
-**Why this algorithm**: Kernighan's method produces a **variable inner loop depth** — the number of inner iterations equals the number of set bits in `n`. For n=0: 0 inner iterations. For n=65535 (hypothetically): 16 inner iterations. For integers 0..49,999, the average popcount is ~8.16, so the inner loop averages 8 iterations.
-
-This irregular inner loop is qualitatively different from all other tasks in the benchmark. Every other task has a fixed number of iterations per outer step. Popcount forces the interpreter to execute branches with unpredictable trip counts, testing whether WAMR's fast-interpreter branch dispatch handles variable-depth loops efficiently or whether the irregularity adds overhead.
-
-**The `val &= val - 1` trick**: This idiom clears the lowest set bit of `val` in one operation. In WASM: `i32.and (local.get $val) (i32.sub (local.get $val) (i32.const 1))`. The key insight is that `val - 1` flips all bits below the lowest set bit (and clears the lowest set bit itself), so AND-ing with the original `val` clears exactly that one bit. No division, no conditionals.
-
-**No linear memory**: The outer counter `n`, working copy `val`, and total `count` are all locals. The 50,000 outer × average 8.16 inner = ~408,000 total inner iterations per call.
-
-```wat
-(module
-  (func (export "main") (param i32 i32) (result i32)
-    (local $n     i32)   ;; local[2]: outer counter (value being popcounted)
-    (local $count i32)   ;; local[3]: cumulative bit count
-    (local $val   i32)   ;; local[4]: working copy of $n for inner loop
-    (block $break
-      (loop $outer
-        (br_if $break (i32.ge_u (local.get $n) (i32.const 50000)))
-        ;; val = n  (working copy so we can destroy it in inner loop)
-        (local.set $val (local.get $n))
-        ;; Kernighan inner loop: while val != 0 { val &= val-1; count++ }
-        (block $kb (loop $kl
-          (br_if $kb (i32.eqz (local.get $val)))   ;; exit when val == 0
-          (local.set $val
-            (i32.and (local.get $val)
-                     (i32.sub (local.get $val) (i32.const 1))))
-          (local.set $count (i32.add (local.get $count) (i32.const 1)))
-          (br $kl)
-        ))
-        (local.set $n (i32.add (local.get $n) (i32.const 1)))
-        (br $outer)
-      )
-    )
-    (i32.const 0)
-  )
-)
-```
-
-Raw binary — 99 bytes:
-
-```text
-00 61 73 6d 01 00 00 00       ;; header
-01 07 01 60 02 7f 7f 01 7f    ;; type section
-03 02 01 00                   ;; func section
-07 08 01 04 6d 61 69 6e 00 00 ;; export "main"
-0a 42 01                      ;; code section: 1 func, 64 bytes
-  40 01 03 7f                 ;; 3 locals (n, count, val)
-  02 40                       ;; block $break
-    03 40                     ;; loop $outer
-      20 02 41 d0 86 03 4f 0d 01  ;; n >= 50000? break
-      20 02 21 04             ;;   val = n
-      02 40                   ;;   block $kb
-        03 40                 ;;   loop $kl
-          20 04 45 0d 01      ;;     val == 0? break  (0x45 = i32.eqz)
-          20 04 20 04 41 01 6b 71 21 04  ;; val = val & (val-1)
-          20 03 41 01 6a 21 03  ;; count++
-          0c 00               ;;     br $kl
-        0b 0b                 ;;   end inner loop; end inner block
-      20 02 41 01 6a 21 02    ;;   n++
-      0c 00                   ;;   br $outer
-    0b 0b                     ;; end outer loop; end block
-  41 00 0b                    ;; return 0
-```
-
-The `i32.eqz` opcode (`0x45`) exits the inner loop when `val` reaches zero — this is the branch that fires a variable number of times per outer iteration.
-
-Measured on device: **903 ms per call** at 1 instance. At ~408,000 inner iterations, that works out to ~2.2 µs per inner iteration — the same as checksum's memory access cost. The variable-depth branching adds no measurable overhead over a fixed-depth loop at this scale; the interpreter dispatch cost per iteration is what dominates.
+Counts set bits in integers 0–49,999 using [Kernighan's algorithm](https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetKernighan). Unlike other tasks, this produces a **variable inner loop depth** (average 8 iterations per outer step), testing whether WAMR's branch dispatch handles irregular trip counts. No linear memory. **903 ms per call** (~2.2 µs per inner iteration).
 
 ---
 
@@ -899,248 +503,68 @@ Measured on device: **903 ms per call** at 1 instance. At ~408,000 inner iterati
 | `checksum` | 145   | **Yes (64 KB)** | 3      | 2 (fixed depth 4096)    |
 | `popcount` | 99    | No              | 3      | 1 (variable depth 0–16) |
 
-Binary size tracks directly with code complexity: more locals, more blocks, more instructions. The memory section itself adds only 6 bytes to checksum; all remaining size difference is instruction count in the code section.
+Binary size tracks with code complexity: more locals, more blocks, more instructions.
 
-### Results
+### Diverse Workload Results
 
 ```text
-╔══════════════════════════════════════════╗
-║  DIVERSE WORKLOAD BENCHMARK              ║
-║  5 tasks × N concurrent sets             ║
-╚══════════════════════════════════════════╝
+DIVERSE WORKLOAD BENCHMARK: 5 tasks × N concurrent sets
 
-Tasks: add | mul | fib | checksum | popcount
-wasm_stack=4KB  task_stack=6KB
+set_size=1 (5 instances):  heap=235KB, zero errors
+set_size=2 (10 instances): heap=116KB, zero errors
+set_size=3: OOM
 
-I bench: Loaded module: add      (72 bytes)
-I bench: Loaded module: mul      (78 bytes)
-I bench: Loaded module: fib     (113 bytes)
-I bench: Loaded module: checksum (145 bytes)
-I bench: Loaded module: popcount  (99 bytes)
-
-set_size=1   total=5    heap=235KB  cpu= 99%  up=3s
-  add         latency=  71877us  iters=28    errors=0
-  mul         latency=  29864us  iters=41    errors=0
-  fib         latency=  45186us  iters=58    errors=0
-  checksum    latency=1779372us  iters=1     errors=0
-  popcount    latency= 902675us  iters=2     errors=0
-
-set_size=2   total=10   heap=116KB  cpu=100%  up=5s
-  add         latency= 140169us  iters=52    errors=0
-  mul         latency=  67461us  iters=99    errors=0
-  fib         latency=  65338us  iters=110   errors=0
-  checksum    latency= 889686us  iters=1     errors=0
-  popcount    latency=1441622us  iters=4     errors=0
-
-set=3  OOM (heap=116KB < ~178KB needed for next set)
-
---- Peak: 2 concurrent sets  (10 total WASM instances) ---
-
-  id  task        iters   errors  latency_us
-   0  add         51      0       126882
-   1  mul         93      0        44878
-   2  fib        108      0        45148
-   3  checksum     2      0      2973000
-   4  popcount     4      0      1792661
-   5  add         23      0       161911
-   6  mul         55      0        49984
-   7  fib         47      0        45056
-   8  checksum     1      0      3866578
-   9  popcount     2      0      1603632
-
+--- Peak: 10 total WASM instances of 5 different types ---
 Post-teardown heap: 353KB free
 ```
 
 ### Analysis
 
-**Peak: 2 sets = 10 simultaneous WASM instances of 5 different types.** That is 10 independently executing, isolated WASM functions, each with its own module, each computing something different, all running at the same time on a $4 microcontroller.
+**Peak: 10 simultaneous WASM instances of 5 different types** — 10 independently executing, isolated WASM functions on a $4 microcontroller.
 
-**Heap accounting**:
+The dominant cost is `checksum`: each instance needs a 64 KB linear memory page (128 KB for two). The other 8 instances together cost only ~90 KB total. Remove checksum and you could run 4–5 sets (16–20 instances) before hitting OOM.
 
-Starting free DRAM: **356 KB** (slightly lower than the 412 KB from the homogeneous run because loading 5 separate module structs has more overhead than 1 shared module).
+**Key insight**: mul at 30 ms (20K iterations) vs add at 72 ms (50K iterations) shows identical per-iteration cost (~1.5 µs). **Interpreter dispatch overhead dominates, not arithmetic.** Checksum at 1,779 ms exposes WAMR's bounds-checking cost: ~2.2 µs per memory access (2× arithmetic cost).
 
-| Set                        | DRAM consumed                   | Heap remaining |
-| -------------------------- | ------------------------------- | -------------- |
-| After loading 5 modules    | ~28 KB (module structs + parse) | ~328 KB        |
-| After set 1 (5 instances)  | ~93 KB                          | ~235 KB        |
-| After set 2 (10 instances) | ~119 KB more                    | ~116 KB        |
-| Set 3 would need           | ~178 KB                         | **OOM**        |
-
-The dominant cost is `checksum`: each instance needs the 64 KB linear memory page. Two checksum instances = 128 KB just for linear memory. The other 8 instances (add ×2, mul ×2, fib ×2, popcount ×2) together cost only about ~90 KB total. Remove the checksum task and you could run 4–5 sets of the remaining four tasks before hitting OOM.
-
-**Per-task latency at set_size=1**:
-
-| Task       | Latency (1 instance) | Iterations in 2s | Notes                                            |
-| ---------- | -------------------- | ---------------- | ------------------------------------------------ |
-| `add`      | 72 ms                | 28               | Baseline: ~4 instructions/iter                   |
-| `mul`      | 30 ms                | 41               | **2.4× faster than add** despite same loop count |
-| `fib`      | 45 ms                | 58               | Nested loop, 5 locals — surprisingly fast        |
-| `checksum` | 1,779 ms             | 1                | 25× slower than add — bounded by memory ops      |
-| `popcount` | 903 ms               | 2                | 12× slower — variable inner loop depth           |
-
-The `mul` result is the most striking: 20,000 iterations of multiply completes in 30 ms, while 50,000 iterations of add takes 72 ms. Normalised per iteration, multiply (1.5 µs/iter) is faster than add (1.44 µs/iter) — essentially the same. The difference is purely loop count: mul has 20K iterations vs add's 50K. This confirms that **WAMR's interpreter dispatch overhead is the dominant cost, not the arithmetic operation itself**. The Xtensa LX7's multiply unit is as fast as its adder at this scale.
-
-The `checksum` task at 1,779 ms per call exposes the true cost of WAMR's bounds-checking path. Every `i32.store8` and `i32.load8_u` goes through a bounds check against the linear memory page limit. With 100 rounds × 4,096 bytes × 2 passes (write + read) = 819,200 checked memory accesses per call, `checksum` is fundamentally memory-bottlenecked. At 1,779 ms / 819,200 accesses ≈ 2.2 µs per memory access — roughly twice the cost of a pure arithmetic instruction.
-
-**At set_size=2**, latencies change significantly:
-
-| Task       | set_size=1 | set_size=2 | Degradation         |
-| ---------- | ---------- | ---------- | ------------------- |
-| `add`      | 72 ms      | 140 ms     | 1.94×               |
-| `mul`      | 30 ms      | 67 ms      | 2.24×               |
-| `fib`      | 45 ms      | 65 ms      | 1.44×               |
-| `checksum` | 1,779 ms   | 890 ms     | **0.50× (faster!)** |
-| `popcount` | 903 ms     | 1,442 ms   | 1.60×               |
-
-The `add` and `mul` tasks roughly double in latency as expected (2 instances competing for 2 cores). The surprising result is `checksum`: it *halved* from set 1 to set 2. This is a scheduling artefact — at set_size=1, the single checksum instance dominates one core, starving the other tasks. At set_size=2, FreeRTOS distributes the two checksum instances across both cores more evenly, and the `vTaskDelay(5ms)` yield between calls allows the scheduler to interleave them with the faster tasks, reducing wall-clock latency per instance. The *total* checksum work per unit time actually doubled; each individual instance just got more regular access to its core.
-
-**CPU utilisation hits 100%** from set_size=1. With checksum consuming ~1.8s per call and only a 5ms yield between calls, it saturates whichever core it runs on almost continuously. The faster tasks (mul, fib, add) run in the gaps.
-
-**Zero errors** across all 10 instances and both sets. Five different modules loaded simultaneously, 10 separate execution environments, no cross-contamination.
+Zero errors across all 10 instances — five different modules, 10 separate execution environments, no cross-contamination.
 
 ### Multi-module overhead
 
-Loading 5 separate modules costs about **28 KB** more than the initial WAMR runtime base (measured as starting heap 356 KB vs the 412 KB seen in the homogeneous experiment after a full teardown and re-init). Each module struct — containing the parsed type section, function table, export table, and fast-interpreter pre-processed code — costs roughly 5–6 KB each for these tiny binaries. For real-world WASM modules (50–200 KB compiled from Rust/TinyGo), this per-module overhead would be proportionally larger, making the shared-module architecture of the homogeneous experiment even more valuable in production.
+Loading 5 separate modules costs ~28 KB more than the initial WAMR runtime base (~5–6 KB per module struct). For larger real-world WASM modules, shared-module architecture becomes more valuable.
 
 ---
 
 ## Comparison with Other Platforms
 
-To put these numbers in context:
+| Platform                   | RAM         | WASM Runtime     | Concurrent instances | Cost   |
+| -------------------------- | ----------- | ---------------- | -------------------- | ------ |
+| ESP32-S3 (this experiment) | 512 KB SRAM | WAMR fast-interp | **29 CPU, 3 MEM**    | ~$4    |
+| Raspberry Pi Zero 2W       | 512 MB RAM  | Wasmtime         | ~200+                | ~$15   |
+| Raspberry Pi 4 (2GB)       | 2 GB RAM    | Wasmtime         | 1000+                | ~$35   |
 
-| Platform                   | RAM         | WASM Runtime     | Concurrent instances | Cost          |
-| -------------------------- | ----------- | ---------------- | -------------------- | ------------- |
-| ESP32-S3 (this experiment) | 512 KB SRAM | WAMR fast-interp | **29 CPU, 3 MEM**    | ~$4           |
-| Raspberry Pi Zero 2W       | 512 MB RAM  | Wasmtime         | ~200+                | ~$15          |
-| Raspberry Pi 4 (2GB)       | 2 GB RAM    | Wasmtime         | 1000+                | ~$35          |
-| Docker container (x86)     | GBs         | Native Linux     | OS limit             | ~$500+ server |
-
-The ESP32-S3 running WAMR achieves **29 concurrent lightweight WASM containers** in 512 KB of SRAM. A Raspberry Pi Zero 2W has 1000× more RAM and achieves roughly 200× more concurrent instances. The per-instance cost scales roughly linearly with available memory, which makes sense — memory is the binding constraint on both platforms.
-
-What makes the microcontroller result impressive is the *absolute* number: 29 isolated, independently-executing WASM workloads in a space smaller than a thumbnail, consuming 240 mW, for $4. Each "container" is truly isolated (separate linear memory, separate execution state) and can be started/stopped dynamically.
+The ESP32-S3 achieves **29 concurrent WASM containers** in 512 KB — 29 isolated, independently-executing workloads in a $4 chip smaller than a thumbnail, consuming 240 mW.
 
 ---
 
-## Practical Implications for Edge Computing
+## Practical Implications
 
-This benchmark was motivated by [Propeller](https://github.com/absmach/propeller) — a project for deploying and managing WebAssembly workloads on distributed embedded devices. The question "how many containers can one node run?" directly determines how to schedule workloads across a fleet.
+This benchmark was motivated by [Propeller](https://github.com/absmach/propeller) — a project for deploying WASM workloads on distributed embedded devices. Key takeaways:
 
-For CPU-bound workloads (signal processing, encryption, compression, protocol parsers), the ESP32-S3 can run **~25–29 concurrent WASM functions** before hitting DRAM limits. In a Propeller deployment:
-
-- A single ESP32-S3 node could serve as a multi-tenant edge compute node, running up to 25 small WASM functions simultaneously
-- Each function is isolated — one crashing or looping cannot corrupt another's state
-- The total throughput at 29 instances and ~73 ms/call is ~397 calls/second across all instances
-
-For memory-intensive workloads, the 64 KB WASM memory page minimum is the bottleneck. Three instances. For workloads that fit entirely in WASM local variables (no linear memory needed), the sky is limited only by DRAM.
-
-The **WASM binary size** matters enormously. Our CPU workload binary is 90 bytes. A real-world WASM module from TinyGo might be 50–200 KB. That module would still need to be loaded only *once* (shared module architecture), but each instance's heap overhead would grow based on the module's complexity. The 15 KB per-instance cost for our minimal CPU workload is a best-case lower bound.
-
----
-
-## Reproducing This Experiment
-
-### Hardware
-
-- ESP32-S3-WROOM-1 (or any ESP32-S3 dev board)
-- USB cable for power + serial
-
-### Software dependencies
-
-- ESP-IDF v5.3.2
-- WAMR component (`idf_component_manager install`)
-
-### sdkconfig.defaults
-
-```ini
-CONFIG_WAMR_ENABLE_INTERP=y
-CONFIG_WAMR_INTERP_FAST=y
-CONFIG_WAMR_ENABLE_AOT=n
-CONFIG_FREERTOS_USE_TRACE_FACILITY=y
-CONFIG_FREERTOS_GENERATE_RUN_TIME_STATS=y
-CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU0=n
-CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU1=n
-```
-
-### Build and flash
-
-```bash
-cd esp32s3-wasm-stress
-idf.py set-target esp32s3
-idf.py build flash
-```
-
-### Monitor (if idf.py monitor fails in your shell)
-
-```python
-import serial, time, re
-
-s = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.2)
-s.setDTR(False)
-s.setRTS(False)
-buf = ""
-while True:
-    data = s.read(256).decode('utf-8', errors='replace')
-    if data:
-        buf += data
-        lines = buf.split('\n')
-        buf = lines[-1]
-        for line in lines[:-1]:
-            clean = re.sub(r'\x1b\[[0-9;]*m', '', line).strip()
-            if clean:
-                print(f"[{time.strftime('%H:%M:%S')}] {clean}")
-    time.sleep(0.05)
-```
-
-### Expected output (EXPERIMENT 0, full comparison)
-
-```text
-========================================
-  ESP32-S3 WASM Stress Benchmark
-========================================
-Internal DRAM:
-  total free  : 412 KB
-  ...
-
-╔══════════════════════════════════════════╗
-║  WORKLOAD COMPARISON                     ║
-╚══════════════════════════════════════════╝
-
-=== WASM Stress Benchmark ===
-workload=cpu ...
-instances=1    heap= 394KB ...
-...
-instances=29   heap= 14KB ...
-instances=30   OOM (heap=14KB < ~28KB needed)
-
---- Peak: 29 concurrent WASM instances ---
-...
-Post-teardown heap: 412KB free
-
-╔══════════════════════════════════════════╗
-║  SUMMARY                                 ║
-╠══════════════════════════════════════════╣
-║  cpu       max_instances = 29            ║
-║  mem       max_instances = 3             ║
-║  msg       max_instances = 3             ║
-╚══════════════════════════════════════════╝
-```
+- **CPU-bound workloads**: ~25–29 concurrent WASM functions per ESP32-S3, ~397 calls/second total
+- **Memory-intensive workloads**: 3 instances max (64 KB page minimum)
+- **Isolation**: one crashing or looping function cannot corrupt another's state
+- **Binary size matters**: our 90-byte workload is a best-case; real 50–200 KB TinyGo/Rust modules increase per-instance overhead
 
 ---
 
 ## Conclusion
 
-Two experiments, two answers:
+**Homogeneous**: The ESP32-S3 runs **29 concurrent WASM instances** (~16 KB each) of a CPU-bound workload. Memory workloads: 3 instances max.
 
-**Homogeneous (same task, many instances)**: The ESP32-S3 can run **29 concurrent WebAssembly instances** of a CPU-bound workload, each costing approximately 16 KB of DRAM, sharing one loaded module. For workloads requiring WASM linear memory, the 64 KB minimum page size limits concurrency to 3 instances on a 512 KB device.
+**Heterogeneous**: **10 concurrent instances of 5 different task types**, zero errors. Without memory-using tasks, would scale to 16–20 instances.
 
-**Heterogeneous (five different tasks simultaneously)**: With five distinct WASM modules loaded independently, the device runs **10 concurrent instances of 5 different task types** (2 sets) before the checksum task's 64 KB linear memory page tips the balance into OOM. Without memory-using tasks, the four arithmetic tasks alone (add, mul, fib, popcount) would scale to 4–5 sets (16–20 instances) before exhausting DRAM. Zero errors across all experiments.
-
-The shared-module architecture is the key enabler for high concurrency: parse once, instantiate many times. Combined with a cooperative yield (`vTaskDelay(5ms)`) to prevent watchdog timeouts, this gives a clean, leak-free, multi-tenant WASM execution environment on a $4 microcontroller.
-
-For workloads that fit in WASM local variables (no memory section), the practical limit is DRAM for native stacks. For workloads requiring memory, PSRAM expansion is the path to higher concurrency.
-
-The code for this benchmark is at [esp32s3-wasm-stress](https://github.com/absmach/propeller).
+Shared-module architecture + cooperative yields = clean, leak-free, multi-tenant WASM execution on a $4 microcontroller. Full source: [esp32s3-wasm-stress](https://github.com/absmach/propeller/tree/main/esp32s3-wasm-stress).
 
 ---
 
-*All measurements taken on ESP32-S3-WROOM-1 with ESP-IDF v5.3.2, WAMR commit from the idf-component-manager registry circa early 2026. Timings are wall-clock as measured by `esp_timer_get_time()` from within the FreeRTOS task.*
+*ESP32-S3-WROOM-1, ESP-IDF v5.3.2, WAMR fast-interpreter.*
