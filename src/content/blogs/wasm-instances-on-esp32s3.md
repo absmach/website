@@ -1,7 +1,7 @@
 ---
 slug: "29-wasm-instances-on-esp32s3"
 title: "29 Concurrent WebAssembly Instances on a $4 Microcontroller"
-description: "A deep dive into running parallel WebAssembly workloads on the ESP32-S3 using WAMR fast-interpreter. Covers the shared-module architecture, five debugging war stories (DROM write exceptions, DTR/RTS boot traps, FreeRTOS priority inversion, WAMR heap alignment panics, SMP IPC deadlocks), and full benchmark results: 29 CPU instances, 3 memory instances, zero leaks."
+description: "We pushed an ESP32-S3 to its limits — 29 parallel WASM workloads, zero Docker. Here's how far a $4 chip can go."
 date: "2026-03-09"
 author:
   name: "Jeff Mboya"
@@ -26,7 +26,7 @@ The ESP32-S3-WROOM-1 costs about $4. It has two Xtensa LX7 cores clocked at 240 
 
 But it *can* run WebAssembly.
 
-This post documents an experiment to find the hard limit: **how many concurrent WASM workloads can one ESP32-S3 execute before memory or scheduling makes it impossible?** Along the way we hit five distinct bugs — silent flash-memory exceptions, serial-line race conditions, FreeRTOS priority inversions, WebAssembly heap alignment panics, and an inter-core IPC deadlock — and fixed every one of them.
+This post documents an experiment to find the hard limit: **how many concurrent WASM workloads can one ESP32-S3 execute before memory or scheduling makes it impossible?**
 
 The answer is **29 parallel CPU-bound WASM instances**, consuming roughly 15 KB of DRAM each, at a combined system throughput of thousands of iterations per second. Memory-intensive and messaging workloads top out at 3 instances each due to the 64 KB WASM linear memory page cost.
 
@@ -311,159 +311,6 @@ Each instance runs in its own pthread. Instances loop: call WASM `main`, record 
 
 ---
 
-## Five Bugs, Five Fixes
-
-Getting this to work required debugging five distinct failure modes, each silent in its own way.
-
-### Bug 1: The Read-Only Flash Exception
-
-**Symptom**: Device printed the benchmark header and then went completely silent. No further output. No exception log. Nothing.
-
-**Root cause**: `wasm_runtime_load()` in fast-interpreter mode performs an in-place rewrite of the bytecode buffer — it patches opcodes and rewrites branch targets as part of pre-processing. Our WASM arrays were declared as `static const uint8_t wasm_cpu_stress[] = { ... }` and embedded directly in the firmware binary. The linker places `static const` data in **DROM** — the read-only flash region, mapped via the MMU into the CPU's address space. Writes to DROM cause a silent **LoadStoreError** hardware exception at the Xtensa level, which FreeRTOS converts to a task abort. Because the exception happens inside WAMR's loader before any benchmark output is produced, nothing is printed.
-
-This is an insidious bug because WAMR's documentation for fast-interpreter mode does warn that it modifies the buffer, but the connection to ESP32's DROM placement of `static const` is non-obvious.
-
-**Fix**: Copy the bytecode to writable DRAM heap before passing it to WAMR:
-
-```c
-uint8_t *wasm_bytes = heap_caps_malloc(wasm_len, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
-if (!wasm_bytes) {
-    ESP_LOGE(TAG, "malloc(%u) for WASM buffer failed", (unsigned)wasm_len);
-    return 0;
-}
-memcpy(wasm_bytes, wasm_ro, wasm_len);
-
-// WAMR takes ownership of wasm_bytes after wasm_runtime_load().
-// Do NOT free it — WAMR will free it via wasm_runtime_unload().
-s_shared_module = wasm_runtime_load(wasm_bytes, wasm_len, err, sizeof(err));
-```
-
-The `heap_caps_malloc` with `MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT` ensures we get byte-addressable DRAM (not PSRAM, which WAMR may not support, and not IRAM which has alignment constraints).
-
-Ownership semantics: after a successful `wasm_runtime_load`, WAMR owns the buffer and will free it when you call `wasm_runtime_unload`. Do not double-free.
-
----
-
-### Bug 2: The Stuck Serial Lines
-
-**Symptom**: After several flashing and monitoring iterations, the device produced absolutely no output — not even the ESP-IDF boot banner. A fresh power cycle was required.
-
-**Root cause**: `idf.py monitor` requires an interactive TTY (it uses `termios` raw mode). When running in a scripted environment, it exits immediately with "Monitor requires standard input to be attached to TTY". We resorted to Python pyserial scripts to read the serial output. Early versions of the capture script left the DTR and RTS serial control lines in their default asserted state when opening the port.
-
-On ESP32-S3 dev boards, the CP2102N USB-UART bridge connects:
-
-- **RTS → EN pin** (chip enable/reset)
-- **DTR → GPIO0** (boot mode selection)
-
-With both DTR and RTS asserted (logic high = active), GPIO0 is pulled low (boot mode = download) AND EN is held low (chip reset). The device stays in serial download mode and cannot boot normally.
-
-**Fix**: Immediately after opening the serial port in every pyserial script, deassert both lines:
-
-```python
-import serial, time
-
-s = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.2)
-s.setDTR(False)
-s.setRTS(False)
-time.sleep(0.1)  # give the device a moment after line release
-```
-
-The RTS-triggered reset (used by `idf.py flash` for automatic reset into normal boot) pulses RTS briefly — it does not leave it asserted.
-
----
-
-### Bug 3: The Priority Inversion
-
-**Symptom**: After fixing the DROM bug, the benchmark could load the WASM module and call `spawn_instance`. Debug output showed `before pthread_create[0]` printed, and inside the worker thread `wasm_worker_thread[0] started` was printed — but the line `pthread_create[0] returned 0` never appeared. The benchmark task blocked indefinitely after `pthread_create()` returned.
-
-**Root cause**: This was a classic SMP FreeRTOS priority inversion, made subtle by the dual-core topology.
-
-The benchmark harness task (`bench_main`) runs at **priority 2** (`tskIDLE_PRIORITY + 2`), pinned to **core 0**.
-
-ESP-IDF's default pthread configuration sets `CONFIG_PTHREAD_TASK_PRIO_DEFAULT=5`. Every `pthread_create()` spawns a FreeRTOS task at priority 5.
-
-When `pthread_create` spawns the worker at priority 5, FreeRTOS's scheduler on core 0 immediately preempts the benchmark task (priority 2) in favour of the newly created higher-priority worker (priority 5). The worker starts executing `wasm_runtime_instantiate`, which on Xtensa LX7 with fast-interpreter for a ~90-byte module takes maybe 10–50 ms. During this entire time, the benchmark task cannot run. It can't print `pthread_create returned 0`, it can't call `vTaskDelay`, it can't do anything. From the outside, it looks like `pthread_create` is blocking.
-
-Why doesn't core 1 help? Because we had `cfg.core_affinity = -1` (any core), but the worker still prefers core 0 right after creation since that's where the creating task ran. More importantly, the benchmark harness is *pinned* to core 0, so it can only run there, and it can't run there while a higher-priority task exists.
-
-**Fix**: Use `esp_pthread_set_cfg()` to set the priority of the *next* `pthread_create` call before spawning each worker:
-
-```c
-#include "esp_pthread.h"
-
-esp_pthread_cfg_t pcfg = esp_pthread_get_default_config();
-pcfg.prio = tskIDLE_PRIORITY + 1;   /* priority 1, below harness priority 2 */
-esp_pthread_set_cfg(&pcfg);
-
-int rc = pthread_create(&inst->thread, &attr, wasm_worker_thread, inst);
-```
-
-`esp_pthread_set_cfg` stores the config in thread-local storage. The next `pthread_create` on this thread reads that TLS config and overrides the default priority. Setting workers to priority 1 (below the harness at priority 2) means workers only run when the harness yields — exactly what we want.
-
-**CMake gotcha**: `esp_pthread.h` is *not* a separate ESP-IDF component. It lives inside the `pthread` component. Adding `esp_pthread` to `REQUIRES` in CMakeLists.txt causes:
-
-```text
-CMake Error: Failed to resolve component 'esp_pthread'
-```
-
-The correct `REQUIRES` list is just `pthread`. The header is found automatically.
-
----
-
-### Bug 4: The Heap Alignment Panic
-
-**Symptom**: After fixing the priority bug, CPU workloads ran fine and scaled to 29 instances. But MEM and MSG workloads failed at `wasm_runtime_instantiate` with:
-
-```text
-E (1234) wamr: [GC_ERROR]heap init struct buf not 8-byte aligned
-E (1234) bench: [0] instantiate failed: init app heap failed
-```
-
-**Root cause**: When `heap_size > 0` is passed to `wasm_runtime_instantiate` *and* the WASM module declares a linear memory section (`(memory N N)` in WAT, bytecode section type `0x05`), WAMR allocates the linear memory page(s) and then tries to initialise an internal GC heap manager within the remaining allocated space. Under a specific combination of allocation order, module layout, and the fast-interpreter's internal data structures, the computed pointer for the GC heap initialisation struct was not 8-byte aligned. This caused the assertion failure.
-
-The CPU workload has **no memory section** — it uses only local variables (registers in WASM). It never triggers the GC heap path. The MEM and MSG workloads both have `(memory 1 1)`, triggering the problematic allocation.
-
-**Fix**: Pass `heap_size = 0`:
-
-```c
-inst->module_inst = wasm_runtime_instantiate(
-    s_shared_module,
-    inst->wasm_stack_bytes,  /* WAMR interpreter operand stack, 4 KB */
-    0,                       /* heap_size=0: suppress WAMR internal GC heap */
-    err, sizeof(err));
-```
-
-With `heap_size = 0`, WAMR skips the internal GC heap initialisation entirely. The 64 KB linear memory page (declared by the module's memory section) is *still* allocated by WAMR for `i32.store`/`i32.load` instructions to work — that allocation path does not involve the GC heap struct and has no alignment issue. Our workloads never call `malloc()` from WASM code, so the GC heap provides no value.
-
----
-
-### Bug 5: The Inter-Core IPC Deadlock
-
-**Symptom**: During development, an early version of `metrics.c` used `vTaskGetInfo(eRunning)` to query running task CPU usage. On multi-core ESP32-S3, this call occasionally deadlocked the system — one core would wait for an IPC response from the other core, which was itself blocked.
-
-**Root cause**: On SMP FreeRTOS, `vTaskGetInfo` with `eRunning` state sends an IPC (inter-processor call) to the other core to query what task is currently running there. If both cores call `vTaskGetInfo` simultaneously (which happens when multiple instances all sample metrics at the same time), each core's IPC message is waiting for the other core to respond — deadlock.
-
-**Fix**: Replace `vTaskGetInfo` with `uxTaskGetSystemState()`, which collects all task stats in one atomic operation without triggering IPC:
-
-```c
-static uint32_t get_idle_runtime(int core)
-{
-    static TaskStatus_t buf[MAX_TASKS];
-    uint32_t total_runtime;
-    UBaseType_t count = uxTaskGetSystemState(buf, MAX_TASKS, &total_runtime);
-
-    const char *name = (core == 0) ? "IDLE0" : "IDLE1";
-    for (UBaseType_t i = 0; i < count; i++) {
-        if (strncmp(buf[i].pcTaskName, name, 5) == 0)
-            return buf[i].ulRunTimeCounter;
-    }
-    return 0;
-}
-```
-
-CPU utilisation is computed as `1 - (idle_delta / elapsed_time)`, sampled across both cores. `CONFIG_FREERTOS_USE_TRACE_FACILITY=y` and `CONFIG_FREERTOS_GENERATE_RUN_TIME_STATS=y` must be enabled in `sdkconfig.defaults` for `ulRunTimeCounter` to be populated.
-
----
 
 ## Results
 
@@ -1269,14 +1116,6 @@ Two experiments, two answers:
 **Homogeneous (same task, many instances)**: The ESP32-S3 can run **29 concurrent WebAssembly instances** of a CPU-bound workload, each costing approximately 16 KB of DRAM, sharing one loaded module. For workloads requiring WASM linear memory, the 64 KB minimum page size limits concurrency to 3 instances on a 512 KB device.
 
 **Heterogeneous (five different tasks simultaneously)**: With five distinct WASM modules loaded independently, the device runs **10 concurrent instances of 5 different task types** (2 sets) before the checksum task's 64 KB linear memory page tips the balance into OOM. Without memory-using tasks, the four arithmetic tasks alone (add, mul, fib, popcount) would scale to 4–5 sets (16–20 instances) before exhausting DRAM. Zero errors across all experiments.
-
-The five bugs we encountered — and fixed — illuminate deeper truths about embedded WASM deployment:
-
-1. **Fast-interpreter mode has side effects**: it mutates the bytecode buffer. Know where your data lives (DROM vs DRAM).
-2. **Serial debugging is non-trivial on ESP32**: serial control lines and boot mode pins interact in surprising ways. Always deassert DTR/RTS.
-3. **Priority matters on SMP FreeRTOS**: spawned threads at higher priority than their creator will starve it on a pinned core. Use `esp_pthread_set_cfg` to control this.
-4. **WASM heap_size=0 is often correct**: if your WASM code doesn't call `malloc`, don't ask WAMR to initialise a GC heap. It avoids alignment issues and saves memory.
-5. **Multi-core metrics collection is harder than it looks**: `vTaskGetInfo(eRunning)` deadlocks on SMP. Use `uxTaskGetSystemState()` instead.
 
 The shared-module architecture is the key enabler for high concurrency: parse once, instantiate many times. Combined with a cooperative yield (`vTaskDelay(5ms)`) to prevent watchdog timeouts, this gives a clean, leak-free, multi-tenant WASM execution environment on a $4 microcontroller.
 
