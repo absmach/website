@@ -6,9 +6,9 @@ date: "2026-03-09"
 author:
   name: "Jeff Mboya"
   picture: "https://avatars.githubusercontent.com/u/44696487?s=96&v=4"
-coverImage: "/img/blogs/esp32s3-wasm/cover.png"
+coverImage: "/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3.svg"
 ogImage:
-  url: "/img/blogs/esp32s3-wasm/cover.png"
+  url: "/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3.svg"
 tags:
   - WebAssembly
   - ESP32
@@ -72,6 +72,9 @@ wasm_module_t        ← loaded once from bytecode, read-only after init
   └── (same module_t shared by all instances)
 ```
 
+![](/img/blogs/wasm-instances-on-esp32s3/shared-module-arch.svg)
+*Figure 1. WAMR shared-module architecture: one parsed module spawns multiple isolated instances, each with its own linear memory and execution state.*
+
 `wasm_runtime_load()` parses and pre-processes the WASM bytecode once. Every `wasm_runtime_instantiate()` call creates an independent module instance — with its own linear memory and execution state — that shares the immutable parsed representation. This means N instances cost roughly:
 
 ```bash
@@ -94,6 +97,9 @@ Each instance needs:
 For CPU workloads (no linear memory page): **~15–16 KB per instance**.
 For MEM/MSG workloads (with 64 KB linear memory): **~80–90 KB per instance**.
 
+![](/img/blogs/wasm-instances-on-esp32s3/memory-cost-comparison.svg)
+*Figure 2. Per-instance DRAM cost: CPU workloads without linear memory cost ~16 KB, while MEM/MSG workloads with a 64 KB WASM page cost ~88 KB each.*
+
 ---
 
 ## The Benchmark Design
@@ -103,6 +109,9 @@ The benchmark has three workload types, each compiled to a hand-crafted minimal 
 ### Why hand-crafted WASM?
 
 A TinyGo or Rust WASM binary for even a trivial function starts at 50–200 KB because it includes a runtime, panic handler, memory allocator stubs, and DWARF debug info. At that size, `wasm_runtime_load` takes longer, the shared module consumes more RAM, and the benchmark measures compiler overhead as much as the runtime. By writing the bytecode by hand we get binaries small enough that **loading is near-instant** and each binary does exactly one thing.
+
+![](/img/blogs/wasm-instances-on-esp32s3/binary-size-comparison.svg)
+*Figure 3. WASM binary size: hand-crafted WAT (72–170 bytes) vs compiler-generated TinyGo/Rust (50–200 KB) — roughly 1000× difference.*
 
 ---
 
@@ -365,6 +374,9 @@ Post-teardown heap: 412KB free
 - **Zero errors across all 29 instances.** The shared-module architecture is stable — no corruption, no cross-instance interference.
 - After calling `stop_all_instances()` + `wasm_runtime_unload()`, heap returns exactly to its initial state: **412 KB free**. No leaks.
 
+![](/img/blogs/wasm-instances-on-esp32s3/heap-vs-instances.svg)
+*Figure 4. Free heap vs CPU instance count: starting at 412 KB, each instance consumes ~16 KB until OOM at instance 30.*
+
 ### MEM workload: 3 concurrent instances
 
 ```text
@@ -431,6 +443,9 @@ The scheduling flow for each worker:
 [run WASM main: ~75ms]  →  [vTaskDelay 5ms]  →  [repeat]
 ```
 
+![](/img/blogs/wasm-instances-on-esp32s3/scheduler-timeline.svg)
+*Figure 5. FreeRTOS scheduler timeline: 29 WASM threads time-sliced across 2 cores, with 5 ms vTaskDelay yields to prevent watchdog timeout.*
+
 At 29 workers on 2 cores, the effective time-slice per worker is approximately:
 
 ```text
@@ -490,6 +505,9 @@ wasm_module_t (popcount) → instance 4  (popcount)
                          → instance 8  (checksum)
                          → instance 9  (popcount)
 ```
+
+![](/img/blogs/wasm-instances-on-esp32s3/five-tasks-arch.svg)
+*Figure 6. Five different WASM modules running concurrently: each task has its own wasm_module_t, unlike the shared-module approach in Experiment 1.*
 
 This is fundamentally different from the shared-module architecture of the first benchmark. Each module is independently loaded, independently parsed, and independently owned. The five `wasm_module_t` structs coexist in DRAM simultaneously.
 
