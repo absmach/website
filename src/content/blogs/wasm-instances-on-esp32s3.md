@@ -65,13 +65,6 @@ We use **fast-interpreter** (`CONFIG_WAMR_INTERP_FAST=y`). This is the sweet spo
 
 The key insight for parallelism is that WAMR separates the *loaded module* from its *instance*:
 
-```bash
-wasm_module_t        ← loaded once from bytecode, read-only after init
-  ├── wasm_module_inst_t  ← per-instance linear memory, globals, call stack
-  │     └── wasm_exec_env_t  ← per-thread interpreter state + operand stack
-  └── (same module_t shared by all instances)
-```
-
 ![Shared module architecture diagram](/img/blogs/wasm-instances-on-esp32s3/shared-module-arch.svg)
 *Figure 1. WAMR shared-module architecture: one parsed module spawns multiple isolated instances, each with its own linear memory and execution state.*
 
@@ -336,30 +329,22 @@ Similar to MEM — ring-buffer uses linear memory. Peak: 3 instances. Latency: ~
 
 ---
 
-## Memory Breakdown at 29 CPU Instances
+## Understanding the Limits
 
-Starting free DRAM: **412 KB**. Per-instance cost breakdown: 4 KB WAMR stack + 6 KB pthread stack + ~6 KB WAMR overhead = **~16 KB total**. Post-teardown heap returns to exactly 412 KB (no leaks).
+**Memory breakdown**: Starting free DRAM is **412 KB**. Each CPU instance costs 4 KB WAMR stack + 6 KB pthread stack + ~6 KB WAMR overhead = **~16 KB total**. Post-teardown heap returns to exactly 412 KB — no leaks.
 
----
-
-## Scheduler Mechanics
-
-With 29 threads on 2 cores, each worker calls `vTaskDelay(5ms)` after each WASM call. This is **critical** — without it, workers never yield to the FreeRTOS IDLE task, triggering watchdog resets.
+**Scheduler**: With 29 threads on 2 cores, each worker calls `vTaskDelay(5ms)` after every WASM call. This is **critical** — without it, workers never yield to the FreeRTOS IDLE task, triggering watchdog resets.
 
 ![Scheduler timeline diagram](/img/blogs/wasm-instances-on-esp32s3/scheduler-timeline.svg)
 *Figure 5. FreeRTOS scheduler timeline: 29 WASM threads time-sliced across 2 cores, with 5 ms vTaskDelay yields to prevent watchdog timeout.*
 
----
-
-## What Limits the CPU Instance Count?
-
-The binding constraint is **DRAM for FreeRTOS pthread stacks** (6 KB each). Reducing stack sizes would allow ~35–40 instances at the cost of less headroom. For MEM/MSG workloads, **PSRAM** (8 MB on ESP32-S3R8) could push to 40+ concurrent instances by keeping linear memory pages in PSRAM while stacks stay in DRAM.
+**The binding constraint** is DRAM for FreeRTOS pthread stacks (6 KB each). Reducing stack sizes would allow ~35–40 instances at the cost of less headroom. For MEM/MSG workloads, **PSRAM** (8 MB on ESP32-S3R8) could push to 40+ concurrent instances by keeping linear memory pages in PSRAM while stacks stay in DRAM.
 
 ---
 
-## Experiment 2: Five Different Tasks Running Simultaneously
+## Diverse Workloads: Five Different Tasks
 
-Real deployments run *different* functions at once — a protocol decoder, sensor filter, ring-buffer aggregator, etc. To test this, we run **five distinct WASM modules**, each separately loaded, scaling by adding full sets until OOM.
+The homogeneous benchmark scaled 29 identical instances. But real deployments run *different* functions at once — a protocol decoder, sensor filter, ring-buffer aggregator, etc. To test this, we run **five distinct WASM modules**, each separately loaded, scaling by adding full sets until OOM.
 
 ### The five tasks
 
@@ -388,7 +373,7 @@ wasm_module_t (popcount) → instance 4  (popcount)
 ```
 
 ![Five tasks architecture diagram](/img/blogs/wasm-instances-on-esp32s3/five-tasks-arch.svg)
-*Figure 6. Five different WASM modules running concurrently: each task has its own wasm_module_t, unlike the shared-module approach in Experiment 1.*
+*Figure 6. Five different WASM modules running concurrently: each task has its own wasm_module_t, unlike the shared-module approach above.*
 
 This is fundamentally different from the shared-module architecture of the first benchmark. Each module is independently loaded, independently parsed, and independently owned. The five `wasm_module_t` structs coexist in DRAM simultaneously.
 
