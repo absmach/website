@@ -29,16 +29,17 @@ const cards = [
   },
   {
     name: "S0 Gateway",
-    description: "Low-power RISC-V gateway for lightweight edge deployments.",
+    description: "S0 is a low-power, Zephyr RTOS gateway. Built on ESP32-C6 RISC-V, it delivers multi-protocol wireless connectivity for smart metering, industrial automation, and constrained edge deployments.",
     href: "https://hardware.absmach.eu",
-    logoSrc: "/img/s0.png",
+    logoSrc: "/img/s0.webp",
     logoAlt: "S0 Gateway board",
     logoClass: "!h-16 !w-auto !max-w-none sm:!h-[4.5rem]  md:!h-32 xl:!h-40",
   },
   {
     name: "S1 Gateway",
-    description: "Industrial RISC-V gateway for high-reliability deployments.",
+    description: "S1 is a powerful Linux-based IoT gateway built on RISC-V architecture. It offers robust connectivity, advanced processing capabilities, and scalability for industrial IoT applications.",
     href: "https://hardware.absmach.eu",
+    videoSrc: "/img/s1.mp4",
     logoSrc: "/img/beagle.png",
     logoAlt: "S1 Gateway board",
     logoClass: "!h-16 !w-auto !max-w-none sm:!h-[4.5rem] md:!h-32 xl:!h-36 ",
@@ -129,6 +130,7 @@ const hardwareCards = cards.slice(2);
               logoSrc={card.logoSrc}
               logoAlt={card.logoAlt}
               logoClass={card.logoClass}
+              videoSrc={card.videoSrc}
             />
           ))
         }

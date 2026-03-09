@@ -10,9 +10,11 @@ const {
   logoAlt = "Product logo",
   logoClass = "",
   className = "",
+  videoSrc,
 } = Astro.props;
 
 const hasLogo = logoSrc || Astro.slots.has("logo");
+const isVideo = videoSrc || (logoSrc && (logoSrc.endsWith('.mp4') || logoSrc.endsWith('.webm') || logoSrc.endsWith('.ogg')));
 const cardClass = featured
   ? "rounded-2xl border border-subtle bg-panel p-3 shadow-[var(--shadow-soft)] md:p-4"
   : "rounded-2xl border border-subtle bg-panel p-3 shadow-[var(--shadow-soft)] min-h-[10rem]";
@@ -32,6 +34,15 @@ const defaultLogoClass = featured
               <div class="flex max-w-full items-center gap-1 overflow-hidden">
                 <slot name="logo" />
               </div>
+            ) : isVideo ? (
+              <video
+                src={videoSrc || logoSrc!}
+                class={`${defaultLogoClass} ${logoClass}`}
+                autoplay
+                muted
+                loop
+                playsinline
+              />
             ) : (
               <Image
                 src={logoSrc!}
@@ -67,6 +78,15 @@ const defaultLogoClass = featured
               <div class="flex max-w-full items-center gap-1 overflow-hidden">
                 <slot name="logo" />
               </div>
+            ) : isVideo ? (
+              <video
+                src={videoSrc || logoSrc!}
+                class={`${defaultLogoClass} ${logoClass}`}
+                autoplay
+                muted
+                loop
+                playsinline
+              />
             ) : (
               <Image
                 src={logoSrc!}
