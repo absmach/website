@@ -20,8 +20,8 @@ Astro + Tailwind source for the [Abstract Machines](https://absmach.eu) website 
 ## Development
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 Astro runs on `http://localhost:4321` by default.
@@ -29,8 +29,8 @@ Astro runs on `http://localhost:4321` by default.
 ## Build & Preview
 
 ```bash
-npm run build
-npm run preview
+pnpm run build
+pnpm run preview
 ```
 
 ## Cloudflare Scripts
@@ -38,8 +38,8 @@ npm run preview
 Use the package scripts for Pages Functions workflows:
 
 ```bash
-npm run cf:dev
-npm run cf:deploy
+pnpm run cf:dev
+pnpm run cf:deploy
 ```
 
 - `cf:dev`: Builds the site and starts local Pages dev server from `dist/` using `wrangler.jsonc`.
@@ -112,7 +112,7 @@ Production does not use `.dev.vars`.
 
 - `.dev.vars` is local-only for `wrangler pages dev`.
 - For production, configure values in Cloudflare Pages:
-Dashboard -> Pages -> your project -> Settings -> Variables and Secrets -> Production.
+  Dashboard -> Pages -> your project -> Settings -> Variables and Secrets -> Production.
 - No separate production env file is required in the repo.
 
 For local Cloudflare Pages function testing, copy `.dev.vars.example` to `.dev.vars` and fill the values.
@@ -128,7 +128,7 @@ See [WRITING.md](WRITING.md) for frontmatter and writing guidelines.
 
 ## Sitemap / robots.txt
 
-- `@astrojs/sitemap` generates `dist/sitemap-index.xml` (and chunk files like `dist/sitemap-0.xml`) during `npm run build`.
+- `@astrojs/sitemap` generates `dist/sitemap-index.xml` (and chunk files like `dist/sitemap-0.xml`) during `pnpm run build`.
 - `src/pages/robots.txt.ts` is prerendered as `/robots.txt` and points to `/sitemap-index.xml`.
 
 ## RSS
