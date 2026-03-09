@@ -544,11 +544,11 @@ This benchmark was motivated by [Propeller](https://github.com/absmach/propeller
 
 ## Conclusion
 
-**Homogeneous**: The ESP32-S3 runs **29 concurrent WASM instances** (~16 KB each) of a CPU-bound workload. Memory workloads: 3 instances max.
+A $4 microcontroller with 512 KB of SRAM can run 29 concurrent WebAssembly instances. Each instance is fully isolated — its own linear memory, its own execution state, its own call stack — yet they share a single parsed module and coexist peacefully on two CPU cores under FreeRTOS. When we swapped in five different task types, the system handled 10 simultaneous instances of mixed workloads without a single error.
 
-**Heterogeneous**: **10 concurrent instances of 5 different task types**, zero errors. Without memory-using tasks, would scale to 16–20 instances.
+The constraint is not CPU cycles; it is memory. Linear memory pages cost 64 KB each, which is why memory-intensive workloads top out at three instances while CPU-bound workloads scale to 29. PSRAM variants of the ESP32-S3 could push this further, but even on the base hardware, the numbers are striking: multi-tenant, sandboxed code execution on a chip smaller than a thumbnail, drawing 240 mW.
 
-Shared-module architecture + cooperative yields = clean, leak-free, multi-tenant WASM execution on a $4 microcontroller. Full source: [esp32s3-wasm-stress](https://github.com/absmach/propeller/tree/main/esp32s3-wasm-stress).
+This is what edge computing looks like when you strip away the operating system, the container runtime, and the orchestrator. Just a microcontroller, a WASM interpreter, and the functions you need to run.
 
 ---
 
