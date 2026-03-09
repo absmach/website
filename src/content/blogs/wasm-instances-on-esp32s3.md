@@ -1,16 +1,14 @@
 ---
-title: "29 Concurrent WebAssembly Instances on a $4 Microcontroller"
 slug: "29-wasm-instances-on-esp32s3"
-excerpt: "How many parallel WASM containers can an ESP32-S3 run? We benchmarked WAMR fast-interpreter on dual-core Xtensa LX7 and hit 29 concurrent CPU workloads in 512 KB of SRAM — along the way fixing five silent bugs."
+title: "29 Concurrent WebAssembly Instances on a $4 Microcontroller"
 description: "A deep dive into running parallel WebAssembly workloads on the ESP32-S3 using WAMR fast-interpreter. Covers the shared-module architecture, five debugging war stories (DROM write exceptions, DTR/RTS boot traps, FreeRTOS priority inversion, WAMR heap alignment panics, SMP IPC deadlocks), and full benchmark results: 29 CPU instances, 3 memory instances, zero leaks."
 date: "2026-03-09"
 author:
-  name: "Jeff Malcolm"
-  picture: "https://avatars.githubusercontent.com/u/1"
+  name: "Jeff Mboya"
+  picture: "https://avatars.githubusercontent.com/u/44696487?s=96&v=4"
 coverImage: "/img/blogs/esp32s3-wasm/cover.png"
 ogImage:
   url: "/img/blogs/esp32s3-wasm/cover.png"
-category: blog
 tags:
   - WebAssembly
   - ESP32
@@ -19,6 +17,9 @@ tags:
   - FreeRTOS
   - Propeller
   - Edge Computing
+category: blog
+featured: false
+draft: false
 ---
 
 The ESP32-S3-WROOM-1 costs about $4. It has two Xtensa LX7 cores clocked at 240 MHz, 512 KB of internal SRAM, and no memory management unit. Docker is not an option. Linux is not an option. The OS is FreeRTOS.
