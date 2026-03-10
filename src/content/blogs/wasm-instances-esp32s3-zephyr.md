@@ -6,9 +6,9 @@ date: "2026-03-10"
 author:
   name: "Jeff Mboya"
   picture: "https://avatars.githubusercontent.com/u/44696487?s=96&v=4"
-coverImage: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.svg"
+coverImage: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.png"
 ogImage:
-  url: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.svg"
+  url: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.png"
 tags:
   - WebAssembly
   - ESP32
