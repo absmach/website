@@ -6,9 +6,9 @@ date: "2026-03-10"
 author:
   name: "Jeff Mboya"
   picture: "https://avatars.githubusercontent.com/u/44696487?s=96&v=4"
-coverImage: "/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3.svg"
+coverImage: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.svg"
 ogImage:
-  url: "/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3.svg"
+  url: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.svg"
 tags:
   - WebAssembly
   - ESP32
@@ -81,11 +81,17 @@ Zephyr DRAM layout (399 KB usable dram0_0_seg):
   Remaining headroom             ~11 KB
 ```
 
+![Zephyr DRAM layout diagram](/img/blogs/wasm-instances-on-esp32s3/zephyr-dram-layout.svg)
+*Figure 1. Zephyr DRAM layout on ESP32-S3: thread stacks are pre-allocated in .noinit and never compete with the malloc arena used by WAMR.*
+
 The segregation means WAMR instantiation cannot accidentally exhaust thread stack memory and vice versa. The trade-off: peak instance count is bounded by whichever resource runs out first — the 24 pre-allocated stack slots, or the 192 KB arena.
 
 ### Single-Core Target
 
 The Zephyr board target `esp32s3_devkitc/esp32s3/procpu` runs exclusively on core 0. Unlike ESP-IDF's SMP FreeRTOS (which distributes threads across both LX7 cores), Zephyr's procpu target is single-core. This halves raw throughput for CPU-bound workloads but simplifies scheduling and eliminates SMP-related sources of non-determinism.
+
+![Zephyr single-core scheduling and concurrency limits](/img/blogs/wasm-instances-on-esp32s3/zephyr-scheduling-arena-stack.svg)
+*Figure 2. Zephyr schedules all threads on Core 0; concurrency is limited by stack slots (CPU workloads) or arena size (MEM/MSG workloads).*
 
 ---
 
@@ -180,6 +186,9 @@ The Zephyr CPU result is **not directly comparable to the ESP-IDF result**. On E
 With 40 KB remaining at 6 KB per instance, the arena can accommodate roughly 6 more instances before OOM. A 30-slot stack pool would push the CPU peak to approximately **29–30 instances** — matching or slightly exceeding the ESP-IDF result, despite the Zephyr malloc arena being less than half the size of the ESP-IDF heap (192 KB vs ~412 KB).
 
 The difference comes from how stacks are accounted. On ESP-IDF, each 6 KB pthread stack competes with WAMR for the same heap — so 29 instances spend 174 KB on thread stacks alone. On Zephyr, the 24 × 4 KB stacks are pre-reserved in `.noinit` and never appear in the malloc arena at all. The arena sees only pure WAMR overhead per instance (~6 KB), not stack + overhead (~16 KB on ESP-IDF). The two platforms are using their SRAM differently, not using different amounts.
+
+![Thread stack allocation comparison](/img/blogs/wasm-instances-on-esp32s3/zephyr-thread-stack-vs-espidf.svg)
+*Figure 3. Thread stack allocation: Zephyr pre-allocates 24 × 4 KB slots in .noinit (fixed at boot), while ESP-IDF dynamically allocates 6 KB per thread from the shared heap.*
 
 ### MEM/MSG: an arena configuration ceiling
 
