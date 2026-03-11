@@ -60,7 +60,7 @@ The workflow begins with **detection** as Proplet identifies TEE capabilities at
 
 ## Hardware Abstraction Layer (HAL)
 
-Proplet provides a Hardware Abstraction Layer that automates the creation and configuration of Confidential VMs. The HAL script — [hal/ubuntu/qemu.sh](https://github.com/absmach/propeller/blob/main/hal/ubuntu/qemu.sh) — handles the entire lifecycle from image building to VM execution.
+Propeller provides a Hardware Abstraction Layer that automates the creation and configuration of Confidential VMs. The HAL script — [hal/ubuntu/qemu.sh](https://github.com/absmach/propeller/blob/main/hal/ubuntu/qemu.sh) — handles the entire lifecycle from image building to VM execution.
 
 ### What HAL Does
 
@@ -471,7 +471,7 @@ Running Proplet inside Trusted Execution Environments combines the portability a
 
 The integration of Propeller with Intel TDX and AMD SEV provides comprehensive security capabilities. It delivers **end-to-end confidentiality** from encrypted image distribution through to in-memory execution, ensuring protection throughout the entire workload lifecycle. **Verifiable security** is achieved through remote attestation that proves TEE configuration before releasing any secrets. **Operational simplicity** is enabled by automated deployment via HAL with minimal manual configuration required. Finally, **platform independence** allows Wasm portability across different TEE implementations, providing flexibility in deployment choices.
 
-As confidential computing becomes critical for AI/ML workloads, federated learning, and privacy-preserving computation, Proplet's TEE integration positions it as a robust platform for secure WebAssembly execution at scale.
+As confidential computing becomes critical for AI/ML workloads, federated learning, and privacy-preserving computation, Propeller's TEE integration positions it as a robust platform for secure WebAssembly execution at scale.
 
 For production deployments, combine Propeller with comprehensive monitoring, strict attestation policies, and defense-in-depth security practices to maximize the security guarantees provided by hardware TEEs.
 
