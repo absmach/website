@@ -18,7 +18,7 @@ tags:
   - Propeller
   - Edge Computing
 category: blog
-featured: true
+featured: false
 draft: false
 ---
 
