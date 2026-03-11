@@ -2,7 +2,7 @@
 slug: "wasm-instances-esp32s3-zephyr"
 title: "Up to 24 Concurrent WebAssembly Instances on an ESP32-S3 Running Zephyr"
 description: "How many concurrent WASM instances can an ESP32-S3 running Zephyr handle? We push WAMR's classic interpreter to its limits: 24 CPU-bound instances, 2 stateful instances — all isolated, zero errors."
-date: "2026-03-10"
+date: "2026-03-11"
 author:
   name: "Jeff Mboya"
   picture: "https://avatars.githubusercontent.com/u/44696487?s=96&v=4"
@@ -28,7 +28,7 @@ How many concurrent WebAssembly instances can you run on a $4 microcontroller? W
 
 ## Hardware
 
-The test board is an **ESP32-S3-WROOM-1** — a dual-core Xtensa LX7 at 240 MHz with 512 KB of internal SRAM and no external RAM. At roughly $4 in quantity, it sits at the low end of what embedded teams reach for when they need processing headroom on a budget.
+The test board is an **[ESP32-S3-WROOM-1](https://www.espressif.com/en/products/modules/esp32-s3-wroom-1)** — a dual-core Xtensa LX7 at 240 MHz with 512 KB of internal SRAM and no external RAM. At roughly $4 in quantity, it sits at the low end of what embedded teams reach for when they need processing headroom on a budget.
 
 | Attribute      | Value                          |
 | -------------- | ------------------------------ |
@@ -88,6 +88,8 @@ Each Zephyr thread runs one instance to completion, then calls `wasm_runtime_des
 ## Benchmark Design
 
 Three workloads, all hand-written in WAT (WebAssembly Text Format) and assembled with `wat2wasm`. WAT lets us control the binary exactly — no compiler passes, no runtime libraries, no hidden allocations. What you see in the source is what runs.
+
+The `.wat` sources and a `gen_headers.py` script to regenerate the C header arrays live in [`examples/esp32s3-wasm-benchmark-zephyr/wat/`](https://github.com/absmach/propeller/tree/main/examples/esp32s3-wasm-benchmark-zephyr/wat). Requires [`wat2wasm`](https://github.com/WebAssembly/wabt) from the WABT toolchain.
 
 ### CPU Workload — FNV-1a Hash Loop
 
