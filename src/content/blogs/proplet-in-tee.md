@@ -18,11 +18,11 @@ tags:
 category: blog
 ---
 
-In today's cloud-native landscape, securing sensitive workloads during execution is paramount. Organizations require not just encryption at rest and in transit, but also protection during computation. This is where Trusted Execution Environments (TEEs) combined with WebAssembly (Wasm) runtimes create a powerful paradigm for confidential computing. Proplet, built on this foundation, enables secure execution of WebAssembly workloads within hardware-protected enclaves, ensuring that even cloud providers cannot access your data during processing.
+In today's cloud-native landscape, securing sensitive workloads during execution is paramount. Organizations require not just encryption at rest and in transit, but also protection during computation. This is where Trusted Execution Environments (TEEs) combined with WebAssembly (Wasm) runtimes create a powerful paradigm for confidential computing. Propeller, built on this foundation, enables secure execution of WebAssembly workloads within hardware-protected enclaves, ensuring that even cloud providers cannot access your data during processing.
 
-![Proplet TEE Architecture](/img/blogs/running-proplet-in-tee/architecture.svg)
+![Propeller TEE Architecture](/img/blogs/running-proplet-in-tee/architecture.svg)
 
-This guide explores how to deploy Proplet inside TEE environments, leveraging hardware-based isolation to execute WebAssembly workloads with confidentiality and integrity guarantees.
+This guide explores how to deploy Propeller Proplet inside TEE environments, leveraging hardware-based isolation to execute WebAssembly workloads with confidentiality and integrity guarantees.
 
 ## Understanding the TEE Landscape
 
@@ -36,7 +36,7 @@ The confidential computing ecosystem currently supports several hardware-based T
 - **AMD SEV-SNP** (Secure Encrypted Virtualization with Secure Nested Paging) — Hardware-encrypted virtual machines
 - **Intel SGX** (Software Guard Extensions) — Application-level enclaves for process isolation
 
-Proplet leverages TDX and SEV-SNP to provide VM-level isolation, enabling entire WebAssembly runtime environments to execute within protected memory regions.
+Propeller leverages TDX and SEV-SNP to provide VM-level isolation, enabling entire WebAssembly runtime environments to execute within protected memory regions.
 
 ## Why WebAssembly in TEEs?
 
@@ -44,11 +44,11 @@ WebAssembly offers several compelling advantages for confidential computing work
 
 By combining Wasm with hardware TEEs, Proplet provides defense-in-depth: software-level sandboxing within hardware-enforced isolation.
 
-## Proplet TEE Architecture
+## Propeller TEE Architecture
 
-Proplet's TEE integration follows a layered security model:
+Propeller's TEE integration follows a layered security model:
 
-![Proplet Architecture](/img/blogs/running-proplet-in-tee/proplet-arch.svg)
+![Propeller Architecture](/img/blogs/running-proplet-in-tee/proplet-arch.svg)
 
 ### Component Interaction Flow
 
@@ -467,11 +467,11 @@ Adjust port forwarding in each copy of the script to avoid host port conflicts (
 
 Running Proplet inside Trusted Execution Environments combines the portability and efficiency of WebAssembly with hardware-based confidential computing. This architecture enables secure execution of sensitive workloads in untrusted environments, with cryptographic verification that your code and data remain protected even from privileged attackers.
 
-The integration of Proplet with Intel TDX and AMD SEV provides comprehensive security capabilities. It delivers **end-to-end confidentiality** from encrypted image distribution through to in-memory execution, ensuring protection throughout the entire workload lifecycle. **Verifiable security** is achieved through remote attestation that proves TEE configuration before releasing any secrets. **Operational simplicity** is enabled by automated deployment via HAL with minimal manual configuration required. Finally, **platform independence** allows Wasm portability across different TEE implementations, providing flexibility in deployment choices.
+The integration of Propeller with Intel TDX and AMD SEV provides comprehensive security capabilities. It delivers **end-to-end confidentiality** from encrypted image distribution through to in-memory execution, ensuring protection throughout the entire workload lifecycle. **Verifiable security** is achieved through remote attestation that proves TEE configuration before releasing any secrets. **Operational simplicity** is enabled by automated deployment via HAL with minimal manual configuration required. Finally, **platform independence** allows Wasm portability across different TEE implementations, providing flexibility in deployment choices.
 
 As confidential computing becomes critical for AI/ML workloads, federated learning, and privacy-preserving computation, Proplet's TEE integration positions it as a robust platform for secure WebAssembly execution at scale.
 
-For production deployments, combine Proplet with comprehensive monitoring, strict attestation policies, and defense-in-depth security practices to maximize the security guarantees provided by hardware TEEs.
+For production deployments, combine Propeller with comprehensive monitoring, strict attestation policies, and defense-in-depth security practices to maximize the security guarantees provided by hardware TEEs.
 
 ## Additional Resources
 
