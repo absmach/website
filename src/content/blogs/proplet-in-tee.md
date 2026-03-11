@@ -2,7 +2,7 @@
 slug: running-proplet-in-tee
 title: "Running Proplet in TEE Environments"
 description: Deploy and run WebAssembly workloads securely with Proplet inside Trusted Execution Environments using Intel TDX and AMD SEV.
-date: "2026-03-09"
+date: "2026-03-11"
 author:
   name: "Rodney Osodo"
   picture: "https://avatars.githubusercontent.com/u/28790446?v=4"
