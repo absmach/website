@@ -1,7 +1,7 @@
 ---
 slug: running-proplet-in-tee
-title: "Running Proplet in TEE Environments"
-description: Deploy and run WebAssembly workloads securely with Proplet inside Trusted Execution Environments using Intel TDX and AMD SEV.
+title: "Running WebAssembly Workloads in TEE Environments"
+description: Deploy and run WebAssembly workloads securely with Propeller inside Trusted Execution Environments using Intel TDX and AMD SEV.
 date: "2026-03-11"
 author:
   name: "Rodney Osodo"
@@ -18,11 +18,13 @@ tags:
 category: blog
 ---
 
-In today's cloud-native landscape, securing sensitive workloads during execution is paramount. Organizations require not just encryption at rest and in transit, but also protection during computation. This is where Trusted Execution Environments (TEEs) combined with WebAssembly (Wasm) runtimes create a powerful paradigm for confidential computing. Propeller, built on this foundation, enables secure execution of WebAssembly workloads within hardware-protected enclaves, ensuring that even cloud providers cannot access your data during processing.
+In today's cloud-native landscape, securing sensitive workloads during execution is paramount. Organizations require not just encryption at rest and in transit, but also protection during computation. This is where Trusted Execution Environments (TEEs) combined with WebAssembly (Wasm) runtimes create a powerful paradigm for confidential computing.
+
+[Propeller](https://propeller.absmach.eu/) is a distributed WebAssembly orchestration platform designed for edge computing and IoT environments. Built on this foundation, Propeller enables secure execution of WebAssembly workloads within hardware-protected enclaves, ensuring that even cloud providers cannot access your data during processing. The platform consists of a central Manager that orchestrates workloads and Proplet agents that execute WebAssembly modules on edge devices. Propeller is developed as part of the [ELASTIC project](https://elasticproject.eu/), a European initiative focused on building secure and trustworthy edge computing infrastructure.
 
 ![Propeller TEE Architecture](/img/blogs/running-proplet-in-tee/architecture.svg)
 
-This guide explores how to deploy Propeller Proplet inside TEE environments, leveraging hardware-based isolation to execute WebAssembly workloads with confidentiality and integrity guarantees.
+This guide explores how to deploy Propeller's Proplet agents inside TEE environments, leveraging hardware-based isolation to execute WebAssembly workloads with confidentiality and integrity guarantees.
 
 ## Understanding the TEE Landscape
 
