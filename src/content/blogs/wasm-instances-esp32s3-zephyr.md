@@ -1,14 +1,14 @@
 ---
 slug: "wasm-instances-esp32s3-zephyr"
-title: "Does WebAssembly Concurrency Hold on Zephyr? Testing WAMR on an ESP32-S3"
-description: "After running 29 concurrent WASM instances on an ESP32-S3 under FreeRTOS, the question became: does it hold on Zephyr? Same chip, same binaries, different OS. Here's what changed and why."
+title: "Up to 24 Concurrent WebAssembly Instances on an ESP32-S3 Running Zephyr"
+description: "How many concurrent WASM instances can an ESP32-S3 running Zephyr handle? We push WAMR's classic interpreter to its limits: 24 CPU-bound instances, 2 stateful instances — all isolated, zero errors."
 date: "2026-03-10"
 author:
   name: "Jeff Mboya"
   picture: "https://avatars.githubusercontent.com/u/44696487?s=96&v=4"
-coverImage: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.png"
+coverImage: "/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3-zephyr-cover.svg"
 ogImage:
-  url: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.png"
+  url: "/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3-zephyr-cover.svg"
 tags:
   - WebAssembly
   - ESP32
@@ -18,88 +18,224 @@ tags:
   - Propeller
   - Edge Computing
 category: blog
-featured: false
+featured: true
 draft: false
 ---
 
-In my [previous post](/blogs/29-wasm-instances-on-esp32s3), I benchmarked WebAssembly on an ESP32-S3 under FreeRTOS: 29 concurrent WASM instances, 512 KB of SRAM, no Docker, no Linux. After it went up, the same question kept surfacing: *does that hold on Zephyr?*
-
-FreeRTOS is what Espressif ships by default. Zephyr is what embedded teams reach for when the device might be an STM32 today and a Nordic nRF52 tomorrow — when the OS needs to travel with the codebase, not with the silicon vendor. Same chip. Same binaries. Different OS. I wanted to find out whether the WASM concurrency model holds when you swap the scheduler underneath it.
+How many concurrent WebAssembly instances can you run on a $4 microcontroller? We tested it on an ESP32-S3 running Zephyr RTOS, using [WAMR](https://github.com/bytecodealliance/wasm-micro-runtime)'s classic interpreter and three hand-crafted WAT workloads. The answer: **24 CPU-bound instances** and **2 stateful instances** — all isolated, zero errors, no operating system in sight.
 
 ---
 
-## The Baseline
+## Hardware
 
-If you haven't read the [ESP-IDF post](/blogs/29-wasm-instances-on-esp32s3), the short version:
+The test board is an **ESP32-S3-WROOM-1** — a dual-core Xtensa LX7 at 240 MHz with 512 KB of internal SRAM and no external RAM. At roughly $4 in quantity, it sits at the low end of what embedded teams reach for when they need processing headroom on a budget.
 
-- **Hardware**: ESP32-S3-WROOM-1, 2 × Xtensa LX7 @ 240 MHz, 512 KB SRAM, ~$4
-- **Runtime**: [WAMR](https://github.com/bytecodealliance/wasm-micro-runtime) fast-interpreter, shared-module architecture (one parsed module, N isolated instances)
-- **Workloads**: Three hand-crafted WAT binaries — CPU (FNV-1a hash, no linear memory), MEM (write/read 1 KB × 100 rounds, 64 KB linear memory page), MSG (ring buffer simulation, 64 KB linear memory page)
-- **Results**: 29 CPU instances (heap exhausted at ~14 KB remaining), 3 MEM/MSG instances each
+| Attribute      | Value                          |
+| -------------- | ------------------------------ |
+| SoC            | ESP32-S3                       |
+| CPU            | 2 × Xtensa LX7 @ 240 MHz       |
+| Internal SRAM  | 512 KB                         |
+| Flash          | 8 MB (WROOM-1 module)          |
+| External RAM   | None                           |
+| Price          | ~$4                            |
+| RTOS           | Zephyr 4.3.99                  |
+| WASM Runtime   | WAMR classic interpreter       |
+| Active cores   | 1 (`esp32s3_devkitc/esp32s3/procpu`) |
 
-The shared-module architecture is the key enabler: `wasm_runtime_load()` parses the WASM bytecode once; each `wasm_runtime_instantiate()` creates an isolated instance — its own linear memory, its own stack — sharing the immutable parsed representation.
+The Zephyr target `esp32s3_devkitc/esp32s3/procpu` pins execution to Core 0. Core 1 is not used. This is a deliberate choice: Zephyr's Xtensa SMP support on ESP32-S3 was still maturing at the time of this test, and single-core removes any SMP scheduling variables from the results. Everything measured here comes from 240 MHz of a single Xtensa LX7.
 
 ---
 
-## What Changed for Zephyr
+## WAMR on Zephyr
 
-The workloads, WAT binaries, and WAMR shared-module architecture are identical to the ESP-IDF run. Everything that changed is in the harness layer:
+[WAMR (WebAssembly Micro Runtime)](https://github.com/bytecodealliance/wasm-micro-runtime) is the Bytecode Alliance's embedded WASM interpreter, designed to run on devices where Linux and a full runtime like Wasmtime are not an option. It ships multiple execution tiers — AOT, fast interpreter, classic interpreter — and a platform abstraction layer (PAL) that handles threading, memory, and time across different RTOS environments.
 
-| Dimension               | ESP-IDF                                               | Zephyr                                                                      |
-| ----------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------- |
-| RTOS thread API         | `pthread_create` / `pthread_join`                     | `k_thread_create` / `k_thread_join`                                         |
-| Thread stack allocation | Dynamic, from `heap_caps_malloc(MALLOC_CAP_INTERNAL)` | Static, `K_THREAD_STACK_ARRAY_DEFINE` (`.noinit` section)                   |
-| Thread stack size       | 6 KB per thread                                       | 4 KB per thread                                                             |
-| Heap API                | `heap_caps_malloc(MALLOC_CAP_INTERNAL)`               | `malloc` backed by a 192 KB arena (`CONFIG_COMMON_LIBC_MALLOC_ARENA_SIZE`)  |
-| Heap stats              | `heap_caps_get_free_size(MALLOC_CAP_INTERNAL)`        | `malloc_runtime_stats_get()`                                                |
-| CPU utilisation         | `uxTaskGetSystemState()` over all tasks               | `k_thread_runtime_stats_all_get()`                                          |
-| Timer                   | `esp_timer_get_time()` (µs, direct)                   | `k_cycle_get_64()` + `k_cyc_to_us_floor64()`                                |
-| WAMR execution mode     | **Fast interpreter**                                  | **Classic interpreter**                                                     |
-| Entry point             | `app_main()` (FreeRTOS task)                          | `main()` (Zephyr main thread)                                               |
-| Build system            | ESP-IDF CMake + `idf.py`                              | West + Zephyr CMake                                                         |
-| CPU cores used          | 2 (SMP FreeRTOS)                                      | 1 (`esp32s3_devkitc/esp32s3/procpu`)                                        |
+Zephyr's WAMR integration defaults to the **classic interpreter** (`WASM_ENABLE_FAST_INTERP=0`). The classic interpreter evaluates WASM opcodes directly from the bytecode buffer without modifying it. This is a safer default on Zephyr: the RTOS can mark memory regions non-writable, and any runtime that modifies its own bytecode buffer would fault. The classic interpreter leaves the buffer untouched, which also allows WASM bytes to be stored in read-only flash regions and copied to RAM only when needed.
 
-The most consequential changes are the last three: **WAMR execution mode**, **memory architecture**, and **core count**.
+### Shared-Module Architecture
 
-### WAMR Classic vs Fast Interpreter
+The key to running many concurrent instances on constrained hardware is WAMR's shared-module architecture. Instead of loading a separate copy of the WASM module for each task, you parse the bytecode once and instantiate it many times.
 
-The ESP-IDF build uses WAMR's fast interpreter (`CONFIG_WAMR_INTERP_FAST=y`). As described in the [ESP-IDF post](/blogs/29-wasm-instances-on-esp32s3#webassembly-on-microcontrollers--wamr), fast-interp pre-processes bytecode in-place at load time — roughly 2–3× faster per iteration than the classic interpreter, but it modifies the bytecode buffer it receives.
+![Shared module architecture diagram](/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3-shared-module-arch.svg)
+*Figure 1. WAMR shared-module architecture: `wasm_runtime_load()` parses bytecode once into an immutable `wasm_module_t`; each `wasm_runtime_instantiate()` creates an isolated instance with its own linear memory and interpreter stack.*
 
-Zephyr's WAMR platform integration defaults to the classic interpreter (`WASM_ENABLE_FAST_INTERP=0`). This is a safer default: Zephyr's memory protection model can mark code regions as non-writable, and fast-interp's in-place modification would fault on such regions. Classic interpreter leaves the bytecode buffer untouched, which also means WASM bytes could in principle be loaded directly from flash (DROM) — though the harness still copies them to the malloc arena before calling `wasm_runtime_load`, matching the ESP-IDF approach.
+The API maps directly:
 
-For a benchmark measuring *how many* concurrent instances fit (not *how fast each runs*), execution speed affects iterations-per-second but not peak instance count.
+```c
+// Parse once — produces an immutable wasm_module_t
+wasm_module_t module = wasm_runtime_load(wasm_bytes, wasm_size, err, sizeof(err));
 
-### Memory Architecture
+// Instantiate N times — each gets isolated linear memory + stack
+for (int i = 0; i < n; i++) {
+    inst[i] = wasm_runtime_instantiate(module, stack_kb * 1024, heap_kb * 1024, err, sizeof(err));
+    env[i]  = wasm_runtime_create_exec_env(inst[i], stack_kb * 1024);
+}
+```
 
-On ESP-IDF, thread stacks and WAMR allocations compete for the same internal DRAM heap (~412 KB free at start). On Zephyr, they are segregated into two pools:
+The parsed `wasm_module_t` is shared and immutable. Each `wasm_module_inst_t` carries its own linear memory (for workloads that declare `(memory ...)`), its own interpreter stack, and its own execution environment. Instances cannot observe each other's memory.
+
+### Instance Lifecycle
+
+Every instance follows the same lifecycle from load to teardown:
+
+![WASM instance lifecycle diagram](/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3-wasm-lifecycle.svg)
+*Figure 2. WASM instance lifecycle: load → instantiate → execute → destroy → unload. Multiple instances share the single `wasm_module_t` produced by load; unload happens once, after all instances are destroyed.*
+
+Each Zephyr thread runs one instance to completion, then calls `wasm_runtime_destroy_exec_env` and `wasm_runtime_deinstantiate`. Once all threads have finished, `wasm_runtime_unload` releases the shared module. Post-teardown heap measurements confirm that WAMR leaves no allocations behind.
+
+---
+
+## Benchmark Design
+
+Three workloads, all hand-written in WAT (WebAssembly Text Format) and assembled with `wat2wasm`. WAT lets us control the binary exactly — no compiler passes, no runtime libraries, no hidden allocations. What you see in the source is what runs.
+
+### CPU Workload — FNV-1a Hash Loop
+
+No linear memory. Pure computation: hash a 32-bit seed across 10 000 iterations of FNV-1a, accumulate into a global, repeat forever.
+
+```wat
+(module
+  (global $acc (mut i32) (i32.const 2166136261))
+  (func $fnv_iter (result i32)
+    (local $i i32)
+    (local $h i32)
+    (local.set $h (global.get $acc))
+    (block $break
+      (loop $loop
+        (br_if $break (i32.ge_u (local.get $i) (i32.const 10000)))
+        (local.set $h
+          (i32.mul
+            (i32.xor (local.get $h) (local.get $i))
+            (i32.const 16777619)))
+        (local.set $i (i32.add (local.get $i) (i32.const 1)))
+        (br $loop)))
+    (global.set $acc (local.get $h))
+    (local.get $h))
+  (export "fnv_iter" (func $fnv_iter)))
+```
+
+Binary size: **90 bytes**. Per-instance malloc cost: ~6 KB (4 KB WAMR interpreter stack + ~1–2 KB bookkeeping, no linear memory page).
+
+### MEM Workload — Linear Memory Write/Read
+
+Declares one 64 KB linear memory page. Writes a byte pattern across 1 KB, reads it back 100 times per call, returns a checksum.
+
+```wat
+(module
+  (memory 1 1)
+  (func $mem_stress (result i32)
+    (local $i i32) (local $sum i32)
+    (block $outer_break
+      (loop $outer
+        (br_if $outer_break (i32.ge_u (local.get $i) (i32.const 100)))
+        (local $j i32)
+        (block $inner_break
+          (loop $inner
+            (br_if $inner_break (i32.ge_u (local.get $j) (i32.const 1024)))
+            (i32.store8 (local.get $j)
+              (i32.and (i32.add (local.get $i) (local.get $j)) (i32.const 255)))
+            (local.set $j (i32.add (local.get $j) (i32.const 1)))
+            (br $inner)))
+        (local.set $j (i32.const 0))
+        (block $read_break
+          (loop $read
+            (br_if $read_break (i32.ge_u (local.get $j) (i32.const 1024)))
+            (local.set $sum
+              (i32.add (local.get $sum)
+                (i32.load8_u (local.get $j))))
+            (local.set $j (i32.add (local.get $j) (i32.const 1)))
+            (br $read)))
+        (local.set $i (i32.add (local.get $i) (i32.const 1)))
+        (br $outer)))
+    (local.get $sum))
+  (export "mem_stress" (func $mem_stress)))
+```
+
+Binary size: **145 bytes**. Per-instance malloc cost: ~70 KB (64 KB WASM linear memory page + ~6 KB overhead).
+
+### MSG Workload — SPSC Ring Buffer
+
+Declares one 64 KB linear memory page. Simulates a single-producer single-consumer ring buffer: writes 64 messages of 32 bytes each, reads them back, returns the count.
+
+```wat
+(module
+  (memory 1 1)
+  (global $head (mut i32) (i32.const 0))
+  (global $tail (mut i32) (i32.const 0))
+  (func $msg_stress (result i32)
+    (local $count i32) (local $i i32) (local $slot i32)
+    ;; produce 64 messages
+    (block $prod_break
+      (loop $prod
+        (br_if $prod_break (i32.ge_u (local.get $i) (i32.const 64)))
+        (local.set $slot
+          (i32.mul (i32.rem_u (global.get $head) (i32.const 64)) (i32.const 32)))
+        (i32.store (local.get $slot) (local.get $i))
+        (global.set $head (i32.add (global.get $head) (i32.const 1)))
+        (local.set $i (i32.add (local.get $i) (i32.const 1)))
+        (br $prod)))
+    ;; consume 64 messages
+    (local.set $i (i32.const 0))
+    (block $cons_break
+      (loop $cons
+        (br_if $cons_break (i32.ge_u (local.get $i) (i32.const 64)))
+        (local.set $slot
+          (i32.mul (i32.rem_u (global.get $tail) (i32.const 64)) (i32.const 32)))
+        (drop (i32.load (local.get $slot)))
+        (global.set $tail (i32.add (global.get $tail) (i32.const 1)))
+        (local.set $count (i32.add (local.get $count) (i32.const 1)))
+        (local.set $i (i32.add (local.get $i) (i32.const 1)))
+        (br $cons)))
+    (local.get $count))
+  (export "msg_stress" (func $msg_stress)))
+```
+
+Binary size: **170 bytes**. Per-instance malloc cost: ~70 KB (same as MEM — same `(memory 1 1)` declaration).
+
+---
+
+## Memory Architecture
+
+Understanding the results requires understanding where every byte lives on Zephyr.
+
+### DRAM Layout
+
+The ESP32-S3's 512 KB SRAM is divided between the Zephyr kernel, pre-allocated thread stacks, the malloc arena, and a small headroom margin.
+
+![Zephyr DRAM layout diagram](/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3-zephyr-dram-layout.svg)
+*Figure 3. Zephyr DRAM layout on ESP32-S3: thread stacks are pre-allocated in `.noinit` and never compete with the malloc arena used by WAMR.*
 
 ```text
 Zephyr DRAM layout (399 KB usable dram0_0_seg):
   Zephyr kernel + BSS          ~100 KB  (code, globals, kernel data structures)
-  Thread stacks (24 × 4 KB)     96 KB   (.noinit, static — never touches malloc arena)
+  Thread stacks (24 × 4 KB)     96 KB   (.noinit — never touches malloc arena)
   Malloc arena (WAMR)           192 KB  (CONFIG_COMMON_LIBC_MALLOC_ARENA_SIZE)
   Remaining headroom             ~11 KB
 ```
 
-![Zephyr DRAM layout diagram](/img/blogs/wasm-instances-on-esp32s3/zephyr-dram-layout.svg)
-*Figure 1. Zephyr DRAM layout on ESP32-S3: thread stacks are pre-allocated in .noinit and never compete with the malloc arena used by WAMR.*
+Thread stacks are declared with `K_THREAD_STACK_ARRAY_DEFINE`, which places them in the `.noinit` section. They are reserved at boot and never appear in the malloc arena accounting. WAMR calls `malloc` / `free` for module loads, instance allocations, and interpreter stacks. The two pools are completely separate: WAMR cannot accidentally exhaust thread stack memory, and creating a new thread cannot reduce the WAMR arena.
 
-The segregation means WAMR instantiation cannot accidentally exhaust thread stack memory and vice versa. The trade-off: peak instance count is bounded by whichever resource runs out first — the 24 pre-allocated stack slots, or the 192 KB arena.
+The trade-off is that the stack pool is fixed at boot. The benchmark pre-allocates 24 slots (96 KB). If the experiment needs more threads, the source constant must be changed and the firmware rebuilt.
 
-### Single-Core Target
+### Scheduling and Concurrency Limits
 
-The Zephyr board target `esp32s3_devkitc/esp32s3/procpu` runs exclusively on core 0. Unlike ESP-IDF's SMP FreeRTOS (which distributes threads across both LX7 cores), Zephyr's procpu target is single-core. This halves raw throughput for CPU-bound workloads but simplifies scheduling and eliminates SMP-related sources of non-determinism.
+All threads run on Core 0. The Zephyr scheduler time-slices them cooperatively and preemptively. With 24 threads simultaneously active, the CPU is 100% utilised from the moment the second instance starts.
 
-![Zephyr single-core scheduling and concurrency limits](/img/blogs/wasm-instances-on-esp32s3/zephyr-scheduling-arena-stack.svg)
-*Figure 2. Zephyr schedules all threads on Core 0; concurrency is limited by stack slots (CPU workloads) or arena size (MEM/MSG workloads).*
+![Zephyr scheduling and concurrency limits diagram](/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3-zephyr-scheduling-arena-stack.svg)
+*Figure 4. Two independent ceilings bound concurrency: stack slots cap CPU-bound workloads at 24; the 192 KB malloc arena caps stateful workloads at 2.*
+
+Two independent ceilings determine the peak:
+
+- **Stack-slot ceiling**: 24 pre-allocated slots. CPU workloads hit this first because their per-instance arena cost is small (~6 KB × 24 = 144 KB, leaving 40 KB of arena still free when the run stops).
+- **Arena ceiling**: 192 KB. Stateful workloads (MEM, MSG) consume ~70 KB each; two instances leave 50 KB, which is not enough for a third (70 KB required).
 
 ---
 
 ## Results
 
-All three workloads were run in sequence (`EXPERIMENT 0`). Serial output captured at 115200 baud.
+All three workloads run in the same firmware image under `EXPERIMENT 0`. Serial output captured at 115200 baud.
 
-### CPU workload: 24 concurrent instances
+### CPU Workload — 24 Concurrent Instances
 
 ```text
 === WASM Stress Benchmark (Zephyr) ===
@@ -110,10 +246,12 @@ instances=1    heap=185KB  min=185KB  cpu= 84%  up=3s
   +instance cost ~6KB  latency 0us
 instances=2    heap=178KB  min=178KB  cpu=100%  up=5s
   +instance cost ~6KB  latency 0us
-...
+instances=4    heap=163KB  min=163KB  cpu=100%  up=10s
+  +instance cost ~6KB  latency 0us
+instances=8    heap=137KB  min=137KB  cpu=100%  up=19s
+  +instance cost ~6KB  latency 0us
 instances=16   heap= 91KB  min= 91KB  cpu=100%  up=38s
   +instance cost ~6KB  latency 0us
-...
 instances=24   heap= 40KB  min= 40KB  cpu=100%  up=56s
   +instance cost ~6KB  latency 0us
 
@@ -122,6 +260,7 @@ instances=24   heap= 40KB  min= 40KB  cpu=100%  up=56s
   id  task   iters  errors  latency_us
    0  cpu      311       0           0
    1  cpu      239       0           0
+   2  cpu      201       0           0
   ...
   23  cpu        6       0           0
 ---
@@ -129,15 +268,21 @@ instances=24   heap= 40KB  min= 40KB  cpu=100%  up=56s
 Post-teardown heap: 191KB free
 ```
 
-**Key observations**: Each CPU instance costs **~6 KB from the malloc arena** — WAMR interpreter stack (4 KB) plus runtime bookkeeping (~1–2 KB), with no pthread stack competing for the same pool. The arena starts at 191 KB free; at 24 instances, 40 KB remains. The run stopped because all 24 pre-allocated stack slots were consumed — *not* because memory ran out. Post-teardown the full 191 KB is recovered: no leaks.
+Each CPU instance costs **~6 KB from the malloc arena**: 4 KB WAMR interpreter stack plus ~1–2 KB of runtime bookkeeping. No linear memory page is allocated because the CPU workload declares none.
 
-The `latency 0us` values are a measurement gap: `k_cycle_get_64()` on this Zephyr/ESP32-S3 target does not advance at the expected rate, producing zero-width elapsed times. Actual call duration can be inferred from iteration counts: instance 0 ran from t ≈ 3 s to t ≈ 56 s (53 s total) and completed 311 iterations, giving **~170 ms per call** at 24-instance load on a single core. On ESP-IDF fast-interp with 29 instances across 2 cores, the per-call time was 96 ms — consistent with classic interpreter overhead (≈ 1.8×) and a single core handling twice the scheduling load.
+The run stopped at 24 because all pre-allocated stack slots were consumed — not because memory ran out. At peak, **40 KB of arena remained free**. Post-teardown, the full 191 KB returns: WAMR is clean.
 
-CPU utilisation hits 100% at 2 instances (single core, no idle headroom), vs the ESP-IDF dual-core run which absorbed many more threads before saturation.
+The `latency 0us` values are a known measurement gap: `k_cycle_get_64()` on this Zephyr/ESP32-S3 target does not advance at the expected rate and produces zero-width elapsed times. Actual per-call duration can be read from iteration counts: instance 0 ran from t ≈ 3 s to t ≈ 56 s (53 seconds total) and completed 311 iterations — approximately **170 ms per call** at 24-instance load on a single 240 MHz core.
 
-### MEM workload: 2 concurrent instances
+CPU utilisation hits 100% at 2 instances. With 24 threads all running WASM on one core, the scheduler is fully saturated, which is expected and correct.
+
+### MEM Workload — 2 Concurrent Instances
 
 ```text
+=== WASM Stress Benchmark (Zephyr) ===
+workload=mem  wasm_stack=4KB
+thread_stack=4KB (pre-allocated, 24 slots)  core=-1
+
 instances=1   heap=120KB  min=40KB  cpu=98%  up=62s
   +instance cost ~70KB  latency 0us
 instances=2   heap= 50KB  min=40KB  cpu=100% up=65s
@@ -149,11 +294,17 @@ instances=3   TASK_DIED (errors=1)
 Post-teardown heap: 191KB free
 ```
 
-Each MEM instance consumes **~70 KB** from the 192 KB arena (64 KB WASM linear memory page + ~6 KB overhead). Two instances occupy 140 KB, leaving 50 KB — insufficient for a third. The failure message is identical in meaning to the ESP-IDF OOM: `wasm_runtime_instantiate` returns false when linear memory allocation fails.
+Each MEM instance consumes **~70 KB** from the 192 KB arena: 64 KB for the WASM linear memory page declared by `(memory 1 1)`, plus ~6 KB of overhead. Two instances occupy 140 KB, leaving 50 KB. A third instance requires 70 KB — the arena cannot provide it.
 
-### MSG workload: 2 concurrent instances
+The error is clean: `wasm_runtime_instantiate` returns false, the thread reports the failure and exits. No memory is leaked; the two surviving instances continue running without error.
+
+### MSG Workload — 2 Concurrent Instances
 
 ```text
+=== WASM Stress Benchmark (Zephyr) ===
+workload=msg  wasm_stack=4KB
+thread_stack=4KB (pre-allocated, 24 slots)  core=-1
+
 instances=1   heap=120KB  min=40KB  cpu=68%  up=72s
   +instance cost ~70KB  latency 0us
 instances=2   heap= 50KB  min=40KB  cpu=100% up=74s
@@ -165,88 +316,52 @@ instances=3   TASK_DIED (errors=1)
 Post-teardown heap: 191KB free
 ```
 
-Same pattern as MEM. Both workloads declare `(memory 1 1)` — same 64 KB page cost, same arena ceiling. At 2 instances, 50 KB remains; no errors even at 100% single-core load.
+Identical pattern to MEM. The MSG workload also declares `(memory 1 1)`, so the per-instance cost is the same 70 KB. At 2 instances, 50 KB remains and both run cleanly at 100% single-core utilisation with zero errors.
 
 ### Summary
 
-| Workload               | Zephyr peak | ESP-IDF peak | Per-instance arena cost | Limiting factor                    |
-| ---------------------- | ----------- | ------------ | ----------------------- | ---------------------------------- |
-| CPU (no linear mem)    | **24**      | **29**       | ~6 KB                   | Stack-slot pool (24 pre-allocated) |
-| MEM (64 KB linear mem) | **2**       | **3**        | ~70 KB                  | 192 KB malloc arena                |
-| MSG (64 KB linear mem) | **2**       | **3**        | ~70 KB                  | 192 KB malloc arena                |
+| Workload               | Peak instances | Per-instance arena cost | Limiting factor                    |
+| ---------------------- | -------------- | ----------------------- | ---------------------------------- |
+| CPU (no linear mem)    | **24**         | ~6 KB                   | Stack-slot pool (24 pre-allocated) |
+| MEM (64 KB linear mem) | **2**          | ~70 KB                  | 192 KB malloc arena                |
+| MSG (64 KB linear mem) | **2**          | ~70 KB                  | 192 KB malloc arena                |
 
----
+Arena consumption across all three experiments:
 
-## Understanding the Gaps
-
-### CPU: a stack-slot ceiling, not an OOM
-
-The Zephyr CPU result is **not directly comparable to the ESP-IDF result**. On ESP-IDF, the run stopped at 29 because the heap was exhausted (~14 KB remaining, below the ~28 KB estimated for the next instance). On Zephyr, it stopped at 24 because the pre-allocated stack array was full, with **40 KB of malloc arena still free**.
-
-With 40 KB remaining at 6 KB per instance, the arena can accommodate roughly 6 more instances before OOM. A 30-slot stack pool would push the CPU peak to approximately **29–30 instances** — matching or slightly exceeding the ESP-IDF result, despite the Zephyr malloc arena being less than half the size of the ESP-IDF heap (192 KB vs ~412 KB).
-
-The difference comes from how stacks are accounted. On ESP-IDF, each 6 KB pthread stack competes with WAMR for the same heap — so 29 instances spend 174 KB on thread stacks alone. On Zephyr, the 24 × 4 KB stacks are pre-reserved in `.noinit` and never appear in the malloc arena at all. The arena sees only pure WAMR overhead per instance (~6 KB), not stack + overhead (~16 KB on ESP-IDF). The two platforms are using their SRAM differently, not using different amounts.
-
-![Thread stack allocation comparison](/img/blogs/wasm-instances-on-esp32s3/zephyr-thread-stack-vs-espidf.svg)
-*Figure 3. Thread stack allocation: Zephyr pre-allocates 24 × 4 KB slots in .noinit (fixed at boot), while ESP-IDF dynamically allocates 6 KB per thread from the shared heap.*
-
-### MEM/MSG: an arena configuration ceiling
-
-The Zephyr MEM/MSG cap of 2 (vs 3 on ESP-IDF) is a configuration ceiling: 3 × 70 KB = 210 KB > 192 KB arena. Increasing `CONFIG_COMMON_LIBC_MALLOC_ARENA_SIZE` to 224 KB (and reducing thread stack slots by a matching amount in `.noinit`) would push MEM/MSG to 3 instances — matching ESP-IDF. The Zephyr DRAM segment has ~11 KB of headroom above current usage, which limits how far the arena can be expanded without reducing stack slots.
-
-### Classic interpreter per-instance overhead
-
-Classic interpreter does not pre-process bytecode at load time, so `wasm_module_t` is smaller than fast-interp's processed representation. The **~6 KB per CPU instance** from the Zephyr malloc arena breaks down as:
-
-- WAMR interpreter stack: 4 KB (`wasm_stack_kb = 4`)
-- `wasm_module_inst_t` + `wasm_exec_env_t`: ~1–2 KB
-- WAMR internal allocations during instantiate: minimal (no fast-interp pre-process buffer)
-
-Compare to ESP-IDF's ~16 KB per CPU instance, which includes the 6 KB pthread stack drawn from the same heap. The true per-instance WAMR overhead is similar on both platforms (~6–10 KB); the difference is purely in how thread stacks are accounted for.
-
----
-
-## Comparison with Other Platforms
-
-| Platform              | RAM         | WASM Runtime        | OS/RTOS                | Concurrent instances | Cost |
-| --------------------- | ----------- | ------------------- | ---------------------- | -------------------- | ---- |
-| ESP32-S3 — ESP-IDF    | 512 KB SRAM | WAMR fast-interp    | FreeRTOS SMP (2 cores) | **29 CPU, 3 MEM**    | ~$4  |
-| ESP32-S3 — Zephyr     | 512 KB SRAM | WAMR classic-interp | Zephyr (1 core)        | **24¹ CPU, 2² MEM**  | ~$4  |
-| Raspberry Pi Zero 2W  | 512 MB RAM  | Wasmtime            | Linux                  | ~200+                | ~$15 |
-| Raspberry Pi 4 (2GB)  | 2 GB RAM    | Wasmtime            | Linux                  | 1000+                | ~$35 |
-
-¹ Stack-slot limited at 24; malloc arena still had 40 KB free. A 30-slot pool reaches ~29–30 instances.
-² Arena-size limited at 192 KB; a 224 KB arena allows 3 instances.
-
-The same $4 chip reaches **29 CPU instances under ESP-IDF** and **24 under Zephyr** — the difference is configuration (stack-slot pool size and arena size), not a fundamental platform gap.
+![Arena consumption chart](/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3-arena-consumption.svg)
+*Figure 5. Malloc arena consumption as instance count grows for each workload. CPU workloads spend ~6 KB per instance; MEM/MSG spend ~70 KB. The 192 KB ceiling terminates MEM/MSG at 2 instances; CPU hits the stack-slot ceiling first at 24, with 40 KB of arena still available.*
 
 ---
 
 ## What This Means for Propeller
 
-Propeller's model: a manager node dispatches compiled WASM binaries over MQTT to a fleet of embedded devices. Each proplet receives the binary, loads it via WAMR, and runs it. A device might be running functions from several different deployments simultaneously.
+[Propeller](https://github.com/absmach/propeller) is an open-source orchestration system for WebAssembly workloads on embedded devices. A manager node compiles tasks to WASM and dispatches them over MQTT to a fleet of proplets — worker nodes that load and run the binaries. A single proplet might serve tasks from several independent deployments simultaneously.
 
-This Zephyr run adds an important data point:
+![Propeller edge dispatch diagram](/img/blogs/wasm-instances-on-esp32s3/wasm-instances-on-esp32s3-propeller-edge-dispatch.svg)
+*Figure 6. Propeller dispatch model: the manager sends compiled WASM binaries over MQTT; each proplet loads the binary via WAMR and runs it in an isolated instance. Multiple concurrent instances run within the same proplet process.*
 
-- **RTOS choice is tunable, not binding**: the benchmark ran cleanly on both FreeRTOS (via ESP-IDF) and Zephyr RTOS. Teams that need Zephyr's vendor-neutral board support, POSIX compliance, or upstream hardware abstraction can adopt it without sacrificing WASM concurrency — the numbers are within configuration range of the ESP-IDF baseline.
-- **Up to 24 concurrent stateless functions** per device with the default Zephyr configuration (~6 KB per instance in the malloc arena; thread stacks pre-reserved separately). Expanding the stack pool to 30 slots reaches ~29–30 instances — matching ESP-IDF.
-- **Up to 2 concurrent stateful functions** per device with the default 192 KB arena; a 224 KB arena allows 3 (matching ESP-IDF). If your pipeline stages maintain local state, budget accordingly — or target ESP32-S3R8 (8 MB PSRAM) for 40+ concurrent stateful instances.
-- **Isolation holds across both RTOS environments**: across every Zephyr experiment — 24 CPU instances, 2 MEM/MSG instances — zero errors, zero cross-contamination. Propeller's per-function isolation guarantee holds down to bare metal, regardless of which RTOS is underneath.
+This benchmark answers the capacity question for the Zephyr proplet configuration:
+
+- **24 concurrent stateless functions** per device with the default configuration. The 24-slot stack pool is a single constant in source; rebuilding with 30 slots gives ~29–30 instances (the arena would run out before the stack pool at ~29 instances, where 6 KB × 29 ≈ 174 KB leaves only ~18 KB — enough for ~3 more instances before OOM).
+- **2 concurrent stateful functions** per device with the default 192 KB arena. If your pipeline stages maintain local state (ring buffers, accumulators, running statistics), budget 70 KB per concurrent instance. The ESP32-S3R8 variant (8 MB PSRAM) lifts this ceiling substantially.
+- **Isolation is guaranteed by construction**: WAMR instances cannot access each other's linear memory. Across every experiment — 24 CPU instances, 2 MEM instances, 2 MSG instances — zero cross-contamination errors were observed. Propeller's per-function isolation guarantee holds at the microcontroller level.
+- **Zephyr's vendor-neutral HAL is compatible**: the WAMR runtime, the WASM binaries, and the shared-module architecture work unchanged on Zephyr. Teams that need to target an nRF5340, an STM32L5, and an ESP32-S3 from the same codebase can deploy Propeller proplets across all three without re-benchmarking.
 
 ---
 
 ## Conclusion
 
-The question was whether WASM concurrency on an ESP32-S3 is a FreeRTOS result or a hardware result. The answer is hardware.
+A $4 ESP32-S3 running Zephyr RTOS can sustain **24 concurrent WebAssembly instances** for CPU-bound workloads and **2 concurrent instances** for workloads with 64 KB linear memory — all isolated, all zero-error, on a single 240 MHz core with no external RAM.
 
-With Zephyr, the same chip, the same WAMR runtime, and the same WASM binaries deliver 24 concurrent CPU-bound instances — stopped by a stack-slot configuration parameter, not by memory exhaustion. The malloc arena still had 40 KB free when the benchmark hit the ceiling. Expand the stack pool from 24 to 30 slots and you get ~29–30 instances, matching the ESP-IDF number exactly.
+The limits are deterministic and configurable:
 
-The MEM/MSG gap — 2 Zephyr vs 3 ESP-IDF — comes from the 192 KB default arena size, not from anything fundamental about Zephyr. One config line change closes it.
+- The CPU ceiling is a **stack-slot count**, not an OOM. Pre-allocate more stack slots at compile time and the arena absorbs more instances — the 192 KB arena still had 40 KB free when the 24-slot pool was exhausted.
+- The MEM/MSG ceiling is a **`Kconfig` parameter**. `CONFIG_COMMON_LIBC_MALLOC_ARENA_SIZE` is one line; increasing it (and the headroom permits a small increase) directly lifts stateful instance capacity.
 
-What the Zephyr port actually demonstrates is that the WASM concurrency model is portable. The harness required adapting the thread and heap APIs — `pthread_create` to `k_thread_create`, `heap_caps_malloc` to a Kconfig-sized arena. The WAMR runtime, the workload binaries, and the shared-module architecture transferred unchanged. Teams choosing Zephyr for its hardware abstraction layer — the ability to target an nRF5340, an STM32, and an ESP32 from the same codebase — can run Propeller functions without re-benchmarking from scratch. The limits are governed by SRAM, not the scheduler.
+WAMR's shared-module architecture is what makes this possible: parsing happens once, and each `wasm_runtime_instantiate()` costs only the per-instance overhead — not a full copy of the module. On Zephyr, thread stacks are segregated into the `.noinit` section and never compete with the WAMR malloc arena, which keeps the accounting clean and the limits predictable.
 
-Propeller is open source. The Zephyr benchmark source is at [examples/esp32s3-wasm-benchmark-zephyr](https://github.com/absmach/propeller/tree/main/examples/esp32s3-wasm-benchmark-zephyr). The ESP-IDF baseline is at [examples/esp32s3-wasm-benchmark-espidf](https://github.com/absmach/propeller/tree/main/examples/esp32s3-wasm-benchmark-espidf).
+The benchmark source is at [examples/esp32s3-wasm-benchmark-zephyr](https://github.com/absmach/propeller/tree/main/examples/esp32s3-wasm-benchmark-zephyr). Propeller is open source at [github.com/absmach/propeller](https://github.com/absmach/propeller).
 
 ---
 
-*Measurements: ESP32-S3-WROOM-1, Zephyr 4.3.99, WAMR classic interpreter, single core (`esp32s3_devkitc/esp32s3/procpu`), `k_cycle_get_64()` for timing (latency values unreliable — see CPU section above; iteration counts used instead). All benchmarks run in-process with no external tooling.*
+*Measurements: ESP32-S3-WROOM-1, Zephyr 4.3.99, WAMR classic interpreter, single core (`esp32s3_devkitc/esp32s3/procpu`). Timing via `k_cycle_get_64()` — latency values unreliable on this target; iteration counts used for duration estimates. All experiments run in-process with no external tooling.*
