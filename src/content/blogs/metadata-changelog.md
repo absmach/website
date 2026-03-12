@@ -145,31 +145,17 @@ The `location` and `perimeter` types integrate directly with map visualizations 
 
 ---
 
-## User Preferences Consolidated into Flat Metadata
+## User Fields Moved to Flat Metadata
 
-User-specific data was previously split across multiple nested keys depending on how the user was created or last updated. With v0.19.0, all user data is stored in flat `metadata`.
+The `subscribed` flag was previously stored under a nested `admin` key in user metadata. With v0.19.0, it is stored directly in flat `metadata`.
 
-**Before:**
+| Field | Before | After |
+|-------|--------|-------|
+| Email subscription flag | `metadata.admin.subscribed` | `metadata.subscribed` |
 
-| Field | Location |
-|-------|----------|
-| Email subscription flag | `metadata.admin.subscribed` |
-| UI language | `private_metadata.language` or `metadata.ui.language` |
-| UI theme | `private_metadata.theme` or `metadata.ui.theme` |
+User preferences (`language` and `theme`) remain in `private_metadata` and are not affected by this change.
 
-**After:**
-
-| Field | Location |
-|-------|----------|
-| Email subscription flag | `metadata.subscribed` |
-| UI language | `metadata.language` |
-| UI theme | `metadata.theme` |
-
-New user registrations now receive `language: "en"` and `theme: "default"` preset in their metadata at the time of account creation.
-
-### System-managed metadata keys
-
-Some metadata keys are reserved for internal UI components and are excluded from the user-editable metadata table. Currently, `logo` is the only system-managed key — it is used by the domain logo feature and is preserved across metadata updates but is not displayed or editable in the metadata editor.
+New user registrations now receive `language` and `theme` preset in `private_metadata` at the time of account creation.
 
 ---
 
@@ -189,7 +175,6 @@ No API schema changes, no SDK updates, and no CLI flag changes are required to s
 |----------|----------------|
 | Entity metadata stored under `ui` key | Upgrade to v0.19.0 — backend migration handles it automatically |
 | User fields stored under `admin` key | Upgrade to v0.19.0 — backend migration handles it automatically |
-| User preferences previously in `private_metadata` | Upgrade to v0.19.0 — automatically written to flat `metadata` on next save |
 | Plain (untyped) flat metadata values | Automatically handled — type is inferred by the UI |
 | New deployments | No action required |
 
