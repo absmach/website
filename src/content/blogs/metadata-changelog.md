@@ -3,7 +3,7 @@ title: "UI Metadata Redesign: Flat Format, Richer Types, and a Breaking Change"
 slug: "ui-metadata-redesign-flat-format"
 excerpt: "Magistrala UI introduces a flat, typed metadata format with automatic migration support. If you are upgrading from v0.18.5 or earlier, read this before upgrading."
 description: "Magistrala UI v0.19.0 introduces a redesigned metadata system with a flat storage format, typed values, timestamps, and automatic migration support."
-date: "2026-02-27"
+date: "2026-03-12"
 author:
   name: "Felister Wambui"
   picture: "https://avatars.githubusercontent.com/u/80099068?v=4"
@@ -197,6 +197,6 @@ No API schema changes, no SDK updates, and no CLI flag changes are required to s
 
 ## Conclusion
 
-The metadata redesign removes an internal abstraction layer that was causing inconsistency between the UI and the raw API data model. All entities — channels, clients, groups, domains, plans, and users — now use the same flat, typed structure, making metadata easier to inspect, query, and manage across tools.
+The metadata redesign removes an internal abstraction layer that was causing inconsistency between the UI and the raw API data model. All entities (channels, clients, groups, domains, plans, and users) now use the same flat, typed structure, making metadata easier to inspect, query, and manage across tools.
 
 Existing entries stored under the `ui` or `admin` sub-keys are automatically migrated by the backend on upgrade. After upgrading to v0.19.0, your metadata will be consistently structured and fully aligned with the API representation.
