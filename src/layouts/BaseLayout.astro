@@ -8,6 +8,13 @@ const {
   ogImage = "https://api.microlink.io/?url=https://www.absmach.eu&meta=false&screenshot=true&embed=screenshot.url",
   ogImageAlt = "Abstract Machines",
   canonical,
+  pageType = "homepage",
+  author = { name: "", url: "" },
+  startDate,
+  endDate,
+  keywords = [],
+  product = { name: "", description: "", category: "", os: "Linux, Docker", price: "0", currency: "USD" },
+  breadcrumb = [] 
 } = Astro.props;
 
 const resolveMetaUrl = (value) => {
@@ -15,229 +22,190 @@ const resolveMetaUrl = (value) => {
   try {
     return new URL(value, Astro.url).toString();
   } catch {
-    return value;
+    return undefined;
   }
 };
 
-const canonicalUrl = resolveMetaUrl(canonical ?? Astro.url.pathname);
+const canonicalUrl = resolveMetaUrl(canonical ?? Astro.url.pathname) || "https://www.absmach.eu/";
 const ogImageUrl = resolveMetaUrl(ogImage);
----
 
-<!doctype html>
+const getJsonLd = () => {
+  const breadcrumbs = breadcrumb.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumb.map((b, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "name": b.name,
+          "item": resolveMetaUrl(b.url)
+        }))
+      }
+    : null;
+
+  switch (pageType) {
+    case "homepage":
+      return [
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Abstract Machines",
+          "url": "https://www.absmach.eu/",
+          "logo": "https://www.absmach.eu/logo.png",
+          "description": "Open-source IoT platform and edge computing company.",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "141 Quai de Valmy",
+            "addressLocality": "Paris",
+            "postalCode": "75010",
+            "addressCountry": "FR"
+          },
+          "sameAs": [
+            "https://twitter.com/absmach",
+            "https://www.linkedin.com/company/absmach",
+            "https://github.com/absmach"
+          ]
+        },
+        breadcrumbs
+      ].filter(Boolean);
+
+    case "product":
+      return [
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": product.name,
+          "applicationCategory": product.category,
+          "operatingSystem": product.os,
+          "offers": {
+            "@type": "Offer",
+            "price": product.price,
+            "priceCurrency": product.currency
+          },
+          "description": product.description,
+          "url": canonicalUrl
+        },
+        breadcrumbs
+      ].filter(Boolean);
+
+    case "blog":
+      return [
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "@id": canonicalUrl,
+          "headline": title,
+          "description": description,
+          ...(author?.name && {
+            "author": {
+              "@type": "Person",
+              "name": author.name,
+              "url": author.url
+            }
+          }),
+          "publisher": {
+            "@type": "Organization",
+            "name": "Abstract Machines",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.absmach.eu/logo.png"
+            }
+          },
+          ...(startDate && { "datePublished": startDate }),
+          ...(endDate && { "dateModified": endDate }),
+          ...(keywords?.length && { "keywords": keywords }),
+          "mainEntityOfPage": canonicalUrl,
+          ...(ogImageUrl && { "image": ogImageUrl })
+        },
+        breadcrumbs
+      ].filter(Boolean);
+
+    default:
+      return breadcrumbs ? [breadcrumbs] : null;
+  }
+};
+
+const jsonLd = getJsonLd();
+---
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+
+    <title>{title ? `${title} | Abstract Machines` : "Abstract Machines"}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+
     <meta property="og:site_name" content="Abstract Machines" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title || "Abstract Machines"} />
+    <meta property="og:description" content={description || "Infrastructure for event-driven systems."} />
+    <meta property="og:type" content={pageType === "blog" ? "article" : ogType} />
+    <meta property="og:locale" content="en_US" />
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
     {ogImageUrl && <meta property="og:image:alt" content={ogImageAlt} />}
-    <meta
-      name="twitter:card"
-      content={ogImageUrl ? "summary_large_image" : "summary"}
-    />
+    {pageType === "blog" && author?.url && <meta property="article:author" content={author.url} />}
+    {pageType === "blog" && startDate && <meta property="article:published_time" content={startDate} />}
+    {pageType === "blog" && endDate && <meta property="article:modified_time" content={endDate} />}
+
+    <meta name="twitter:card" content={ogImageUrl ? "summary_large_image" : "summary"} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
-    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    {pageType === "blog" && author?.url && <meta name="twitter:creator" content={author.url} />}
+
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title="Abstract Machines Blog"
-      href="/rss.xml"
-    />
-
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap"
       rel="stylesheet"
     />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Abstract Machines Blog" href="/rss.xml" />
+
+    {jsonLd && jsonLd.map((item) => (
+      <script type="application/ld+json">
+        {JSON.stringify(item)}
+      </script>
+    ))}
+
     <script is:inline>
       (() => {
-        const storageKey = "am_theme";
-        let stored = null;
-        try {
-          const raw = localStorage.getItem(storageKey);
-          stored = raw === "light" || raw === "dark" ? raw : null;
-        } catch (err) {
-          stored = null;
-        }
-        const prefersDark =
-          window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const theme = stored || (prefersDark ? "dark" : "light");
-        document.documentElement.setAttribute("data-theme", theme);
+        const key = "am_theme";
+        const doc = document.documentElement;
+        const getSystem = () =>
+          window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const safeGet = () => { try { const val = localStorage.getItem(key); return val === "dark" || val === "light" ? val : null; } catch { return null; } };
+        const applyTheme = (theme) => doc.setAttribute("data-theme", theme);
+        const init = () => { const stored = safeGet(); const theme = stored || getSystem(); applyTheme(theme); };
+        init();
       })();
     </script>
   </head>
-  <body class="">
+
+  <body>
     <slot />
     <script is:inline>
       (() => {
-        const storageKey = "am_theme";
-        const doc = document.documentElement;
-        const optionButtons = () =>
-          Array.from(document.querySelectorAll("[data-theme-option]"));
-        const legacyToggles = () =>
-          Array.from(document.querySelectorAll("[data-theme-toggle]"));
-        const getSystemTheme = () =>
-          window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
-        const normalizeTheme = (value) =>
-          value === "light" || value === "dark" ? value : null;
-        const safeGet = () => {
-          try {
-            return normalizeTheme(localStorage.getItem(storageKey));
-          } catch (err) {
-            return null;
-          }
-        };
-        const safeSet = (value) => {
-          try {
-            localStorage.setItem(storageKey, value);
-          } catch (err) {
-            return;
-          }
-        };
-        const safeRemove = () => {
-          try {
-            localStorage.removeItem(storageKey);
-          } catch (err) {
-            return;
-          }
-        };
-
-        const getMode = () => {
-          const stored = safeGet();
-          return stored
-            ? { mode: "explicit", stored }
-            : { mode: "system", stored: null };
-        };
-
-        const syncControls = () => {
-          const { mode, stored } = getMode();
-          const effectiveTheme =
-            doc.getAttribute("data-theme") || getSystemTheme();
-
-          optionButtons().forEach((button) => {
-            const option = button.getAttribute("data-theme-option");
-            const pressed =
-              (option === "system" && mode === "system") ||
-              (mode === "explicit" && option === stored);
-            button.setAttribute("aria-pressed", pressed ? "true" : "false");
-          });
-
-          const isDark = effectiveTheme === "dark";
-          const label = isDark ? "Switch to light mode" : "Switch to dark mode";
-          legacyToggles().forEach((toggle) => {
-            toggle.setAttribute("aria-pressed", isDark ? "true" : "false");
-            toggle.setAttribute("aria-label", label);
-            toggle.setAttribute("title", label);
-          });
-        };
-
-        const setMode = (nextMode) => {
-          if (nextMode === "system") {
-            safeRemove();
-            doc.setAttribute("data-theme", getSystemTheme());
-            syncControls();
-            return;
-          }
-
-          if (nextMode !== "light" && nextMode !== "dark") return;
-          safeSet(nextMode);
-          doc.setAttribute("data-theme", nextMode);
-          syncControls();
-        };
-
-        const stored = safeGet();
-        const existing = doc.getAttribute("data-theme");
-        const initialTheme =
-          existing === "light" || existing === "dark"
-            ? existing
-            : stored || getSystemTheme();
-        doc.setAttribute("data-theme", initialTheme);
-        syncControls();
-
-        optionButtons().forEach((button) => {
-          button.addEventListener("click", () => {
-            const option = button.getAttribute("data-theme-option");
-            setMode(option === "system" ? "system" : option);
-          });
-        });
-
-        legacyToggles().forEach((toggle) => {
-          toggle.addEventListener("click", () => {
-            const current = doc.getAttribute("data-theme") || getSystemTheme();
-            const next = current === "dark" ? "light" : "dark";
-            setMode(next);
-          });
-        });
-
-        if (window.matchMedia) {
-          const mq = window.matchMedia("(prefers-color-scheme: dark)");
-          const handler = (event) => {
-            if (safeGet()) return;
-            doc.setAttribute("data-theme", event.matches ? "dark" : "light");
-            syncControls();
-          };
-          if (mq.addEventListener) {
-            mq.addEventListener("change", handler);
-          } else if (mq.addListener) {
-            mq.addListener(handler);
-          }
-        }
-      })();
-    </script>
-    <script is:inline>
-      (() => {
-        const UTM_PARAMS = {
-          utm_source: "absmach.eu",
-          utm_medium: "referral",
-          utm_campaign: "website",
-        };
-
-        const isExternalHttpUrl = (href) => {
-          try {
-            const url = new URL(href, window.location.href);
-            if (!/^https?:$/.test(url.protocol)) return false;
-            return url.origin !== window.location.origin;
-          } catch (err) {
-            return false;
-          }
-        };
-
-        const applyUtmParams = (anchor) => {
-          const href = anchor.getAttribute("href");
-          if (!href || href.startsWith("#")) return;
-          if (anchor.hasAttribute("data-no-utm")) return;
-          if (!isExternalHttpUrl(href)) return;
-
+        const UTM_PARAMS = { utm_source: "absmach.eu", utm_medium: "referral", utm_campaign: "website" };
+        const isExternal = (href) => { try { const url = new URL(href, window.location.href); return /^https?:$/.test(url.protocol) && url.origin !== window.location.origin; } catch { return false; } };
+        document.querySelectorAll("a[href]").forEach(a => {
+          const href = a.getAttribute("href");
+          if (!href || href.startsWith("#") || a.hasAttribute("data-no-utm")) return;
+          if (!isExternal(href)) return;
           const url = new URL(href, window.location.href);
-          for (const [key, value] of Object.entries(UTM_PARAMS)) {
-            if (!url.searchParams.has(key)) {
-              url.searchParams.set(key, value);
-            }
-          }
-
-          anchor.setAttribute("href", url.toString());
-        };
-
-        document.querySelectorAll("a[href]").forEach(applyUtmParams);
+          Object.entries(UTM_PARAMS).forEach(([k,v]) => { if(!url.searchParams.has(k)) url.searchParams.set(k,v); });
+          a.setAttribute("href", url.toString());
+        });
       })();
     </script>
   </body>
