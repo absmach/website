@@ -20,7 +20,6 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-const title = `${post.data.title} | Blog`;
 const description = post.data.description;
 const currentSlug = post.data.slug ?? post.slug;
 const publishedAt =
@@ -67,7 +66,10 @@ const getYouTubeEmbedSrc = (rawUrl) => {
 };
 const coverVideoIframeSrc = coverVideo ? getYouTubeEmbedSrc(coverVideo) : null;
 const canonical =
-    post.data.canonical ?? `/blog/${post.data.slug ?? post.slug}/`;
+  post.data.canonical ??
+  (Astro.site
+    ? new URL(`/blog/${post.data.slug ?? post.slug}/`, Astro.site).toString()
+    : `/blog/${post.data.slug ?? post.slug}/`);
 const normalizedCategory = (post.data.category ?? "").toLowerCase().trim();
 const postBadgeChips = (() => {
     const chips = [];
@@ -148,12 +150,25 @@ const nextReadPosts = allPosts
 ---
 
 <BaseLayout
-    title={title}
-    description={description}
-    ogType="article"
+    title={post.data.title}
+    description={post.data.description}
     ogImage={coverImage ?? "/img/logos/social-preview.png"}
     ogImageAlt={post.data.title}
     canonical={canonical}
+    pageType="blog"
+    category={post.data.category ?? "blog"}
+    author={{
+        name: post.data.author?.name ?? "Abstract Machines",
+        ...(post.data.author?.url && { url: post.data.author.url })
+    }}
+    startDate={publishedAt.toISOString()}
+    keywords={post.data.tags ?? []}
+    breadcrumb={[
+        { name: "Home", url: "/" },
+        { name: "Blog", url: "/blog" },
+        { name: post.data.title, url: canonical }
+        ]
+  }
 >
     <Header />
     <main>
@@ -182,10 +197,10 @@ const nextReadPosts = allPosts
 
                     <div class="mt-6 flex items-center gap-4">
                         {
-                            post.data.author.picture ? (
+                            post.data.author?.picture ? (
                                 <Image
-                                    src={post.data.author.picture!}
-                                    alt={post.data.author.name}
+                                    src={post.data.author.picture}
+                                    alt={post.data.author?.name ?? "Abstract Machines"}
                                     width={56}
                                     height={56}
                                     class="h-14 w-14 rounded-full border border-subtle bg-surface-2 object-cover"
@@ -194,14 +209,14 @@ const nextReadPosts = allPosts
                                 />
                             ) : (
                                 <div class="flex h-14 w-14 items-center justify-center rounded-full border border-subtle bg-surface-2 font-semibold text-primary">
-                                    {post.data.author.name.slice(0, 1)}
+                                    {post.data.author.name.slice(0, 1) ?? "A"}
                                 </div>
                             )
                         }
 
                         <div class="min-w-0">
                             <p class="text-xl font-semibold text-primary">
-                                {post.data.author.name}
+                                {post.data.author?.name ?? "Abstract Machines"}
                             </p>
                             <p class="mt-1 text-base text-muted">
                                 {
