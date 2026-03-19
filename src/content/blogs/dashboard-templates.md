@@ -1,5 +1,5 @@
 ---
-title: "Dashboard Templates: One Dashboard, Every User, The Right Data"
+title: "Dashboard Templates: Build Once, Scale to Every User"
 slug: "dashboard-templates"
 excerpt: "Dashboard templates let you build a single dashboard layout and share it across many users, with each person seeing only the data they're permitted to access, automatically filtered by tags."
 description: "Learn how Magistrala's dashboard templates feature reduces setup overhead for multi-user IoT deployments. Build once, share with many, and let tag-based filtering surface the right data for each user."
@@ -22,7 +22,7 @@ tags:
   - IIoT
 ---
 
-# Dashboard Templates: One Dashboard, Every User, The Right Data
+# Dashboard Templates: Build Once, Scale to Every User
 
 Managing dashboards at scale is one of those problems that sneaks up on you.
 
@@ -32,6 +32,8 @@ Multiply that by a hundred users, add a few layout changes to roll out, and you 
 
 Dashboard templates are how we solve this in Magistrala.
 
+![Dashboard list showing the Insights Template card with a Template badge and Users sharing](/img/blogs/dashboard-templates/template%20card.png)
+
 ---
 
 ## What Dashboard Templates Actually Do
@@ -40,9 +42,11 @@ The idea is straightforward: you build one dashboard and share it with many user
 
 The filtering is driven by tags. When a user opens a templated dashboard, Magistrala looks at the tags defined on each widget and finds the entities (clients, channels, groups) that belong to that user and match those tags. The widget then queries and displays data only from those matched entities.
 
-So a "device temperature" chart on the template becomes a "temperature from *my* assigned device" chart for every individual user, without you having to wire it up separately for each one.
+So a "device temperature" chart on the template becomes a "temperature from _my_ assigned device" chart for every individual user, without you having to wire it up separately for each one.
 
 This is the core mechanic: a single source of truth for layout and configuration, with per-user data scoping handled automatically at render time.
+
+![Two users opening the same Insights Template and each seeing their own meter readings](/img/blogs/dashboard-templates/template-consumers.png)
 
 ---
 
@@ -52,7 +56,9 @@ When you build a dashboard template, widgets are configured with tags rather tha
 
 When a user loads the dashboard, Magistrala finds the entities that the user has access to and that carry the widget's tag. The widget then uses those entities as its data source.
 
-There's one constraint worth understanding upfront: the system expects one entity per tag per user. If a user has multiple entities sharing the same tag, only the first one is used. This is a deliberate simplicity trade-off. The template model is built around the assumption that each tag maps to a single, unambiguous entity for a given user. If your deployment has situations where multiple devices carry the same tag for the same user, you'll want to think about your tagging scheme before you build templates around it.
+![Widget configuration showing channel tag and client tag fields instead of hard-coded entity references](/img/blogs/dashboard-templates/tag-data-sources.png)
+
+> There's one constraint worth understanding upfront: the system expects one entity per tag per user. If a user has multiple entities sharing the same tag, only the first one is used. This is a deliberate simplicity trade-off. The template model is built around the assumption that each tag maps to a single, unambiguous entity for a given user. If your deployment has situations where multiple devices carry the same tag for the same user, you'll want to think about your tagging scheme before you build templates around it.
 
 The practical takeaway: design your tags to be specific enough that they point to a single entity per user. Think of tags as "roles" or "slots" in the dashboard (`primary-meter`, `floor-sensor`, `assigned-pump`) rather than broad categorical labels.
 
@@ -94,7 +100,13 @@ This extends naturally to any scenario where you're running a service that custo
 
 The workflow for building a templated dashboard in Magistrala UI is fairly close to building a regular dashboard, with one key difference: instead of selecting specific entities when you configure a widget, you assign tags.
 
-You create the dashboard, add your widgets (charts, gauges, tables, status indicators), and for each one, specify the tag that identifies the entity it should pull from. Save that as a template and share it with users or groups.
+![Create Dashboard modal with the Template type selected, showing name, tags, and share options](/img/blogs/dashboard-templates/create-template.png)
+
+You create the dashboard, add your widgets (charts, gauges, tables, status indicators), and for each one, specify the tag that identifies the entity it should pull from. Save that as a template and share it with users.
+
+![Widget configuration showing channel tag and client tag fields instead of hard-coded entity references](/img/blogs/dashboard-templates/tag-data-sources.png)
+
+![The Insights Template as seen by a user, showing the full layout of meter reading widgets](/img/blogs/dashboard-templates/template.png)
 
 When those users open it, the resolution happens behind the scenes. Magistrala matches the tag to their accessible entities and renders the widget with their data. From the user's perspective, they just see a dashboard that shows their stuff.
 
@@ -112,4 +124,14 @@ A few things worth getting right before you start creating templates:
 
 ---
 
+## Where to Go From Here
+
 Dashboard templates are an enterprise feature because the problems they solve are enterprise problems: large user counts, consistent operational views, centralized management of a distributed deployment. If you're building an IoT solution that will eventually need to onboard many users with scoped access to their own data, building your dashboard strategy around templates from the start is considerably easier than retrofitting it later.
+
+The concrete benefits are worth stating plainly. You stop creating dashboards per user. You manage one layout instead of many. Every user gets a consistent experience. New users are onboarded without a dashboard provisioning step. And when something needs to change, you change it once.
+
+If you want to dig into the specifics, the [Magistrala documentation](https://magistrala.absmach.eu/docs/user-guide/dashboards/templates) covers dashboard templates in detail, including how to set up tag-based data sources and configure sharing.
+
+Dashboard templates are part of Magistrala's enterprise offering. If you're evaluating Magistrala for a multi-user or multi-tenant deployment and want to talk through your use case, [reach out to us](https://magistrala.absmach.eu/contact) and we'll help you figure out whether this fits what you're building.
+
+One more thing worth mentioning: we're working on **solution packs**. The idea is that you'll be able to install a pre-built solution (a complete set of dashboards, widgets, and configuration for a specific use case) directly from the platform, rather than assembling everything from scratch. What currently takes hours of setup gets reduced to minutes. We'll have more on that soon.
