@@ -32,7 +32,7 @@ Multiply that by a hundred users, add a few layout changes to roll out, and you 
 
 Dashboard templates are how we solve this in Magistrala.
 
-![Dashboard list showing the Insights Template card with a Template badge and Users sharing](/img/blogs/dashboard-templates/template%20card.png)
+![Dashboard list showing the Insights Template card with a Template badge and Users sharing](/img/blogs/dashboard-templates/template-card.png)
 
 ---
 
