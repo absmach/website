@@ -38,26 +38,6 @@ Key requirements:
 - **Strong security** - Policy-based access enforcement
 - **Organizational flexibility** - Each tenant manages their own structure
 
-**SuperMQ's Multi-Tenancy Model:**
-
-SuperMQ provides the basic structure:
-- **Domains** - Containers that keep each customer separate
-- **Users** - People who log in to their domain
-- **Groups** - Teams within a domain
-- **Clients** - IoT devices that belong to a domain
-- **Channels** - Ways for devices to send messages
-- **Policies** - Rules that control who can do what
-
-**Magistrala's Features:**
-
-Magistrala adds more features on top of SuperMQ:
-- **Rules Engine** - Set up automatic actions
-- **Alarms** - Get alerts when something goes wrong
-- **Reports** - Create data reports
-- **Bootstrap** - Set up devices automatically
-- **Readers** - Read data over time
-- **Consumers** - Route messages safely
-
 **What This Covers:**
 
 1. How Domains provide tenant isolation
@@ -78,7 +58,6 @@ Magistrala adds more features on top of SuperMQ:
   - [User Access Control Within Each Domain](#user-access-control-within-each-domain)
   - [Device Setup and Communication](#device-registration-and-communication)
   - [Security in Action](#enforcing-security-policies)
-- [Best Practices](#best-practices-for-multi-tenant-iot)
 - [Get Started](#getting-started)
 
 ---
@@ -87,8 +66,11 @@ Magistrala adds more features on top of SuperMQ:
 
 **Domains** keep customers separate in SuperMQ. Each domain is like a separate box. One customer cannot see inside another customer's box.
 
-**What Are Domains?**
+**What Are Domains?**m
 
+**What Are Domains?**m
+
+A domain is a container. It holds:
 A domain is a container. It holds:
 - All users from one company
 - All teams in that company
@@ -98,57 +80,20 @@ A domain is a container. It holds:
 
 **Key Facts About Domains:**
 
-**Complete Separation:**
-
-Users in Domain A cannot see Domain B. Devices in one domain cannot talk to another domain. Channels belong to just one domain. Users must be explicitly invited to a domain before they can access any of its resources.
-
-**Each Domain Has Its Own Admin:**
-
-Each domain has its own boss. Domain admins control only their own domain. Platform admins manage all the domains.
-
-**Everything Belongs to One Domain:**
-
-Every user, team, device, and channel lives in one domain. You create things inside a domain. Delete a domain and everything in it is deleted too.
-
-**Easy to Grow:**
-
-Domains share servers and databases. Each domain can grow on its own. One domain doesn't slow down another.
-
-**Domain Hierarchy:**
-
-```
-Platform (SuperMQ/Magistrala Instance)
-├── Domain: TenantA-Corp
-│   ├── Users: admin@tenanta.com, engineer@tenanta.com
-│   ├── Groups: East-Region, West-Region
-│   ├── Clients: 5,000 GPS trackers
-│   ├── Channels: vehicle-telemetry, vehicle-commands
-│   └── Policies: Access control rules for TenantA
-│
-├── Domain: TenantB-Industries
-│   ├── Users: manager@tenantb.com, operator@tenantb.com
-│   ├── Groups: Factory-Floor, Quality-Control
-│   ├── Clients: 2,000 industrial sensors
-│   ├── Channels: sensor-data, equipment-alerts
-│   └── Policies: Access control rules for TenantB
-│
-└── Domain: TenantC-Solutions
-    ├── Users: admin@tenantc.com
-    ├── Groups: Smart-Buildings
-    ├── Clients: 10,000 building sensors
-    ├── Channels: hvac-data, occupancy-data
-    └── Policies: Access control rules for TenantC
-```
+- **Complete Separation:** Users in Domain A cannot see Domain B. Devices in one domain cannot talk to another domain. Channels belong to just one domain. Users must be explicitly invited to a domain before they can access any of its resources.
+- **Each Domain Has Its Own Admin:** Domain admins control only their own domain. Platform admins manage all the domains.
+- **Everything Belongs to One Domain:** Every user, team, device, and channel lives in one domain. You create things inside a domain. Delete a domain and everything in it is deleted too.
+- **Easy to Grow:** Domains share servers and databases. Each domain can grow on its own. One domain doesn't slow down another.
 
 **Advantages of Domains:**
 
-:white_check_mark: **SaaS IoT Platforms** - Give each customer their own domain
-:white_check_mark: **Service Providers** - Keep different clients separate
-:white_check_mark: **Big Companies** - Keep business units apart
-:white_check_mark: **Multi-Brand Services** - Keep different brands separate
-:white_check_mark: **Testing and Production** - Keep test systems separate from live ones
+✅ **SaaS IoT Platforms** - Give each customer their own domain
+✅ **Service Providers** - Keep different clients separate
+✅ **Big Companies** - Keep business units apart
+✅ **Multi-Brand Services** - Keep different brands separate
+✅ **Testing and Production** - Keep test systems separate from live ones
 
-![Magistrala Architecture](images/architecture.png)
+![Magistrala Architecture](/img/blogs/access-control/architecture.png)
 
 ---
 
@@ -169,8 +114,8 @@ Every action needs permission. The system checks if a **person** (or device) can
   "subject": "<user-id or client-id>",
   "subject_type": "user" | "client",
   "object": "<resource-id>",
-  "object_type": "domain" | "group" | "client" | "channel",
-  "permission": "<action to check>"
+  "object_type": "domain" | "group" | "client" | "channel" | "rule" | "report",
+  "permission": "<permission to check>"
 }
 ```
 
@@ -187,7 +132,7 @@ Every action needs permission. The system checks if a **person** (or device) can
   "permission": "membership"
 }
 ```
-Result: :white_check_mark: User has access to domain resources
+Result: ✅ User has access to domain resources
 
 **User Creating a Client:**
 ```json
@@ -200,51 +145,52 @@ Result: :white_check_mark: User has access to domain resources
   "permission": "client_create_permission"
 }
 ```
-Result: :white_check_mark: User can create IoT devices in the domain
+Result: ✅ User can create IoT devices in the domain
 
 **How Roles Work:**
 
 When you create something (like a client or group), you automatically become the admin. As the admin, you can create custom roles.
 
 Each role has:
-- **Actions** - What people can do (read, write, delete)
-- **Members** - Which users have this role
+- **Actions** - The specific permissions granted (e.g. `read_permission`, `update_permission`, `delete_permission`)
+- **Members** - Which users hold this role
 
 **Example - Creating a Role:**
 
-You create a client device. You want someone to only read data from it. You create a role called "data_viewer":
+A client device is created. To allow a user to only read data from it, a `data_viewer` role is defined:
 
 ```json
 {
   "role_name": "data_viewer",
-  "optional_actions": ["read"],
+  "optional_actions": ["read_permission"],
   "optional_members": ["f756e6c5-bb52-4475-8c42-7bca0c917764"]
 }
 ```
 
-Now user `f756e6c5-bb52-4475-8c42-7bca0c917764` can read from your client.
+That user gains `read_permission` on the client — `update_permission` and `delete_permission` are not granted.
 
-They cannot write or delete.
+**Permissions by Entity:**
 
-**Common Actions:**
+| Entity | Key Permissions |
+|---|---|
+| **Client** | `read_permission`, `update_permission`, `delete_permission`, `connect_to_channel_permission`, `manage_role_permission` |
+| **Channel** | `read_permission`, `update_permission`, `delete_permission`, `publish_permission`, `subscribe_permission`, `connect_to_client_permission`, `manage_role_permission` |
+| **Group** | `subgroup_create_permission`, `subgroup_read_permission`, `subgroup_update_permission`, `subgroup_delete_permission`, `manage_role_permission` |
+| **Domain** | `read_permission`, `update_permission`, `enable_permission`, `disable_permission`, `delete_permission`, `manage_role_permission` |
+| **Rule** | `read_permission`, `update_permission`, `delete_permission`, `alarm_read_permission`, `alarm_assign_permission`, `alarm_acknowledge_permission`, `alarm_resolve_permission`, `manage_role_permission` |
+| **Report** | `read_permission`, `update_permission`, `delete_permission`, `manage_role_permission` |
 
-- `read` - View data
-- `update` - Change settings
-- `delete` - Remove things
-- `share` - Let others access
-- `create` - Make new things
+All roles and permissions are scoped to the domain they were created in — they cannot cross tenant boundaries.
 
-You pick which actions each role gets.
+**Magistrala — Rules, Alarms and Reports:**
 
-**Magistrala Extra Features:**
+Magistrala extends SuperMQ's RBAC to cover its additional services. Permissions map directly to API operations via SpiceDB:
 
-Magistrala adds more permissions:
+- **Rules**: `rule_create_permission`, `rule_read_permission`, `rule_update_permission`, `rule_delete_permission` (domain-scoped); `read_permission`, `update_permission`, `delete_permission` (rule-scoped)
+- **Alarms**: Access is controlled through the parent rule — `alarm_read_permission`, `alarm_assign_permission`, `alarm_acknowledge_permission`, `alarm_resolve_permission`
+- **Reports**: `report_create_permission`, `report_read_permission`, `report_update_permission`, `report_delete_permission` (domain-scoped); `read_permission`, `update_permission`, `delete_permission` (report-scoped)
 
-- **Rules Engine** - Create automatic actions
-- **Alarms** - Set up alerts
-- **Reports** - Make reports
-
-All policies stay inside one domain. This keeps customers separate.
+All policies remain within their domain — there is no cross-tenant permission inheritance.
 
 **How Permission Checking Works:**
 
@@ -264,14 +210,14 @@ SuperMQ uses SpiceDB to check permissions. It looks at your role and the action 
 You: "I want to create a client"
 
 Step 1 - Check Token:
-:white_check_mark: Is the token valid?
-:white_check_mark: Is it expired?
-:white_check_mark: Was it really issued by SuperMQ?
+✅ Is the token valid?
+✅ Is it expired?
+✅ Was it really issued by SuperMQ?
 
 Step 2 - Check Permission:
-:white_check_mark: What domain are you in?
-:white_check_mark: What role do you have?
-:white_check_mark: Does your role allow "create client"?
+✅ What domain are you in?
+✅ What role do you have?
+✅ Does your role allow "create client"?
 
 Result: Allow or Deny
 ```
@@ -320,21 +266,10 @@ Domain: TenantA-Corp (Isolation Boundary)
 
 **How They Work Together:**
 
-**Users Belong to a Domain:**
-
-Users are created inside a domain. They log in to their domain. They can only see things in their domain. Special rules are needed to see other domains.
-
-**Groups Organize Users:**
-
-Groups are like teams. Think of departments or locations. Users join groups with different roles. Groups make it easy to give permissions to many people at once. Groups can have groups inside them.
-
-**Clients Belong to a Domain:**
-
-Each IoT device is a client in a domain. Clients get a special ID (UUID). They also get a secret (password). You can set your own secret or leave it empty to get an auto-generated one. They can only connect to channels in the same domain. They use their secret to prove who they are.
-
-**Channels Let Things Talk:**
-
-Channels are created inside a domain for messages. Clients connect to channels to send and receive. Users connect to channels to see data and control clients. Channels stay in one domain. They cannot cross domains.
+- **Users Belong to a Domain:** Users are created inside a domain. They log in to their domain and can only see things within it. Special cross-domain rules are required to access other domains.
+- **Groups Organize Users:** Groups are like teams — think departments or locations. Users join groups with different roles, making it easy to assign permissions to many people at once. Groups can be nested inside other groups.
+- **Clients Belong to a Domain:** Each IoT device is a client in a domain. Clients get a unique ID (UUID) and a secret for authentication. They can only connect to channels in the same domain.
+- **Channels Let Things Talk:** Channels are created inside a domain. Clients connect to channels to send and receive messages. Channels stay within one domain and cannot cross domain boundaries.
 
 ---
 
@@ -357,7 +292,7 @@ Policies control everything inside a domain. Understanding these policies keeps 
   "permission": "admin"
 }
 ```
-Result: :white_check_mark: Full administrative access to domain
+Result: ✅ Full administrative access to domain
 
 **Group Management:**
 
@@ -372,7 +307,7 @@ Result: :white_check_mark: Full administrative access to domain
   "permission": "manage_role_permission"
 }
 ```
-Result: :white_check_mark: Can manage group roles and permissions
+Result: ✅ Can manage group roles and permissions
 
 **Creating a Client:**
 
@@ -387,7 +322,7 @@ Result: :white_check_mark: Can manage group roles and permissions
   "permission": "client_create_permission"
 }
 ```
-Result: :white_check_mark: User can create clients in the domain
+Result: ✅ User can create clients in the domain
 
 **How Permission Checks Work:**
 
@@ -405,9 +340,9 @@ When someone tries to do something, these steps happen:
 Request: operator@tenanta.com creates GPS client
 
 Check:
-1. Authentication: :white_check_mark: Valid JWT
-2. Domain: :white_check_mark: User in correct domain  
-3. Permission: :white_check_mark: Has client_create_permission
+1. Authentication: ✅ Valid JWT
+2. Domain: ✅ User in correct domain  
+3. Permission: ✅ Has client_create_permission
 4. Result: ALLOW
 5. Audit: "User created client successfully"
 ```
@@ -418,22 +353,19 @@ Check:
 Request: analyst@tenanta.com deletes client
 
 Check:
-1. Authentication: :white_check_mark: Valid JWT
-2. Domain: :white_check_mark: User in correct domain
-3. Permission: :x: Only has read_permission
+1. Authentication: ✅ Valid JWT
+2. Domain: ✅ User in correct domain
+3. Permission: ❌ Only has read_permission
 4. Result: DENY
 5. Log: "Unauthorized delete attempt blocked"
 ```
 
 **Safety Rules:**
 
-:x: Nothing is allowed by default
-
-:white_check_mark: You need clear permission for every action
-
-:white_check_mark: Roles give the least permission needed
-
-:white_check_mark: Special cases get their own rules
+- ❌ Nothing is allowed by default
+- ✅ You need explicit permission for every action
+- ✅ Roles grant the least permission needed
+- ✅ Special cases get their own dedicated rules
 
 ---
 
@@ -445,14 +377,9 @@ Here's how domains, access control, and the Rules Engine work together in a real
 
 You run a fleet tracking platform with three customers:
 
-**Company A: FastShip Logistics**
-500 delivery trucks on US East Coast
-
-**Company B: ColdChain Transport**
-200 trucks with freezers for food
-
-**Company C: Urban Couriers**
-1,000 bikes and vans for city delivery
+- **Company A: FastShip Logistics** — 500 delivery trucks on the US East Coast
+- **Company B: ColdChain Transport** — 200 refrigerated trucks for food logistics
+- **Company C: Urban Couriers** — 1,000 bikes and vans for city delivery
 
 Each company needs their data kept separate. Each needs different user access. Each needs safe device messages.
 
@@ -462,27 +389,7 @@ Each company needs their data kept separate. Each needs different user access. E
 
 **Platform Structure:**
 
-```
-FleetManagement SaaS Platform
-│
-├── Domain: FastShip-Logistics (Tenant A)
-│   ├── Users: 15 (admins, dispatchers, analysts)
-│   ├── Groups: East-Region, West-Region, Maintenance
-│   ├── Clients: 500 GPS trackers
-│   └── Channels: vehicle-telemetry, vehicle-commands, maintenance-alerts
-│
-├── Domain: ColdChain-Transport (Tenant B)
-│   ├── Users: 8 (admins, drivers, quality-control)
-│   ├── Groups: North-Region, South-Region, Quality-Team
-│   ├── Clients: 200 GPS trackers + 200 temperature sensors
-│   └── Channels: vehicle-telemetry, temperature-monitoring, alerts
-│
-└── Domain: UrbanCouriers (Tenant C)
-    ├── Users: 50 (admins, zone-managers, drivers)
-    ├── Groups: Downtown, Midtown, Uptown, Brooklyn, Queens
-    ├── Clients: 1,000 GPS trackers (bikes + vans)
-    └── Channels: courier-tracking, delivery-status, customer-notifications
-```
+![Multitenant Example](/img/blogs/access-control/multitenant_example.png)
 
 ---
 
@@ -497,9 +404,9 @@ User: admin@fastship.com
 Role: Domain Admin
 
 What they can do:
-:white_check_mark: Manage all users, teams, devices, channels
-:white_check_mark: Set up Rules, Alarms, and Reports
-:white_check_mark: Access everything in the domain
+✅ Manage all users, teams, devices, channels
+✅ Set up Rules, Alarms, and Reports
+✅ Access everything in the domain
 ```
 
 **Regional Manager:**
@@ -510,9 +417,9 @@ Team: East-Region
 Role: Team Admin
 
 What they can do:
-:white_check_mark: Manage East-Region users and devices
-:white_check_mark: See East-Region truck data
-:x: Cannot access West-Region
+✅ Manage East-Region users and devices
+✅ See East-Region truck data
+❌ Cannot access West-Region
 ```
 
 **Dispatcher:**
@@ -522,9 +429,9 @@ User: dispatcher@fastship.com
 Role: Team Operator
 
 What they can do:
-:white_check_mark: See truck locations and send commands
-:white_check_mark: Mark alarms as seen
-:x: Cannot add devices or manage users
+✅ See truck locations and send commands
+✅ Mark alarms as seen
+❌ Cannot add devices or manage users
 ```
 
 **Data Analyst:**
@@ -534,8 +441,8 @@ User: analyst@fastship.com
 Role: Team Viewer
 
 What they can do:
-:white_check_mark: See old data and make reports
-:x: Cannot send commands or change anything
+✅ See old data and make reports
+❌ Cannot send commands or change anything
 ```
 
 ---
@@ -575,11 +482,11 @@ Rules work only in one domain. They watch the data:
 
 **Who Can See What:**
 
-:white_check_mark: admin@fastship.com - Everything
-:white_check_mark: manager-east@fastship.com - East-Region trucks only
-:white_check_mark: dispatcher@fastship.com - Can read and send commands
-:white_check_mark: analyst@fastship.com - Can only read old data
-:x: Users from other companies - Nothing
+- ✅ admin@fastship.com — Everything
+- ✅ manager-east@fastship.com — East-Region trucks only
+- ✅ dispatcher@fastship.com — Can read and send commands
+- ✅ analyst@fastship.com — Can only read old data
+- ❌ Users from other companies — Nothing
 
 ---
 
@@ -592,9 +499,9 @@ User: dispatcher@fastship.com (Team Operator)
 Tries to: Add new GPS device
 
 What happens:
-1. Check login: :white_check_mark: User is real
-2. Check domain: :white_check_mark: Right domain
-3. Check permission: :x: Not allowed to add devices
+1. Check login: ✅ User is real
+2. Check domain: ✅ Right domain
+3. Check permission: ❌ Not allowed to add devices
 4. BLOCKED - "Ask your admin to add devices"
 ```
 
@@ -605,49 +512,12 @@ User: admin@coldchain.com (ColdChain boss)
 Tries to: Read FastShip truck data
 
 What happens:
-1. Check login: :white_check_mark: User is real
-2. Check domain: :x: User in wrong domain
-3. Check special rule: :x: No cross-domain rule exists
+1. Check login: ✅ User is real
+2. Check domain: ❌ User in wrong domain
+3. Check special rule: ❌ No cross-domain rule exists
 4. BLOCKED - "Not found" (doesn't say other domain exists)
 5. Send security alert about cross-domain try
 ```
-
----
-
-## Best Practices
-
-**Domains & Access:**
-
-:white_check_mark: One domain per customer. Never share.
-:white_check_mark: Give least permission needed. Don't give extra.
-:white_check_mark: Use role rules. Set up Admin, Operator, and Viewer roles.
-:white_check_mark: Track changes. Write down all access rule changes.
-:white_check_mark: Change passwords often. Do it automatically for devices and users.
-:x: Never give platform admin to just anyone.
-
-**Magistrala Features:**
-
-:white_check_mark: Keep rules in one domain. Rules Engine stays in its domain.
-:white_check_mark: Use clear alarm permissions. Let operators mark alarms as seen.
-:white_check_mark: Control report access. Split read and make permissions.
-:white_check_mark: Limit rule runs per domain.
-:x: Never let rules cross domains or share passwords.
-
-**Security & Operations:**
-
-:white_check_mark: Use strong device login checks.
-:white_check_mark: Watch for cross-domain tries. Send alerts.
-:white_check_mark: Track each domain separately.
-:white_check_mark: Back up each customer separately.
-:white_check_mark: Smart channel design. Keep data, commands, and alarms separate.
-:x: Never write passwords in logs.
-
-**Following Rules:**
-
-:white_check_mark: Follow data location laws for each domain.
-:white_check_mark: Keep full logs for legal needs.
-:white_check_mark: Set how long to keep data per domain.
-:white_check_mark: Follow privacy laws like GDPR.
 
 ---
 
