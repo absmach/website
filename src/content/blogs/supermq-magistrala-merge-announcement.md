@@ -6,9 +6,9 @@ date: "2026-03-24"
 author:
   name: "Steve Munene"
   picture: "https://avatars.githubusercontent.com/u/61874077?v=4"
-coverImage: "/img/blogs/supermq-magistrala-merge/cover.png"
+coverImage: "/img/blogs/supermq-magistrala-announcement-merge/cover.png"
 ogImage:
-  url: "/img/blogs/supermq-magistrala-merge/cover.png"
+  url: "/img/blogs/supermq-magistrala-announcement-merge/cover.png"
 tags:
   - Magistrala
   - SuperMQ
