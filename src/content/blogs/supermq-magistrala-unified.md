@@ -1,0 +1,153 @@
+---
+slug: supermq-magistrala-unified
+title: "One Platform Again: How and Why We Merged SuperMQ into Magistrala"
+description: "SuperMQ and Magistrala are now a single unified platform under the Magistrala name. Here's the full story — why we split, why that was a mistake, what changed, and what you need to do."
+date: "2026-03-24"
+author:
+  name: "Steve Munene"
+  picture: "https://avatars.githubusercontent.com/u/61874077?v=4"
+coverImage: "/img/blogs/supermq-magistrala-unified/cover.png"
+ogImage:
+  url: "/img/blogs/supermq-magistrala-unified/cover.png"
+tags:
+  - Magistrala
+  - SuperMQ
+  - IoT Platform
+  - Open Source
+  - Architecture
+  - Migration
+category: announcement
+featured: true
+---
+
+**SuperMQ and Magistrala are now one.** The SuperMQ repository has been merged into Magistrala, the name is Magistrala, and a new version marks the unification. This post covers the full story: what we built, why we split it, why that was the wrong call, and exactly what changed.
+
+---
+
+## Table of Contents
+
+- [How we got here](#how-we-got-here)
+- [Why the split was a mistake](#why-the-split-was-a-mistake)
+- [What changed](#what-changed)
+- [What stayed the same](#what-stayed-the-same)
+- [Migration guide](#migration-guide)
+- [What's next](#whats-next)
+
+---
+
+## How we got here
+
+Magistrala began as a single open-source IoT platform — one repository, one set of docs, one community. It provided everything needed to build IoT solutions: device connectivity across HTTP, MQTT, WebSocket, and CoAP; multi-tenancy via Domains; fine-grained access control with RBAC and ABAC; a Rules Engine; Alarms; Reports; Bootstrap; and more.
+
+Over time, as the platform matured, we identified a natural internal division: a general-purpose messaging and event-driven core (protocol bridging, authentication, channel routing, multi-tenancy primitives) and an IoT application layer on top (Rules Engine, Alarms, Reports, Bootstrap, UI). The core felt like something that could stand on its own — useful beyond IoT, applicable to any event-driven system.
+
+So we extracted it into a separate project: **SuperMQ**.
+
+The theory was sound. A clean interface between the two layers. Independent versioning. SuperMQ as a general-purpose platform, Magistrala as an opinionated IoT product built on top.
+
+In practice, it didn't work.
+
+---
+
+## Why the split was a mistake
+
+The separation created friction at every level:
+
+**Duplicated maintenance.** Any change that touched the core — authentication, domain management, policy enforcement — required coordinating two separate pull requests, two CI pipelines, two changelogs, and two releases. Simple improvements became complex coordination tasks.
+
+**Developer confusion.** Contributors didn't know which repo to engage with. Issues filed in the wrong place, PRs that needed to span both repos, and no clear answer to the question: "where does this belong?"
+
+**User confusion.** The most common question we received: "Should I use SuperMQ or Magistrala?" The honest answer was almost always Magistrala — but the existence of SuperMQ as a separate, equally prominent project made that unclear. Users spent time evaluating a choice that wasn't really a choice.
+
+**Fragmented ecosystem.** Two GitHub repositories, two documentation sites, two release cycles. A contributor fixing a bug or adding a feature had to understand the boundary between the projects before they could even start.
+
+**The two projects never actually diverged.** SuperMQ's user base was almost entirely Magistrala users and contributors. No significant independent adoption of SuperMQ as a standalone platform materialized. The separation had real costs but no meaningful benefit.
+
+The split was an architectural experiment that made sense on a whiteboard. The reality of maintaining and growing an open-source project across two repositories proved it was the wrong call.
+
+---
+
+## What changed
+
+### Repository
+
+`github.com/absmach/supermq` now redirects to `github.com/absmach/magistrala`. The SuperMQ repository has been renamed — everything is in `github.com/absmach/magistrala`.
+
+There is one canonical repository. Issues, pull requests, discussions, and contributions all happen there.
+
+### Codebase
+
+The SuperMQ core has been fully renamed to Magistrala throughout the codebase. There is no longer a conceptual "SuperMQ layer" and "Magistrala layer" — it is one unified codebase.
+
+Go module paths, package names, and internal naming all reflect `magistrala`.
+
+### Version
+
+A new version marks the merger. This is the release that brings everything together under the Magistrala name. Check the [releases page](https://github.com/absmach/magistrala/releases) for the current version.
+
+### Documentation
+
+`docs.supermq.absmach.eu` redirects to `docs.magistrala.absmach.eu`. There is one documentation site going forward.
+
+### Community
+
+The Matrix community retains its name. Use [#magistrala:matrix.org](https://matrix.to/#/#magistrala:matrix.org) for all platform questions and discussions.
+
+---
+
+## What stayed the same
+
+**All APIs are unchanged.** The REST APIs, messaging APIs, and protocol adapters are identical. No API changes were made as part of this merge. If you have existing integrations, they continue to work.
+
+**All features are intact.** The full Magistrala feature set — Rules Engine, Alarms, Reports, Bootstrap, multi-tenancy, Domains, RBAC/ABAC, protocol support (HTTP, MQTT, WebSocket, CoAP), instrumentation — is present and unchanged.
+
+**Deployment is unchanged.** Docker Compose and Kubernetes deployments work the same way. Environment variables and configuration structure are unchanged.
+
+**Data is unchanged.** Existing databases and stored data require no migration.
+
+---
+
+## Migration guide
+
+For most users, the only action required is updating where you point things.
+
+### If you were using Magistrala
+
+Nothing changes functionally. Update any bookmarked documentation links to `docs.magistrala.absmach.eu`.
+
+### If you were using SuperMQ standalone
+
+SuperMQ's capabilities are fully present in Magistrala. Migrate to `github.com/absmach/magistrala` — all APIs you relied on are available and unchanged.
+
+**Repository references**
+
+| Before | After |
+|---|---|
+| `github.com/absmach/supermq` | `github.com/absmach/magistrala` |
+| `docs.supermq.absmach.eu` | `docs.magistrala.absmach.eu` |
+
+**Go module path**
+
+If you imported SuperMQ as a Go module, update your import paths from `github.com/absmach/supermq/...` to `github.com/absmach/magistrala/...`.
+
+```bash
+# Update all import paths in your Go project
+find . -type f -name '*.go' | xargs sed -i 's|github.com/absmach/supermq|github.com/absmach/magistrala|g'
+go mod tidy
+```
+
+**Docker images**
+
+Update any references from SuperMQ Docker images to Magistrala equivalents. Check the [releases page](https://github.com/absmach/magistrala/releases) for the current image tags.
+
+---
+
+## What's next
+
+The merge cleans up the overhead that was slowing everything down. With one repository, one issue tracker, one release cycle, and one community, the team can move faster and contributors can engage more easily.
+
+The roadmap is unified. Features, fixes, and improvements that previously required coordination across two projects now happen in one place.
+
+Follow the [GitHub repository](https://github.com/absmach/magistrala), join the [Matrix community](https://matrix.to/#/#magistrala:matrix.org), and read the [docs](https://docs.magistrala.absmach.eu/) to stay up to date.
+
+If you have questions about migrating or run into anything unexpected, open an issue or reach out on Matrix.
