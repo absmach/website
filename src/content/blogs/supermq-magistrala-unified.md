@@ -126,16 +126,6 @@ SuperMQ's capabilities are fully present in Magistrala. Migrate to `github.com/a
 | `github.com/absmach/supermq` | `github.com/absmach/magistrala` |
 | `docs.supermq.absmach.eu` | `docs.magistrala.absmach.eu` |
 
-**Go module path**
-
-If you imported SuperMQ as a Go module, update your import paths from `github.com/absmach/supermq/...` to `github.com/absmach/magistrala/...`.
-
-```bash
-# Update all import paths in your Go project
-find . -type f -name '*.go' | xargs sed -i 's|github.com/absmach/supermq|github.com/absmach/magistrala|g'
-go mod tidy
-```
-
 **Docker images**
 
 Update any references from SuperMQ Docker images to Magistrala equivalents. Check the [releases page](https://github.com/absmach/magistrala/releases) for the current image tags.
