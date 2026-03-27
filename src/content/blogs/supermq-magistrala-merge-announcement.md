@@ -16,7 +16,6 @@ tags:
   - IoT Platform
   - Open Source
 category: announcement
-featured: true
 ---
 
 We have an important update to share: **SuperMQ and Magistrala are merging into a single unified platform.**
@@ -30,6 +29,13 @@ We have an important update to share: **SuperMQ and Magistrala are merging into 
 The intent was a clean separation of concerns — SuperMQ as the general-purpose event-driven core, and Magistrala as the IoT application layer on top.
 
 In practice, running two repositories created more problems than it solved.
+
+With the merger, the Abstract Machines stack is now clearly defined across four focused projects:
+
+- **[Magistrala](https://github.com/absmach/magistrala)** — a cloud IoT platform framework that provides multi-tenancy, access control, device management, a Rules Engine, Alarms, Reports, and Bootstrap. It integrates with FluxMQ for messaging and serves as a flexible foundation for building IoT solutions.
+- **[FluxMQ](https://github.com/absmach/fluxmq)** — the cloud and edge messaging backbone. A versatile, high-performance message broker that runs on edge and cloud, clusters and scales, and supports an event store for internal service synchronization.
+- **[S0](https://absmach.eu/s0)** — modular IoT gateway solutions for smart metering, industrial IoT, and edge computing. The S0 module and Base Board deliver multi-protocol connectivity with open-source hardware and professional support.
+- **[Propeller](https://github.com/absmach/propeller)** — a cutting-edge orchestrator for WebAssembly workloads across the Cloud-Edge continuum.
 
 ---
 
