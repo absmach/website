@@ -17,7 +17,6 @@ tags:
   - Architecture
   - Migration
 category: announcement
-featured: true
 ---
 
 **SuperMQ and Magistrala are now one.** The SuperMQ repository has been merged into Magistrala, the name is Magistrala, and a new version marks the unification. This post covers the full story: what we built, why we split it, why that was the wrong call, and exactly what changed.
@@ -46,6 +45,13 @@ So we extracted it into a separate project: **SuperMQ**.
 The theory was sound. A clean interface between the two layers. Independent versioning. SuperMQ as a general-purpose platform, Magistrala as an opinionated IoT product built on top.
 
 In practice, it didn't work.
+
+With the merger, the Abstract Machines stack is now clearly defined across four focused projects:
+
+- **[Magistrala](https://github.com/absmach/magistrala)** — a cloud IoT platform framework that provides multi-tenancy, access control, device management, a Rules Engine, Alarms, Reports, and Bootstrap. It integrates with FluxMQ for messaging and serves as a flexible foundation for building IoT solutions.
+- **[FluxMQ](https://github.com/absmach/fluxmq)** — the cloud and edge messaging backbone. A versatile, high-performance message broker that runs on edge and cloud, clusters and scales, and supports an event store for internal service synchronization.
+- **[S0](https://absmach.eu/s0)** — modular IoT gateway solutions for smart metering, industrial IoT, and edge computing. The S0 module and Base Board deliver multi-protocol connectivity with open-source hardware and professional support.
+- **[Propeller](https://github.com/absmach/propeller)** — a cutting-edge orchestrator for WebAssembly workloads across the Cloud-Edge continuum.
 
 ---
 
