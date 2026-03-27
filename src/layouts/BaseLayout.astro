@@ -5,8 +5,7 @@ const {
   title = "Abstract Machines",
   description = "Infrastructure for event-driven systems.",
   ogType = "website",
-  ogImage = "https://api.microlink.io/?url=https://www.absmach.eu&meta=false&screenshot=true&embed=screenshot.url",
-  ogImageAlt = "Abstract Machines",
+  ogImage = "/og-image.png", 
   canonical,
   pageType = "homepage",
   author = { name: "", url: "" },
@@ -26,22 +25,27 @@ const resolveMetaUrl = (value) => {
   }
 };
 
-const canonicalUrl = resolveMetaUrl(canonical ?? Astro.url.pathname) || "https://www.absmach.eu/";
-const ogImageUrl = resolveMetaUrl(ogImage);
+const resolveImgUrl = (path) =>
+  path?.startsWith("http") ? path : `https://www.absmach.eu${path}`;
+
+const canonicalUrl = pageType === "homepage"
+  ? "https://www.absmach.eu/"
+  : resolveMetaUrl(canonical ?? Astro.url.pathname);
+
+const ogImageUrl = resolveImgUrl(ogImage);
+const ogImageAlt = pageType === "product" ? product.name : title;
 
 const getJsonLd = () => {
-  const breadcrumbs = breadcrumb.length
-    ? {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": breadcrumb.map((b, index) => ({
-          "@type": "ListItem",
-          "position": index + 1,
-          "name": b.name,
-          "item": resolveMetaUrl(b.url)
-        }))
-      }
-    : null;
+  const breadcrumbJson = breadcrumb.length ? {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumb.map((b, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": b.name,
+      "item": resolveMetaUrl(b.url)
+    }))
+  } : null;
 
   switch (pageType) {
     case "homepage":
@@ -66,7 +70,7 @@ const getJsonLd = () => {
             "https://github.com/absmach"
           ]
         },
-        breadcrumbs
+        breadcrumbJson
       ].filter(Boolean);
 
     case "product":
@@ -83,9 +87,9 @@ const getJsonLd = () => {
             "priceCurrency": product.currency
           },
           "description": product.description,
-          "url": canonicalUrl
-        },
-        breadcrumbs
+          "url": canonicalUrl,
+          "breadcrumb": breadcrumbJson?.itemListElement ? breadcrumbJson : undefined
+        }
       ].filter(Boolean);
 
     case "blog":
@@ -115,25 +119,32 @@ const getJsonLd = () => {
           ...(endDate && { "dateModified": endDate }),
           ...(keywords?.length && { "keywords": keywords }),
           "mainEntityOfPage": canonicalUrl,
-          ...(ogImageUrl && { "image": ogImageUrl })
-        },
-        breadcrumbs
+          ...(ogImageUrl && { "image": ogImageUrl }),
+          ...(breadcrumbJson && { "breadcrumb": breadcrumbJson })
+        }
       ].filter(Boolean);
 
     default:
-      return breadcrumbs ? [breadcrumbs] : null;
+      return breadcrumbJson ? [breadcrumbJson] : [];
   }
 };
 
-const jsonLd = getJsonLd();
+const jsonLd = getJsonLd().filter(Boolean);
 ---
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{title ? `${title} | Abstract Machines` : "Abstract Machines"}</title>
+    <title>
+      {pageType === "homepage"
+        ? "Secure Event-Driven Connectivity | Abstract Machines"
+        : pageType === "product"
+          ? `${product.name} | Abstract Machines`
+          : `${title} | Abstract Machines`}
+    </title>
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
@@ -169,13 +180,11 @@ const jsonLd = getJsonLd();
       rel="stylesheet"
     />
 
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    {Astro.site && <link rel="sitemap" href="/sitemap-index.xml" />}
     <link rel="alternate" type="application/rss+xml" title="Abstract Machines Blog" href="/rss.xml" />
 
-    {jsonLd && jsonLd.map((item) => (
-      <script type="application/ld+json">
-        {JSON.stringify(item)}
-      </script>
+    {jsonLd.map((item) => (
+      <script type="application/ld+json" set:html={JSON.stringify(item)} />
     ))}
 
     <script is:inline>
