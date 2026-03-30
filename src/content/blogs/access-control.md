@@ -1,7 +1,7 @@
 ---
-title: "# Access Control and Multitenancy with Domains"
+title: "Access Control and Multitenancy with Domains"
 slug: "magistrala-access-control-multitenancy"
-excerpt: "How SuperMQ's Domains and policy-based access control enable secure multi-tenant IoT deployments with complete organization isolation."
+excerpt: "How Magistrala's Domains and policy-based access control enable secure multi-tenant IoT deployments with complete organization isolation."
 description: "How Magistrala uses Domains and policy-based access control (RBAC/ABAC) to deliver secure, isolated multi-tenant IoT deployments."
 date: "2026-02-12"
 author:
@@ -11,7 +11,6 @@ coverImage: "/img/blogs/access-control/cover_page.png"
 ogImage:
   url: "/img/blogs/access-control/cover_page.png"
 category: blog
-featured: true
 tags:
   - IoT Platform
   - Magistrala
@@ -25,7 +24,7 @@ tags:
 
 Multi-tenant IoT platforms require strict isolation between organizations to protect data, enforce security, and scale efficiently.
 
-Magistrala, built on **SuperMQ**, addresses this with **Domains** for tenant isolation and **policy-based access control** to govern permissions across users, devices, and resources.
+Magistrala addresses this with **Domains** for tenant isolation and **policy-based access control** to govern permissions across users, devices, and resources.
 
 **Why Multi-Tenancy Matters:**
 
@@ -64,13 +63,10 @@ Key requirements:
 
 ## Understanding Domains: Keep Customers Separate
 
-**Domains** keep customers separate in SuperMQ. Each domain is like a separate box. One customer cannot see inside another customer's box.
+**Domains** keep customers separate in Magistrala. Each domain is like a separate box. One customer cannot see inside another customer's box.
 
-**What Are Domains?**m
+**What Are Domains?**
 
-**What Are Domains?**m
-
-A domain is a container. It holds:
 A domain is a container. It holds:
 - All users from one company
 - All teams in that company
@@ -99,7 +95,7 @@ A domain is a container. It holds:
 
 ## Access Control Rules
 
-SuperMQ uses access control policies. These are like keys that unlock doors.
+Magistrala uses access control policies. These are like keys that unlock doors.
 
 The policies decide who can do what.
 
@@ -184,7 +180,7 @@ All roles and permissions are scoped to the domain they were created in — they
 
 **Magistrala — Rules, Alarms and Reports:**
 
-Magistrala extends SuperMQ's RBAC to cover its additional services. Permissions map directly to API operations via SpiceDB:
+Magistrala's RBAC covers its core services and additional features. Permissions map directly to API operations via SpiceDB:
 
 - **Rules**: `rule_create_permission`, `rule_read_permission`, `rule_update_permission`, `rule_delete_permission` (domain-scoped); `read_permission`, `update_permission`, `delete_permission` (rule-scoped)
 - **Alarms**: Access is controlled through the parent rule — `alarm_read_permission`, `alarm_assign_permission`, `alarm_acknowledge_permission`, `alarm_resolve_permission`
@@ -194,7 +190,7 @@ All policies remain within their domain — there is no cross-tenant permission 
 
 **How Permission Checking Works:**
 
-Every time you try to do something, SuperMQ checks two things:
+Every time you try to do something, Magistrala checks two things:
 
 **1. Are you who you say you are?** (Authentication)
 
@@ -202,7 +198,7 @@ Users get a token when they log in with username and password. The token is call
 
 **2. Are you allowed to do this?** (Authorization)
 
-SuperMQ uses SpiceDB to check permissions. It looks at your role and the action you want to do. It checks if your role has permission for that action.
+Magistrala uses SpiceDB to check permissions. It looks at your role and the action you want to do. It checks if your role has permission for that action.
 
 **The Check Process:**
 
@@ -212,7 +208,7 @@ You: "I want to create a client"
 Step 1 - Check Token:
 ✅ Is the token valid?
 ✅ Is it expired?
-✅ Was it really issued by SuperMQ?
+✅ Was it really issued by Magistrala?
 
 Step 2 - Check Permission:
 ✅ What domain are you in?
