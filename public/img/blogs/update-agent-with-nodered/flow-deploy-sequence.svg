@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="sans-serif" font-size="12">
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#555"/>
+    </marker>
+    <marker id="ab" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#22c55e"/>
+    </marker>
+    <marker id="ao" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="420" fill="#f8fafc" rx="10"/>
+
+  <!-- Column headers -->
+  <rect x="30" y="16" width="130" height="36" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="95" y="30" text-anchor="middle" fill="#5b21b6" font-weight="bold">Operator</text>
+  <text x="95" y="46" text-anchor="middle" fill="#6d28d9" font-size="11">(cloud / terminal)</text>
+
+  <rect x="210" y="16" width="130" height="36" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="275" y="30" text-anchor="middle" fill="#5b21b6" font-weight="bold">Magistrala</text>
+  <text x="275" y="46" text-anchor="middle" fill="#6d28d9" font-size="11">MQTT Broker</text>
+
+  <rect x="390" y="16" width="130" height="36" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="455" y="30" text-anchor="middle" fill="#1d4ed8" font-weight="bold">Agent</text>
+  <text x="455" y="46" text-anchor="middle" fill="#1e40af" font-size="11">Raspberry Pi</text>
+
+  <rect x="580" y="16" width="130" height="36" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="645" y="30" text-anchor="middle" fill="#92400e" font-weight="bold">Node-RED</text>
+  <text x="645" y="46" text-anchor="middle" fill="#78350f" font-size="11">Raspberry Pi</text>
+
+  <!-- Lifelines -->
+  <line x1="95" y1="52" x2="95" y2="400" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="275" y1="52" x2="275" y2="400" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="455" y1="52" x2="455" y2="400" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="645" y1="52" x2="645" y2="400" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Step labels -->
+  <!-- 1 -->
+  <text x="16" y="86" fill="#94a3b8" font-size="10">1</text>
+  <line x1="95" y1="82" x2="272" y2="82" stroke="#555" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="106" y="68" width="158" height="16" rx="3" fill="#f8fafc"/>
+  <text x="185" y="80" text-anchor="middle" fill="#374151" font-size="11">MQTT publish → /req topic</text>
+
+  <!-- 1 label -->
+  <rect x="96" y="88" width="178" height="24" rx="3" fill="#ede9fe"/>
+  <text x="185" y="100" text-anchor="middle" fill="#5b21b6" font-size="10">[{bn:req-1:, n:nodered,</text>
+  <text x="185" y="111" text-anchor="middle" fill="#5b21b6" font-size="10"> vs:nodered-deploy,&lt;base64&gt;}]</text>
+
+  <!-- 2 -->
+  <text x="16" y="140" fill="#94a3b8" font-size="10">2</text>
+  <line x1="275" y1="136" x2="452" y2="136" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#ab)"/>
+  <rect x="286" y="122" width="155" height="16" rx="3" fill="#f8fafc"/>
+  <text x="363" y="134" text-anchor="middle" fill="#1d4ed8" font-size="11">deliver to subscribed agent</text>
+
+  <!-- 3 -->
+  <text x="16" y="178" fill="#94a3b8" font-size="10">3</text>
+  <rect x="420" y="152" width="70" height="28" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+  <text x="455" y="165" text-anchor="middle" fill="#1d4ed8" font-size="10">decode SenML</text>
+  <text x="455" y="177" text-anchor="middle" fill="#1d4ed8" font-size="10">base64 flows</text>
+
+  <!-- 4 -->
+  <text x="16" y="210" fill="#94a3b8" font-size="10">4</text>
+  <rect x="420" y="184" width="70" height="28" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+  <text x="455" y="197" text-anchor="middle" fill="#1d4ed8" font-size="10">patch clientid</text>
+  <text x="455" y="209" text-anchor="middle" fill="#1d4ed8" font-size="10">→ &lt;id&gt;-nr</text>
+
+  <!-- 5 -->
+  <text x="16" y="242" fill="#94a3b8" font-size="10">5</text>
+  <line x1="455" y1="238" x2="642" y2="238" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#ao)"/>
+  <rect x="465" y="222" width="168" height="16" rx="3" fill="#f8fafc"/>
+  <text x="549" y="234" text-anchor="middle" fill="#92400e" font-size="11">POST /flows  (Node-RED API)</text>
+
+  <!-- 6 -->
+  <text x="16" y="278" fill="#94a3b8" font-size="10">6</text>
+  <rect x="608" y="252" width="74" height="28" rx="4" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="645" y="265" text-anchor="middle" fill="#92400e" font-size="10">deploy + start</text>
+  <text x="645" y="277" text-anchor="middle" fill="#92400e" font-size="10">new flows</text>
+
+  <!-- 7 -->
+  <text x="16" y="312" fill="#94a3b8" font-size="10">7</text>
+  <line x1="642" y1="308" x2="458" y2="308" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ao)"/>
+  <rect x="465" y="292" width="168" height="16" rx="3" fill="#f8fafc"/>
+  <text x="549" y="304" text-anchor="middle" fill="#78350f" font-size="11">200 OK (deploy confirmed)</text>
+
+  <!-- 8 -->
+  <text x="16" y="350" fill="#94a3b8" font-size="10">8</text>
+  <line x1="452" y1="346" x2="98" y2="346" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ag)"/>
+  <rect x="172" y="330" width="205" height="16" rx="3" fill="#f8fafc"/>
+  <text x="274" y="342" text-anchor="middle" fill="#15803d" font-size="11">publish result → /res topic (SenML)</text>
+
+  <!-- 9 -->
+  <text x="16" y="386" fill="#94a3b8" font-size="10">9</text>
+  <rect x="610" y="358" width="70" height="28" rx="4" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="645" y="371" text-anchor="middle" fill="#92400e" font-size="10">flows active,</text>
+  <text x="645" y="383" text-anchor="middle" fill="#92400e" font-size="10">data publishing</text>
+
+</svg>
