@@ -75,7 +75,7 @@ The provisioning script creates:
 4. A Bootstrap configuration
 5. A Rule Engine rule with `save_senml` output
 
-Credentials are written directly to `docker/.env`.
+All provisioned variables are written directly to `docker/.env`.
 
 ![Rule Engine save_senml rule](/img/blogs/update-agent-with-nodered/rule_in_mg_to_save.png)
 
@@ -105,7 +105,14 @@ This verifies the full MQTT pipeline end-to-end before touching any deploy comma
 ```bash
 # Agent health
 curl http://localhost:9999/health
+```
 
+Expected response:
+```json
+{"status":"pass","version":"0.0.0","commit":"ffffffff","description":"agent service","build_time":"1970-01-01_00:00:00","instance_id":""}
+```
+
+```bash
 # Ping Node-RED via agent
 curl -s -X POST http://localhost:9999/nodered \
   -H 'Content-Type: application/json' \
@@ -114,10 +121,7 @@ curl -s -X POST http://localhost:9999/nodered \
 
 Expected response:
 ```json
-{
-  "service": "agent",
-  "response": "{\"httpNodeRoot\":\"/\",\"version\":\"4.0.9\",\"user\":{\"anonymous\":true}}"
-}
+{"service":"agent","response":"..."}
 ```
 
 ---
@@ -368,5 +372,3 @@ Provisioning, flow deployment, telemetry, and MQTT commands all work identically
 The agent code, example flows, Docker Compose stack, and provisioning script are all available at:
 
 [github.com/absmach/agent](https://github.com/absmach/agent)
-
-See [docs/nodered.md](docs/nodered.md) for the full setup guide.
