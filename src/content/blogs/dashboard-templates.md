@@ -3,7 +3,7 @@ title: "Dashboard Templates: Build Once, Scale to Every User"
 slug: "dashboard-templates"
 excerpt: "Dashboard templates let you build a single dashboard layout and share it across many users, with each person seeing only the data they're permitted to access, automatically filtered by tags."
 description: "Learn how Magistrala's dashboard templates feature reduces setup overhead for multi-user IoT deployments. Build once, share with many, and let tag-based filtering surface the right data for each user."
-date: "2026-03-31"
+date: "2026-04-02"
 author:
   name: "Ian Muchiri"
   picture: "https://avatars.githubusercontent.com/u/100555904?v=4"
