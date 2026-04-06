@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Inter, system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="960" height="540" fill="#f8f9fc" rx="12"/>
+
+  <!-- ══════════════════════════════════════════════ BEFORE (left) -->
+  <rect x="20" y="20" width="430" height="500" fill="#ffffff" rx="10" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="235" y="52" text-anchor="middle" font-size="15" font-weight="700" fill="#1e293b">Before — Two Repositories</text>
+  <line x1="20" y1="62" x2="450" y2="62" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- SuperMQ box -->
+  <rect x="50" y="78" width="370" height="188" fill="#eff6ff" rx="8" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="235" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#1d4ed8">SuperMQ  (github.com/absmach/supermq)</text>
+  <text x="235" y="116" text-anchor="middle" font-size="10.5" fill="#3b82f6">General-purpose event-driven core</text>
+
+  <!-- SuperMQ services row 1 -->
+  <rect x="66"  y="126" width="88" height="30" rx="5" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="110" y="146" text-anchor="middle" font-size="10" fill="#1e40af">Users &amp; Auth</text>
+
+  <rect x="163" y="126" width="88" height="30" rx="5" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="207" y="146" text-anchor="middle" font-size="10" fill="#1e40af">Clients &amp; Groups</text>
+
+  <rect x="260" y="126" width="88" height="30" rx="5" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="304" y="146" text-anchor="middle" font-size="10" fill="#1e40af">Channels</text>
+
+  <!-- SuperMQ services row 2 -->
+  <rect x="66"  y="164" width="88" height="30" rx="5" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="110" y="184" text-anchor="middle" font-size="10" fill="#1e40af">Domains / MT</text>
+
+  <rect x="163" y="164" width="88" height="30" rx="5" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="207" y="184" text-anchor="middle" font-size="10" fill="#1e40af">Access Control</text>
+
+  <rect x="260" y="164" width="88" height="30" rx="5" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="304" y="184" text-anchor="middle" font-size="10" fill="#1e40af">MQTT / HTTP</text>
+
+  <!-- SuperMQ services row 3 -->
+  <rect x="66"  y="202" width="88" height="30" rx="5" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="110" y="222" text-anchor="middle" font-size="10" fill="#1e40af">Event Streams</text>
+
+  <rect x="163" y="202" width="195" height="30" rx="5" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="260" y="222" text-anchor="middle" font-size="10" fill="#1e40af">Message Routing</text>
+
+  <!-- Arrow down -->
+  <line x1="235" y1="268" x2="235" y2="290" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+  <text x="235" y="284" text-anchor="middle" font-size="9" fill="#94a3b8">depends on</text>
+
+  <!-- Magistrala box -->
+  <rect x="50" y="292" width="370" height="188" fill="#fdf4ff" rx="8" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="235" y="314" text-anchor="middle" font-size="13" font-weight="700" fill="#7e22ce">Magistrala  (github.com/absmach/magistrala)</text>
+  <text x="235" y="330" text-anchor="middle" font-size="10.5" fill="#a855f7">IoT application layer on top of SuperMQ</text>
+
+  <!-- Magistrala services row 1 -->
+  <rect x="66"  y="340" width="88" height="30" rx="5" fill="#fae8ff" stroke="#d8b4fe" stroke-width="1"/>
+  <text x="110" y="360" text-anchor="middle" font-size="10" fill="#6b21a8">Rules Engine</text>
+
+  <rect x="163" y="340" width="88" height="30" rx="5" fill="#fae8ff" stroke="#d8b4fe" stroke-width="1"/>
+  <text x="207" y="360" text-anchor="middle" font-size="10" fill="#6b21a8">Alarms</text>
+
+  <rect x="260" y="340" width="88" height="30" rx="5" fill="#fae8ff" stroke="#d8b4fe" stroke-width="1"/>
+  <text x="304" y="360" text-anchor="middle" font-size="10" fill="#6b21a8">Reports</text>
+
+  <!-- Magistrala services row 2 -->
+  <rect x="66"  y="378" width="88" height="30" rx="5" fill="#fae8ff" stroke="#d8b4fe" stroke-width="1"/>
+  <text x="110" y="398" text-anchor="middle" font-size="10" fill="#6b21a8">Bootstrap</text>
+
+  <rect x="163" y="378" width="195" height="30" rx="5" fill="#fae8ff" stroke="#d8b4fe" stroke-width="1"/>
+  <text x="260" y="398" text-anchor="middle" font-size="10" fill="#6b21a8">Provisioning</text>
+
+  <!-- Pain points -->
+  <rect x="60" y="420" width="350" height="48" fill="#fef2f2" rx="6" stroke="#fca5a5" stroke-width="1"/>
+  <text x="235" y="438" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">⚠ Problems</text>
+  <text x="235" y="453" text-anchor="middle" font-size="9.5" fill="#ef4444">Duplicated maintenance · Fragmented community</text>
+  <text x="235" y="466" text-anchor="middle" font-size="9.5" fill="#ef4444">Slow releases · Developer confusion</text>
+
+  <!-- ══════════════════════════════════════════════ AFTER (right) -->
+  <rect x="510" y="20" width="430" height="500" fill="#ffffff" rx="10" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="725" y="52" text-anchor="middle" font-size="15" font-weight="700" fill="#1e293b">After — Unified Stack</text>
+  <line x1="510" y1="62" x2="940" y2="62" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Magistrala unified box -->
+  <rect x="540" y="78" width="370" height="218" fill="#f0fdf4" rx="8" stroke="#22c55e" stroke-width="2"/>
+  <text x="725" y="101" text-anchor="middle" font-size="13" font-weight="700" fill="#15803d">Magistrala  (github.com/absmach/magistrala)</text>
+  <text x="725" y="117" text-anchor="middle" font-size="10.5" fill="#22c55e">Unified IoT platform — infrastructure + application layer</text>
+
+  <!-- Infra row -->
+  <text x="556" y="136" font-size="9.5" font-weight="600" fill="#166534">CORE INFRASTRUCTURE</text>
+  <rect x="556" y="142" width="82" height="28" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="597" y="161" text-anchor="middle" font-size="9.5" fill="#166534">Users &amp; Auth</text>
+
+  <rect x="645" y="142" width="82" height="28" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="686" y="161" text-anchor="middle" font-size="9.5" fill="#166534">Clients/Groups</text>
+
+  <rect x="734" y="142" width="82" height="28" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="775" y="161" text-anchor="middle" font-size="9.5" fill="#166534">Multi-Tenancy</text>
+
+  <rect x="556" y="178" width="82" height="28" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="597" y="197" text-anchor="middle" font-size="9.5" fill="#166534">Access Control</text>
+
+  <rect x="645" y="178" width="82" height="28" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="686" y="197" text-anchor="middle" font-size="9.5" fill="#166534">Channels</text>
+
+  <rect x="734" y="178" width="82" height="28" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="775" y="197" text-anchor="middle" font-size="9.5" fill="#166534">SpiceDB/RBAC</text>
+
+  <!-- IoT services row -->
+  <line x1="556" y1="214" x2="822" y2="214" stroke="#86efac" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="556" y="228" font-size="9.5" font-weight="600" fill="#166534">IOT SERVICES</text>
+  <rect x="556" y="234" width="80" height="28" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="596" y="253" text-anchor="middle" font-size="9.5" fill="#166534">Rules Engine</text>
+
+  <rect x="643" y="234" width="80" height="28" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="683" y="253" text-anchor="middle" font-size="9.5" fill="#166534">Alarms</text>
+
+  <rect x="730" y="234" width="80" height="28" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="770" y="253" text-anchor="middle" font-size="9.5" fill="#166534">Reports</text>
+
+  <rect x="556" y="270" width="80" height="28" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="596" y="289" text-anchor="middle" font-size="9.5" fill="#166534">Bootstrap</text>
+
+  <rect x="643" y="270" width="167" height="28" rx="5" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+  <text x="726" y="289" text-anchor="middle" font-size="9.5" fill="#166534">Provisioning</text>
+
+  <!-- Arrow down from Magistrala to FluxMQ -->
+  <line x1="725" y1="298" x2="725" y2="318" stroke="#64748b" stroke-width="2" marker-end="url(#arrowGray)"/>
+  <text x="725" y="313" text-anchor="middle" font-size="9" fill="#94a3b8">uses for messaging</text>
+
+  <!-- FluxMQ box -->
+  <rect x="540" y="320" width="370" height="110" fill="#fff7ed" rx="8" stroke="#f97316" stroke-width="1.5"/>
+  <text x="725" y="343" text-anchor="middle" font-size="13" font-weight="700" fill="#c2410c">FluxMQ  (github.com/absmach/fluxmq)</text>
+  <text x="725" y="358" text-anchor="middle" font-size="10.5" fill="#f97316">High-performance messaging backbone</text>
+
+  <rect x="556" y="366" width="78" height="28" rx="5" fill="#ffedd5" stroke="#fdba74" stroke-width="1"/>
+  <text x="595" y="385" text-anchor="middle" font-size="9.5" fill="#9a3412">MQTT 3.1/5.0</text>
+
+  <rect x="642" y="366" width="78" height="28" rx="5" fill="#ffedd5" stroke="#fdba74" stroke-width="1"/>
+  <text x="681" y="385" text-anchor="middle" font-size="9.5" fill="#9a3412">AMQP 0.9/1.0</text>
+
+  <rect x="728" y="366" width="78" height="28" rx="5" fill="#ffedd5" stroke="#fdba74" stroke-width="1"/>
+  <text x="767" y="385" text-anchor="middle" font-size="9.5" fill="#9a3412">CoAP / WS</text>
+
+  <rect x="556" y="402" width="78" height="24" rx="5" fill="#ffedd5" stroke="#fdba74" stroke-width="1"/>
+  <text x="595" y="419" text-anchor="middle" font-size="9.5" fill="#9a3412">Clustering</text>
+
+  <rect x="642" y="402" width="78" height="24" rx="5" fill="#ffedd5" stroke="#fdba74" stroke-width="1"/>
+  <text x="681" y="419" text-anchor="middle" font-size="9.5" fill="#9a3412">Durable Queues</text>
+
+  <rect x="728" y="402" width="78" height="24" rx="5" fill="#ffedd5" stroke="#fdba74" stroke-width="1"/>
+  <text x="767" y="419" text-anchor="middle" font-size="9.5" fill="#9a3412">Event Store</text>
+
+  <!-- Benefit banner -->
+  <rect x="550" y="442" width="350" height="48" fill="#f0fdf4" rx="6" stroke="#86efac" stroke-width="1"/>
+  <text x="725" y="460" text-anchor="middle" font-size="10" font-weight="600" fill="#15803d">✅ Benefits</text>
+  <text x="725" y="475" text-anchor="middle" font-size="9.5" fill="#16a34a">Single repo · Unified community · Faster releases</text>
+  <text x="725" y="488" text-anchor="middle" font-size="9.5" fill="#16a34a">Simpler onboarding · Stable APIs</text>
+
+  <!-- Arrow between panels -->
+  <defs>
+    <marker id="arrowGray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
+    </marker>
+  </defs>
+
+  <line x1="455" y1="270" x2="502" y2="270" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrowGray)"/>
+  <text x="478" y="264" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">merge</text>
+</svg>
