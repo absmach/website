@@ -2,11 +2,12 @@
 slug: supermq-magistrala-unified
 title: "One Platform Again: How and Why We Merged SuperMQ into Magistrala"
 description: "SuperMQ and Magistrala are now a single unified platform under the Magistrala name. Here's the full story — why we split, why that was a mistake, what changed, and what you need to do."
-date: "2026-03-24"
+date: "2026-04-07"
 author:
   name: "Steve Munene"
   picture: "https://avatars.githubusercontent.com/u/61874077?v=4"
 coverImage: "/img/blogs/supermq-magistrala-merge/cover.png"
+featured: true
 ogImage:
   url: "/img/blogs/supermq-magistrala-merge/cover.png"
 tags:
@@ -25,11 +26,19 @@ category: announcement
 
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
 - [How we got here](#how-we-got-here)
 - [Why the split was a mistake](#why-the-split-was-a-mistake)
 - [What changed](#what-changed)
+  - [Repository](#repository)
+  - [Codebase](#codebase)
+  - [Version](#version)
+  - [Documentation](#documentation)
+  - [Community](#community)
 - [What stayed the same](#what-stayed-the-same)
 - [Migration guide](#migration-guide)
+  - [If you were using Magistrala](#if-you-were-using-magistrala)
+  - [If you were using SuperMQ standalone](#if-you-were-using-supermq-standalone)
 - [What's next](#whats-next)
 
 ---
@@ -59,17 +68,17 @@ With the merger, the Abstract Machines stack is now clearly defined across four 
 
 The separation created friction at every level:
 
-**Duplicated maintenance.** Any change that touched the core — authentication, domain management, policy enforcement — required coordinating two separate pull requests, two CI pipelines, two changelogs, and two releases. Simple improvements became complex coordination tasks.
+**Duplicated maintenance.** Any change that touched the core — authentication, domain management, policy enforcement — required coordinating two separate pull requests, two CI pipelines, two changelogs, and two releases. Simple improvements became two-step process.
 
 **Developer confusion.** Contributors didn't know which repo to engage with. Issues filed in the wrong place, PRs that needed to span both repos, and no clear answer to the question: "where does this belong?"
 
-**User confusion.** The most common question we received: "Should I use SuperMQ or Magistrala?" The honest answer was almost always Magistrala — but the existence of SuperMQ as a separate, equally prominent project made that unclear. Users spent time evaluating a choice that wasn't really a choice.
+**User confusion.** The most common question we received: "Should I use SuperMQ or Magistrala?" The answer was almost always Magistrala — but the existence of SuperMQ as a separate, equally prominent project made that unclear. Users spent time evaluating a choice that wasn't really a choice.
 
 **Fragmented ecosystem.** Two GitHub repositories, two documentation sites, two release cycles. A contributor fixing a bug or adding a feature had to understand the boundary between the projects before they could even start.
 
-**The two projects never actually diverged.** SuperMQ's user base was almost entirely Magistrala users and contributors. No significant independent adoption of SuperMQ as a standalone platform materialized. The separation had real costs but no meaningful benefit.
+**The two projects never actually diverged.** SuperMQ's user base was almost entirely Magistrala users and contributors. SuperMQ as a platform was too tightly coupled with Magistrala to make sense as a standalone solution. The separation had real costs but no meaningful benefit.
 
-The split was an architectural experiment that made sense on a whiteboard. The reality of maintaining and growing an open-source project across two repositories proved it was the wrong call.
+The split was an architectural experiment that made sense on a whiteboard. The reality of maintaining and growing an open-source project across two repositories proved it was not worth it.
 
 ---
 
@@ -77,7 +86,7 @@ The split was an architectural experiment that made sense on a whiteboard. The r
 
 ### Repository
 
-`github.com/absmach/supermq` now redirects to `github.com/absmach/magistrala`. The SuperMQ repository has been renamed — everything is in `github.com/absmach/magistrala`.
+`github.com/absmach/supermq` is left for history reasons, but it points to `github.com/absmach/magistrala`. The SuperMQ repository has been archived — all the code and opened issues are moved to `github.com/absmach/magistrala`.
 
 There is one canonical repository. Issues, pull requests, discussions, and contributions all happen there.
 
@@ -89,11 +98,11 @@ Go module paths, package names, and internal naming all reflect `magistrala`.
 
 ### Version
 
-A new version marks the merger. This is the release that brings everything together under the Magistrala name. Check the [releases page](https://github.com/absmach/magistrala/releases) for the current version.
+A new version `v0.20.0` will mark the first release after the merger. This is the release that brings everything together under the Magistrala name. Check the [releases page](https://github.com/absmach/magistrala/releases) for the current version.
 
 ### Documentation
 
-`docs.supermq.absmach.eu` redirects to `docs.magistrala.absmach.eu`. There is one documentation site going forward.
+`docs.supermq.absmach.eu` redirects to `magistrala.absmach.eu/docs`. There is one documentation site going forward.
 
 ### Community
 
@@ -119,7 +128,7 @@ For most users, the only action required is updating where you point things.
 
 ### If you were using Magistrala
 
-Nothing changes functionally. Update any bookmarked documentation links to `docs.magistrala.absmach.eu`.
+Nothing changes functionally. Update any bookmarked documentation links to `magistrala.absmach.eu/docs`.
 
 ### If you were using SuperMQ standalone
 
@@ -127,10 +136,10 @@ SuperMQ's capabilities are fully present in Magistrala. Migrate to `github.com/a
 
 **Repository references**
 
-| Before | After |
-|---|---|
+| Before                       | After                           |
+| ---------------------------- | ------------------------------- |
 | `github.com/absmach/supermq` | `github.com/absmach/magistrala` |
-| `docs.supermq.absmach.eu` | `docs.magistrala.absmach.eu` |
+| `docs.supermq.absmach.eu`    | `magistrala.absmach.eu/docs`    |
 
 **Docker images**
 
