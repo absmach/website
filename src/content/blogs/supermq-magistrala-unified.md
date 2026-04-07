@@ -1,7 +1,7 @@
 ---
 slug: supermq-magistrala-unified
-title: "One Platform Again: How and Why We Merged SuperMQ into Magistrala"
-description: "SuperMQ and Magistrala are now a single unified platform under the Magistrala name. Here's the full story — why we split, why that was a mistake, what changed, and what you need to do."
+title: "SuperMQ and Magistrala Are Becoming One Platform"
+description: "SuperMQ and Magistrala are now a single unified platform under the Magistrala name. Here's the full story — why we split, what changed, why we are merging back, and what you need to do."
 date: "2026-04-07"
 author:
   name: "Steve Munene"
@@ -20,7 +20,7 @@ tags:
 category: announcement
 ---
 
-**SuperMQ and Magistrala are now one.** The SuperMQ repository has been merged into Magistrala, the name is Magistrala, and a new version marks the unification. This post covers the full story: what we built, why we split it, why that was the wrong call, and exactly what changed.
+**SuperMQ and Magistrala are now one.** The SuperMQ repository has been merged into Magistrala, the name is Magistrala, and a new version marks the unification. This post covers the full story: what we built, why we split it, what exactly changed, and why we are merging back.
 
 ---
 
@@ -28,7 +28,7 @@ category: announcement
 
 - [Table of Contents](#table-of-contents)
 - [How we got here](#how-we-got-here)
-- [Why the split was a mistake](#why-the-split-was-a-mistake)
+- [Why the split didn’t hold up](#why-the-split-didnt-hold-up)
 - [What changed](#what-changed)
   - [Repository](#repository)
   - [Codebase](#codebase)
@@ -53,8 +53,6 @@ So we extracted it into a separate project: **SuperMQ**.
 
 The theory was sound. A clean interface between the two layers. Independent versioning. SuperMQ as a general-purpose platform, Magistrala as an opinionated IoT product built on top.
 
-In practice, it didn't work.
-
 With the merger, the Abstract Machines stack is now clearly defined across four focused projects:
 
 - **[Magistrala](https://github.com/absmach/magistrala)** — a cloud IoT platform framework that provides multi-tenancy, access control, device management, a Rules Engine, Alarms, Reports, and Bootstrap. It integrates with FluxMQ for messaging and serves as a flexible foundation for building IoT solutions.
@@ -64,7 +62,7 @@ With the merger, the Abstract Machines stack is now clearly defined across four 
 
 ---
 
-## Why the split was a mistake
+## Why the split didn’t hold up
 
 The separation created friction at every level:
 
