@@ -3,7 +3,7 @@ title: "UI Metadata Redesign: Flat Format, Richer Types, and a Breaking Change"
 slug: "ui-metadata-redesign-flat-format"
 excerpt: "Magistrala UI introduces a flat, typed metadata format with automatic migration support. If you are upgrading from v0.18.5 or earlier, read this before upgrading."
 description: "Magistrala UI v0.19.0 introduces a redesigned metadata system with a flat storage format, typed values, timestamps, and automatic migration support."
-date: "2026-03-12"
+date: "2026-04-09"
 author:
   name: "Felister Wambui"
   picture: "https://avatars.githubusercontent.com/u/80099068?v=4"
