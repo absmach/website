@@ -135,7 +135,7 @@ Here is a quick reference for the core certificate operations using the Magistra
 **Issue a certificate**
  
 ```
-magistrala-cli certs issue <client_id> <user_auth_token> [--ttl=24h]
+magistrala-cli certs issue <client_id> <user_auth_token> [--ttl=8760h]
 ```
  
 **Retrieve a certificate**
@@ -167,7 +167,7 @@ Even with high compatibility, the backend transition introduces some practical d
  
 ## What is next
  
-Moving to OpenBao kept certs aligned with an open and community-driven PKI stack. It also simplified long-term maintenance across Magistrala and SuperMQ deployments that relied on cert lifecycle automation.
+Moving to OpenBao kept certs aligned with an open and community-driven PKI stack. It also simplified long-term maintenance across Magistrala deployments that relied on cert lifecycle automation.
  
 From there, work continued on hardening PKI operations, improving migration tooling, and documenting deployment patterns for different environments.
  
