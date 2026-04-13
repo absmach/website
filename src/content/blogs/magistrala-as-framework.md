@@ -3,7 +3,7 @@ title: "Magistrala as a framework for building solutions"
 slug: "magistrala-as-framework"
 excerpt: "Magistrala's building blocks give you everything you need to build IoT and industrial solutions - without starting from scratch."
 description: "Explore how Magistrala can serve as the framework for building IoT and industrial solutions. We cover the key building blocks, how they work together to support flexible and scalable solutions, and what's coming next with solution packs."
-date: "2026-04-10"
+date: "2026-04-13"
 author:
   name: "Ian Muchiri"
   picture: "https://avatars.githubusercontent.com/u/100555904?v=4"
