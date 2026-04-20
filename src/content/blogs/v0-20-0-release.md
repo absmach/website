@@ -33,12 +33,12 @@ Magistrala is an **open-source IoT platform** designed for building secure, scal
 It provides identity management, device connectivity, access control, data processing, and messaging infrastructure for modern IoT deployments.
 
 This release is one of the most important architectural releases in the recent Magistrala roadmap.
-With **v0.20.0**, Magistrala and SuperMQ move into a unified platform direction, while Magistrala also gains new services for rules, alarms, reports, certificate management, provisioning, and message storage.
+With **v0.20.0**, Magistrala and SuperMQ move into a unified platform direction, while rules, alarms, reports, certificate management, provisioning, and message storage become part of a clearer integrated platform.
 
 Over the past release cycle we've focused on bringing the wider Abstract Machines IoT stack into a clearer, more integrated system.
 That means better operational workflows, richer automation, stronger authorization behavior, and a cleaner developer experience for running the full stack locally or in production.
 
-This release brings several important improvements - particularly around **platform unification**, **FluxMQ-based messaging**, **rules and reporting workflows**, and **access-control visibility** across new services.
+This release brings several important improvements - particularly around **platform unification**, **FluxMQ-based messaging**, **certificate management**, and **access-control visibility** across platform services.
 
 ---
 
@@ -54,10 +54,10 @@ The result is a more complete IoT platform framework, where device management, i
 This unification includes major service and deployment updates such as:
 
 -   FluxMQ integration as the messaging backbone
--   new services for alarms, rules engine, reports, certificates, provisioning, and readers
+-   integrated support for alarms, rules engine, reports, certificates, provisioning, and readers
 -   updated Docker Compose configuration for the expanded stack
--   refreshed OpenAPI documentation for the new services
--   SDK and CLI support for the newly integrated services
+-   refreshed OpenAPI documentation for the expanded service set
+-   SDK and CLI support for the integrated service set
 
 For operators and developers, this means fewer boundaries between related projects and a clearer path for deploying a full IoT system from one repository.
 
@@ -79,70 +79,11 @@ This change also makes the relationship between Magistrala and FluxMQ more expli
 
 ---
 
-## Rules Engine
-
-The new **Rules Engine** service brings programmable automation into Magistrala.
-
-Rules can process incoming messages using **Lua or Go logic** and route results to multiple outputs, including:
-
--   channels
--   alarms
--   email
--   SenML writers
--   PostgreSQL
--   Slack
-
-The Rules Engine also supports scheduled execution, topic matching, filtering, tracing, metrics, and event publishing.
-
-This is an important step for IoT deployments that need to react to device data in real time.
-Instead of moving every automation workflow into an external service, users can now define processing logic directly in the Magistrala platform.
-
----
-
-## Alarms Service
-
-Magistrala v0.20.0 introduces a dedicated **Alarms** service.
-
-The Alarms service stores, manages, and exposes alarms raised by rules and device activity.
-It consumes alarm events from the message broker, persists them to PostgreSQL, and provides an HTTP API for listing, viewing, updating, and deleting alarms.
-
-This enables workflows such as:
-
--   tracking active and cleared alarms
--   assigning alarms to users
--   acknowledging and resolving incidents
--   filtering alarms by domain, rule, channel, client, status, severity, and time
--   observing alarm behavior through metrics and tracing
-
-Together with the Rules Engine, this gives Magistrala a stronger foundation for monitoring and operational response.
-
----
-
-## Reports Service
-
-This release also adds a dedicated **Reports** service.
-
-Reports can generate time-series summaries from stored messages and export results in multiple formats.
-The service supports:
-
--   JSON report responses
--   CSV exports
--   PDF rendering
--   scheduled report delivery
--   email delivery
--   custom report templates
-
-Reports fetch data from the readers gRPC service and can be used for operational dashboards, compliance exports, periodic device summaries, and user-facing analytics.
-
-The follow-up work in **PR #3478** also adds billing callout configuration for the Rules Engine and Reports services, preparing these workflows for more advanced operational and commercial deployments.
-
----
-
 ## Certificate Management and Provisioning
 
-Magistrala v0.20.0 brings certificate management and provisioning deeper into the platform.
+Magistrala v0.20.0 merges **Certs** into Magistrala and brings provisioning deeper into the platform.
 
-The integrated certificate service adds APIs, storage, SDK support, CLI commands, and OpenBao-backed PKI handling.
+The merged Certs service adds APIs, storage, SDK support, CLI commands, and OpenBao-backed PKI handling directly inside Magistrala.
 Provisioning support was also added with service APIs, configuration handling, Docker Compose wiring, and CLI tooling.
 
 For IoT systems, this matters because onboarding devices securely is often one of the hardest parts of operating the platform.
@@ -152,9 +93,9 @@ These additions help Magistrala support more complete device lifecycle workflows
 
 # Access Control and Security Improvements
 
-## Access-Control Listing for New Services
+## Access-Control Listing Improvements
 
-The new alarms, rules engine, and reports services now support richer access-control listing behavior through **PR #3417**.
+Alarms, rules engine, and reports now support richer access-control listing behavior through **PR #3417**.
 
 This means users can list resources while also receiving access-control information that helps clients understand what actions are available.
 That is especially useful for UI and API consumers because resource lists can now carry more of the permission context needed to build correct user experiences.
@@ -174,7 +115,7 @@ It also helps keep authorization metadata close to the resources that need it.
 
 Personal Access Token support was extended for rules and reports in **PR #3466**.
 
-This allows automation and service integrations to work with these new platform capabilities using PAT-based authentication.
+This allows automation and service integrations to work with these platform capabilities using PAT-based authentication.
 For operators, this is important because reports and rules are often used by scripts, schedulers, integrations, and internal services rather than only by interactive users.
 
 ---
@@ -230,7 +171,7 @@ Clearer errors make integrations easier to debug and reduce ambiguity between au
 
 Listing members for rules and reports was corrected in **PR #3423**.
 
-This improves consistency for access-management workflows around the newly integrated automation and reporting services.
+This improves consistency for access-management workflows around automation and reporting services.
 
 ---
 
