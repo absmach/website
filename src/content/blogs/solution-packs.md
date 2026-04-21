@@ -3,7 +3,7 @@ title: "Solution Packs, Simplifying Getting Started With Magistrala"
 slug: "solution-packs"
 excerpt: "Solution packs are finally here. Install a pre-built IoT solution in minutes, no deep platform knowledge required."
 description: "Magistrala solution packs are here. Install pre-built IoT and industrial solutions in minutes, explore them on our cloud platform, and when you are ready, deploy with our managed service or self-host using the open-source version."
-date: "2026-04-13"
+date: "2026-04-22"
 author:
   name: "Ian Muchiri"
   picture: "https://avatars.githubusercontent.com/u/100555904?v=4"
