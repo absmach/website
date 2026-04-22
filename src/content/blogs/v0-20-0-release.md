@@ -23,6 +23,7 @@ tags:
 - Access Control
 - Distributed Systems
 title: Magistrala v0.20.0 is Here!
+featured: true
 ---
 
 # Magistrala v0.20.0
@@ -47,7 +48,7 @@ This release brings several important improvements - particularly around **platf
 ## Magistrala and SuperMQ Unified
 
 The biggest change in this release is the unification of **Magistrala and SuperMQ** into a single platform direction.
-This work landed through **SMQ-3399 / PR #3400** and brings a large part of the SuperMQ service surface into Magistrala.
+This work landed through **SMQ-3399** in [PR #3400](https://github.com/absmach/magistrala/pull/3400) and brings a large part of the SuperMQ service surface into Magistrala.
 
 The result is a more complete IoT platform framework, where device management, identity, access control, messaging, data processing, and observability live in one coherent codebase.
 
@@ -65,7 +66,7 @@ For operators and developers, this means fewer boundaries between related projec
 
 ## FluxMQ Messaging Integration
 
-Magistrala is now built more directly around **FluxMQ**, the message broker designed for messaging and event streams.
+Magistrala is now built more directly around [**FluxMQ**](https://github.com/absmach/fluxmq), the message broker designed for messaging and event streams.
 
 The v0.20.0 work replaces older messaging paths with FluxMQ-oriented infrastructure and updates internal event handling across the platform.
 This gives Magistrala a stronger foundation for:
@@ -95,7 +96,7 @@ These additions help Magistrala support more complete device lifecycle workflows
 
 ## Access-Control Listing Improvements
 
-Alarms, rules engine, and reports now support richer access-control listing behavior through **PR #3417**.
+Alarms, rules engine, and reports now support richer access-control listing behavior through [PR #3417](https://github.com/absmach/magistrala/pull/3417).
 
 This means users can list resources while also receiving access-control information that helps clients understand what actions are available.
 That is especially useful for UI and API consumers because resource lists can now carry more of the permission context needed to build correct user experiences.
@@ -104,7 +105,7 @@ That is especially useful for UI and API consumers because resource lists can no
 
 ## Role Fields for Rules and Reports
 
-Additional role fields were added to rules and reports in **PR #3435**.
+Additional role fields were added to rules and reports in [PR #3435](https://github.com/absmach/magistrala/pull/3435).
 
 This improves consistency with the rest of the platform and makes rules and reports easier to manage through SDKs, APIs, and UI workflows.
 It also helps keep authorization metadata close to the resources that need it.
@@ -113,7 +114,7 @@ It also helps keep authorization metadata close to the resources that need it.
 
 ## PAT Support for Rules and Reports
 
-Personal Access Token support was extended for rules and reports in **PR #3466**.
+Personal Access Token support was extended for rules and reports in [PR #3466](https://github.com/absmach/magistrala/pull/3466).
 
 This allows automation and service integrations to work with these platform capabilities using PAT-based authentication.
 For operators, this is important because reports and rules are often used by scripts, schedulers, integrations, and internal services rather than only by interactive users.
@@ -122,7 +123,7 @@ For operators, this is important because reports and rules are often used by scr
 
 ## SuperAdmin Authorization Updates
 
-The SuperAdmin authorization checks were refined in **PR #3394**.
+The SuperAdmin authorization checks were refined in [PR #3394](https://github.com/absmach/magistrala/pull/3394).
 
 These updates improve the way elevated permissions are handled across channels, domains, and users.
 The result is clearer authorization behavior for administrative operations and better alignment with the renamed **SuperAdmin** role.
@@ -131,7 +132,7 @@ The result is clearer authorization behavior for administrative operations and b
 
 ## Roles and Actions in Channel Lists
 
-For non-SuperAdmin users, channel listing now returns roles and actions more consistently through **SMQ-416 / PR #3388**.
+For non-SuperAdmin users, channel listing now returns roles and actions more consistently through **SMQ-416** in [PR #3388](https://github.com/absmach/magistrala/pull/3388).
 
 This improves the API experience for users who need to understand not just which channels they can see, but what they are allowed to do with them.
 
@@ -150,7 +151,7 @@ Authentication flows are now more predictable when sessions expire, refresh, or 
 
 ## SQL Performance and Safety
 
-Database query performance and safety were improved through **PR #3378**.
+Database query performance and safety were improved through [PR #3378](https://github.com/absmach/magistrala/pull/3378).
 
 This work touched repositories for users, clients, channels, groups, domains, auth, roles, and journal storage.
 It adds safer and more consistent SQL behavior while improving query structure across core platform services.
@@ -161,7 +162,7 @@ For large IoT deployments, these repository-level improvements matter because li
 
 ## Correct Auth gRPC Errors
 
-The auth gRPC response path now returns more accurate errors through **SMQ-3415 / PR #3416**.
+The auth gRPC response path now returns more accurate errors through **SMQ-3415** in [PR #3416](https://github.com/absmach/magistrala/pull/3416).
 
 Clearer errors make integrations easier to debug and reduce ambiguity between authentication failures, authorization failures, and internal service errors.
 
@@ -169,7 +170,7 @@ Clearer errors make integrations easier to debug and reduce ambiguity between au
 
 ## Rules and Reports Member Listing Fixes
 
-Listing members for rules and reports was corrected in **PR #3423**.
+Listing members for rules and reports was corrected in [PR #3423](https://github.com/absmach/magistrala/pull/3423).
 
 This improves consistency for access-management workflows around automation and reporting services.
 
@@ -202,7 +203,7 @@ The goal is to make the project easier to understand as a single platform instea
 
 ## Topic Delimiter Update
 
-The platform now uses `/` as the topic delimiter through **PR #3424**.
+The platform now uses `/` as the topic delimiter through [PR #3424](https://github.com/absmach/magistrala/pull/3424).
 
 This brings topic handling closer to common MQTT-style conventions and makes examples easier to read across rules, routing, and messaging workflows.
 
