@@ -21,7 +21,7 @@ tags:
   - solution packs
 ---
 
-The long wait is over. Solution packs are finally here, and available now on the Magistrala cloud platform.
+Magistrala cloud platform now ships with ready-to-install solutions, so you can go from a blank domain to a working IoT setup in just a few steps.
 
 We have been hinting at this feature for a while, most recently in our [Magistrala as a Framework](https://absmach.eu/blog/magistrala-as-framework) post, and today we are making it official. Solution packs fundamentally change how you get started with Magistrala. Instead of spending weeks reading documentation and learning the platform before you can build anything, you can now install a working solution in minutes and start sending messages immediately. The platform knowledge can come later, at your own pace.
 
