@@ -6,9 +6,9 @@ date: "2026-02-23"
 author:
   name: "Jeff Mboya"
   picture: "https://avatars.githubusercontent.com/u/44696487?s=96&v=4"
-coverImage: "/img/blogs/federated-ml/Federated__Machine_Learning.jpg"
+coverImage: "/img/blogs/federated-ml/propeller-fml-mental-model.svg"
 ogImage:
-  url: "/img/blogs/federated-ml/Federated__Machine_Learning.jpg"
+  url: "/img/blogs/federated-ml/propeller-fml-mental-model.svg"
 tags:
   - "Federated Learning"
   - "Machine Learning"
@@ -40,7 +40,7 @@ The only thing that changes between a regular task and a federated one is contex
 
 For more detailed information about all component behavior and configuration, refer to the [Propeller docs](https://propeller.absmach.eu/).
 
-![Simple view of who does what in federated learning: operator, devices, coordinator, and model store](/img/blogs/federated-ml/federated-ml-simple-who-does-what.svg)
+![Simple view of who does what in federated learning: operator, devices, coordinator, and model store](/img/blogs/federated-ml/simple-who-does-what.svg)
 
 This diagram shows four roles: operator, devices, coordinator, and the model store that saves progress.
 
@@ -66,7 +66,7 @@ Propeller keeps this simple by building everything on three objects:
 - Round: the same training task deployed and run across many devices at the same time. Each participating device trains on local data, sends back one small update, and then stops.
 - Experiment: the high-level structure that stitches multiple rounds together into a full federated learning process. It defines participating devices, training configuration, how many updates are needed, and the stopping condition.
 
-![Simple decision flow showing when a task runs normally versus federated learning mode](/img/blogs/federated-ml/federated-ML-fml-simple-decision-flow.svg)
+![Simple decision flow showing when a task runs normally versus federated learning mode](/img/blogs/federated-ml/fml-simple-decision-flow.svg)
 
 With `ROUND_ID` set, the Proplet trains locally and sends an update; otherwise it runs normally.
 
@@ -108,7 +108,7 @@ For each example, the Proplet predicts, compares to the label, and adjusts the m
 
 Once training is complete, the WASM module writes its update to stdout as JSON. The Proplet captures that output and POSTs it to the coordinator. The update includes the trained weights and bias, the sample count, and the starting model version.
 
-![Simple round loop: share model, train locally, send updates, combine updates, and repeat](/img/blogs/federated-ml/federated-ml-simple-round-loop.svg)
+![Simple round loop: share model, train locally, send updates, combine updates, and repeat](/img/blogs/federated-ml/simple-round-loop.svg)
 
 Send model out, train locally, collect updates, combine them, then repeat with the improved model.
 
@@ -118,7 +118,7 @@ The coordinator's primary job is to collect model updates from all of the partic
 
 Devices that trained on more data always contribute proportionally more to the final aggregated result. Aggregation produces new weights and a bias capturing everything all devices collectively learned that round.
 
-![Simple privacy and bandwidth story comparing raw data upload with federated updates](/img/blogs/federated-ml/federated-ml-simple-privacy-story.svg)
+![Simple privacy and bandwidth story comparing raw data upload with federated updates](/img/blogs/federated-ml/simple-privacy-story.svg)
 
 Raw data stays put on devices; only lightweight model update payloads move across the network.
 

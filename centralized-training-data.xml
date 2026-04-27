@@ -1,0 +1,116 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Centralized Training Data">
+    <mxGraphModel dx="1200" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="650">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Background -->
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#101714;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1100" height="650" as="geometry"/>
+        </mxCell>
+
+        <!-- Central database -->
+        <mxCell id="db" value="" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#FFD84D;strokeColor=#E0A329;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="485" y="70" width="135" height="145" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="dbText" value="Centralized&lt;br&gt;training data" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontStyle=1;fontSize=20;" vertex="1" parent="1">
+          <mxGeometry x="655" y="120" width="220" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Main green connector -->
+        <mxCell id="mainLine" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=6;strokeColor=#56D782;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="550" y="330" as="sourcePoint"/>
+            <mxPoint x="550" y="235" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="horizontalLine" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=6;strokeColor=#56D782;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="190" y="330" as="sourcePoint"/>
+            <mxPoint x="910" y="330" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Device drop lines -->
+        <mxCell id="drop1" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=6;strokeColor=#56D782;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="190" y="330" as="sourcePoint"/>
+            <mxPoint x="190" y="415" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="drop2" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=6;strokeColor=#56D782;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="330" as="sourcePoint"/>
+            <mxPoint x="390" y="415" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="drop3" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=6;strokeColor=#56D782;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="590" y="330" as="sourcePoint"/>
+            <mxPoint x="590" y="415" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="dropN" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=6;strokeColor=#56D782;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="910" y="330" as="sourcePoint"/>
+            <mxPoint x="910" y="415" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Small branch near Device N -->
+        <mxCell id="branch" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=6;strokeColor=#56D782;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="755" y="330" as="sourcePoint"/>
+            <mxPoint x="755" y="390" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Devices -->
+        <mxCell id="d1" value="AI" style="shape=mxgraph.cisco19.laptop;html=1;fillColor=#5DC5E8;strokeColor=#777777;fontColor=#2BBF63;fontStyle=1;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="125" y="410" width="130" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="d2" value="AI" style="shape=mxgraph.cisco19.laptop;html=1;fillColor=#C451D9;strokeColor=#777777;fontColor=#2BBF63;fontStyle=1;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="325" y="410" width="130" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="d3" value="AI" style="shape=mxgraph.cisco19.laptop;html=1;fillColor=#C51E26;strokeColor=#777777;fontColor=#2BBF63;fontStyle=1;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="525" y="410" width="130" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="dn" value="AI" style="shape=mxgraph.cisco19.laptop;html=1;fillColor=#F2A51A;strokeColor=#777777;fontColor=#2BBF63;fontStyle=1;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="850" y="410" width="130" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Labels -->
+        <mxCell id="l1" value="Device 1" style="text;html=1;strokeColor=none;fillColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=20;align=center;" vertex="1" parent="1">
+          <mxGeometry x="125" y="520" width="130" height="35" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="l2" value="Device 2" style="text;html=1;strokeColor=none;fillColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=20;align=center;" vertex="1" parent="1">
+          <mxGeometry x="325" y="520" width="130" height="35" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="l3" value="Device 3" style="text;html=1;strokeColor=none;fillColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=20;align=center;" vertex="1" parent="1">
+          <mxGeometry x="525" y="520" width="130" height="35" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ln" value="Device N" style="text;html=1;strokeColor=none;fillColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=20;align=center;" vertex="1" parent="1">
+          <mxGeometry x="850" y="520" width="130" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- Ellipsis -->
+        <mxCell id="ellipsis" value="..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#262626;strokeColor=none;fontColor=#FFFFFF;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="725" y="438" width="60" height="45" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
