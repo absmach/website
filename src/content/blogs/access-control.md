@@ -2,7 +2,7 @@
 title: "Access Control and Multitenancy with Domains"
 slug: "magistrala-access-control-multitenancy"
 excerpt: "How Magistrala's Domains and policy-based access control enable secure multi-tenant IoT deployments with complete organization isolation."
-description: "How Magistrala uses Domains and policy-based access control (RBAC/ABAC) to deliver secure, isolated multi-tenant IoT deployments."
+description: "How Magistrala uses Domains and policy-based access control (RBAC/ReBAC) to deliver secure, isolated multi-tenant IoT deployments."
 date: "2026-02-12"
 author:
   name: "Steve Munene"
@@ -17,7 +17,7 @@ tags:
   - Multitenancy
   - Access Control
   - RBAC
-  - ABAC
+  - ReBAC
   - IoT Security
   - Enterprise IoT
 ---
@@ -48,7 +48,7 @@ Key requirements:
 ## Table of Contents
 
 - [Understanding Domains: Keep Customers Separate](#understanding-domains-multi-tenant-isolation)
-- [Access Control Rules](#policy-based-access-control-rbacabac)
+- [Access Control Rules](#access-control-rules)
 - [How Domains Work with Users, Teams, Devices, and Channels](#how-domains-work-with-users-groups-clients-and-channels)
 - [Access Control Within Domains](#access-control-within-domains)
 - [Real Example: Fleet Management SaaS](#practical-example-multi-tenant-fleet-management-saas)
@@ -99,11 +99,26 @@ Magistrala uses access control policies. These are like keys that unlock doors.
 
 The policies decide who can do what.
 
+**RBAC and ReBAC: How Magistrala Combines Both:**
+
+Magistrala uses **RBAC (Role-Based Access Control)** on top of **ReBAC (Relationship-Based Access Control)**.
+
+- **RBAC** is the model you see as a user: create a role, assign permissions to it, add members to it. When a user is in a role, they get those permissions.
+- **ReBAC** is the engine underneath, powered by [SpiceDB](https://authzed.com/spicedb) (an open-source Zanzibar implementation). Instead of storing flat role tables, Magistrala stores a graph of relationships between entities: user → role → client, client → domain, group → parent_group, and so on. Permission checks traverse this graph.
+
+This combination gives Magistrala two important capabilities:
+
+1. **Inherited permissions:** A user with a role on a group automatically inherits permissions on all clients and channels inside that group, and those inside its subgroups, without explicitly granting them per-resource.
+2. **Domain isolation:** Every relationship is scoped to a domain. The graph never crosses tenant boundaries, so a permission check for Domain A cannot accidentally resolve through Domain B's relationships.
+
+A concrete example: when a client is assigned to a group (`parent_group` relation), SpiceDB resolves `client_read_permission` by walking `client → parent_group → domain`. A user granted read on the group gains read on the client through the relationship graph; no extra policy entries needed.
+
 **How Policies Work:**
 
 Every action needs permission. The system checks if a **person** (or device) can do something with a **thing**. This happens inside a **domain**.
 
 **Authorization Structure:**
+
 ```json
 {
   "domain": "<domain-id>",
@@ -118,6 +133,7 @@ Every action needs permission. The system checks if a **person** (or device) can
 **Example Authorization Checks:**
 
 **Domain Membership:**
+
 ```json
 {
   "domain": "a1b2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
@@ -128,9 +144,11 @@ Every action needs permission. The system checks if a **person** (or device) can
   "permission": "membership"
 }
 ```
+
 Result: ✅ User has access to domain resources
 
 **User Creating a Client:**
+
 ```json
 {
   "domain": "a1b2c3d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
@@ -141,6 +159,7 @@ Result: ✅ User has access to domain resources
   "permission": "client_create_permission"
 }
 ```
+
 Result: ✅ User can create IoT devices in the domain
 
 **How Roles Work:**
@@ -148,6 +167,7 @@ Result: ✅ User can create IoT devices in the domain
 When you create something (like a client or group), you automatically become the admin. As the admin, you can create custom roles.
 
 Each role has:
+
 - **Actions** - The specific permissions granted (e.g. `read_permission`, `update_permission`, `delete_permission`)
 - **Members** - Which users hold this role
 
@@ -163,7 +183,7 @@ A client device is created. To allow a user to only read data from it, a `data_v
 }
 ```
 
-That user gains `read_permission` on the client — `update_permission` and `delete_permission` are not granted.
+That user gains `read_permission` on the client; `update_permission` and `delete_permission` are not granted.
 
 **Permissions by Entity:**
 
@@ -176,17 +196,17 @@ That user gains `read_permission` on the client — `update_permission` and `del
 | **Rule** | `read_permission`, `update_permission`, `delete_permission`, `alarm_read_permission`, `alarm_assign_permission`, `alarm_acknowledge_permission`, `alarm_resolve_permission`, `manage_role_permission` |
 | **Report** | `read_permission`, `update_permission`, `delete_permission`, `manage_role_permission` |
 
-All roles and permissions are scoped to the domain they were created in — they cannot cross tenant boundaries.
+All roles and permissions are scoped to the domain they were created in; they cannot cross tenant boundaries.
 
-**Magistrala — Rules, Alarms and Reports:**
+**Magistrala: Rules, Alarms and Reports:**
 
 Magistrala's RBAC covers its core services and additional features. Permissions map directly to API operations via SpiceDB:
 
 - **Rules**: `rule_create_permission`, `rule_read_permission`, `rule_update_permission`, `rule_delete_permission` (domain-scoped); `read_permission`, `update_permission`, `delete_permission` (rule-scoped)
-- **Alarms**: Access is controlled through the parent rule — `alarm_read_permission`, `alarm_assign_permission`, `alarm_acknowledge_permission`, `alarm_resolve_permission`
+- **Alarms**: Access is controlled through the parent rule: `alarm_read_permission`, `alarm_assign_permission`, `alarm_acknowledge_permission`, `alarm_resolve_permission`
 - **Reports**: `report_create_permission`, `report_read_permission`, `report_update_permission`, `report_delete_permission` (domain-scoped); `read_permission`, `update_permission`, `delete_permission` (report-scoped)
 
-All policies remain within their domain — there is no cross-tenant permission inheritance.
+All policies remain within their domain; there is no cross-tenant permission inheritance.
 
 **How Permission Checking Works:**
 
@@ -202,7 +222,7 @@ Magistrala uses SpiceDB to check permissions. It looks at your role and the acti
 
 **The Check Process:**
 
-```
+```text
 You: "I want to create a client"
 
 Step 1 - Check Token:
@@ -221,6 +241,7 @@ Result: Allow or Deny
 **What Gets Logged:**
 
 Every action is written to a log:
+
 - Who tried to do it
 - What they tried to do
 - When they tried
@@ -236,7 +257,7 @@ Each domain has four main parts. They work together to run your IoT system.
 
 **Entity Hierarchy Within a Domain:**
 
-```
+```text
 Domain: TenantA-Corp (Isolation Boundary)
 │
 ├── Users (Human access)
@@ -263,7 +284,7 @@ Domain: TenantA-Corp (Isolation Boundary)
 **How They Work Together:**
 
 - **Users Belong to a Domain:** Users are created inside a domain. They log in to their domain and can only see things within it. Special cross-domain rules are required to access other domains.
-- **Groups Organize Users:** Groups are like teams — think departments or locations. Users join groups with different roles, making it easy to assign permissions to many people at once. Groups can be nested inside other groups.
+- **Groups Organize Users:** Groups are like teams: departments or locations. Users join groups with different roles, making it easy to assign permissions to many people at once. Groups can be nested inside other groups.
 - **Clients Belong to a Domain:** Each IoT device is a client in a domain. Clients get a unique ID (UUID) and a secret for authentication. They can only connect to channels in the same domain.
 - **Channels Let Things Talk:** Channels are created inside a domain. Clients connect to channels to send and receive messages. Channels stay within one domain and cannot cross domain boundaries.
 
@@ -288,6 +309,7 @@ Policies control everything inside a domain. Understanding these policies keeps 
   "permission": "admin"
 }
 ```
+
 Result: ✅ Full administrative access to domain
 
 **Group Management:**
@@ -303,6 +325,7 @@ Result: ✅ Full administrative access to domain
   "permission": "manage_role_permission"
 }
 ```
+
 Result: ✅ Can manage group roles and permissions
 
 **Creating a Client:**
@@ -318,6 +341,7 @@ Result: ✅ Can manage group roles and permissions
   "permission": "client_create_permission"
 }
 ```
+
 Result: ✅ User can create clients in the domain
 
 **How Permission Checks Work:**
@@ -332,7 +356,7 @@ When someone tries to do something, these steps happen:
 
 **Example - Creating a Client:**
 
-```
+```text
 Request: operator@tenanta.com creates GPS client
 
 Check:
@@ -345,7 +369,7 @@ Check:
 
 **Example - Unauthorized Delete:**
 
-```
+```text
 Request: analyst@tenanta.com deletes client
 
 Check:
@@ -373,9 +397,9 @@ Here's how domains, access control, and the Rules Engine work together in a real
 
 You run a fleet tracking platform with three customers:
 
-- **Company A: FastShip Logistics** — 500 delivery trucks on the US East Coast
-- **Company B: ColdChain Transport** — 200 refrigerated trucks for food logistics
-- **Company C: Urban Couriers** — 1,000 bikes and vans for city delivery
+- **Company A: FastShip Logistics**, 500 delivery trucks on the US East Coast
+- **Company B: ColdChain Transport**, 200 refrigerated trucks for food logistics
+- **Company C: Urban Couriers**, 1,000 bikes and vans for city delivery
 
 Each company needs their data kept separate. Each needs different user access. Each needs safe device messages.
 
@@ -391,11 +415,11 @@ Each company needs their data kept separate. Each needs different user access. E
 
 ### User Access Control Within Each Domain
 
-**Domain A: FastShip Logistics**
+#### Domain A: FastShip Logistics
 
 **Main Administrator:**
 
-```
+```text
 User: admin@fastship.com
 Role: Domain Admin
 
@@ -407,7 +431,7 @@ What they can do:
 
 **Regional Manager:**
 
-```
+```text
 User: manager-east@fastship.com
 Team: East-Region
 Role: Team Admin
@@ -420,7 +444,7 @@ What they can do:
 
 **Dispatcher:**
 
-```
+```text
 User: dispatcher@fastship.com
 Role: Team Operator
 
@@ -432,7 +456,7 @@ What they can do:
 
 **Data Analyst:**
 
-```
+```text
 User: analyst@fastship.com
 Role: Team Viewer
 
@@ -445,11 +469,11 @@ What they can do:
 
 ### Device Setup and Communication
 
-**Domain A: FastShip Logistics - Device Setup**
+#### Domain A: FastShip Logistics - Device Setup
 
 **Adding and Connecting Devices:**
 
-```
+```text
 1. Make a Client (GPS Tracker):
    - Auto-made ID and password
    - Info: truck ID, area, driver name
@@ -473,24 +497,25 @@ What they can do:
 **Rules Engine:**
 
 Rules work only in one domain. They watch the data:
+
 - **Low Fuel Alert** - IF fuel < 20% THEN sound alarm
 - **Out of Zone** - IF outside area THEN tell dispatcher
 
 **Who Can See What:**
 
-- ✅ admin@fastship.com — Everything
-- ✅ manager-east@fastship.com — East-Region trucks only
-- ✅ dispatcher@fastship.com — Can read and send commands
-- ✅ analyst@fastship.com — Can only read old data
-- ❌ Users from other companies — Nothing
+- ✅ admin@fastship.com: Everything
+- ✅ manager-east@fastship.com: East-Region trucks only
+- ✅ dispatcher@fastship.com: Can read and send commands
+- ✅ analyst@fastship.com: Can only read old data
+- ❌ Users from other companies: Nothing
 
 ---
 
 ### Security in Action
 
-**Example 1: Can't Add Devices**
+#### Example 1: Can't Add Devices
 
-```
+```text
 User: dispatcher@fastship.com (Team Operator)
 Tries to: Add new GPS device
 
@@ -501,9 +526,9 @@ What happens:
 4. BLOCKED - "Ask your admin to add devices"
 ```
 
-**Example 2: Wrong Domain**
+#### Example 2: Wrong Domain
 
-```
+```text
 User: admin@coldchain.com (ColdChain boss)
 Tries to: Read FastShip truck data
 
@@ -528,6 +553,7 @@ Ready to build your IoT solution?
 [**Make Your Free Account →**](https://cloud.magistrala.absmach.eu/en/login)
 
 **Learn More:**
+
 - [Docs](https://docs.magistrala.absmach.eu/) - Guides and help
 - [GitHub](https://github.com/absmach/magistrala) - Code and examples
 - [Community](https://matrix.to/#/#magistrala:matrix.org) - Ask questions
