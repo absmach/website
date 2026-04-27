@@ -6,9 +6,9 @@ date: "2026-02-23"
 author:
   name: "Jeff Mboya"
   picture: "https://avatars.githubusercontent.com/u/44696487?s=96&v=4"
-coverImage: "/img/blogs/federated-ml/propeller-fml-mental-model.svg"
+coverImage: "/img/blogs/federated-ml/propeller-mental-model.svg"
 ogImage:
-  url: "/img/blogs/federated-ml/propeller-fml-mental-model.svg"
+  url: "/img/blogs/federated-ml/propeller-mental-model.svg"
 tags:
   - "Federated Learning"
   - "Machine Learning"
@@ -66,7 +66,7 @@ Propeller keeps this simple by building everything on three objects:
 - Round: the same training task deployed and run across many devices at the same time. Each participating device trains on local data, sends back one small update, and then stops.
 - Experiment: the high-level structure that stitches multiple rounds together into a full federated learning process. It defines participating devices, training configuration, how many updates are needed, and the stopping condition.
 
-![Simple decision flow showing when a task runs normally versus federated learning mode](/img/blogs/federated-ml/fml-simple-decision-flow.svg)
+![Simple decision flow showing when a task runs normally versus federated learning mode](/img/blogs/federated-ml/simple-decision-flow.svg)
 
 With `ROUND_ID` set, the Proplet trains locally and sends an update; otherwise it runs normally.
 
