@@ -21,7 +21,7 @@ tags:
 category: announcement
 ---
 
-**The certs service was moved from Vault to OpenBao.** This change kept our PKI workflows open and sustainable after the Vault license transition. In this post, we explain why we made the move, what changed in the implementation, what remained compatible, and how to get started.
+The certs service now runs on OpenBao instead of Vault. Here is what changed, what stayed the same, and what you need to do if you are migrating.
  
 ---
  
@@ -44,15 +44,9 @@ category: announcement
  
 ## Why we made this change
  
-The certs service historically integrated with Vault for PKI operations. After Vault's license change, we moved it to OpenBao.
- 
-This was not a cosmetic rename. It was a strategic decision that kept the certificate lifecycle stack aligned with open-source licensing and long-term maintainability goals:
- 
-- **Open governance and licensing clarity.** OpenBao is community-driven and aligned with our open platform direction.
-- **Operational continuity.** OpenBao preserved the core PKI workflows we depended on.
-- **Future-proofing.** We could keep evolving certs without introducing licensing uncertainty into critical security infrastructure.
- 
-The result was a backend migration that preserved the user-facing experience while making the foundation healthier for long-term operation.
+The certs service historically integrated with Vault for PKI operations. After HashiCorp relicensed Vault from MPL 2.0 to BUSL 1.1 in August 2023, we moved it to OpenBao, a community fork of Vault that kept the original MPL 2.0 license.
+
+The PKI backend, CA hierarchy, authentication flow, and configuration surface all changed. What did not change was the API your code calls.
  
 ---
  
@@ -60,9 +54,7 @@ The result was a backend migration that preserved the user-facing experience whi
  
 ### PKI backend
  
-The certs service moved to an OpenBao-backed PKI agent instead of the previous Vault-backed implementation.
- 
-Core certificate lifecycle operations continued to be delegated to the PKI engine:
+The PKI engine still handles:
  
 - issue certificates
 - sign CSRs
@@ -73,15 +65,15 @@ Core certificate lifecycle operations continued to be delegated to the PKI engin
 - serve OCSP responses
 - retrieve CA chain
  
-Under the hood, the service authenticated to OpenBao using AppRole and maintained renewable credentials in the background.
+The service authenticates to OpenBao using AppRole and keeps its token renewed in the background.
  
 ### Certificate authority hierarchy
  
-The migration introduced a two-tier CA hierarchy: a **root CA** and a signed **intermediate CA**, each mounted separately in OpenBao.
+We use a two-tier CA hierarchy: a **root CA** and a signed **intermediate CA**, each mounted separately in OpenBao.
  
 On first setup, the root CA is generated at the `pki` mount and used exclusively to sign the intermediate CA's CSR. The intermediate CA lives at `pki_int` and is the only authority that issues leaf certificates to devices and services. The root CA has no direct role in day-to-day issuance.
  
-This separation brings practical operational benefits:
+Why this matters:
  
 - the root CA key is insulated from routine certificate operations
 - the intermediate CA can be rotated or reissued without disturbing the root trust anchor already distributed to clients
@@ -91,38 +83,26 @@ All cert issuance, signing, revocation, and CRL/OCSP operations that the service
  
 ### Service behavior
  
-From an API perspective, cert lifecycle behavior remained consistent, but the newer certs service also consolidated certificate management responsibilities and integrated more tightly with platform middleware.
+The cert lifecycle API did not change. Under the hood:
  
-Operationally relevant behavior included:
- 
-- managed token/session renewal for PKI backend connectivity
-- robust error propagation from PKI operations to transport layer responses
-- certificate metadata mapping between PKI responses and service/domain models
-- continued support for CSR-based issuance and internal issuance flows
+- token and session renewal for the PKI connection
+- PKI errors surfaced cleanly through the API responses
+- certificate metadata mapping between PKI responses and service domain models
+- CSR-based issuance and internal issuance flows both supported
  
 ### Configuration surface
  
-The deployment surface moved from Vault-specific configuration to OpenBao-specific configuration.
- 
-That meant OpenBao environment variables and settings in service configuration: host, namespace, AppRole credentials, mount paths, roles, and service token usage for secret rotation.
+You now configure OpenBao instead of Vault: host, namespace, AppRole credentials, mount paths, roles, and the service token used for secret rotation.
  
 ### Operations and observability
  
-The service remained fully instrumented with logging, metrics, and tracing around cert issuance, renewal, revocation, and listing flows.
- 
-That meant teams could migrate PKI backends without losing observability coverage in production.
+Logging, metrics, and tracing cover cert issuance, renewal, revocation, and listing flows, the same as before.
  
 ---
  
 ## What stayed the same
  
-**Client-facing cert APIs remained stable.** Existing API consumers did not need to redesign integration logic simply because the PKI backend changed.
- 
-**Certificate lifecycle intent remained unchanged.** You could still issue, list, view, renew, revoke, validate through OCSP, and retrieve CRL/CA artifacts in the same domain context.
- 
-**Platform integration remained intact.** Authorization, middleware, transport patterns, and service boundaries were preserved.
- 
-**Security posture was preserved.** The migration kept the same trust model: PKI authority stayed in the backend engine, while the certs service orchestrated issuance and lifecycle operations.
+The client-facing cert API did not change. You can still issue, list, view, renew, revoke, validate through OCSP, and retrieve CRL/CA artifacts the same way. Authorization, middleware, and service boundaries are intact. The trust model is the same: PKI authority lives in the backend engine; certs orchestrates the lifecycle.
  
 ---
  
@@ -156,7 +136,7 @@ All certificate operations are backed by the `pki_int` mount. The OpenBao enviro
  
 ## Known differences to account for
  
-Even with high compatibility, the backend transition introduces some practical differences worth knowing:
+A few differences from Vault to account for:
  
 - token renewal and secret rotation workflows differ operationally from Vault
 - default mount naming and path conventions may vary by deployment
@@ -167,9 +147,7 @@ Even with high compatibility, the backend transition introduces some practical d
  
 ## What is next
  
-Moving to OpenBao kept certs aligned with an open and community-driven PKI stack. It also simplified long-term maintenance across Magistrala deployments that relied on cert lifecycle automation.
- 
-From there, work continued on hardening PKI operations, improving migration tooling, and documenting deployment patterns for different environments.
- 
-If you run into migration issues or edge cases, open an issue in the repository and share your deployment context so we can help quickly.
+The certs service is on OpenBao and the MPL 2.0 stack. We are continuing to harden PKI operations and document deployment patterns for different environments.
+
+If you run into issues, open an issue in the repository with your deployment context.
  
