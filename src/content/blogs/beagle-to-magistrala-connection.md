@@ -3,7 +3,7 @@ title: "Connecting BeagleV Fire to Magistrala and send data via MQTT and CoAP"
 slug: "connecting_the_beaglev_fire_to_magistrala"
 excerpt: "Publishing and Subscribing data to Magistrala via CoAP and MQTT using the BeagleV Fire"
 description: "Learn about the highly scalable, secure and open-source cloud platform Magistrala, how to connect the BeagleV Fire to it and publish data via CoAP and MQTT"
-date: "2026-02-23"
+date: "2026-04-28"
 author:
   name: "Jones Kisaka"
   picture: "https://avatars.githubusercontent.com/u/85192767?v=4"
