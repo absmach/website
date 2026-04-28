@@ -4,12 +4,32 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
   background: var(--bg);
 }
 
 :root {
+  --anchor-scroll-offset: 5rem;
   scrollbar-width: thin;
   scrollbar-color: rgba(16, 24, 38, 0.35) transparent;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --anchor-scroll-offset: 5.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --anchor-scroll-offset: 6rem;
+  }
+}
+
+:target {
+  scroll-margin-top: calc(
+    var(--anchor-scroll-offset) + env(safe-area-inset-top, 0px)
+  );
 }
 
 :root::-webkit-scrollbar {
@@ -128,8 +148,16 @@ body {
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: clip;
   position: relative;
   z-index: 0;
+}
+
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
 }
 
 body::before {

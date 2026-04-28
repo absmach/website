@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
 
+export const prerender = false;
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const NAME_MIN_LENGTH = 2;
@@ -202,8 +204,21 @@ const buildConfirmationEmail = ({ name, message }) => {
   };
 };
 
-const handlePost = async (context) => {
-  const { request, env } = context;
+const getRuntimeEnv = (locals) =>
+  locals?.runtime?.env ?? globalThis.process?.env ?? {};
+
+const getClientIp = (request) => {
+  const cfIp = request.headers.get("cf-connecting-ip");
+  if (cfIp) return cfIp;
+
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  if (!forwardedFor) return "unknown";
+
+  return forwardedFor.split(",")[0]?.trim() || "unknown";
+};
+
+const handlePost = async ({ request, locals }) => {
+  const env = getRuntimeEnv(locals);
 
   let payload;
   try {
@@ -214,7 +229,6 @@ const handlePost = async (context) => {
 
   const { name, email, message, company } = normalizeInput(payload);
 
-  // Honeypot field for basic bot filtering.
   if (company) {
     return json({ ok: true, message: "Message sent." });
   }
@@ -224,10 +238,6 @@ const handlePost = async (context) => {
     return json({ ok: false, error: validationError }, 400);
   }
 
-  // API contract:
-  // 1) Request body contains name, email, message.
-  // 2) Send inquiry to TEAM_CONTACT_EMAIL.
-  // 3) Send confirmation copy to request email, from MAIL_FROM_EMAIL.
   const mailFromEmail = getMailFromEmail(env);
   const teamContactEmail = getTeamContactEmail(env);
   const transport = createTransporter(env);
@@ -240,7 +250,7 @@ const handlePost = async (context) => {
     name,
     email,
     message,
-    ip: request.headers.get("cf-connecting-ip") || "unknown",
+    ip: getClientIp(request),
     userAgent: request.headers.get("user-agent") || "unknown",
   });
 
@@ -283,23 +293,24 @@ const handlePost = async (context) => {
   return json({ ok: true, message: "Thanks. Your message has been sent." });
 };
 
-export const onRequest = async (context) => {
-  if (context.request.method === "OPTIONS") {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        Allow: "POST, OPTIONS",
-      },
-    });
-  }
+const methodNotAllowed = () =>
+  json(
+    { ok: false, error: "Method not allowed." },
+    405,
+    { Allow: "POST, OPTIONS" },
+  );
 
-  if (context.request.method !== "POST") {
-    return json(
-      { ok: false, error: "Method not allowed." },
-      405,
-      { Allow: "POST, OPTIONS" },
-    );
-  }
+export const OPTIONS = async () =>
+  new Response(null, {
+    status: 204,
+    headers: {
+      Allow: "POST, OPTIONS",
+      "cache-control": "no-store",
+    },
+  });
 
-  return handlePost(context);
-};
+export const POST = handlePost;
+export const GET = methodNotAllowed;
+export const PUT = methodNotAllowed;
+export const PATCH = methodNotAllowed;
+export const DELETE = methodNotAllowed;

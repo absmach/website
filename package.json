@@ -7,10 +7,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "cf:dev": "npm run build && npx wrangler pages dev",
-    "cf:deploy": "npm run build && npx wrangler pages deploy"
+    "cf:dev": "astro build && wrangler pages dev dist",
+    "deploy": "astro build && wrangler pages deploy dist"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/tailwind": "^5.1.4",
     "astro": "^5.17.1",
@@ -22,6 +23,8 @@
     "@tailwindcss/typography": "^0.5.19",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.41",
-    "tailwindcss": "^3.4.10"
-  }
+    "tailwindcss": "^3.4.10",
+    "wrangler": "^4.68.1"
+  },
+  "packageManager": "pnpm@10.30.3"
 }

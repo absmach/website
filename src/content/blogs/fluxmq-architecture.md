@@ -20,7 +20,7 @@ tags:
   - "CoAP"
   - "Distributed Systems"
 category: blog
-featured: true
+featured: false
 ---
 
 ## From Motivation to Architecture

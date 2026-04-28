@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 530" font-family="sans-serif" font-size="13">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#555"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f97316"/>
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#22c55e"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8b5cf6"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="530" fill="#f8fafc" rx="10"/>
+
+  <!-- ── Modbus Device ── -->
+  <rect x="20" y="140" width="160" height="180" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="2"/>
+  <text x="100" y="165" text-anchor="middle" fill="#b91c1c" font-weight="bold" font-size="13">Modbus Device</text>
+  <text x="100" y="183" text-anchor="middle" fill="#b91c1c" font-size="11">(TCP/RTU slave)</text>
+  <line x1="30" y1="195" x2="170" y2="195" stroke="#fca5a5" stroke-width="1"/>
+  <text x="100" y="213" text-anchor="middle" fill="#7f1d1d" font-size="11">HR0 – Voltage (V)</text>
+  <text x="100" y="231" text-anchor="middle" fill="#7f1d1d" font-size="11">HR1 – Current (A)</text>
+  <text x="100" y="249" text-anchor="middle" fill="#7f1d1d" font-size="11">HR2 – Power (W)</text>
+  <text x="100" y="267" text-anchor="middle" fill="#7f1d1d" font-size="11">HR3 – Temp (°C)</text>
+  <text x="100" y="300" text-anchor="middle" fill="#dc2626" font-size="10">FC03 Holding Registers</text>
+
+  <!-- ── Raspberry Pi box ── -->
+  <rect x="240" y="60" width="330" height="360" rx="10" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="405" y="85" text-anchor="middle" fill="#64748b" font-size="12" font-weight="bold">Raspberry Pi</text>
+
+  <!-- Node-RED -->
+  <rect x="260" y="100" width="140" height="110" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+  <text x="330" y="122" text-anchor="middle" fill="#92400e" font-weight="bold">Node-RED</text>
+  <text x="330" y="140" text-anchor="middle" fill="#92400e" font-size="11">:1880</text>
+  <line x1="268" y1="150" x2="392" y2="150" stroke="#fcd34d" stroke-width="1"/>
+  <text x="330" y="166" text-anchor="middle" fill="#78350f" font-size="11">modbus-read node</text>
+  <text x="330" y="182" text-anchor="middle" fill="#78350f" font-size="11">Polls every 10s</text>
+  <text x="330" y="198" text-anchor="middle" fill="#78350f" font-size="11">Publishes SenML</text>
+
+  <!-- Agent -->
+  <rect x="420" y="100" width="130" height="110" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+  <text x="485" y="122" text-anchor="middle" fill="#1d4ed8" font-weight="bold">Agent</text>
+  <text x="485" y="140" text-anchor="middle" fill="#1d4ed8" font-size="11">:9999</text>
+  <line x1="428" y1="150" x2="542" y2="150" stroke="#93c5fd" stroke-width="1"/>
+  <text x="485" y="166" text-anchor="middle" fill="#1e40af" font-size="11">MQTT client</text>
+  <text x="485" y="182" text-anchor="middle" fill="#1e40af" font-size="11">HTTP API</text>
+  <text x="485" y="198" text-anchor="middle" fill="#1e40af" font-size="11">Flow manager</text>
+
+  <!-- NATS -->
+  <rect x="300" y="260" width="200" height="55" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+  <text x="400" y="282" text-anchor="middle" fill="#15803d" font-weight="bold">NATS</text>
+  <text x="400" y="298" text-anchor="middle" fill="#15803d" font-size="11">:4222 — agent internal bus</text>
+  <text x="400" y="312" text-anchor="middle" fill="#15803d" font-size="10">(EdgeX, terminal services)</text>
+
+  <!-- Node-RED → Agent HTTP arrow -->
+  <line x1="400" y1="148" x2="418" y2="148" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="409" y="140" text-anchor="middle" fill="#374151" font-size="10">HTTP</text>
+
+  <!-- Agent → NATS (internal services only) -->
+  <line x1="470" y1="210" x2="430" y2="258" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <!-- Modbus → Node-RED arrow -->
+  <line x1="182" y1="220" x2="258" y2="180" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="180" y="188" width="72" height="16" rx="3" fill="#f8fafc"/>
+  <text x="216" y="200" text-anchor="middle" fill="#b91c1c" font-size="10">Modbus TCP</text>
+
+  <!-- ── Magistrala Cloud ── -->
+  <rect x="630" y="80" width="170" height="290" rx="10" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="715" y="107" text-anchor="middle" fill="#5b21b6" font-weight="bold">Magistrala Cloud</text>
+  <line x1="638" y1="115" x2="792" y2="115" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="715" y="135" text-anchor="middle" fill="#6d28d9" font-size="11">MQTT Broker</text>
+  <text x="715" y="152" text-anchor="middle" fill="#6d28d9" font-size="11">:8883/TLS</text>
+  <line x1="638" y1="163" x2="792" y2="163" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="715" y="182" text-anchor="middle" fill="#5b21b6" font-size="11">Rules Engine</text>
+  <text x="715" y="199" text-anchor="middle" fill="#5b21b6" font-size="11">save_senml</text>
+  <line x1="638" y1="210" x2="792" y2="210" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="715" y="229" text-anchor="middle" fill="#5b21b6" font-size="11">Time-series DB</text>
+  <text x="715" y="247" text-anchor="middle" fill="#5b21b6" font-size="11">Sensor data</text>
+  <line x1="638" y1="257" x2="792" y2="257" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="715" y="276" text-anchor="middle" fill="#5b21b6" font-size="11">Remote control</text>
+  <text x="715" y="294" text-anchor="middle" fill="#5b21b6" font-size="11">Deploy flows</text>
+  <text x="715" y="312" text-anchor="middle" fill="#5b21b6" font-size="11">via MQTT req</text>
+  <line x1="638" y1="322" x2="792" y2="322" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="715" y="341" text-anchor="middle" fill="#5b21b6" font-size="11">Channels / Clients</text>
+  <text x="715" y="358" text-anchor="middle" fill="#5b21b6" font-size="11">Multi-tenancy</text>
+
+  <!-- Node-RED → Cloud MQTT (data) — routed high to avoid agent arrow -->
+  <path d="M 400 100 L 400 28 L 700 28 L 700 78" fill="none" stroke="#f97316" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-orange)"/>
+  <rect x="490" y="12" width="110" height="16" rx="3" fill="#f8fafc"/>
+  <text x="545" y="24" text-anchor="middle" fill="#c2410c" font-size="11">SenML data → /data</text>
+
+  <!-- Agent ↔ Cloud MQTT (control) — routed lower to avoid Node-RED arrow -->
+  <path d="M 552 155 L 590 155 L 590 50 L 660 50 L 660 78" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <rect x="560" y="34" width="120" height="16" rx="3" fill="#f8fafc"/>
+  <text x="620" y="46" text-anchor="middle" fill="#1d4ed8" font-size="11">cmd/res ↔ /req /res</text>
+
+  <!-- Remote flow deploy: operator sends MQTT command to cloud; cloud delivers to agent -->
+  <rect x="550" y="430" width="165" height="36" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="632" y="447" text-anchor="middle" fill="#5b21b6" font-size="11" font-weight="bold">Remote flow deploy</text>
+  <text x="632" y="461" text-anchor="middle" fill="#6d28d9" font-size="10">Operator → MQTT → Cloud → Agent</text>
+  <!-- Arrow: operator box → Magistrala Cloud bottom -->
+  <path d="M 632 430 L 632 395 L 715 395 L 715 372" fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arr-purple)"/>
+
+  <!-- Legend -->
+  <rect x="20" y="360" width="205" height="115" rx="6" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="32" y="378" fill="#374151" font-size="11" font-weight="bold">Legend</text>
+  <line x1="32" y1="392" x2="62" y2="392" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="70" y="396" fill="#374151" font-size="11">Modbus TCP poll</text>
+  <line x1="32" y1="410" x2="62" y2="410" stroke="#f97316" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-orange)"/>
+  <text x="70" y="414" fill="#374151" font-size="11">MQTT data publish</text>
+  <line x1="32" y1="428" x2="62" y2="428" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <text x="70" y="432" fill="#374151" font-size="11">MQTT control (agent)</text>
+  <line x1="32" y1="446" x2="62" y2="446" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arr-purple)"/>
+  <text x="70" y="450" fill="#374151" font-size="11">Remote flow deploy</text>
+</svg>

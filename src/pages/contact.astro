@@ -11,6 +11,7 @@ const linkedin = "https://www.linkedin.com/company/abstract-machines/";
 const twitter = "https://twitter.com/absmach";
 const youtube = "https://www.youtube.com/@absmach";
 const matrix = "https://matrix.to/#/#supermq:matrix.org";
+const contactApiEndpoint = "/api/contact";
 ---
 
 <BaseLayout
@@ -178,7 +179,7 @@ const matrix = "https://matrix.to/#/#supermq:matrix.org";
       <form
         class="grid gap-4 md:grid-cols-2"
         method="post"
-        action="/api/contact"
+        action={contactApiEndpoint}
         data-contact-form
       >
         <label class="flex flex-col gap-2">

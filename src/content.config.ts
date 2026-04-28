@@ -19,6 +19,7 @@ const blogs = defineCollection({
         draft: z.boolean().default(false),
 
         coverImage: z.union([z.string().url(), z.string()]).optional(), // URL or local path
+        coverVideo: z.union([z.string().url(), z.string()]).optional(), // URL or local path
         heroImage: z.union([z.string().url(), z.string()]).optional(), // URL or local path
         canonical: z.string().url().optional(),
 
