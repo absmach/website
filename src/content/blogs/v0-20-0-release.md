@@ -248,7 +248,7 @@ Before upgrading, back up the Domains, Rules Engine, Reports, Alarms, Auth, and 
 
 v0.20.0 adds new domain admin actions that require a one-time role backfill for existing rules and reports after the services start. Alarms are embedded in rules and do not have separate roles. The migrations run automatically on startup, but the backfill scripts must be run manually once afterwards.
 
-For full step-by-step upgrade instructions, see the [upgrade guide](https://github.com/absmach/magistrala/blob/main/README.md#upgrade-from-v0190-to-v0200).
+For full step-by-step upgrade instructions, see the [upgrade guide](Add a link to the blogpost: https://www.absmach.eu/blog/migrating-magistrala-v0-19-0-to-v0-20-0/).
 
 ---
 
