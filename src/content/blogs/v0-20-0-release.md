@@ -242,6 +242,16 @@ This release moves the ecosystem forward by making the full stack more integrate
 
 ---
 
+# Upgrading to v0.20.0
+
+Before upgrading, back up the Domains, Rules Engine, Reports, Alarms, Auth, and SpiceDB databases.
+
+v0.20.0 adds new domain admin actions for alarms and reports, which means existing rules and reports need a one-time role backfill after the services start. The migrations run automatically on startup, but the backfill scripts must be run manually once afterwards.
+
+For full step-by-step upgrade instructions, see the [upgrade guide](https://github.com/absmach/magistrala/blob/main/README.md#upgrade-from-v0190-to-v0200).
+
+---
+
 # Contributors
 
 Thanks to everyone who contributed to **Magistrala v0.20.0**:
