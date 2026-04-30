@@ -238,3 +238,4 @@ We would love to hear your feedback and ideas.
 - 🌐 Website: https://magistrala.absmach.eu
 - ⚙️ GitHub: https://github.com/absmach/magistrala
 - 📘 Documentation: https://magistrala.absmach.eu/docs
+- 💬 Matrix: https://matrix.to/#/#magistrala:matrix.org
