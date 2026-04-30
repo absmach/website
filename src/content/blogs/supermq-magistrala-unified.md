@@ -7,7 +7,7 @@ author:
   name: "Steve Munene"
   picture: "https://avatars.githubusercontent.com/u/61874077?v=4"
 coverImage: "/img/blogs/supermq-magistrala-merge/cover.jpg"
-featured: true
+featured: false
 ogImage:
   url: "/img/blogs/supermq-magistrala-merge/cover.jpg"
 tags:
