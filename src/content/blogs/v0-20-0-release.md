@@ -4,7 +4,7 @@ author:
   picture: "https://avatars.githubusercontent.com/u/61874077?v=4"
 category: announcement
 coverImage: /img/blogs/v0-20-0-release/homepage.png
-date: 2026-04-20
+date: 2026-04-30
 description: Release details for Magistrala v0.20.0, including the
   Magistrala and SuperMQ unification, FluxMQ integration, rules engine,
   alarms, reports, and access-control improvements.
