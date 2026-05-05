@@ -44,7 +44,7 @@ This is a practical breakdown of five IoT platforms worth evaluating. For each o
 
 ## Magistrala
 
-[Magistrala](https://magistrala.absmach.eu/) is an open-source IoT platform built as a **framework for constructing solutions**, not just running them. The distinction matters: most IoT platforms ship a fixed application you configure; Magistrala gives you the building blocks to design your own system architecture, rather than adapting your system to fit the platform.
+[Magistrala](https://magistrala.absmach.eu/) is an open-source (Apache 2.0) IoT platform built as a **framework for constructing solutions**, not just running them. The distinction matters: most IoT platforms ship a fixed application you configure; Magistrala gives you the building blocks to design your own system architecture, rather than adapting your system to fit the platform.
 
 ### Architecture
 
@@ -56,7 +56,7 @@ The platform's core model is built around a small set of abstractions that map t
 - **Channels**: message conduits between clients; they map to topics in the underlying message broker
 - **Groups**: hierarchical structures up to five levels deep for organizing clients and channels, with access control that propagates through every level
 
-On top of these, Magistrala ships a complete IoT application layer: a scriptable rules engine (Go and Lua), an alarms system (generate, assign, acknowledge, resolve), reports with PDF and CSV export, and dashboards with template support for multi-tenant data separation.
+On top of these, Magistrala ships a complete IoT application layer: a scriptable rules engine (supporting Go and Lua scripting), an alarms system (generate, assign, acknowledge, resolve), reports with PDF and CSV export, and dashboards with template support for multi-tenant data separation.
 
 ### Key Capabilities
 
@@ -80,9 +80,8 @@ On top of these, Magistrala ships a complete IoT application layer: a scriptable
 ### When Not To
 
 - Your project is simple and doesn't need the flexibility a framework provides
-- You want a fully managed SaaS and have no interest in self-hosting or a managed deployment
-
-That said, if managed deployment is the blocker, Magistrala offers an enterprise option where their team handles setup, customization, and infrastructure management for you.
+- You just need an MQTT broker — check out [FluxMQ](https://github.com/absmach/fluxmq)
+- You don't need dashboards, advanced access control, or message storage, just messaging infrastructure — [FluxMQ](https://github.com/absmach/fluxmq) is a better fit
 
 ---
 
