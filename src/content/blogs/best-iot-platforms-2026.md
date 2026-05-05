@@ -3,7 +3,7 @@ title: "Best IoT Platforms in 2026: 5 Options Worth Building On"
 slug: "best-iot-platforms-2026"
 excerpt: "A practical comparison of Magistrala, ThingsBoard, EMQX, AWS IoT Core, and Azure IoT Hub: what each platform actually does well, where it falls short, and when to pick it."
 description: "Explore five IoT platforms worth evaluating in 2026, including Magistrala, ThingsBoard, EMQX, AWS IoT Core, and Azure IoT Hub. This guide breaks down their strengths, trade-offs, and when each platform makes sense."
-date: "2026-04-28"
+date: "2026-05-05"
 author:
   name: "Ian Muchiri"
   picture: "https://avatars.githubusercontent.com/u/100555904?v=4"
@@ -63,7 +63,7 @@ On top of these, Magistrala ships a complete IoT application layer: a scriptable
 - **Multi-protocol support**: MQTT, CoAP, HTTP, WebSocket
 - **Secure communication**: TLS and mTLS
 - **Edge control**: via the [agent](https://github.com/absmach/agent) extension
-- **Rules engine**: scriptable logic in Go or Lua, with integrations for alarms, email, Slack, TimescaleDB, PostgreSQL, and channel republishing
+- **Rules engine**: scriptable logic in Go or Lua (Lua is commonly used for lightweight scripting on embedded/edge devices), with integrations for alarms, email, Slack, TimescaleDB, PostgreSQL, and channel republishing
 - **Alarms**: application-level alerts with a full lifecycle (generate, assign, track, resolve)
 - **Reports**: scheduled or on-demand, exportable as PDF or CSV
 - **RBAC**: fine-grained across domains, groups, clients, and channels
