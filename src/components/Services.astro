@@ -1,27 +1,34 @@
-<section class="py-16">
+---
+const solutions = [
+  ["Industrial IoT", "Secure, low-latency data flows for factory automation and industrial equipment.", ["Factory Automation", "Predictive Maintenance", "Energy"]],
+  ["Smart Cities", "Distributed sensor networks for intelligent urban infrastructure.", ["Lighting", "Traffic", "Environmental"]],
+  ["Edge AI & Analytics", "WebAssembly-orchestrated AI workloads at the network edge.", ["Live Inference", "Vision", "Anomaly Detection"]],
+  ["Connected Healthcare", "Secure patient monitoring and compliant medical device integration.", ["Remote Monitoring", "Privacy", "Live Alerts"]],
+  ["Fleet Management", "Continuous vehicle telemetry and route optimisation at scale.", ["GPS", "Fuel", "Diagnostics"]],
+  ["Energy & Utilities", "Monitoring and control for distributed energy resources.", ["Smart Metering", "Grid", "Solar"]],
+];
+---
+
+<section>
   <div class="container-wide">
-    <p class="section-label">Services</p>
-    <h2 class="section-title mt-4">From platform to production</h2>
-    <div class="mt-8 grid gap-6 md:grid-cols-2">
-      <div class="card-base">
-        <h3 class="text-lg font-semibold">Managed Magistrala Platform</h3>
-        <p class="mt-3 text-muted">Operate production deployments with SLAs and expert support.</p>
+    <div class="section-head">
+      <div class="left">
+        <span class="kicker">Solutions · Production deployments</span>
+        <h2 class="h-1" style="margin-top:14px;">Infrastructure for demanding environments.</h2>
       </div>
-      <div class="card-base">
-        <h3 class="text-lg font-semibold">Solution Design & Integration</h3>
-        <p class="mt-3 text-muted">Architecture, integration, and rollout support for complex systems.</p>
-      </div>
-      <div class="card-base">
-        <h3 class="text-lg font-semibold">Custom Development</h3>
-        <p class="mt-3 text-muted">Build specialized components and workflow automation.</p>
-      </div>
-      <div class="card-base">
-        <h3 class="text-lg font-semibold">Hardware & Embedded Systems</h3>
-        <p class="mt-3 text-muted">Gateway hardware design, firmware, and device onboarding.</p>
-      </div>
+      <a href="/solutions" class="btn-link">All solutions →</a>
     </div>
-    <div class="mt-8">
-      <a class="button-secondary" href="/services/">View services</a>
+    <div class="sol-grid">
+      {solutions.map(([title, description, tags]) => (
+        <a class="sol-card" href="/solutions">
+          <div class="icon-frame">{(title as string).charAt(0)}</div>
+          <h3 class="name">{title}</h3>
+          <p class="desc">{description}</p>
+          <div class="tags">
+            {(tags as string[]).map((tag) => <span class="tag">{tag}</span>)}
+          </div>
+        </a>
+      ))}
     </div>
   </div>
 </section>

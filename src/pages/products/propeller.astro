@@ -1,0 +1,798 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+
+const features = [
+  {
+    ic: "☁️",
+    name: "Cloud-Edge Orchestration",
+    desc: "Deploy Wasm workloads effortlessly across diverse environments, from robust cloud servers to lightweight microcontrollers running Zephyr RTOS.",
+  },
+  {
+    ic: "⚡",
+    name: "Fast Boot Times",
+    desc: "Take advantage of Wasm's near-instant startup for efficient workload execution. Deploy and scale functions in milliseconds.",
+  },
+  {
+    ic: "📦",
+    name: "OCI Registry Support",
+    desc: "Push and pull Wasm workloads from OCI-compliant registries for streamlined workflow integration and version management.",
+  },
+  {
+    ic: "🛡️",
+    name: "Security at the Core",
+    desc: "Propeller ensures secure workload execution and communication for IoT environments with sandboxed Wasm runtimes.",
+  },
+  {
+    ic: "🔗",
+    name: "Powerful Service Mesh",
+    desc: "Integrates with Magistrala for secure, efficient IoT device communication across your entire infrastructure.",
+  },
+  {
+    ic: "🖥️",
+    name: "FaaS Deployment",
+    desc: "Enable Function-as-a-Service capabilities for scalable and event-driven applications across the cloud-edge continuum.",
+  },
+];
+
+const steps = [
+  {
+    num: "01",
+    icon: "⌨️",
+    title: "Develop in WebAssembly",
+    desc: "Write portable, lightweight Wasm workloads for your application using your preferred language.",
+  },
+  {
+    num: "02",
+    icon: "⬆️",
+    title: "Register Workloads",
+    desc: "Push your workloads to an OCI-compliant registry for easy deployment and version control.",
+  },
+  {
+    num: "03",
+    icon: "🚀",
+    title: "Deploy Anywhere",
+    desc: "Use Propeller to orchestrate and manage workload deployment across cloud, edge, and IoT devices.",
+  },
+  {
+    num: "04",
+    icon: "📊",
+    title: "Monitor & Scale",
+    desc: "Leverage real-time monitoring and dynamic scaling to optimize your system's performance.",
+  },
+];
+
+const uiFeatures = [
+  {
+    id: "job",
+    title: "Job Management",
+    desc: "Deploy and manage WebAssembly jobs across your infrastructure with full Kubernetes manifest support and real-time status tracking.",
+    img: "/img/propeller-ui/job.png",
+    alt: "Propeller Job K8S Manifest",
+  },
+  {
+    id: "logs",
+    title: "Live Log Streaming",
+    desc: "Stream logs from proplets in real time directly from the Kubernetes cluster, giving you full observability into running Wasm workloads.",
+    img: "/img/propeller-ui/logs.png",
+    alt: "Propeller Proplet K8S Logs",
+  },
+  {
+    id: "proplet",
+    title: "Proplet Manifests",
+    desc: "Inspect and manage proplet manifests across cloud and edge nodes, with detailed resource and configuration visibility.",
+    img: "/img/propeller-ui/proplet.png",
+    alt: "Propeller Proplet K8S Manifest",
+  },
+  {
+    id: "topology",
+    title: "Connection Topology",
+    desc: "Visualise the live connection topology of your Propeller cluster, tracking how proplets and jobs are distributed across the cloud-edge continuum.",
+    img: "/img/propeller-ui/topology.png",
+    alt: "Propeller K8S Connection Topology",
+  },
+];
+
+const solutions = [
+  {
+    title: "Edge Inference",
+    desc: "Run AI and ML inference workloads directly on edge nodes without round-trips to the cloud.",
+    tags: ["Vision", "Anomaly Detection", "Low Latency"],
+  },
+  {
+    title: "IoT Automation",
+    desc: "Deploy event-driven logic close to devices to reduce latency and cloud bandwidth costs.",
+    tags: ["Rules", "Triggers", "Edge Logic"],
+  },
+  {
+    title: "Serverless at Edge",
+    desc: "Invoke on-demand functions on remote nodes without managing long-running processes.",
+    tags: ["FaaS", "On-Demand", "Scale-to-Zero"],
+  },
+  {
+    title: "MCU Workloads",
+    desc: "Deploy Wasm binaries directly to Zephyr RTOS microcontrollers for ultra-low-power edge computing.",
+    tags: ["Zephyr", "RISC-V", "MCU"],
+  },
+];
+
+const integrations = [
+  "WebAssembly",
+  "Kubernetes",
+  "Docker",
+  "Zephyr RTOS",
+  "Magistrala",
+  "Go Runtime",
+  "Rust Runtime",
+  "OCI Registry",
+];
+
+const faqs = [
+  {
+    q: "What is Propeller?",
+    a: "Propeller is a cutting-edge orchestrator for WebAssembly (Wasm) workloads across the Cloud-Edge continuum. It enables seamless deployment of Wasm applications from powerful cloud servers to constrained microcontrollers, combining flexibility, security, and performance.",
+  },
+  {
+    q: "What are the key features of Propeller?",
+    a: "Propeller offers cloud-edge orchestration, fast boot times with near-instant startup, FaaS deployment capabilities, OCI registry support, WAMR on Zephyr RTOS for constrained devices, integration with Magistrala service mesh, and security-first design for IoT environments.",
+  },
+  {
+    q: "Which devices does Propeller support?",
+    a: "Propeller supports a wide range of devices from robust cloud servers to lightweight microcontrollers running Zephyr RTOS. It can deploy Wasm workloads across the entire cloud-edge continuum, making it ideal for diverse IoT and edge computing scenarios.",
+  },
+  {
+    q: "How does Propeller integrate with existing infrastructure?",
+    a: "Propeller integrates with OCI-compliant registries for workload storage and retrieval, and connects with Magistrala for secure IoT device communication. It supports standard protocols like MQTT, CoAP, and WebSocket for communication with edge devices.",
+  },
+  {
+    q: "What are common use cases for Propeller?",
+    a: "Common use cases include Industrial IoT (deploying analytics to factory edge devices), secure workload execution with isolated Wasm runtimes, smart cities with scalable IoT networks, and serverless applications leveraging FaaS capabilities across the cloud-edge continuum.",
+  },
+  {
+    q: "How do I get started with Propeller?",
+    a: "Getting started is easy: develop your application in WebAssembly, push your workloads to an OCI-compliant registry, use Propeller to orchestrate deployment across your infrastructure, and monitor and scale your workloads in real time. Check the documentation for detailed setup instructions.",
+  },
+];
+---
+
+<BaseLayout
+  title="Propeller Wasm Orchestrator — Abstract Machines"
+  description="Deploy WebAssembly workloads from cloud to microcontrollers with sub-10ms boot times. Open-source Wasm orchestration for the cloud-edge continuum."
+>
+  <Header />
+  <main>
+    <!-- Hero -->
+    <section class="prod-hero has-video">
+      <video
+        class="hero-bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="/video/hero-background-poster.webp"
+        aria-hidden="true"
+      >
+        <source src="/video/hero-background.webm" type="video/webm" />
+        <source src="/video/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div class="container-wide">
+        <div class="hero-grid">
+          <div>
+            <img
+              src="/img/products/propeller-named-white.svg"
+              alt="Propeller"
+              class="prod-logo-img"
+              style="height:56px; margin-bottom:8px;"
+            />
+            <h1 class="tagline">Deploy Wasm from Cloud to Microcontrollers.</h1>
+            <p class="lede" style="margin-top:16px; max-width:48ch;">
+              Propeller is a cutting-edge orchestrator for WebAssembly workloads
+              across the Cloud-Edge continuum. Seamlessly deploy portable,
+              lightweight Wasm applications from powerful cloud servers to
+              constrained microcontrollers with security and performance.
+            </p>
+            <div class="btn-row" style="margin-top:32px;">
+              <a
+                href="https://propeller.absmach.eu/docs/getting-started"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener">Get Started ↗</a
+              >
+              <a
+                href="https://propeller.absmach.eu/docs"
+                class="btn"
+                target="_blank"
+                rel="noopener">Documentation ↗</a
+              >
+            </div>
+            <div style="margin-top:20px;">
+              <span class="badge success"
+                ><span class="dot"></span>Open Source · Apache 2.0</span
+              >
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="arch-card">
+              <img
+                src="/img/products/propeller-architecture-diagram.svg"
+                alt="Propeller architecture diagram"
+                class="arch-img"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats bar -->
+    <div style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="prop-metrics metrics" style="border:none; border-radius:0; border-left:1px solid var(--line-3);">
+          <div class="metric">
+            <div class="v">Cloud to MCU</div>
+            <div class="l">Deployment range</div>
+          </div>
+          <div class="metric featured">
+            <div class="v">&lt;10ms</div>
+            <div class="l">Wasm boot time</div>
+          </div>
+          <div class="metric">
+            <div class="v">100%</div>
+            <div class="l">Sandboxed isolation</div>
+          </div>
+          <div class="metric">
+            <div class="v">Multi-Protocol</div>
+            <div class="l">MQTT · CoAP · WebSocket</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Features</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              WebAssembly orchestration at scale.
+            </h2>
+          </div>
+          <p class="lede">
+            Deploy portable, secure, and high-performance Wasm workloads across
+            any environment with Propeller's comprehensive feature set.
+          </p>
+        </div>
+        <div class="prop-feat-grid feature-grid">
+          {
+            features.map(({ ic, name, desc }) => (
+              <div class="feature">
+                <div class="ic" style="font-size:18px;">{ic}</div>
+                <div class="name">{name}</div>
+                <p class="desc">{desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head" style="text-align:center; display:block;">
+          <span class="kicker">How it works</span>
+          <h2 class="h-2" style="margin-top:14px;">
+            Deploy WebAssembly in four steps.
+          </h2>
+          <p class="lede" style="margin:12px auto 0; max-width:56ch;">
+            From development to deployment, Propeller makes it easy to
+            orchestrate Wasm workloads across your entire infrastructure.
+          </p>
+        </div>
+
+        <!-- Desktop: horizontal timeline -->
+        <div class="hiw-desktop">
+          <div class="hiw-track">
+            <div class="hiw-line"></div>
+            <div class="hiw-line-beam"></div>
+            {
+              steps.map(({ icon, title, desc, num }) => (
+                <div class="hiw-step">
+                  <div class="hiw-icon-wrap">
+                    <div class="hiw-icon">{icon}</div>
+                  </div>
+                  <div class="hiw-body">
+                    <div class="hiw-num">{num}</div>
+                    <h3 class="hiw-title">{title}</h3>
+                    <p class="hiw-desc">{desc}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Mobile: vertical timeline -->
+        <div class="hiw-mobile">
+          <div class="hiw-vline"></div>
+          {
+            steps.map(({ icon, title, desc, num }) => (
+              <div class="hiw-vstep">
+                <div class="hiw-vicon">{icon}</div>
+                <div class="hiw-vbody">
+                  <span class="hiw-vnum">{num}</span>
+                  <h3 class="hiw-vtitle">{title}</h3>
+                  <p class="hiw-vdesc">{desc}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Propeller UI -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head" style="text-align:center; display:block;">
+          <span class="kicker">Propeller UI</span>
+          <h2 class="h-2" style="margin-top:14px;">
+            A unified interface for the edge.
+          </h2>
+          <p class="lede" style="margin:12px auto 0; max-width:60ch;">
+            Deploy, monitor, and inspect WebAssembly workloads across the
+            cloud-edge continuum — from Kubernetes manifests to live topology
+            views.
+          </p>
+        </div>
+
+        <div class="pui-layout">
+          <!-- Accordion tabs -->
+          <div class="pui-tabs" id="pui-tabs">
+            {
+              uiFeatures.map(({ id, title, desc }, i) => (
+                <div
+                  class={`pui-tab${i === 0 ? " active" : ""}`}
+                  data-target={id}
+                >
+                  <button class="pui-tab-btn" type="button">
+                    <span class="pui-tab-title">{title}</span>
+                    <span class="pui-chevron">›</span>
+                  </button>
+                  <p class="pui-tab-desc">{desc}</p>
+                </div>
+              ))
+            }
+          </div>
+
+          <!-- Image panel -->
+          <div class="pui-panel">
+            {
+              uiFeatures.map(({ id, img, alt }, i) => (
+                <div
+                  class={`pui-img-wrap${i === 0 ? " active" : ""}`}
+                  data-panel={id}
+                >
+                  <img src={img} alt={alt} class="pui-img" loading="lazy" />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solutions -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Solutions</span>
+            <h2 class="h-2" style="margin-top:14px;">Where Propeller fits.</h2>
+          </div>
+        </div>
+        <div class="prop-sol-grid sol-grid">
+          {
+            solutions.map(({ title, desc, tags }) => (
+              <div class="sol-card">
+                <div class="icon-frame">{title.charAt(0)}</div>
+                <h3 class="name">{title}</h3>
+                <p class="desc">{desc}</p>
+                <div class="tags">
+                  {tags.map((t) => (
+                    <span class="tag">{t}</span>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Integrations -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Integrations</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Works with the tools you use.
+            </h2>
+          </div>
+        </div>
+        <div class="integ-grid">
+          {
+            integrations.map((name) => (
+              <div class="integ-chip">
+                <span class="dot" />
+                {name}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">FAQ</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Frequently asked questions.
+            </h2>
+          </div>
+        </div>
+        <FAQAccordion items={faqs} />
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+      <div class="container-narrow" style="text-align:center;">
+        <span class="kicker">Get started</span>
+        <h2 class="h-2" style="margin-top:14px;">
+          Start orchestrating workloads.
+        </h2>
+        <p class="lede" style="margin:20px auto 36px;">
+          Read the documentation, explore the source, or talk to the team about
+          your deployment needs.
+        </p>
+        <div class="btn-row" style="justify-content:center;">
+          <a
+            href="https://propeller.absmach.eu/docs"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener">View Documentation ↗</a
+          >
+          <a href="/contact" class="btn">Contact Sales</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Hero architecture card — light background forces light-mode SVG rendering */
+  .arch-card {
+    /* background: #ffffff; */
+    border-radius: 12px;
+    padding: 24px;
+    color-scheme: light;
+  }
+  .arch-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Metrics responsive */
+  .prop-metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 640px) {
+    .prop-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .prop-metrics .metric {
+      border-right: none;
+    }
+  }
+
+  /* Features responsive */
+  .prop-feat-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 980px) {
+    .prop-feat-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .prop-feat-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── How It Works ── */
+  .hiw-desktop {
+    margin-top: 48px;
+  }
+  .hiw-mobile {
+    display: none;
+    margin-top: 40px;
+  }
+  @media (max-width: 768px) {
+    .hiw-desktop { display: none; }
+    .hiw-mobile { display: block; }
+  }
+
+  /* Desktop timeline */
+  .hiw-track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .hiw-line {
+    position: absolute;
+    top: 23px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--line-3);
+  }
+  .hiw-line-beam {
+    position: absolute;
+    top: 23px;
+    left: 0;
+    height: 2px;
+    width: 80px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: hiw-beam 4s ease-in-out infinite;
+  }
+  @keyframes hiw-beam {
+    0% { left: -80px; }
+    100% { left: 100%; }
+  }
+  .hiw-step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .hiw-icon-wrap {
+    position: relative;
+    z-index: 1;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--line-3);
+    background: var(--paper-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .hiw-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+  .hiw-body {
+    margin-top: 24px;
+  }
+  .hiw-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--ink-4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .hiw-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .hiw-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.6;
+  }
+
+  /* Mobile vertical timeline */
+  .hiw-mobile {
+    position: relative;
+  }
+  .hiw-vline {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 19px;
+    width: 2px;
+    background: var(--line-3);
+  }
+  .hiw-vstep {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 28px;
+  }
+  .hiw-vicon {
+    position: relative;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--line-3);
+    background: var(--paper-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .hiw-vbody {
+    padding: 10px 16px;
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    background: var(--paper-2);
+    flex: 1;
+  }
+  .hiw-vnum {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--ink-4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .hiw-vtitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .hiw-vdesc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.5;
+  }
+
+  /* ── Propeller UI section ── */
+  .pui-layout {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 48px;
+    margin-top: 48px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .pui-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .pui-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .pui-tab {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+  }
+  .pui-tab.active {
+    border-color: var(--accent);
+  }
+  .pui-tab-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    gap: 8px;
+  }
+  .pui-tab-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .pui-chevron {
+    font-size: 18px;
+    color: var(--ink-4);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .pui-tab.active .pui-chevron {
+    transform: rotate(90deg);
+    color: var(--accent);
+  }
+  .pui-tab-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.6;
+    padding: 0 16px 14px;
+    display: none;
+  }
+  .pui-tab.active .pui-tab-desc {
+    display: block;
+  }
+
+  .pui-panel {
+    display: grid;
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--paper-2);
+  }
+  .pui-img-wrap {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+  .pui-img-wrap.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .pui-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Solutions responsive */
+  .prop-sol-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 640px) {
+    .prop-sol-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const tabs = document.querySelectorAll(".pui-tab");
+    const panels = document.querySelectorAll(".pui-img-wrap");
+
+    tabs.forEach((tab) => {
+      tab.querySelector(".pui-tab-btn").addEventListener("click", () => {
+        const target = tab.dataset.target;
+        tabs.forEach((t) => t.classList.remove("active"));
+        panels.forEach((p) => p.classList.remove("active"));
+        tab.classList.add("active");
+        document.querySelector(`.pui-img-wrap[data-panel="${target}"]`)?.classList.add("active");
+      });
+    });
+  })();
+</script>

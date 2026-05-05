@@ -1,0 +1,48 @@
+---
+const deployments = [
+  [
+    "Nokia",
+    "Data Marketplace",
+    "Magistrala powers Nokia's Data Marketplace, enabling secure IoT data exchange and monetisation through real-time MQTT connectors.",
+    ["Seamless data sharing", "Real-time processing", "Secure monetisation"],
+  ],
+  [
+    "Intel",
+    "Edge Metering",
+    "Real-time metering on the edge with Magistrala integrated into EdgeX Foundry for advanced monitoring solutions.",
+    ["Edge processing", "Real-time metrics", "Linux Foundation integration"],
+  ],
+  [
+    "Ericsson",
+    "IoT Slice Orchestration",
+    "Orchestration of IoT slices through edge and cloud microservice platforms for next-generation network architecture.",
+    ["Network slicing", "Microservice orchestration", "Cloud-edge continuum"],
+  ],
+];
+---
+
+<section style="background:var(--ink); color:var(--paper);">
+  <div class="container-wide">
+    <div class="section-head">
+      <div class="left">
+        <span class="kicker" style="color:rgba(246,244,238,0.6);">Production</span>
+        <h2 class="h-1" style="margin-top:14px; color:var(--paper);">Where the stack runs in production.</h2>
+      </div>
+      <p class="lede" style="color:rgba(246,244,238,0.7); max-width:36ch;">
+        Three flagship deployments built on the same open-source platform you can run yourself.
+      </p>
+    </div>
+    <div class="depl-grid">
+      {deployments.map(([company, title, description, bullets]) => (
+        <div class="depl-card" style="background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.1);">
+          <div class="company" style="color:rgba(246,244,238,0.6);">{company}</div>
+          <h3 class="title" style="color:var(--paper);">{title}</h3>
+          <p class="desc" style="color:rgba(246,244,238,0.7);">{description}</p>
+          <ul style="color:rgba(246,244,238,0.8);">
+            {(bullets as string[]).map((bullet) => <li>{bullet}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
