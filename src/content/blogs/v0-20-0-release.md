@@ -23,7 +23,7 @@ tags:
 - Access Control
 - Distributed Systems
 title: Magistrala v0.20.0 is Here!
-featured: true
+featured: false
 ---
 
 # Magistrala v0.20.0
