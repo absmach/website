@@ -1,9 +1,9 @@
 ---
-title: "Building a Dashboard for FluxMQ: Visibility Across Protocols and Clusters"
+title: "The FluxMQ Dashboard: Real-Time Visibility Across Protocols and Clusters"
 slug: "fluxmq-dashboard"
 excerpt: "FluxMQ now ships with a real-time dashboard that gives you live visibility into sessions, subscriptions, broker health, and cluster topology — all in one place."
 description: "A walkthrough of the FluxMQ dashboard: what it shows, how it's built, and how to run it alongside your broker using Docker or docker compose."
-date: "2026-03-24"
+date: "2026-05-06"
 author:
   name: "Felister Wambui"
   picture: "https://avatars.githubusercontent.com/u/80099068?v=4"
@@ -17,8 +17,7 @@ tags:
   - mqtt
   - amqp
 ---
-
-Running a message broker in production without visibility is flying blind. You know messages are flowing but how many clients are connected? Which sessions are active or stale? Are all cluster nodes healthy? Which topics are active right now?
+FluxMQ is a multi-protocol message broker supporting MQTT, AMQP, and HTTP. Running a message broker in production without observability means guessing. You know messages are flowing but how many clients are connected? Which sessions are active or stale? Are all cluster nodes healthy? Which topics are active right now?
 
 FluxMQ now ships with a real-time dashboard that answers these questions out of the box.
 
@@ -26,12 +25,23 @@ FluxMQ now ships with a real-time dashboard that answers these questions out of 
 
 ## What the Dashboard Shows
 
-The dashboard is a Next.js application that talks to the FluxMQ Admin API. It's organized around six views:
+The dashboard is a Next.js application that talks to the FluxMQ Admin API. It's organized around four views:
 
 - **Overview** — live message throughput charts, bandwidth trends, and a cluster node table with per-node health at a glance
+
+![Dashboard Overview Page](/img/blogs/fluxmq-dashboard/broker.png)
+
 - **Sessions** — all sessions (connected and disconnected), filterable by protocol, with per-session detail dialogs
+
+![Sessions Page](/img/blogs/fluxmq-dashboard/sessions.png)
+
 - **Subscriptions** — active topic filters aggregated from connected clients
+
+![Subscriptions Page](/img/blogs/fluxmq-dashboard/subscriptions.png)
+
 - **Broker Info** — runtime identity, uptime, session counts, and error counters
+
+![Broker Info Page](/img/blogs/fluxmq-dashboard/health.png)
 
 Every page polls the Admin API on a short interval so the data stays current without a page refresh.
 
@@ -61,7 +71,9 @@ The easiest way to get started is docker compose:
 docker compose -f deployments/docker/compose.yaml up -d
 ```
 
-This starts FluxMQ and the dashboard together. The dashboard is available at `http://localhost:3000/dashboard`.
+This starts FluxMQ and the dashboard together. The dashboard is available at `http://localhost:3001/dashboard`.
+
+![Single Node](/img/blogs/fluxmq-dashboard/cover-image.png)
 
 For a three-node cluster:
 
@@ -72,8 +84,12 @@ docker compose -f deployments/cluster/docker-compose.yaml up -d dashboard
 
 The dashboard connects to node 1 by default and fans out per-node stats across all three nodes.
 
+![Three Nodes](/img/blogs/fluxmq-dashboard/3-nodes.png)
+
 ---
 
 ## What's Next
 
-The current dashboard covers the core operational view. Upcoming work includes alert thresholds, historical trend data, and a connections page for filtering active clients by IP or client ID. If you have a specific use case or a gap you're running into, open an issue.
+The current dashboard covers the core operational view. Upcoming work includes alert thresholds and historical trend data.
+
+If you have a specific use case or a gap you're running into, [open an issue](https://github.com/absmach/fluxmq/issues) on GitHub. To follow development or ask questions, join the community on [Discord](https://discord.gg/HvB5QuzF) or explore the [documentation](https://fluxmq.absmach.eu/docs).
