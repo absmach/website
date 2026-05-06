@@ -16,10 +16,12 @@ tags:
   - dashboard
   - mqtt
   - amqp
+  - observability
+  - monitoring
 ---
-FluxMQ is a multi-protocol message broker supporting MQTT, AMQP, and HTTP. Running a message broker in production without observability means guessing. You know messages are flowing but how many clients are connected? Which sessions are active or stale? Are all cluster nodes healthy? Which topics are active right now?
+FluxMQ is a multi-protocol message broker supporting multiple versions of MQTT, AMQP, and HTTP. Running a message broker in production without observability means guessing. You know messages are flowing, but how many clients are connected? Which sessions are active or stale? Are all cluster nodes healthy? Which topics are active right now?
 
-FluxMQ now ships with a real-time dashboard that answers these questions out of the box.
+The FluxMQ dashboard answers these questions out of the box.
 
 ---
 
@@ -81,6 +83,8 @@ For a three-node cluster:
 make docker-cluster-up
 docker compose -f deployments/cluster/docker-compose.yaml up -d dashboard
 ```
+
+The first command brings up the three broker nodes. The second starts the dashboard separately, since the cluster is typically deployed independently of the UI.
 
 The dashboard connects to node 1 by default and fans out per-node stats across all three nodes.
 
