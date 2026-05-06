@@ -31,19 +31,19 @@ The dashboard is a Next.js application that talks to the FluxMQ Admin API. It's 
 
 - **Overview** — live message throughput charts, bandwidth trends, and a cluster node table with per-node health at a glance
 
-![Dashboard Overview Page](/img/blogs/fluxmq-dashboard/broker.png)
+![Overview page showing message throughput charts and cluster node health table](/img/blogs/fluxmq-dashboard/broker.png)
 
 - **Sessions** — all sessions (connected and disconnected), filterable by protocol, with per-session detail dialogs
 
-![Sessions Page](/img/blogs/fluxmq-dashboard/sessions.png)
+![Sessions page listing connected and disconnected clients with protocol filter](/img/blogs/fluxmq-dashboard/sessions.png)
 
 - **Subscriptions** — active topic filters aggregated from connected clients
 
-![Subscriptions Page](/img/blogs/fluxmq-dashboard/subscriptions.png)
+![Subscriptions page showing active topic filters from connected clients](/img/blogs/fluxmq-dashboard/subscriptions.png)
 
 - **Broker Info** — runtime identity, uptime, session counts, and error counters
 
-![Broker Info Page](/img/blogs/fluxmq-dashboard/health.png)
+![Broker Info page displaying runtime identity, uptime, and error counters](/img/blogs/fluxmq-dashboard/health.png)
 
 Every page polls the Admin API on a short interval so the data stays current without a page refresh.
 
@@ -67,7 +67,7 @@ FluxMQ speaks MQTT v3, MQTT v5, AMQP 1.0, AMQP 0.9.1, and HTTP. The sessions pag
 
 ## Running It
 
-The easiest way to get started is docker compose:
+The easiest way to get started is with docker compose:
 
 ```bash
 docker compose -f deployments/docker/compose.yaml up -d
@@ -75,7 +75,7 @@ docker compose -f deployments/docker/compose.yaml up -d
 
 This starts FluxMQ and the dashboard together. The dashboard is available at `http://localhost:3001/dashboard`.
 
-![Single Node](/img/blogs/fluxmq-dashboard/cover-image.png)
+![Dashboard running against a single FluxMQ node via docker compose](/img/blogs/fluxmq-dashboard/cover-image.png)
 
 For a three-node cluster:
 
@@ -88,7 +88,7 @@ The first command brings up the three broker nodes. The second starts the dashbo
 
 The dashboard connects to node 1 by default and fans out per-node stats across all three nodes.
 
-![Three Nodes](/img/blogs/fluxmq-dashboard/3-nodes.png)
+![Dashboard showing per-node stats across a three-node FluxMQ cluster](/img/blogs/fluxmq-dashboard/3-nodes.png)
 
 ---
 
