@@ -10,42 +10,34 @@ const products = [
   {
     group: "Software",
     items: [
-      {
-        label: "Magistrala",
-        desc: "IoT Platform",
-        href: "/products/magistrala",
-      },
-      { label: "FluxMQ", desc: "Message Broker", href: "/products/fluxmq" },
-      {
-        label: "Propeller",
-        desc: "Wasm Orchestrator",
-        href: "/products/propeller",
-      },
+      { label: "Magistrala", desc: "IoT Platform", href: "/products/magistrala", logo: "/img/products/magistrala.png" },
+      { label: "FluxMQ", desc: "Message Broker", href: "/products/fluxmq", logo: "/img/products/fluxmq.png" },
+      { label: "Propeller", desc: "Wasm Orchestrator", href: "/products/propeller", logo: "/img/products/propeller.png" },
     ],
   },
   {
     group: "Hardware",
     items: [
-      { label: "S0", desc: "Edge Gateway", href: "/products/s0" },
-      { label: "S1", desc: "Industrial Gateway", href: "/products/s1" },
+      { label: "S0", desc: "Edge Gateway", href: "/products/s0", logo: "/img/products/s0.png" },
+      { label: "S1", desc: "Industrial Gateway", href: "/products/s1", logo: undefined },
     ],
   },
 ];
 
 const solutions = [
-  { label: "Smart Water Metering", href: "/solutions/smart-water" },
-  { label: "Smart City", href: "/solutions/smart-city" },
-  { label: "Smart Energy", href: "/solutions/smart-energy" },
-  { label: "Cold Storage", href: "/solutions/cold-storage" },
-  { label: "Smart Farming", href: "/solutions/smart-farming" },
-  { label: "Oil & Gas", href: "/solutions/oil-gas" },
-  { label: "Smart Irrigation", href: "/solutions/smart-irrigation" },
-  { label: "Air Quality", href: "/solutions/air-quality" },
+  { label: "Smart Water Metering", desc: "Eliminate NRW and automate AMI billing in real time.", href: "/solutions/smart-water" },
+  { label: "Smart City", desc: "Unify traffic, energy, and civic infrastructure in one dashboard.", href: "/solutions/smart-city" },
+  { label: "Smart Energy", desc: "Balance grid loads and monitor renewable generation.", href: "/solutions/smart-energy" },
+  { label: "Cold Storage", desc: "HACCP-compliant cold chain monitoring across all zones.", href: "/solutions/cold-storage" },
+  { label: "Smart Farming", desc: "Precision irrigation and crop stress monitoring.", href: "/solutions/smart-farming" },
+  { label: "Oil & Gas", desc: "Pipeline integrity monitoring and predictive maintenance.", href: "/solutions/oil-gas" },
+  { label: "Smart Irrigation", desc: "Sensor-driven irrigation schedules that eliminate water waste.", href: "/solutions/smart-irrigation" },
+  { label: "Air Quality", desc: "Track PM2.5, CO₂, and pollutants with regulatory reporting.", href: "/solutions/air-quality" },
 ];
 
 const projects = [
-  { label: "ELASTIC", href: "/projects/elastic" },
-  { label: "Confidential 6G", href: "/projects/confidential6g" },
+  { label: "ELASTIC", desc: "6G edge orchestration", href: "/projects/elastic", logo: "/img/logos/elastic-dark.png" },
+  { label: "Confidential 6G", desc: "Post-quantum 6G security", href: "/projects/confidential6g", logo: "/img/logos/confidential6G.jpg" },
 ];
 
 const plainLinks = [
@@ -91,13 +83,16 @@ const plainLinks = [
             products.map(({ group, items }) => (
               <div class="dropdown-group">
                 <div class="dropdown-group-label">{group}</div>
-                {items.map(({ label, desc, href }) => (
+                {items.map(({ label, desc, href, logo }) => (
                   <a
                     href={href}
-                    class={`dropdown-item${isActive(href) ? " active" : ""}`}
+                    class={`dropdown-item${logo ? " has-logo" : ""}${isActive(href) ? " active" : ""}`}
                   >
-                    <span class="dropdown-name">{label}</span>
-                    <span class="dropdown-desc">{desc}</span>
+                    {logo && <img src={logo} alt="" class="dropdown-logo" aria-hidden="true" />}
+                    <div class="dropdown-text">
+                      <span class="dropdown-name">{label}</span>
+                      <span class="dropdown-desc">{desc}</span>
+                    </div>
                   </a>
                 ))}
               </div>
@@ -128,12 +123,13 @@ const plainLinks = [
         </a>
         <div class="nav-dropdown dropdown-solutions">
           {
-            solutions.map(({ label, href }) => (
+            solutions.map(({ label, desc, href }) => (
               <a
                 href={href}
                 class={`dropdown-item${isActive(href) ? " active" : ""}`}
               >
                 <span class="dropdown-name">{label}</span>
+                <span class="dropdown-desc">{desc}</span>
               </a>
             ))
           }
@@ -169,12 +165,16 @@ const plainLinks = [
         </a>
         <div class="nav-dropdown dropdown-projects">
           {
-            projects.map(({ label, href }) => (
+            projects.map(({ label, desc, href, logo }) => (
               <a
                 href={href}
-                class={`dropdown-item${isActive(href) ? " active" : ""}`}
+                class={`dropdown-item${logo ? " has-logo" : ""}${isActive(href) ? " active" : ""}`}
               >
-                <span class="dropdown-name">{label}</span>
+                {logo && <img src={logo} alt="" class="dropdown-logo" aria-hidden="true" />}
+                <div class="dropdown-text">
+                  <span class="dropdown-name">{label}</span>
+                  <span class="dropdown-desc">{desc}</span>
+                </div>
               </a>
             ))
           }
@@ -387,14 +387,14 @@ const plainLinks = [
   /* Products: two groups side by side */
   .dropdown-products {
     display: flex;
-    gap: 4px;
-    min-width: 360px;
+    gap: 12px;
+    min-width: 560px;
   }
   .dropdown-group {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 6px;
   }
   .dropdown-group-label {
     font-family: "JetBrains Mono", monospace;
@@ -403,45 +403,63 @@ const plainLinks = [
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--ink-4);
-    padding: 6px 10px 4px;
+    padding: 4px 2px;
   }
 
   /* Solutions: 2-col grid */
   .dropdown-solutions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    min-width: 340px;
+    gap: 6px;
+    min-width: 520px;
   }
 
-  /* Projects: simple list */
+  /* Projects: single column */
   .dropdown-projects {
-    min-width: 200px;
+    min-width: 320px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 6px;
   }
 
   /* Dropdown items */
   .dropdown-item {
     display: flex;
     flex-direction: column;
-    gap: 1px;
-    padding: 8px 10px;
-    border-radius: calc(var(--radius) - 4px);
+    gap: 3px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line-3);
+    background: var(--paper);
     text-decoration: none;
-    transition: background 0.1s ease;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .dropdown-item.has-logo {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
   }
   .dropdown-item:hover {
     background: var(--paper-2);
+    border-color: var(--line-2);
+  }
+  .dropdown-item.active {
+    border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+    background: color-mix(in srgb, var(--accent) 4%, var(--paper));
   }
   .dropdown-item.active .dropdown-name {
     font-weight: 600;
     color: var(--ink);
   }
+  .dropdown-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
   .dropdown-name {
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 600;
     color: var(--ink);
     line-height: 1.3;
   }
@@ -449,6 +467,12 @@ const plainLinks = [
     font-size: 11px;
     color: var(--ink-3);
     font-family: "JetBrains Mono", monospace;
+  }
+  .dropdown-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
   }
 
   /* ── Mobile drawer additions ────────────────────────────── */
