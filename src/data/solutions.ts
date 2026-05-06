@@ -7,6 +7,7 @@ export interface SolutionItem {
 export interface Solution {
   title: string;
   slug: string;
+  image: string;
   summary: string;
   description: string;
   heroDetail: string;
@@ -25,12 +26,13 @@ export const solutions: Solution[] = [
   {
     title: "Smart Water Metering",
     slug: "smart-water",
+    image: "/img/solutions/smart-water-metering.jpg",
     summary:
       "Most utilities find out about burst pipes from tenant complaints. This pack connects your meters and sensors to a single platform, catches problems in seconds, and files weekly compliance reports automatically.",
     description:
       "The Smart Water Metering pack gives water utilities and facility managers a live view of their distribution networks. Flow, pressure, water quality, pump state, and tank levels all land in pre-built dashboards with detection rules and scheduled reports already wired up.",
     heroDetail:
-      "Seven detection rules watch the network around the clock — catching slow leaks, sudden bursts, water quality problems, and devices that go dark — with alerts delivered in seconds over email and the platform.",
+      "Seven detection rules watch the network around the clock, catching slow leaks, sudden bursts, water quality problems, and devices that go dark, with alerts delivered in seconds over email and the platform.",
     whyMagistrala:
       "Your existing field devices probably already speak MQTT or HTTP, so there's nothing to replace in the field. Raw readings and validated data stay in separate channels, so a sensor glitch never triggers a false alarm. One dashboard template covers any number of zones or customer accounts. Compliance reports go out automatically every week.",
     docsPath: "/docs/user-guide/solution-packs/smart-water-metering/",
@@ -69,7 +71,7 @@ export const solutions: Solution[] = [
       ],
     },
     benefits: [
-      "Leak alarms fire within seconds of threshold breach — not hours after a tenant complaint",
+      "Leak alarms fire within seconds of threshold breach, not hours after a tenant complaint",
       "Zone-level flow data identifies where NRW losses are occurring so rehabilitation spend goes to the right places",
       "Water quality compliance reports generate and deliver automatically every week",
       "Device Health Monitor flags offline sensors within 10–20 minutes, preventing silent data gaps in regulatory records",
@@ -87,12 +89,13 @@ export const solutions: Solution[] = [
   {
     title: "Smart City",
     slug: "smart-city",
+    image: "/img/solutions/smart-city.jpg",
     summary:
       "Digitize urban infrastructure and unify civic command centers. Monitor traffic, energy, and public utilities from a single platform.",
     description:
       "Transform disconnected urban infrastructure into a unified, data-driven command center. The Smart City Solution Pack gives municipalities real-time visibility across traffic systems, street lighting, waste management, and public energy grids.",
     heroDetail:
-      "The Smart City Solution Pack is built for municipalities and city operators who need to move beyond manual monitoring and siloed systems. It addresses the complete urban IoT lifecycle — from device onboarding and multi-protocol data ingestion to real-time alerting, automated rule execution, and executive reporting.",
+      "The Smart City Solution Pack is built for municipalities and city operators who need to move beyond manual monitoring and siloed systems. It addresses the complete urban IoT lifecycle: from device onboarding and multi-protocol data ingestion to real-time alerting, automated rule execution, and executive reporting.",
     whyMagistrala:
       "Magistrala's open-source core provides the multi-protocol connectivity, per-device credential management, and rule-engine foundation that large-scale urban deployments demand. Its built-in multi-tenancy lets each city department manage their own data view, while open APIs ensure you're never locked into a proprietary ecosystem.",
     dashboardScreenshots: [
@@ -103,7 +106,7 @@ export const solutions: Solution[] = [
     ],
     challenges: {
       title: "Cities are drowning in disconnected data",
-      subtitle: "Urban infrastructure generates enormous amounts of data — but fragmented systems mean operators can't act on it fast enough.",
+      subtitle: "Urban infrastructure generates enormous amounts of data, but fragmented systems mean operators can't act on it fast enough.",
       items: [
         { ic: "SI", title: "Fragmented Infrastructure", desc: "Traffic, lighting, waste, and energy systems run on separate platforms with no unified visibility, creating blind spots and duplicated efforts." },
         { ic: "IR", title: "Slow Incident Response", desc: "Without real-time alerts, incidents like traffic accidents or infrastructure failures are discovered hours or days after the fact." },
@@ -111,10 +114,10 @@ export const solutions: Solution[] = [
       ],
     },
     howItWorks: {
-      subtitle: "From distributed sensors to a unified operations center — in one platform.",
+      subtitle: "From distributed sensors to a unified operations center, in one platform.",
       steps: [
         { title: "Connect", desc: "Traffic cameras, smart meters, environmental sensors, and lighting nodes connect over MQTT or HTTP using pre-configured client credentials." },
-        { title: "Stream", desc: "Telemetry flows into dedicated channels organized by infrastructure type — traffic, energy, waste, safety — with automatic normalization." },
+        { title: "Stream", desc: "Telemetry flows into dedicated channels organized by infrastructure type (traffic, energy, waste, safety) with automatic normalization." },
         { title: "Analyze", desc: "The rules engine evaluates incoming data in real time, triggering alerts for congestion, energy spikes, overflowing bins, or public safety incidents." },
         { title: "Act", desc: "Operators receive alarms in the dashboard, automated notifications are dispatched, and downstream actuators can be triggered via outbound channels." },
       ],
@@ -132,16 +135,16 @@ export const solutions: Solution[] = [
     benefits: [
       "Reduce operational costs by up to 35% through optimized scheduling and predictive maintenance",
       "Cut incident response time from hours to minutes with real-time alerting",
-      "Single pane of glass for all urban infrastructure — no more siloed dashboards",
+      "Single pane of glass for all urban infrastructure; no more siloed dashboards",
       "Built-in multi-tenancy lets each city department manage their own view",
-      "Open source core means no vendor lock-in — extend as your needs grow",
+      "Open source core means no vendor lock-in; extend as your needs grow",
       "Enterprise-grade security with per-device credentials and role-based access control",
     ],
     faq: [
       { question: "Can Magistrala integrate with existing city management software?", answer: "Yes. Magistrala exposes REST and WebSocket APIs that integrate with GIS platforms, ERP systems, and city dashboards such as Esri ArcGIS and SAP. Webhook sinks push events directly to existing ticketing and dispatch systems." },
       { question: "How do you handle multi-tenancy across city departments?", answer: "Magistrala uses domain-level isolation backed by SpiceDB policies. Each department operates in its own domain with its own device groups, channels, and user roles. Cross-domain data sharing is configured explicitly through policy grants." },
       { question: "What happens if connectivity to the central platform is lost?", answer: "Edge gateway nodes buffer messages locally during connectivity gaps and replay them in order once the link is restored. Time-series data arrives with original device timestamps." },
-      { question: "How quickly can the Smart City pack be deployed?", answer: "The pre-configured pack installs on Magistrala Cloud in minutes — clients, channels, rules, dashboards, and alarms are all included. Custom device types and additional integrations can be added incrementally." },
+      { question: "How quickly can the Smart City pack be deployed?", answer: "The pre-configured pack installs on Magistrala Cloud in minutes; clients, channels, rules, dashboards, and alarms are all included. Custom device types and additional integrations can be added incrementally." },
     ],
     metaDescription: "Deploy a full smart city IoT platform in minutes. The Magistrala Smart City Solution Pack includes pre-configured traffic, lighting, waste, and energy monitoring — ready out of the box.",
   },
@@ -149,12 +152,13 @@ export const solutions: Solution[] = [
   {
     title: "Smart Energy",
     slug: "smart-energy",
+    image: "/img/solutions/smart-energy.jpg",
     summary:
       "Balance loads and monitor renewable generation with sub-millisecond telemetry and automated alerts.",
     description:
       "Modernize energy infrastructure management with a pre-built IoT platform covering grid monitoring, renewable generation, load balancing, and demand response. The Smart Energy Pack delivers enterprise-grade telemetry and analytics without weeks of integration work.",
     heroDetail:
-      "The Smart Energy Grid Pack is engineered for energy utilities, grid operators, and industrial energy managers who need real-time visibility across generation, transmission, and consumption. It spans the full grid intelligence stack — from sub-station telemetry and renewable output monitoring to load balancing automation and demand response event management.",
+      "The Smart Energy Grid Pack is engineered for energy utilities, grid operators, and industrial energy managers who need real-time visibility across generation, transmission, and consumption. It spans the full grid intelligence stack: from sub-station telemetry and renewable output monitoring to load balancing automation and demand response event management.",
     whyMagistrala:
       "Magistrala's high-throughput message bus and persistent time-series store handle the sub-second telemetry volumes that energy grid monitoring demands, while the rules engine enables automated load control actions without any custom middleware development.",
     dashboardScreenshots: [
@@ -173,12 +177,12 @@ export const solutions: Solution[] = [
       ],
     },
     howItWorks: {
-      subtitle: "From grid edge to operations center — real-time intelligence at every voltage level.",
+      subtitle: "From grid edge to operations center, real-time intelligence at every voltage level.",
       steps: [
         { title: "Measure", desc: "Smart meters, inverters, and grid sensors stream high-frequency power quality and energy flow data into Magistrala over MQTT or HTTP at configurable intervals." },
-        { title: "Normalize", desc: "Incoming telemetry is timestamped, normalized by channel type, and partitioned by asset group — generation, distribution, or consumption — for clean analytics." },
+        { title: "Normalize", desc: "Incoming telemetry is timestamped, normalized by channel type, and partitioned by asset group (generation, distribution, or consumption) for clean analytics." },
         { title: "Alert", desc: "Pre-configured power quality rules detect voltage excursions, harmonics, overloads, and anomalous consumption patterns in real time, firing alarms before damage occurs." },
-        { title: "Respond", desc: "Operators receive actionable alarms. Demand response rules can trigger downstream actuation — load shedding, storage dispatch, or curtailment signals." },
+        { title: "Respond", desc: "Operators receive actionable alarms. Demand response rules can trigger downstream actuation: load shedding, storage dispatch, or curtailment signals." },
       ],
     },
     applications: {
@@ -192,10 +196,10 @@ export const solutions: Solution[] = [
       ],
     },
     benefits: [
-      "Detect and respond to grid faults in seconds, not minutes — reducing outage duration and SAIDI scores",
+      "Detect and respond to grid faults in seconds, not minutes, reducing outage duration and SAIDI scores",
       "Increase renewable utilization with real-time generation-to-demand matching",
       "Cut energy audit costs with automated reporting replacing manual data gathering",
-      "Enable demand response programs with rules-based load control — no custom integration needed",
+      "Enable demand response programs with rules-based load control, no custom integration needed",
       "Sub-second telemetry resolution captures power quality events traditional meters miss",
       "Multi-tenant architecture lets distribution companies serve multiple network operators from one platform",
     ],
@@ -211,6 +215,7 @@ export const solutions: Solution[] = [
   {
     title: "Cold Storage Monitoring",
     slug: "cold-storage",
+    image: "/img/solutions/cold-storage.jpg",
     summary:
       "This pack connects your cold room sensors to a single platform, fires HACCP alarms the moment a threshold is crossed, and delivers automated compliance reports.",
     description:
@@ -228,7 +233,7 @@ export const solutions: Solution[] = [
     ],
     challenges: {
       title: "Problems cold storage operators deal with every shift",
-      subtitle: "Temperature exceedances, equipment faults, and compliance gaps all have warning signals — the problem is catching them before product is at risk.",
+      subtitle: "Temperature exceedances, equipment faults, and compliance gaps all have warning signals; the problem is catching them before product is at risk.",
       items: [
         { ic: "TW", title: "A frozen zone warming past −15 °C overnight with no one on site", desc: "A compressor fault or door left ajar during a late loading run can push a frozen room toward the −12 °C HACCP critical limit in hours." },
         { ic: "PA", title: "Paper logs that are incomplete when the auditor arrives", desc: "Manual temperature logs have gaps during nights, weekends, and busy periods. When a food safety regulator asks for 30 days of records, incomplete logs mean failed audits." },
@@ -256,7 +261,7 @@ export const solutions: Solution[] = [
     },
     benefits: [
       "HACCP temperature warnings fire at −15 °C and +5 °C, giving operators a response window before critical limits are reached",
-      "CO2 worker safety monitoring enforces OSHA limits — warning at 2,000 ppm and evacuation alarm at 5,000 ppm",
+      "CO2 worker safety monitoring enforces OSHA limits: warning at 2,000 ppm and evacuation alarm at 5,000 ppm",
       "Door open alarms fire at 120 seconds so operators can act before significant thermal ingress affects room temperature",
       "Grid power failure triggers a Critical alarm immediately; undervoltage below 180 V triggers a second Critical before compressor motors are damaged",
       "Monthly HACCP compliance reports generate automatically with per-zone temperature history and exceedance alarm counts",
@@ -274,6 +279,7 @@ export const solutions: Solution[] = [
   {
     title: "Smart Farming",
     slug: "smart-farming",
+    image: "/img/solutions/smart-farming.jpg",
     summary:
       "Maximize agricultural yield via predictive models and real-time soil, weather, and crop analytics.",
     description:
@@ -290,10 +296,10 @@ export const solutions: Solution[] = [
     ],
     challenges: {
       title: "Guesswork is costing farms yield and water",
-      subtitle: "Irrigation timing, pest management, and harvest decisions made without sensor data consistently underperform — and over-irrigating is both expensive and damaging.",
+      subtitle: "Irrigation timing, pest management, and harvest decisions made without sensor data consistently underperform, and over-irrigating is both expensive and damaging.",
       items: [
         { ic: "WW", title: "Water Waste", desc: "Calendar-based irrigation ignores actual soil moisture and evapotranspiration conditions, routinely over-irrigating by 20–40% and leaching nutrients." },
-        { ic: "UY", title: "Unpredictable Yields", desc: "Crop stress events — frost, heat, drought, disease pressure — go undetected until visible symptoms appear, when intervention is often already too late." },
+        { ic: "UY", title: "Unpredictable Yields", desc: "Crop stress events (frost, heat, drought, disease pressure) go undetected until visible symptoms appear, when intervention is often already too late." },
         { ic: "MS", title: "Manual Scouting Overhead", desc: "Labour-intensive manual monitoring across large farms can't achieve the sensor resolution needed for precision decisions." },
       ],
     },
@@ -321,7 +327,7 @@ export const solutions: Solution[] = [
       "Detect frost, disease pressure, and heat stress events before visible crop damage occurs",
       "Eliminate manual scouting overhead with continuous automated field monitoring",
       "Improve yield predictability by correlating sensor data with historical crop performance",
-      "Scale from pilot field to full farm without re-configuration — add sensors in minutes",
+      "Scale from pilot field to full farm without re-configuration; add sensors in minutes",
       "Comply with water use regulations and sustainability audits with automated water consumption reports",
     ],
     faq: [
@@ -336,8 +342,9 @@ export const solutions: Solution[] = [
   {
     title: "Oil & Gas Field Monitoring",
     slug: "oil-gas",
+    image: "/img/solutions/oil-and-gas.jpg",
     summary:
-      "This pack connects wellhead sensors to a single monitoring platform and fires the alarm the moment a threshold is crossed — before the next shift arrives on site.",
+      "This pack connects wellhead sensors to a single monitoring platform and fires the alarm the moment a threshold is crossed, before the next shift arrives on site.",
     description:
       "The Oil & Gas Field Monitoring pack gives upstream production teams real-time visibility across wellhead gateways, flow meters, pressure sensors, gas detectors, storage tank sensors, separator controllers, and pump controllers. Five detection rules cover high wellhead pressure, H2S and LEL gas hazards, low oil flow, rising water cut, and tank overfill protection.",
     heroDetail:
@@ -353,7 +360,7 @@ export const solutions: Solution[] = [
     ],
     challenges: {
       title: "Problems field operators deal with every shift",
-      subtitle: "Wellhead incidents, gas hazards, and overfill events all have warning signals — the problem is having a system that catches them in time.",
+      subtitle: "Wellhead incidents, gas hazards, and overfill events all have warning signals; the problem is having a system that catches them in time.",
       items: [
         { ic: "H2", title: "H2S above threshold at an unmanned wellsite", desc: "An electrochemical H2S detector hitting the OSHA ceiling at an unmanned wellsite is a hazardous event with nobody there to respond. The alarm needs to fire before the next scheduled site visit." },
         { ic: "OV", title: "A tank filling while the transfer pump is stopped overnight", desc: "When the transfer pump trips at midnight and nobody notices, crude keeps flowing into the tank. By morning the level is at 90% and the spill risk window is closing." },
@@ -399,14 +406,15 @@ export const solutions: Solution[] = [
   {
     title: "Smart Irrigation",
     slug: "smart-irrigation",
+    image: "/img/solutions/smart-irrigation.jpg",
     summary:
       "Most farms find out about burst irrigation pipes from wet ground the next morning. This pack connects your field sensors and actuators to a single platform, catches problems within seconds, and files weekly soil health reports automatically.",
     description:
       "The Smart Irrigation pack gives farms and managed landscapes a live view of soil conditions, water flow, and tank levels across multiple field zones. Soil moisture sensors, weather stations, flow meters, smart valves, and a pump controller all land in pre-built dashboards with detection rules and scheduled reports already wired up.",
     heroDetail:
-      "Six detection rules monitor the field around the clock — catching dry soil before crops reach wilting point, waterlogging before root damage sets in, pipe bursts before significant water is lost, and low tank levels before the pump runs dry. Valve and pump control sit directly on the dashboard so operators can respond without leaving the monitoring view.",
+      "Six detection rules monitor the field around the clock, catching dry soil before crops reach wilting point, waterlogging before root damage sets in, pipe bursts before significant water is lost, and low tank levels before the pump runs dry. Valve and pump control sit directly on the dashboard so operators can respond without leaving the monitoring view.",
     whyMagistrala:
-      "All ten device types — soil sensors, weather stations, flow meters, valves, tank sensor, pump — connect to the same Telemetry Channel and flow through the same rules. One Zone Monitoring template scales to any number of irrigation zones without duplicating configuration. Soil health and water consumption reports go out automatically every week.",
+      "All ten device types (soil sensors, weather stations, flow meters, valves, tank sensor, pump) connect to the same Telemetry Channel and flow through the same rules. One Zone Monitoring template scales to any number of irrigation zones without duplicating configuration. Soil health and water consumption reports go out automatically every week.",
     docsPath: "/docs/user-guide/solution-packs/smart-irrigation/",
     dashboardScreenshots: [
       { src: "/img/solutions/smart-irrigation/field-operations-dashboard.png", alt: "Field Operations Dashboard with zone soil moisture gauges, flow charts, tank level, and valve control switches" },
@@ -443,7 +451,7 @@ export const solutions: Solution[] = [
       ],
     },
     benefits: [
-      "Dry soil alarms fire within seconds of threshold breach — before crop stress develops, not after a field inspection the next morning",
+      "Dry soil alarms fire within seconds of threshold breach, before crop stress develops, not after a field inspection the next morning",
       "Pipe burst alarms trigger at 40 L/min, giving operators time to close the zone valve before the tank drains and the pump runs dry",
       "Zone-level total volume data closes the gap between water budget targets and actual consumption without manual data collection",
       "Weekly soil health reports aggregate daily average moisture and temperature per zone and deliver automatically",
@@ -452,9 +460,9 @@ export const solutions: Solution[] = [
     ],
     faq: [
       { question: "Our soil sensors use a proprietary serial protocol. Can we still connect them?", answer: "Yes. A local gateway can read your sensors via their native interface and publish SenML payloads to the Telemetry Channel. Many commercial agriculture gateways support RS-485 Modbus, SDI-12, and other field bus protocols out of the box." },
-      { question: "Can the pack handle more than two irrigation zones?", answer: "Yes. The solution ships with two zones, but the architecture scales to any number. Each additional zone needs its own device clients and a group for access control. The Zone Monitoring template scales automatically — assign it to any group and it renders the right data." },
+      { question: "Can the pack handle more than two irrigation zones?", answer: "Yes. The solution ships with two zones, but the architecture scales to any number. Each additional zone needs its own device clients and a group for access control. The Zone Monitoring template scales automatically; assign it to any group and it renders the right data." },
       { question: "How often should devices publish readings for the alarms to be effective?", answer: "Detection rules evaluate each SenML message as it arrives, so alarm latency equals the device's publish interval. For flow meter and pipe burst detection, publishing every 30–60 seconds gives operators a window to respond before significant water is lost." },
-      { question: "Can we use the pack with drip irrigation as well as sprinkler systems?", answer: "Yes. The pack is agnostic to the delivery method. The main difference is the normal flow rate range — you may want to lower the pipe burst threshold in the High Flow Alert rule to match your drip system's actual flow profile." },
+      { question: "Can we use the pack with drip irrigation as well as sprinkler systems?", answer: "Yes. The pack is agnostic to the delivery method. The main difference is the normal flow rate range; you may want to lower the pipe burst threshold in the High Flow Alert rule to match your drip system's actual flow profile." },
     ],
     metaDescription: "Monitor soil moisture, flow rate, tank level, and rainfall across multiple irrigation zones in real time. Detect dry soil, pipe bursts, and waterlogging within seconds with Magistrala's Smart Irrigation solution pack.",
   },
@@ -462,12 +470,13 @@ export const solutions: Solution[] = [
   {
     title: "Air Quality Monitoring",
     slug: "air-quality",
+    image: "/img/solutions/air-quality.jpg",
     summary:
       "Track PM2.5, CO₂, and pollutants across zones to ensure regulatory compliance and protect public health.",
     description:
-      "Deploy a comprehensive air quality monitoring network across indoor and outdoor environments. The Air Quality & Compliance Pack connects multi-pollutant sensors to real-time dashboards, automated regulatory reporting, and public health alert systems — pre-configured and ready in minutes.",
+      "Deploy a comprehensive air quality monitoring network across indoor and outdoor environments. The Air Quality & Compliance Pack connects multi-pollutant sensors to real-time dashboards, automated regulatory reporting, and public health alert systems, pre-configured and ready in minutes.",
     heroDetail:
-      "The Air Quality & Compliance Pack monitors a full range of pollutants — PM2.5, PM10, CO₂, NO₂, O₃, and VOCs — in real time, with automatic exceedance detection and regulatory threshold alerting. It includes pre-built compliance reports formatted for standard environmental reporting frameworks, significantly reducing the manual effort of periodic regulatory audits.",
+      "The Air Quality & Compliance Pack monitors a full range of pollutants (PM2.5, PM10, CO₂, NO₂, O₃, and VOCs) in real time, with automatic exceedance detection and regulatory threshold alerting. It includes pre-built compliance reports formatted for standard environmental reporting frameworks, significantly reducing the manual effort of periodic regulatory audits.",
     whyMagistrala:
       "Magistrala's scalable message ingestion and persistent time-series storage provide the data fidelity and retention that regulatory compliance frameworks require, while the built-in rule engine automates the threshold monitoring that would otherwise demand custom application development.",
     dashboardScreenshots: [
@@ -478,15 +487,15 @@ export const solutions: Solution[] = [
     ],
     challenges: {
       title: "Air quality risks are invisible until harm is done",
-      subtitle: "Pollutant exposure impacts public health, productivity, and regulatory compliance — but without continuous monitoring, exceedances go undetected for hours or days.",
+      subtitle: "Pollutant exposure impacts public health, productivity, and regulatory compliance, but without continuous monitoring, exceedances go undetected for hours or days.",
       items: [
         { ic: "CG", title: "Invisible Compliance Gaps", desc: "Manual sampling and infrequent measurement miss acute pollution events that breach regulatory limits, creating undetected compliance exposure for operators and municipalities." },
-        { ic: "PH", title: "Public Health Risk", desc: "Without real-time AQI monitoring, vulnerable populations — schools, hospitals, care homes — aren't notified during high-pollution events when protective action is needed." },
+        { ic: "PH", title: "Public Health Risk", desc: "Without real-time AQI monitoring, vulnerable populations (schools, hospitals, care homes) aren't notified during high-pollution events when protective action is needed." },
         { ic: "MR", title: "Manual Reporting Burden", desc: "Compiling regulatory submissions from manual sampling and disparate sensor logs is time-consuming, error-prone, and creates delays in compliance reporting." },
       ],
     },
     howItWorks: {
-      subtitle: "From sensor network to regulatory report — continuous and automated.",
+      subtitle: "From sensor network to regulatory report: continuous and automated.",
       steps: [
         { title: "Measure", desc: "Multi-pollutant sensors stream PM2.5, PM10, CO₂, NO₂, O₃, and VOC readings at 1-minute intervals via MQTT into pre-built pollutant-specific channels." },
         { title: "Contextualize", desc: "Readings are tagged with sensor location, zone type (indoor/outdoor/industrial), and correlated with meteorological data for dispersion context and regulatory categorization." },
@@ -505,7 +514,7 @@ export const solutions: Solution[] = [
       ],
     },
     benefits: [
-      "Detect regulatory exceedances in real time — minutes after they occur, not days after manual review",
+      "Detect regulatory exceedances in real time, minutes after they occur, not days after manual review",
       "Protect public health with automated AQI alerts for sensitive locations like schools and hospitals",
       "Eliminate manual reporting labour with automated regulatory submission reports",
       "Deploy anywhere from urban ambient networks to industrial boundary monitoring with the same platform",

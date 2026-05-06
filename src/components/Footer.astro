@@ -79,20 +79,22 @@ const year = new Date().getFullYear();
           method="post"
           target="_blank"
         >
-          <label class="sr-only" for="footer-email">Email address</label>
-          <input
-            id="footer-email"
-            type="email"
-            name="EMAIL"
-            placeholder="you@company.com"
-            required
-            autocomplete="email"
-          />
+          <div class="newsletter-pill">
+            <label class="sr-only" for="footer-email">Email address</label>
+            <input
+              id="footer-email"
+              type="email"
+              name="EMAIL"
+              placeholder="you@company.com"
+              required
+              autocomplete="email"
+            />
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </div>
           <input name="tags" type="hidden" value="8115259" />
           <div aria-hidden="true" style="position:absolute; left:-5000px;">
             <input name="b_70b43c7181d005024187bfb31_0a319b6b63" tabindex="-1" type="text" value="" />
           </div>
-          <button type="submit" class="btn btn-primary" style="padding:11px 16px;">Subscribe</button>
         </form>
       </div>
     </div>

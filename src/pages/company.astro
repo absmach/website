@@ -2,476 +2,502 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import Hero from "../components/Hero.astro";
-import Section from "../components/Section.astro";
 import FinalCTA from "../components/FinalCTA.astro";
 
-const address = "141 Quai de Valmy, 75010 Paris, France";
-const email = "info@absmach.eu";
-
-const facts = [
-  { label: "Founded", value: "2017" },
+const glance = [
+  { label: "Founded", value: "2023" },
   { label: "Headquarters", value: "Paris, France" },
   {
     label: "Open source",
     value: "github.com/absmach",
     href: "https://github.com/absmach",
-    external: true,
   },
-  { label: "Research", value: "EU Horizon Europe projects", href: "/projects/" },
-];
-
-const timeline = [
-  {
-    year: "2017",
-    title: "Founded",
-    description: "Abstract Machines established in Paris, launching Mainflux (now Magistrala).",
-  },
-  {
-    year: "2020",
-    title: "Enterprise adoption",
-    description: "Deployed at Nokia, Intel, and Ericsson for production workloads.",
-  },
-  {
-    year: "2023",
-    title: "Research leadership",
-    description: "Leading EU Horizon projects CONFIDENTIAL6G and Elastic.",
-  },
-  {
-    year: "2025",
-    title: "Hardware launch",
-    description: "Introducing S0 and S1 RISC-V gateways for edge deployment.",
-  },
+  { label: "Research", value: "EU Horizon Europe", href: "/projects/" },
 ];
 
 const values = [
   {
+    ic: "⊞",
     title: "Open Source First",
-    description: "We believe in transparency and community-driven innovation",
-    icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+    desc: "We build in public, contribute back, and believe transparency creates better software. Our entire stack is open source, not just the parts that are convenient.",
   },
   {
+    ic: "⬡",
     title: "Security by Design",
-    description: "Security is fundamental, not an afterthought",
-    icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+    desc: "Security is a first-class requirement, not a feature bolted on later. From mTLS to confidential computing, we build it in from the start.",
   },
   {
+    ic: "◈",
     title: "Innovation at the Edge",
-    description: "Pushing boundaries in distributed systems",
-    icon: "M13 10V3L4 14h7v7l9-11h-7z",
+    desc: "We push the frontier of distributed systems, IoT, and edge computing through production work and EU research programmes.",
   },
   {
+    ic: "◉",
     title: "Pragmatic Excellence",
-    description: "Building production-ready solutions that work",
-    icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+    desc: "Production-ready quality, delivered with engineering discipline. We ship systems that work at Nokia, Intel, and Ericsson scale.",
   },
 ];
 
 const team = [
   {
-    role: "Engineering",
-    description:
-      "Expert developers building high-performance distributed systems",
     count: "10+",
+    role: "Engineering",
+    desc: "Expert developers building high-performance distributed systems",
   },
   {
-    role: "Research",
-    description: "PhDs and researchers advancing IoT and edge computing",
     count: "2+",
+    role: "Research",
+    desc: "PhDs and researchers advancing IoT and edge computing",
   },
   {
-    role: "Solutions",
-    description: "Architects and consultants delivering customer success",
     count: "4+",
+    role: "Solutions",
+    desc: "Architects and consultants delivering customer success",
   },
 ];
 ---
 
 <BaseLayout
-  title="Company | Abstract Machines"
-  description="Learn about Abstract Machines: an open-source infrastructure company building secure IoT and edge computing systems."
+  title="Company — Abstract Machines"
+  description="Abstract Machines is an open-source infrastructure company building secure IoT and edge computing systems. Based in Paris, founded 2023."
 >
   <Header />
-
   <main>
-    <Hero
-      title="Company"
-      subtitle="Since 2017, Abstract Machines has been delivering secure, open-source infrastructure for IoT and edge computing. Based in Paris, we serve enterprises, research institutions, and innovators across Europe and beyond."
-      primary={{ label: "Get in touch", href: "/contact/", external: false }}
-      secondary={{ label: "Explore projects", href: "/projects/", external: false }}
-      backgroundClass="hero-grid"
-    >
-      <div class="rounded-2xl border border-subtle bg-panel p-6 shadow-[var(--shadow-soft)] md:p-8">
-        <p class="section-label">At a glance</p>
-        <dl class="mt-6 space-y-4 text-sm">
-          {facts.map((item) => (
-            <div class="flex items-center justify-between gap-4">
-              <dt class="text-muted">{item.label}</dt>
-              <dd class="text-right font-semibold text-primary">
-                {item.href ? (
-                  <a
-                    href={item.href}
-                    target={item.external ? "_blank" : undefined}
-                    rel={item.external ? "noopener noreferrer" : undefined}
-                    class="hover:underline"
-                  >
-                    {item.value}
-                  </a>
-                ) : (
-                  item.value
-                )}
-              </dd>
-            </div>
-          ))}
-        </dl>
-
-        <div class="my-6 border-t border-subtle"></div>
-
-        <p class="text-sm text-muted">
-          Want to collaborate on research or deploy at scale? We’d love to hear from you.
-        </p>
-      </div>
-    </Hero>
-
-    <Section title="Our mission" center>
-      <div class="mx-auto max-w-4xl rounded-3xl border border-subtle bg-panel p-8 text-center shadow-[var(--shadow-soft)] md:p-12">
-        <p class="text-lg text-muted md:text-xl leading-relaxed">
-          To democratize access to enterprise-grade infrastructure through open-source
-          innovation, enabling organizations of all sizes to build secure, scalable
-          distributed systems.
-        </p>
-      </div>
-    </Section>
-
-    <Section
-      title="What drives us"
-      subtitle="Core principles guiding our work."
-      center
-    >
-      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {values.map((value) => (
-          <article class="card-base">
-            <div class="flex items-start gap-4">
-              <div class="flex h-12 w-12 flex-none items-center justify-center rounded-2xl border border-subtle bg-surface-2 text-accent">
-                <svg
-                  class="h-6 w-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d={value.icon}></path>
-                </svg>
-              </div>
-              <div class="min-w-0">
-                <h3 class="text-xl font-semibold">{value.title}</h3>
-                <p class="mt-2 text-muted">{value.description}</p>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </Section>
-
-    <Section
-      title="Expert team"
-      subtitle="Distributed across Europe, united by mission."
-      center
-    >
-      <div class="grid gap-6 md:grid-cols-3">
-        {team.map((dept) => (
-          <article class="card-base text-center">
-            <p class="text-5xl font-semibold tracking-tight text-accent">
-              {dept.count}
+    <!-- Hero -->
+    <section class="comp-hero">
+      <div class="container-wide">
+        <div class="hero-grid">
+          <div class="hero-left">
+            <span class="kicker">Company</span>
+            <h1 class="h-1" style="margin-top:10px;">
+              Building open infrastructure<br />for a connected world.
+            </h1>
+            <p class="lede" style="margin-top:16px; max-width:520px;">
+              Abstract Machines is an open-source infrastructure company based
+              in Paris. We build secure, scalable systems for IoT and edge
+              computing, used in production by enterprises, researchers, and
+              innovators across Europe and beyond.
             </p>
-            <h3 class="mt-4 text-xl font-semibold">{dept.role}</h3>
-            <p class="mt-2 text-muted">{dept.description}</p>
-          </article>
-        ))}
-      </div>
-    </Section>
-
-    <Section title="Our journey" subtitle="Key milestones in our growth." center>
-      <ol class="journey-stepper" aria-label="Company timeline">
-        {timeline.map((item, index) => (
-          <li class={`journey-step ${index === timeline.length - 1 ? "journey-step-latest" : ""}`}>
-            <span class="journey-dot" aria-hidden="true">{item.year}</span>
-            <article class="card-base journey-card">
-              <h3 class="text-xl font-semibold">{item.title}</h3>
-              <p class="mt-2 text-muted">{item.description}</p>
-            </article>
-          </li>
-        ))}
-      </ol>
-    </Section>
-
-    <Section title="Based in Paris" subtitle="We work with clients and partners across Europe and globally.">
-      <div class="grid gap-6 lg:grid-cols-2 lg:items-start">
-        <div class="card-base">
-          <div class="space-y-5 text-sm">
-            <div class="flex items-start gap-3">
-              <svg
-                class="mt-0.5 h-5 w-5 flex-none text-accent"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"></path>
-                <path d="M12 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
-              </svg>
-              <div>
-                <p class="font-semibold text-primary">Address</p>
-                <p class="mt-1 text-muted">{address}</p>
-              </div>
+            <div class="btn-row" style="margin-top:28px;">
+              <a href="/contact/" class="btn btn-primary">Get in touch</a>
+              <a href="/projects/" class="btn">Explore research</a>
             </div>
-
-            <div class="flex items-start gap-3">
-              <svg
-                class="mt-0.5 h-5 w-5 flex-none text-accent"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M4 4h16v16H4z"></path>
-                <path d="m22 6-10 7L2 6"></path>
-              </svg>
-              <div>
-                <p class="font-semibold text-primary">Email</p>
-                <a class="mt-1 inline-block text-muted hover:underline" href={`mailto:${email}`}>
-                  {email}
-                </a>
+          </div>
+          <div class="hero-right">
+            <div class="glance-card card">
+              <div class="glance-label">At a glance</div>
+              <div class="glance-list">
+                {
+                  glance.map(({ label, value, href }) => (
+                    <div class="glance-row">
+                      <span class="glance-key">{label}</span>
+                      <span class="glance-val">
+                        {href ? (
+                          <a
+                            href={href}
+                            target={
+                              href.startsWith("http") ? "_blank" : undefined
+                            }
+                            rel={
+                              href.startsWith("http")
+                                ? "noopener noreferrer"
+                                : undefined
+                            }
+                          >
+                            {value}
+                          </a>
+                        ) : (
+                          value
+                        )}
+                      </span>
+                    </div>
+                  ))
+                }
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="card-base">
-          <div class="overflow-hidden rounded-2xl border border-subtle bg-surface-2">
+    <!-- Metrics bar -->
+    <section
+      class="section-tight"
+      style="background:var(--ink); color:var(--paper); border-top:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="comp-metrics">
+          <div class="comp-metric">
+            <div class="h-2" style="color:var(--paper);">2023</div>
+            <div class="comp-metric-label">Founded</div>
+          </div>
+          <div class="comp-metric">
+            <div class="h-2" style="color:var(--paper);">400+</div>
+            <div class="comp-metric-label">Production deployments</div>
+          </div>
+          <div class="comp-metric">
+            <div class="h-2" style="color:var(--paper);">13+</div>
+            <div class="comp-metric-label">Global partners</div>
+          </div>
+          <div class="comp-metric" style="border-right:none;">
+            <div class="h-2" style="color:var(--paper);">2</div>
+            <div class="comp-metric-label">EU research projects</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission -->
+    <section
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-narrow" style="text-align:center;">
+        <span class="kicker">Our mission</span>
+        <h2 class="h-2" style="margin-top:10px;">Why we exist</h2>
+        <blockquote class="mission-quote">
+          To democratize access to enterprise-grade infrastructure through
+          open-source innovation, enabling organisations of all sizes to build
+          secure, scalable distributed systems without starting from scratch.
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Values -->
+    <section>
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Values</span>
+            <h2 class="h-2" style="margin-top:10px;">What drives us</h2>
+            <p class="lede" style="margin-top:10px;">
+              Core principles guiding every line of code we ship.
+            </p>
+          </div>
+        </div>
+        <div class="val-grid" style="margin-top:36px;">
+          {
+            values.map((v) => (
+              <div class="card">
+                <div class="val-icon">{v.ic}</div>
+                <h3 class="h-3" style="margin-top:16px;">
+                  {v.title}
+                </h3>
+                <p style="margin-top:8px; font-size:14px; color:var(--ink-2); line-height:1.65;">
+                  {v.desc}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Team</span>
+            <h2 class="h-2" style="margin-top:10px;">Expert and distributed</h2>
+            <p class="lede" style="margin-top:10px;">
+              Spread across the world, united by mission.
+            </p>
+          </div>
+        </div>
+        <div class="team-grid" style="margin-top:36px;">
+          {
+            team.map((t) => (
+              <div class="card" style="text-align:center;">
+                <div
+                  class="h-1"
+                  style="color:var(--accent); letter-spacing:-1px;"
+                >
+                  {t.count}
+                </div>
+                <h3 class="h-3" style="margin-top:8px;">
+                  {t.role}
+                </h3>
+                <p style="margin-top:8px; font-size:13px; color:var(--ink-2); line-height:1.6;">
+                  {t.desc}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Location -->
+    <section>
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Location</span>
+            <h2 class="h-2" style="margin-top:10px;">Based in Paris</h2>
+            <p class="lede" style="margin-top:10px;">
+              Working with clients and partners across Europe and globally.
+            </p>
+          </div>
+        </div>
+        <div class="loc-grid" style="margin-top:36px;">
+          <div class="card">
+            <div class="loc-item">
+              <div class="loc-icon">◎</div>
+              <div>
+                <div
+                  style="font-weight:600; font-size:14px; margin-bottom:4px;"
+                >
+                  Address
+                </div>
+                <div
+                  style="font-size:14px; color:var(--ink-2); line-height:1.6;"
+                >
+                  141 Quai de Valmy<br />75010 Paris, France
+                </div>
+              </div>
+            </div>
+            <div class="loc-item" style="margin-top:20px;">
+              <div class="loc-icon">✉</div>
+              <div>
+                <div
+                  style="font-weight:600; font-size:14px; margin-bottom:4px;"
+                >
+                  Email
+                </div>
+                <a
+                  href="mailto:info@absmach.eu"
+                  style="font-size:14px; color:var(--accent);"
+                  >info@absmach.eu</a
+                >
+              </div>
+            </div>
+            <div
+              style="margin-top:24px; display:flex; gap:10px; flex-wrap:wrap;"
+            >
+              <a href="/contact/" class="btn" style="font-size:13px;"
+                >Send a message</a
+              >
+              <a
+                href="https://github.com/absmach"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn"
+                style="font-size:13px;">GitHub ↗</a
+              >
+            </div>
+          </div>
+          <div class="card" style="overflow:hidden; padding:0;">
             <iframe
-              title="Map showing Abstract Machines office in Paris"
-              class="company-map-embed aspect-video w-full"
-              src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}
+              title="Abstract Machines office in Paris"
+              class="loc-map"
+              src="https://www.google.com/maps?q=141+Quai+de+Valmy+75010+Paris+France&output=embed"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-            ></iframe>
-          </div>
-          <p class="mt-4 text-sm text-muted">
-            Prefer async? Email is best. For open-source questions, reach out on GitHub.
-          </p>
-          <div class="mt-5 flex flex-wrap gap-3">
-            <a class="button-secondary" href={`mailto:${email}`}>Email us</a>
-            <a
-              class="button-secondary"
-              href="https://github.com/absmach"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
+              allowfullscreen></iframe>
           </div>
         </div>
       </div>
-    </Section>
+    </section>
 
     <FinalCTA
-      title="Join Our Mission"
-      subtitle="We're always looking for talented people who share our values"
-      primary={{ label: "View openings", href: "/careers/", external: false }}
-      secondary={{ label: "Get in touch", href: "/contact/", external: false }}
+      title="Join our mission"
+      subtitle="We're always looking for talented people who share our values, and for organisations ready to build with open-source infrastructure."
+      primary={{ label: "View openings", href: "/careers/" }}
+      secondary={{ label: "Get in touch", href: "/contact/" }}
     />
   </main>
-
   <Footer />
 </BaseLayout>
 
 <style>
-  .company-map-embed {
-    transition: filter 180ms ease;
+  /* ── Hero ──────────────────────────────────────────────────── */
+  .comp-hero {
+    padding: 64px 0 56px;
+    border-bottom: 1px solid var(--line-3);
   }
-
-  .journey-stepper {
-    position: relative;
+  .hero-grid {
     display: grid;
-    --journey-year-w: 4.2rem;
-    --journey-year-h: 2rem;
-    gap: 1rem;
-    list-style: none;
-    padding: 0;
-    margin: 0 auto;
-    max-width: 76rem;
-  }
-
-  .journey-stepper::before {
-    content: "";
-    position: absolute;
-    top: calc(var(--journey-year-h) * 0.8);
-    bottom: calc(var(--journey-year-h) * 0.4);
-    left: calc(var(--journey-year-w) / 2);
-    width: 2px;
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--accent) 55%, var(--border)),
-      var(--border)
-    );
-    z-index: 0;
-  }
-
-  .journey-step {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: var(--journey-year-w) minmax(0, 1fr);
-    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
     align-items: start;
   }
-
-  .journey-dot {
-    position: relative;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--journey-year-w);
-    height: var(--journey-year-h);
-    border-radius: 9999px;
-    border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
-    background: color-mix(in srgb, var(--surface-2) 78%, var(--panel));
-    color: var(--accent);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    line-height: 1;
-    font-variant-numeric: tabular-nums lining-nums;
-    font-feature-settings: "tnum" 1, "lnum" 1;
-    box-shadow: 0 0 0 6px var(--bg), var(--shadow-soft);
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .journey-dot::selection {
-    background: transparent;
-    color: inherit;
-  }
-
-  .journey-card {
-    position: relative;
+  .hero-left {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    padding: 1.1rem;
-    min-height: 8.75rem;
   }
 
-  @media (min-width: 1024px) {
-    .journey-stepper {
-      --journey-year-w: 5.8rem;
-      --journey-year-h: auto;
-      gap: 1.6rem;
-    }
-
-    .journey-stepper::before {
-      top: 0.25rem;
-      bottom: 0.25rem;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .journey-step {
-      grid-template-columns:
-        minmax(0, 1fr)
-        calc(var(--journey-year-w) + 1.5rem)
-        minmax(0, 1fr);
-      gap: 1.65rem;
-      align-items: center;
-    }
-
-    .journey-dot {
-      grid-column: 2;
-      justify-self: center;
-      width: 6.2rem;
-      height: 2.7rem;
-      min-width: 6.2rem;
-      border-radius: 9999px;
-      border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
-      padding: 0 0.3rem;
-      background: color-mix(in srgb, var(--surface-2) 78%, var(--panel));
-      box-shadow: 0 0 0 8px var(--bg), var(--shadow-soft);
-      color: var(--accent);
-      font-size: 1.3rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      text-align: center;
-      justify-content: center;
-      white-space: nowrap;
-    }
-
-    .journey-dot,
-    .journey-card {
-      grid-row: 1;
-    }
-
-    .journey-card {
-      width: min(100%, 29rem);
-      padding: 1.2rem 1.25rem;
-      min-height: 9.5rem;
-    }
-
-    .journey-step:nth-child(odd) .journey-card {
-      grid-column: 1;
-      justify-self: end;
-    }
-
-    .journey-step:nth-child(even) .journey-card {
-      grid-column: 3;
-      justify-self: start;
-    }
-
-    .journey-step:nth-child(odd) .journey-card::after,
-    .journey-step:nth-child(even) .journey-card::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 1.25rem;
-      height: 2px;
-      background: color-mix(in srgb, var(--accent) 58%, var(--border));
-      transform: translateY(-50%);
-      opacity: 0.9;
-    }
-
-    .journey-step:nth-child(odd) .journey-card::after {
-      right: -1.3rem;
-    }
-
-    .journey-step:nth-child(even) .journey-card::before {
-      left: -1.3rem;
-    }
+  /* ── At a glance card ───────────────────────────────────────── */
+  .glance-card {
+    padding: 24px;
+  }
+  .glance-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-3);
+    margin-bottom: 16px;
+  }
+  .glance-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .glance-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    background: var(--paper-2);
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+  }
+  .glance-key {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+  }
+  .glance-val {
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+  }
+  .glance-val a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .glance-val a:hover {
+    text-decoration: underline;
   }
 
-  .journey-step-latest .journey-dot {
-    color: color-mix(in srgb, var(--accent) 84%, var(--text));
+  /* ── Metrics bar ────────────────────────────────────────────── */
+  .comp-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid rgba(246, 244, 238, 0.15);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .comp-metric {
+    padding: 32px;
+    border-right: 1px solid rgba(246, 244, 238, 0.15);
+  }
+  .comp-metric-label {
+    margin-top: 4px;
+    font-size: 13px;
+    color: rgba(246, 244, 238, 0.55);
   }
 
-  .journey-step-latest .journey-card {
-    border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
-    box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent),
-      var(--shadow-soft);
+  /* ── Mission ────────────────────────────────────────────────── */
+  .mission-quote {
+    margin: 28px auto 0;
+    max-width: 680px;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    font-style: normal;
+    quotes: none;
   }
 
-  :global(html[data-theme="dark"]) .company-map-embed {
-    filter: grayscale(0.2) invert(0.92) hue-rotate(180deg) saturate(0.75)
-      brightness(0.92) contrast(0.95);
+  /* ── Values ─────────────────────────────────────────────────── */
+  .val-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .val-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--accent);
+  }
+
+  /* ── Team ───────────────────────────────────────────────────── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* ── Location ───────────────────────────────────────────────── */
+  .loc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .loc-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .loc-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--paper-2);
+    border: 1px solid var(--line-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--ink-2);
+    flex-shrink: 0;
+  }
+  .loc-map {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: none;
+    display: block;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 980px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .val-grid {
+      grid-template-columns: 1fr;
+    }
+    .loc-grid {
+      grid-template-columns: 1fr;
+    }
+    .comp-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .comp-metric:nth-child(2) {
+      border-right: none;
+    }
+    .comp-metric:nth-child(3) {
+      border-top: 1px solid rgba(246, 244, 238, 0.15);
+    }
+    .comp-metric:nth-child(4) {
+      border-top: 1px solid rgba(246, 244, 238, 0.15);
+    }
+  }
+  @media (max-width: 600px) {
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+    .comp-metrics {
+      grid-template-columns: 1fr 1fr;
+    }
+    .val-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

@@ -9,7 +9,7 @@ const features = [
     emoji: "🌐",
     color: "#2F69B3",
     name: "Multi-Protocol Support",
-    desc: "Full MQTT 3.1.1 and 5.0 over TCP and WebSocket, plus HTTP-MQTT and CoAP bridges. AMQP 0.9.1 and AMQP 1.0 servers included. All protocols share the same broker core — messages flow seamlessly across transports.",
+    desc: "Full MQTT 3.1.1 and 5.0 over TCP and WebSocket, plus HTTP-MQTT and CoAP bridges. AMQP 0.9.1 and AMQP 1.0 servers included. All protocols share the same broker core; messages flow seamlessly across transports.",
   },
   {
     emoji: "💾",
@@ -47,7 +47,7 @@ const steps = [
   [
     "01",
     "Drop in the binary",
-    "Download the single binary — no external dependencies. Configure TLS, listeners, storage, and cluster peers in one YAML file.",
+    "Download the single binary. No external dependencies. Configure TLS, listeners, storage, and cluster peers in one YAML file.",
   ],
   [
     "02",
@@ -130,7 +130,7 @@ const solutions = [
 const faqs = [
   {
     q: "How does FluxMQ compare to Mosquitto or EMQX?",
-    a: "FluxMQ is designed for high-throughput, distributed deployments with built-in clustering, durable queues, consumer groups, and AMQP support. Mosquitto is a lightweight single-node MQTT broker. EMQX is a commercial broker with a similar feature set — FluxMQ is fully open source under Apache 2.0 with no commercial restrictions.",
+    a: "FluxMQ is designed for high-throughput, distributed deployments with built-in clustering, durable queues, consumer groups, and AMQP support. Mosquitto is a lightweight single-node MQTT broker. EMQX is a commercial broker with a similar feature set; FluxMQ is fully open source under Apache 2.0 with no commercial restrictions.",
   },
   {
     q: "Which protocols does FluxMQ support?",
@@ -150,7 +150,7 @@ const faqs = [
   },
   {
     q: "How does FluxMQ integrate with Magistrala?",
-    a: "FluxMQ is the recommended message broker for Magistrala deployments. It handles the data plane — routing device telemetry through durable queues — while Magistrala provides device identity, RBAC, dashboards, and platform services.",
+    a: "FluxMQ is the recommended message broker for Magistrala deployments. It handles the data plane, routing device telemetry through durable queues, while Magistrala provides device identity, RBAC, dashboards, and platform services.",
   },
 ];
 ---
@@ -269,7 +269,7 @@ const faqs = [
             </h2>
           </div>
           <p class="lede">
-            Every performance decision in FluxMQ is deliberate — from zero-copy
+            Every performance decision in FluxMQ is deliberate, from zero-copy
             parsing to trie-based topic routing and Raft-replicated durable
             queues.
           </p>
@@ -344,7 +344,7 @@ graph TD
               <li>
                 <span class="fmq-arch-bullet" style="color:#2F69B3;">▸</span>
                 <span
-                  ><strong>Transport Layer</strong> — Multi-protocol servers: MQTT
+                  ><strong>Transport Layer:</strong> Multi-protocol servers: MQTT
                   over TCP and WebSocket, AMQP 1.0, AMQP 0.9.1, CoAP, HTTP, and WebSocket
                   bridges.</span
                 >
@@ -352,14 +352,14 @@ graph TD
               <li>
                 <span class="fmq-arch-bullet" style="color:#2F69B3;">▸</span>
                 <span
-                  ><strong>Protocol Brokers</strong> — FSM-based protocol handlers
+                  ><strong>Protocol Brokers:</strong> FSM-based protocol handlers
                   with zero-copy parsing. Session ownership tracked per broker node.</span
                 >
               </li>
               <li>
                 <span class="fmq-arch-bullet" style="color:#F9A32A;">▸</span>
                 <span
-                  ><strong>Queue Manager</strong> — Durable queue bindings with FIFO,
+                  ><strong>Queue Manager:</strong> Durable queue bindings with FIFO,
                   priority, and topic-based delivery. Consumer groups, ack semantics,
                   and dead-letter queues.</span
                 >
@@ -367,7 +367,7 @@ graph TD
               <li>
                 <span class="fmq-arch-bullet" style="color:#F9A32A;">▸</span>
                 <span
-                  ><strong>Storage</strong> — Pluggable persistence layer for message
+                  ><strong>Storage:</strong> Pluggable persistence layer for message
                   storage and topic indexing. Raft-based replication across cluster
                   nodes.</span
                 >
