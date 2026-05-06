@@ -96,4 +96,10 @@ The dashboard connects to node 1 by default and fans out per-node stats across a
 
 The current dashboard covers the core operational view. Upcoming work includes alert thresholds and historical trend data.
 
-If you have a specific use case or a gap you're running into, [open an issue](https://github.com/absmach/fluxmq/issues) on GitHub. To follow development or ask questions, join the community on [Discord](https://discord.gg/HvB5QuzF) or explore the [documentation](https://fluxmq.absmach.eu/docs).
+If you have a specific use case or a gap you're running into, [open an issue](https://github.com/absmach/fluxmq/issues) on GitHub.
+
+Get involved or stay up to date:
+- 🌐 **Website:** https://fluxmq.absmach.eu
+- ⚙️ **GitHub:** https://github.com/absmach/fluxmq
+- 📘 **Documentation:** https://fluxmq.absmach.eu/docs
+- 💬 **Discord:** https://discord.gg/HvB5QuzF
