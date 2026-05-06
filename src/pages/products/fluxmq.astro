@@ -157,7 +157,7 @@ const faqs = [
 
 <BaseLayout
   title="FluxMQ Message Broker — Abstract Machines"
-  description="High-performance multi-protocol message broker supporting MQTT 5.0, AMQP, CoAP, and WebSocket. 500K+ concurrent connections, 300K–500K msg/s. Single binary, no dependencies."
+  description="High-performance MQTT 5.0, AMQP, CoAP, and WebSocket message broker. 500K+ connections, 300K–500K msg/s per node. Single Go binary, no external dependencies."
 >
   <Header />
   <main>
@@ -609,6 +609,22 @@ graph TD
     </section>
   </main>
   <Footer />
+  <script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "FluxMQ",
+    "description": "High-performance multi-protocol message broker supporting MQTT 5.0, AMQP, CoAP, and WebSocket. 500K+ concurrent connections, 300K–500K msg/s per node.",
+    "applicationCategory": "IoT",
+    "operatingSystem": "Linux",
+    "url": "https://absmach.eu/products/fluxmq",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "author": {
+      "@type": "Organization",
+      "name": "Abstract Machines"
+    }
+  }
+  </script>
 </BaseLayout>
 
 <style>

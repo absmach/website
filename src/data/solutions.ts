@@ -83,7 +83,7 @@ export const solutions: Solution[] = [
       { question: "How does the solution support Non-Revenue Water calculation?", answer: "The pack provides the metered volume data that NRW calculation requires: zone-level flow totals, daily consumption, and long-term volume records from the PostgreSQL archive." },
       { question: "What happens if a device goes offline during a quality exceedance event?", answer: "The Device Health Monitor raises a Warning alarm within 10–20 minutes of the last received message. If the device went offline while reporting an out-of-range reading, the quality alarm remains active in the log." },
     ],
-    metaDescription: "Monitor water flow, pressure, pH, and tank levels in real time. Detect leaks within seconds, automate water quality compliance reports, and reduce NRW losses with Magistrala.",
+    metaDescription: "Monitor water flow, pressure, and tank levels in real time. Detect leaks within seconds, automate compliance reports, and reduce NRW losses with Magistrala.",
   },
 
   {
@@ -146,7 +146,7 @@ export const solutions: Solution[] = [
       { question: "What happens if connectivity to the central platform is lost?", answer: "Edge gateway nodes buffer messages locally during connectivity gaps and replay them in order once the link is restored. Time-series data arrives with original device timestamps." },
       { question: "How quickly can the Smart City pack be deployed?", answer: "The pre-configured pack installs on Magistrala Cloud in minutes; clients, channels, rules, dashboards, and alarms are all included. Custom device types and additional integrations can be added incrementally." },
     ],
-    metaDescription: "Deploy a full smart city IoT platform in minutes. The Magistrala Smart City Solution Pack includes pre-configured traffic, lighting, waste, and energy monitoring — ready out of the box.",
+    metaDescription: "Deploy a smart city IoT platform in minutes. Pre-configured traffic, lighting, waste, and energy monitoring on Magistrala — ready out of the box.",
   },
 
   {
@@ -209,7 +209,7 @@ export const solutions: Solution[] = [
       { question: "Can we monitor multiple grid zones or substations from one platform?", answer: "Yes. Magistrala's multi-tenant architecture lets you organize substations, feeders, and distributed energy resources into separate domains with their own access policies." },
       { question: "How is power quality event data handled for compliance reporting?", answer: "Sub-second telemetry resolution captures voltage sags, harmonics, and frequency deviations. Automated daily and monthly compliance reports are generated from raw event data." },
     ],
-    metaDescription: "Deploy smart grid monitoring and energy management in minutes. The Magistrala Smart Energy Pack includes pre-configured meters, demand response rules, and grid dashboards.",
+    metaDescription: "Deploy smart grid monitoring in minutes. The Magistrala Smart Energy Pack includes pre-configured meters, demand response rules, and grid fault dashboards.",
   },
 
   {
@@ -273,7 +273,7 @@ export const solutions: Solution[] = [
       { question: "Can I monitor multiple cold rooms or facilities from one platform?", answer: "Yes. The pack ships with two zones but scales to any number. The Cold Room Status template scales automatically by device tag, so new rooms are covered without changing the template definition." },
       { question: "How are the monthly HACCP compliance reports generated?", answer: "The Monthly Compliance Report aggregates temperature readings for both cold rooms at daily intervals over the previous 30 days, including average, minimum, and maximum values per zone alongside a count of exceedance alarms." },
     ],
-    metaDescription: "Monitor frozen and chilled storage zones against HACCP thresholds in real time. Magistrala Cold Storage Monitoring includes temperature and humidity sensors, CO2 safety monitoring, and automated HACCP compliance reports.",
+    metaDescription: "Monitor cold storage zones against HACCP thresholds in real time. Includes temperature, humidity, CO2 safety monitoring, and automated HACCP compliance reports.",
   },
 
   {
@@ -336,7 +336,7 @@ export const solutions: Solution[] = [
       { question: "Can I monitor multiple farms or fields from one platform?", answer: "Yes. Each farm, field, or crop zone is an isolated domain with its own sensors, rules, and dashboards. A farm manager sees their own operations while an agronomist account can be granted cross-farm read access." },
       { question: "How does the platform help with water regulation compliance?", answer: "Automated water usage logs record every irrigation event with volume, duration, and zone data. Monthly reports are generated from this data and can be exported for submission to water authorities." },
     ],
-    metaDescription: "Deploy precision agriculture IoT infrastructure in minutes. The Magistrala Smart Farming Pack includes soil sensors, weather stations, irrigation automation rules, and crop monitoring dashboards.",
+    metaDescription: "Deploy precision agriculture IoT in minutes. Magistrala Smart Farming includes soil sensors, weather stations, irrigation automation, and crop dashboards.",
   },
 
   {
@@ -400,7 +400,7 @@ export const solutions: Solution[] = [
       { question: "How are H2S safety alarms escalated when no one acknowledges them?", answer: "The Gas Leak Detection rule sends email notifications to configured recipients the moment the alarm fires. For SMS or Safety Management System integration, use the rule's webhook output to POST the event to your external system." },
       { question: "Do all sensors need to connect through the Wellhead Gateway, or can they connect directly?", answer: "Either works. Each device type has its own client credentials, so sensors can connect directly if they have MQTT capability. In most field deployments, all sensors route through the Wellhead Gateway for a single TLS connection." },
     ],
-    metaDescription: "Monitor wellhead pressure, H2S gas concentration, oil flow rate, and tank levels in real time. Detect gas hazards and pressure excursions within seconds with Magistrala's Oil & Gas Field Monitoring solution pack.",
+    metaDescription: "Monitor wellhead pressure, H2S concentration, oil flow, and tank levels in real time. Detect gas hazards and pressure excursions within seconds with Magistrala.",
   },
 
   {
@@ -464,7 +464,7 @@ export const solutions: Solution[] = [
       { question: "How often should devices publish readings for the alarms to be effective?", answer: "Detection rules evaluate each SenML message as it arrives, so alarm latency equals the device's publish interval. For flow meter and pipe burst detection, publishing every 30–60 seconds gives operators a window to respond before significant water is lost." },
       { question: "Can we use the pack with drip irrigation as well as sprinkler systems?", answer: "Yes. The pack is agnostic to the delivery method. The main difference is the normal flow rate range; you may want to lower the pipe burst threshold in the High Flow Alert rule to match your drip system's actual flow profile." },
     ],
-    metaDescription: "Monitor soil moisture, flow rate, tank level, and rainfall across multiple irrigation zones in real time. Detect dry soil, pipe bursts, and waterlogging within seconds with Magistrala's Smart Irrigation solution pack.",
+    metaDescription: "Monitor soil moisture, flow rate, and tank level across irrigation zones. Detect dry soil, pipe bursts, and waterlogging within seconds with Magistrala.",
   },
 
   {
@@ -527,7 +527,7 @@ export const solutions: Solution[] = [
       { question: "How does the platform handle multi-site monitoring networks?", answer: "Each monitoring station or network zone is organized as a Magistrala domain with its own sensors, rules, and access policies. Environmental agencies can manage multiple operator networks from a single platform while maintaining strict data isolation." },
       { question: "How are automated compliance reports generated?", answer: "Compliance reports are generated on a configurable daily, weekly, or monthly schedule from raw sensor data. Reports include hourly averages, exceedance counts, and station metadata in formats accepted by major regulatory submission portals." },
     ],
-    metaDescription: "Deploy air quality monitoring and regulatory compliance infrastructure in minutes. The Magistrala Air Quality Pack includes multi-pollutant sensors, AQI rules, and automated compliance reporting.",
+    metaDescription: "Deploy air quality monitoring in minutes. Magistrala Air Quality Pack includes multi-pollutant sensors, AQI rules, and automated compliance reporting.",
   },
 ];
 

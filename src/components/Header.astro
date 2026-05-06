@@ -40,6 +40,24 @@ const projects = [
   { label: "Confidential 6G", desc: "Post-quantum 6G security", href: "/projects/confidential6g", logo: "/img/logos/confidential6G.jpg" },
 ];
 
+const docs = [
+  {
+    group: "Software",
+    items: [
+      { label: "Magistrala", desc: "IoT Platform", href: "https://magistrala.absmach.eu/docs", logo: "/img/products/magistrala.png" },
+      { label: "FluxMQ", desc: "Message Broker", href: "https://fluxmq.absmach.eu/docs", logo: "/img/products/fluxmq.png" },
+      { label: "Propeller", desc: "Wasm Orchestrator", href: "https://propeller.absmach.eu/docs", logo: "/img/products/propeller.png" },
+    ],
+  },
+  {
+    group: "Hardware",
+    items: [
+      { label: "S0 Gateway", desc: "Zephyr RTOS Gateway", href: "https://hardware.absmach.eu/docs/s0-gateway/getting-started", logo: "/img/products/s0.png" },
+      { label: "S1 Gateway", desc: "Linux Industrial Gateway", href: "https://hardware.absmach.eu/docs/s1-gateway", logo: undefined },
+    ],
+  },
+];
+
 const plainLinks = [
   { label: "Company", href: "/company" },
   { label: "Blog", href: "/blog" },
@@ -191,6 +209,51 @@ const plainLinks = [
           </li>
         ))
       }
+
+      <!-- Docs dropdown -->
+      <li class="nav-item has-dropdown">
+        <a href="#">
+          Docs
+          <svg
+            class="nav-chevron"
+            width="10"
+            height="6"
+            viewBox="0 0 10 6"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M1 1l4 4 4-4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+        <div class="nav-dropdown dropdown-docs">
+          {
+            docs.map(({ group, items }) => (
+              <div class="dropdown-group">
+                <div class="dropdown-group-label">{group}</div>
+                {items.map(({ label, desc, href, logo }) => (
+                  <a
+                    href={href}
+                    class={`dropdown-item${logo ? " has-logo" : ""}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {logo && <img src={logo} alt="" class="dropdown-logo" aria-hidden="true" />}
+                    <div class="dropdown-text">
+                      <span class="dropdown-name">{label}</span>
+                      <span class="dropdown-desc">{desc}</span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            ))
+          }
+        </div>
+      </li>
     </ul>
 
     <div class="nav-actions">
@@ -317,6 +380,25 @@ const plainLinks = [
       ))
     }
 
+    <!-- Docs -->
+    <details class="nav-drawer-section">
+      <summary class="nav-drawer-link nav-drawer-summary">Docs</summary>
+      <div class="nav-drawer-sub">
+        {
+          docs.map(({ group, items }) => (
+            <>
+              <div class="nav-drawer-sub-group">{group}</div>
+              {items.map(({ label, desc, href }) => (
+                <a href={href} class="nav-drawer-sublink" target="_blank" rel="noopener noreferrer">
+                  {label} <span class="nav-drawer-subdesc">{desc}</span>
+                </a>
+              ))}
+            </>
+          ))
+        }
+      </div>
+    </details>
+
     <div class="nav-drawer-actions">
       <a
         href="https://github.com/absmach"
@@ -384,8 +466,9 @@ const plainLinks = [
     translate: -50% 0;
   }
 
-  /* Products: two groups side by side */
-  .dropdown-products {
+  /* Products / Docs: two groups side by side */
+  .dropdown-products,
+  .dropdown-docs {
     display: flex;
     gap: 12px;
     min-width: 560px;
