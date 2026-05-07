@@ -3,7 +3,7 @@ title: "The FluxMQ Dashboard: Real-Time Visibility Across Protocols and Clusters
 slug: "fluxmq-dashboard"
 excerpt: "FluxMQ now ships with a real-time dashboard that gives you live visibility into sessions, subscriptions, broker health, and cluster topology — all in one place."
 description: "A walkthrough of the FluxMQ dashboard: what it shows, how it's built, and how to run it alongside your broker using Docker or docker compose."
-date: "2026-05-06"
+date: "2026-05-07"
 author:
   name: "Felister Wambui"
   picture: "https://avatars.githubusercontent.com/u/80099068?v=4"
