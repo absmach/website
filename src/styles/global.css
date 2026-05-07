@@ -877,7 +877,7 @@ section {
   color: var(--paper);
   border-bottom-color: transparent;
   isolation: isolate;
-  min-height: calc(100svh - 200px);
+  min-height: min(760px, calc(100vh - 72px));
   display: flex;
   align-items: center;
 }
@@ -2386,8 +2386,8 @@ section {
   .contact-grid {
     grid-template-columns: 1fr;
   }
-  .prod-hero .hero-visual {
-    display: none;
+  .prod-hero.has-video {
+    min-height: auto;
   }
   .section-head {
     grid-template-columns: 1fr;
@@ -2480,6 +2480,9 @@ section {
   .prod-hero h1,
   .proj-hero h1 {
     font-size: 42px;
+  }
+  .prod-hero .hero-visual {
+    display: none;
   }
   .metrics {
     grid-template-columns: 1fr;
