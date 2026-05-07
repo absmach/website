@@ -79,8 +79,8 @@ a {
 }
 
 ::selection {
-  background: var(--accent);
-  color: #fff;
+  background: var(--ink);
+  color: var(--paper);
 }
 
 /* scrollbar ---------------------------------------------------------------- */
@@ -282,8 +282,8 @@ section {
   border-color: var(--ink);
 }
 .btn-primary:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--ink-2);
+  border-color: var(--ink-2);
 }
 .btn-accent {
   background: var(--accent);
@@ -305,8 +305,8 @@ section {
   padding-bottom: 2px;
 }
 .btn-link:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+  color: var(--ink);
+  border-color: var(--line);
   transform: none;
 }
 .btn-row {
@@ -336,7 +336,7 @@ section {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--ink-3);
 }
 .badge.success {
   color: var(--green);
@@ -346,7 +346,7 @@ section {
   background: var(--green);
 }
 .badge.active .dot {
-  background: var(--accent);
+  background: var(--green);
   animation: pulse 2s infinite;
 }
 .badge.complete .dot {
@@ -725,7 +725,7 @@ section {
   inset: 0;
   background: radial-gradient(
     circle at 30% 40%,
-    rgba(37, 71, 255, 0.25),
+    rgba(246, 244, 238, 0.04),
     transparent 50%
   );
   pointer-events: none;
@@ -1449,6 +1449,66 @@ section {
   color: var(--ink-3);
 }
 
+/* solution image cards ----------------------------------------------------- */
+
+.sol-img-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line-3);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--paper);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+.sol-img-card:hover {
+  border-color: var(--line-2);
+  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+}
+.sol-img-wrap {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+.sol-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.4s ease;
+}
+.sol-img-card:hover .sol-img-wrap img {
+  transform: scale(1.04);
+}
+.sol-img-body {
+  padding: 20px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.sol-img-title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+.sol-img-desc {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* deployment cards --------------------------------------------------------- */
 
 .depl-grid {
@@ -1497,7 +1557,7 @@ section {
 }
 .depl-card ul li::before {
   content: "→ ";
-  color: var(--accent);
+  color: var(--ink-3);
   margin-right: 4px;
 }
 
@@ -1523,7 +1583,7 @@ section {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--accent);
+  color: var(--ink-3);
 }
 .cta-card h3 {
   font-family: "Montserrat", sans-serif;
@@ -1604,7 +1664,7 @@ section {
 .step .num {
   font-family: "JetBrains Mono", monospace;
   font-size: 11px;
-  color: var(--accent);
+  color: var(--ink-3);
   letter-spacing: 0.16em;
   margin-bottom: 16px;
 }
@@ -1641,7 +1701,7 @@ section {
 .val .num {
   font-family: "JetBrains Mono", monospace;
   font-size: 11px;
-  color: var(--accent);
+  color: var(--ink-3);
   letter-spacing: 0.14em;
   min-width: 32px;
 }
@@ -1686,7 +1746,7 @@ section {
 .timeline .item .y {
   font-family: "JetBrains Mono", monospace;
   font-size: 13px;
-  color: var(--accent);
+  color: var(--ink-3);
   letter-spacing: 0.1em;
 }
 .timeline .item h4 {
@@ -1737,7 +1797,7 @@ section {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 40px;
-  color: var(--accent);
+  color: var(--ink);
   letter-spacing: 0;
   line-height: 1;
   margin-bottom: 14px;
@@ -1790,10 +1850,10 @@ section {
 .depl-map .pin {
   position: absolute;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--ink);
   border: 2px solid var(--paper);
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 0 4px rgba(37, 71, 255, 0.18);
+  box-shadow: 0 0 0 4px rgba(20, 22, 26, 0.12);
 }
 .depl-map .pin.live {
   animation: pulse-pin 2.5s infinite;
@@ -1801,10 +1861,10 @@ section {
 @keyframes pulse-pin {
   0%,
   100% {
-    box-shadow: 0 0 0 4px rgba(37, 71, 255, 0.18);
+    box-shadow: 0 0 0 4px rgba(20, 22, 26, 0.12);
   }
   50% {
-    box-shadow: 0 0 0 12px rgba(37, 71, 255, 0);
+    box-shadow: 0 0 0 12px rgba(20, 22, 26, 0);
   }
 }
 .depl-map .side {
@@ -2031,9 +2091,9 @@ section {
 }
 .product-chip[aria-pressed="true"],
 .tag-chip[aria-pressed="true"] {
-  background: var(--accent-soft);
-  border-color: var(--accent);
-  color: var(--accent);
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
 }
 
 /* screenshots grid (solution detail pages) --------------------------------- */
@@ -2220,7 +2280,7 @@ section {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--accent);
+  color: var(--ink-3);
 }
 .feat-row h3 {
   font-family: "Montserrat", sans-serif;
@@ -2357,7 +2417,7 @@ section {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--ink-3);
   flex-shrink: 0;
 }
 

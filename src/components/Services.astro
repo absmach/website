@@ -1,12 +1,5 @@
 ---
-const solutions = [
-  ["Industrial IoT", "Secure, low-latency data flows for factory automation and industrial equipment.", ["Factory Automation", "Predictive Maintenance", "Energy"]],
-  ["Smart Cities", "Distributed sensor networks for intelligent urban infrastructure.", ["Lighting", "Traffic", "Environmental"]],
-  ["Edge AI & Analytics", "WebAssembly-orchestrated AI workloads at the network edge.", ["Live Inference", "Vision", "Anomaly Detection"]],
-  ["Connected Healthcare", "Secure patient monitoring and compliant medical device integration.", ["Remote Monitoring", "Privacy", "Live Alerts"]],
-  ["Fleet Management", "Continuous vehicle telemetry and route optimisation at scale.", ["GPS", "Fuel", "Diagnostics"]],
-  ["Energy & Utilities", "Monitoring and control for distributed energy resources.", ["Smart Metering", "Grid", "Solar"]],
-];
+import { solutions } from "../data/solutions";
 ---
 
 <section>
@@ -18,17 +11,38 @@ const solutions = [
       </div>
       <a href="/solutions" class="btn-link">All solutions →</a>
     </div>
-    <div class="sol-grid">
-      {solutions.map(([title, description, tags]) => (
-        <a class="sol-card" href="/solutions">
-          <div class="icon-frame">{(title as string).charAt(0)}</div>
-          <h3 class="name">{title}</h3>
-          <p class="desc">{description}</p>
-          <div class="tags">
-            {(tags as string[]).map((tag) => <span class="tag">{tag}</span>)}
+    <div class="home-sol-grid">
+      {solutions.slice(0, 6).map((sol) => (
+        <a href={`/solutions/${sol.slug}/`} class="sol-img-card">
+          <div class="sol-img-wrap">
+            <img
+              src={sol.image}
+              alt={`${sol.title} solution`}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="sol-img-body">
+            <h3 class="sol-img-title">{sol.title}</h3>
+            <p class="sol-img-desc">{sol.summary}</p>
+            <span class="btn-link" style="font-size:13px; margin-top:auto;">Explore solution →</span>
           </div>
         </a>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .home-sol-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 980px) {
+    .home-sol-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .home-sol-grid { grid-template-columns: 1fr; }
+  }
+</style>

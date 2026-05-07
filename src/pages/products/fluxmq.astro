@@ -249,7 +249,7 @@ const faqs = [
           {
             features.map(({ emoji, name, desc }) => (
               <div class="feature">
-                <div class="ic" style="background:var(--ink); color:var(--paper); font-size:18px; border:none;">
+                <div class="ic" style="font-size:18px;">
                   {emoji}
                 </div>
                 <div class="name">{name}</div>
@@ -432,7 +432,7 @@ graph TD
           {
             solutions.map(({ emoji, title, desc, bullets, tags }) => (
               <div class="sol-card">
-                <div class="icon-frame" style="background:var(--ink-2); border-color:var(--ink-2); color:var(--paper); font-size:22px;">
+                <div class="icon-frame" style="font-size:22px;">
                   {emoji}
                 </div>
                 <h3 class="name">{title}</h3>
@@ -622,7 +622,7 @@ graph TD
     align-items: start;
   }
   .fmq-diagram-wrap {
-    background: var(--paper);
+    background: transparent;
     border: 1px solid var(--line-3);
     border-radius: var(--radius-lg);
     padding: 32px 24px;
@@ -635,7 +635,7 @@ graph TD
   .fmq-arch-components {
     border: 1px solid var(--line-3);
     border-radius: var(--radius-lg);
-    background: var(--paper);
+    background: transparent;
     padding: 32px;
   }
   .fmq-arch-components-title {
