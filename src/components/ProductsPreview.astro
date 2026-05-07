@@ -17,7 +17,6 @@ const products = [
     category: "Messaging",
     name: "FluxMQ",
     description: "Durable, low-latency MQTT broker for distributed event streams.",
-    logo: "/img/products/fluxmq.png",
   },
   {
     href: "/products/propeller",
@@ -82,6 +81,11 @@ const products = [
           {product.logo && (
             <div class="plogo" aria-hidden="true">
               <img src={product.logo} alt="" loading="lazy" />
+            </div>
+          )}
+          {product.className === "b-fluxmq" && (
+            <div class="plogo plogo-hw" aria-hidden="true">
+              <span>Flux</span><span class="fmq-mq">MQ</span>
             </div>
           )}
           {product.className === "b-s0" && (

@@ -1281,8 +1281,11 @@ section {
   mix-blend-mode: screen;
   filter: invert(1);
 }
-.bento .b-fluxmq .plogo img {
-  height: 80px;
+.bento .b-fluxmq .plogo-hw {
+  color: rgba(20, 22, 26, 0.15);
+}
+.bento .b-fluxmq .plogo-hw .fmq-mq {
+  color: rgba(20, 22, 26, 0.05);
 }
 
 /* S0 / S1 typographic marks */
