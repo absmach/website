@@ -9,16 +9,16 @@
    ========================================================================== */
 
 :root {
-  --paper: #f6f4ee;
-  --paper-2: #ecebe5;
-  --paper-3: #e2e0d8;
-  --ink: #14161a;
-  --ink-2: #383a40;
-  --ink-3: #6c6e73;
-  --ink-4: #a4a6ac;
-  --line: #1a1c20;
-  --line-2: #c9c7be;
-  --line-3: #dedcd4;
+  --paper: #ffffff;
+  --paper-2: #f3f6fb;
+  --paper-3: #e6ecf5;
+  --ink: #073763;
+  --ink-2: #1e3a5a;
+  --ink-3: #5a7898;
+  --ink-4: #96aec4;
+  --line: #073763;
+  --line-2: #b8c9da;
+  --line-3: #dce5ef;
   --accent: #2547ff;
   --accent-2: #ff7a4a;
   --accent-soft: #e7eaff;
@@ -29,10 +29,10 @@
   --radius: 8px;
   --radius-lg: 14px;
 
-  --shadow-sm: 0 1px 2px rgba(20, 22, 26, 0.04);
-  --shadow: 0 4px 14px rgba(20, 22, 26, 0.06), 0 1px 2px rgba(20, 22, 26, 0.04);
+  --shadow-sm: 0 1px 2px rgba(7, 55, 99, 0.06);
+  --shadow: 0 4px 14px rgba(7, 55, 99, 0.08), 0 1px 2px rgba(7, 55, 99, 0.04);
   --shadow-lg:
-    0 18px 60px -20px rgba(20, 22, 26, 0.18), 0 4px 14px rgba(20, 22, 26, 0.06);
+    0 18px 60px -20px rgba(7, 55, 99, 0.20), 0 4px 14px rgba(7, 55, 99, 0.08);
 
   --container: 1200px;
   --container-wide: 1320px;
