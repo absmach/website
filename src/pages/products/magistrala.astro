@@ -209,7 +209,6 @@ const faqs = [
               src="/img/products/magistrala-logo.svg"
               alt="Magistrala"
               class="prod-logo-img"
-              style="filter:invert(1);"
             />
             <h1 class="tagline">IoT solutions without complexity.</h1>
             <p class="lede" style="margin-top:16px; max-width:44ch;">
@@ -253,10 +252,10 @@ const faqs = [
               >
                 <defs>
                   <linearGradient id="mgCurveFade" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="white" stop-opacity="0"/>
-                    <stop offset="15%" stop-color="white" stop-opacity="0.22"/>
-                    <stop offset="85%" stop-color="white" stop-opacity="0.22"/>
-                    <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                    <stop offset="0%" stop-color="#073763" stop-opacity="0"/>
+                    <stop offset="15%" stop-color="#073763" stop-opacity="0.18"/>
+                    <stop offset="85%" stop-color="#073763" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#073763" stop-opacity="0"/>
                   </linearGradient>
                 </defs>
                 <path
@@ -883,9 +882,9 @@ const faqs = [
     left: 0;
     width: 12px;
     height: 12px;
-    background: white;
+    background: var(--ink);
     border-radius: 50%;
-    box-shadow: 0 0 0 5px rgba(246, 244, 238, 0.12);
+    box-shadow: 0 0 0 5px rgba(7, 55, 99, 0.12);
     transform: translate(-50%, -50%);
     transition: transform 0.2s ease;
   }
@@ -898,19 +897,19 @@ const faqs = [
     top: -30px;
     padding-bottom: 6px;
     padding-right: 48px;
-    border-bottom: 1.5px solid rgba(255, 255, 255, 0.28);
+    border-bottom: 1.5px solid var(--line-2);
     white-space: nowrap;
     -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
     mask-image: linear-gradient(to right, black 60%, transparent 100%);
     font-family: "JetBrains Mono", monospace;
     font-size: 13px;
     font-weight: 500;
-    color: rgba(246, 244, 238, 0.75);
+    color: var(--ink-3);
     transition: border-color 0.2s, color 0.2s;
   }
   .mg-node:hover .mg-label {
-    border-color: rgba(255, 255, 255, 0.7);
-    color: rgba(246, 244, 238, 1);
+    border-color: var(--ink-2);
+    color: var(--ink);
   }
 
   /* Hover card */
@@ -920,10 +919,10 @@ const faqs = [
     top: -24px;
     width: 220px;
     padding: 16px;
-    background: rgba(14, 16, 20, 0.88);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: var(--paper);
+    border: 1px solid var(--line-3);
     border-radius: 12px;
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+    box-shadow: var(--shadow-lg);
     backdrop-filter: blur(8px);
     opacity: 0;
     pointer-events: none;
@@ -940,18 +939,18 @@ const faqs = [
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--line-3);
+    background: var(--paper-2);
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 12px;
-    color: rgba(246, 244, 238, 0.9);
+    color: var(--ink-2);
   }
   .mg-card-desc {
     font-size: 13px;
     font-weight: 500;
-    color: rgba(246, 244, 238, 0.75);
+    color: var(--ink-2);
     line-height: 1.55;
     margin: 0;
   }

@@ -1,4 +1,5 @@
 ---
+
 ---
 
 <section class="hero-asym has-video">
@@ -19,14 +20,23 @@
     <div class="grid">
       <div class="stack stack-lg">
         <span class="kicker">Paris · Open Source · Since 2023</span>
-        <h1 class="h-display">One open stack for secure IoT.</h1>
+        <h1 class="h-display">Unified stack for secure IoT.</h1>
         <p class="lede">
-          One secure, open-source platform covering messaging, device management, edge orchestration,
-          and hardware - everything you need to build and operate IoT and Industrial systems end to end.
+          One secure, open-source platform covering messaging, device
+          management, edge orchestration, and hardware - everything you need to
+          build and operate IoT and Industrial systems end to end.
         </p>
         <div class="btn-row">
-          <a href="/products" class="btn btn-primary">Explore products <span aria-hidden="true">→</span></a>
-          <a href="https://github.com/absmach" class="btn" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          <a href="/products" class="btn btn-primary"
+            >Explore products <span aria-hidden="true">→</span></a
+          >
+          <a
+            href="https://github.com/absmach"
+            class="btn"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub <span aria-hidden="true">↗</span></a
+          >
         </div>
       </div>
 
@@ -35,7 +45,14 @@
         <span class="ps-mark ps-tr" aria-hidden="true"></span>
         <span class="ps-mark ps-bl" aria-hidden="true"></span>
         <span class="ps-mark ps-br" aria-hidden="true"></span>
-
+        <a href="/products/fluxmq" class="ps-cell ps-span ps-last ps-fluxmq">
+          <span class="ps-name">FluxMQ</span>
+          <span class="ps-tag">Multiprotocol Message Broker</span>
+        </a>
+        <a href="/products/magistrala" class="ps-cell ps-span ps-magistrala">
+          <span class="ps-name">Magistrala</span>
+          <span class="ps-tag">IoT Platform</span>
+        </a>
         <a href="/products/propeller" class="ps-cell ps-span ps-propeller">
           <span class="ps-name">Propeller</span>
           <span class="ps-tag">Edge Orchestrator</span>
@@ -48,14 +65,6 @@
           <span class="ps-name">S1</span>
           <span class="ps-tag">Linux gateway</span>
         </a>
-        <a href="/products/magistrala" class="ps-cell ps-span ps-magistrala">
-          <span class="ps-name">Magistrala</span>
-          <span class="ps-tag">IoT Platform</span>
-        </a>
-        <a href="/products/fluxmq" class="ps-cell ps-span ps-last ps-fluxmq">
-          <span class="ps-name">FluxMQ</span>
-          <span class="ps-tag">Multiprotocol Message Broker</span>
-        </a>
       </div>
     </div>
   </div>
@@ -65,35 +74,65 @@
   /* ─── Keyframes ────────────────────────────────────────────────── */
 
   @keyframes cellFlyIn {
-    from { opacity: 0; transform: var(--fly-from, translate(0, 30px)); }
-    to   { opacity: 1; transform: none; }
+    from {
+      opacity: 0;
+      transform: var(--fly-from, translate(0, 30px));
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   @keyframes cellBorderReveal {
-    from { border-color: transparent; }
-    to   { border-color: rgba(246,244,238,0.45); }
+    from {
+      border-color: transparent;
+    }
+    to {
+      border-color: rgba(7, 55, 99, 0.2);
+    }
   }
 
   @keyframes containerReveal {
-    to { border-color: rgba(246,244,238,0.55); }
+    to {
+      border-color: rgba(7, 55, 99, 0.25);
+    }
   }
 
   @keyframes markReveal {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   /* step 1: flash bright, step 2: settle to featured state */
   @keyframes magistralaHighlight {
-    0%   { background: rgba(246,244,238,0.04); box-shadow: none; }
-    45%  { background: rgba(246,244,238,0.18); box-shadow: inset 0 0 0 1px rgba(246,244,238,0.55); }
-    100% { background: rgba(246,244,238,0.11); box-shadow: inset 0 0 0 1px rgba(246,244,238,0.38); }
+    0% {
+      background: rgba(7, 55, 99, 0.04);
+      box-shadow: none;
+    }
+    45% {
+      background: rgba(7, 55, 99, 0.14);
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.35);
+    }
+    100% {
+      background: rgba(7, 55, 99, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.22);
+    }
   }
 
   /* slow breathing glow after the highlight settles */
   @keyframes magistralaPulse {
-    0%, 100% { box-shadow: inset 0 0 0 1px rgba(246,244,238,0.25); }
-    50%      { box-shadow: inset 0 0 0 1px rgba(246,244,238,0.50); }
+    0%,
+    100% {
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.18);
+    }
+    50% {
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.36);
+    }
   }
 
   /* ─── Container ────────────────────────────────────────────────── */
@@ -116,19 +155,33 @@
     padding: 26px 28px;
     min-height: 120px;
     border-bottom: 1px solid transparent;
-    background: rgba(246,244,238,0.04);
+    background: rgba(7, 55, 99, 0.04);
     /* fly-in + border reveal — delays overridden per cell below */
     animation:
-      cellFlyIn        1.0s cubic-bezier(0.25, 1, 0.5, 1) both,
+      cellFlyIn 1s cubic-bezier(0.25, 1, 0.5, 1) both,
       cellBorderReveal 0.35s ease-out both;
     transition: background 0.2s ease;
   }
-  .ps-cell:hover  { background: rgba(246,244,238,0.10); cursor: pointer; }
-  .ps-cell:hover .ps-name { color: rgba(246,244,238,1); }
-  .ps-cell:focus-visible { outline: 2px solid rgba(246,244,238,0.6); outline-offset: -2px; }
-  .ps-cell.ps-span { grid-column: 1 / -1; }
-  .ps-cell.ps-s0   { border-right: 1px solid transparent; }
-  .ps-cell.ps-last { border-bottom: none; }
+  .ps-cell:hover {
+    background: rgba(7, 55, 99, 0.08);
+    cursor: pointer;
+  }
+  .ps-cell:hover .ps-name {
+    color: var(--ink);
+  }
+  .ps-cell:focus-visible {
+    outline: 2px solid rgba(7, 55, 99, 0.5);
+    outline-offset: -2px;
+  }
+  .ps-cell.ps-span {
+    grid-column: 1 / -1;
+  }
+  .ps-cell.ps-s0 {
+    border-right: 1px solid transparent;
+  }
+  .ps-cell.ps-last {
+    border-bottom: none;
+  }
 
   /* ─── Per-cell fly directions & stagger ───────────────────────── */
 
@@ -142,22 +195,22 @@
   .ps-s0 {
     --fly-from: translate(-80px, 0px);
     animation:
-      cellFlyIn        1.0s cubic-bezier(0.25, 1, 0.5, 1) 0.12s both,
-      cellBorderReveal 0.35s ease-out 1.0s both;
+      cellFlyIn 1s cubic-bezier(0.25, 1, 0.5, 1) 0.12s both,
+      cellBorderReveal 0.35s ease-out 1s both;
   }
   .ps-s1 {
     --fly-from: translate(80px, 0px);
-    animation-delay: 0.12s, 1.0s;
+    animation-delay: 0.12s, 1s;
   }
 
   /* Magistrala rises from below-right, then gets highlighted */
   .ps-magistrala {
     --fly-from: translate(25px, 55px);
     animation:
-      cellFlyIn          1.0s cubic-bezier(0.25, 1, 0.5, 1) 0.24s both,
-      cellBorderReveal   0.35s ease-out 1.1s both,
+      cellFlyIn 1s cubic-bezier(0.25, 1, 0.5, 1) 0.24s both,
+      cellBorderReveal 0.35s ease-out 1.1s both,
       magistralaHighlight 0.75s ease-in-out 1.65s forwards,
-      magistralaPulse    3.5s ease-in-out 2.45s infinite;
+      magistralaPulse 3.5s ease-in-out 2.45s infinite;
   }
 
   /* FluxMQ rises from directly below */
@@ -169,22 +222,22 @@
   /* ─── Typography ───────────────────────────────────────────────── */
 
   .ps-name {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 600;
     font-size: 22px;
-    color: rgba(246,244,238,0.95);
+    color: var(--ink);
     letter-spacing: 0;
   }
 
   .ps-tag {
     align-self: flex-end;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.13em;
-    color: white;
+    color: var(--ink-3);
     padding: 4px 11px;
-    border: 1px solid rgba(246,244,238,0.35);
+    border: 1px solid var(--line-2);
     border-radius: 999px;
     white-space: nowrap;
   }
@@ -193,70 +246,129 @@
 
   .ps-mark {
     position: absolute;
-    width: 0; height: 0;
+    width: 0;
+    height: 0;
     pointer-events: none;
     animation: markReveal 0.4s ease-out 1.35s both;
   }
   .ps-mark::before,
   .ps-mark::after {
-    content: '';
+    content: "";
     position: absolute;
-    background: rgba(246,244,238,0.55);
+    background: rgba(7, 55, 99, 0.25);
   }
-  .ps-mark::before { width: 1px; height: 18px; }
-  .ps-mark::after  { height: 1px; width: 18px; }
+  .ps-mark::before {
+    width: 1px;
+    height: 18px;
+  }
+  .ps-mark::after {
+    height: 1px;
+    width: 18px;
+  }
 
-  .ps-tl { top: 0; left: 0; }
-  .ps-tl::before { top: -18px; left: -1px; }
-  .ps-tl::after  { top: -1px;  left: -18px; }
+  .ps-tl {
+    top: 0;
+    left: 0;
+  }
+  .ps-tl::before {
+    top: -18px;
+    left: -1px;
+  }
+  .ps-tl::after {
+    top: -1px;
+    left: -18px;
+  }
 
-  .ps-tr { top: 0; right: 0; }
-  .ps-tr::before { top: -18px; right: -1px; }
-  .ps-tr::after  { top: -1px;  right: -18px; }
+  .ps-tr {
+    top: 0;
+    right: 0;
+  }
+  .ps-tr::before {
+    top: -18px;
+    right: -1px;
+  }
+  .ps-tr::after {
+    top: -1px;
+    right: -18px;
+  }
 
-  .ps-bl { bottom: 0; left: 0; }
-  .ps-bl::before { bottom: -18px; left: -1px; }
-  .ps-bl::after  { bottom: -1px;  left: -18px; }
+  .ps-bl {
+    bottom: 0;
+    left: 0;
+  }
+  .ps-bl::before {
+    bottom: -18px;
+    left: -1px;
+  }
+  .ps-bl::after {
+    bottom: -1px;
+    left: -18px;
+  }
 
-  .ps-br { bottom: 0; right: 0; }
-  .ps-br::before { bottom: -18px; right: -1px; }
-  .ps-br::after  { bottom: -1px;  right: -18px; }
+  .ps-br {
+    bottom: 0;
+    right: 0;
+  }
+  .ps-br::before {
+    bottom: -18px;
+    right: -1px;
+  }
+  .ps-br::after {
+    bottom: -1px;
+    right: -18px;
+  }
 
   /* ─── Row-divider edge ticks ───────────────────────────────────── */
 
   .ps-cell.ps-span:not(.ps-last)::before,
   .ps-cell.ps-s0::before {
-    content: '';
+    content: "";
     position: absolute;
-    bottom: -1px; left: -18px;
-    width: 18px; height: 1px;
-    background: rgba(246,244,238,0.55);
+    bottom: -1px;
+    left: -18px;
+    width: 18px;
+    height: 1px;
+    background: rgba(7, 55, 99, 0.25);
   }
   .ps-cell.ps-span:not(.ps-last)::after,
   .ps-cell.ps-s1::after {
-    content: '';
+    content: "";
     position: absolute;
-    bottom: -1px; right: -18px;
-    width: 18px; height: 1px;
-    background: rgba(246,244,238,0.55);
+    bottom: -1px;
+    right: -18px;
+    width: 18px;
+    height: 1px;
+    background: rgba(7, 55, 99, 0.25);
   }
 
   /* ─── Reduced motion ────────────────────────────────────────────── */
 
   @media (prefers-reduced-motion: reduce) {
-    .ps-cell, .ps-mark, .product-stack {
+    .ps-cell,
+    .ps-mark,
+    .product-stack {
       animation: none;
     }
-    .product-stack { border-color: rgba(246,244,238,0.55); }
-    .ps-cell { border-bottom-color: rgba(246,244,238,0.45); opacity: 1; transform: none; }
-    .ps-s0   { border-right-color: rgba(246,244,238,0.45); }
+    .product-stack {
+      border-color: rgba(7, 55, 99, 0.25);
+    }
+    .ps-cell {
+      border-bottom-color: rgba(7, 55, 99, 0.2);
+      opacity: 1;
+      transform: none;
+    }
+    .ps-s0 {
+      border-right-color: rgba(7, 55, 99, 0.2);
+    }
     .ps-magistrala {
-      background: rgba(246,244,238,0.11);
-      box-shadow: inset 0 0 0 1px rgba(246,244,238,0.38);
+      background: rgba(7, 55, 99, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.22);
     }
   }
 
   @media (max-width: 640px) {
-    .product-stack { display: none; }
+    .product-stack {
+      display: none;
+    }
   }
 </style>

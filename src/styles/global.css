@@ -32,7 +32,7 @@
   --shadow-sm: 0 1px 2px rgba(7, 55, 99, 0.06);
   --shadow: 0 4px 14px rgba(7, 55, 99, 0.08), 0 1px 2px rgba(7, 55, 99, 0.04);
   --shadow-lg:
-    0 18px 60px -20px rgba(7, 55, 99, 0.20), 0 4px 14px rgba(7, 55, 99, 0.08);
+    0 18px 60px -20px rgba(7, 55, 99, 0.2), 0 4px 14px rgba(7, 55, 99, 0.08);
 
   --container: 1200px;
   --container-wide: 1320px;
@@ -409,7 +409,7 @@ section {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(246, 244, 238, 0.88);
+  background: var(--paper-2);
   backdrop-filter: saturate(160%) blur(14px);
   -webkit-backdrop-filter: saturate(160%) blur(14px);
   border-bottom: 1px solid var(--line-3);
@@ -584,8 +584,8 @@ section {
   min-height: min(760px, calc(100vh - 72px));
   display: flex;
   align-items: center;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper-2);
+  color: var(--ink);
   isolation: isolate;
 }
 .hero-asym.has-video::after {
@@ -596,14 +596,14 @@ section {
   background:
     linear-gradient(
       90deg,
-      rgba(20, 22, 26, 0.72) 0%,
-      rgba(20, 22, 26, 0.5) 46%,
-      rgba(20, 22, 26, 0.2) 100%
+      rgba(243, 246, 251, 0.88) 0%,
+      rgba(243, 246, 251, 0.72) 46%,
+      rgba(243, 246, 251, 0.40) 100%
     ),
     linear-gradient(
       180deg,
-      rgba(20, 22, 26, 0.1) 0%,
-      rgba(20, 22, 26, 0.58) 100%
+      rgba(243, 246, 251, 0.30) 0%,
+      rgba(243, 246, 251, 0.80) 100%
     );
   pointer-events: none;
 }
@@ -622,29 +622,29 @@ section {
   width: 100%;
 }
 .hero-asym.has-video .kicker {
-  color: rgba(246, 244, 238, 0.72);
+  color: var(--ink-3);
 }
 .hero-asym.has-video .lede {
-  color: rgba(246, 244, 238, 0.84);
+  color: var(--ink-2);
 }
 .hero-asym.has-video .btn-primary {
-  background: var(--paper);
-  border-color: var(--paper);
-  color: var(--ink);
-}
-.hero-asym.has-video .btn-primary:hover {
-  background: var(--paper-2);
-  border-color: var(--paper-2);
-  color: var(--ink);
-}
-.hero-asym.has-video .btn:not(.btn-primary) {
-  background: rgba(246, 244, 238, 0.08);
-  border-color: rgba(246, 244, 238, 0.28);
+  background: var(--ink);
+  border-color: var(--ink);
   color: var(--paper);
 }
+.hero-asym.has-video .btn-primary:hover {
+  background: var(--ink-2);
+  border-color: var(--ink-2);
+  color: var(--paper);
+}
+.hero-asym.has-video .btn:not(.btn-primary) {
+  background: var(--paper);
+  border-color: var(--line-2);
+  color: var(--ink);
+}
 .hero-asym.has-video .btn:not(.btn-primary):hover {
-  background: rgba(246, 244, 238, 0.14);
-  border-color: rgba(246, 244, 238, 0.42);
+  background: var(--paper-3);
+  border-color: var(--line-2);
 }
 .hero-asym .grid {
   display: grid;
@@ -672,15 +672,14 @@ section {
   border-color: var(--ink);
 }
 .hero-asym.has-video .pill {
-  background: rgba(246, 244, 238, 0.1);
-  border-color: rgba(246, 244, 238, 0.24);
-  color: var(--paper);
-  backdrop-filter: blur(8px);
+  background: var(--paper);
+  border-color: var(--line-2);
+  color: var(--ink);
 }
 .hero-asym.has-video .pill.flagship {
-  background: var(--paper);
-  border-color: var(--paper);
-  color: var(--ink);
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
 }
 
 .hero-display {
@@ -873,8 +872,8 @@ section {
 
 /* prod-hero video variant */
 .prod-hero.has-video {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper-2);
+  color: var(--ink);
   border-bottom-color: transparent;
   isolation: isolate;
   min-height: min(760px, calc(100vh - 72px));
@@ -889,63 +888,63 @@ section {
   background:
     linear-gradient(
       90deg,
-      rgba(20, 22, 26, 0.72) 0%,
-      rgba(20, 22, 26, 0.5) 46%,
-      rgba(20, 22, 26, 0.2) 100%
+      rgba(243, 246, 251, 0.88) 0%,
+      rgba(243, 246, 251, 0.72) 46%,
+      rgba(243, 246, 251, 0.40) 100%
     ),
     linear-gradient(
       180deg,
-      rgba(20, 22, 26, 0.1) 0%,
-      rgba(20, 22, 26, 0.58) 100%
+      rgba(243, 246, 251, 0.30) 0%,
+      rgba(243, 246, 251, 0.80) 100%
     );
   pointer-events: none;
 }
 .prod-hero.has-video .hero-visual {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.4);
+  border-color: var(--line-3);
+  background: rgba(243, 246, 251, 0.6);
+  box-shadow: var(--shadow-lg);
 }
 .prod-hero.has-video .prod-wordmark {
-  color: var(--paper);
-}
-.prod-hero.has-video .logo-mark {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.14);
-  color: rgba(246, 244, 238, 0.7);
-}
-.prod-hero.has-video h1 {
-  color: var(--paper);
-}
-.prod-hero.has-video .tagline {
-  color: rgba(246, 244, 238, 0.82);
-}
-.prod-hero.has-video .lede {
-  color: rgba(246, 244, 238, 0.7);
-}
-.prod-hero.has-video .badge {
-  border-color: rgba(255, 255, 255, 0.18);
-  color: rgba(246, 244, 238, 0.72);
-  background: rgba(255, 255, 255, 0.06);
-}
-.prod-hero.has-video .badge .dot.active {
-  background: #4ade80;
-}
-.prod-hero.has-video .btn-primary {
-  background: #fff;
-  border-color: #fff;
   color: var(--ink);
 }
-.prod-hero.has-video .btn-primary:hover {
-  background: rgba(246, 244, 238, 0.88);
-  border-color: rgba(246, 244, 238, 0.88);
+.prod-hero.has-video .logo-mark {
+  background: var(--paper-3);
+  border-color: var(--line-3);
+  color: var(--ink-3);
 }
-.prod-hero.has-video .btn:not(.btn-primary) {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.22);
+.prod-hero.has-video h1 {
+  color: var(--ink);
+}
+.prod-hero.has-video .tagline {
+  color: var(--ink-2);
+}
+.prod-hero.has-video .lede {
+  color: var(--ink-2);
+}
+.prod-hero.has-video .badge {
+  border-color: var(--line-2);
+  color: var(--ink-2);
+  background: var(--paper);
+}
+.prod-hero.has-video .badge .dot.active {
+  background: var(--green);
+}
+.prod-hero.has-video .btn-primary {
+  background: var(--ink);
+  border-color: var(--ink);
   color: var(--paper);
 }
+.prod-hero.has-video .btn-primary:hover {
+  background: var(--ink-2);
+  border-color: var(--ink-2);
+}
+.prod-hero.has-video .btn:not(.btn-primary) {
+  background: var(--paper);
+  border-color: var(--line-2);
+  color: var(--ink);
+}
 .prod-hero.has-video .btn:not(.btn-primary):hover {
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--paper-3);
 }
 
 /* eco-diagram -------------------------------------------------------------- */
