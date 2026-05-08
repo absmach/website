@@ -4,7 +4,7 @@ const { target = "#post" } = Astro.props;
 
 <div
   id="ar-shell"
-  class="audio-reader-shell z-40 my-6 rounded-2xl border border-subtle px-4 py-3 shadow-[var(--shadow-soft)]"
+  class="audio-reader-shell z-40 my-6 rounded-2xl border border-line-3 px-4 py-3 shadow-[var(--shadow)]"
 >
   <div class="audio-player">
     <div class="audio-left">
@@ -129,7 +129,7 @@ const { target = "#post" } = Astro.props;
           <span>Speed</span>
           <select
             id="ar-rate"
-            class="audio-glass-control audio-select text-sm text-primary"
+            class="audio-glass-control audio-select text-sm text-ink"
           >
             <option value="0.5">0.5x</option>
             <option value="0.75">0.75x</option>
@@ -146,7 +146,7 @@ const { target = "#post" } = Astro.props;
           <span>Voice</span>
           <select
             id="ar-voice"
-            class="audio-glass-control audio-select audio-voice-select text-sm text-primary"
+            class="audio-glass-control audio-select audio-voice-select text-sm text-ink"
           ></select>
         </label>
       </div>

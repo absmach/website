@@ -1,142 +1,103 @@
 ---
-import ProductPreviewCard from "./ProductPreviewCard.astro";
-
-const featured = {
-  name: "Magistrala",
-  description:
-    "Secure IoT platform for identity, access control, and event-driven connectivity.",
-  href: "https://magistrala.absmach.eu",
-  logoSrc: "/img/logos/Magistrala_logo_web_4_btb.png",
-  logoAlt: "Magistrala logo",
-  logoClass: "dark:invert",
-};
-
-const cards = [
+const products = [
   {
-    name: "Propeller",
+    href: "/products/magistrala",
+    className: "b-magistrala",
+    category: "Flagship · IoT Platform",
+    name: "Magistrala",
     description:
-      "WebAssembly orchestration and IoT rule engine for cloud-edge workloads.",
-    href: "https://propeller.absmach.eu",
-    logoSrc: "/img/logos/Propeller_logo_web_4_btw.png",
-    logoAlt: "Propeller logo",
-    logoClass: "dark:invert",
+      "Device identity, multi-protocol connectivity, and fine-grained access control for IoT deployments at any scale.",
+    meta: "MQTT · CoAP · HTTP · WebSocket",
+    badge: "v0.20.0",
+    logo: "/img/products/magistrala.png",
   },
   {
+    href: "/products/fluxmq",
+    className: "b-fluxmq",
+    category: "Messaging",
     name: "FluxMQ",
-    description: "Durable low-latency broker for distributed event streams.",
-    href: "https://fluxmq.absmach.eu",
-    fluxLogo: true,
+    description: "Durable, low-latency MQTT broker for distributed event streams.",
   },
   {
+    href: "/products/propeller",
+    className: "b-propeller",
+    category: "Orchestration",
+    name: "Propeller",
+    description: "WebAssembly orchestration and IoT rule engine for cloud-to-edge workloads.",
+    logo: "/img/products/propeller.png",
+  },
+  {
+    href: "/products/s0",
+    className: "b-s0",
+    category: "Hardware · Edge",
     name: "S0 Gateway",
-    description: "Low-power RISC-V gateway for lightweight edge deployments.",
-    href: "https://hardware.absmach.eu",
-    logoSrc: "/img/s0.png",
-    logoAlt: "S0 Gateway board",
-    logoClass: "!h-16 !w-auto !max-w-none sm:!h-[4.5rem]  md:!h-32 xl:!h-40",
+    description: "Ultra-low-power RISC-V gateway for sensor networks.",
   },
   {
+    href: "/products/s1",
+    className: "b-s1",
+    category: "Hardware · Industrial",
     name: "S1 Gateway",
-    description: "Industrial RISC-V gateway for high-reliability deployments.",
-    href: "https://hardware.absmach.eu",
-    logoSrc: "/img/beagle.png",
-    logoAlt: "S1 Gateway board",
-    logoClass: "!h-16 !w-auto !max-w-none sm:!h-[4.5rem] md:!h-32 xl:!h-36 ",
+    description: "Powerful Linux-based IoT gateway built on RISC-V architecture.",
   },
 ];
-
-const softwareCards = cards.slice(0, 2);
-const hardwareCards = cards.slice(2);
 ---
 
-<section
-  id="products"
-  class="scroll-mt-16 my-4 min-h-[500px] box-border py-5 lg:my-6 lg:h-[calc(100dvh-7rem)] lg:min-h-[44rem] lg:py-6"
->
-  <div
-    class="container-wide flex h-full min-h-full flex-col pt-5 pb-8 lg:pt-7 lg:pb-10"
-  >
-    <div class="flex flex-col gap-2">
-      <div>
-        <p class="section-label">Products</p>
-        <h2 class="section-title mt-0.5">Core platform and hardware</h2>
-        <p class="section-subtitle mt-0.5">
-          Software and edge hardware designed to work as one system.
-        </p>
+<section style="background: var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+  <div class="container-wide">
+    <div class="section-head">
+      <div class="left">
+        <span class="kicker">Products · Five products. One coherent stack.</span>
+        <h2 class="h-1" style="margin-top:14px;">Software and hardware,<br />built for secure connectivity.</h2>
       </div>
+      <a href="/products" class="btn-link">All products →</a>
     </div>
+    <div class="bento">
+      {products.map((product) => (
+        <a
+          href={product.href}
+          class={`b ${product.className}`}
+        >
+          <div class="top">
+            <div>
+              <div class="pcat">{product.category}</div>
+              <div class="pname" style="margin-top:6px;">{product.name}</div>
+              {product.className === "b-magistrala" && <p class="pdesc" style="margin-top:14px;">{product.description}</p>}
+            </div>
+            {product.badge
+              ? <span class="badge"><span class="dot"></span>{product.badge}</span>
+              : <span class="arrow">→</span>
+            }
+          </div>
+          {product.className !== "b-magistrala" && <p class="pdesc">{product.description}</p>}
+          {product.meta && (
+            <div style="display:flex; align-items:center; gap:12px; z-index:2; position:relative;">
+              <span class="btn btn-primary" style="font-size:13px; padding:8px 14px;">Explore →</span>
+              <span class="muted" style="font-size:12px;">{product.meta}</span>
+            </div>
+          )}
 
-    <div
-      class="mt-5 flex flex-col gap-2.5 sm:gap-3 md:gap-4 lg:mt-6 lg:flex-1 lg:justify-between lg:gap-[clamp(0.75rem,2dvh,2rem)] xl:gap-[clamp(1rem,2.4dvh,2.5rem)]"
-    >
-      <ProductPreviewCard
-        featured
-        title={featured.name}
-        description={featured.description}
-        href={featured.href}
-        logoSrc={featured.logoSrc}
-        logoAlt={featured.logoAlt}
-        logoClass={featured.logoClass}
-      />
-
-      <div
-        class="grid gap-2.5 sm:gap-3 md:grid-cols-2 md:gap-4 lg:gap-[clamp(0.75rem,1.6dvh,1.5rem)]"
-      >
-        {
-          softwareCards.map((card) =>
-            card.fluxLogo ? (
-              <ProductPreviewCard
-                title={card.name}
-                description={card.description}
-                href={card.href}
-              >
-                <span
-                  slot="logo"
-                  class="text-flux-blue font-fluxmq-logo text-[1.55rem] font-bold leading-none md:text-[1.7rem]"
-                >
-                  Flux
-                </span>
-                <span
-                  slot="logo"
-                  class="text-flux-orange font-fluxmq-logo text-[1.55rem] font-bold leading-none md:text-[1.7rem]"
-                >
-                  MQ
-                </span>
-              </ProductPreviewCard>
-            ) : (
-              <ProductPreviewCard
-                title={card.name}
-                description={card.description}
-                href={card.href}
-                logoSrc={card.logoSrc}
-                logoAlt={card.logoAlt}
-                logoClass={card.logoClass}
-              />
-            ),
-          )
-        }
-      </div>
-
-      <div
-        class="grid gap-2.5 sm:gap-3 md:grid-cols-2 md:gap-4 lg:gap-[clamp(0.75rem,1.6dvh,1.5rem)]"
-      >
-        {
-          hardwareCards.map((card) => (
-            <ProductPreviewCard
-              title={card.name}
-              description={card.description}
-              href={card.href}
-              logoSrc={card.logoSrc}
-              logoAlt={card.logoAlt}
-              logoClass={card.logoClass}
-            />
-          ))
-        }
-      </div>
-    </div>
-
-    <div class="mt-10 flex justify-center">
-      <a class="button-primary w-fit" href="/products/">View all products</a>
+          {/* Product logo mark — centered vertically on the right */}
+          {product.logo && (
+            <div class="plogo" aria-hidden="true">
+              <img src={product.logo} alt="" loading="lazy" />
+            </div>
+          )}
+          {product.className === "b-fluxmq" && (
+            <div class="plogo plogo-hw" aria-hidden="true">
+              <span>Flux</span><span class="fmq-mq">MQ</span>
+            </div>
+          )}
+          {product.className === "b-s0" && (
+            <div class="plogo plogo-hw" aria-hidden="true">
+              <span>S</span><span class="hw-zero">0</span>
+            </div>
+          )}
+          {product.className === "b-s1" && (
+            <div class="plogo plogo-hw" aria-hidden="true">S1</div>
+          )}
+        </a>
+      ))}
     </div>
   </div>
 </section>

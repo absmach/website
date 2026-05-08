@@ -1,0 +1,499 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+
+const s0BoardSpecs = [
+  "ESP32-C6 RISC-V Core",
+  "Wireless M-Bus (868 MHz)",
+  "NB-IoT / LTE-M (SIM7080G)",
+  "WiFi & Bluetooth LE",
+  "Zephyr RTOS",
+  "Open Source Hardware",
+];
+
+const baseboardSpecs = [
+  "W5500 Ethernet Controller",
+  "TSS721A M-Bus Transceiver",
+  "SD Card Data Logging",
+  "24V DC Power Input (18–36V)",
+  "Battery Backup & Charging",
+  "DIN-Rail Mountable",
+];
+
+const features = [
+  {
+    ic: "📡",
+    name: "Multi-Protocol",
+    desc: "Support for Wireless M-Bus, NB-IoT, LTE-M, WiFi, and BLE. Connect any device with any protocol.",
+  },
+  {
+    ic: "🔋",
+    name: "Low Power Design",
+    desc: "Ultra-low power operation with battery backup and charging. Perfect for remote deployments.",
+  },
+  {
+    ic: "🧩",
+    name: "Modular Architecture",
+    desc: "ESP32-C6 RISC-V core with expansion options. Add Ethernet, M-Bus, and SD card logging.",
+  },
+  {
+    ic: "🛡️",
+    name: "Secure by Design",
+    desc: "Built on Zephyr RTOS with secure boot and encrypted communication for mission-critical apps.",
+  },
+  {
+    ic: "⚡",
+    name: "Edge Computing",
+    desc: "Run Wasm workloads at the edge. Perform AI inference and data processing locally.",
+  },
+  {
+    ic: "🔓",
+    name: "Open Source",
+    desc: "All hardware designs and firmware are open source. Customise and extend as needed.",
+  },
+];
+
+const solutions = [
+  {
+    title: "Smart Metering",
+    desc: "Collect utility consumption data from wireless meters and relay it securely to Magistrala.",
+    tags: ["Wireless M-Bus", "NB-IoT", "Billing"],
+  },
+  {
+    title: "Industrial Automation",
+    desc: "Monitor equipment health and trigger alerts at the edge without cloud round-trips.",
+    tags: ["Sensors", "Edge Logic", "Alerts"],
+  },
+  {
+    title: "Remote Deployments",
+    desc: "Battery-backed operation in locations without permanent power: pipelines, silos, and remote infrastructure.",
+    tags: ["Battery", "Low-Power", "Remote"],
+  },
+  {
+    title: "Edge AI",
+    desc: "Execute lightweight inference workloads on-device using Propeller's Wasm runtime.",
+    tags: ["Wasm", "Inference", "On-Device"],
+  },
+];
+
+const integrations = [
+  "Magistrala",
+  "Propeller",
+  "Zephyr RTOS",
+  "W5500 Ethernet",
+  "SIM7080G (NB-IoT/LTE-M)",
+  "TSS721A (M-Bus)",
+];
+
+const faqs = [
+  {
+    q: "What is Zephyr RTOS?",
+    a: "Zephyr is a small, scalable real-time operating system designed for resource-constrained and embedded devices. It is maintained by the Linux Foundation and supports a wide range of microcontrollers including the ESP32-C6 used on the S0 Board.",
+  },
+  {
+    q: "What is the difference between S0 and S1?",
+    a: "S0 runs Zephyr RTOS on an ESP32-C6 microcontroller, optimised for low power and constrained environments. S1 runs full Linux on a RISC-V compute board (BeagleV-Fire) and supports containers and heavier workloads.",
+  },
+  {
+    q: "Do I need the Baseboard to use S0?",
+    a: "No. The S0 Board is fully functional on its own for wireless applications. The Baseboard adds wired Ethernet, M-Bus transceiver, SD card logging, industrial power input, and DIN-rail mounting for more demanding deployments.",
+  },
+  {
+    q: "Can I customise the S0 firmware?",
+    a: "Yes. The S0 firmware is open source. You can modify, extend, or replace it. The hardware schematics are also published, so you can adapt the board design for your specific requirements.",
+  },
+  {
+    q: "Does S0 support Propeller Wasm workloads?",
+    a: "Yes. S0 includes a lightweight Propeller runtime for Zephyr RTOS that allows the device to receive and execute Wasm workloads deployed remotely through the Propeller manager.",
+  },
+];
+---
+
+<BaseLayout
+  title="S0 Edge Gateway — Abstract Machines"
+  description="Low-power Zephyr RTOS gateway with Wireless M-Bus, NB-IoT, LTE-M, and Wasm support. Open hardware, built for constrained edge deployments."
+>
+  <Header />
+  <main>
+
+    <!-- Hero -->
+    <section class="prod-hero has-video">
+      <video
+        class="hero-bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="/video/hero-background-poster.webp"
+        aria-hidden="true"
+      >
+        <source src="/video/hero-background.webm" type="video/webm" />
+        <source src="/video/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div class="container-wide">
+        <div class="hero-grid">
+          <div>
+            <div class="logo-mark">
+              <span class="swatch" style="background:rgba(255,255,255,0.12);"></span>
+              S0 · Edge Gateway · Hardware
+            </div>
+            <h1 class="tagline">S0 – Zephyr-based Gateway for Wireless IoT.</h1>
+            <p class="lede" style="margin-top:16px; max-width:48ch;">
+              S0 combines the S0 Board with the Baseboard into a low-power,
+              Zephyr RTOS gateway. Built on ESP32-C6 RISC-V, it delivers
+              multi-protocol wireless connectivity for smart metering,
+              industrial automation, and constrained edge deployments.
+            </p>
+            <div class="btn-row" style="margin-top:32px;">
+              <a href="https://hardware.absmach.eu/docs/s0-gateway/getting-started" class="btn btn-primary" target="_blank" rel="noopener">Start Building ↗</a>
+              <a href="/contact" class="btn">Contact Us</a>
+            </div>
+            <div style="margin-top:20px;">
+              <span class="badge success"><span class="dot"></span>Open Hardware</span>
+            </div>
+          </div>
+          <div class="hero-visual" style="padding:16px;">
+            <img
+              src="/img/products/s0-board.webp"
+              alt="S0 edge gateway board"
+              style="object-fit:contain; max-height:420px;"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats bar -->
+    <div style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="s0-metrics metrics" style="border:none; border-radius:0; border-left:1px solid var(--line-3);">
+          <div class="metric featured">
+            <div class="v">ESP32-C6</div>
+            <div class="l">RISC-V microcontroller</div>
+          </div>
+          <div class="metric">
+            <div class="v">5+</div>
+            <div class="l">Wireless protocols</div>
+          </div>
+          <div class="metric">
+            <div class="v">Wasm</div>
+            <div class="l">Edge compute ready</div>
+          </div>
+          <div class="metric">
+            <div class="v">Open</div>
+            <div class="l">Hardware &amp; firmware</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S0 Board + Baseboard components -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+
+        <!-- Component 1: S0 Board -->
+        <div class="s0-component">
+          <div class="s0-component-header">
+            <span class="kicker">Component 1</span>
+            <h2 class="h-2" style="margin-top:8px;">S0 Board</h2>
+          </div>
+          <div class="s0-component-body">
+            <div class="s0-img-wrap">
+              <img
+                src="/img/products/s0-board-detail.webp"
+                alt="S0 Board"
+                class="s0-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="s0-component-text">
+              <p class="lede">
+                The <strong>S0 Board</strong> is the wireless compute core of the S0 gateway.
+                Built on the ESP32-C6 RISC-V microcontroller running <strong>Zephyr RTOS</strong>,
+                it handles multi-protocol wireless data collection and cloud backhaul
+                in a compact, low-power form factor.
+              </p>
+              <ul class="s0-spec-list">
+                {s0BoardSpecs.map(spec => (
+                  <li class="s0-spec-item">
+                    <span class="s0-check">✓</span>
+                    <span>{spec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="s0-divider"></div>
+
+        <!-- Component 2: Baseboard -->
+        <div class="s0-component">
+          <div class="s0-component-header">
+            <span class="kicker">Component 2</span>
+            <h2 class="h-2" style="margin-top:8px;">Baseboard</h2>
+          </div>
+          <div class="s0-component-body">
+            <div class="s0-img-wrap">
+              <img
+                src="/img/products/s0-baseboard.webp"
+                alt="S0 Baseboard"
+                class="s0-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="s0-component-text">
+              <p class="lede">
+                The <strong>Baseboard</strong> extends the S0 Board into a complete industrial
+                gateway. It adds wired Ethernet, M-Bus transceiver, SD card logging,
+                24V DC power, battery backup, and DIN-rail mounting: everything needed
+                for professional smart metering and industrial installations.
+              </p>
+              <ul class="s0-spec-list">
+                {baseboardSpecs.map(spec => (
+                  <li class="s0-spec-item">
+                    <span class="s0-check">✓</span>
+                    <span>{spec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head" style="text-align:center; display:block;">
+          <span class="kicker">Features</span>
+          <h2 class="h-2" style="margin-top:14px;">Built for Industrial IoT.</h2>
+          <p class="lede" style="margin:12px auto 0; max-width:52ch;">
+            Everything you need for smart metering and industrial automation
+            in a modular, open-source platform.
+          </p>
+        </div>
+        <div class="s0-feat-grid feature-grid" style="margin-top:48px;">
+          {features.map(({ ic, name, desc }) => (
+            <div class="feature">
+              <div class="ic" style="font-size:18px;">{ic}</div>
+              <div class="name">{name}</div>
+              <p class="desc">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Solutions -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Solutions</span>
+            <h2 class="h-2" style="margin-top:14px;">Where S0 deploys.</h2>
+          </div>
+        </div>
+        <div class="s0-sol-grid sol-grid">
+          {solutions.map(({ title, desc, tags }) => (
+            <div class="sol-card">
+              <div class="icon-frame">{title.charAt(0)}</div>
+              <h3 class="name">{title}</h3>
+              <p class="desc">{desc}</p>
+              <div class="tags">
+                {tags.map(t => <span class="tag">{t}</span>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Integrations -->
+    <section class="section" style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Integrations</span>
+            <h2 class="h-2" style="margin-top:14px;">Connects with the full stack.</h2>
+          </div>
+          <p class="lede">S0 is designed to run Magistrala and Propeller workloads at the extreme edge.</p>
+        </div>
+        <div class="integ-grid">
+          {integrations.map(name => (
+            <div class="integ-chip">
+              <span class="dot"></span>
+              {name}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">FAQ</span>
+            <h2 class="h-2" style="margin-top:14px;">Common questions.</h2>
+          </div>
+        </div>
+        <FAQAccordion items={faqs} />
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="background:var(--paper-2); border-top:1px solid var(--line-3);">
+      <div class="container-narrow" style="text-align:center;">
+        <span class="kicker">Get started</span>
+        <h2 class="h-2" style="margin-top:14px;">Start building at the edge.</h2>
+        <p class="lede" style="margin:20px auto 36px;">Read the getting-started guide, explore the open hardware schematics, or get in touch with the team.</p>
+        <div class="btn-row" style="justify-content:center;">
+          <a href="https://hardware.absmach.eu/docs/s0-gateway/getting-started" class="btn btn-primary" target="_blank" rel="noopener">Start Building ↗</a>
+          <a href="/contact" class="btn">Contact Us</a>
+        </div>
+      </div>
+      <div class="container-narrow" style="margin-top:48px; padding-top:32px; border-top:1px solid var(--line-3);">
+        <p style="font-size:12px; color:var(--ink-4); text-align:center; line-height:1.6;">
+          S0 hardware was developed with support from the European Union's Horizon Europe research and innovation programme as part of the <a href="/projects/elastic" style="color:var(--ink-3); text-decoration:underline;">ELASTIC project</a>.
+        </p>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "S0 Edge Gateway",
+    "description": "Low-power Zephyr RTOS gateway with Wireless M-Bus, NB-IoT, LTE-M, and Wasm support. Open hardware, built for constrained edge deployments.",
+    "url": "https://absmach.eu/products/s0",
+    "brand": {
+      "@type": "Brand",
+      "name": "Abstract Machines"
+    }
+  }
+  </script>
+</BaseLayout>
+
+<style>
+  /* Metrics */
+  .s0-metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 640px) {
+    .s0-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .s0-metrics .metric {
+      border-right: none;
+    }
+  }
+
+  /* Component sections */
+  .s0-component {
+    padding: 48px 0;
+  }
+  .s0-component-header {
+    margin-bottom: 40px;
+  }
+  .s0-component-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    .s0-component-body {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  .s0-img-wrap {
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--paper-2);
+    border: 1px solid var(--line-3);
+  }
+  .s0-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 15px;
+  }
+
+  .s0-component-text .lede {
+    color: var(--ink-2);
+    margin-bottom: 24px;
+  }
+  .s0-component-text strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .s0-spec-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .s0-spec-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .s0-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--paper-3);
+    color: var(--ink-2);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+
+  .s0-divider {
+    height: 1px;
+    background: var(--line-3);
+  }
+
+  /* Features grid */
+  .s0-feat-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 980px) {
+    .s0-feat-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .s0-feat-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Solutions grid */
+  .s0-sol-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 640px) {
+    .s0-sol-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

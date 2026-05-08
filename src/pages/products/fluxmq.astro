@@ -1,0 +1,747 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+
+const features = [
+  {
+    emoji: "🌐",
+    name: "Multi-Protocol Support",
+    desc: "Full MQTT 3.1.1 and 5.0 over TCP and WebSocket, plus HTTP-MQTT and CoAP bridges. AMQP 0.9.1 and AMQP 1.0 servers included. All protocols share the same broker core; messages flow seamlessly across transports.",
+  },
+  {
+    emoji: "💾",
+    name: "Durable Queues",
+    desc: "Persistent message queues with consumer groups, ack/nack/reject semantics, dead-letter queues, and Kafka-style retention. Raft-based replication with automatic failover.",
+  },
+  {
+    emoji: "🖥️",
+    name: "Clustering & High Availability",
+    desc: "Embedded etcd for coordination, gRPC-based inter-broker communication with mTLS, automatic session ownership, and graceful shutdown with session transfer. No external dependencies.",
+  },
+  {
+    emoji: "⚡",
+    name: "Performance Optimized",
+    desc: "Zero-copy packet parsing, object pooling, and efficient trie-based topic matching. 300K–500K msg/s per node with sub-10ms local latency and up to 500K concurrent connections.",
+  },
+  {
+    emoji: "🛡️",
+    name: "Security",
+    desc: "TLS/mTLS for client connections, mTLS for inter-broker gRPC, DTLS/mDTLS for CoAP, WebSocket origin validation, and per-IP/per-client rate limiting.",
+  },
+  {
+    emoji: "🔧",
+    name: "Open-Source & Extensible",
+    desc: "Apache 2.0 licensed with a clean layered architecture: Transport → Protocol → Domain. Pluggable storage backends, protocol-agnostic domain logic, and straightforward extensibility.",
+  },
+];
+
+const steps = [
+  [
+    "01",
+    "Drop in the binary",
+    "Download the single binary. No external dependencies. Configure TLS, listeners, storage, and cluster peers in one YAML file.",
+  ],
+  [
+    "02",
+    "Connect your clients",
+    "Any MQTT 3.1.1 or 5.0 client, AMQP client, or CoAP device connects immediately. HTTP and WebSocket bridges are built in.",
+  ],
+  [
+    "03",
+    "Scale horizontally",
+    "Add nodes to the cluster. etcd handles coordination. Session ownership transfers automatically. Throughput scales linearly with each node.",
+  ],
+];
+
+const quickstart = [
+  {
+    step: "1. Run with Docker",
+    code: `git clone https://github.com/absmach/fluxmq.git
+cd fluxmq
+docker compose -f deployments/docker/compose.yaml up -d`,
+  },
+  {
+    step: "2. Test with MQTT",
+    code: `# Subscribe to all topics
+mosquitto_sub -p 1883 -t "test/#" -v
+
+# Publish a message
+mosquitto_pub -p 1883 -t "test/hello" -m "Hello FluxMQ"`,
+  },
+  {
+    step: "3. Or build locally",
+    code: `git clone https://github.com/absmach/fluxmq.git
+cd fluxmq
+make build
+./build/fluxmq --config examples/no-cluster.yaml`,
+  },
+];
+
+const solutions = [
+  {
+    emoji: "⚡",
+    title: "Event-Driven Systems",
+    desc: "Decouple microservices with durable event streams and reliable CQRS pipelines.",
+    bullets: [
+      "Decouple microservices with event streams",
+      "Reliable command & event pipelines (CQRS)",
+      "Background jobs & async workflows",
+      "Real-time data processing pipelines",
+    ],
+    tags: ["Microservices", "CQRS", "Async"],
+  },
+  {
+    emoji: "📡",
+    title: "IoT & Real-Time",
+    desc: "Handle device telemetry, edge deployments, and live dashboard updates at scale.",
+    bullets: [
+      "IoT device telemetry ingestion (MQTT)",
+      "Edge deployments with intermittent connectivity",
+      "Live dashboards & browser updates (WebSocket)",
+      "Constrained devices via protocol bridges",
+    ],
+    tags: ["Telemetry", "Edge", "WebSocket"],
+  },
+  {
+    emoji: "📊",
+    title: "High-Throughput Pipelines",
+    desc: "Stream millions of events per second with burst buffering and ingestion decoupling.",
+    bullets: [
+      "Stream millions of events per second",
+      "Buffer traffic bursts with durable queues",
+      "Decouple ingestion from downstream processing",
+      "Power analytics & observability streams",
+    ],
+    tags: ["Streaming", "Burst", "Analytics"],
+  },
+];
+
+const faqs = [
+  {
+    q: "How does FluxMQ compare to Mosquitto or EMQX?",
+    a: "FluxMQ is designed for high-throughput, distributed deployments with built-in clustering, durable queues, consumer groups, and AMQP support. Mosquitto is a lightweight single-node MQTT broker. EMQX is a commercial broker with a similar feature set; FluxMQ is fully open source under Apache 2.0 with no commercial restrictions.",
+  },
+  {
+    q: "Which protocols does FluxMQ support?",
+    a: "FluxMQ supports MQTT 3.1.1 and 5.0 over TCP and WebSocket, AMQP 0.9.1, AMQP 1.0, CoAP (with DTLS/mDTLS), and HTTP-MQTT bridges. All protocols route through the same broker core and Queue Manager.",
+  },
+  {
+    q: "Does FluxMQ support MQTT 5.0?",
+    a: "Yes. FluxMQ implements full MQTT 3.1.1 and 5.0 over TCP and WebSocket. MQTT 5.0 features including shared subscriptions, flow control, and user properties are supported.",
+  },
+  {
+    q: "How do I set up a cluster?",
+    a: "FluxMQ uses embedded etcd for cluster coordination. Add a node to the cluster config, point it at the existing members, and it joins automatically. gRPC handles inter-broker message routing with mTLS. Session ownership transfers gracefully when nodes join or leave.",
+  },
+  {
+    q: "What persistence model does FluxMQ use?",
+    a: "FluxMQ uses a pluggable storage backend for message persistence and topic indexing. The queue layer supports durable queues with configurable retention, dead-letter queues, and consumer group offsets similar to Kafka, with Raft-based replication across cluster nodes.",
+  },
+  {
+    q: "How does FluxMQ integrate with Magistrala?",
+    a: "FluxMQ is the recommended message broker for Magistrala deployments. It handles the data plane, routing device telemetry through durable queues, while Magistrala provides device identity, RBAC, dashboards, and platform services.",
+  },
+];
+---
+
+<BaseLayout
+  title="FluxMQ Message Broker — Abstract Machines"
+  description="High-performance MQTT 5.0, AMQP, CoAP, and WebSocket message broker. 500K+ connections, 300K–500K msg/s per node. Single Go binary, no external dependencies."
+>
+  <Header />
+  <main>
+    <!-- Hero -->
+    <section class="prod-hero has-video">
+      <video
+        class="hero-bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="/video/hero-background-poster.webp"
+        aria-hidden="true"
+      >
+        <source src="/video/hero-background.webm" type="video/webm" />
+        <source src="/video/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div class="container-wide">
+        <div style="text-align: center;">
+          <div>
+            <p class="fmq-wordmark"><span>Flux</span><span class="mq">MQ</span></p>
+            <h1 class="tagline">
+              High-performance multi-protocol message broker.
+            </h1>
+            <p class="lede" style="margin-top:16px; max-width:48ch; margin-left:auto; margin-right:auto;">
+              Open source, high-throughput, low-latency, and scalable. MQTT,
+              AMQP, CoAP, and WebSocket in a single Go binary with no external
+              dependencies.
+            </p>
+            <div class="btn-row" style="margin-top:32px; justify-content:center;">
+              <a
+                href="https://github.com/absmach/fluxmq"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener">View on GitHub ↗</a
+              >
+              <a
+                href="https://fluxmq.absmach.eu/docs"
+                class="btn"
+                target="_blank"
+                rel="noopener">Documentation ↗</a
+              >
+            </div>
+            <div style="margin-top:20px;">
+              <span class="badge success"
+                ><span class="dot"></span>Open Source · Apache 2.0</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats bar -->
+    <div style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div
+          class="metrics fmq-metrics"
+          style="border:none; border-radius:0; border-left:1px solid var(--line-3);"
+        >
+          <div class="metric featured">
+            <div class="v">500K+</div>
+            <div class="l">Concurrent connections / node</div>
+          </div>
+          <div class="metric">
+            <div class="v">300K+</div>
+            <div class="l">Messages / sec / node</div>
+          </div>
+          <div class="metric">
+            <div class="v">&lt;10ms</div>
+            <div class="l">Local latency</div>
+          </div>
+          <div class="metric">
+            <div class="v">1 binary</div>
+            <div class="l">Zero external dependencies</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Features</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Built for throughput and durability.
+            </h2>
+          </div>
+          <p class="lede">
+            Every performance decision in FluxMQ is deliberate, from zero-copy
+            parsing to trie-based topic routing and Raft-replicated durable
+            queues.
+          </p>
+        </div>
+        <div class="feature-grid">
+          {
+            features.map(({ emoji, name, desc }) => (
+              <div class="feature">
+                <div class="ic" style="font-size:18px;">
+                  {emoji}
+                </div>
+                <div class="name">{name}</div>
+                <p class="desc">{desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Architecture</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Layered. Transport → Protocol → Domain.
+            </h2>
+          </div>
+          <p class="lede">
+            A clean separation between transports, protocol handlers, and the
+            domain layer makes FluxMQ easy to extend without touching the core.
+          </p>
+        </div>
+        <div class="fmq-arch-layout">
+          <div class="fmq-diagram-wrap">
+            <pre
+              class="mermaid">
+graph TD
+    A[Setup and configuration] --> B["MQTT / WS / HTTP / CoAP<br />Servers"]
+    A --> C["AMQP 1.0<br />Server"]
+    A --> D["AMQP 0.9.1<br />Server"]
+    B --> E["MQTT v3.1.1 / v5 Broker"]
+    C --> F["AMQP Broker 1.0"]
+    D --> G["AMQP Broker 0.9.1"]
+    E --> H["Queue Manager<br />Bindings + Delivery"]
+    F --> H
+    G --> H
+    H --> I["Log Storage<br />+ Topic Index"]
+
+    style A fill:#2a2a2a,color:#f6f4ee,stroke:#444
+    style B fill:#383a40,color:#f6f4ee,stroke:#383a40
+    style C fill:#383a40,color:#f6f4ee,stroke:#383a40
+    style D fill:#383a40,color:#f6f4ee,stroke:#383a40
+    style E fill:#4a4c52,color:#f6f4ee,stroke:#4a4c52
+    style F fill:#4a4c52,color:#f6f4ee,stroke:#4a4c52
+    style G fill:#4a4c52,color:#f6f4ee,stroke:#4a4c52
+    style H fill:#6c6e73,color:#f6f4ee,stroke:#6c6e73
+    style I fill:#a4a6ac,color:#14161a,stroke:#a4a6ac
+          </pre>
+          </div>
+          <div class="fmq-arch-components">
+            <h3 class="fmq-arch-components-title">Key Components</h3>
+            <ul class="fmq-arch-list">
+              <li>
+                <span class="fmq-arch-bullet">▸</span>
+                <span
+                  ><strong>Transport Layer:</strong> Multi-protocol servers: MQTT
+                  over TCP and WebSocket, AMQP 1.0, AMQP 0.9.1, CoAP, HTTP, and WebSocket
+                  bridges.</span
+                >
+              </li>
+              <li>
+                <span class="fmq-arch-bullet">▸</span>
+                <span
+                  ><strong>Protocol Brokers:</strong> FSM-based protocol handlers
+                  with zero-copy parsing. Session ownership tracked per broker node.</span
+                >
+              </li>
+              <li>
+                <span class="fmq-arch-bullet">▸</span>
+                <span
+                  ><strong>Queue Manager:</strong> Durable queue bindings with FIFO,
+                  priority, and topic-based delivery. Consumer groups, ack semantics,
+                  and dead-letter queues.</span
+                >
+              </li>
+              <li>
+                <span class="fmq-arch-bullet">▸</span>
+                <span
+                  ><strong>Storage:</strong> Pluggable persistence layer for message
+                  storage and topic indexing. Raft-based replication across cluster
+                  nodes.</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">How it works</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Drop in. Connect. Scale.
+            </h2>
+          </div>
+        </div>
+        <div class="steps">
+          {
+            steps.map(([num, title, desc]) => (
+              <div class="step">
+                <div class="num">{num}</div>
+                <h4>{title}</h4>
+                <p>{desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Quick Start</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Up and running in minutes.
+            </h2>
+          </div>
+          <p class="lede">
+            Defaults: MQTT TCP on :1883, AMQP 0.9.1 on :5682, data at
+            <code
+              style="font-family:'JetBrains Mono',monospace; font-size:13px;"
+              >/tmp/fluxmq/data</code
+            >.
+          </p>
+        </div>
+        <div class="fmq-qs-grid">
+          {
+            quickstart.map(({ step, code }) => (
+              <div class="fmq-qs-card">
+                <div class="fmq-qs-step">{step}</div>
+                <pre class="fmq-qs-code">{code}</pre>
+              </div>
+            ))
+          }
+        </div>
+        <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
+          <a
+            href="https://github.com/absmach/fluxmq/tree/main/examples"
+            class="btn"
+            target="_blank"
+            rel="noopener">Explore examples on GitHub ↗</a
+          >
+          <a
+            href="https://fluxmq.absmach.eu/docs"
+            class="btn"
+            target="_blank"
+            rel="noopener">Read the docs ↗</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Solutions -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Use Cases</span>
+            <h2 class="h-2" style="margin-top:14px;">Where FluxMQ fits.</h2>
+          </div>
+        </div>
+        <div class="sol-grid">
+          {
+            solutions.map(({ emoji, title, desc, bullets, tags }) => (
+              <div class="sol-card">
+                <div class="icon-frame" style="font-size:22px;">
+                  {emoji}
+                </div>
+                <h3 class="name">{title}</h3>
+                <p class="desc">{desc}</p>
+                <ul style="list-style:none; padding:0; margin:12px 0; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--ink-2);">
+                  {bullets.map((b) => (
+                    <li>→ {b}</li>
+                  ))}
+                </ul>
+                <div class="tags">
+                  {tags.map((t) => (
+                    <span class="tag">{t}</span>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Performance -->
+    <section style="background:var(--ink); color:var(--paper); padding:96px 0;">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker" style="color:rgba(246,244,238,0.6);"
+              >Performance</span
+            >
+            <h2 class="h-1" style="margin-top:14px; color:var(--paper);">
+              Numbers that hold up under load.
+            </h2>
+          </div>
+          <p class="lede" style="color:rgba(246,244,238,0.7); max-width:36ch;">
+            Benchmarked on commodity hardware. Scales linearly as you add nodes
+            to the cluster with topic sharding.
+          </p>
+        </div>
+        <div class="fmq-perf-grid">
+          <div
+            class="depl-card"
+            style="background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.1);"
+          >
+            <div class="company" style="color:rgba(246,244,238,0.6);">
+              Single node
+            </div>
+            <h3 class="title" style="color:var(--paper);">300K–500K msg/s</h3>
+            <p class="desc" style="color:rgba(246,244,238,0.7);">
+              Sustained throughput per node with sub-10ms local latency and up
+              to 500,000 concurrent connections.
+            </p>
+            <ul style="color:rgba(246,244,238,0.8);">
+              <li>Zero-copy packet parsing</li>
+              <li>Trie-based topic matching</li>
+              <li>Object pool recycling</li>
+              <li>Session takeover &lt;100ms</li>
+            </ul>
+          </div>
+          <div
+            class="depl-card"
+            style="background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.1);"
+          >
+            <div class="company" style="color:rgba(246,244,238,0.6);">
+              3-node cluster
+            </div>
+            <h3 class="title" style="color:var(--paper);">1–2M msg/s</h3>
+            <p class="desc" style="color:rgba(246,244,238,0.7);">
+              Three nodes coordinated by embedded etcd with gRPC inter-broker
+              routing and mTLS encryption.
+            </p>
+            <ul style="color:rgba(246,244,238,0.8);">
+              <li>~5ms cross-node latency</li>
+              <li>Automatic rebalancing</li>
+              <li>Zero-config cluster join</li>
+            </ul>
+          </div>
+          <div
+            class="depl-card"
+            style="background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.1);"
+          >
+            <div class="company" style="color:rgba(246,244,238,0.6);">
+              5-node cluster
+            </div>
+            <h3 class="title" style="color:var(--paper);">2–4M msg/s</h3>
+            <p class="desc" style="color:rgba(246,244,238,0.7);">
+              Linear throughput scaling with node count. Persistent queues
+              maintain durability guarantees at every tier.
+            </p>
+            <ul style="color:rgba(246,244,238,0.8);">
+              <li>Consumer group offsets</li>
+              <li>Dead-letter queues</li>
+              <li>Kafka-style retention</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">FAQ</span>
+            <h2 class="h-2" style="margin-top:14px;">Common questions.</h2>
+          </div>
+        </div>
+        <FAQAccordion items={faqs} />
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3);"
+    >
+      <div class="container-narrow" style="text-align:center;">
+        <span class="kicker">Get started</span>
+        <h2 class="h-2" style="margin-top:14px;">Drop in FluxMQ today.</h2>
+        <p class="lede" style="margin:20px auto 36px;">
+          Download the binary, read the documentation, or explore the source on
+          GitHub.
+        </p>
+        <div class="btn-row" style="justify-content:center;">
+          <a
+            href="https://github.com/absmach/fluxmq"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener">View on GitHub ↗</a
+          >
+          <a
+            href="https://fluxmq.absmach.eu/docs"
+            class="btn"
+            target="_blank"
+            rel="noopener">Documentation ↗</a
+          >
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "FluxMQ",
+    "description": "High-performance multi-protocol message broker supporting MQTT 5.0, AMQP, CoAP, and WebSocket. 500K+ concurrent connections, 300K–500K msg/s per node.",
+    "applicationCategory": "IoT",
+    "operatingSystem": "Linux",
+    "url": "https://absmach.eu/products/fluxmq",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "author": {
+      "@type": "Organization",
+      "name": "Abstract Machines"
+    }
+  }
+  </script>
+</BaseLayout>
+
+<style>
+  /* Wordmark — sits above h1, left-aligned within centered block */
+  .fmq-wordmark {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    color: rgba(246, 244, 238, 0.95);
+    display: block;
+    margin: 0 0 16px;
+    line-height: 1;
+    text-align: left;
+  }
+  .fmq-wordmark .mq {
+    color: rgba(246, 244, 238, 0.35);
+  }
+
+  /* Stats bar */
+  .fmq-metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Architecture layout */
+  .fmq-arch-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .fmq-diagram-wrap {
+    background: transparent;
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    overflow-x: auto;
+  }
+  .fmq-diagram-wrap .mermaid {
+    display: flex;
+    justify-content: center;
+  }
+  .fmq-arch-components {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    background: transparent;
+    padding: 32px;
+  }
+  .fmq-arch-components-title {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-3);
+    margin: 0 0 20px;
+  }
+  .fmq-arch-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .fmq-arch-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+  .fmq-arch-bullet {
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--ink-3);
+  }
+
+  /* Performance 3-col grid */
+  .fmq-perf-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  /* Quick Start */
+  .fmq-qs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .fmq-qs-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .fmq-qs-step {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+  }
+  .fmq-qs-code {
+    background: var(--ink);
+    color: rgba(246, 244, 238, 0.85);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    line-height: 1.75;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 0;
+    flex: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 980px) {
+    .fmq-arch-layout {
+      grid-template-columns: 1fr;
+    }
+    .fmq-perf-grid {
+      grid-template-columns: 1fr;
+    }
+    .fmq-qs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .fmq-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .fmq-metrics .metric {
+      border-right: none;
+    }
+    .fmq-diagram-wrap {
+      padding: 24px 16px;
+    }
+    .fmq-wordmark {
+      font-size: 32px;
+    }
+  }
+</style>
+
+<script type="module" is:inline>
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "neutral",
+    fontFamily: "JetBrains Mono, monospace",
+  });
+</script>

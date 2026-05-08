@@ -2,39 +2,44 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import HeroBig from "../components/HeroBig.astro";
+import Hero from "../components/Hero.astro";
+import PartnersCarousel from "../components/PartnersCarousel.astro";
+import Proof from "../components/Proof.astro";
 import ProductsPreview from "../components/ProductsPreview.astro";
+import Services from "../components/Services.astro";
+import ProductionDeployments from "../components/ProductionDeployments.astro";
 import ProjectsPreview from "../components/ProjectsPreview.astro";
 import FinalCTA from "../components/FinalCTA.astro";
-import PartnersCarousel from "../components/PartnersCarousel.astro";
 ---
 
 <BaseLayout
-  title="Abstract Machines | Secure Event-Driven Connectivity"
-  description="Secure, open-source infrastructure for distributed cloud and edge systems."
+  title="Open Infrastructure for Secure Connectivity — Abstract Machines"
+  description="Open-source software and hardware for secure event-driven connectivity across devices, gateways, messaging, and orchestration."
 >
   <Header />
   <main>
-    <HeroBig
-      title="Secure Event-Driven Connectivity, Everywhere"
-      subtitle="Builds secure, open-source infrastructure for distributed cloud and edge systems—combining Magistrala with messaging, orchestration, and gateway technologies."
-      backgroundClass="hero-grid"
-      primary={{
-        label: "Explore Products",
-        href: "#products",
-        external: false,
-      }}
-      secondary={{
-        label: "Get Started",
-        href: "/contact/",
-        external: false,
-      }}
-    >
-      <PartnersCarousel />
-    </HeroBig>
+    <Hero />
+    <PartnersCarousel />
+    <Proof />
     <ProductsPreview />
+    <Services />
+    <ProductionDeployments />
     <ProjectsPreview />
     <FinalCTA />
   </main>
   <Footer />
+  <script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Abstract Machines",
+    "url": "https://absmach.eu",
+    "logo": "https://absmach.eu/img/logos/abstract-machines_logo_landscape-black.png",
+    "sameAs": [
+      "https://github.com/absmach",
+      "https://www.linkedin.com/company/abstract-machines",
+      "https://twitter.com/absmach"
+    ]
+  }
+  </script>
 </BaseLayout>
