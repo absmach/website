@@ -1330,7 +1330,7 @@ section {
 }
 .proj-card {
   display: grid;
-  grid-template-columns: 96px 1fr;
+  grid-template-columns: 96px minmax(0, 1fr);
   gap: 24px;
   padding: 28px;
   border: 1px solid var(--line-3);
@@ -1369,6 +1369,8 @@ section {
   font-weight: 600;
   font-size: 24px;
   letter-spacing: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .proj-card .tagline {
   color: var(--ink-2);
@@ -2420,6 +2422,34 @@ section {
   flex-shrink: 0;
 }
 
+/* inline-responsive helpers ------------------------------------------------ */
+
+.form-fields-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.products-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+.sol-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid rgba(246, 244, 238, 0.15);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.sol-stats-bar-cell {
+  padding: 32px;
+  border-right: 1px solid rgba(246, 244, 238, 0.15);
+}
+.sol-stats-bar-cell:last-child {
+  border-right: none;
+}
+
 /* responsive --------------------------------------------------------------- */
 
 @media (max-width: 980px) {
@@ -2500,11 +2530,11 @@ section {
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 200px;
   }
-  .b-magistrala,
-  .b-propeller,
-  .b-fluxmq,
-  .b-s0,
-  .b-s1 {
+  .bento .b-magistrala,
+  .bento .b-propeller,
+  .bento .b-fluxmq,
+  .bento .b-s0,
+  .bento .b-s1 {
     grid-column: span 2;
     grid-row: span 1;
   }
@@ -2520,6 +2550,20 @@ section {
   }
   .site-nav .nav-hamburger {
     display: flex;
+  }
+  .products-split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .sol-stats-bar {
+    grid-template-columns: 1fr;
+  }
+  .sol-stats-bar-cell {
+    border-right: none;
+    border-bottom: 1px solid rgba(246, 244, 238, 0.15);
+  }
+  .sol-stats-bar-cell:last-child {
+    border-bottom: none;
   }
 }
 
@@ -2565,12 +2609,32 @@ section {
   .sdk-grid {
     grid-template-columns: 1fr;
   }
+  .proj-card {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px;
+  }
+  .proj-card .logo {
+    width: 72px;
+    height: 72px;
+  }
+  .proj-card .name {
+    font-size: 18px;
+  }
   .bento {
     grid-template-columns: 1fr;
     grid-auto-rows: auto;
   }
   .bento .b {
     min-height: 260px;
+  }
+  .bento .b-magistrala,
+  .bento .b-propeller,
+  .bento .b-fluxmq,
+  .bento .b-s0,
+  .bento .b-s1 {
+    grid-column: span 1;
+    grid-row: span 1;
   }
   .container-wide,
   .container,
@@ -2610,6 +2674,87 @@ section {
   .site-footer .grid {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+  /* page hero: tighten padding */
+  .page-hero {
+    padding: 56px 0 40px;
+  }
+  /* hero split: further padding reduction */
+  .hero-split .left,
+  .hero-split .right {
+    padding: 40px 20px;
+  }
+  /* feature showcase: reduce giant gap */
+  .feat-showcase {
+    gap: 48px;
+  }
+  .feat-row .feat-info {
+    padding: 28px 20px;
+  }
+  .feat-row .feat-visual {
+    min-height: 200px;
+  }
+  /* blog featured: tighten body padding */
+  .blog-featured .body {
+    padding: 28px 24px;
+  }
+  .blog-featured .body h2 {
+    font-size: 26px;
+  }
+  /* callout: tighten padding */
+  .callout {
+    padding: 28px 20px;
+  }
+  .callout h3 {
+    font-size: 24px;
+  }
+  /* metrics: scale down large value */
+  .metric .v {
+    font-size: 40px;
+  }
+  /* product wordmark: scale down */
+  .prod-hero .prod-wordmark {
+    font-size: 54px;
+  }
+  /* SDK snippet: allow wrapping instead of horizontal scroll */
+  .sdk-snippet {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 12px;
+  }
+  /* newsletter: stack input + button vertically */
+  .newsletter-pill {
+    flex-direction: column;
+  }
+  .newsletter-pill .btn {
+    border-left: none;
+    border-top: 1px solid var(--line-2);
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    justify-content: center;
+    width: 100%;
+  }
+  /* screenshots grid */
+  .screenshots-grid {
+    grid-template-columns: 1fr;
+  }
+  /* inline-responsive helpers: collapse to single column */
+  .form-fields-row {
+    grid-template-columns: 1fr;
+  }
+  .products-split {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  /* solutions proof bar: stack vertically */
+  .sol-stats-bar {
+    grid-template-columns: 1fr;
+  }
+  .sol-stats-bar-cell {
+    border-right: none;
+    border-bottom: 1px solid rgba(246, 244, 238, 0.15);
+  }
+  .sol-stats-bar-cell:last-child {
+    border-bottom: none;
   }
 }
 
