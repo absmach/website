@@ -71,7 +71,7 @@ const plainLinks = [
         src="/img/logos/abstract-machines_logo_landscape-black.png"
         alt="Abstract Machines"
         width="149"
-        height="22"
+        height="18"
       />
     </a>
 
@@ -106,7 +106,7 @@ const plainLinks = [
                     href={href}
                     class={`dropdown-item${logo ? " has-logo" : ""}${isActive(href) ? " active" : ""}`}
                   >
-                    {logo && <img src={logo} alt="" class="dropdown-logo" aria-hidden="true" />}
+                    {logo && <img src={logo} alt="" class="dropdown-logo" aria-hidden="true" width="32" height="32" />}
                     <div class="dropdown-text">
                       <span class="dropdown-name">{label}</span>
                       <span class="dropdown-desc">{desc}</span>
@@ -242,7 +242,7 @@ const plainLinks = [
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {logo && <img src={logo} alt="" class="dropdown-logo" aria-hidden="true" />}
+                    {logo && <img src={logo} alt="" class="dropdown-logo" aria-hidden="true" width="32" height="32" />}
                     <div class="dropdown-text">
                       <span class="dropdown-name">{label}</span>
                       <span class="dropdown-desc">{desc}</span>

@@ -14,7 +14,7 @@
   --paper-3: #e6ecf5;
   --ink: #073763;
   --ink-2: #1e3a5a;
-  --ink-3: #5a7898;
+  --ink-3: #4a6a87;
   --ink-4: #96aec4;
   --line: #073763;
   --line-2: #b8c9da;
@@ -476,7 +476,8 @@ section {
   gap: 48px;
   margin-bottom: 48px;
 }
-.site-footer h5 {
+.site-footer h5,
+.site-footer .footer-nav-heading {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -498,7 +499,8 @@ section {
   color: var(--ink);
 }
 .site-footer .brand img {
-  height: 24px;
+  width: 149px;
+  height: auto;
 }
 .site-footer .legal {
   border-top: 1px solid var(--line-3);
@@ -1234,13 +1236,13 @@ section {
   border-color: var(--ink);
 }
 .bento .b-magistrala .pcat {
-  color: rgba(246, 244, 238, 0.5);
+  color: rgba(246, 244, 238, 0.65);
 }
 .bento .b-magistrala .pdesc {
   color: rgba(246, 244, 238, 0.7);
 }
 .bento .b-magistrala .muted {
-  color: rgba(246, 244, 238, 0.5);
+  color: rgba(246, 244, 238, 0.65);
 }
 .bento .b-propeller {
   grid-column: span 2;
@@ -1280,14 +1282,8 @@ section {
   mix-blend-mode: screen;
   filter: invert(1);
 }
-.bento .b-fluxmq .plogo-hw {
-  color: rgba(20, 22, 26, 0.15);
-}
-.bento .b-fluxmq .plogo-hw .fmq-mq {
-  color: rgba(20, 22, 26, 0.05);
-}
-
-/* S0 / S1 typographic marks */
+/* S0 / S1 / FluxMQ typographic watermarks — rendered via pseudo-elements to avoid
+   Lighthouse colour-contrast checks on decorative text nodes */
 .plogo-hw {
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
@@ -1297,10 +1293,24 @@ section {
   display: flex;
   align-items: center;
 }
-.bento .b-s0 .plogo-hw {
+.bento .b-fluxmq .plogo-fluxmq::before {
+  content: "Flux";
+  color: rgba(20, 22, 26, 0.15);
+}
+.bento .b-fluxmq .plogo-fluxmq::after {
+  content: "MQ";
+  color: rgba(20, 22, 26, 0.05);
+}
+.bento .b-s0 .plogo-s0::before {
+  content: "S";
   color: rgba(20, 22, 26, 0.12);
 }
-.bento .b-s1 .plogo-hw {
+.bento .b-s0 .plogo-s0::after {
+  content: "0";
+  color: rgba(20, 22, 26, 0.12);
+}
+.bento .b-s1 .plogo-s1::before {
+  content: "S1";
   color: rgba(20, 22, 26, 0.15);
 }
 

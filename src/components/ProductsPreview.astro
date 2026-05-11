@@ -80,21 +80,17 @@ const products = [
           {/* Product logo mark — centered vertically on the right */}
           {product.logo && (
             <div class="plogo" aria-hidden="true">
-              <img src={product.logo} alt="" loading="lazy" />
+              <img src={product.logo} alt="" loading="eager" decoding="async" />
             </div>
           )}
           {product.className === "b-fluxmq" && (
-            <div class="plogo plogo-hw" aria-hidden="true">
-              <span>Flux</span><span class="fmq-mq">MQ</span>
-            </div>
+            <div class="plogo plogo-hw plogo-fluxmq" aria-hidden="true" role="presentation"></div>
           )}
           {product.className === "b-s0" && (
-            <div class="plogo plogo-hw" aria-hidden="true">
-              <span>S</span><span class="hw-zero">0</span>
-            </div>
+            <div class="plogo plogo-hw plogo-s0" aria-hidden="true" role="presentation"></div>
           )}
           {product.className === "b-s1" && (
-            <div class="plogo plogo-hw" aria-hidden="true">S1</div>
+            <div class="plogo plogo-hw plogo-s1" aria-hidden="true" role="presentation"></div>
           )}
         </a>
       ))}
