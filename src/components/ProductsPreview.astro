@@ -16,14 +16,16 @@ const products = [
     className: "b-fluxmq",
     category: "Messaging",
     name: "FluxMQ",
-    description: "Durable, low-latency MQTT broker for distributed event streams.",
+    description:
+      "Durable, low-latency Message broker for distributed event streams.",
   },
   {
     href: "/products/propeller",
     className: "b-propeller",
     category: "Orchestration",
     name: "Propeller",
-    description: "WebAssembly orchestration and IoT rule engine for cloud-to-edge workloads.",
+    description:
+      "WebAssembly orchestration and IoT rule engine for cloud-to-edge workloads.",
     logo: "/img/products/propeller.png",
   },
   {
@@ -38,62 +40,103 @@ const products = [
     className: "b-s1",
     category: "Hardware · Industrial",
     name: "S1 Gateway",
-    description: "Powerful Linux-based IoT gateway built on RISC-V architecture.",
+    description:
+      "Powerful Linux-based IoT gateway built on RISC-V architecture.",
   },
 ];
 ---
 
-<section style="background: var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+<section
+  style="background: var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+>
   <div class="container-wide">
     <div class="section-head">
       <div class="left">
-        <span class="kicker">Products · Five products. One coherent stack.</span>
-        <h2 class="h-1" style="margin-top:14px;">Software and hardware,<br />built for secure connectivity.</h2>
+        <span class="kicker">Products · Five products. One coherent stack.</span
+        >
+        <h2 class="h-1" style="margin-top:14px;">
+          Software and hardware,<br />built for secure connectivity.
+        </h2>
       </div>
       <a href="/products" class="btn-link">All products →</a>
     </div>
     <div class="bento">
-      {products.map((product) => (
-        <a
-          href={product.href}
-          class={`b ${product.className}`}
-        >
-          <div class="top">
-            <div>
-              <div class="pcat">{product.category}</div>
-              <div class="pname" style="margin-top:6px;">{product.name}</div>
-              {product.className === "b-magistrala" && <p class="pdesc" style="margin-top:14px;">{product.description}</p>}
+      {
+        products.map((product) => (
+          <a href={product.href} class={`b ${product.className}`}>
+            <div class="top">
+              <div>
+                <div class="pcat">{product.category}</div>
+                <div class="pname" style="margin-top:6px;">
+                  {product.name}
+                </div>
+                {product.className === "b-magistrala" && (
+                  <p class="pdesc" style="margin-top:14px;">
+                    {product.description}
+                  </p>
+                )}
+              </div>
+              {product.badge ? (
+                <span class="badge">
+                  <span class="dot" />
+                  {product.badge}
+                </span>
+              ) : (
+                <span class="arrow">→</span>
+              )}
             </div>
-            {product.badge
-              ? <span class="badge"><span class="dot"></span>{product.badge}</span>
-              : <span class="arrow">→</span>
-            }
-          </div>
-          {product.className !== "b-magistrala" && <p class="pdesc">{product.description}</p>}
-          {product.meta && (
-            <div style="display:flex; align-items:center; gap:12px; z-index:2; position:relative;">
-              <span class="btn btn-primary" style="font-size:13px; padding:8px 14px;">Explore →</span>
-              <span class="muted" style="font-size:12px;">{product.meta}</span>
-            </div>
-          )}
+            {product.className !== "b-magistrala" && (
+              <p class="pdesc">{product.description}</p>
+            )}
+            {product.meta && (
+              <div style="display:flex; align-items:center; gap:12px; z-index:2; position:relative;">
+                <span
+                  class="btn btn-primary"
+                  style="font-size:13px; padding:8px 14px;"
+                >
+                  Explore →
+                </span>
+                <span class="muted" style="font-size:12px;">
+                  {product.meta}
+                </span>
+              </div>
+            )}
 
-          {/* Product logo mark — centered vertically on the right */}
-          {product.logo && (
-            <div class="plogo" aria-hidden="true">
-              <img src={product.logo} alt="" loading="eager" decoding="async" />
-            </div>
-          )}
-          {product.className === "b-fluxmq" && (
-            <div class="plogo plogo-hw plogo-fluxmq" aria-hidden="true" role="presentation"></div>
-          )}
-          {product.className === "b-s0" && (
-            <div class="plogo plogo-hw plogo-s0" aria-hidden="true" role="presentation"></div>
-          )}
-          {product.className === "b-s1" && (
-            <div class="plogo plogo-hw plogo-s1" aria-hidden="true" role="presentation"></div>
-          )}
-        </a>
-      ))}
+            {/* Product logo mark — centered vertically on the right */}
+            {product.logo && (
+              <div class="plogo" aria-hidden="true">
+                <img
+                  src={product.logo}
+                  alt=""
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            )}
+            {product.className === "b-fluxmq" && (
+              <div
+                class="plogo plogo-hw plogo-fluxmq"
+                aria-hidden="true"
+                role="presentation"
+              />
+            )}
+            {product.className === "b-s0" && (
+              <div
+                class="plogo plogo-hw plogo-s0"
+                aria-hidden="true"
+                role="presentation"
+              />
+            )}
+            {product.className === "b-s1" && (
+              <div
+                class="plogo plogo-hw plogo-s1"
+                aria-hidden="true"
+                role="presentation"
+              />
+            )}
+          </a>
+        ))
+      }
     </div>
   </div>
 </section>
