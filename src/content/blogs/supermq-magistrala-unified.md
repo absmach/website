@@ -57,7 +57,7 @@ With the merger, the Abstract Machines stack is now clearly defined across four 
 
 - **[Magistrala](https://github.com/absmach/magistrala)** — a cloud IoT platform framework that provides multi-tenancy, access control, device management, a Rules Engine, Alarms, Reports, and Bootstrap. It integrates with FluxMQ for messaging and serves as a flexible foundation for building IoT solutions.
 - **[FluxMQ](https://github.com/absmach/fluxmq)** — the cloud and edge messaging backbone. A versatile, high-performance message broker that runs on edge and cloud, clusters and scales, and supports an event store for internal service synchronization.
-- **[S0](https://absmach.eu/s0)** — modular IoT gateway solutions for smart metering, industrial IoT, and edge computing. The S0 module and Base Board deliver multi-protocol connectivity with open-source hardware and professional support.
+- **[A0](https://absmach.eu/a0)** — modular IoT gateway solutions for smart metering, industrial IoT, and edge computing. The A0 module and Base Board deliver multi-protocol connectivity with open-source hardware and professional support.
 - **[Propeller](https://github.com/absmach/propeller)** — a cutting-edge orchestrator for WebAssembly workloads across the Cloud-Edge continuum.
 
 ---

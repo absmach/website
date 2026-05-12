@@ -127,14 +127,14 @@ The versatile, high-performance message broker for cloud and edge:
 
 FluxMQ handles messaging. Magistrala (and other systems) build on top of it.
 
-### 3. [S0](https://absmach.eu/s0) — IoT Gateway Hardware
+### 3. [A0](https://absmach.eu/a0) — IoT Gateway Hardware
 Modular, open-source IoT gateway solutions:
 - **Smart metering** — Energy monitoring and consumption tracking
 - **Industrial IoT** — Multi-protocol connectivity for industrial systems
 - **Edge computing** — Local processing and data aggregation
 - **Open hardware** — Professionally supported, production-ready designs
 
-The S0 module and Base Board deliver connectivity at the edge.
+The A0 module and Base Board deliver connectivity at the edge.
 
 ### 4. [Propeller](https://github.com/absmach/propeller) — WebAssembly Orchestrator
 Next-generation orchestration for distributed workloads:
@@ -147,7 +147,7 @@ Propeller brings modern workload orchestration to IoT and edge computing.
 
 ---
 
-**Together, these four projects form a complete, modular stack**: from hardware connectivity (S0) through messaging (FluxMQ) and platform services (Magistrala) to workload orchestration (Propeller).
+**Together, these four projects form a complete, modular stack**: from hardware connectivity (A0) through messaging (FluxMQ) and platform services (Magistrala) to workload orchestration (Propeller).
 
 ![Abstract Machines Stack Architecture](/img/blogs/supermq-magistrala-announcement-merge/architecture.png)
 
