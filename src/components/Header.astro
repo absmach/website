@@ -8,52 +8,156 @@ const isActive = (href: string) => {
 
 const products = [
   {
-    group: "Software",
+    group: "Platform Software",
     items: [
-      { label: "Magistrala", desc: "IoT Platform", href: "/products/magistrala", logo: "/img/products/magistrala.png" },
-      { label: "FluxMQ", desc: "Message Broker", href: "/products/fluxmq", logo: undefined },
-      { label: "Propeller", desc: "Wasm Orchestrator", href: "/products/propeller", logo: "/img/products/propeller.png" },
+      {
+        label: "Magistrala",
+        desc: "IoT Platform",
+        href: "/products/magistrala",
+        logo: "/img/products/magistrala.png",
+      },
+      {
+        label: "FluxMQ",
+        desc: "Message Broker",
+        href: "/products/fluxmq",
+        logo: undefined,
+      },
+      {
+        label: "Atom",
+        desc: "Identity & Auth",
+        href: "/products/atom",
+        logo: undefined,
+      },
     ],
   },
   {
-    group: "Hardware",
+    group: "Edge & Hardware",
     items: [
-      { label: "S0", desc: "Edge Gateway", href: "/products/s0", logo: "/img/products/s0.png" },
-      { label: "S1", desc: "Industrial Gateway", href: "/products/s1", logo: undefined },
+      {
+        label: "Propeller",
+        desc: "Edge Orchestrator",
+        href: "/products/propeller",
+        logo: "/img/products/propeller.png",
+      },
+      {
+        label: "A0",
+        desc: "Zephyr Gateway",
+        href: "/products/a0",
+        logo: "/img/products/s0.png",
+      },
+      {
+        label: "A1",
+        desc: "Linux Gateway",
+        href: "/products/a1",
+        logo: undefined,
+      },
+      {
+        label: "Quarc",
+        desc: "Post-quantum Element",
+        href: "/products/quarc",
+        logo: undefined,
+      },
     ],
   },
 ];
 
 const solutions = [
-  { label: "Smart Water Metering", desc: "Eliminate NRW and automate AMI billing in real time.", href: "/solutions/smart-water" },
-  { label: "Smart City", desc: "Unify traffic, energy, and civic infrastructure in one dashboard.", href: "/solutions/smart-city" },
-  { label: "Smart Energy", desc: "Balance grid loads and monitor renewable generation.", href: "/solutions/smart-energy" },
-  { label: "Cold Storage", desc: "HACCP-compliant cold chain monitoring across all zones.", href: "/solutions/cold-storage" },
-  { label: "Smart Farming", desc: "Precision irrigation and crop stress monitoring.", href: "/solutions/smart-farming" },
-  { label: "Oil & Gas", desc: "Pipeline integrity monitoring and predictive maintenance.", href: "/solutions/oil-gas" },
-  { label: "Smart Irrigation", desc: "Sensor-driven irrigation schedules that eliminate water waste.", href: "/solutions/smart-irrigation" },
-  { label: "Air Quality", desc: "Track PM2.5, CO₂, and pollutants with regulatory reporting.", href: "/solutions/air-quality" },
+  {
+    label: "Smart Water Metering",
+    desc: "Eliminate NRW and automate AMI billing in real time.",
+    href: "/solutions/smart-water",
+  },
+  {
+    label: "Smart City",
+    desc: "Unify traffic, energy, and civic infrastructure in one dashboard.",
+    href: "/solutions/smart-city",
+  },
+  {
+    label: "Smart Energy",
+    desc: "Balance grid loads and monitor renewable generation.",
+    href: "/solutions/smart-energy",
+  },
+  {
+    label: "Cold Storage",
+    desc: "HACCP-compliant cold chain monitoring across all zones.",
+    href: "/solutions/cold-storage",
+  },
+  {
+    label: "Smart Farming",
+    desc: "Precision irrigation and crop stress monitoring.",
+    href: "/solutions/smart-farming",
+  },
+  {
+    label: "Oil & Gas",
+    desc: "Pipeline integrity monitoring and predictive maintenance.",
+    href: "/solutions/oil-gas",
+  },
+  {
+    label: "Smart Irrigation",
+    desc: "Sensor-driven irrigation schedules that eliminate water waste.",
+    href: "/solutions/smart-irrigation",
+  },
+  {
+    label: "Air Quality",
+    desc: "Track PM2.5, CO₂, and pollutants with regulatory reporting.",
+    href: "/solutions/air-quality",
+  },
 ];
 
 const projects = [
-  { label: "ELASTIC", desc: "6G edge orchestration", href: "/projects/elastic", logo: "/img/logos/elastic-dark.png" },
-  { label: "Confidential 6G", desc: "Post-quantum 6G security", href: "/projects/confidential6g", logo: "/img/logos/confidential6G.jpg" },
+  {
+    label: "ELASTIC",
+    desc: "6G edge orchestration",
+    href: "/projects/elastic",
+    logo: "/img/logos/elastic-dark.png",
+  },
+  {
+    label: "Confidential 6G",
+    desc: "Post-quantum 6G security",
+    href: "/projects/confidential6g",
+    logo: "/img/logos/confidential6G.jpg",
+  },
 ];
 
 const docs = [
   {
     group: "Software",
     items: [
-      { label: "Magistrala", desc: "IoT Platform", href: "https://magistrala.absmach.eu/docs", logo: "/img/products/magistrala.png" },
-      { label: "FluxMQ", desc: "Message Broker", href: "https://fluxmq.absmach.eu/docs", logo: undefined },
-      { label: "Propeller", desc: "Wasm Orchestrator", href: "https://propeller.absmach.eu/docs", logo: "/img/products/propeller.png" },
+      {
+        label: "Magistrala",
+        desc: "IoT Platform",
+        href: "https://magistrala.absmach.eu/docs",
+        logo: "/img/products/magistrala.png",
+      },
+      {
+        label: "FluxMQ",
+        desc: "Message Broker",
+        href: "https://fluxmq.absmach.eu/docs",
+        logo: undefined,
+      },
+      {
+        label: "Propeller",
+        desc: "Wasm Orchestrator",
+        href: "https://propeller.absmach.eu/docs",
+        logo: "/img/products/propeller.png",
+      },
     ],
   },
   {
     group: "Hardware",
     items: [
-      { label: "S0 Gateway", desc: "Zephyr RTOS Gateway", href: "https://hardware.absmach.eu/docs/s0-gateway/getting-started", logo: "/img/products/s0.png" },
-      { label: "S1 Gateway", desc: "Linux Industrial Gateway", href: "https://hardware.absmach.eu/docs/s1-gateway", logo: undefined },
+      {
+        label: "A0 Gateway",
+        desc: "Zephyr RTOS Gateway",
+        href: "https://hardware.absmach.eu/docs/s0-gateway/getting-started",
+        logo: "/img/products/s0.png",
+      },
+      {
+        label: "A1 Gateway",
+        desc: "Linux Industrial Gateway",
+        href: "https://hardware.absmach.eu/docs/s1-gateway",
+        logo: undefined,
+      },
     ],
   },
 ];
@@ -71,7 +175,7 @@ const plainLinks = [
         src="/img/logos/abstract-machines_logo_landscape-black.png"
         alt="Abstract Machines"
         width="149"
-        height="18"
+        height="22"
       />
     </a>
 
@@ -106,7 +210,14 @@ const plainLinks = [
                     href={href}
                     class={`dropdown-item${logo ? " has-logo" : ""}${isActive(href) ? " active" : ""}`}
                   >
-                    {logo && <img src={logo} alt="" class="dropdown-logo" aria-hidden="true" width="32" height="32" />}
+                    {logo && (
+                      <img
+                        src={logo}
+                        alt=""
+                        class="dropdown-logo"
+                        aria-hidden="true"
+                      />
+                    )}
                     <div class="dropdown-text">
                       <span class="dropdown-name">{label}</span>
                       <span class="dropdown-desc">{desc}</span>
@@ -188,7 +299,14 @@ const plainLinks = [
                 href={href}
                 class={`dropdown-item${logo ? " has-logo" : ""}${isActive(href) ? " active" : ""}`}
               >
-                {logo && <img src={logo} alt="" class="dropdown-logo" aria-hidden="true" />}
+                {logo && (
+                  <img
+                    src={logo}
+                    alt=""
+                    class="dropdown-logo"
+                    aria-hidden="true"
+                  />
+                )}
                 <div class="dropdown-text">
                   <span class="dropdown-name">{label}</span>
                   <span class="dropdown-desc">{desc}</span>
@@ -242,7 +360,14 @@ const plainLinks = [
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {logo && <img src={logo} alt="" class="dropdown-logo" aria-hidden="true" width="32" height="32" />}
+                    {logo && (
+                      <img
+                        src={logo}
+                        alt=""
+                        class="dropdown-logo"
+                        aria-hidden="true"
+                      />
+                    )}
                     <div class="dropdown-text">
                       <span class="dropdown-name">{label}</span>
                       <span class="dropdown-desc">{desc}</span>
@@ -389,7 +514,12 @@ const plainLinks = [
             <>
               <div class="nav-drawer-sub-group">{group}</div>
               {items.map(({ label, desc, href }) => (
-                <a href={href} class="nav-drawer-sublink" target="_blank" rel="noopener noreferrer">
+                <a
+                  href={href}
+                  class="nav-drawer-sublink"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {label} <span class="nav-drawer-subdesc">{desc}</span>
                 </a>
               ))}
@@ -515,7 +645,9 @@ const plainLinks = [
     border: 1px solid var(--line-3);
     background: var(--paper);
     text-decoration: none;
-    transition: border-color 0.15s ease, background 0.15s ease;
+    transition:
+      border-color 0.15s ease,
+      background 0.15s ease;
   }
   .dropdown-item.has-logo {
     flex-direction: row;

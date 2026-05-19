@@ -1,0 +1,1135 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+
+const features = [
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    name: "Identity Model",
+    desc: "Humans, devices, services, workloads, and applications share one identity model. No special user class.",
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+    name: "Runtime Authorization",
+    desc: "Every policy decision is evaluated live. Token changes and revocations take effect on the next request — no restarts.",
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 0 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>`,
+    name: "Authentication",
+    desc: "JWT sessions, API keys, and OIDC social login (Google, GitHub). All flows produce a standard Atom JWT with zero-downtime key rotation.",
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>`,
+    name: "Multi-Tenancy",
+    desc: "Tenant isolation across entities, resources, and policies. Each tenant gets a bootstrapped admin role with full lifecycle enforcement.",
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m13 13.5 2-2.5-2-2.5"/><path d="m21 21-4.3-4.3"/><path d="M9 8.5 7 11l2 2.5"/><circle cx="11" cy="11" r="8"/></svg>`,
+    name: "Authorization Debugger",
+    desc: "Ask why a request was allowed or denied. The explain endpoint returns a full decision trace — matched policies, skipped bindings, ABAC steps.",
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>`,
+    name: "Open Source",
+    desc: "Apache 2.0. GraphQL, REST, and gRPC APIs. Single Rust binary, PostgreSQL auto-migrated on startup. No vendor lock-in.",
+  },
+];
+
+const steps = [
+  ["01", "Run Atom", "Clone the repo and start the stack with Docker Compose. Atom migrates the database and seeds the admin account automatically."],
+  ["02", "Model your system", "Create tenants, entity kinds, and resource definitions through the Admin UI or API. Profiles let you describe your platform's vocabulary."],
+  ["03", "Enforce access", "Call the authorization endpoint from your services. The policy engine evaluates live state and returns ALLOW or DENY instantly."],
+];
+
+const policyFeatures = [
+  { name: "Explicit deny", desc: "A deny binding overrides any allow immediately — no policy ordering tricks." },
+  { name: "Group inheritance", desc: "Policies on a group propagate to all members in real time." },
+  { name: "ABAC conditions", desc: "Attach conditions to any binding — match on entity or resource attributes using dot-path assertions." },
+  { name: "Bulk checks", desc: "Check dozens of permissions in one call — designed for gateway-level enforcement." },
+  { name: "Explain endpoint", desc: "Get a full decision trace: matched policies, skipped bindings, ABAC evaluation, and final verdict." },
+  { name: "Deny by default", desc: "No matching allow policy means denied. Nothing is implicitly permitted." },
+];
+
+const devSurface = [
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg>`,
+    name: "GraphQL API",
+    desc: "All management at a single endpoint — full schema introspection and a built-in Playground.",
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>`,
+    name: "Custom REST",
+    desc: "Define REST routes in the Admin UI backed by GraphQL operations. No code deployment needed.",
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>`,
+    name: "gRPC Runtime",
+    desc: "High-throughput authorization checks over gRPC — used by Magistrala and microservice backends.",
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>`,
+    name: "Built-in Playground",
+    desc: "Explore the schema, run queries, and debug policies directly from the Admin UI.",
+  },
+];
+
+const quickstart = [
+  {
+    step: "1. Start with Docker",
+    code: `git clone https://github.com/absmach/atom.git
+cd atom
+docker compose up -d`,
+  },
+  {
+    step: "2. Open the Admin UI",
+    code: `# Open in your browser:
+# http://localhost:3005
+#
+# Log in as the super admin
+# using the credentials you
+# set in ADMIN_SECRET`,
+  },
+];
+
+const solutions = [
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>`,
+    title: "Multi-Tenant SaaS",
+    desc: "Tenant-scoped identities and runtime policy enforcement with full lifecycle isolation.",
+    tags: ["SaaS", "Multi-tenancy", "Isolation"],
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/><path d="M4 7h3"/><path d="M7 4v3"/><path d="M4 17h3"/><path d="M7 14v3"/><path d="M14 7h3"/><path d="M17 4v3"/></svg>`,
+    title: "IoT Platforms",
+    desc: "Devices and gateways as first-class identities with credentials and fine-grained runtime policy coverage.",
+    tags: ["IoT", "Device Identity", "MQTT"],
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01"/><path d="M6 18h.01"/></svg>`,
+    title: "Microservices",
+    desc: "Centralized runtime authorization across services. One HTTP or gRPC call per check, policy changes propagate instantly.",
+    tags: ["Microservices", "API Keys", "gRPC"],
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>`,
+    title: "Security Operations",
+    desc: "Access explainability through the API. Answer 'why denied?' and 'who can access this?' without touching the database.",
+    tags: ["SecOps", "Audit", "Compliance"],
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`,
+    title: "Edge Systems",
+    desc: "Single-binary deployment alongside edge infrastructure. Minimal footprint with full policy enforcement.",
+    tags: ["Edge", "Propeller", "Gateway"],
+  },
+];
+
+const uiFeatures = [
+  {
+    id: "dashboard",
+    title: "Dashboard",
+    desc: "Live platform summary — entity counts, recent activity, authorization outcomes, and expiring credentials at a glance.",
+    img: "/img/atom-ui/dashboard.png",
+    alt: "Atom Admin Dashboard",
+  },
+  {
+    id: "entities",
+    title: "Entity Management",
+    desc: "Create, update, and manage humans, devices, services, workloads, and applications with credentials and group membership.",
+    img: "/img/atom-ui/entities.png",
+    alt: "Atom Entity Management",
+  },
+  {
+    id: "policies",
+    title: "Policy Bindings",
+    desc: "Create and inspect RBAC and ABAC bindings. Set explicit deny rules and view all bindings for any subject or resource.",
+    img: "/img/atom-ui/policies.png",
+    alt: "Atom Policy Bindings",
+  },
+  {
+    id: "roles",
+    title: "Roles",
+    desc: "Define roles and assign capabilities. Role membership is evaluated live — no token reissuance when roles change.",
+    img: "/img/atom-ui/roles.png",
+    alt: "Atom Roles Management",
+  },
+  {
+    id: "debugger",
+    title: "Authorization Debugger",
+    desc: "Run explain queries interactively. See matched policies, skipped bindings, and ABAC evaluation steps without writing any code.",
+    img: "/img/atom-ui/authorization-debugger.png",
+    alt: "Atom Authorization Debugger",
+  },
+  {
+    id: "audit",
+    title: "Audit Logs",
+    desc: "Every significant event — login, logout, credential creation, authorization checks — logged immutably and exportable to CSV.",
+    img: "/img/atom-ui/audit.png",
+    alt: "Atom Audit Logs",
+  },
+  {
+    id: "playground",
+    title: "GraphQL Playground",
+    desc: "Built-in Playground with full schema introspection. Explore the API, run queries, and test policies interactively.",
+    img: "/img/atom-ui/playground.png",
+    alt: "Atom GraphQL Playground",
+  },
+];
+
+
+const faqs = [
+  {
+    q: "How is Atom different from Keycloak?",
+    a: "Keycloak embeds permissions in tokens — policy changes require token reissuance. Atom evaluates every authorization decision live through the PDP. It also ships as a single binary backed by one PostgreSQL database, with no JGroups, no Infinispan, and no XML configuration.",
+  },
+  {
+    q: "Does Atom support RBAC and ABAC?",
+    a: "Yes. Both are expressed through the same PolicyBinding primitive. RBAC uses role grants with no conditions. ABAC attaches dot-path conditions evaluated against entity or resource attributes. You can combine both in a single binding.",
+  },
+  {
+    q: "Does Atom support OIDC?",
+    a: "Yes. Atom supports OIDC social login with Google, GitHub, and any standards-compliant provider. The OIDC flow produces a standard Atom JWT — same as password login. Atom also exposes a JWKS endpoint for zero-downtime key rotation.",
+  },
+  {
+    q: "Can Atom run in Kubernetes?",
+    a: "Yes. Atom is a single stateless binary that reads config from environment variables. Deploy it as a Kubernetes Deployment with a PostgreSQL service. Migrations run on startup — no init container or migration job needed.",
+  },
+  {
+    q: "Are permissions embedded in JWTs?",
+    a: "No. Atom JWTs carry only the entity ID and session ID. Authorization is evaluated live on every request. A policy change or session revocation takes effect immediately — no token reissuance or cache invalidation needed.",
+  },
+  {
+    q: "Is Atom open source?",
+    a: "Yes. Atom is licensed under Apache 2.0. The source is at github.com/absmach/atom. All APIs — GraphQL, REST, and gRPC — are fully open with no commercial restrictions.",
+  },
+];
+---
+
+<BaseLayout
+  title="Atom Identity & Authorization Platform | Abstract Machines"
+  description="Open-source identity and authorization platform with runtime RBAC, ABAC, authentication, and multi-tenant policy enforcement. Single Rust binary backed by PostgreSQL."
+>
+  <Header />
+  <main>
+
+    <!-- Hero -->
+    <section class="prod-hero has-video">
+      <video
+        class="hero-bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="/video/hero-background-poster.webp"
+        aria-hidden="true"
+      >
+        <source src="/video/hero-background.webm" type="video/webm" />
+        <source src="/video/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div class="container-wide">
+        <div style="text-align: center;">
+          <div style="text-align: left;">
+            <p class="atom-wordmark">Atom</p>
+          </div>
+          <h1 class="tagline">Identity and authorization in one deployable service.</h1>
+          <p class="lede" style="margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;">
+            Open-source authentication, RBAC, ABAC, and runtime authorization
+            in a single Rust binary backed by PostgreSQL.
+          </p>
+          <div class="btn-row" style="margin-top:32px; justify-content:center;">
+            <a href="https://github.com/absmach/atom" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
+            <a href="/docs/atom" class="btn">Documentation ↗</a>
+          </div>
+          <div style="margin-top:20px;">
+            <span class="badge success"><span class="dot"></span>Open Source · Apache 2.0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats bar -->
+    <div style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="metrics atom-metrics" style="border:none; border-radius:0; border-left:1px solid var(--line-3);">
+          <div class="metric featured">
+            <div class="v">1 binary</div>
+            <div class="l">Zero sidecars, zero dependencies</div>
+          </div>
+          <div class="metric">
+            <div class="v">5</div>
+            <div class="l">Entity kinds</div>
+          </div>
+          <div class="metric">
+            <div class="v">∞</div>
+            <div class="l">Policy flexibility</div>
+          </div>
+          <div class="metric">
+            <div class="v">100%</div>
+            <div class="l">Online authorization</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Features</span>
+            <h2 class="h-2" style="margin-top:14px;">Built for modern identity and access control.</h2>
+          </div>
+          <p class="lede">
+            Authentication, authorization, identity management,
+            and policy enforcement — one service.
+          </p>
+        </div>
+        <div class="feature-grid">
+          {features.map(({ icon, name, desc }) => (
+            <div class="feature">
+              <div class="ic atom-ic" set:html={icon} />
+              <div class="name">{name}</div>
+              <p class="desc">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Architecture</span>
+            <h2 class="h-2" style="margin-top:14px;">Two modules. One binary.</h2>
+          </div>
+          <p class="lede">
+            Identity and Authorization run in the same process, backed by a
+            single PostgreSQL database. No sidecars, no external services.
+          </p>
+        </div>
+        <div class="atom-arch-outer">
+          <!-- Left: Atom block -->
+          <div class="atom-block-diagram">
+            <div class="atom-bd-label">Atom</div>
+
+            <!-- Modules row -->
+            <div class="atom-bd-modules">
+              <div class="atom-bd-module">
+                <div class="atom-bd-module-name">Identity Module</div>
+                <div class="atom-bd-module-tags">
+                  <span>entities</span><span>credentials</span><span>sessions</span><span>groups</span><span>ownerships</span>
+                </div>
+              </div>
+              <div class="atom-bd-module">
+                <div class="atom-bd-module-name">Authorization Module</div>
+                <div class="atom-bd-module-tags">
+                  <span>resources</span><span>capabilities</span><span>roles</span><span>policy_bindings</span><span>PDP engine</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Database row -->
+            <div class="atom-bd-db-row">
+              <div class="atom-bd-db">
+                <div class="atom-bd-db-name">PostgreSQL</div>
+                <div class="atom-bd-db-sub">Single database · Auto-migrated on startup</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Request pipeline block -->
+          <div class="atom-pipeline-block">
+            <div class="atom-bd-label">Request Pipeline</div>
+            <div class="atom-bd-pipeline">
+              <div class="atom-bd-block">
+                <div class="atom-bd-block-name">Handler</div>
+                <div class="atom-bd-block-desc">HTTP · parse · respond</div>
+              </div>
+              <div class="atom-bd-arrow">↓</div>
+              <div class="atom-bd-block">
+                <div class="atom-bd-block-name">Service / Engine</div>
+                <div class="atom-bd-block-desc">Business logic · audit</div>
+              </div>
+              <div class="atom-bd-arrow">↓</div>
+              <div class="atom-bd-block">
+                <div class="atom-bd-block-name">Repo</div>
+                <div class="atom-bd-block-desc">SQL only · domain types</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">How it works</span>
+            <h2 class="h-2" style="margin-top:14px;">Deploy. Model. Enforce.</h2>
+          </div>
+        </div>
+        <div class="steps">
+          {steps.map(([num, title, desc]) => (
+            <div class="step">
+              <div class="num">{num}</div>
+              <h4>{title}</h4>
+              <p>{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Policy Engine — dark section -->
+    <section class="atom-policy-section">
+      <div class="container-wide">
+        <div class="section-head" style="color:inherit;">
+          <div class="left">
+            <span class="kicker" style="color:rgba(246,244,238,0.5);">Policy Engine</span>
+            <h2 class="h-2" style="margin-top:14px; color:var(--paper);">One policy primitive. RBAC and ABAC unified.</h2>
+          </div>
+          <p class="lede" style="color:rgba(246,244,238,0.65); max-width:38ch;">
+            Both role-based and attribute-based access control are expressed
+            through a single PolicyBinding — no separate systems to manage.
+          </p>
+        </div>
+        <div class="atom-policy-layout">
+          <div class="atom-policy-code-wrap">
+            <div class="atom-policy-code-label">PolicyBinding</div>
+            <pre class="atom-policy-code">{`PolicyBinding {
+  subject:    group("operators")
+  grant:      capability("publish")
+  scope:      tenant("factory-a")
+  effect:     allow
+  conditions: {
+    "resource.env": "production"
+  }
+}`}</pre>
+            <p class="atom-policy-note">
+              No permissions embedded in tokens. Every decision is evaluated online.
+            </p>
+          </div>
+          <div class="atom-policy-features">
+            {policyFeatures.map(({ name, desc }) => (
+              <div class="atom-policy-feature">
+                <div class="atom-policy-fname">{name}</div>
+                <div class="atom-policy-fdesc">{desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin UI — with screenshots -->
+    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Admin UI</span>
+            <h2 class="h-2" style="margin-top:14px;">Built for operators.</h2>
+          </div>
+          <p class="lede">
+            Manage every object in the system from one interface. No SQL
+            console, no curl scripts.
+          </p>
+        </div>
+        <div class="pui-layout">
+          <div class="pui-tabs" id="pui-tabs">
+            {uiFeatures.map(({ id, title, desc }, i) => (
+              <div class={`pui-tab${i === 0 ? " active" : ""}`} data-target={id}>
+                <button class="pui-tab-btn" type="button">
+                  <span class="pui-tab-title">{title}</span>
+                  <span class="pui-chevron">›</span>
+                </button>
+                <p class="pui-tab-desc">{desc}</p>
+              </div>
+            ))}
+          </div>
+          <div class="pui-panel">
+            {uiFeatures.map(({ id, img, alt }, i) => (
+              <div class={`pui-img-wrap${i === 0 ? " active" : ""}`} data-panel={id}>
+                <img src={img} alt={alt} class="pui-img" loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Developer Surface -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Developer Surface</span>
+            <h2 class="h-2" style="margin-top:14px;">GraphQL-native. Runtime-ready.</h2>
+          </div>
+          <p class="lede">
+            One endpoint for management. A dedicated gRPC channel for
+            high-throughput runtime checks.
+          </p>
+        </div>
+        <div class="feature-grid">
+          {devSurface.map(({ icon, name, desc }) => (
+            <div class="feature">
+              <div class="ic atom-ic" set:html={icon} />
+              <div class="name">{name}</div>
+              <p class="desc">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Quick start</span>
+            <h2 class="h-2" style="margin-top:14px;">Up and running in minutes.</h2>
+          </div>
+        </div>
+        <div class="atom-qs-grid">
+          {quickstart.map(({ step, code }) => (
+            <div class="atom-qs-card">
+              <div class="atom-qs-step">{step}</div>
+              <pre class="atom-qs-code">{code}</pre>
+            </div>
+          ))}
+        </div>
+        <div class="btn-row" style="margin-top:40px;">
+          <a href="https://github.com/absmach/atom" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
+          <a href="/docs/atom" class="btn">Read docs ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Use Cases</span>
+            <h2 class="h-2" style="margin-top:14px;">Where Atom fits.</h2>
+          </div>
+        </div>
+        <div class="sol-grid atom-sol-grid">
+          {solutions.map(({ icon, title, desc, tags }) => (
+            <div class="sol-card">
+              <div class="atom-sol-icon" set:html={icon} />
+              <h3 class="name">{title}</h3>
+              <p class="desc">{desc}</p>
+              <div class="tags">
+                {tags.map((t) => <span class="tag">{t}</span>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Deployment — dark section -->
+    <section class="atom-deploy-section">
+      <div class="container-wide">
+        <div class="section-head" style="color:inherit;">
+          <div class="left">
+            <span class="kicker" style="color:rgba(246,244,238,0.5);">Deployment</span>
+            <h2 class="h-2" style="margin-top:14px; color:var(--paper);">One binary.</h2>
+          </div>
+          <p class="lede" style="color:rgba(246,244,238,0.65); max-width:38ch;">
+            Self-contained and operational immediately after deployment.
+            No infrastructure assembly required.
+          </p>
+        </div>
+        <div class="atom-deploy-grid">
+          {[
+            ["Single Rust binary",   "No runtime dependencies, no JVM, no Node."],
+            ["PostgreSQL only",      "No Redis, no message queues, no coordination service."],
+            ["Auto migrations",      "Schema migrations run on startup automatically."],
+            ["Key generation",       "JWT signing key generated and stored on first boot."],
+            ["Docker Compose",       "Atom + PostgreSQL, ready in one command."],
+            ["Kubernetes",           "Single Deployment + Service. Config from env vars."],
+          ].map(([name, desc]) => (
+            <div class="atom-deploy-item">
+              <div class="atom-deploy-name">{name}</div>
+              <div class="atom-deploy-desc">{desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison -->
+    <!-- <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Comparison</span>
+            <h2 class="h-2" style="margin-top:14px;">Why teams choose Atom.</h2>
+          </div>
+          <p class="lede">
+            Identity and authorization in one operationally simple platform —
+            no infrastructure assembly, no split deployment.
+          </p>
+        </div>
+        <div class="atom-comparison-wrap">
+          <table class="atom-comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th class="atom-col-atom">Atom</th>
+                <th>Keycloak</th>
+                <th>Ory</th>
+                <th>Cerbos</th>
+              </tr>
+            </thead>
+            <tbody>
+              {comparisonRows.map(({ feature, atom, keycloak, ory, cerbos }) => (
+                <tr>
+                  <td>{feature}</td>
+                  <td class={`atom-col-atom ${atom === "Yes" ? "atom-yes" : "atom-partial"}`}>{atom}</td>
+                  <td class={keycloak === "Yes" ? "atom-yes" : keycloak === "No" ? "atom-no" : "atom-partial"}>{keycloak}</td>
+                  <td class={ory === "Yes" ? "atom-yes" : ory === "No" ? "atom-no" : "atom-partial"}>{ory}</td>
+                  <td class={cerbos === "Yes" ? "atom-yes" : cerbos === "No" ? "atom-no" : "atom-partial"}>{cerbos}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- FAQ -->
+    <section class="section" style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">FAQ</span>
+            <h2 class="h-2" style="margin-top:14px;">Common questions.</h2>
+          </div>
+        </div>
+        <FAQAccordion items={faqs} />
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="background:var(--paper-2);">
+      <div class="container-narrow" style="text-align:center;">
+        <span class="kicker">Get started</span>
+        <h2 class="h-2" style="margin-top:14px;">Deploy Atom today.</h2>
+        <p class="lede" style="margin:20px auto 36px;">
+          Identity, authentication, and authorization from one deployable
+          service. Apache 2.0. Single binary. Deploy alongside PostgreSQL on
+          a VM, in Docker Compose, or on Kubernetes.
+        </p>
+        <div class="btn-row" style="justify-content:center;">
+          <a href="https://github.com/absmach/atom" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
+          <a href="/docs/atom" class="btn">Documentation ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Atom",
+    "description": "Open-source identity and authorization platform. Runtime RBAC, ABAC, authentication, and multi-tenant policy enforcement in a single Rust binary backed by PostgreSQL.",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Linux",
+    "url": "https://absmach.eu/products/atom",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "keywords": "identity platform,authorization platform,RBAC,ABAC,runtime authorization,policy decision point,authentication,OIDC,JWT,multi-tenant IAM,open-source IAM,Keycloak alternative,Cerbos alternative",
+    "author": {
+      "@type": "Organization",
+      "name": "Abstract Machines",
+      "url": "https://absmach.eu"
+    }
+  }
+  </script>
+</BaseLayout>
+
+<style>
+  /* ─── Hero wordmark ─────────────────────────────────────────────── */
+  .atom-wordmark {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    color: var(--accent-2);
+    display: block;
+    margin: 0 0 8px;
+    line-height: 1;
+    text-align: left;
+  }
+
+  /* ─── Stats bar ─────────────────────────────────────────────────── */
+  .atom-metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* ─── Feature icons ─────────────────────────────────────────────── */
+  .atom-ic {
+    color: var(--ink-2);
+    display: flex;
+    align-items: center;
+  }
+
+  /* ─── Architecture block diagram ───────────────────────────────── */
+  .atom-arch-outer {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 16px;
+    margin-top: 48px;
+    align-items: stretch;
+  }
+
+  .atom-block-diagram {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .atom-pipeline-block {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .atom-bd-label {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--accent-2);
+    margin-bottom: 2px;
+  }
+
+  /* pipeline (vertical) */
+  .atom-bd-pipeline {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+  .atom-bd-block {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    background: var(--paper-2);
+  }
+  .atom-bd-block-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .atom-bd-block-desc {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .atom-bd-arrow {
+    font-size: 14px;
+    color: var(--ink-3);
+    text-align: center;
+    line-height: 1;
+    padding: 1px 0;
+  }
+
+  /* modules row */
+  .atom-bd-modules {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .atom-bd-module {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    padding: 18px;
+    background: var(--paper-2);
+  }
+  .atom-bd-module-name {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .atom-bd-module-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .atom-bd-module-tags span {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-2);
+    background: var(--paper);
+    border: 1px solid var(--line-3);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+
+  /* db row */
+  .atom-bd-db-row {
+    display: flex;
+  }
+  .atom-bd-db {
+    flex: 1;
+    border: 1px solid var(--accent-2);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    background: rgba(7, 55, 99, 0.04);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .atom-bd-db-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--accent-2);
+    white-space: nowrap;
+  }
+  .atom-bd-db-sub {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  /* ─── Policy Engine (dark) ──────────────────────────────────────── */
+  .atom-policy-section {
+    background: var(--ink);
+    color: #fff;
+    padding: 80px 0;
+  }
+  .atom-policy-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    margin-top: 48px;
+  }
+  .atom-policy-code-wrap {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+  }
+  .atom-policy-code-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 16px;
+  }
+  .atom-policy-code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.88);
+    white-space: pre;
+    margin: 0;
+    background: transparent;
+    overflow-x: auto;
+  }
+  .atom-policy-note {
+    margin-top: 20px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.35);
+    font-family: "JetBrains Mono", monospace;
+    line-height: 1.6;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 16px;
+  }
+  .atom-policy-features {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .atom-policy-feature {
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .atom-policy-fname {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 4px;
+  }
+  .atom-policy-fdesc {
+    display: block;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.5;
+  }
+
+  /* ─── Admin UI (propeller pattern) ─────────────────────────────── */
+  .pui-layout {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 48px;
+    margin-top: 48px;
+    align-items: start;
+  }
+  .pui-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .pui-tab {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+    background: var(--paper);
+  }
+  .pui-tab.active {
+    border-color: var(--ink);
+  }
+  .pui-tab-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    gap: 8px;
+  }
+  .pui-tab-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .pui-chevron {
+    font-size: 18px;
+    color: var(--ink-3);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .pui-tab.active .pui-chevron {
+    transform: rotate(90deg);
+    color: var(--ink);
+  }
+  .pui-tab-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.6;
+    padding: 0 16px 14px;
+    display: none;
+  }
+  .pui-tab.active .pui-tab-desc {
+    display: block;
+  }
+  .pui-panel {
+    display: grid;
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--paper);
+  }
+  .pui-img-wrap {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+  .pui-img-wrap.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .pui-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ─── Use Cases ─────────────────────────────────────────────────── */
+  .atom-sol-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .atom-sol-icon {
+    color: var(--ink-2);
+    margin-bottom: 12px;
+    display: flex;
+  }
+
+  /* ─── Quick start ────────────────────────────────────────────────── */
+  .atom-qs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .atom-qs-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--paper);
+  }
+  .atom-qs-step {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    padding: 12px 20px;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--line-3);
+  }
+  .atom-qs-code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    white-space: pre;
+    margin: 0;
+    padding: 20px;
+    background: transparent;
+    overflow-x: auto;
+  }
+
+  /* ─── Deployment (dark) ─────────────────────────────────────────── */
+  .atom-deploy-section {
+    background: var(--ink);
+    color: #fff;
+    padding: 80px 0;
+  }
+  .atom-deploy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 48px;
+  }
+  .atom-deploy-item {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .atom-deploy-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .atom-deploy-desc {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+  }
+
+  /* ─── Comparison table ──────────────────────────────────────────── */
+  .atom-comparison-wrap {
+    overflow-x: auto;
+    margin-top: 48px;
+  }
+  .atom-comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .atom-comparison-table th {
+    padding: 12px 20px;
+    text-align: left;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    border-bottom: 1px solid var(--line-3);
+  }
+  .atom-comparison-table td {
+    padding: 13px 20px;
+    border-bottom: 1px solid var(--line-3);
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+  .atom-comparison-table td:first-child {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .atom-col-atom {
+    background: rgba(7, 55, 99, 0.04);
+  }
+  .atom-yes    { color: var(--ink) !important; font-weight: 600 !important; }
+  .atom-no     { color: var(--ink-3) !important; }
+  .atom-partial { color: var(--ink-2) !important; }
+
+  /* ─── Responsive ────────────────────────────────────────────────── */
+  @media (max-width: 980px) {
+    .atom-arch-outer {
+      grid-template-columns: 1fr;
+    }
+    .atom-bd-modules {
+      grid-template-columns: 1fr;
+    }
+    .atom-policy-layout,
+    .pui-layout {
+      grid-template-columns: 1fr;
+    }
+    .atom-sol-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .atom-qs-grid {
+      grid-template-columns: 1fr;
+    }
+    .atom-deploy-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .atom-metrics {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .atom-sol-grid,
+    .atom-deploy-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const tabs = document.querySelectorAll("#pui-tabs .pui-tab");
+    const panels = document.querySelectorAll(".pui-img-wrap");
+
+    tabs.forEach((tab) => {
+      tab.querySelector(".pui-tab-btn").addEventListener("click", () => {
+        const target = tab.dataset.target;
+        tabs.forEach((t) => t.classList.remove("active"));
+        panels.forEach((p) => p.classList.remove("active"));
+        tab.classList.add("active");
+        document.querySelector(`.pui-img-wrap[data-panel="${target}"]`)?.classList.add("active");
+      });
+    });
+  })();
+</script>

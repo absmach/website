@@ -650,7 +650,7 @@ section {
 }
 .hero-asym .grid {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
+  grid-template-columns: 1fr 1.2fr;
   gap: 64px;
   align-items: center;
 }
@@ -1135,7 +1135,7 @@ section {
 .metric .v {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  font-size: 56px;
+  font-size: 36px;
   line-height: 1;
   letter-spacing: 0;
 }
@@ -1164,8 +1164,8 @@ section {
 
 .bento {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-auto-rows: 270px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 240px 220px 220px;
   gap: 16px;
 }
 .bento .b {
@@ -1228,38 +1228,37 @@ section {
   transform: translateX(4px);
 }
 
+/* Row 1 — Magistrala, full width flagship */
 .bento .b-magistrala {
   grid-column: span 4;
-  grid-row: span 1;
   background: var(--ink);
   color: var(--paper);
   border-color: var(--ink);
 }
 .bento .b-magistrala .pcat {
-  color: rgba(246, 244, 238, 0.65);
+  color: rgba(246, 244, 238, 0.5);
 }
 .bento .b-magistrala .pdesc {
   color: rgba(246, 244, 238, 0.7);
 }
 .bento .b-magistrala .muted {
-  color: rgba(246, 244, 238, 0.65);
+  color: rgba(246, 244, 238, 0.5);
 }
-.bento .b-propeller {
+
+/* Row 2 — Platform components, half width */
+.bento .b-fluxmq,
+.bento .b-atom {
   grid-column: span 2;
-  grid-row: span 1;
 }
-.bento .b-fluxmq {
+
+/* Rows 3 & 4 — Edge & Hardware, half width each */
+.bento .b-a0,
+.bento .b-a1,
+.bento .b-propeller,
+.bento .b-quarc {
   grid-column: span 2;
-  grid-row: span 1;
 }
-.bento .b-s0 {
-  grid-column: span 2;
-  grid-row: span 1;
-}
-.bento .b-s1 {
-  grid-column: span 2;
-  grid-row: span 1;
-}
+
 
 /* bento product logos ------------------------------------------------------ */
 
@@ -1282,8 +1281,16 @@ section {
   mix-blend-mode: screen;
   filter: invert(1);
 }
-/* S0 / S1 / FluxMQ typographic watermarks — rendered via pseudo-elements to avoid
-   Lighthouse colour-contrast checks on decorative text nodes */
+
+.bento .b-atom .plogo-hw,
+.bento .b-fluxmq .plogo-hw,
+.bento .b-a0 .plogo-hw,
+.bento .b-a1 .plogo-hw,
+.bento .b-quarc .plogo-hw {
+  color: rgba(20, 22, 26, 0.12);
+}
+
+/* Typographic marks */
 .plogo-hw {
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
@@ -2538,15 +2545,17 @@ section {
   }
   .bento {
     grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 200px;
+    grid-template-rows: none;
+    grid-auto-rows: 220px;
   }
-  .bento .b-magistrala,
-  .bento .b-propeller,
-  .bento .b-fluxmq,
-  .bento .b-s0,
-  .bento .b-s1 {
+  .b-magistrala,
+  .b-fluxmq,
+  .b-atom,
+  .b-propeller,
+  .b-a0,
+  .b-a1,
+  .b-quarc {
     grid-column: span 2;
-    grid-row: span 1;
   }
   .depl-map {
     grid-template-columns: 1fr;
@@ -2720,7 +2729,7 @@ section {
   }
   /* metrics: scale down large value */
   .metric .v {
-    font-size: 40px;
+    font-size: 28px;
   }
   /* product wordmark: scale down */
   .prod-hero .prod-wordmark {

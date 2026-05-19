@@ -1,8 +1,8 @@
 ---
-title: "Building the S0: The IoT Gateway of the future"
-slug: "building_the_s0"
-excerpt: "Road to S0: The IoT gateway for the future."
-description: "The journey to building the S0 IoT gateway, the challenges faced and the solutions implemented. "
+title: "Building the A0: The IoT Gateway of the future"
+slug: "building_the_a0"
+excerpt: "Road to A0: The IoT gateway for the future."
+description: "The journey to building the A0 IoT gateway, the challenges faced and the solutions implemented. "
 date: "2026-02-23"
 author:
   name: "Jones Kisaka"
@@ -13,7 +13,7 @@ ogImage:
 category: blog
 tags:
 
-- S0
+- A0
 - Baseboard
 - IoT
 - Gateway
@@ -24,17 +24,17 @@ tags:
 
 ## Design Journey
 
-The journey of a thousand miles begins with the first step. When we set out to design the S0 gateway board, we had a clear vision: create a comprehensive solution for aggregating smart meter data from both wireless and wired M-Bus meters. What followed was an educational journey through PCB design challenges, debugging sessions, and valuable lessons that shaped not just our board, but our approach to hardware design.
+The journey of a thousand miles begins with the first step. When we set out to design the A0 gateway board, we had a clear vision: create a comprehensive solution for aggregating smart meter data from both wireless and wired M-Bus meters. What followed was an educational journey through PCB design challenges, debugging sessions, and valuable lessons that shaped not just our board, but our approach to hardware design.
 
-![S0 board](/img/blogs/building-the-s0/s0.png)
+![A0 board](/img/blogs/building-the-s0/s0.png)
 
 ![Baseboard](/img/blogs/building-the-s0/baseboard.png)
 
 ## The Vision
 
-The [S0](https://hardware.absmach.eu/s0) is a dual-board system designed to act as a smart meter gateway with impressive connectivity options:
+The [A0](https://hardware.absmach.eu/a0) is a dual-board system designed to act as a smart meter gateway with impressive connectivity options:
 
-The S0 Main Board features:
+The A0 Main Board features:
 
 - [ESP32-C6](https://www.espressif.com/en/products/socs/esp32-c6) microcontroller (RISC-V powered, USB-C programmable)
 - [SIM7080G](https://www.simcom.com/product/SIM7080G.html) NB-IoT module for cellular connectivity
@@ -42,20 +42,20 @@ The S0 Main Board features:
 - Battery power support via JST connector
 - JTAG debugging capability
 
-The S0 Baseboard extends functionality with:
+The A0 Baseboard extends functionality with:
 
 - W5500 Ethernet chip with RJ45 Jack and Magnetics
 - [TSS721ADR](https://www.digikey.com/en/products/detail/texas-instruments/TSS721ADR/1910054) Wired M-Bus module for reading wired meters
 - SD card slot for local data logging
 - Power management and distribution
 
-Both boards connect via 92-pin headers, creating a compact yet powerful gateway system. Our ambitious goal for S0? Make it pin-compatible with the BeagleV-Fire development board.
+Both boards connect via 92-pin headers, creating a compact yet powerful gateway system. Our ambitious goal for A0? Make it pin-compatible with the BeagleV-Fire development board.
 
 Just like any design, we had our fair share of challenges, which has made this journey a learning experience.
 
 ## Challenge 1: The Form Factor Puzzle
 
-Our first major hurdle hit us during component placement. We wanted the S0 to be pin-to-pin compatible with the [BeagleV-Fire](https://www.beagleboard.org/boards/beaglev-fire) while maintaining a compact form factor. It sounds simple on paper, but when you’re trying to fit multiple radio modules, power circuits, and connectors onto a constrained PCB while maintaining proper spacing for RF performance, reality sets in quickly.
+Our first major hurdle hit us during component placement. We wanted the A0 to be pin-to-pin compatible with the [BeagleV-Fire](https://www.beagleboard.org/boards/beaglev-fire) while maintaining a compact form factor. It sounds simple on paper, but when you’re trying to fit multiple radio modules, power circuits, and connectors onto a constrained PCB while maintaining proper spacing for RF performance, reality sets in quickly.
 
 The ESP32C6, SIM7080G, and RC-S2LP modules each had their own keep-out zones and antenna requirements. We found ourselves playing 3D Tetris, rotating components, trying different orientations, and constantly checking clearances. The lesson? Start with your largest and most constrained components first, then build around them. And always, always verify mechanical compatibility early in the design phase.
 
@@ -81,7 +81,7 @@ The solution: We implemented a tri-state buffer (essentially an SPI isolator) on
 
 ## Challenge 4: The Bootstrap Pin Blunder
 
-This was a facepalm moment. On the first revision of the S0, we connected SPI lines to the ESP32-C6’s bootstrapping pins. For those unfamiliar, bootstrap pins are sampled during power-up to determine boot mode and configuration.
+This was a facepalm moment. On the first revision of the A0, we connected SPI lines to the ESP32-C6’s bootstrapping pins. For those unfamiliar, bootstrap pins are sampled during power-up to determine boot mode and configuration.
 
 The result? A completely non-functional SPI bus. The ESP32-C6 was fighting with our peripherals for control of those pins during startup.
 
@@ -133,7 +133,7 @@ Looking back at this journey, here’s what we’d change:
 
 ## The Win
 
-Despite the challenges, Rev3 of the S0 system works. It reliably reads both wireless and wired M-Bus meters, communicates over NB-IoT, logs to SD card, and connects via Ethernet. The form factor works with the BeagleV-Fire. The power circuit is rock-solid.
+Despite the challenges, Rev3 of the A0 system works. It reliably reads both wireless and wired M-Bus meters, communicates over NB-IoT, logs to SD card, and connects via Ethernet. The form factor works with the BeagleV-Fire. The power circuit is rock-solid.
 
 More importantly, we learned lessons that will make every future design better. Hardware design is iterative, and every challenge is a chance to deepen understanding.
 
@@ -149,6 +149,6 @@ If you’re designing your first complex board, here’s our advice:
 - Document your mistakes — They’re learning opportunities, not failures
 - Keep it simple — Especially for power and protection circuits
 
-The S0 journey taught us that good hardware design isn’t about being clever — it’s about being thorough, methodical, and humble enough to learn from mistakes. Every challenge we faced made the final product better and made us better engineers.
+The A0 journey taught us that good hardware design isn’t about being clever — it’s about being thorough, methodical, and humble enough to learn from mistakes. Every challenge we faced made the final product better and made us better engineers.
 
 Here’s to many more revisions, lessons learned, and working boards. 🔧

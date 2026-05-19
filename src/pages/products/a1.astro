@@ -4,7 +4,7 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
 
-const s0BoardSpecs = [
+const a0BoardSpecs = [
   "ESP32-C6 RISC-V Core",
   "Wireless M-Bus (868 MHz)",
   "NB-IoT / LTE-M (SIM7080G)",
@@ -25,8 +25,8 @@ const beagleVFireSpecs = [
 const features = [
   {
     ic: "🔲",
-    name: "S0 Board + BeagleV-Fire",
-    desc: "S1 combines the S0 module with the BeagleV-Fire board, pairing multi-protocol wireless capabilities with powerful Linux compute in a single gateway.",
+    name: "A0 Board + BeagleV-Fire",
+    desc: "A1 combines the A0 module with the BeagleV-Fire board, pairing multi-protocol wireless capabilities with powerful Linux compute in a single gateway.",
   },
   {
     ic: "🐧",
@@ -41,7 +41,7 @@ const features = [
   {
     ic: "📡",
     name: "Multi-Protocol Wireless",
-    desc: "Inherits the S0 module's multi-protocol connectivity (Wireless M-Bus, NB-IoT, LTE-M, WiFi, and BLE) for versatile IoT deployments.",
+    desc: "Inherits the A0 module's multi-protocol connectivity (Wireless M-Bus, NB-IoT, LTE-M, WiFi, and BLE) for versatile IoT deployments.",
   },
   {
     ic: "☁️",
@@ -58,7 +58,7 @@ const features = [
 const solutions = [
   {
     title: "Smart Metering",
-    desc: "Aggregate data from multiple S0 wireless gateways and forward it securely to Magistrala.",
+    desc: "Aggregate data from multiple A0 wireless gateways and forward it securely to Magistrala.",
     tags: ["Aggregation", "M-Bus", "MQTT"],
   },
   {
@@ -86,35 +86,35 @@ const integrations = [
   "MQTT",
   "CoAP",
   "WebSocket",
-  "S0 Module",
+  "A0 Module",
 ];
 
 const faqs = [
   {
-    q: "What is the difference between S0 and S1?",
-    a: "S0 runs Zephyr RTOS on an ESP32-C6 microcontroller, optimised for ultra-low power and constrained environments. S1 runs full Linux on a RISC-V compute board (BeagleV-Fire) and is suited to workloads requiring a full OS, containers, or higher processing power.",
+    q: "What is the difference between A0 and A1?",
+    a: "A0 runs Zephyr RTOS on an ESP32-C6 microcontroller, optimised for ultra-low power and constrained environments. A1 runs full Linux on a RISC-V compute board (BeagleV-Fire) and is suited to workloads requiring a full OS, containers, or higher processing power.",
   },
   {
     q: "When should I choose Linux over Zephyr RTOS?",
-    a: "Choose S1 when you need standard tooling, container support, Python or higher-level runtimes, or when the workload requires more memory and compute than a microcontroller can provide. Choose S0 when power consumption and form factor are the primary constraints.",
+    a: "Choose A1 when you need standard tooling, container support, Python or higher-level runtimes, or when the workload requires more memory and compute than a microcontroller can provide. Choose A0 when power consumption and form factor are the primary constraints.",
   },
   {
-    q: "Does S1 support container workloads?",
-    a: "Yes. S1 runs a full Linux stack and can run Docker containers alongside WebAssembly workloads managed by Propeller. Both runtimes can coexist on the same device.",
+    q: "Does A1 support container workloads?",
+    a: "Yes. A1 runs a full Linux stack and can run Docker containers alongside WebAssembly workloads managed by Propeller. Both runtimes can coexist on the same device.",
   },
   {
-    q: "How does S1 connect to Magistrala?",
-    a: "S1 communicates with Magistrala over MQTT, CoAP, or HTTP. The S0 wireless radio module on S1 handles the communication with field devices, while the BeagleV-Fire compute board routes aggregated data to the cloud platform.",
+    q: "How does A1 connect to Magistrala?",
+    a: "A1 communicates with Magistrala over MQTT, CoAP, or HTTP. The A0 wireless radio module on A1 handles the communication with field devices, while the BeagleV-Fire compute board routes aggregated data to the cloud platform.",
   },
   {
     q: "What is the BeagleV-Fire?",
-    a: "BeagleV-Fire is an open-hardware single-board computer based on the Microchip PolarFire SoC, which combines a RISC-V processor with an FPGA. It provides the Linux compute core for the S1 gateway.",
+    a: "BeagleV-Fire is an open-hardware single-board computer based on the Microchip PolarFire SoC, which combines a RISC-V processor with an FPGA. It provides the Linux compute core for the A1 gateway.",
   },
 ];
 ---
 
 <BaseLayout
-  title="S1 Industrial Gateway — Abstract Machines"
+  title="A1 Industrial Gateway — Abstract Machines"
   description="RISC-V Linux gateway for industrial IoT with container and Wasm workload support. Full Linux OS, edge AI, and industrial-grade reliability."
 >
   <Header />
@@ -139,11 +139,11 @@ const faqs = [
           <div>
             <div class="logo-mark">
               <span class="swatch" style="background:rgba(255,255,255,0.12);"></span>
-              S1 · Industrial Gateway · Hardware
+              A1 · Industrial Gateway · Hardware
             </div>
-            <h1 class="tagline">S1 – Linux Gateway for Industrial IoT.</h1>
+            <h1 class="tagline">A1 – Linux Gateway for Industrial IoT.</h1>
             <p class="lede" style="margin-top:16px; max-width:48ch;">
-              S1 is a powerful Linux-based IoT gateway built on RISC-V
+              A1 is a powerful Linux-based IoT gateway built on RISC-V
               architecture. It offers robust connectivity, advanced processing
               capabilities, and scalability for industrial IoT applications.
             </p>
@@ -158,7 +158,7 @@ const faqs = [
           <div class="hero-visual" style="padding:32px;">
             <img
               src="/img/products/s1-beagle.png"
-              alt="S1 industrial gateway with BeagleV-Fire compute board"
+              alt="A1 industrial gateway with BeagleV-Fire compute board"
               style="object-fit:contain; max-height:400px;"
             />
           </div>
@@ -169,7 +169,7 @@ const faqs = [
     <!-- Stats bar -->
     <div style="border-bottom:1px solid var(--line-3);">
       <div class="container-wide">
-        <div class="s1-metrics metrics" style="border:none; border-radius:0; border-left:1px solid var(--line-3);">
+        <div class="a1-metrics metrics" style="border:none; border-radius:0; border-left:1px solid var(--line-3);">
           <div class="metric featured">
             <div class="v">RISC-V</div>
             <div class="l">BeagleV-Fire compute</div>
@@ -190,36 +190,36 @@ const faqs = [
       </div>
     </div>
 
-    <!-- S0 Board + BeagleV-Fire components -->
+    <!-- A0 Board + BeagleV-Fire components -->
     <section class="section" style="border-bottom:1px solid var(--line-3);">
       <div class="container-wide">
 
-        <!-- Component 1: S0 Board -->
-        <div class="s1-component">
-          <div class="s1-component-header">
+        <!-- Component 1: A0 Board -->
+        <div class="a1-component">
+          <div class="a1-component-header">
             <span class="kicker">Component 1</span>
-            <h2 class="h-2" style="margin-top:8px;">S0 Board</h2>
+            <h2 class="h-2" style="margin-top:8px;">A0 Board</h2>
           </div>
-          <div class="s1-component-body">
-            <div class="s1-img-wrap">
+          <div class="a1-component-body">
+            <div class="a1-img-wrap">
               <img
                 src="/img/products/s0-board-detail.webp"
-                alt="S0 Board"
-                class="s1-img"
+                alt="A0 Board"
+                class="a1-img"
                 loading="lazy"
               />
             </div>
-            <div class="s1-component-text">
+            <div class="a1-component-text">
               <p class="lede">
-                The <strong>S0 Board</strong> is the wireless connectivity core of the S1
+                The <strong>A0 Board</strong> is the wireless connectivity core of the A1
                 gateway. It handles multi-protocol wireless data collection
                 (Wireless M-Bus, NB-IoT, LTE-M, WiFi, and BLE) and passes data
                 to the <strong>BeagleV-Fire</strong> for Linux-side processing and cloud backhaul.
               </p>
-              <ul class="s1-spec-list">
-                {s0BoardSpecs.map(spec => (
-                  <li class="s1-spec-item">
-                    <span class="s1-check">✓</span>
+              <ul class="a1-spec-list">
+                {a0BoardSpecs.map(spec => (
+                  <li class="a1-spec-item">
+                    <span class="a1-check">✓</span>
                     <span>{spec}</span>
                   </li>
                 ))}
@@ -228,35 +228,35 @@ const faqs = [
           </div>
         </div>
 
-        <div class="s1-divider"></div>
+        <div class="a1-divider"></div>
 
         <!-- Component 2: BeagleV-Fire -->
-        <div class="s1-component">
-          <div class="s1-component-header">
+        <div class="a1-component">
+          <div class="a1-component-header">
             <span class="kicker">Component 2</span>
             <h2 class="h-2" style="margin-top:8px;">BeagleV-Fire</h2>
           </div>
-          <div class="s1-component-body">
-            <div class="s1-img-wrap">
+          <div class="a1-component-body">
+            <div class="a1-img-wrap">
               <img
                 src="/img/products/s1-beaglev-fire.webp"
                 alt="BeagleV-Fire compute board"
-                class="s1-img"
+                class="a1-img"
                 loading="lazy"
               />
             </div>
-            <div class="s1-component-text">
+            <div class="a1-component-text">
               <p class="lede">
                 The <strong>BeagleV-Fire</strong> brings a full <strong>Linux operating system</strong> to the
-                S1 gateway on a RISC-V PolarFire SoC. It provides the compute
+                A1 gateway on a RISC-V PolarFire SoC. It provides the compute
                 power needed for containerised workloads, edge AI inference,
                 advanced networking, and seamless cloud integration;
                 capabilities not available on a bare-metal RTOS.
               </p>
-              <ul class="s1-spec-list">
+              <ul class="a1-spec-list">
                 {beagleVFireSpecs.map(spec => (
-                  <li class="s1-spec-item">
-                    <span class="s1-check">✓</span>
+                  <li class="a1-spec-item">
+                    <span class="a1-check">✓</span>
                     <span>{spec}</span>
                   </li>
                 ))}
@@ -273,13 +273,13 @@ const faqs = [
       <div class="container-wide">
         <div class="section-head" style="text-align:center; display:block;">
           <span class="kicker">Features</span>
-          <h2 class="h-2" style="margin-top:14px;">S1 Features.</h2>
+          <h2 class="h-2" style="margin-top:14px;">A1 Features.</h2>
           <p class="lede" style="margin:12px auto 0; max-width:52ch;">
-            S0 Board + BeagleV-Fire: the Linux-based gateway for demanding
+            A0 Board + BeagleV-Fire: the Linux-based gateway for demanding
             industrial and edge computing deployments.
           </p>
         </div>
-        <div class="s1-feat-grid feature-grid" style="margin-top:48px;">
+        <div class="a1-feat-grid feature-grid" style="margin-top:48px;">
           {features.map(({ ic, name, desc }) => (
             <div class="feature">
               <div class="ic" style="font-size:18px;">{ic}</div>
@@ -297,10 +297,10 @@ const faqs = [
         <div class="section-head">
           <div class="left">
             <span class="kicker">Solutions</span>
-            <h2 class="h-2" style="margin-top:14px;">Where S1 deploys.</h2>
+            <h2 class="h-2" style="margin-top:14px;">Where A1 deploys.</h2>
           </div>
         </div>
-        <div class="s1-sol-grid sol-grid">
+        <div class="a1-sol-grid sol-grid">
           {solutions.map(({ title, desc, tags }) => (
             <div class="sol-card">
               <div class="icon-frame">{title.charAt(0)}</div>
@@ -323,7 +323,7 @@ const faqs = [
             <span class="kicker">Integrations</span>
             <h2 class="h-2" style="margin-top:14px;">Connects with the full stack.</h2>
           </div>
-          <p class="lede">S1 pairs with Magistrala for device management and Propeller for edge workload orchestration.</p>
+          <p class="lede">A1 pairs with Magistrala for device management and Propeller for edge workload orchestration.</p>
         </div>
         <div class="integ-grid">
           {integrations.map(name => (
@@ -362,7 +362,7 @@ const faqs = [
       </div>
       <div class="container-narrow" style="margin-top:48px; padding-top:32px; border-top:1px solid var(--line-3);">
         <p style="font-size:12px; color:var(--ink-4); text-align:center; line-height:1.6;">
-          S1 hardware was developed with support from the European Union's Horizon Europe research and innovation programme as part of the <a href="/projects/elastic" style="color:var(--ink-3); text-decoration:underline;">ELASTIC project</a>.
+          A1 hardware was developed with support from the European Union's Horizon Europe research and innovation programme as part of the <a href="/projects/elastic" style="color:var(--ink-3); text-decoration:underline;">ELASTIC project</a>.
         </p>
       </div>
     </section>
@@ -373,9 +373,9 @@ const faqs = [
   {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": "S1 Industrial Gateway",
+    "name": "A1 Industrial Gateway",
     "description": "RISC-V Linux gateway for industrial IoT with container and Wasm workload support. Full Linux OS, edge AI, and industrial-grade reliability.",
-    "url": "https://absmach.eu/products/s1",
+    "url": "https://absmach.eu/products/a1",
     "brand": {
       "@type": "Brand",
       "name": "Abstract Machines"
@@ -386,61 +386,61 @@ const faqs = [
 
 <style>
   /* Metrics */
-  .s1-metrics {
+  .a1-metrics {
     grid-template-columns: repeat(4, 1fr);
   }
   @media (max-width: 640px) {
-    .s1-metrics {
+    .a1-metrics {
       grid-template-columns: repeat(2, 1fr);
     }
-    .s1-metrics .metric {
+    .a1-metrics .metric {
       border-right: none;
     }
   }
 
   /* Component sections */
-  .s1-component {
+  .a1-component {
     padding: 48px 0;
   }
-  .s1-component-header {
+  .a1-component-header {
     margin-bottom: 40px;
   }
-  .s1-component-body {
+  .a1-component-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 64px;
     align-items: center;
   }
   @media (max-width: 768px) {
-    .s1-component-body {
+    .a1-component-body {
       grid-template-columns: 1fr;
       gap: 32px;
     }
   }
 
-  .s1-img-wrap {
+  .a1-img-wrap {
     border-radius: 16px;
     overflow: hidden;
     background: var(--paper-2);
     border: 1px solid var(--line-3);
   }
-  .s1-img {
+  .a1-img {
     width: 100%;
     height: auto;
     display: block;
     border-radius: 15px;
   }
 
-  .s1-component-text .lede {
+  .a1-component-text .lede {
     color: var(--ink-2);
     margin-bottom: 24px;
   }
-  .s1-component-text strong {
+  .a1-component-text strong {
     color: var(--ink);
     font-weight: 600;
   }
 
-  .s1-spec-list {
+  .a1-spec-list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -448,14 +448,14 @@ const faqs = [
     flex-direction: column;
     gap: 10px;
   }
-  .s1-spec-item {
+  .a1-spec-item {
     display: flex;
     align-items: center;
     gap: 10px;
     font-size: 14px;
     color: var(--ink-2);
   }
-  .s1-check {
+  .a1-check {
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -469,32 +469,32 @@ const faqs = [
     font-weight: 700;
   }
 
-  .s1-divider {
+  .a1-divider {
     height: 1px;
     background: var(--line-3);
   }
 
   /* Features grid */
-  .s1-feat-grid {
+  .a1-feat-grid {
     grid-template-columns: repeat(3, 1fr);
   }
   @media (max-width: 980px) {
-    .s1-feat-grid {
+    .a1-feat-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
   @media (max-width: 640px) {
-    .s1-feat-grid {
+    .a1-feat-grid {
       grid-template-columns: 1fr;
     }
   }
 
   /* Solutions grid */
-  .s1-sol-grid {
+  .a1-sol-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   @media (max-width: 640px) {
-    .s1-sol-grid {
+    .a1-sol-grid {
       grid-template-columns: 1fr;
     }
   }

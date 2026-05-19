@@ -27,8 +27,8 @@ const PRODUCT_CATEGORIES = [
   { key: "MG", label: "Magistrala", matchTags: ["mg", "magistrala"] },
   { key: "FLUXMQ", label: "FluxMQ", matchTags: ["fluxmq"] },
   { key: "PROPELLER", label: "Propeller", matchTags: ["propeller"] },
-  { key: "S0", label: "S0", matchTags: ["s0", "s0 gateway"] },
-  { key: "S1", label: "S1", matchTags: ["s1", "s1 gateway"] },
+  { key: "A0", label: "A0", matchTags: ["a0", "a0 gateway"] },
+  { key: "A1", label: "A1", matchTags: ["a1", "a1 gateway"] },
 ];
 
 const categoryTagSet = new Set(
@@ -296,8 +296,8 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
               MG: ["mg", "magistrala"],
               FLUXMQ: ["fluxmq"],
               PROPELLER: ["propeller", "properller"],
-              S0: ["s0", "s0 gateway"],
-              S1: ["s1", "s1 gateway"],
+              A0: ["a0", "a0 gateway"],
+              A1: ["a1", "a1 gateway"],
             };
             const PRODUCT_KEYS = new Set(Object.keys(PRODUCT_MATCHERS));
             const normalize = (value) =>

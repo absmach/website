@@ -14,10 +14,34 @@ const products = [
   {
     href: "/products/fluxmq",
     className: "b-fluxmq",
-    category: "Messaging",
+    category: "Platform · Messaging",
     name: "FluxMQ",
     description:
-      "Durable, low-latency Message broker for distributed event streams.",
+      "Durable, low-latency MQTT broker for distributed event streams.",
+  },
+  {
+    href: "/products/atom",
+    className: "b-atom",
+    category: "Platform · Identity",
+    name: "Atom",
+    description:
+      "Identity and authorization provider for fine-grained access control across the platform.",
+  },
+  {
+    href: "/products/a0",
+    className: "b-a0",
+    category: "Hardware · Edge",
+    name: "A0 Gateway",
+    description:
+      "Ultra-low-power Zephyr RTOS gateway for constrained sensor networks.",
+  },
+  {
+    href: "/products/a1",
+    className: "b-a1",
+    category: "Hardware · Industrial",
+    name: "A1 Gateway",
+    description:
+      "Powerful Linux-based IoT gateway built on RISC-V architecture.",
   },
   {
     href: "/products/propeller",
@@ -29,19 +53,12 @@ const products = [
     logo: "/img/products/propeller.png",
   },
   {
-    href: "/products/s0",
-    className: "b-s0",
-    category: "Hardware · Edge",
-    name: "S0 Gateway",
-    description: "Ultra-low-power RISC-V gateway for sensor networks.",
-  },
-  {
-    href: "/products/s1",
-    className: "b-s1",
-    category: "Hardware · Industrial",
-    name: "S1 Gateway",
+    href: "/products/quarc",
+    className: "b-quarc",
+    category: "Hardware · Security",
+    name: "Quarc",
     description:
-      "Powerful Linux-based IoT gateway built on RISC-V architecture.",
+      "Post-quantum cryptographic coprocessor for hardware-rooted security at the edge.",
   },
 ];
 ---
@@ -52,7 +69,8 @@ const products = [
   <div class="container-wide">
     <div class="section-head">
       <div class="left">
-        <span class="kicker">Products · Five products. One coherent stack.</span
+        <span class="kicker"
+          >Products · Seven products. One coherent stack.</span
         >
         <h2 class="h-1" style="margin-top:14px;">
           Software and hardware,<br />built for secure connectivity.
@@ -105,34 +123,35 @@ const products = [
             {/* Product logo mark — centered vertically on the right */}
             {product.logo && (
               <div class="plogo" aria-hidden="true">
-                <img
-                  src={product.logo}
-                  alt=""
-                  loading="eager"
-                  decoding="async"
-                />
+                <img src={product.logo} alt="" loading="lazy" />
               </div>
             )}
             {product.className === "b-fluxmq" && (
-              <div
-                class="plogo plogo-hw plogo-fluxmq"
-                aria-hidden="true"
-                role="presentation"
-              />
+              <div class="plogo plogo-hw" aria-hidden="true">
+                <span>Flux</span>
+                <span class="fmq-mq">MQ</span>
+              </div>
             )}
-            {product.className === "b-s0" && (
-              <div
-                class="plogo plogo-hw plogo-s0"
-                aria-hidden="true"
-                role="presentation"
-              />
+            {product.className === "b-atom" && (
+              <div class="plogo plogo-hw" aria-hidden="true">
+                Atom
+              </div>
             )}
-            {product.className === "b-s1" && (
-              <div
-                class="plogo plogo-hw plogo-s1"
-                aria-hidden="true"
-                role="presentation"
-              />
+            {product.className === "b-a0" && (
+              <div class="plogo plogo-hw" aria-hidden="true">
+                <span>A</span>
+                <span class="hw-zero">0</span>
+              </div>
+            )}
+            {product.className === "b-a1" && (
+              <div class="plogo plogo-hw" aria-hidden="true">
+                A1
+              </div>
+            )}
+            {product.className === "b-quarc" && (
+              <div class="plogo plogo-hw" aria-hidden="true">
+                Quarc
+              </div>
             )}
           </a>
         ))
