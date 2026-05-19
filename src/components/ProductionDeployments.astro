@@ -1,48 +1,129 @@
 ---
-const deployments = [
-  [
-    "Nokia",
-    "Data Marketplace",
-    "Magistrala powers Nokia's Data Marketplace, enabling secure IoT data exchange and monetisation through real-time MQTT connectors.",
-    ["Seamless data sharing", "Real-time processing", "Secure monetisation"],
-  ],
-  [
-    "Intel",
-    "Edge Metering",
-    "Real-time metering on the edge with Magistrala integrated into EdgeX Foundry for advanced monitoring solutions.",
-    ["Edge processing", "Real-time metrics", "Linux Foundation integration"],
-  ],
-  [
-    "Ericsson",
-    "IoT Slice Orchestration",
-    "Orchestration of IoT slices through edge and cloud microservice platforms for next-generation network architecture.",
-    ["Network slicing", "Microservice orchestration", "Cloud-edge continuum"],
-  ],
-];
+import { deployments } from "../data/deployments";
 ---
 
-<section style="background:var(--ink); color:var(--paper);">
+<section class="pd-section">
   <div class="container-wide">
-    <div class="section-head">
+    <div class="section-head" style="color:inherit;">
       <div class="left">
-        <span class="kicker" style="color:rgba(246,244,238,0.6);">Production</span>
-        <h2 class="h-1" style="margin-top:14px; color:var(--paper);">Where the stack runs in production.</h2>
+        <span class="kicker" style="color:rgba(246,244,238,0.5);">In production</span>
+        <h2 class="h-2" style="margin-top:14px; color:var(--paper);">Trusted by industry leaders.</h2>
       </div>
-      <p class="lede" style="color:rgba(246,244,238,0.7); max-width:36ch;">
-        Three flagship deployments built on the same open-source platform you can run yourself.
+      <p class="lede" style="color:rgba(246,244,238,0.65); max-width:36ch;">
+        Four flagship deployments, all built on the same open-source platform you can run yourself.
       </p>
     </div>
-    <div class="depl-grid">
-      {deployments.map(([company, title, description, bullets]) => (
-        <div class="depl-card" style="background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.1);">
-          <div class="company" style="color:rgba(246,244,238,0.6);">{company}</div>
-          <h3 class="title" style="color:var(--paper);">{title}</h3>
-          <p class="desc" style="color:rgba(246,244,238,0.7);">{description}</p>
-          <ul style="color:rgba(246,244,238,0.8);">
-            {(bullets as string[]).map((bullet) => <li>{bullet}</li>)}
-          </ul>
+    <div class="pd-grid">
+      {deployments.map(({ logo, company, title, description, link, linkText }) => (
+        <div class="pd-card">
+          <div class="pd-logo-bar">
+            <img src={logo} alt={company} class="pd-logo" loading="lazy" />
+          </div>
+          <div class="pd-body">
+            <h3 class="pd-title">{title}</h3>
+            <p class="pd-desc">{description}</p>
+            <a href={link} class="pd-link" target="_blank" rel="noopener noreferrer">
+              {linkText} <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .pd-section {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 96px 0;
+  }
+
+  .pd-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+  }
+
+  .pd-card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .pd-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .pd-logo-bar {
+    padding: 24px 28px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    min-height: 76px;
+  }
+
+  .pd-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.75;
+  }
+
+  .pd-body {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .pd-title {
+    font-family: "Montserrat", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--paper);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .pd-desc {
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(246, 244, 238, 0.65);
+    margin: 0;
+    flex: 1;
+  }
+
+  .pd-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(246, 244, 238, 0.75);
+    text-decoration: none;
+    margin-top: 4px;
+    transition: color 0.15s ease;
+  }
+  .pd-link:hover {
+    color: var(--paper);
+  }
+
+  @media (max-width: 980px) {
+    .pd-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .pd-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
