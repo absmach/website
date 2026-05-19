@@ -5,11 +5,11 @@ const products = [
     className: "b-magistrala",
     category: "Flagship · IoT Platform",
     name: "Magistrala",
+    nameLogo: "/img/logos/Magistrala_logo_web_4_btb.png",
     description:
       "Device identity, multi-protocol connectivity, and fine-grained access control for IoT deployments at any scale.",
     meta: "MQTT · CoAP · HTTP · WebSocket",
     badge: "v0.20.0",
-    logo: "/img/products/magistrala.png",
   },
   {
     href: "/products/fluxmq",
@@ -25,7 +25,16 @@ const products = [
     category: "Platform · Identity",
     name: "Atom",
     description:
-      "Identity and authorization provider for fine-grained access control across the platform.",
+      "Identity and authorization for every entity, online at runtime.",
+  },
+  {
+    href: "/products/propeller",
+    className: "b-propeller",
+    category: "Orchestration",
+    name: "Propeller",
+    nameLogo: "/img/logos/Propeller_logo_web_4_btw.png",
+    description:
+      "WebAssembly orchestration and IoT rule engine for cloud-to-edge workloads.",
   },
   {
     href: "/products/a0",
@@ -40,17 +49,7 @@ const products = [
     className: "b-a1",
     category: "Hardware · Industrial",
     name: "A1 Gateway",
-    description:
-      "Powerful Linux-based IoT gateway built on RISC-V architecture.",
-  },
-  {
-    href: "/products/propeller",
-    className: "b-propeller",
-    category: "Orchestration",
-    name: "Propeller",
-    description:
-      "WebAssembly orchestration and IoT rule engine for cloud-to-edge workloads.",
-    logo: "/img/products/propeller.png",
+    description: "Linux-based IoT gateway built on RISC-V architecture.",
   },
   {
     href: "/products/quarc",
@@ -58,7 +57,7 @@ const products = [
     category: "Hardware · Security",
     name: "Quarc",
     description:
-      "Post-quantum cryptographic coprocessor for hardware-rooted security at the edge.",
+      "Post-quantum cryptographic coprocessor for hardware-rooted security.",
   },
 ];
 ---
@@ -85,9 +84,18 @@ const products = [
             <div class="top">
               <div>
                 <div class="pcat">{product.category}</div>
-                <div class="pname" style="margin-top:6px;">
-                  {product.name}
-                </div>
+                {product.nameLogo ? (
+                  <img
+                    src={product.nameLogo}
+                    alt={product.name}
+                    class="pname-logo"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="pname" style="margin-top:6px;">
+                    {product.name}
+                  </div>
+                )}
                 {product.className === "b-magistrala" && (
                   <p class="pdesc" style="margin-top:14px;">
                     {product.description}
@@ -103,9 +111,19 @@ const products = [
                 <span class="arrow">→</span>
               )}
             </div>
-            {product.className !== "b-magistrala" && (
-              <p class="pdesc">{product.description}</p>
+
+            {product.className === "b-magistrala" && (
+              <div class="b-platform-stack" aria-label="Built on">
+                <span class="b-platform-label">Built with</span>
+                <span class="b-platform-tag">FluxMQ</span>
+                <span class="b-platform-tag">Atom</span>
+              </div>
             )}
+
+            {product.className !== "b-magistrala" && (
+              <p class="pdesc" style="margin-top:14px;">{product.description}</p>
+            )}
+
             {product.meta && (
               <div style="display:flex; align-items:center; gap:12px; z-index:2; position:relative;">
                 <span
@@ -119,43 +137,48 @@ const products = [
                 </span>
               </div>
             )}
-
-            {/* Product logo mark — centered vertically on the right */}
-            {product.logo && (
-              <div class="plogo" aria-hidden="true">
-                <img src={product.logo} alt="" loading="lazy" />
-              </div>
-            )}
-            {product.className === "b-fluxmq" && (
-              <div class="plogo plogo-hw" aria-hidden="true">
-                <span>Flux</span>
-                <span class="fmq-mq">MQ</span>
-              </div>
-            )}
-            {product.className === "b-atom" && (
-              <div class="plogo plogo-hw" aria-hidden="true">
-                Atom
-              </div>
-            )}
-            {product.className === "b-a0" && (
-              <div class="plogo plogo-hw" aria-hidden="true">
-                <span>A</span>
-                <span class="hw-zero">0</span>
-              </div>
-            )}
-            {product.className === "b-a1" && (
-              <div class="plogo plogo-hw" aria-hidden="true">
-                A1
-              </div>
-            )}
-            {product.className === "b-quarc" && (
-              <div class="plogo plogo-hw" aria-hidden="true">
-                Quarc
-              </div>
-            )}
           </a>
         ))
       }
     </div>
   </div>
 </section>
+
+<style>
+  .pname-logo {
+    display: block;
+    height: 48px;
+    width: auto;
+    margin-top: 10px;
+    object-fit: contain;
+    object-position: left center;
+  }
+  .b-magistrala .pname-logo {
+    filter: invert(1);
+  }
+  .b-platform-stack {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    z-index: 2;
+  }
+  .b-platform-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(246, 244, 238, 0.4);
+  }
+  .b-platform-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 3px 9px;
+    border-radius: 4px;
+    border: 1px solid rgba(246, 244, 238, 0.15);
+    color: rgba(246, 244, 238, 0.6);
+    background: rgba(246, 244, 238, 0.05);
+  }
+</style>

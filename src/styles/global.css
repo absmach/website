@@ -1165,7 +1165,7 @@ section {
 .bento {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 280px 240px 220px 220px;
+  grid-template-rows: 170px 160px 200px;
   gap: 16px;
 }
 .bento .b {
@@ -1214,7 +1214,7 @@ section {
   color: var(--ink-2);
   font-size: 14px;
   line-height: 1.5;
-  max-width: 36ch;
+  max-width: 50ch;
 }
 .bento .b .arrow {
   font-size: 18px;
@@ -1228,9 +1228,10 @@ section {
   transform: translateX(4px);
 }
 
-/* Row 1 — Magistrala, full width flagship */
+/* Magistrala — flagship, 2-wide × 2-tall, dark */
 .bento .b-magistrala {
-  grid-column: span 4;
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2;
   background: var(--ink);
   color: var(--paper);
   border-color: var(--ink);
@@ -1245,19 +1246,21 @@ section {
   color: rgba(246, 244, 238, 0.5);
 }
 
-/* Row 2 — Platform components, half width */
-.bento .b-fluxmq,
+/* Platform components — 2-wide each, stacked on right half */
+.bento .b-fluxmq {
+  grid-column: 3 / span 2;
+  grid-row: 1;
+}
 .bento .b-atom {
-  grid-column: span 2;
+  grid-column: 3 / span 2;
+  grid-row: 2;
 }
 
-/* Rows 3 & 4 — Edge & Hardware, half width each */
-.bento .b-a0,
-.bento .b-a1,
-.bento .b-propeller,
-.bento .b-quarc {
-  grid-column: span 2;
-}
+/* Bottom row — 4 equal products */
+.bento .b-propeller { grid-column: 1; grid-row: 3; }
+.bento .b-a0        { grid-column: 2; grid-row: 3; }
+.bento .b-a1        { grid-column: 3; grid-row: 3; }
+.bento .b-quarc     { grid-column: 4; grid-row: 3; }
 
 
 /* bento product logos ------------------------------------------------------ */
@@ -1270,24 +1273,34 @@ section {
   pointer-events: none;
   z-index: 0;
 }
+.bento .b:not(.b-magistrala) .plogo {
+  top: auto;
+  bottom: 16px;
+  transform: none;
+}
+.bento .b:not(.b-magistrala) .plogo-hw {
+  font-size: 52px;
+}
 .bento .b .plogo img {
   display: block;
   height: 80px;
   width: auto;
   mix-blend-mode: multiply;
 }
-.bento .b-magistrala .plogo img {
-  height: 80px;
-  mix-blend-mode: screen;
-  filter: invert(1);
-}
 
 .bento .b-atom .plogo-hw,
 .bento .b-fluxmq .plogo-hw,
 .bento .b-a0 .plogo-hw,
 .bento .b-a1 .plogo-hw,
-.bento .b-quarc .plogo-hw {
-  color: rgba(20, 22, 26, 0.12);
+.bento .b-quarc .plogo-hw,
+.bento .b-propeller .plogo-hw {
+  color: rgba(20, 22, 26, 0.07);
+}
+.bento .b-magistrala .plogo-hw {
+  color: rgba(246, 244, 238, 0.08);
+}
+.bento .b-propeller .plogo-hw {
+  font-size: 44px;
 }
 
 /* Typographic marks */
@@ -2548,14 +2561,15 @@ section {
     grid-template-rows: none;
     grid-auto-rows: 220px;
   }
-  .b-magistrala,
-  .b-fluxmq,
-  .b-atom,
-  .b-propeller,
-  .b-a0,
-  .b-a1,
-  .b-quarc {
+  .bento .b-magistrala,
+  .bento .b-fluxmq,
+  .bento .b-atom,
+  .bento .b-propeller,
+  .bento .b-a0,
+  .bento .b-a1,
+  .bento .b-quarc {
     grid-column: span 2;
+    grid-row: span 1;
   }
   .depl-map {
     grid-template-columns: 1fr;
@@ -2648,8 +2662,12 @@ section {
     min-height: 260px;
   }
   .bento .b-magistrala,
-  .bento .b-propeller,
   .bento .b-fluxmq,
+  .bento .b-atom,
+  .bento .b-propeller,
+  .bento .b-a0,
+  .bento .b-a1,
+  .bento .b-quarc,
   .bento .b-s0,
   .bento .b-s1 {
     grid-column: span 1;
