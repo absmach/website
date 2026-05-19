@@ -3,6 +3,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
+import Radio from "lucide-astro/Radio";
+import Battery from "lucide-astro/Battery";
+import Layers from "lucide-astro/Layers";
+import Shield from "lucide-astro/Shield";
+import Zap from "lucide-astro/Zap";
+import LockOpen from "lucide-astro/LockOpen";
+import Gauge from "lucide-astro/Gauge";
+import Settings2 from "lucide-astro/Settings2";
+import MapPin from "lucide-astro/MapPin";
+import Brain from "lucide-astro/Brain";
 
 const a0BoardSpecs = [
   "ESP32-C6 RISC-V Core",
@@ -24,32 +34,32 @@ const baseboardSpecs = [
 
 const features = [
   {
-    ic: "📡",
+    icon: Radio,
     name: "Multi-Protocol",
     desc: "Support for Wireless M-Bus, NB-IoT, LTE-M, WiFi, and BLE. Connect any device with any protocol.",
   },
   {
-    ic: "🔋",
+    icon: Battery,
     name: "Low Power Design",
     desc: "Ultra-low power operation with battery backup and charging. Perfect for remote deployments.",
   },
   {
-    ic: "🧩",
+    icon: Layers,
     name: "Modular Architecture",
     desc: "ESP32-C6 RISC-V core with expansion options. Add Ethernet, M-Bus, and SD card logging.",
   },
   {
-    ic: "🛡️",
+    icon: Shield,
     name: "Secure by Design",
     desc: "Built on Zephyr RTOS with secure boot and encrypted communication for mission-critical apps.",
   },
   {
-    ic: "⚡",
+    icon: Zap,
     name: "Edge Computing",
     desc: "Run Wasm workloads at the edge. Perform AI inference and data processing locally.",
   },
   {
-    ic: "🔓",
+    icon: LockOpen,
     name: "Open Source",
     desc: "All hardware designs and firmware are open source. Customise and extend as needed.",
   },
@@ -57,21 +67,25 @@ const features = [
 
 const solutions = [
   {
+    icon: Gauge,
     title: "Smart Metering",
     desc: "Collect utility consumption data from wireless meters and relay it securely to Magistrala.",
     tags: ["Wireless M-Bus", "NB-IoT", "Billing"],
   },
   {
+    icon: Settings2,
     title: "Industrial Automation",
     desc: "Monitor equipment health and trigger alerts at the edge without cloud round-trips.",
     tags: ["Sensors", "Edge Logic", "Alerts"],
   },
   {
+    icon: MapPin,
     title: "Remote Deployments",
     desc: "Battery-backed operation in locations without permanent power: pipelines, silos, and remote infrastructure.",
     tags: ["Battery", "Low-Power", "Remote"],
   },
   {
+    icon: Brain,
     title: "Edge AI",
     desc: "Execute lightweight inference workloads on-device using Propeller's Wasm runtime.",
     tags: ["Wasm", "Inference", "On-Device"],
@@ -278,9 +292,9 @@ const faqs = [
           </p>
         </div>
         <div class="a0-feat-grid feature-grid" style="margin-top:48px;">
-          {features.map(({ ic, name, desc }) => (
+          {features.map(({ icon: Icon, name, desc }) => (
             <div class="feature">
-              <div class="ic" style="font-size:18px;">{ic}</div>
+              <div class="ic"><Icon size={18} /></div>
               <div class="name">{name}</div>
               <p class="desc">{desc}</p>
             </div>
@@ -299,9 +313,9 @@ const faqs = [
           </div>
         </div>
         <div class="a0-sol-grid sol-grid">
-          {solutions.map(({ title, desc, tags }) => (
+          {solutions.map(({ icon: Icon, title, desc, tags }) => (
             <div class="sol-card">
-              <div class="icon-frame">{title.charAt(0)}</div>
+              <div class="icon-frame"><Icon size={22} /></div>
               <h3 class="name">{title}</h3>
               <p class="desc">{desc}</p>
               <div class="tags">

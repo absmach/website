@@ -3,6 +3,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
+import Layers from "lucide-astro/Layers";
+import Terminal from "lucide-astro/Terminal";
+import Cpu from "lucide-astro/Cpu";
+import Radio from "lucide-astro/Radio";
+import Cloud from "lucide-astro/Cloud";
+import Factory from "lucide-astro/Factory";
+import Gauge from "lucide-astro/Gauge";
+import Settings2 from "lucide-astro/Settings2";
+import Brain from "lucide-astro/Brain";
 
 const a0BoardSpecs = [
   "ESP32-C6 RISC-V Core",
@@ -24,32 +33,32 @@ const beagleVFireSpecs = [
 
 const features = [
   {
-    ic: "🔲",
+    icon: Layers,
     name: "A0 Board + BeagleV-Fire",
     desc: "A1 combines the A0 module with the BeagleV-Fire board, pairing multi-protocol wireless capabilities with powerful Linux compute in a single gateway.",
   },
   {
-    ic: "🐧",
+    icon: Terminal,
     name: "Linux-Based OS",
     desc: "Runs a full Linux operating system, enabling richer software stacks, containerised workloads, and support for a wide range of open-source tools.",
   },
   {
-    ic: "⚙️",
+    icon: Cpu,
     name: "RISC-V Architecture",
     desc: "Built on RISC-V architecture, delivering high-performance computing for demanding industrial and edge AI applications.",
   },
   {
-    ic: "📡",
+    icon: Radio,
     name: "Multi-Protocol Wireless",
     desc: "Inherits the A0 module's multi-protocol connectivity (Wireless M-Bus, NB-IoT, LTE-M, WiFi, and BLE) for versatile IoT deployments.",
   },
   {
-    ic: "☁️",
+    icon: Cloud,
     name: "Edge-to-Cloud Integration",
     desc: "Seamlessly integrates edge devices with cloud platforms via MQTT, CoAP, and WebSockets, powered by the Magistrala IoT platform.",
   },
   {
-    ic: "🏭",
+    icon: Factory,
     name: "Industrial-Grade Reliability",
     desc: "Designed for demanding industrial environments requiring high-performance computing, robust connectivity, and long-term operational stability.",
   },
@@ -57,21 +66,25 @@ const features = [
 
 const solutions = [
   {
+    icon: Gauge,
     title: "Smart Metering",
     desc: "Aggregate data from multiple A0 wireless gateways and forward it securely to Magistrala.",
     tags: ["Aggregation", "M-Bus", "MQTT"],
   },
   {
+    icon: Settings2,
     title: "Industrial Automation",
     desc: "Run control logic and monitoring applications directly on the gateway in industrial environments.",
     tags: ["Control Logic", "Edge", "Reliability"],
   },
   {
+    icon: Cpu,
     title: "Edge Computing",
     desc: "Process data locally with containers or Wasm before sending aggregated results to the cloud.",
     tags: ["Containers", "Wasm", "Bandwidth"],
   },
   {
+    icon: Brain,
     title: "Edge AI Inference",
     desc: "Deploy and update ML models over the air using Propeller. Run inference at line speed.",
     tags: ["ML Models", "OTA", "Inference"],
@@ -280,9 +293,9 @@ const faqs = [
           </p>
         </div>
         <div class="a1-feat-grid feature-grid" style="margin-top:48px;">
-          {features.map(({ ic, name, desc }) => (
+          {features.map(({ icon: Icon, name, desc }) => (
             <div class="feature">
-              <div class="ic" style="font-size:18px;">{ic}</div>
+              <div class="ic"><Icon size={18} /></div>
               <div class="name">{name}</div>
               <p class="desc">{desc}</p>
             </div>
@@ -301,9 +314,9 @@ const faqs = [
           </div>
         </div>
         <div class="a1-sol-grid sol-grid">
-          {solutions.map(({ title, desc, tags }) => (
+          {solutions.map(({ icon: Icon, title, desc, tags }) => (
             <div class="sol-card">
-              <div class="icon-frame">{title.charAt(0)}</div>
+              <div class="icon-frame"><Icon size={22} /></div>
               <h3 class="name">{title}</h3>
               <p class="desc">{desc}</p>
               <div class="tags">

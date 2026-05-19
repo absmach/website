@@ -3,35 +3,48 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
+import Users from "lucide-astro/Users";
+import Zap from "lucide-astro/Zap";
+import KeyRound from "lucide-astro/KeyRound";
+import Building2 from "lucide-astro/Building2";
+import SearchCode from "lucide-astro/SearchCode";
+import Code2 from "lucide-astro/Code2";
+import Braces from "lucide-astro/Braces";
+import Route from "lucide-astro/Route";
+import Server from "lucide-astro/Server";
+import Terminal from "lucide-astro/Terminal";
+import LayoutGrid from "lucide-astro/LayoutGrid";
+import ShieldCheck from "lucide-astro/ShieldCheck";
+import MapPin from "lucide-astro/MapPin";
 
 const features = [
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    icon: Users,
     name: "Identity Model",
     desc: "Humans, devices, services, workloads, and applications share one identity model. No special user class.",
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+    icon: Zap,
     name: "Runtime Authorization",
     desc: "Every policy decision is evaluated live. Token changes and revocations take effect on the next request — no restarts.",
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 0 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>`,
+    icon: KeyRound,
     name: "Authentication",
     desc: "JWT sessions, API keys, and OIDC social login (Google, GitHub). All flows produce a standard Atom JWT with zero-downtime key rotation.",
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>`,
+    icon: Building2,
     name: "Multi-Tenancy",
     desc: "Tenant isolation across entities, resources, and policies. Each tenant gets a bootstrapped admin role with full lifecycle enforcement.",
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m13 13.5 2-2.5-2-2.5"/><path d="m21 21-4.3-4.3"/><path d="M9 8.5 7 11l2 2.5"/><circle cx="11" cy="11" r="8"/></svg>`,
+    icon: SearchCode,
     name: "Authorization Debugger",
     desc: "Ask why a request was allowed or denied. The explain endpoint returns a full decision trace — matched policies, skipped bindings, ABAC steps.",
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>`,
+    icon: Code2,
     name: "Open Source",
     desc: "Apache 2.0. GraphQL, REST, and gRPC APIs. Single Rust binary, PostgreSQL auto-migrated on startup. No vendor lock-in.",
   },
@@ -54,22 +67,22 @@ const policyFeatures = [
 
 const devSurface = [
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg>`,
+    icon: Braces,
     name: "GraphQL API",
     desc: "All management at a single endpoint — full schema introspection and a built-in Playground.",
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>`,
+    icon: Route,
     name: "Custom REST",
     desc: "Define REST routes in the Admin UI backed by GraphQL operations. No code deployment needed.",
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>`,
+    icon: Server,
     name: "gRPC Runtime",
     desc: "High-throughput authorization checks over gRPC — used by Magistrala and microservice backends.",
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>`,
+    icon: Terminal,
     name: "Built-in Playground",
     desc: "Explore the schema, run queries, and debug policies directly from the Admin UI.",
   },
@@ -95,31 +108,31 @@ docker compose up -d`,
 
 const solutions = [
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>`,
+    icon: Building2,
     title: "Multi-Tenant SaaS",
     desc: "Tenant-scoped identities and runtime policy enforcement with full lifecycle isolation.",
     tags: ["SaaS", "Multi-tenancy", "Isolation"],
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/><path d="M4 7h3"/><path d="M7 4v3"/><path d="M4 17h3"/><path d="M7 14v3"/><path d="M14 7h3"/><path d="M17 4v3"/></svg>`,
+    icon: LayoutGrid,
     title: "IoT Platforms",
     desc: "Devices and gateways as first-class identities with credentials and fine-grained runtime policy coverage.",
     tags: ["IoT", "Device Identity", "MQTT"],
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01"/><path d="M6 18h.01"/></svg>`,
+    icon: Server,
     title: "Microservices",
     desc: "Centralized runtime authorization across services. One HTTP or gRPC call per check, policy changes propagate instantly.",
     tags: ["Microservices", "API Keys", "gRPC"],
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>`,
+    icon: ShieldCheck,
     title: "Security Operations",
     desc: "Access explainability through the API. Answer 'why denied?' and 'who can access this?' without touching the database.",
     tags: ["SecOps", "Audit", "Compliance"],
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`,
+    icon: MapPin,
     title: "Edge Systems",
     desc: "Single-binary deployment alongside edge infrastructure. Minimal footprint with full policy enforcement.",
     tags: ["Edge", "Propeller", "Gateway"],
@@ -287,9 +300,9 @@ const faqs = [
           </p>
         </div>
         <div class="feature-grid">
-          {features.map(({ icon, name, desc }) => (
+          {features.map(({ icon: Icon, name, desc }) => (
             <div class="feature">
-              <div class="ic atom-ic" set:html={icon} />
+              <div class="ic atom-ic"><Icon size={20} /></div>
               <div class="name">{name}</div>
               <p class="desc">{desc}</p>
             </div>
@@ -477,9 +490,9 @@ const faqs = [
           </p>
         </div>
         <div class="feature-grid">
-          {devSurface.map(({ icon, name, desc }) => (
+          {devSurface.map(({ icon: Icon, name, desc }) => (
             <div class="feature">
-              <div class="ic atom-ic" set:html={icon} />
+              <div class="ic atom-ic"><Icon size={20} /></div>
               <div class="name">{name}</div>
               <p class="desc">{desc}</p>
             </div>
@@ -522,9 +535,9 @@ const faqs = [
           </div>
         </div>
         <div class="sol-grid atom-sol-grid">
-          {solutions.map(({ icon, title, desc, tags }) => (
+          {solutions.map(({ icon: Icon, title, desc, tags }) => (
             <div class="sol-card">
-              <div class="atom-sol-icon" set:html={icon} />
+              <div class="atom-sol-icon"><Icon size={22} /></div>
               <h3 class="name">{title}</h3>
               <p class="desc">{desc}</p>
               <div class="tags">
@@ -666,9 +679,9 @@ const faqs = [
     font-weight: 700;
     font-size: 28px;
     letter-spacing: -0.02em;
-    color: var(--accent-2);
+    color: var(--ink);
     display: block;
-    margin: 0 0 8px;
+    margin: 0 0 2px;
     line-height: 1;
     text-align: left;
   }

@@ -4,6 +4,10 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
 import { deployments } from "../../data/deployments";
+import Network from "lucide-astro/Network";
+import ShieldCheck from "lucide-astro/ShieldCheck";
+import BarChart from "lucide-astro/BarChart";
+import KeyRound from "lucide-astro/KeyRound";
 
 const showcaseFeatures = [
   {
@@ -42,22 +46,22 @@ const showcaseFeatures = [
 
 const gridFeatures = [
   [
-    "MP",
+    Network,
     "Multi-Protocol Messaging",
     "MQTT, CoAP, HTTP, and WebSocket. Devices speak whatever protocol they need to; Magistrala handles the translation.",
   ],
   [
-    "AC",
+    ShieldCheck,
     "RBAC with SpiceDB",
     "Fine-grained permissions at user, group, domain, client, and channel level, backed by a distributed SpiceDB authorization engine.",
   ],
   [
-    "RP",
+    BarChart,
     "Reports & Analytics",
     "Scheduled or on-demand reports from device telemetry. Export to CSV, JSON, or pipe into your BI tools.",
   ],
   [
-    "PT",
+    KeyRound,
     "Personal Access Tokens",
     "Issue scoped tokens for CI/CD pipelines, service accounts, and third-party integrations with configurable expiry and permissions.",
   ],
@@ -369,10 +373,10 @@ const faqs = [
           style="gap:20px; margin-top: 80px;"
         >
           {
-            gridFeatures.map(([ic, name, desc]) => (
+            gridFeatures.map(([Icon, name, desc]) => (
               <div class="feature" style="padding:36px;">
-                <div class="ic" style="width:40px; height:40px; font-size:13px; margin-bottom:18px;">
-                  {ic}
+                <div class="ic" style="width:40px; height:40px; margin-bottom:18px;">
+                  <Icon size={20} />
                 </div>
                 <div class="name" style="font-size:18px; margin-bottom:10px;">{name}</div>
                 <p class="desc" style="font-size:15px; line-height:1.65;">{desc}</p>

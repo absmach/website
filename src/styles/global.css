@@ -916,6 +916,7 @@ section {
 }
 .prod-hero.has-video h1 {
   color: var(--ink);
+  margin-top: 4px;
 }
 .prod-hero.has-video .tagline {
   color: var(--ink-2);

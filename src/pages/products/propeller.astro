@@ -3,35 +3,48 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
+import Cloud from "lucide-astro/Cloud";
+import Zap from "lucide-astro/Zap";
+import Package from "lucide-astro/Package";
+import Shield from "lucide-astro/Shield";
+import Network from "lucide-astro/Network";
+import Server from "lucide-astro/Server";
+import Code2 from "lucide-astro/Code2";
+import Upload from "lucide-astro/Upload";
+import Rocket from "lucide-astro/Rocket";
+import BarChart from "lucide-astro/BarChart";
+import Brain from "lucide-astro/Brain";
+import Radio from "lucide-astro/Radio";
+import CircuitBoard from "lucide-astro/CircuitBoard";
 
 const features = [
   {
-    ic: "☁️",
+    icon: Cloud,
     name: "Cloud-Edge Orchestration",
     desc: "Deploy Wasm workloads effortlessly across diverse environments, from robust cloud servers to lightweight microcontrollers running Zephyr RTOS.",
   },
   {
-    ic: "⚡",
+    icon: Zap,
     name: "Fast Boot Times",
     desc: "Take advantage of Wasm's near-instant startup for efficient workload execution. Deploy and scale functions in milliseconds.",
   },
   {
-    ic: "📦",
+    icon: Package,
     name: "OCI Registry Support",
     desc: "Push and pull Wasm workloads from OCI-compliant registries for streamlined workflow integration and version management.",
   },
   {
-    ic: "🛡️",
+    icon: Shield,
     name: "Security at the Core",
     desc: "Propeller ensures secure workload execution and communication for IoT environments with sandboxed Wasm runtimes.",
   },
   {
-    ic: "🔗",
+    icon: Network,
     name: "Powerful Service Mesh",
     desc: "Integrates with Magistrala for secure, efficient IoT device communication across your entire infrastructure.",
   },
   {
-    ic: "🖥️",
+    icon: Server,
     name: "FaaS Deployment",
     desc: "Enable Function-as-a-Service capabilities for scalable and event-driven applications across the cloud-edge continuum.",
   },
@@ -40,25 +53,25 @@ const features = [
 const steps = [
   {
     num: "01",
-    icon: "⌨️",
+    icon: Code2,
     title: "Develop in WebAssembly",
     desc: "Write portable, lightweight Wasm workloads for your application using your preferred language.",
   },
   {
     num: "02",
-    icon: "⬆️",
+    icon: Upload,
     title: "Register Workloads",
     desc: "Push your workloads to an OCI-compliant registry for easy deployment and version control.",
   },
   {
     num: "03",
-    icon: "🚀",
+    icon: Rocket,
     title: "Deploy Anywhere",
     desc: "Use Propeller to orchestrate and manage workload deployment across cloud, edge, and IoT devices.",
   },
   {
     num: "04",
-    icon: "📊",
+    icon: BarChart,
     title: "Monitor & Scale",
     desc: "Leverage real-time monitoring and dynamic scaling to optimize your system's performance.",
   },
@@ -97,21 +110,25 @@ const uiFeatures = [
 
 const solutions = [
   {
+    icon: Brain,
     title: "Edge Inference",
     desc: "Run AI and ML inference workloads directly on edge nodes without round-trips to the cloud.",
     tags: ["Vision", "Anomaly Detection", "Low Latency"],
   },
   {
+    icon: Radio,
     title: "IoT Automation",
     desc: "Deploy event-driven logic close to devices to reduce latency and cloud bandwidth costs.",
     tags: ["Rules", "Triggers", "Edge Logic"],
   },
   {
+    icon: Zap,
     title: "Serverless at Edge",
     desc: "Invoke on-demand functions on remote nodes without managing long-running processes.",
     tags: ["FaaS", "On-Demand", "Scale-to-Zero"],
   },
   {
+    icon: CircuitBoard,
     title: "MCU Workloads",
     desc: "Deploy Wasm binaries directly to Zephyr RTOS microcontrollers for ultra-low-power edge computing.",
     tags: ["Zephyr", "RISC-V", "MCU"],
@@ -267,9 +284,9 @@ const faqs = [
         </div>
         <div class="prop-feat-grid feature-grid">
           {
-            features.map(({ ic, name, desc }) => (
+            features.map(({ icon: Icon, name, desc }) => (
               <div class="feature">
-                <div class="ic" style="font-size:18px;">{ic}</div>
+                <div class="ic"><Icon size={18} /></div>
                 <div class="name">{name}</div>
                 <p class="desc">{desc}</p>
               </div>
@@ -302,10 +319,10 @@ const faqs = [
             <div class="hiw-line"></div>
             <div class="hiw-line-beam"></div>
             {
-              steps.map(({ icon, title, desc, num }) => (
+              steps.map(({ icon: Icon, title, desc, num }) => (
                 <div class="hiw-step">
                   <div class="hiw-icon-wrap">
-                    <div class="hiw-icon">{icon}</div>
+                    <div class="hiw-icon"><Icon size={18} /></div>
                   </div>
                   <div class="hiw-body">
                     <div class="hiw-num">{num}</div>
@@ -322,9 +339,9 @@ const faqs = [
         <div class="hiw-mobile">
           <div class="hiw-vline"></div>
           {
-            steps.map(({ icon, title, desc, num }) => (
+            steps.map(({ icon: Icon, title, desc, num }) => (
               <div class="hiw-vstep">
-                <div class="hiw-vicon">{icon}</div>
+                <div class="hiw-vicon"><Icon size={16} /></div>
                 <div class="hiw-vbody">
                   <span class="hiw-vnum">{num}</span>
                   <h3 class="hiw-vtitle">{title}</h3>
@@ -402,9 +419,9 @@ const faqs = [
         </div>
         <div class="prop-sol-grid sol-grid">
           {
-            solutions.map(({ title, desc, tags }) => (
+            solutions.map(({ icon: Icon, title, desc, tags }) => (
               <div class="sol-card">
-                <div class="icon-frame">{title.charAt(0)}</div>
+                <div class="icon-frame"><Icon size={22} /></div>
                 <h3 class="name">{title}</h3>
                 <p class="desc">{desc}</p>
                 <div class="tags">
