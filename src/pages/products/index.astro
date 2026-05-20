@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ProductsPreview from "../../components/ProductsPreview.astro";
+---
+
+<BaseLayout
+  title="Products — Abstract Machines"
+  description="The full Abstract Machines IoT stack: platform, message broker, Wasm orchestrator, and edge hardware. Open source and production-ready."
+>
+  <Header />
+  <main>
+    <section class="page-hero">
+      <div class="container-wide">
+        <span class="kicker">Products</span>
+        <h1 class="h-1" style="margin-top:14px; max-width:18ch;">
+          Purpose-built for the IoT stack.
+        </h1>
+        <p class="lede" style="margin-top:20px; max-width:52ch;">
+          From edge hardware to cloud platform: every layer of secure,
+          event-driven connectivity, open source.
+        </p>
+      </div>
+    </section>
+
+    <ProductsPreview />
+
+    <section class="section">
+      <div class="container-wide">
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px;">
+          <div>
+            <span class="kicker" style="display:block; margin-bottom:14px;"
+              >Platform Software</span
+            >
+            <h2 class="h-3">The IoT platform layer.</h2>
+            <p
+              style="color:var(--ink-2); margin-top:16px; font-size:15px; line-height:1.65;"
+            >
+              Magistrala is the flagship IoT platform. FluxMQ powers its
+              messaging data plane. Atom provides identity and fine-grained
+              access control across the stack.
+            </p>
+            <div class="btn-row" style="margin-top:28px;">
+              <a href="/products/magistrala" class="btn btn-primary"
+                >Magistrala</a
+              >
+              <a href="/products/fluxmq" class="btn">FluxMQ</a>
+              <a href="/products/atom" class="btn">Atom</a>
+            </div>
+          </div>
+          <div>
+            <span class="kicker" style="display:block; margin-bottom:14px;"
+              >Orchestration</span
+            >
+            <h2 class="h-3">Edge-to-cloud workloads.</h2>
+            <p
+              style="color:var(--ink-2); margin-top:16px; font-size:15px; line-height:1.65;"
+            >
+              Propeller orchestrates WebAssembly workloads from cloud to
+              constrained edge devices, enabling remote deployment and updates
+              across the full hardware fleet.
+            </p>
+            <div class="btn-row" style="margin-top:28px;">
+              <a href="/products/propeller" class="btn btn-primary">Propeller</a
+              >
+            </div>
+          </div>
+          <div>
+            <span class="kicker" style="display:block; margin-bottom:14px;"
+              >Hardware</span
+            >
+            <h2 class="h-3">Gateways built for the edge.</h2>
+            <p
+              style="color:var(--ink-2); margin-top:16px; font-size:15px; line-height:1.65;"
+            >
+              A0 and A1 run Magistrala and Propeller at the edge. Quarc adds a
+              post-quantum cryptographic coprocessor for hardware-rooted
+              security.
+            </p>
+            <div class="btn-row" style="margin-top:28px;">
+              <a href="/products/a0" class="btn btn-primary">A0 Gateway</a>
+              <a href="/products/a1" class="btn">A1 Gateway</a>
+              <a href="/products/quarc" class="btn">Quarc</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

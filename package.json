@@ -15,6 +15,7 @@
     "@astrojs/rss": "^4.0.15",
     "@astrojs/tailwind": "^5.1.4",
     "astro": "^5.17.1",
+    "lucide-astro": "^0.556.0",
     "node": "^25.6.1",
     "nodemailer": "^8.0.1"
   },

@@ -1,312 +1,447 @@
 ---
-import { Image } from "astro:assets";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Header from "../../../components/Header.astro";
-import Hero from "../../../components/Hero.astro";
-import ProjectInformation from "../../../components/ProjectInformation.astro";
-import ProjectPartners from "../../../components/ProjectPartners.astro";
 import Footer from "../../../components/Footer.astro";
+import FinalCTA from "../../../components/FinalCTA.astro";
+
+const partners = [
+  { alt: "Wings ICT Solutions", src: "/img/logos/wings-logo.png" },
+  { alt: "Nokia", src: "/img/logos/nokia-1.png" },
+  { alt: "Nokia Bell Labs", src: "/img/logos/nokia-bellLabs.png" },
+  { alt: "Telefonica", src: "/img/logos/telefonica.png" },
+  { alt: "TU/e", src: "/img/logos/tue.png" },
+  { alt: "Ultraviolet", src: "/img/logos/ultraviolet.png" },
+  { alt: "Zen", src: "/img/logos/zen.png" },
+  { alt: "VTT", src: "/img/logos/vtt.png" },
+  { alt: "TNO", src: "/img/logos/tno.png" },
+  { alt: "IMDEA", src: "/img/logos/imdea.png" },
+  { alt: "TU Graz", src: "/img/logos/tu-gratz.png" },
+  { alt: "UCD", src: "/img/logos/ucd.png" },
+  { alt: "TU Wien", src: "/img/logos/tuw.png" },
+  { alt: "Abstract Machines", src: "/img/logos/AMA.png" },
+];
+
+const objectives = [
+  {
+    title: "Quantum-resistant security",
+    desc: "Develop security tools and cryptographic libraries for 6G confidential computing and networking.",
+  },
+  {
+    title: "Privacy-preserving AI/ML",
+    desc: "Create secure, GDPR-compliant methods in multi-stakeholder environments.",
+  },
+  {
+    title: "Edge-cloud networking",
+    desc: "Build secure networking for confidential computing and federated machine learning.",
+  },
+  {
+    title: "Modular framework",
+    desc: "Integrate all tools and test with real 6G use cases.",
+  },
+  {
+    title: "Standardization support",
+    desc: "Support 6G security standards and promote EU capabilities in future cloud technologies.",
+  },
+];
+
+const outcomes = [
+  { title: "Cryptographic libraries", desc: "Post-quantum libraries and SDKs for 6G" },
+  { title: "Computing framework", desc: "Confidential computing framework for cloud-edge environments" },
+  { title: "Privacy protocols", desc: "Privacy-preserving protocols for heterogeneous 6G networks" },
+  { title: "Security tools", desc: "Quantum-resistant security tools and artifacts" },
+  { title: "Security standards", desc: "Enhanced security standards for future 6G deployments" },
+];
+
+const responsibilities = [
+  {
+    title: "Technical Management",
+    desc: "Coordinating technical activities and ensuring project milestone delivery.",
+  },
+  {
+    title: "Secure IoT Integration",
+    desc: "Developing privacy-preserving IoT protocols for 6G networks.",
+  },
+  {
+    title: "Edge Security",
+    desc: "Implementing confidential computing at the network edge.",
+  },
+  {
+    title: "Platform Development",
+    desc: "Creating secure platforms for privacy-preserving applications.",
+  },
+  {
+    title: "Cryptographic Implementation",
+    desc: "Integrating advanced cryptographic protocols into IoT systems.",
+  },
+];
+
+const infoItems = [
+  { label: "Duration", value: "1 January 2023 – 31 December 2025" },
+  { label: "Funding Program", value: "Horizon Europe" },
+  { label: "Total Budget", value: "€5 Million" },
+  { label: "Project Coordinator", value: "WINGS ICT Solutions" },
+  { label: "Status", value: "Completed", pill: true },
+];
+
+const infoLinks = [
+  { label: "Visit Project Site", href: "https://confidential6g.eu/" },
+  { label: "View on CORDIS", href: "https://cordis.europa.eu/project/id/101096435" },
+];
+
+const impactAreas = [
+  {
+    icon: "🔑",
+    title: "Cryptography",
+    desc: "Cryptographic enablers for confidential computing (FHE, SMPC, TEE) and post-quantum networking. DLT privacy enablers (ZKP). Support for embedded edge devices and hardware.",
+  },
+  {
+    icon: "🔒",
+    title: "Confidential Computing",
+    desc: "Confidential Computing via FHE, SMPC and HW TEEs. Collaborative AI/ML. Confidential containers. Remote attestations. Secure enclave abstractions. Secure key distribution.",
+  },
+  {
+    icon: "🌐",
+    title: "Confidential Networking",
+    desc: "Post-quantum secure network protocols. Secure data sharing and access control. Private blockchain smart contracts, DIDs and VCs. Federated AI/ML orchestration.",
+  },
+];
 ---
 
 <BaseLayout
-  title="Confidential6G Project | Abstract Machines"
+  title="Confidential6G Project — Abstract Machines"
   description="Confidential Computing and Privacy-preserving Technologies for 6G. Ensuring secure and private computation in the cloud-edge continuum."
 >
   <Header />
-  <main>
-    <Hero
-      eyebrow="Research Project"
-      title="Confidential6G"
-      subtitle="Confidential Computing and Privacy-preserving Technologies for 6G"
-      backgroundClass="hero-grid"
-    >
-      <p slot="meta" class="text-sm font-semibold tracking-wide text-muted">
-        2023-2025
-      </p>
 
-      <div class="flex justify-center lg:justify-end">
-        <div class="rounded-2xl border border-subtle bg-panel p-4">
-          <Image
-            src="/img/logos/confidential6G.jpg"
-            alt="Confidential6G Project Logo"
-            class="h-24 w-auto md:h-28"
-            width={360}
-            height={140}
-            priority
-            decoding="async"
-          />
+  <main>
+    <!-- Hero -->
+    <div class="proj-hero">
+      <div class="container-wide">
+        <div class="hero-inner">
+          <div>
+            <span class="kicker">EU Horizon Europe · 2023–2025</span>
+            <h1>CONFIDENTIAL6G</h1>
+            <p class="lede" style="max-width:560px; margin-top:16px;">
+              Confidential Computing and Privacy-preserving Technologies for 6G.
+              Ensuring secure and private computation in the cloud-edge continuum.
+            </p>
+            <div class="btn-row" style="margin-top:28px;">
+              <a href="https://confidential6g.eu/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Visit Project Site ↗</a>
+              <a href="https://cordis.europa.eu/project/id/101096435" class="btn" target="_blank" rel="noopener noreferrer">View on CORDIS ↗</a>
+            </div>
+            <span class="badge complete" style="margin-top:24px; display:inline-flex;">
+              <span class="dot"></span>Completed
+            </span>
+          </div>
+          <div class="logo-card">
+            <img
+              src="/img/logos/confidential6G.jpg"
+              alt="Confidential6G Project Logo"
+              style="height:80px; width:auto; object-fit:contain;"
+            />
+          </div>
+        </div>
+        <div class="meta-grid">
+          <div><div class="l">Duration</div><div class="v">Jan 2023 – Dec 2025</div></div>
+          <div><div class="l">Funding</div><div class="v">Horizon Europe</div></div>
+          <div><div class="l">Total Budget</div><div class="v">€5 Million</div></div>
+          <div><div class="l">Coordinator</div><div class="v">WINGS ICT Solutions</div></div>
         </div>
       </div>
-    </Hero>
+    </div>
 
-    <section class="py-16">
-      <div class="mx-auto w-full max-w-6xl px-6">
-        <div class="grid gap-12 lg:grid-cols-[2fr_1fr]">
-          <div class="space-y-16">
-            <section aria-labelledby="project-description">
-              <h2
-                id="project-description"
-                class="text-3xl font-semibold tracking-tight md:text-4xl"
-              >
-                Project Description
-              </h2>
-              <p class="mt-6 text-muted md:text-lg leading-relaxed">
-                In CONFIDENTIAL6G, our goal is to ensure secure and private
-                computation in the cloud-edge continuum of 6G by developing
-                modern cryptographic techniques, tools, and libraries. We
-                recognize the importance of implementing privacy preservation
-                and security of data in heterogeneous environments and contexts,
-                and thus, we prioritize researching security enablers. We aim to
-                tackle the potential danger posed by near-future quantum
-                computers, which can break contemporary encryptions, by
-                exploring novel cryptographic operations.
+    <!-- Main content + sidebar -->
+    <section class="section-pad-top">
+      <div class="container-wide">
+        <div class="content-grid">
+
+          <!-- Left: main content -->
+          <div class="main-content stack stack-lg">
+
+            <!-- Description -->
+            <div>
+              <span class="kicker">Overview</span>
+              <h2 class="h-2" style="margin-top:14px;">Project Description</h2>
+              <p style="margin-top:16px; color:var(--ink-2); line-height:1.7; font-size:15px;">
+                In CONFIDENTIAL6G, our goal is to ensure secure and private computation
+                in the cloud-edge continuum of 6G by developing modern cryptographic
+                techniques, tools, and libraries. We recognize the importance of
+                implementing privacy preservation and security of data in heterogeneous
+                environments and contexts, and thus, we prioritize researching security
+                enablers. We aim to tackle the potential danger posed by near-future
+                quantum computers, which can break contemporary encryptions, by exploring
+                novel cryptographic operations.
               </p>
-            </section>
+            </div>
 
-            <section aria-labelledby="project-summary">
-              <h2
-                id="project-summary"
-                class="text-3xl font-semibold tracking-tight md:text-4xl"
-              >
-                Project Summary
-              </h2>
-              <div class="mt-10 grid gap-10 md:grid-cols-2">
+            <!-- Objectives + Outcomes -->
+            <div>
+              <span class="kicker">Project Summary</span>
+              <div class="two-col" style="margin-top:24px;">
                 <div>
-                  <h3 class="text-lg font-semibold">Key Objectives</h3>
-                  <ul
-                    class="mt-4 list-disc space-y-2 pl-5 text-muted md:text-base"
-                  >
-                    <li>
-                      <strong>Quantum-resistant security:</strong> Develop security
-                      tools and cryptographic libraries for 6G confidential computing
-                      and networking
-                    </li>
-                    <li>
-                      <strong>Privacy-preserving AI/ML:</strong> Create secure, GDPR-compliant
-                      methods in multi-stakeholder environments
-                    </li>
-                    <li>
-                      <strong>Edge-cloud networking:</strong> Build secure networking
-                      for confidential computing and federated machine learning
-                    </li>
-                    <li>
-                      <strong>Modular framework:</strong> Integrate all tools and
-                      test with real 6G use cases
-                    </li>
-                    <li>
-                      <strong>Standardization support:</strong> Support 6G security
-                      standards and promote EU capabilities in future cloud technologies
-                    </li>
-                  </ul>
+                  <h3 class="h-3">Key Objectives</h3>
+                  <div class="stack stack-sm" style="margin-top:16px;">
+                    {objectives.map(({ title, desc }) => (
+                      <div class="obj-item">
+                        <div class="obj-check" aria-hidden="true">✓</div>
+                        <div>
+                          <div style="font-weight:600; font-size:14px;">{title}</div>
+                          <div style="font-size:13px; color:var(--ink-2); margin-top:4px; line-height:1.6;">{desc}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-
                 <div>
-                  <h3 class="text-lg font-semibold">Expected Outcomes</h3>
-                  <ul
-                    class="mt-4 list-disc space-y-2 pl-5 text-muted md:text-base"
-                  >
-                    <li>
-                      <strong>Cryptographic libraries:</strong> Post-quantum libraries
-                      and SDKs for 6G
-                    </li>
-                    <li>
-                      <strong>Computing framework:</strong> Confidential computing
-                      framework for cloud-edge environments
-                    </li>
-                    <li>
-                      <strong>Privacy protocols:</strong> Privacy-preserving protocols
-                      for heterogeneous 6G networks
-                    </li>
-                    <li>
-                      <strong>Security tools:</strong> Quantum-resistant security
-                      tools and artifacts
-                    </li>
-                    <li>
-                      <strong>Security standards:</strong> Enhanced security standards
-                      for future 6G deployments
-                    </li>
-                  </ul>
+                  <h3 class="h-3">Expected Outcomes</h3>
+                  <div class="stack stack-sm" style="margin-top:16px;">
+                    {outcomes.map(({ title, desc }) => (
+                      <div class="obj-item">
+                        <div class="obj-check" aria-hidden="true">✓</div>
+                        <div>
+                          <div style="font-weight:600; font-size:14px;">{title}</div>
+                          <div style="font-size:13px; color:var(--ink-2); margin-top:4px; line-height:1.6;">{desc}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </section>
+            </div>
 
-            <section aria-labelledby="our-involvement">
-              <h2
-                id="our-involvement"
-                class="text-3xl font-semibold tracking-tight md:text-4xl"
-              >
-                Our Involvement
-              </h2>
-              <p class="mt-6 text-muted md:text-lg leading-relaxed">
-                Abstract Machines serves as the technical manager of the
-                Confidential6G project, leading the coordination of technical
-                activities and ensuring successful delivery of project
-                objectives. Our expertise in IoT infrastructure and security
-                makes us uniquely positioned to address the privacy challenges
-                in 6G networks.
+            <!-- Our involvement -->
+            <div>
+              <span class="kicker">Our Role</span>
+              <h2 class="h-2" style="margin-top:14px;">Our Involvement</h2>
+              <p style="margin-top:16px; color:var(--ink-2); line-height:1.7; font-size:15px;">
+                Abstract Machines serves as the technical manager of the Confidential6G
+                project, leading the coordination of technical activities and ensuring
+                successful delivery of project objectives. Our expertise in IoT
+                infrastructure and security makes us uniquely positioned to address the
+                privacy challenges in 6G networks.
               </p>
+              <h3 class="h-3" style="margin-top:28px;">Our Responsibilities</h3>
+              <div class="stack stack-sm" style="margin-top:16px;">
+                {responsibilities.map(({ title, desc }) => (
+                  <div class="obj-item">
+                    <div class="obj-check" aria-hidden="true">✓</div>
+                    <div>
+                      <div style="font-weight:600; font-size:14px;">{title}</div>
+                      <div style="font-size:13px; color:var(--ink-2); margin-top:4px; line-height:1.6;">{desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-              <h3 class="mt-10 text-lg font-semibold">Our Responsibilities</h3>
-              <ul class="mt-4 list-disc space-y-2 pl-5 text-muted md:text-base">
-                <li>
-                  <strong>Technical Management:</strong> Coordinating technical activities
-                  and ensuring project milestone delivery
-                </li>
-                <li>
-                  <strong>Secure IoT Integration:</strong> Developing privacy-preserving
-                  IoT protocols for 6G networks
-                </li>
-                <li>
-                  <strong>Edge Security:</strong> Implementing confidential computing
-                  at the network edge
-                </li>
-                <li>
-                  <strong>Platform Development:</strong> Creating secure platforms
-                  for privacy-preserving applications
-                </li>
-                <li>
-                  <strong>Cryptographic Implementation:</strong> Integrating advanced
-                  cryptographic protocols into IoT systems
-                </li>
-              </ul>
-            </section>
           </div>
 
-          <aside class="space-y-8">
-            <ProjectInformation
-              items={[
-                {
-                  label: "Duration",
-                  value: "1 January 2023 - 31 December 2025",
-                },
-                { label: "Funding Program", value: "Horizon Europe" },
-                { label: "Total Budget", value: "€5 Million" },
-                {
-                  label: "Project Coordinator",
-                  value: "WINGS ICT SOLUTIONS TECHNOLOGIES",
-                },
-                { label: "Status", value: "Active", pill: true },
-              ]}
-              links={[
-                {
-                  label: "Visit Project Site",
-                  href: "https://confidential6g.eu/",
-                },
-                {
-                  label: "View on CORDIS",
-                  href: "https://cordis.europa.eu/project/id/101096435",
-                },
-              ]}
-            />
+          <!-- Right: sidebar -->
+          <aside class="stack stack-md">
 
-            <ProjectPartners
-              partners={[
-                {
-                  alt: "Wings",
-                  src: "/img/logos/wings-logo.png",
-                  logoClass: "dark:brightness-[1.3]",
-                },
-                { alt: "Nokia", src: "/img/logos/nokia-1.png" },
-                {
-                  alt: "Nokia Bell Labs",
-                  src: "/img/logos/nokia-bellLabs.png",
-                },
-                { alt: "Telefonica", src: "/img/logos/telefonica.png" },
-                { alt: "TU/e", src: "/img/logos/tue.png" },
-                { alt: "Ultraviolet", src: "/img/logos/ultraviolet.png" },
-                { alt: "Zen", src: "/img/logos/zen.png" },
-                { alt: "VTT", src: "/img/logos/vtt.png" },
-                {
-                  alt: "TNO",
-                  src: "/img/logos/tno.png",
-                  logoClass: "dark:brightness-200",
-                },
-                { alt: "IMDEA", src: "/img/logos/imdea.png" },
-                { alt: "TU Graz", src: "/img/logos/tu-gratz.png" },
-                { alt: "UCD", src: "/img/logos/ucd-1.png" },
-                { alt: "TU Wien", src: "/img/logos/tuw.png" },
-                { alt: "AMA", src: "/img/logos/AMA.png" },
-              ]}
-            />
+            <!-- Project info card -->
+            <div class="card">
+              <div class="sidebar-section-label">Project</div>
+              <div style="font-weight:700; font-size:20px; margin-top:4px;">CONFIDENTIAL6G</div>
+              <div class="info-list" style="margin-top:20px;">
+                {infoItems.map(({ label, value, pill }) => (
+                  <div class="info-row">
+                    <div class="info-label">{label}</div>
+                    <div class="info-val">
+                      {pill ? (
+                        <span class="badge complete"><span class="dot"></span>{value}</span>
+                      ) : (
+                        value
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div class="stack stack-sm" style="margin-top:20px;">
+                {infoLinks.map(({ label, href }) => (
+                  <a href={href} class="btn" style="width:100%; justify-content:space-between;" target="_blank" rel="noopener noreferrer">
+                    <span>{label}</span><span>↗</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <!-- Partners card -->
+            <div class="card">
+              <div class="sidebar-section-label">Network</div>
+              <div style="font-weight:700; font-size:18px; margin-top:4px;">Project Partners</div>
+              <p style="font-size:13px; color:var(--ink-3); margin-top:4px;">Organizations collaborating across this project.</p>
+              <div class="partners-grid" style="margin-top:16px;">
+                {partners.map(({ alt, src }) => (
+                  <div class="partner-tile">
+                    <img src={src} alt={alt} loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </aside>
         </div>
       </div>
     </section>
 
-    <section class="py-16">
-      <div class="mx-auto w-full max-w-6xl px-6">
-        <h2
-          class="text-center text-3xl font-semibold tracking-tight md:text-4xl"
-        >
-          Project Goals &amp; Impact
-        </h2>
-
-        <div class="mt-12 grid gap-10 md:grid-cols-3">
-          <div class="text-center">
-            <div
-              class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-surface-2"
-            >
-              <Image
-                src="/img/icons/icon01-2.png"
-                alt="Cryptography"
-                class="h-8 w-auto"
-                width={64}
-                height={64}
-                loading="lazy"
-              />
+    <!-- Goals & Impact -->
+    <section style="background:var(--paper-2); border-top:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div style="text-align:center; margin-bottom:48px;">
+          <span class="kicker">Goals & Impact</span>
+          <h2 class="h-2" style="margin-top:14px;">Project Goals &amp; Impact</h2>
+        </div>
+        <div class="impact-grid">
+          {impactAreas.map(({ icon, title, desc }) => (
+            <div class="card" style="text-align:center; display:flex; flex-direction:column; align-items:center; gap:16px;">
+              <div class="icon-frame" style="width:56px; height:56px; border-radius:50%; background:var(--paper-2); border:1px solid var(--line-3); display:flex; align-items:center; justify-content:center; font-size:22px;">
+                {icon}
+              </div>
+              <h3 class="h-3" style="margin:0;">{title}</h3>
+              <p style="font-size:14px; color:var(--ink-2); line-height:1.6; margin:0;">{desc}</p>
             </div>
-            <h3 class="mt-6 text-xl font-semibold">Cryptography</h3>
-            <p class="mt-4 text-muted">
-              Cryptographic enablers for confidential computing (FHE, SMPC, TEE)
-              and post-quantum networking. DLT privacy enablers (ZKP). Support
-              for embedded edge devices and hardware.
-            </p>
-          </div>
-
-          <div class="text-center">
-            <div
-              class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-surface-2"
-            >
-              <Image
-                src="/img/icons/icon02.png"
-                alt="Confidential Computing"
-                class="h-8 w-auto"
-                width={64}
-                height={64}
-                loading="lazy"
-              />
-            </div>
-            <h3 class="mt-6 text-xl font-semibold">Confidential Computing</h3>
-            <p class="mt-4 text-muted">
-              Confidential Computing via FHE, SMPC and HW TEEs. Collaborative
-              AI/ML. Confidential containers. Remote attestations. Secure
-              enclave abstractions. Secure key distribution.
-            </p>
-          </div>
-
-          <div class="text-center">
-            <div
-              class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-surface-2"
-            >
-              <Image
-                src="/img/icons/icon03.png"
-                alt="Confidential Networking"
-                class="h-8 w-auto"
-                width={64}
-                height={64}
-                loading="lazy"
-              />
-            </div>
-            <h3 class="mt-6 text-xl font-semibold">Confidential Networking</h3>
-            <p class="mt-4 text-muted">
-              Post-quantum secure network protocols. Secure data sharing and
-              access control. Private blockchain smart contracts, DIDs and VCs.
-              Federated AI/ML orchestration.
-            </p>
-          </div>
+          ))}
         </div>
       </div>
     </section>
+
+    <FinalCTA
+      title="Collaborate with us"
+      subtitle="Interested in partnering on research or joining a consortium? Let's talk."
+      primary={{ label: "Get in touch", href: "/contact" }}
+      secondary={null}
+    />
   </main>
+
   <Footer />
 </BaseLayout>
+
+<style>
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: start;
+  }
+  .logo-card {
+    background: var(--paper);
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+  }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 56px;
+    align-items: start;
+    padding-bottom: 96px;
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .obj-item {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+  .obj-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--paper-3);
+    color: var(--ink-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .sidebar-section-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-3);
+  }
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .info-row {
+    background: var(--paper-2);
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+  }
+  .info-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-3);
+  }
+  .info-val {
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .partners-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .partner-tile {
+    background: var(--paper-2);
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+    transition: border-color 0.15s ease;
+  }
+  .partner-tile:hover {
+    border-color: var(--line-2);
+  }
+  .partner-tile img {
+    max-height: 36px;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 980px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+    .logo-card {
+      max-width: 200px;
+    }
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+    .impact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

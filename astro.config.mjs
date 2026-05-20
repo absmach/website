@@ -8,6 +8,12 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   site: "https://www.absmach.eu",
   output: "static",
+  devToolbar: { enabled: false },
+
+  redirects: {
+    "/products/s0": "/products/a0",
+    "/products/s1": "/products/a1",
+  },
 
   integrations: [
     tailwind(),

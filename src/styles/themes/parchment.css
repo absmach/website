@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Theme: Parchment
+   Warm cream background · near-black ink · electric blue + orange accents
+   Feels: editorial, academic, refined — Stripe Docs / Linear blog energy
+   ========================================================================== */
+
+/* FONT PAIRING (update --font-* AND the Google Fonts URL in BaseLayout.astro)
+   Current:      Montserrat + JetBrains Mono
+   Alternative:  "Plus Jakarta Sans" — slightly rounder, warmer feel
+     URL: https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap
+*/
+
+:root {
+  /* === Typography === */
+  --font-sans: "Montserrat";
+  --font-mono: "JetBrains Mono";
+
+  /* === Surfaces === */
+  --paper:   #f6f4ee;
+  --paper-2: #ecebe5;
+  --paper-3: #e2e0d8;
+
+  /* === Text === */
+  --ink:   #14161a;
+  --ink-2: #383a40;
+  --ink-3: #6c6e73;
+  --ink-4: #a4a6ac;
+
+  /* === Borders === */
+  --line:   #1a1c20;
+  --line-2: #c9c7be;
+  --line-3: #dedcd4;
+
+  /* === Accent === */
+  --accent:      #2547ff;
+  --accent-2:    #ff7a4a;
+  --accent-soft: #e7eaff;
+
+  /* === Status === */
+  --green: #1f6b3a;
+  --warn:  #b46010;
+
+  /* === Elevation === */
+  --shadow-sm: 0 1px 2px rgba(20, 22, 26, 0.04);
+  --shadow:    0 4px 14px rgba(20, 22, 26, 0.06), 0 1px 2px rgba(20, 22, 26, 0.04);
+  --shadow-lg: 0 18px 60px -20px rgba(20, 22, 26, 0.18), 0 4px 14px rgba(20, 22, 26, 0.06);
+
+  /* === Glass overlays (used in video hero sections) === */
+  /* Derived from --paper-2 (#ecebe5) */
+  --glass-start:  rgba(236, 235, 229, 0.88);
+  --glass-mid:    rgba(236, 235, 229, 0.72);
+  --glass-end:    rgba(236, 235, 229, 0.40);
+  --glass-top:    rgba(236, 235, 229, 0.30);
+  --glass-bottom: rgba(236, 235, 229, 0.80);
+  --glass-visual: rgba(236, 235, 229, 0.60);
+
+  /* === Accent surface (dark cards, code blocks, contact form) === */
+  --surface-accent:      var(--ink);     /* #14161a */
+  --on-accent:           var(--paper);   /* #f6f4ee — warm cream text on dark */
+  --on-accent-dim:       rgba(246, 244, 238, 0.85);
+  --on-accent-muted:     rgba(246, 244, 238, 0.60);
+  --on-accent-subtle:    rgba(246, 244, 238, 0.50);
+  --dark-border:         rgba(246, 244, 238, 0.15);
+  --dark-input-bg:       rgba(255, 255, 255, 0.05);
+  --dark-input-border:   rgba(255, 255, 255, 0.15);
+
+  /* === System chrome === */
+  --scrollbar-thumb: rgba(20, 22, 26, 0.25);
+  --backdrop:        rgba(20, 22, 26, 0.40);
+
+  /* === Shape === */
+  --radius-sm: 4px;
+  --radius:    8px;
+  --radius-lg: 14px;
+
+  /* === Layout === */
+  --container:      1200px;
+  --container-wide: 1320px;
+}

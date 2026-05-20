@@ -1,27 +1,48 @@
-<section class="py-16">
+---
+import { solutions } from "../data/solutions";
+---
+
+<section>
   <div class="container-wide">
-    <p class="section-label">Services</p>
-    <h2 class="section-title mt-4">From platform to production</h2>
-    <div class="mt-8 grid gap-6 md:grid-cols-2">
-      <div class="card-base">
-        <h3 class="text-lg font-semibold">Managed Magistrala Platform</h3>
-        <p class="mt-3 text-muted">Operate production deployments with SLAs and expert support.</p>
+    <div class="section-head">
+      <div class="left">
+        <span class="kicker">Solutions · Production deployments</span>
+        <h2 class="h-1" style="margin-top:14px;">Infrastructure for demanding environments.</h2>
       </div>
-      <div class="card-base">
-        <h3 class="text-lg font-semibold">Solution Design & Integration</h3>
-        <p class="mt-3 text-muted">Architecture, integration, and rollout support for complex systems.</p>
-      </div>
-      <div class="card-base">
-        <h3 class="text-lg font-semibold">Custom Development</h3>
-        <p class="mt-3 text-muted">Build specialized components and workflow automation.</p>
-      </div>
-      <div class="card-base">
-        <h3 class="text-lg font-semibold">Hardware & Embedded Systems</h3>
-        <p class="mt-3 text-muted">Gateway hardware design, firmware, and device onboarding.</p>
-      </div>
+      <a href="/solutions" class="btn-link">All solutions →</a>
     </div>
-    <div class="mt-8">
-      <a class="button-secondary" href="/services/">View services</a>
+    <div class="home-sol-grid">
+      {solutions.slice(0, 6).map((sol) => (
+        <a href={`/solutions/${sol.slug}/`} class="sol-img-card">
+          <div class="sol-img-wrap">
+            <img
+              src={sol.image}
+              alt={`${sol.title} solution`}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="sol-img-body">
+            <h3 class="sol-img-title">{sol.title}</h3>
+            <p class="sol-img-desc">{sol.summary}</p>
+            <span class="btn-link" style="font-size:13px; margin-top:auto;">Explore solution →</span>
+          </div>
+        </a>
+      ))}
     </div>
   </div>
 </section>
+
+<style>
+  .home-sol-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 980px) {
+    .home-sol-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .home-sol-grid { grid-template-columns: 1fr; }
+  }
+</style>

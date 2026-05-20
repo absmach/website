@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Theme: Aurora
+   Soft lavender-white background · deep indigo ink · vivid purple + orange
+   Feels: colorful, modern, gradient-lush — Linear / Vercel / Raycast vibes
+   ========================================================================== */
+
+/* FONT PAIRING (update --font-* AND the Google Fonts URL in BaseLayout.astro)
+   Current:      Montserrat + JetBrains Mono
+   Alternative:  "Inter" — clean complement to the purple palette
+     URL: https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap
+*/
+
+:root {
+  /* === Typography === */
+  --font-sans: "Montserrat";
+  --font-mono: "JetBrains Mono";
+
+  /* === Surfaces === */
+  /* Progressively deeper lavender — naturally gradient-like when stacked */
+  --paper:   #fbfaff;
+  --paper-2: #f2efff;
+  --paper-3: #e6e0fe;
+
+  /* === Text === */
+  --ink:   #1e1b4b;
+  --ink-2: #3730a3;
+  --ink-3: #6d6baa;
+  --ink-4: #a5a3d4;
+
+  /* === Borders === */
+  --line:   #1e1b4b;
+  --line-2: #c8c4f0;
+  --line-3: #dddafc;
+
+  /* === Accent === */
+  --accent:      #7c3aed;
+  --accent-2:    #f97316;
+  --accent-soft: #ede9fe;
+
+  /* === Status === */
+  --green: #16a34a;
+  --warn:  #d97706;
+
+  /* === Elevation === */
+  --shadow-sm: 0 1px 2px rgba(30, 27, 75, 0.07);
+  --shadow:    0 4px 14px rgba(30, 27, 75, 0.09), 0 1px 2px rgba(30, 27, 75, 0.05);
+  --shadow-lg: 0 18px 60px -20px rgba(30, 27, 75, 0.22), 0 4px 14px rgba(30, 27, 75, 0.10);
+
+  /* === Glass overlays (used in video hero sections) === */
+  /* Derived from --paper-2 (#f2efff) */
+  --glass-start:  rgba(242, 239, 255, 0.90);
+  --glass-mid:    rgba(242, 239, 255, 0.74);
+  --glass-end:    rgba(242, 239, 255, 0.40);
+  --glass-top:    rgba(242, 239, 255, 0.30);
+  --glass-bottom: rgba(242, 239, 255, 0.82);
+  --glass-visual: rgba(242, 239, 255, 0.62);
+
+  /* === Accent surface (dark cards, code blocks, contact form) === */
+  --surface-accent:    var(--ink);       /* #1e1b4b — deep indigo */
+  --on-accent:         #f2efff;          /* lavender-white — text on dark surface */
+  --on-accent-dim:     rgba(242, 239, 255, 0.85);
+  --on-accent-muted:   rgba(242, 239, 255, 0.60);
+  --on-accent-subtle:  rgba(242, 239, 255, 0.50);
+  --dark-border:       rgba(242, 239, 255, 0.15);
+  --dark-input-bg:     rgba(255, 255, 255, 0.05);
+  --dark-input-border: rgba(255, 255, 255, 0.15);
+
+  /* === System chrome === */
+  --scrollbar-thumb: rgba(30, 27, 75, 0.25);
+  --backdrop:        rgba(20, 18, 48, 0.45);
+
+  /* === Shape === */
+  --radius-sm: 4px;
+  --radius:    8px;
+  --radius-lg: 14px;
+
+  /* === Layout === */
+  --container:      1200px;
+  --container-wide: 1320px;
+}
