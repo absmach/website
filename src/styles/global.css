@@ -8,35 +8,10 @@
    Montserrat for all text, JetBrains Mono for labels/code.
    ========================================================================== */
 
-:root {
-  --paper: #ffffff;
-  --paper-2: #f3f6fb;
-  --paper-3: #e6ecf5;
-  --ink: #073763;
-  --ink-2: #1e3a5a;
-  --ink-3: #4a6a87;
-  --ink-4: #96aec4;
-  --line: #073763;
-  --line-2: #b8c9da;
-  --line-3: #dce5ef;
-  --accent: #2547ff;
-  --accent-2: #ff7a4a;
-  --accent-soft: #e7eaff;
-  --green: #1f6b3a;
-  --warn: #b46010;
-
-  --radius-sm: 4px;
-  --radius: 8px;
-  --radius-lg: 14px;
-
-  --shadow-sm: 0 1px 2px rgba(7, 55, 99, 0.06);
-  --shadow: 0 4px 14px rgba(7, 55, 99, 0.08), 0 1px 2px rgba(7, 55, 99, 0.04);
-  --shadow-lg:
-    0 18px 60px -20px rgba(7, 55, 99, 0.2), 0 4px 14px rgba(7, 55, 99, 0.08);
-
-  --container: 1200px;
-  --container-wide: 1320px;
-}
+/* Design tokens are loaded by the active theme.
+   To switch themes, change the import in BaseLayout.astro:
+     import "../styles/themes/blueprint.css";  ← default
+   Available: blueprint · parchment · slate · graphite · obsidian */
 
 * {
   box-sizing: border-box;
@@ -51,7 +26,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family:
-    "Montserrat",
+    var(--font-sans),
     system-ui,
     -apple-system,
     sans-serif;
@@ -86,7 +61,7 @@ a {
 /* scrollbar ---------------------------------------------------------------- */
 :root {
   scrollbar-width: thin;
-  scrollbar-color: rgba(20, 22, 26, 0.25) transparent;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 ::-webkit-scrollbar {
   width: 8px;
@@ -95,7 +70,7 @@ a {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(20, 22, 26, 0.25);
+  background-color: var(--scrollbar-thumb);
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
@@ -109,13 +84,13 @@ h3,
 h4,
 h5 {
   margin: 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   line-height: 1.08;
   letter-spacing: 0;
 }
 
 .h-display {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 700;
   font-size: 76px;
   letter-spacing: 0;
@@ -123,7 +98,7 @@ h5 {
   height: auto;
 }
 .h-1 {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 56px;
   letter-spacing: 0;
@@ -131,7 +106,7 @@ h5 {
   height: auto;
 }
 .h-2 {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 40px;
   letter-spacing: 0;
@@ -153,7 +128,7 @@ h5 {
 }
 
 .kicker {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
@@ -311,7 +286,7 @@ section {
   border-radius: 999px;
   border: 1px solid var(--line-2);
   background: var(--paper);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   font-weight: 500;
   color: var(--ink-2);
@@ -381,12 +356,12 @@ section {
   box-shadow: var(--shadow);
 }
 .card-dark {
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink);
+  background: var(--surface-accent);
+  color: var(--on-accent);
+  border-color: var(--surface-accent);
 }
 .card-dark .kicker {
-  color: rgba(246, 244, 238, 0.6);
+  color: var(--on-accent-muted);
 }
 
 /* nav ---------------------------------------------------------------------- */
@@ -584,14 +559,14 @@ section {
   background:
     linear-gradient(
       90deg,
-      rgba(243, 246, 251, 0.88) 0%,
-      rgba(243, 246, 251, 0.72) 46%,
-      rgba(243, 246, 251, 0.40) 100%
+      var(--glass-start) 0%,
+      var(--glass-mid)   46%,
+      var(--glass-end)   100%
     ),
     linear-gradient(
       180deg,
-      rgba(243, 246, 251, 0.30) 0%,
-      rgba(243, 246, 251, 0.80) 100%
+      var(--glass-top)    0%,
+      var(--glass-bottom) 100%
     );
   pointer-events: none;
 }
@@ -699,7 +674,7 @@ section {
   border: 1px solid var(--line-3);
   border-radius: 999px;
   background: var(--paper);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -783,20 +758,20 @@ section {
   background:
     linear-gradient(
       90deg,
-      rgba(243, 246, 251, 0.88) 0%,
-      rgba(243, 246, 251, 0.72) 46%,
-      rgba(243, 246, 251, 0.40) 100%
+      var(--glass-start) 0%,
+      var(--glass-mid)   46%,
+      var(--glass-end)   100%
     ),
     linear-gradient(
       180deg,
-      rgba(243, 246, 251, 0.30) 0%,
-      rgba(243, 246, 251, 0.80) 100%
+      var(--glass-top)    0%,
+      var(--glass-bottom) 100%
     );
   pointer-events: none;
 }
 .prod-hero.has-video .hero-visual {
   border-color: var(--line-3);
-  background: rgba(243, 246, 251, 0.6);
+  background: var(--glass-visual);
   box-shadow: var(--shadow-lg);
 }
 .prod-hero.has-video .logo-mark {
@@ -910,14 +885,14 @@ section {
   border-right: none;
 }
 .metric .v {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 700;
   font-size: 36px;
   line-height: 1;
   letter-spacing: 0;
 }
 .metric .l {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -925,11 +900,11 @@ section {
   margin-top: 12px;
 }
 .metric.featured {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--surface-accent);
+  color: var(--on-accent);
 }
 .metric.featured .l {
-  color: rgba(246, 244, 238, 0.6);
+  color: var(--on-accent-muted);
 }
 .metric a {
   display: inline-flex;
@@ -974,13 +949,13 @@ section {
   gap: 12px;
 }
 .bento .b .pname {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 28px;
   letter-spacing: 0;
 }
 .bento .b .pcat {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -1009,18 +984,18 @@ section {
 .bento .b-magistrala {
   grid-column: 1 / span 2;
   grid-row: 1 / span 2;
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink);
+  background: var(--surface-accent);
+  color: var(--on-accent);
+  border-color: var(--surface-accent);
 }
 .bento .b-magistrala .pcat {
-  color: rgba(246, 244, 238, 0.5);
+  color: var(--on-accent-subtle);
 }
 .bento .b-magistrala .pdesc {
-  color: rgba(246, 244, 238, 0.7);
+  color: var(--on-accent-dim);
 }
 .bento .b-magistrala .muted {
-  color: rgba(246, 244, 238, 0.5);
+  color: var(--on-accent-subtle);
 }
 
 /* Platform components — 2-wide each, stacked on right half */
@@ -1084,7 +1059,7 @@ section {
   object-fit: contain;
 }
 .proj-card .name {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 24px;
   letter-spacing: 0;
@@ -1102,7 +1077,7 @@ section {
   gap: 16px;
   flex-wrap: wrap;
   margin-top: 14px;
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   color: var(--ink-3);
   text-transform: uppercase;
@@ -1138,7 +1113,7 @@ section {
   box-shadow: var(--shadow);
 }
 .sol-card .name {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 24px;
   letter-spacing: 0;
@@ -1163,7 +1138,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 12px;
   letter-spacing: 0.1em;
   color: var(--ink-3);
@@ -1213,7 +1188,7 @@ section {
   flex: 1;
 }
 .sol-img-title {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 15px;
   letter-spacing: 0;
@@ -1247,14 +1222,14 @@ section {
   min-height: 280px;
 }
 .depl-card .company {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--ink-3);
 }
 .depl-card .title {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 24px;
   letter-spacing: 0;
@@ -1299,14 +1274,14 @@ section {
   min-height: 260px;
 }
 .cta-card .label {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--ink-3);
 }
 .cta-card h3 {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 26px;
   letter-spacing: 0;
@@ -1319,12 +1294,12 @@ section {
   line-height: 1.55;
 }
 .cta-card.dark {
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink);
+  background: var(--surface-accent);
+  color: var(--on-accent);
+  border-color: var(--surface-accent);
 }
 .cta-card.dark p {
-  color: rgba(246, 244, 238, 0.7);
+  color: var(--on-accent-dim);
 }
 .cta-card.dark .label {
   color: var(--accent-2);
@@ -1351,7 +1326,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 12px;
   color: var(--ink-2);
   margin-bottom: 14px;
@@ -1382,14 +1357,14 @@ section {
   position: relative;
 }
 .step .num {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   color: var(--ink-3);
   letter-spacing: 0.16em;
   margin-bottom: 16px;
 }
 .step h4 {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 24px;
   letter-spacing: 0;
@@ -1419,14 +1394,14 @@ section {
   align-items: flex-start;
 }
 .val .num {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   color: var(--ink-3);
   letter-spacing: 0.14em;
   min-width: 32px;
 }
 .val h4 {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 22px;
   margin-bottom: 6px;
@@ -1464,13 +1439,13 @@ section {
   box-shadow: 0 0 0 2px var(--ink);
 }
 .timeline .item .y {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 13px;
   color: var(--ink-3);
   letter-spacing: 0.1em;
 }
 .timeline .item h4 {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 24px;
   margin: 4px 0 8px;
@@ -1491,7 +1466,7 @@ section {
   text-align: center;
 }
 .callout h3 {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 32px;
   letter-spacing: 0;
@@ -1514,7 +1489,7 @@ section {
   background: var(--paper);
 }
 .proc-card .num {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 700;
   font-size: 40px;
   color: var(--ink);
@@ -1523,7 +1498,7 @@ section {
   margin-bottom: 14px;
 }
 .proc-card h4 {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 22px;
   margin-bottom: 8px;
@@ -1562,7 +1537,7 @@ section {
   border-right: none;
 }
 .proj-hero .meta-grid .l {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -1584,7 +1559,7 @@ section {
   background: var(--paper);
   color: var(--ink);
   font-size: 14px;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   outline: none;
   transition: border-color 0.15s;
 }
@@ -1634,8 +1609,8 @@ section {
 }
 .contact-form {
   padding: 36px;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--surface-accent);
+  color: var(--on-accent);
   border-radius: var(--radius-lg);
 }
 .contact-form .field {
@@ -1645,16 +1620,16 @@ section {
   margin-bottom: 18px;
 }
 .contact-form label {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: rgba(246, 244, 238, 0.6);
+  color: var(--on-accent-muted);
 }
 .contact-form input,
 .contact-form textarea {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--dark-input-bg);
+  border: 1px solid var(--dark-input-border);
   color: var(--paper);
   font: inherit;
   font-size: 14px;
@@ -1697,7 +1672,7 @@ section {
   border-bottom: none;
 }
 .contact-side .channels .lbl {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -1791,14 +1766,14 @@ section {
   border-right: 1px solid var(--line-3);
 }
 .feat-row .feat-tag {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--ink-3);
 }
 .feat-row h3 {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans), sans-serif;
   font-weight: 600;
   font-size: 28px;
   letter-spacing: 0;
@@ -1829,7 +1804,7 @@ section {
   gap: 14px;
 }
 .sdk-lang {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -1841,11 +1816,11 @@ section {
   letter-spacing: 0;
 }
 .sdk-snippet {
-  background: var(--ink);
-  color: rgba(246, 244, 238, 0.85);
+  background: var(--surface-accent);
+  color: var(--on-accent-dim);
   border-radius: var(--radius-sm);
   padding: 14px 16px;
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 14px;
   line-height: 1.8;
   flex: 1;
@@ -1882,7 +1857,7 @@ section {
 }
 .faq-q::after {
   content: "+";
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), monospace;
   font-size: 18px;
   font-weight: 400;
   color: var(--ink-3);
@@ -1937,13 +1912,13 @@ section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0;
-  border: 1px solid rgba(246, 244, 238, 0.15);
+  border: 1px solid var(--dark-border);
   border-radius: var(--radius);
   overflow: hidden;
 }
 .sol-stats-bar-cell {
   padding: 32px;
-  border-right: 1px solid rgba(246, 244, 238, 0.15);
+  border-right: 1px solid var(--dark-border);
 }
 .sol-stats-bar-cell:last-child {
   border-right: none;
@@ -2045,7 +2020,7 @@ section {
   }
   .sol-stats-bar-cell {
     border-right: none;
-    border-bottom: 1px solid rgba(246, 244, 238, 0.15);
+    border-bottom: 1px solid var(--dark-border);
   }
   .sol-stats-bar-cell:last-child {
     border-bottom: none;
@@ -2195,7 +2170,7 @@ section {
   }
   .sol-stats-bar-cell {
     border-right: none;
-    border-bottom: 1px solid rgba(246, 244, 238, 0.15);
+    border-bottom: 1px solid var(--dark-border);
   }
   .sol-stats-bar-cell:last-child {
     border-bottom: none;

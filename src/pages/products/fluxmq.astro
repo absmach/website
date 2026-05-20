@@ -471,18 +471,18 @@ graph TD
     </section>
 
     <!-- Performance -->
-    <section style="background:var(--ink); color:var(--paper); padding:96px 0;">
+    <section style="background:var(--surface-accent); color:var(--on-accent); padding:96px 0;">
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
-            <span class="kicker" style="color:rgba(246,244,238,0.6);"
+            <span class="kicker" style="color:var(--on-accent-muted);"
               >Performance</span
             >
-            <h2 class="h-1" style="margin-top:14px; color:var(--paper);">
+            <h2 class="h-1" style="margin-top:14px; color:var(--on-accent);">
               Numbers that hold up under load.
             </h2>
           </div>
-          <p class="lede" style="color:rgba(246,244,238,0.7); max-width:36ch;">
+          <p class="lede" style="color:var(--on-accent-dim); max-width:36ch;">
             Benchmarked on commodity hardware. Scales linearly as you add nodes
             to the cluster with topic sharding.
           </p>
@@ -492,15 +492,15 @@ graph TD
             class="depl-card"
             style="background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.1);"
           >
-            <div class="company" style="color:rgba(246,244,238,0.6);">
+            <div class="company" style="color:var(--on-accent-muted);">
               Single node
             </div>
-            <h3 class="title" style="color:var(--paper);">300K–500K msg/s</h3>
-            <p class="desc" style="color:rgba(246,244,238,0.7);">
+            <h3 class="title" style="color:var(--on-accent);">300K–500K msg/s</h3>
+            <p class="desc" style="color:var(--on-accent-dim);">
               Sustained throughput per node with sub-10ms local latency and up
               to 500,000 concurrent connections.
             </p>
-            <ul style="color:rgba(246,244,238,0.8);">
+            <ul style="color:var(--on-accent-dim);">
               <li>Zero-copy packet parsing</li>
               <li>Trie-based topic matching</li>
               <li>Object pool recycling</li>
@@ -511,15 +511,15 @@ graph TD
             class="depl-card"
             style="background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.1);"
           >
-            <div class="company" style="color:rgba(246,244,238,0.6);">
+            <div class="company" style="color:var(--on-accent-muted);">
               3-node cluster
             </div>
-            <h3 class="title" style="color:var(--paper);">1–2M msg/s</h3>
-            <p class="desc" style="color:rgba(246,244,238,0.7);">
+            <h3 class="title" style="color:var(--on-accent);">1–2M msg/s</h3>
+            <p class="desc" style="color:var(--on-accent-dim);">
               Three nodes coordinated by embedded etcd with gRPC inter-broker
               routing and mTLS encryption.
             </p>
-            <ul style="color:rgba(246,244,238,0.8);">
+            <ul style="color:var(--on-accent-dim);">
               <li>~5ms cross-node latency</li>
               <li>Automatic rebalancing</li>
               <li>Zero-config cluster join</li>
@@ -529,15 +529,15 @@ graph TD
             class="depl-card"
             style="background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.1);"
           >
-            <div class="company" style="color:rgba(246,244,238,0.6);">
+            <div class="company" style="color:var(--on-accent-muted);">
               5-node cluster
             </div>
-            <h3 class="title" style="color:var(--paper);">2–4M msg/s</h3>
-            <p class="desc" style="color:rgba(246,244,238,0.7);">
+            <h3 class="title" style="color:var(--on-accent);">2–4M msg/s</h3>
+            <p class="desc" style="color:var(--on-accent-dim);">
               Linear throughput scaling with node count. Persistent queues
               maintain durability guarantees at every tier.
             </p>
-            <ul style="color:rgba(246,244,238,0.8);">
+            <ul style="color:var(--on-accent-dim);">
               <li>Consumer group offsets</li>
               <li>Dead-letter queues</li>
               <li>Kafka-style retention</li>
@@ -712,8 +712,8 @@ graph TD
     color: var(--ink-3);
   }
   .fmq-qs-code {
-    background: var(--ink);
-    color: rgba(246, 244, 238, 0.85);
+    background: var(--surface-accent);
+    color: var(--on-accent-dim);
     border-radius: var(--radius);
     padding: 16px 18px;
     font-family: "JetBrains Mono", monospace;

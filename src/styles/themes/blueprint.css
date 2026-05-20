@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Theme: Blueprint  (default)
+   White background · deep navy ink · electric blue + orange accents
+   Feels: clean enterprise tech, professional, confident
+   ========================================================================== */
+
+/* FONT PAIRING (update --font-* AND the Google Fonts URL in BaseLayout.astro)
+   Current:      Montserrat + JetBrains Mono
+   Alternative:  "Inter" — warmer, more developer-neutral
+     URL: https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap
+*/
+
+:root {
+  /* === Typography === */
+  --font-sans: "Montserrat";
+  --font-mono: "JetBrains Mono";
+
+  /* === Surfaces === */
+  --paper:   #ffffff;
+  --paper-2: #f3f6fb;
+  --paper-3: #e6ecf5;
+
+  /* === Text === */
+  --ink:   #073763;
+  --ink-2: #1e3a5a;
+  --ink-3: #4a6a87;
+  --ink-4: #96aec4;
+
+  /* === Borders === */
+  --line:   #073763;
+  --line-2: #b8c9da;
+  --line-3: #dce5ef;
+
+  /* === Accent === */
+  --accent:      #2547ff;
+  --accent-2:    #ff7a4a;
+  --accent-soft: #e7eaff;
+
+  /* === Status === */
+  --green: #1f6b3a;
+  --warn:  #b46010;
+
+  /* === Elevation === */
+  --shadow-sm: 0 1px 2px rgba(7, 55, 99, 0.06);
+  --shadow:    0 4px 14px rgba(7, 55, 99, 0.08), 0 1px 2px rgba(7, 55, 99, 0.04);
+  --shadow-lg: 0 18px 60px -20px rgba(7, 55, 99, 0.2), 0 4px 14px rgba(7, 55, 99, 0.08);
+
+  /* === Glass overlays (used in video hero sections) === */
+  /* Derived from --paper-2 (#f3f6fb) */
+  --glass-start:  rgba(243, 246, 251, 0.88);
+  --glass-mid:    rgba(243, 246, 251, 0.72);
+  --glass-end:    rgba(243, 246, 251, 0.40);
+  --glass-top:    rgba(243, 246, 251, 0.30);
+  --glass-bottom: rgba(243, 246, 251, 0.80);
+  --glass-visual: rgba(243, 246, 251, 0.60);
+
+  /* === Accent surface (dark cards, code blocks, contact form) === */
+  --surface-accent:      var(--ink);     /* #073763 */
+  --on-accent:           #f6f4ee;        /* warm off-white — text on dark surface */
+  --on-accent-dim:       rgba(246, 244, 238, 0.85);
+  --on-accent-muted:     rgba(246, 244, 238, 0.60);
+  --on-accent-subtle:    rgba(246, 244, 238, 0.50);
+  --dark-border:         rgba(246, 244, 238, 0.15);
+  --dark-input-bg:       rgba(255, 255, 255, 0.05);
+  --dark-input-border:   rgba(255, 255, 255, 0.15);
+
+  /* === System chrome === */
+  --scrollbar-thumb: rgba(7, 55, 99, 0.25);
+  --backdrop:        rgba(20, 22, 26, 0.40);
+
+  /* === Shape === */
+  --radius-sm: 4px;
+  --radius:    8px;
+  --radius-lg: 14px;
+
+  /* === Layout === */
+  --container:      1200px;
+  --container-wide: 1320px;
+}

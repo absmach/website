@@ -127,24 +127,24 @@ const team = [
     <!-- Metrics bar -->
     <section
       class="section-tight"
-      style="background:var(--ink); color:var(--paper); border-top:1px solid var(--line-3);"
+      style="background:var(--surface-accent); color:var(--on-accent); border-top:1px solid var(--line-3);"
     >
       <div class="container-wide">
         <div class="comp-metrics">
           <div class="comp-metric">
-            <div class="h-2" style="color:var(--paper);">2023</div>
+            <div class="h-2" style="color:var(--on-accent);">2023</div>
             <div class="comp-metric-label">Founded</div>
           </div>
           <div class="comp-metric">
-            <div class="h-2" style="color:var(--paper);">400+</div>
+            <div class="h-2" style="color:var(--on-accent);">400+</div>
             <div class="comp-metric-label">Production deployments</div>
           </div>
           <div class="comp-metric">
-            <div class="h-2" style="color:var(--paper);">13+</div>
+            <div class="h-2" style="color:var(--on-accent);">13+</div>
             <div class="comp-metric-label">Global partners</div>
           </div>
           <div class="comp-metric" style="border-right:none;">
-            <div class="h-2" style="color:var(--paper);">2</div>
+            <div class="h-2" style="color:var(--on-accent);">2</div>
             <div class="comp-metric-label">EU research projects</div>
           </div>
         </div>
@@ -385,18 +385,18 @@ const team = [
   .comp-metrics {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    border: 1px solid rgba(246, 244, 238, 0.15);
+    border: 1px solid var(--dark-border);
     border-radius: var(--radius);
     overflow: hidden;
   }
   .comp-metric {
     padding: 32px;
-    border-right: 1px solid rgba(246, 244, 238, 0.15);
+    border-right: 1px solid var(--dark-border);
   }
   .comp-metric-label {
     margin-top: 4px;
     font-size: 13px;
-    color: rgba(246, 244, 238, 0.55);
+    color: var(--on-accent-muted);
   }
 
   /* ── Mission ────────────────────────────────────────────────── */
@@ -487,10 +487,10 @@ const team = [
       border-right: none;
     }
     .comp-metric:nth-child(3) {
-      border-top: 1px solid rgba(246, 244, 238, 0.15);
+      border-top: 1px solid var(--dark-border);
     }
     .comp-metric:nth-child(4) {
-      border-top: 1px solid rgba(246, 244, 238, 0.15);
+      border-top: 1px solid var(--dark-border);
     }
   }
   @media (max-width: 600px) {

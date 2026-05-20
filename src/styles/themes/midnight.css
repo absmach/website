@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Theme: Midnight  (dark)
+   Deep navy background · cool blue-white ink · sky-blue + orange accents
+   Feels: developer-first, premium dark mode — GitHub / Vercel / Raycast
+   ========================================================================== */
+
+/* FONT PAIRING (update --font-* AND the Google Fonts URL in BaseLayout.astro)
+   Current:      Montserrat + JetBrains Mono
+   Alternative:  "Inter" — crisp and legible on dark backgrounds
+     URL: https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap
+*/
+
+:root {
+  /* === Typography === */
+  --font-sans: "Montserrat";
+  --font-mono: "JetBrains Mono";
+
+  /* === Surfaces === */
+  --paper:   #0d1117;
+  --paper-2: #161b27;
+  --paper-3: #1e2540;
+
+  /* === Text === */
+  --ink:   #e8f1ff;
+  --ink-2: #c4cde8;
+  --ink-3: #7d8cb5;
+  --ink-4: #4a5a82;
+
+  /* === Borders === */
+  --line:   #e8f1ff;
+  --line-2: #1e2d50;
+  --line-3: #162240;
+
+  /* === Accent === */
+  --accent:      #4d9fff;
+  --accent-2:    #ff7a4a;
+  --accent-soft: rgba(77, 159, 255, 0.12);
+
+  /* === Status === */
+  --green: #4ade80;
+  --warn:  #fbbf24;
+
+  /* === Elevation === */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --shadow:    0 4px 14px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.20);
+  --shadow-lg: 0 18px 60px -20px rgba(0, 0, 0, 0.55), 0 4px 14px rgba(0, 0, 0, 0.35);
+
+  /* === Glass overlays (used in video hero sections) === */
+  /* Derived from --paper (#0d1117) */
+  --glass-start:  rgba(13, 17, 23, 0.92);
+  --glass-mid:    rgba(13, 17, 23, 0.76);
+  --glass-end:    rgba(13, 17, 23, 0.44);
+  --glass-top:    rgba(13, 17, 23, 0.34);
+  --glass-bottom: rgba(13, 17, 23, 0.86);
+  --glass-visual: rgba(22, 27, 39, 0.70);
+
+  /* === Accent surface (dark cards, code blocks, contact form) === */
+  /* In dark mode, "dark" sections are an elevated blue-navy for visible contrast */
+  --surface-accent:    #192845;
+  --on-accent:         #e8f1ff;
+  --on-accent-dim:     rgba(232, 241, 255, 0.85);
+  --on-accent-muted:   rgba(232, 241, 255, 0.60);
+  --on-accent-subtle:  rgba(232, 241, 255, 0.50);
+  --dark-border:       rgba(232, 241, 255, 0.12);
+  --dark-input-bg:     rgba(232, 241, 255, 0.04);
+  --dark-input-border: rgba(232, 241, 255, 0.12);
+
+  /* === System chrome === */
+  --scrollbar-thumb: rgba(77, 159, 255, 0.25);
+  --backdrop:        rgba(0, 0, 0, 0.65);
+
+  /* === Shape === */
+  --radius-sm: 4px;
+  --radius:    8px;
+  --radius-lg: 14px;
+
+  /* === Layout === */
+  --container:      1200px;
+  --container-wide: 1320px;
+}

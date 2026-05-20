@@ -500,18 +500,18 @@ const faqs = [
     </section>
 
     <!-- Production Deployments -->
-    <section style="background:var(--ink); color:var(--paper); padding:96px 0;">
+    <section style="background:var(--surface-accent); color:var(--on-accent); padding:96px 0;">
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
-            <span class="kicker" style="color:rgba(246,244,238,0.6);"
+            <span class="kicker" style="color:var(--on-accent-muted);"
               >In production</span
             >
-            <h2 class="h-1" style="margin-top:14px; color:var(--paper);">
+            <h2 class="h-1" style="margin-top:14px; color:var(--on-accent);">
               Trusted by industry leaders.
             </h2>
           </div>
-          <p class="lede" style="color:rgba(246,244,238,0.7); max-width:36ch;">
+          <p class="lede" style="color:var(--on-accent-dim); max-width:36ch;">
             Four flagship deployments, all built on the same open-source
             platform you can run yourself.
           </p>
@@ -540,12 +540,12 @@ const faqs = [
                   style="padding:32px; display:flex; flex-direction:column; gap:16px; flex:1;"
                 >
                   <h3
-                    style="font-size:20px; font-weight:600; color:var(--paper); margin:0;"
+                    style="font-size:20px; font-weight:600; color:var(--on-accent); margin:0;"
                   >
                     {d.title}
                   </h3>
                   <p
-                    style="font-size:15px; line-height:1.65; color:rgba(246,244,238,0.72); margin:0;"
+                    style="font-size:15px; line-height:1.65; color:var(--on-accent-dim); margin:0;"
                   >
                     {d.description}
                   </p>
@@ -553,7 +553,7 @@ const faqs = [
                     href={d.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style="display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; color:rgba(246,244,238,0.85); margin-top:auto; text-decoration:none;"
+                    style="display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; color:var(--on-accent-dim); margin-top:auto; text-decoration:none;"
                   >
                     {d.linkText} ↗
                   </a>

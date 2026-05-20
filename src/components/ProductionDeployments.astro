@@ -34,8 +34,8 @@ import { deployments } from "../data/deployments";
 
 <style>
   .pd-section {
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--surface-accent);
+    color: var(--on-accent);
     padding: 96px 0;
   }
 
@@ -96,7 +96,7 @@ import { deployments } from "../data/deployments";
   .pd-desc {
     font-size: 14px;
     line-height: 1.65;
-    color: rgba(246, 244, 238, 0.65);
+    color: var(--on-accent-muted);
     margin: 0;
     flex: 1;
   }
@@ -107,13 +107,13 @@ import { deployments } from "../data/deployments";
     gap: 4px;
     font-size: 13px;
     font-weight: 600;
-    color: rgba(246, 244, 238, 0.75);
+    color: var(--on-accent-dim);
     text-decoration: none;
     margin-top: 4px;
     transition: color 0.15s ease;
   }
   .pd-link:hover {
-    color: var(--paper);
+    color: var(--on-accent);
   }
 
   @media (max-width: 980px) {
