@@ -3,6 +3,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FinalCTA from "../components/FinalCTA.astro";
+import Award from "lucide-astro/Award";
+import Code2 from "lucide-astro/Code2";
+import Cpu from "lucide-astro/Cpu";
+import ShieldCheck from "lucide-astro/ShieldCheck";
 
 const glance = [
   { label: "Founded", value: "2023" },
@@ -17,22 +21,22 @@ const glance = [
 
 const values = [
   {
-    ic: "⊞",
+    ic: Code2,
     title: "Open Source First",
     desc: "We build in public, contribute back, and believe transparency creates better software. Our entire stack is open source, not just the parts that are convenient.",
   },
   {
-    ic: "⬡",
+    ic: ShieldCheck,
     title: "Security by Design",
     desc: "Security is a first-class requirement, not a feature bolted on later. From mTLS to confidential computing, we build it in from the start.",
   },
   {
-    ic: "◈",
+    ic: Cpu,
     title: "Innovation at the Edge",
     desc: "We push the frontier of distributed systems, IoT, and edge computing through production work and EU research programmes.",
   },
   {
-    ic: "◉",
+    ic: Award,
     title: "Pragmatic Excellence",
     desc: "Production-ready quality, delivered with engineering discipline. We ship systems that work at Nokia, Intel, and Ericsson scale.",
   },
@@ -176,14 +180,14 @@ const team = [
         </div>
         <div class="val-grid" style="margin-top:36px;">
           {
-            values.map((v) => (
+            values.map(({ ic: Ic, title, desc }) => (
               <div class="card">
-                <div class="val-icon">{v.ic}</div>
+                <div class="val-icon"><Ic size={20} /></div>
                 <h3 class="h-3" style="margin-top:16px;">
-                  {v.title}
+                  {title}
                 </h3>
                 <p style="margin-top:8px; font-size:14px; color:var(--ink-2); line-height:1.65;">
-                  {v.desc}
+                  {desc}
                 </p>
               </div>
             ))
@@ -421,7 +425,7 @@ const team = [
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    color: var(--ink-2);
     color: var(--ink-3);
   }
 

@@ -3,35 +3,41 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FinalCTA from "../components/FinalCTA.astro";
+import DollarSign from "lucide-astro/DollarSign";
+import FlaskConical from "lucide-astro/FlaskConical";
+import Github from "lucide-astro/Github";
+import Globe from "lucide-astro/Globe";
+import TrendingUp from "lucide-astro/TrendingUp";
+import Zap from "lucide-astro/Zap";
 
 const benefits = [
   {
-    ic: "◈",
+    ic: Globe,
     title: "Remote-First",
     desc: "Work from anywhere in Europe with flexible hours. We care about outcomes, not office time.",
   },
   {
-    ic: "⊞",
+    ic: Github,
     title: "Open Source",
     desc: "Contribute to projects used by thousands of developers worldwide. Your work ships publicly.",
   },
   {
-    ic: "◉",
+    ic: FlaskConical,
     title: "Research",
     desc: "Work on cutting-edge EU Horizon Europe projects in confidential computing and 6G networks.",
   },
   {
-    ic: "▲",
+    ic: TrendingUp,
     title: "Growth",
     desc: "Continuous learning, conference attendance, and the space to explore new technologies.",
   },
   {
-    ic: "◆",
+    ic: Zap,
     title: "Impact",
     desc: "Build infrastructure running at Nokia, Intel, and Ericsson scale. What you ship matters.",
   },
   {
-    ic: "⬡",
+    ic: DollarSign,
     title: "Competitive",
     desc: "Market-rate compensation and equity. We reward the people who make the work excellent.",
   },
@@ -95,11 +101,11 @@ const process = [
           </div>
         </div>
         <div class="ben-grid" style="margin-top:36px;">
-          {benefits.map((b) => (
+          {benefits.map(({ ic: Ic, title, desc }) => (
             <div class="card">
-              <div class="ben-icon">{b.ic}</div>
-              <h3 class="h-3" style="margin-top:16px;">{b.title}</h3>
-              <p style="margin-top:8px; font-size:14px; color:var(--ink-2); line-height:1.65;">{b.desc}</p>
+              <div class="ben-icon"><Ic size={20} /></div>
+              <h3 class="h-3">{title}</h3>
+              <p style="margin-top:8px; font-size:14px; color:var(--ink-2); line-height:1.65;">{desc}</p>
             </div>
           ))}
         </div>
@@ -172,13 +178,12 @@ const process = [
     width: 40px;
     height: 40px;
     border-radius: var(--radius-sm);
-    background: color-mix(in srgb, var(--accent) 10%, transparent);
-    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    background: var(--paper-2);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
-    color: var(--accent);
+    color: var(--ink-2);
+    margin-bottom: 14px;
   }
 
   /* ── Hiring status ──────────────────────────────────────────── */

@@ -1,5 +1,43 @@
+import Activity from "lucide-astro/Activity";
+import AlertTriangle from "lucide-astro/AlertTriangle";
+import BarChart from "lucide-astro/BarChart";
+import Building2 from "lucide-astro/Building2";
+import Car from "lucide-astro/Car";
+import Clock from "lucide-astro/Clock";
+import ClipboardList from "lucide-astro/ClipboardList";
+import ClipboardX from "lucide-astro/ClipboardX";
+import Database from "lucide-astro/Database";
+import Droplets from "lucide-astro/Droplets";
+import EyeOff from "lucide-astro/EyeOff";
+import Factory from "lucide-astro/Factory";
+import FileCheck from "lucide-astro/FileCheck";
+import FileText from "lucide-astro/FileText";
+import FlaskConical from "lucide-astro/FlaskConical";
+import Gauge from "lucide-astro/Gauge";
+import Heart from "lucide-astro/Heart";
+import Home from "lucide-astro/Home";
+import Layers from "lucide-astro/Layers";
+import Leaf from "lucide-astro/Leaf";
+import MapPin from "lucide-astro/MapPin";
+import Network from "lucide-astro/Network";
+import Scale from "lucide-astro/Scale";
+import Settings from "lucide-astro/Settings";
+import ShieldAlert from "lucide-astro/ShieldAlert";
+import Snowflake from "lucide-astro/Snowflake";
+import Sprout from "lucide-astro/Sprout";
+import Sun from "lucide-astro/Sun";
+import Thermometer from "lucide-astro/Thermometer";
+import Trash2 from "lucide-astro/Trash2";
+import TrendingDown from "lucide-astro/TrendingDown";
+import TrendingUp from "lucide-astro/TrendingUp";
+import Users from "lucide-astro/Users";
+import Waves from "lucide-astro/Waves";
+import Wheat from "lucide-astro/Wheat";
+import Wind from "lucide-astro/Wind";
+import Wrench from "lucide-astro/Wrench";
+
 export interface SolutionItem {
-  ic: string;
+  ic: any;
   title: string;
   desc: string;
 }
@@ -46,9 +84,9 @@ export const solutions: Solution[] = [
       title: "Problems utilities deal with every day",
       subtitle: "The operational and financial costs of reactive water management are well documented.",
       items: [
-        { ic: "B!", title: "Finding out about bursts from tenants, not telemetry", desc: "Most utilities hear about burst pipes from a complaint call. By then, the damage is done. The alarm should fire first." },
-        { ic: "NR", title: "A CFO who can't explain Non-Revenue Water losses", desc: "NRW of 20–40% is common in ageing networks. Without zone-level flow data, there's no way to know where the losses are." },
-        { ic: "RP", title: "Water quality compliance reports assembled by hand", desc: "Pulling pH, turbidity, and TDS data from multiple systems every week, then formatting it for the regulator. Every single week." },
+        { ic: Waves, title: "Finding out about bursts from tenants, not telemetry", desc: "Most utilities hear about burst pipes from a complaint call. By then, the damage is done. The alarm should fire first." },
+        { ic: TrendingDown, title: "A CFO who can't explain Non-Revenue Water losses", desc: "NRW of 20–40% is common in ageing networks. Without zone-level flow data, there's no way to know where the losses are." },
+        { ic: FileText, title: "Water quality compliance reports assembled by hand", desc: "Pulling pH, turbidity, and TDS data from multiple systems every week, then formatting it for the regulator. Every single week." },
       ],
     },
     howItWorks: {
@@ -64,10 +102,10 @@ export const solutions: Solution[] = [
       title: "Key Applications",
       subtitle: "Where utilities and property managers deploy smart metering",
       items: [
-        { ic: "MU", title: "Municipal distribution network monitoring", desc: "Flow, pressure, and quality at DMA boundaries. Leaks detected within minutes. NRW trends tracked monthly." },
-        { ic: "MP", title: "Multi-site commercial and residential property", desc: "Tenants see their own usage. Building managers get aggregate consumption and burst alarms." },
-        { ic: "WQ", title: "Water quality compliance for regulated supplies", desc: "Continuous WHO-threshold monitoring. Weekly compliance reports delivered automatically." },
-        { ic: "PS", title: "Pump station and storage tank management", desc: "Live pump state, energy draw, and tank levels. Spot inefficient pump cycles. Schedule refills before pressure drops." },
+        { ic: Network, title: "Municipal distribution network monitoring", desc: "Flow, pressure, and quality at DMA boundaries. Leaks detected within minutes. NRW trends tracked monthly." },
+        { ic: Building2, title: "Multi-site commercial and residential property", desc: "Tenants see their own usage. Building managers get aggregate consumption and burst alarms." },
+        { ic: Droplets, title: "Water quality compliance for regulated supplies", desc: "Continuous WHO-threshold monitoring. Weekly compliance reports delivered automatically." },
+        { ic: Gauge, title: "Pump station and storage tank management", desc: "Live pump state, energy draw, and tank levels. Spot inefficient pump cycles. Schedule refills before pressure drops." },
       ],
     },
     benefits: [
@@ -108,9 +146,9 @@ export const solutions: Solution[] = [
       title: "Cities are drowning in disconnected data",
       subtitle: "Urban infrastructure generates enormous amounts of data, but fragmented systems mean operators can't act on it fast enough.",
       items: [
-        { ic: "SI", title: "Fragmented Infrastructure", desc: "Traffic, lighting, waste, and energy systems run on separate platforms with no unified visibility, creating blind spots and duplicated efforts." },
-        { ic: "IR", title: "Slow Incident Response", desc: "Without real-time alerts, incidents like traffic accidents or infrastructure failures are discovered hours or days after the fact." },
-        { ic: "CO", title: "Escalating Operating Costs", desc: "Manual monitoring, fixed-schedule maintenance, and energy waste drive costs up with no data-driven path to reduce them." },
+        { ic: Layers, title: "Fragmented Infrastructure", desc: "Traffic, lighting, waste, and energy systems run on separate platforms with no unified visibility, creating blind spots and duplicated efforts." },
+        { ic: Clock, title: "Slow Incident Response", desc: "Without real-time alerts, incidents like traffic accidents or infrastructure failures are discovered hours or days after the fact." },
+        { ic: TrendingUp, title: "Escalating Operating Costs", desc: "Manual monitoring, fixed-schedule maintenance, and energy waste drive costs up with no data-driven path to reduce them." },
       ],
     },
     howItWorks: {
@@ -126,10 +164,10 @@ export const solutions: Solution[] = [
       title: "Key Applications",
       subtitle: "What cities are running on this pack today",
       items: [
-        { ic: "TM", title: "Adaptive Traffic Management", desc: "Real-time congestion monitoring with automated signal timing adjustments and incident alerts to reduce commute times." },
-        { ic: "SL", title: "Smart Street Lighting", desc: "Occupancy-based dimming schedules slash energy use. Faulty luminaires trigger maintenance tickets automatically." },
-        { ic: "WC", title: "Intelligent Waste Collection", desc: "Fill-level sensors route collection vehicles only to full bins, cutting collection kilometres by up to 40%." },
-        { ic: "PS", title: "Public Safety Monitoring", desc: "Environmental anomaly detection and infrastructure integrity alerts improve response times across city zones." },
+        { ic: Car, title: "Adaptive Traffic Management", desc: "Real-time congestion monitoring with automated signal timing adjustments and incident alerts to reduce commute times." },
+        { ic: Sun, title: "Smart Street Lighting", desc: "Occupancy-based dimming schedules slash energy use. Faulty luminaires trigger maintenance tickets automatically." },
+        { ic: Trash2, title: "Intelligent Waste Collection", desc: "Fill-level sensors route collection vehicles only to full bins, cutting collection kilometres by up to 40%." },
+        { ic: ShieldAlert, title: "Public Safety Monitoring", desc: "Environmental anomaly detection and infrastructure integrity alerts improve response times across city zones." },
       ],
     },
     benefits: [
@@ -171,9 +209,9 @@ export const solutions: Solution[] = [
       title: "The grid is more complex than ever",
       subtitle: "Distributed renewables, EV charging, and prosumer energy flows are pushing traditional grid management to its limits.",
       items: [
-        { ic: "GI", title: "Grid Instability", desc: "Intermittent renewable generation creates unpredictable load imbalances that traditional SCADA systems can't detect and respond to fast enough." },
-        { ic: "LV", title: "Limited Visibility", desc: "Distribution networks lack sensor density, creating blind spots where faults develop undetected until customers report outages." },
-        { ic: "DV", title: "Rising Demand Volatility", desc: "EV adoption and heat pump growth are creating new demand peaks that existing capacity planning models weren't designed for." },
+        { ic: Activity, title: "Grid Instability", desc: "Intermittent renewable generation creates unpredictable load imbalances that traditional SCADA systems can't detect and respond to fast enough." },
+        { ic: EyeOff, title: "Limited Visibility", desc: "Distribution networks lack sensor density, creating blind spots where faults develop undetected until customers report outages." },
+        { ic: TrendingUp, title: "Rising Demand Volatility", desc: "EV adoption and heat pump growth are creating new demand peaks that existing capacity planning models weren't designed for." },
       ],
     },
     howItWorks: {
@@ -189,10 +227,10 @@ export const solutions: Solution[] = [
       title: "Key Applications",
       subtitle: "What energy operators are running on this pack",
       items: [
-        { ic: "LB", title: "Load Balancing & Demand Response", desc: "Automated demand response programs shed controllable loads during peak periods, reducing grid stress and avoiding costly peak tariff charges." },
-        { ic: "RE", title: "Renewable Generation Monitoring", desc: "Real-time solar and wind generation tracking with curtailment alerts, yield forecasting, and performance benchmarking." },
-        { ic: "GF", title: "Grid Fault Detection", desc: "Voltage sag, swell, and harmonic distortion detection across distribution feeders, enabling rapid fault isolation before customer impact." },
-        { ic: "EA", title: "Energy Audit & Reporting", desc: "Automated daily and monthly energy balance reports for utility billing reconciliation, regulatory submission, and carbon accounting." },
+        { ic: Scale, title: "Load Balancing & Demand Response", desc: "Automated demand response programs shed controllable loads during peak periods, reducing grid stress and avoiding costly peak tariff charges." },
+        { ic: Sun, title: "Renewable Generation Monitoring", desc: "Real-time solar and wind generation tracking with curtailment alerts, yield forecasting, and performance benchmarking." },
+        { ic: AlertTriangle, title: "Grid Fault Detection", desc: "Voltage sag, swell, and harmonic distortion detection across distribution feeders, enabling rapid fault isolation before customer impact." },
+        { ic: BarChart, title: "Energy Audit & Reporting", desc: "Automated daily and monthly energy balance reports for utility billing reconciliation, regulatory submission, and carbon accounting." },
       ],
     },
     benefits: [
@@ -235,9 +273,9 @@ export const solutions: Solution[] = [
       title: "Problems cold storage operators deal with every shift",
       subtitle: "Temperature exceedances, equipment faults, and compliance gaps all have warning signals; the problem is catching them before product is at risk.",
       items: [
-        { ic: "TW", title: "A frozen zone warming past −15 °C overnight with no one on site", desc: "A compressor fault or door left ajar during a late loading run can push a frozen room toward the −12 °C HACCP critical limit in hours." },
-        { ic: "PA", title: "Paper logs that are incomplete when the auditor arrives", desc: "Manual temperature logs have gaps during nights, weekends, and busy periods. When a food safety regulator asks for 30 days of records, incomplete logs mean failed audits." },
-        { ic: "CF", title: "A compressor fault discovered after the room has warmed", desc: "A refrigeration unit drawing 6,000 W instead of its normal 2,500 W is heading toward failure. Without continuous power draw monitoring, the first sign is often a warm room and spoiled stock." },
+        { ic: Thermometer, title: "A frozen zone warming past −15 °C overnight with no one on site", desc: "A compressor fault or door left ajar during a late loading run can push a frozen room toward the −12 °C HACCP critical limit in hours." },
+        { ic: ClipboardX, title: "Paper logs that are incomplete when the auditor arrives", desc: "Manual temperature logs have gaps during nights, weekends, and busy periods. When a food safety regulator asks for 30 days of records, incomplete logs mean failed audits." },
+        { ic: Wrench, title: "A compressor fault discovered after the room has warmed", desc: "A refrigeration unit drawing 6,000 W instead of its normal 2,500 W is heading toward failure. Without continuous power draw monitoring, the first sign is often a warm room and spoiled stock." },
       ],
     },
     howItWorks: {
@@ -253,10 +291,10 @@ export const solutions: Solution[] = [
       title: "Key Applications",
       subtitle: "Where the Cold Storage Monitoring pack is deployed today",
       items: [
-        { ic: "HC", title: "Frozen and chilled warehouse HACCP compliance", desc: "Continuous zone-specific monitoring against HACCP critical limits. Warning alarms fire at −15 °C and +5 °C, giving operators a response window." },
-        { ic: "PH", title: "Pharmaceutical cold storage", desc: "Temperature-sensitive drugs and vaccines monitored against WHO PQS and GDP guidelines. CO2 level monitoring provides additional worker safety coverage." },
-        { ic: "EH", title: "Refrigeration equipment health monitoring", desc: "Compressor power draw tracked against the normal operating range. Energy anomaly warnings fire before mechanical failure forces a room shutdown." },
-        { ic: "RC", title: "Regulatory compliance reporting", desc: "Monthly HACCP compliance summaries with temperature history and exceedance alarm counts per zone, ready for food safety authority submissions." },
+        { ic: Thermometer, title: "Frozen and chilled warehouse HACCP compliance", desc: "Continuous zone-specific monitoring against HACCP critical limits. Warning alarms fire at −15 °C and +5 °C, giving operators a response window." },
+        { ic: FlaskConical, title: "Pharmaceutical cold storage", desc: "Temperature-sensitive drugs and vaccines monitored against WHO PQS and GDP guidelines. CO2 level monitoring provides additional worker safety coverage." },
+        { ic: Wrench, title: "Refrigeration equipment health monitoring", desc: "Compressor power draw tracked against the normal operating range. Energy anomaly warnings fire before mechanical failure forces a room shutdown." },
+        { ic: FileCheck, title: "Regulatory compliance reporting", desc: "Monthly HACCP compliance summaries with temperature history and exceedance alarm counts per zone, ready for food safety authority submissions." },
       ],
     },
     benefits: [
@@ -298,9 +336,9 @@ export const solutions: Solution[] = [
       title: "Guesswork is costing farms yield and water",
       subtitle: "Irrigation timing, pest management, and harvest decisions made without sensor data consistently underperform, and over-irrigating is both expensive and damaging.",
       items: [
-        { ic: "WW", title: "Water Waste", desc: "Calendar-based irrigation ignores actual soil moisture and evapotranspiration conditions, routinely over-irrigating by 20–40% and leaching nutrients." },
-        { ic: "UY", title: "Unpredictable Yields", desc: "Crop stress events (frost, heat, drought, disease pressure) go undetected until visible symptoms appear, when intervention is often already too late." },
-        { ic: "MS", title: "Manual Scouting Overhead", desc: "Labour-intensive manual monitoring across large farms can't achieve the sensor resolution needed for precision decisions." },
+        { ic: Droplets, title: "Water Waste", desc: "Calendar-based irrigation ignores actual soil moisture and evapotranspiration conditions, routinely over-irrigating by 20–40% and leaching nutrients." },
+        { ic: TrendingDown, title: "Unpredictable Yields", desc: "Crop stress events (frost, heat, drought, disease pressure) go undetected until visible symptoms appear, when intervention is often already too late." },
+        { ic: MapPin, title: "Manual Scouting Overhead", desc: "Labour-intensive manual monitoring across large farms can't achieve the sensor resolution needed for precision decisions." },
       ],
     },
     howItWorks: {
@@ -316,10 +354,10 @@ export const solutions: Solution[] = [
       title: "Key Applications",
       subtitle: "Precision agriculture use cases running on this pack",
       items: [
-        { ic: "PI", title: "Precision Irrigation", desc: "VWC-based irrigation scheduling replaces calendar timers with real soil data, reducing water use by 20–35% without yield impact." },
-        { ic: "CS", title: "Crop Stress Monitoring", desc: "Continuous tracking of heat stress, water deficit, and disease pressure indices allows proactive agronomic interventions before visible symptoms." },
-        { ic: "FA", title: "Frost & Weather Alerting", desc: "Microclimate frost risk alerts give operators a 2–4 hour warning window to activate frost protection measures for vulnerable crops." },
-        { ic: "SY", title: "Seasonal Yield Analysis", desc: "Historical sensor data and yield correlations improve season-on-season decision quality for irrigation, nutrition, and harvest timing." },
+        { ic: Droplets, title: "Precision Irrigation", desc: "VWC-based irrigation scheduling replaces calendar timers with real soil data, reducing water use by 20–35% without yield impact." },
+        { ic: Sprout, title: "Crop Stress Monitoring", desc: "Continuous tracking of heat stress, water deficit, and disease pressure indices allows proactive agronomic interventions before visible symptoms." },
+        { ic: Snowflake, title: "Frost & Weather Alerting", desc: "Microclimate frost risk alerts give operators a 2–4 hour warning window to activate frost protection measures for vulnerable crops." },
+        { ic: BarChart, title: "Seasonal Yield Analysis", desc: "Historical sensor data and yield correlations improve season-on-season decision quality for irrigation, nutrition, and harvest timing." },
       ],
     },
     benefits: [
@@ -362,9 +400,9 @@ export const solutions: Solution[] = [
       title: "Problems field operators deal with every shift",
       subtitle: "Wellhead incidents, gas hazards, and overfill events all have warning signals; the problem is having a system that catches them in time.",
       items: [
-        { ic: "H2", title: "H2S above threshold at an unmanned wellsite", desc: "An electrochemical H2S detector hitting the OSHA ceiling at an unmanned wellsite is a hazardous event with nobody there to respond. The alarm needs to fire before the next scheduled site visit." },
-        { ic: "OV", title: "A tank filling while the transfer pump is stopped overnight", desc: "When the transfer pump trips at midnight and nobody notices, crude keeps flowing into the tank. By morning the level is at 90% and the spill risk window is closing." },
-        { ic: "WP", title: "Wellhead pressure trending toward MAOP between manual checks", desc: "Pressure excursions that develop between manual checks can reach critical levels before anyone looks at the gauge. Continuous monitoring catches the trend at 1800 psi before it reaches 2200." },
+        { ic: Wind, title: "H2S above threshold at an unmanned wellsite", desc: "An electrochemical H2S detector hitting the OSHA ceiling at an unmanned wellsite is a hazardous event with nobody there to respond. The alarm needs to fire before the next scheduled site visit." },
+        { ic: Gauge, title: "A tank filling while the transfer pump is stopped overnight", desc: "When the transfer pump trips at midnight and nobody notices, crude keeps flowing into the tank. By morning the level is at 90% and the spill risk window is closing." },
+        { ic: TrendingUp, title: "Wellhead pressure trending toward MAOP between manual checks", desc: "Pressure excursions that develop between manual checks can reach critical levels before anyone looks at the gauge. Continuous monitoring catches the trend at 1800 psi before it reaches 2200." },
       ],
     },
     howItWorks: {
@@ -380,10 +418,10 @@ export const solutions: Solution[] = [
       title: "Key Applications",
       subtitle: "Where upstream operators deploy the Oil & Gas Field Monitoring pack",
       items: [
-        { ic: "WP", title: "Wellhead production monitoring", desc: "Flow rate, gas-oil ratio, and water cut tracked continuously across producing wells. Daily production reports close the loop without manual data collection." },
-        { ic: "HS", title: "H2S safety compliance at unmanned sites", desc: "Continuous OSHA-threshold monitoring at wellheads. Gas hazard alarms fire within seconds and reach on-call contacts by email." },
-        { ic: "TB", title: "Tank battery level management", desc: "Crude oil storage level monitored against two fill thresholds. Warning at 85% gives trucking schedulers a lead window before spill risk at 95%." },
-        { ic: "SP", title: "Separator and pump operations", desc: "Separator temperature and pressure trended for process upsets. Transfer pump status displayed and controllable from the KPI dashboard." },
+        { ic: Gauge, title: "Wellhead production monitoring", desc: "Flow rate, gas-oil ratio, and water cut tracked continuously across producing wells. Daily production reports close the loop without manual data collection." },
+        { ic: ShieldAlert, title: "H2S safety compliance at unmanned sites", desc: "Continuous OSHA-threshold monitoring at wellheads. Gas hazard alarms fire within seconds and reach on-call contacts by email." },
+        { ic: Database, title: "Tank battery level management", desc: "Crude oil storage level monitored against two fill thresholds. Warning at 85% gives trucking schedulers a lead window before spill risk at 95%." },
+        { ic: Settings, title: "Separator and pump operations", desc: "Separator temperature and pressure trended for process upsets. Transfer pump status displayed and controllable from the KPI dashboard." },
       ],
     },
     benefits: [
@@ -426,9 +464,9 @@ export const solutions: Solution[] = [
       title: "Problems farms deal with every season",
       subtitle: "The agronomic and financial costs of reactive irrigation management add up.",
       items: [
-        { ic: "BP", title: "Finding out about burst pipes from wet ground, not telemetry", desc: "A burst irrigation pipe in the early hours drains the tank, wastes water, and can leave an entire zone unirrigated. The alarm should fire before the water is gone." },
-        { ic: "NV", title: "No visibility into how much water each zone is actually using", desc: "Without zone-level flow data, water budgets are estimates at best. Comparing consumption against scheduled volumes is a spreadsheet job done after the fact." },
-        { ic: "SR", title: "Soil health reports assembled manually every week", desc: "Pulling moisture and temperature readings from sensors, averaging them per zone, and formatting the output for the agronomist. Every single week, by hand." },
+        { ic: Waves, title: "Finding out about burst pipes from wet ground, not telemetry", desc: "A burst irrigation pipe in the early hours drains the tank, wastes water, and can leave an entire zone unirrigated. The alarm should fire before the water is gone." },
+        { ic: EyeOff, title: "No visibility into how much water each zone is actually using", desc: "Without zone-level flow data, water budgets are estimates at best. Comparing consumption against scheduled volumes is a spreadsheet job done after the fact." },
+        { ic: FileText, title: "Soil health reports assembled manually every week", desc: "Pulling moisture and temperature readings from sensors, averaging them per zone, and formatting the output for the agronomist. Every single week, by hand." },
       ],
     },
     howItWorks: {
@@ -444,10 +482,10 @@ export const solutions: Solution[] = [
       title: "Key Applications",
       subtitle: "Where farms and land managers deploy smart irrigation monitoring",
       items: [
-        { ic: "AF", title: "Arable farming and precision crop irrigation", desc: "Zone-level soil moisture drives irrigation decisions rather than fixed schedules. Dry soil alarms fire before crops are stressed. Daily volume reports close the loop on water spend." },
-        { ic: "VO", title: "Vineyard and orchard water stress management", desc: "Soil moisture at canopy depth tells you when vines or trees are drawing on reserves. Irrigation runs only when needed. Waterlogging alarms prevent root rot during wet spells." },
-        { ic: "LT", title: "Multi-zone landscape and turf management", desc: "Golf courses, sports grounds, and municipal parks monitor each irrigation zone independently. Pipe burst alarms prevent overnight water loss." },
-        { ic: "SI", title: "Shared farmland and tenant irrigation accounts", desc: "Each farmer sees their own field's moisture history, water consumed, and device battery status. Aggregate consumption and alarm data stay with the farm manager." },
+        { ic: Wheat, title: "Arable farming and precision crop irrigation", desc: "Zone-level soil moisture drives irrigation decisions rather than fixed schedules. Dry soil alarms fire before crops are stressed. Daily volume reports close the loop on water spend." },
+        { ic: Leaf, title: "Vineyard and orchard water stress management", desc: "Soil moisture at canopy depth tells you when vines or trees are drawing on reserves. Irrigation runs only when needed. Waterlogging alarms prevent root rot during wet spells." },
+        { ic: MapPin, title: "Multi-zone landscape and turf management", desc: "Golf courses, sports grounds, and municipal parks monitor each irrigation zone independently. Pipe burst alarms prevent overnight water loss." },
+        { ic: Users, title: "Shared farmland and tenant irrigation accounts", desc: "Each farmer sees their own field's moisture history, water consumed, and device battery status. Aggregate consumption and alarm data stay with the farm manager." },
       ],
     },
     benefits: [
@@ -489,9 +527,9 @@ export const solutions: Solution[] = [
       title: "Air quality risks are invisible until harm is done",
       subtitle: "Pollutant exposure impacts public health, productivity, and regulatory compliance, but without continuous monitoring, exceedances go undetected for hours or days.",
       items: [
-        { ic: "CG", title: "Invisible Compliance Gaps", desc: "Manual sampling and infrequent measurement miss acute pollution events that breach regulatory limits, creating undetected compliance exposure for operators and municipalities." },
-        { ic: "PH", title: "Public Health Risk", desc: "Without real-time AQI monitoring, vulnerable populations (schools, hospitals, care homes) aren't notified during high-pollution events when protective action is needed." },
-        { ic: "MR", title: "Manual Reporting Burden", desc: "Compiling regulatory submissions from manual sampling and disparate sensor logs is time-consuming, error-prone, and creates delays in compliance reporting." },
+        { ic: ShieldAlert, title: "Invisible Compliance Gaps", desc: "Manual sampling and infrequent measurement miss acute pollution events that breach regulatory limits, creating undetected compliance exposure for operators and municipalities." },
+        { ic: Heart, title: "Public Health Risk", desc: "Without real-time AQI monitoring, vulnerable populations (schools, hospitals, care homes) aren't notified during high-pollution events when protective action is needed." },
+        { ic: ClipboardList, title: "Manual Reporting Burden", desc: "Compiling regulatory submissions from manual sampling and disparate sensor logs is time-consuming, error-prone, and creates delays in compliance reporting." },
       ],
     },
     howItWorks: {
@@ -507,10 +545,10 @@ export const solutions: Solution[] = [
       title: "Key Applications",
       subtitle: "Air quality monitoring deployments using this pack",
       items: [
-        { ic: "UA", title: "Urban AQI Networks", desc: "Dense sensor networks across city districts provide neighbourhood-level air quality data for public information systems and pollution mapping." },
-        { ic: "IA", title: "Indoor Air Quality Management", desc: "CO₂ and VOC monitoring in offices, schools, and public buildings drives HVAC automation and ventilation alerts to maintain healthy indoor environments." },
-        { ic: "IB", title: "Industrial Boundary Monitoring", desc: "Perimeter sensor networks at industrial facilities continuously monitor regulated pollutants, providing automated permit compliance evidence and exceedance alerts." },
-        { ic: "RC", title: "Regulatory Compliance Reporting", desc: "Automated generation of regulatory-format air quality reports for environmental agency submissions, reducing compliance administration overhead significantly." },
+        { ic: Building2, title: "Urban AQI Networks", desc: "Dense sensor networks across city districts provide neighbourhood-level air quality data for public information systems and pollution mapping." },
+        { ic: Home, title: "Indoor Air Quality Management", desc: "CO₂ and VOC monitoring in offices, schools, and public buildings drives HVAC automation and ventilation alerts to maintain healthy indoor environments." },
+        { ic: Factory, title: "Industrial Boundary Monitoring", desc: "Perimeter sensor networks at industrial facilities continuously monitor regulated pollutants, providing automated permit compliance evidence and exceedance alerts." },
+        { ic: FileCheck, title: "Regulatory Compliance Reporting", desc: "Automated generation of regulatory-format air quality reports for environmental agency submissions, reducing compliance administration overhead significantly." },
       ],
     },
     benefits: [
