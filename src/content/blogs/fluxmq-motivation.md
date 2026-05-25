@@ -224,7 +224,7 @@ We’ll outline:
 - and the design constraints that shaped these choices
 
 If you care about messaging systems, protocol design, or distributed architecture — now is the perfect time to get involved:
-- 🌐 **Website:** https://fluxmq.absmach.eu
+- 🌐 **Website:** https://absmach.eu/products/fluxmq
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
 - 📘 **Documentation:** https://www.absmach.eu/docs/fluxmq
 - 💬 **Discord:** https://discord.gg/HvB5QuzF
