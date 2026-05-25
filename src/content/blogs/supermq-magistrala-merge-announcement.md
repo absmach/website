@@ -127,7 +127,7 @@ The versatile, high-performance message broker for cloud and edge:
 
 FluxMQ handles messaging. Magistrala (and other systems) build on top of it.
 
-### 3. [A0](https://absmach.eu/products/a0) — IoT Gateway Hardware
+### 3. [A0](https://www.absmach.eu/products/a0) — IoT Gateway Hardware
 Modular, open-source IoT gateway solutions:
 - **Smart metering** — Energy monitoring and consumption tracking
 - **Industrial IoT** — Multi-protocol connectivity for industrial systems

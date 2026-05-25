@@ -179,7 +179,7 @@ Wasm does not solve orchestration. But it eliminates one of the hardest parts: m
 
 Most teams building cloud-edge systems end up managing two separate stacks — one for the cloud, one for the edge — with no unified control plane between them. Every deployment involves SSH sessions, manual file transfers, and coordination calls with site operations teams.
 
-**[Propeller](https://absmach.eu/products/propeller/) eliminates that gap.** It is an open-source orchestrator built specifically for Wasm workloads across the cloud-edge continuum.
+**[Propeller](https://www.absmach.eu/products/propeller/) eliminates that gap.** It is an open-source orchestrator built specifically for Wasm workloads across the cloud-edge continuum.
 
 It handles:
 
@@ -290,4 +290,4 @@ Propeller makes that split practical. You write Wasm workloads. Propeller handle
 
 **Propeller is open source.** You can run the full stack locally, connect proplets, and deploy your first Wasm task in minutes.
 
-→ [Explore the documentation and get started at propeller.absmach.eu](https://absmach.eu/products/propeller)
+→ [Explore the documentation and get started at propeller.absmach.eu](https://www.absmach.eu/products/propeller)
