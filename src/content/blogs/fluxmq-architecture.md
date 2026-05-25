@@ -311,7 +311,7 @@ In the next post, we’ll zoom in further and explore one of the core building b
 After that, we will discuss **queues and message flow**, and how FluxMQ reconciles messaging and event logs without collapsing them into the same abstraction.
 
 If you want to follow along or help shape the design:
-- 🌐 **Website:** https://fluxmq.absmach.eu
+- 🌐 **Website:** https://absmach.eu/products/fluxmq
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
 - 📘 **Documentation:** https://www.absmach.eu/docs/fluxmq
 - 💬 **Discord:** https://discord.gg/HvB5QuzF

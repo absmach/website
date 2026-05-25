@@ -99,7 +99,7 @@ The current dashboard covers the core operational view. Upcoming work includes a
 If you have a specific use case or a gap you're running into, [open an issue](https://github.com/absmach/fluxmq/issues) on GitHub.
 
 Get involved or stay up to date:
-- 🌐 **Website:** https://fluxmq.absmach.eu
+- 🌐 **Website:** https://absmach.eu/products/fluxmq
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
 - 📘 **Documentation:** https://www.absmach.eu/docs/fluxmq
 - 💬 **Discord:** https://discord.gg/HvB5QuzF
