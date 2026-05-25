@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 
 export const prerender = true;
 
-const DEFAULT_SITE = "https://absmach.eu";
+const DEFAULT_SITE = "https://www.absmach.eu/";
 
 export const GET: APIRoute = ({ site }) => {
   const base = site ? new URL(site) : new URL(DEFAULT_SITE);

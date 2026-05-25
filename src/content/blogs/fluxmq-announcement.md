@@ -33,7 +33,7 @@ For years, we relied on existing brokers as the backbone of our architecture, an
 
 That realization led us to start a new project.
 
-Meet <a href="https://absmach.eu/products/fluxmq"><span style="color:#2F69B3">**Flux**</span><span style="color:#F9A32A">**MQ**</span>!</a>
+Meet <a href="https://www.absmach.eu/products/fluxmq"><span style="color:#2F69B3">**Flux**</span><span style="color:#F9A32A">**MQ**</span>!</a>
 
 ---
 
@@ -149,7 +149,7 @@ FluxMQ is **open source and actively developed**. We're building it in public, a
 
 **Start here:**
 
-- 🌐 **Website:** https://absmach.eu/products/fluxmq
+- 🌐 **Website:** https://www.absmach.eu/products/fluxmq
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
 - 📘 **Documentation:** https://www.absmach.eu/docs/fluxmq
 - 💬 **Discord:** https://discord.gg/HvB5QuzF

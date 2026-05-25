@@ -30,7 +30,7 @@ featured: false # optional (featured posts are pinned above non-featured posts o
 draft: false # optional (set true to hide from /blog/)
 coverImage: "/img/blogs/my-new-post/cover.png" # optional (URL or local path)
 coverVideo: "https://www.youtube.com/watch?v=R3GfuzLMPkA" # optional (YouTube only, hero video)
-canonical: "https://absmach.eu/blog/my-new-post/" # optional
+canonical: "https://www.absmach.eu/blog/my-new-post/" # optional
 slug: "my-new-post" # optional override
 ---
 ```

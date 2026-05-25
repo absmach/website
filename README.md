@@ -1,6 +1,6 @@
 # Abstract Machines Website
 
-Astro + Tailwind source for the [Abstract Machines](https://absmach.eu) website and blog.
+Astro + Tailwind source for the [Abstract Machines](https://www.absmach.eu/) website and blog.
 
 ## Stack
 

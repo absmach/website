@@ -39,7 +39,7 @@ FluxMQ is not an experiment, a toy, or a “because we can” project. It is the
 
 ## Context: Messaging as a Core, Not a Dependency
 
-As mentioned in the [announcement post](https://absmach.eu/blog/fluxmq-announcement/), FluxMQ grew out of our work on [SuperMQ](https://github.com/absmach/supermq), a core for event-driven distributed systems that itself evolved from the IoT platform [Magistrala](https://magistrala.abmach.eu).
+As mentioned in the [announcement post](https://www.absmach.eu/blog/fluxmq-announcement/), FluxMQ grew out of our work on [SuperMQ](https://github.com/absmach/supermq), a core for event-driven distributed systems that itself evolved from the IoT platform [Magistrala](https://magistrala.abmach.eu).
 
 In most systems, messaging is treated as _plumbing_ — something you wire up and forget about.
 In our case, messaging is **the product**.
@@ -224,7 +224,7 @@ We’ll outline:
 - and the design constraints that shaped these choices
 
 If you care about messaging systems, protocol design, or distributed architecture — now is the perfect time to get involved:
-- 🌐 **Website:** https://absmach.eu/products/fluxmq
+- 🌐 **Website:** https://www.absmach.eu/products/fluxmq
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
 - 📘 **Documentation:** https://www.absmach.eu/docs/fluxmq
 - 💬 **Discord:** https://discord.gg/HvB5QuzF
