@@ -313,5 +313,5 @@ After that, we will discuss **queues and message flow**, and how FluxMQ reconcil
 If you want to follow along or help shape the design:
 - 🌐 **Website:** https://fluxmq.absmach.eu
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
-- 📘 **Documentation:** https://fluxmq.absmach.eu/docs
+- 📘 **Documentation:** https://www.absmach.eu/docs/fluxmq
 - 💬 **Discord:** https://discord.gg/HvB5QuzF

@@ -29,18 +29,18 @@ tags:
 
 Magistrala ships with numerous features. Key to these features are the building blocks of Magistrala:
 
-1. [Users](https://magistrala.absmach.eu/docs/dev-guide/services/users/) - These are the individuals interacting with the system.
-2. [Domains](https://magistrala.absmach.eu/docs/user-guide/domain-management/domain/) - These are logical groupings that separate different tenants and govern access control. Basically multi-tenancy out of the box!
-3. [Roles](https://magistrala.absmach.eu/docs/dev-guide/authorization/) - Roles are a set of permissions that a user can have within the system. They allow for fine-grained access control by associating users with the actions they are allowed to perform.
-4. [Groups](https://magistrala.absmach.eu/docs/user-guide/clients-management/groups/) - These are hierarchical structures used to organize clients and channels within a domain.
-5. [Clients](https://magistrala.absmach.eu/docs/user-guide/clients-management/clients/) - These represent devices or applications that connect to the platform for communication.
-6. [Channels](https://magistrala.absmach.eu/docs/user-guide/clients-management/channels/) - Channels are message conduits between the clients connected to them and the system. They map to topics in the message broker.
-7. [Rules](https://magistrala.absmach.eu/docs/user-guide/rules-engine/) - These are scriptable logic units that enable message processing. They consume messages, apply processing logic, and output to various integrations such as alarms, email, PostgresDB, Slack, internal TimescaleDB, or forwarding to other channels.
-8. [Alarms](https://magistrala.absmach.eu/docs/user-guide/alarms/) - Alarms are system-generated indicators and warnings triggered by threshold conditions defined in rules.
-9. [Reports](https://magistrala.absmach.eu/docs/user-guide/reports/) - Reports allow users to generate and schedule processed information from messages coming from connected devices and sensors. This allows them to collect, aggregate, and export metrics in PDF and CSV formats either via email or direct download.
-10. [Dashboards](https://magistrala.absmach.eu/docs/user-guide/dashboards/introduction/) - Dashboards allow you to build and customize real-time or historical visualizations of your data. We support templates as well; these allow the same dashboard to display different data for different users.
-11. [Tags](https://magistrala.absmach.eu/docs/dev-guide/entities/#tags-filtering) - These are labels used to uniquely identify entities. They are used to filter entities when listing.
-12. [Metadata](https://magistrala.absmach.eu/docs/user-guide/metadata/) - Metadata is a free-form JSON object used to attach arbitrary structured data to entities. With metadata, we give entities properties that represent their real-world counterparts.
+1. [Users](https://www.absmach.eu/docs/magistrala/dev-guide/services/users/) - These are the individuals interacting with the system.
+2. [Domains](https://www.absmach.eu/docs/magistrala/user-guide/domain-management/domain/) - These are logical groupings that separate different tenants and govern access control. Basically multi-tenancy out of the box!
+3. [Roles](https://www.absmach.eu/docs/magistrala/dev-guide/authorization/) - Roles are a set of permissions that a user can have within the system. They allow for fine-grained access control by associating users with the actions they are allowed to perform.
+4. [Groups](https://www.absmach.eu/docs/magistrala/user-guide/clients-management/groups/) - These are hierarchical structures used to organize clients and channels within a domain.
+5. [Clients](https://www.absmach.eu/docs/magistrala/user-guide/clients-management/clients/) - These represent devices or applications that connect to the platform for communication.
+6. [Channels](https://www.absmach.eu/docs/magistrala/user-guide/clients-management/channels/) - Channels are message conduits between the clients connected to them and the system. They map to topics in the message broker.
+7. [Rules](https://www.absmach.eu/docs/magistrala/user-guide/rules-engine/) - These are scriptable logic units that enable message processing. They consume messages, apply processing logic, and output to various integrations such as alarms, email, PostgresDB, Slack, internal TimescaleDB, or forwarding to other channels.
+8. [Alarms](https://www.absmach.eu/docs/magistrala/user-guide/alarms/) - Alarms are system-generated indicators and warnings triggered by threshold conditions defined in rules.
+9. [Reports](https://www.absmach.eu/docs/magistrala/user-guide/reports/) - Reports allow users to generate and schedule processed information from messages coming from connected devices and sensors. This allows them to collect, aggregate, and export metrics in PDF and CSV formats either via email or direct download.
+10. [Dashboards](https://www.absmach.eu/docs/magistrala/user-guide/dashboards/introduction/) - Dashboards allow you to build and customize real-time or historical visualizations of your data. We support templates as well; these allow the same dashboard to display different data for different users.
+11. [Tags](https://www.absmach.eu/docs/magistrala/dev-guide/entities/#tags-filtering) - These are labels used to uniquely identify entities. They are used to filter entities when listing.
+12. [Metadata](https://www.absmach.eu/docs/magistrala/user-guide/metadata/) - Metadata is a free-form JSON object used to attach arbitrary structured data to entities. With metadata, we give entities properties that represent their real-world counterparts.
 
 Together, these building blocks give you the flexibility to make your Magistrala solution as simple or as sophisticated as your needs demand.
 
@@ -75,5 +75,5 @@ With all these great features, Magistrala has positioned itself as the leading f
 - ☁️ **Cloud:** https://cloud.magistrala.absmach.eu
 - 🌐 **Website:** https://magistrala.absmach.eu
 - ⚙️ **GitHub:** https://github.com/absmach/magistrala
-- 📘 **Documentation:** https://magistrala.absmach.eu/docs
+- 📘 **Documentation:** https://www.absmach.eu/docs/magistrala
 - 💬 **Matrix:** https://matrix.to/#/#magistrala:matrix.org

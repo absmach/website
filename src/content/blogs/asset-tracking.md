@@ -191,6 +191,6 @@ Deploy in the cloud or self-host on your own infrastructure. No vendor lock-in. 
 <a href="https://cloud.magistrala.absmach.eu" class="button-primary !flex !w-full !justify-center !rounded-xl !px-5 !py-3.5 text-sm">Start Free Cloud Trial</a>
 <a href="https://github.com/absmach/magistrala" class="button-secondary !flex !w-full !justify-center !rounded-xl !px-5 !py-3.5 text-sm">Self-Host Open Source (GitHub)</a>
 </div>
-<p class="mt-4 text-sm text-muted">Need implementation help? <a href="https://magistrala.absmach.eu/docs" class="font-semibold text-accent hover:underline">Read the documentation</a> or <a href="https://matrix.to/#/!zhoyNzJKBUyyhHtgPr" class="font-semibold text-accent hover:underline">join the community</a>.</p>
+<p class="mt-4 text-sm text-muted">Need implementation help? <a href="https://www.absmach.eu/docs/magistrala" class="font-semibold text-accent hover:underline">Read the documentation</a> or <a href="https://matrix.to/#/!zhoyNzJKBUyyhHtgPr" class="font-semibold text-accent hover:underline">join the community</a>.</p>
 </div>
 </section>

@@ -195,13 +195,13 @@ You focus on writing workload logic. Propeller handles where it runs and how it 
 
 Propeller's architecture maps cleanly onto the cloud-edge model.
 
-The **[Manager](https://propeller.absmach.eu/docs/manager)** runs centrally — in your cloud environment or a central on-premise server. It handles scheduling, proplet discovery, result storage, and metrics aggregation. All interaction with the system goes through the Manager. Edge devices never need to be directly reachable.
+The **[Manager](https://www.absmach.eu/docs/propeller/manager)** runs centrally — in your cloud environment or a central on-premise server. It handles scheduling, proplet discovery, result storage, and metrics aggregation. All interaction with the system goes through the Manager. Edge devices never need to be directly reachable.
 
-The **[Manager](https://propeller.absmach.eu/docs/manager)** runs centrally — on a gateway, industrial PC, or any Linux machine. They register with the Manager at startup, listen for task commands, execute Wasm binaries using the Wasmtime runtime, and report results back. **Proplets need only outbound MQTT connectivity.** No open firewall rules. No VPN. No inbound ports.
+The **[Manager](https://www.absmach.eu/docs/propeller/manager)** runs centrally — on a gateway, industrial PC, or any Linux machine. They register with the Manager at startup, listen for task commands, execute Wasm binaries using the Wasmtime runtime, and report results back. **Proplets need only outbound MQTT connectivity.** No open firewall rules. No VPN. No inbound ports.
 
 **[SuperMQ](https://docs.supermq.absmach.eu/)** is the MQTT broker layer connecting them. All control messages — task dispatches, results, heartbeats, binary chunks — flow through it. Edge sites behind firewalls or on intermittent links can participate as long as they can reach the broker.
 
-The **[Proxy](https://propeller.absmach.eu/docs/proxy)** handles OCI registry delivery. When a task references a container image, the proxy fetches the Wasm binary, chunks it, and streams it to the proplet over MQTT. Proplets do not need direct internet access to receive new workloads.
+The **[Proxy](https://www.absmach.eu/docs/propeller/proxy)** handles OCI registry delivery. When a task references a container image, the proxy fetches the Wasm binary, chunks it, and streams it to the proplet over MQTT. Proplets do not need direct internet access to receive new workloads.
 
 The result: **a task submitted from a laptop in one country can run on edge hardware at a remote factory on another continent** — without VPN, without direct network access, without any manual steps at the site.
 
@@ -239,7 +239,7 @@ One of the most underestimated operational problems in cloud-edge systems is mon
 
 Propeller collects CPU usage, memory consumption, disk I/O, and uptime from every running task and surfaces it through the Manager — **no agents, no VPN, no direct machine access.** Configure a collection interval and retain a rolling history of samples per task.
 
-[Metrics](https://propeller.absmach.eu/docs/monitoring) can also be streamed in real time to any MQTT subscriber, making it straightforward to feed existing dashboards or alerting pipelines without any custom integration work.
+[Metrics](https://www.absmach.eu/docs/propeller/monitoring) can also be streamed in real time to any MQTT subscriber, making it straightforward to feed existing dashboards or alerting pipelines without any custom integration work.
 
 ## Scheduled and Federated Workloads
 

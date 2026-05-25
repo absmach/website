@@ -416,7 +416,7 @@ TASK_ID="<task-id-from-response>"
 curl -sS -X POST http://localhost:7070/tasks/$TASK_ID/start | jq .
 ```
 
-For complete task lifecycle documentation and full API details, refer to the [Propeller API docs](https://propeller.absmach.eu/docs/manager).
+For complete task lifecycle documentation and full API details, refer to the [Propeller API docs](https://www.absmach.eu/docs/propeller/manager).
 
 ## Limitations and good practices
 
