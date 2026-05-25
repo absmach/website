@@ -241,5 +241,5 @@ If your use case is standard and well defined, managed platforms are faster. If 
 To see how Magistrala works in practice, the [Magistrala as a Framework](/blog/magistrala-as-framework) post walks through how Magistrala functions as a framework. You can also try the platform directly:
 
 - **Cloud**: [cloud.magistrala.absmach.eu](https://cloud.magistrala.absmach.eu)
-- **Documentation**: [magistrala.absmach.eu/docs](https://magistrala.absmach.eu/docs)
+- **Documentation**: [magistrala.absmach.eu/docs](https://www.absmach.eu/docs/magistrala)
 - **GitHub**: [github.com/absmach/magistrala](https://github.com/absmach/magistrala)

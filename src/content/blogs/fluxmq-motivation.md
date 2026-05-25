@@ -226,7 +226,7 @@ We’ll outline:
 If you care about messaging systems, protocol design, or distributed architecture — now is the perfect time to get involved:
 - 🌐 **Website:** https://fluxmq.absmach.eu
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
-- 📘 **Documentation:** https://fluxmq.absmach.eu/docs
+- 📘 **Documentation:** https://www.absmach.eu/docs/fluxmq
 - 💬 **Discord:** https://discord.gg/HvB5QuzF
  
 We’re building this in the open.  

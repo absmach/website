@@ -32,7 +32,7 @@ The journey of a thousand miles begins with the first step. When we set out to d
 
 ## The Vision
 
-The [A0](https://hardware.absmach.eu/a0) is a dual-board system designed to act as a smart meter gateway with impressive connectivity options:
+The [A0](https://www.absmach.eu/products/a0/) is a dual-board system designed to act as a smart meter gateway with impressive connectivity options:
 
 The A0 Main Board features:
 

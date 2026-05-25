@@ -151,7 +151,7 @@ FluxMQ is **open source and actively developed**. We're building it in public, a
 
 - 🌐 **Website:** https://fluxmq.absmach.eu
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
-- 📘 **Documentation:** https://fluxmq.absmach.eu/docs
+- 📘 **Documentation:** https://www.absmach.eu/docs/fluxmq
 - 💬 **Discord:** https://discord.gg/HvB5QuzF
 
 ## What’s Next?
