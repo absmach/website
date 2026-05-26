@@ -2217,6 +2217,12 @@ section {
     word-break: break-word;
     font-size: 12px;
   }
+  /* Blog filter chips: ensure 44px touch target */
+  .product-chip,
+  .tag-chip {
+    min-height: 44px;
+    justify-content: center;
+  }
   /* newsletter: stack input + button vertically */
   .newsletter-pill {
     flex-direction: column;
