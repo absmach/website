@@ -447,7 +447,115 @@
 
   @media (max-width: 640px) {
     .product-stack {
-      display: none;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: min(calc(100% - 28px), 340px);
+      margin: 14px auto 0;
+      justify-self: center;
+      border-color: rgba(7, 55, 99, 0.22);
+      animation: none;
+    }
+    .ps-mark {
+      animation: none;
+      opacity: 1;
+    }
+    .ps-mark::before {
+      height: 12px;
+    }
+    .ps-mark::after {
+      width: 12px;
+    }
+    .ps-tl::before {
+      top: -12px;
+    }
+    .ps-tl::after {
+      left: -12px;
+    }
+    .ps-tr::before {
+      top: -12px;
+    }
+    .ps-tr::after {
+      right: -12px;
+    }
+    .ps-bl::before {
+      bottom: -12px;
+    }
+    .ps-bl::after {
+      left: -12px;
+    }
+    .ps-br::before {
+      bottom: -12px;
+    }
+    .ps-br::after {
+      right: -12px;
+    }
+    .ps-cell.ps-span::before,
+    .ps-cell.ps-span::after {
+      display: block;
+      width: 12px;
+      background: rgba(7, 55, 99, 0.25);
+    }
+    .ps-cell.ps-span::before {
+      left: -12px;
+    }
+    .ps-cell.ps-span::after {
+      right: -12px;
+    }
+    .ps-cell,
+    .ps-magistrala,
+    .ps-fluxmq,
+    .ps-atom,
+    .ps-propeller,
+    .ps-a0,
+    .ps-a1,
+    .ps-quarc {
+      min-height: 76px;
+      padding: 14px;
+      animation: none;
+      border-color: rgba(7, 55, 99, 0.18);
+      transform: none;
+      opacity: 1;
+    }
+    .ps-magistrala {
+      grid-column: 1 / -1;
+      min-height: 88px;
+      background: rgba(7, 55, 99, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.18);
+    }
+    .ps-half {
+      grid-column: span 1;
+    }
+    .ps-propeller,
+    .ps-a0,
+    .ps-a1 {
+      border-right: 1px solid rgba(7, 55, 99, 0.18);
+      border-bottom: 1px solid rgba(7, 55, 99, 0.18);
+    }
+    .ps-quarc {
+      border-bottom: 1px solid rgba(7, 55, 99, 0.18);
+    }
+    .ps-name,
+    .ps-propeller .ps-name,
+    .ps-a0 .ps-name,
+    .ps-a1 .ps-name,
+    .ps-quarc .ps-name {
+      font-size: 14px;
+      line-height: 1.1;
+    }
+    .ps-tag,
+    .ps-propeller .ps-tag,
+    .ps-a0 .ps-tag,
+    .ps-a1 .ps-tag,
+    .ps-quarc .ps-tag {
+      position: static;
+      align-self: flex-start;
+      margin-top: 14px;
+      max-width: 100%;
+      white-space: normal;
+      font-size: 8px;
+      line-height: 1.25;
+      padding: 3px 7px;
+      letter-spacing: 0.08em;
     }
   }
 </style>
