@@ -242,7 +242,7 @@ const faqs = [
         <source src="/video/hero-background.mp4" type="video/mp4" />
       </video>
       <div class="container-wide">
-        <div style="text-align: center;">
+        <div class="hero-copy" style="text-align: center;">
           <div style="text-align: left;">
             <p class="atom-wordmark">Atom</p>
           </div>
@@ -688,7 +688,7 @@ const faqs = [
 
   /* ─── Stats bar ─────────────────────────────────────────────────── */
   .atom-metrics {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   /* ─── Feature icons ─────────────────────────────────────────────── */
@@ -1121,7 +1121,7 @@ const faqs = [
   }
   @media (max-width: 640px) {
     .atom-metrics {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
     }
     .atom-sol-grid,
     .atom-deploy-grid {

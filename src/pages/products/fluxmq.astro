@@ -175,7 +175,7 @@ const faqs = [
         <source src="/video/hero-background.mp4" type="video/mp4" />
       </video>
       <div class="container-wide">
-        <div style="text-align: center;">
+        <div class="hero-copy" style="text-align: center;">
           <div>
             <p class="fmq-wordmark">
               <span>Flux</span><span class="mq">MQ</span>
@@ -627,7 +627,7 @@ graph TD
 
   /* Stats bar */
   .fmq-metrics {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   /* Architecture layout */
@@ -688,20 +688,21 @@ graph TD
   /* Performance 3-col grid */
   .fmq-perf-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
   }
 
   /* Quick Start */
   .fmq-qs-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
   }
   .fmq-qs-card {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    min-width: 0;
   }
   .fmq-qs-step {
     font-family: "JetBrains Mono", monospace;
@@ -723,6 +724,7 @@ graph TD
     overflow-x: auto;
     margin: 0;
     flex: 1;
+    max-width: 100%;
   }
 
   /* Responsive */
@@ -739,7 +741,7 @@ graph TD
   }
   @media (max-width: 640px) {
     .fmq-metrics {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
     }
     .fmq-metrics .metric {
       border-right: none;
@@ -749,6 +751,10 @@ graph TD
     }
     .fmq-wordmark {
       font-size: 32px;
+    }
+    .fmq-qs-code {
+      white-space: pre-wrap;
+      word-break: break-word;
     }
   }
 </style>

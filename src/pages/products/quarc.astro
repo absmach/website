@@ -198,7 +198,7 @@ const faqs = [
         <source src="/video/hero-background.mp4" type="video/mp4" />
       </video>
       <div class="container-wide">
-        <div style="text-align: center;">
+        <div class="hero-copy" style="text-align: center;">
           <div style="text-align: left;">
             <p class="quarc-wordmark">Quarc</p>
           </div>
@@ -666,7 +666,7 @@ const faqs = [
 
   /* ─── Stats bar ─────────────────────────────────────────────────── */
   .quarc-metrics {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   /* ─── Feature icons ─────────────────────────────────────────────── */
@@ -1088,7 +1088,7 @@ const faqs = [
     .quarc-sol-grid       { grid-template-columns: 1fr; }
   }
   @media (max-width: 640px) {
-    .quarc-metrics        { grid-template-columns: repeat(2, 1fr); }
+    .quarc-metrics        { grid-template-columns: 1fr; }
     .quarc-bd-bot         { grid-template-columns: repeat(2, 1fr); }
     .quarc-security-grid  { grid-template-columns: 1fr; }
   }
