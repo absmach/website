@@ -148,7 +148,7 @@ const faqs = [
       </video>
       <div class="container-wide">
         <div class="hero-grid">
-          <div>
+          <div class="hero-copy">
             <div class="logo-mark">
               <span class="swatch" style="background:rgba(255,255,255,0.12);"></span>
               A0 · Edge Gateway · Hardware
@@ -399,11 +399,11 @@ const faqs = [
 <style>
   /* Metrics */
   .a0-metrics {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   @media (max-width: 640px) {
     .a0-metrics {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
     }
     .a0-metrics .metric {
       border-right: none;

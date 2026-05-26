@@ -196,7 +196,7 @@ const faqs = [
       </video>
       <div class="container-wide">
         <div class="hero-grid">
-          <div>
+          <div class="hero-copy">
             <img
               src="/img/products/propeller-named-white.svg"
               alt="Propeller"
@@ -525,22 +525,37 @@ const faqs = [
   .arch-card {
     /* background: #ffffff; */
     border-radius: 12px;
-    padding: 24px;
+    padding: clamp(8px, 3vw, 24px);
     color-scheme: light;
+    width: 100%;
+    min-width: 0;
   }
   .arch-img {
     width: 100%;
+    max-width: 100%;
     height: auto;
     display: block;
   }
 
   /* Metrics responsive */
   .prop-metrics {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   @media (max-width: 640px) {
+    .prod-hero .hero-visual {
+      aspect-ratio: auto;
+      max-height: none;
+      overflow: visible;
+    }
+    .arch-card {
+      padding: 0;
+    }
+    .arch-img {
+      max-height: 300px;
+      object-fit: contain;
+    }
     .prop-metrics {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
     }
     .prop-metrics .metric {
       border-right: none;

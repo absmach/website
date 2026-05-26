@@ -28,7 +28,7 @@ import ProductsPreview from "../../components/ProductsPreview.astro";
 
     <section class="section">
       <div class="container-wide">
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px;">
+        <div class="product-layer-grid">
           <div>
             <span class="kicker" style="display:block; margin-bottom:14px;"
               >Platform Software</span
@@ -90,3 +90,20 @@ import ProductsPreview from "../../components/ProductsPreview.astro";
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  .product-layer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 48px;
+  }
+  .product-layer-grid > div {
+    min-width: 0;
+  }
+  @media (max-width: 980px) {
+    .product-layer-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>
