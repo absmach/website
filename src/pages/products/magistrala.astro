@@ -147,6 +147,16 @@ const faqs = [
     a: "Yes. Magistrala is modular and open source. You can replace, extend, or disable individual services, add custom storage backends, or build new protocol adapters without forking the core.",
   },
 ];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    "name": q,
+    "acceptedAnswer": { "@type": "Answer", "text": a },
+  })),
+});
 ---
 
 <BaseLayout
@@ -757,6 +767,7 @@ const faqs = [
     }
   }
   </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
 </BaseLayout>
 
 <style>

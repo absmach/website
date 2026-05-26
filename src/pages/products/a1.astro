@@ -124,6 +124,16 @@ const faqs = [
     a: "BeagleV-Fire is an open-hardware single-board computer based on the Microchip PolarFire SoC, which combines a RISC-V processor with an FPGA. It provides the Linux compute core for the A1 gateway.",
   },
 ];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    "name": q,
+    "acceptedAnswer": { "@type": "Answer", "text": a },
+  })),
+});
 ---
 
 <BaseLayout
@@ -286,7 +296,7 @@ const faqs = [
       <div class="container-wide">
         <div class="section-head" style="text-align:center; display:block;">
           <span class="kicker">Features</span>
-          <h2 class="h-2" style="margin-top:14px;">A1 Features.</h2>
+          <h2 class="h-2" style="margin-top:14px;">RISC-V Linux gateway features.</h2>
           <p class="lede" style="margin:12px auto 0; max-width:52ch;">
             A0 Board + BeagleV-Fire: the Linux-based gateway for demanding
             industrial and edge computing deployments.
@@ -395,6 +405,7 @@ const faqs = [
     }
   }
   </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
 </BaseLayout>
 
 <style>

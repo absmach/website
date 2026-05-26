@@ -218,10 +218,20 @@ const faqs = [
     a: "Yes. Atom is licensed under Apache 2.0. The source is at github.com/absmach/atom. All APIs — GraphQL, REST, and gRPC — are fully open with no commercial restrictions.",
   },
 ];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    "name": q,
+    "acceptedAnswer": { "@type": "Answer", "text": a },
+  })),
+});
 ---
 
 <BaseLayout
-  title="Atom Identity & Authorization Platform | Abstract Machines"
+  title="Runtime RBAC, ABAC & Identity Platform — Abstract Machines"
   description="Open-source identity and authorization platform with runtime RBAC, ABAC, authentication, and multi-tenant policy enforcement. Single Rust binary backed by PostgreSQL."
 >
   <Header />
@@ -669,6 +679,23 @@ const faqs = [
       "url": "https://www.absmach.eu/"
     }
   }
+  </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script is:inline>
+    (() => {
+      const tabs = document.querySelectorAll("#pui-tabs .pui-tab");
+      const panels = document.querySelectorAll(".pui-img-wrap");
+
+      tabs.forEach((tab) => {
+        tab.querySelector(".pui-tab-btn").addEventListener("click", () => {
+          const target = tab.dataset.target;
+          tabs.forEach((t) => t.classList.remove("active"));
+          panels.forEach((p) => p.classList.remove("active"));
+          tab.classList.add("active");
+          document.querySelector(`.pui-img-wrap[data-panel="${target}"]`)?.classList.add("active");
+        });
+      });
+    })();
   </script>
 </BaseLayout>
 
@@ -1132,20 +1159,3 @@ const faqs = [
     }
   }
 </style>
-
-<script is:inline>
-  (() => {
-    const tabs = document.querySelectorAll("#pui-tabs .pui-tab");
-    const panels = document.querySelectorAll(".pui-img-wrap");
-
-    tabs.forEach((tab) => {
-      tab.querySelector(".pui-tab-btn").addEventListener("click", () => {
-        const target = tab.dataset.target;
-        tabs.forEach((t) => t.classList.remove("active"));
-        panels.forEach((p) => p.classList.remove("active"));
-        tab.classList.add("active");
-        document.querySelector(`.pui-img-wrap[data-panel="${target}"]`)?.classList.add("active");
-      });
-    });
-  })();
-</script>

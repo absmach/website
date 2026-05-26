@@ -152,6 +152,16 @@ const faqs = [
     a: "FluxMQ is the recommended message broker for Magistrala deployments. It handles the data plane, routing device telemetry through durable queues, while Magistrala provides device identity, RBAC, dashboards, and platform services.",
   },
 ];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    "name": q,
+    "acceptedAnswer": { "@type": "Answer", "text": a },
+  })),
+});
 ---
 
 <BaseLayout
@@ -606,6 +616,15 @@ graph TD
       }
     }
   </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="module" is:inline>
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "neutral",
+      fontFamily: "JetBrains Mono, monospace",
+    });
+  </script>
 </BaseLayout>
 
 <style>
@@ -758,12 +777,3 @@ graph TD
     }
   }
 </style>
-
-<script type="module" is:inline>
-  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: "neutral",
-    fontFamily: "JetBrains Mono, monospace",
-  });
-</script>

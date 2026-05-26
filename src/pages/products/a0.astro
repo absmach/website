@@ -123,6 +123,16 @@ const faqs = [
     a: "Yes. A0 includes a lightweight Propeller runtime for Zephyr RTOS that allows the device to receive and execute Wasm workloads deployed remotely through the Propeller manager.",
   },
 ];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    "name": q,
+    "acceptedAnswer": { "@type": "Answer", "text": a },
+  })),
+});
 ---
 
 <BaseLayout
@@ -394,6 +404,7 @@ const faqs = [
     }
   }
   </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
 </BaseLayout>
 
 <style>

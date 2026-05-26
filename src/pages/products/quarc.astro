@@ -173,10 +173,20 @@ const faqs = [
     a: "Devices deployed today may still be operating when quantum attacks become practical. NIST finalised PQC standards in 2024. EU and US regulators project mandatory PQC adoption in critical infrastructure by 2030. Quarc closes the gap so devices deployed today aren't vulnerable at end-of-life.",
   },
 ];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    "name": q,
+    "acceptedAnswer": { "@type": "Answer", "text": a },
+  })),
+});
 ---
 
 <BaseLayout
-  title="Quarc | Open-Source Post-Quantum Secure Element | Abstract Machines"
+  title="Open-Source Post-Quantum Secure Element — Abstract Machines"
   description="Quarc is an open-source post-quantum secure element with hardware-accelerated ML-KEM and ML-DSA, built for IoT, industrial systems, confidential computing, and long-lived device trust."
 >
   <Header />
@@ -648,6 +658,7 @@ const faqs = [
     "keywords": "post-quantum cryptography, secure element, ML-KEM, ML-DSA, FPGA, RISC-V, NIST PQC, hardware root of trust, open hardware"
   }
   </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
 </BaseLayout>
 
 <style>
