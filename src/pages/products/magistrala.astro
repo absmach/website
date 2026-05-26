@@ -16,6 +16,7 @@ const showcaseFeatures = [
     desc: "Build live and historical dashboards with drag-and-drop widgets. Monitor alarms, track device state, and visualise sensor data without writing a line of code.",
     img: "/img/magistrala/dashboard-2.png",
     alt: "Magistrala dashboard overview",
+    width: 1903, height: 927,
     flipped: false,
   },
   {
@@ -24,6 +25,7 @@ const showcaseFeatures = [
     desc: "Define rules that transform messages, generate alarms, send notifications, and route data to external storage. Visual editor or API, your choice.",
     img: "/img/magistrala/rules-engine-1.png",
     alt: "Magistrala rules engine configuration",
+    width: 1644, height: 878,
     flipped: true,
   },
   {
@@ -32,6 +34,7 @@ const showcaseFeatures = [
     desc: "Rules fire alarms. Alarms have severity levels, assignees, and resolution workflows. Track everything from a single view across your entire fleet.",
     img: "/img/magistrala/alarms-2.png",
     alt: "Magistrala alarm management",
+    width: 1642, height: 870,
     flipped: false,
   },
   {
@@ -40,6 +43,7 @@ const showcaseFeatures = [
     desc: "Each domain has its own users, devices, channels, and policies, completely isolated from every other domain. Manage them all from a unified control plane.",
     img: "/img/magistrala/domains-1.png",
     alt: "Magistrala domain management",
+    width: 1704, height: 884,
     flipped: true,
   },
 ];
@@ -173,6 +177,8 @@ const faqSchema = JSON.stringify({
         muted
         loop
         playsinline
+        width="1920"
+        height="1080"
         poster="/video/hero-background-poster.webp"
         aria-hidden="true"
       >
@@ -186,6 +192,8 @@ const faqSchema = JSON.stringify({
               src="/img/products/magistrala-logo.svg"
               alt="Magistrala"
               class="prod-logo-img"
+              width="1700"
+              height="400"
             />
             <h1 class="tagline">IoT solutions without complexity.</h1>
             <p class="lede" style="margin-top:16px; max-width:44ch;">
@@ -354,7 +362,7 @@ const faqSchema = JSON.stringify({
         <!-- Showcase rows -->
         <div class="feat-showcase" style="margin-bottom:16px;">
           {
-            showcaseFeatures.map(({ tag, title, desc, img, alt, flipped }) => (
+            showcaseFeatures.map(({ tag, title, desc, img, alt, width, height, flipped }) => (
               <div
                 class={`feat-row${flipped ? " feat-flipped" : ""}`}
                 style="min-height:300px;"
@@ -368,6 +376,8 @@ const faqSchema = JSON.stringify({
                   <img
                     src={img}
                     alt={alt}
+                    width={width}
+                    height={height}
                     loading="lazy"
                     style="width:100%; height:auto; object-fit:cover; object-position:top left;"
                   />
