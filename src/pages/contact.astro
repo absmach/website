@@ -8,8 +8,8 @@ const contactApiEndpoint = "/api/contact";
 ---
 
 <BaseLayout
-  title="Contact — Abstract Machines"
-  description="Talk to Abstract Machines about production deployments, integrations, research partnerships, and open-source support."
+  title="IoT Platform Deployment, Support & Partnerships — Abstract Machines"
+  description="Talk to Abstract Machines about production IoT deployments, integrations, research partnerships, and open-source support. Based in Paris, working globally."
 >
   <Header />
   <main>
@@ -99,6 +99,21 @@ const contactApiEndpoint = "/api/contact";
     </section>
   </main>
   <Footer />
+  <script is:inline type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Abstract Machines",
+    "url": "https://www.absmach.eu/contact",
+    "description": "Contact Abstract Machines for IoT platform deployments, integrations, research partnerships, and support.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Abstract Machines",
+      "url": "https://www.absmach.eu",
+      "email": "info@absmach.eu"
+    }
+  }
+  </script>
   <script is:inline>
     (() => {
       const form = document.querySelector("[data-contact-form]");

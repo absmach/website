@@ -12,6 +12,9 @@ const {
   ogImage = "/img/logos/social-preview.png",
   ogImageAlt = "Abstract Machines",
   canonical,
+  articlePublishedTime,
+  articleAuthor,
+  articleTags,
 } = Astro.props;
 
 const resolveMetaUrl = (value: string | undefined) => {
@@ -41,7 +44,13 @@ const ogImageUrl = resolveMetaUrl(ogImage);
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
     {ogImageUrl && <meta property="og:image:alt" content={ogImageAlt} />}
+    {ogImageUrl && <meta property="og:image:width" content="1200" />}
+    {ogImageUrl && <meta property="og:image:height" content="630" />}
+    {articlePublishedTime && <meta property="article:published_time" content={articlePublishedTime} />}
+    {articleAuthor && <meta property="article:author" content={articleAuthor} />}
+    {articleTags?.map((tag: string) => <meta property="article:tag" content={tag} />)}
     <meta name="twitter:card" content={ogImageUrl ? "summary_large_image" : "summary"} />
+    <meta name="twitter:site" content="@absmach" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}

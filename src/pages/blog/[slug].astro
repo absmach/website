@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-const title = `${post.data.title} | Blog`;
+const title = `${post.data.title} — Abstract Machines Blog`;
 const description = post.data.description;
 const currentSlug = post.data.slug ?? post.slug;
 const publishedAt =
@@ -154,6 +154,9 @@ const nextReadPosts = allPosts
     ogImage={coverImage ?? "/img/logos/social-preview.png"}
     ogImageAlt={post.data.title}
     canonical={canonical}
+    articlePublishedTime={publishedAt.toISOString()}
+    articleAuthor={post.data.author.name}
+    articleTags={post.data.tags ?? []}
 >
     <Header />
     <main>
@@ -252,7 +255,7 @@ const nextReadPosts = allPosts
                                 ) : (
                                     <Image
                                         src={coverImage!}
-                                        alt=""
+                                        alt={post.data.title}
                                         width={1280}
                                         height={720}
                                         class="cover-image h-full w-full"
@@ -411,7 +414,7 @@ const nextReadPosts = allPosts
                                                 <div class="aspect-[16/9] overflow-hidden border-b border-line-3">
                                                     <Image
                                                         src={entry.coverImage}
-                                                        alt=""
+                                                        alt={entry.title}
                                                         width={1280}
                                                         height={720}
                                                         class="cover-image h-full w-full"
@@ -493,6 +496,35 @@ const nextReadPosts = allPosts
         }
     </main>
     <Footer />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.data.title,
+        "description": post.data.description,
+        "datePublished": publishedAt.toISOString(),
+        "dateModified": (post.data.updatedAt ? new Date(post.data.updatedAt) : publishedAt).toISOString(),
+        "author": {
+            "@type": "Person",
+            "name": post.data.author.name,
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Abstract Machines",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.absmach.eu/img/logos/abstract-machines_logo_landscape-black.png",
+            },
+        },
+        "image": coverImage
+            ? new URL(coverImage, "https://www.absmach.eu").toString()
+            : "https://www.absmach.eu/img/logos/social-preview.png",
+        "url": shareUrl,
+        "keywords": (post.data.tags ?? []).join(", "),
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": shareUrl,
+        },
+    })} />
 </BaseLayout>
 
 <style>
