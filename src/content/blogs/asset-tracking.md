@@ -27,7 +27,7 @@ tags:
 
 Modern asset tracking systems are no longer just GPS dashboards—they are distributed, real-time data pipelines. Vehicles, construction equipment, containers, and industrial machinery continuously generate telemetry: location, speed, fuel levels, temperature, vibration, and operational metrics. Turning that raw stream into actionable intelligence requires secure device connectivity, scalable ingestion, real-time processing, and automated decision logic.
 
-[Magistrala](https://magistrala.absmach.eu/) is an open-source IoT platform designed for exactly this. It connects GPS trackers and sensors over MQTT, HTTP, CoAP, or WebSocket, processes telemetry in real time with a built-in Rules Engine, and persists structured data for dashboards, alerts, compliance, and analytics.
+[Magistrala](/products/magistrala) is an open-source IoT platform designed for exactly this. It connects GPS trackers and sensors over MQTT, HTTP, CoAP, or WebSocket, processes telemetry in real time with a built-in Rules Engine, and persists structured data for dashboards, alerts, compliance, and analytics.
 
 Instead of building custom ingestion pipelines, alerting systems, and reporting engines from scratch, teams can use Magistrala as the foundation for a production-ready asset tracking system—fully self-hostable, multi-tenant, and enterprise secure.
 
