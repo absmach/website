@@ -542,8 +542,17 @@ const faqs = [
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   @media (max-width: 640px) {
+    .prod-hero .hero-visual {
+      aspect-ratio: auto;
+      max-height: none;
+      overflow: visible;
+    }
     .arch-card {
       padding: 0;
+    }
+    .arch-img {
+      max-height: 300px;
+      object-fit: contain;
     }
     .prop-metrics {
       grid-template-columns: 1fr;

@@ -75,7 +75,7 @@ const process = [
   <main>
 
     <!-- Hero -->
-    <section class="section-tight" style="background:var(--paper-2); border-bottom:1px solid var(--line-3); text-align:center;">
+    <section class="section-tight careers-hero" style="background:var(--paper-2); border-bottom:1px solid var(--line-3); text-align:center;">
       <div class="container-wide">
         <span class="kicker">Careers</span>
         <h1 class="h-1" style="margin-top:8px;">Build the future with us.</h1>
@@ -169,6 +169,19 @@ const process = [
 
 <style>
   /* ── Benefits ───────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .careers-hero {
+      text-align: left !important;
+    }
+    .careers-hero .lede {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    .careers-hero .btn-row {
+      justify-content: flex-start !important;
+    }
+  }
+
   .ben-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
