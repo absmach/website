@@ -151,21 +151,33 @@ const faqs = [
     q: "How does FluxMQ integrate with Magistrala?",
     a: "FluxMQ is the recommended message broker for Magistrala deployments. It handles the data plane, routing device telemetry through durable queues, while Magistrala provides device identity, RBAC, dashboards, and platform services.",
   },
+  {
+    q: "How does FluxMQ compare to Apache Kafka?",
+    a: "Kafka is a log-based streaming platform built for high-throughput batch analytics with long-term retention and consumer group replay. FluxMQ is a real-time message broker optimized for IoT and event-driven microservices — lower latency, native MQTT and AMQP wire-protocol support for device firmware, and no ZooKeeper or schema registry required. FluxMQ includes Kafka-style retention and consumer groups for hybrid workloads, packaged as a single binary with zero external dependencies.",
+  },
+  {
+    q: "How does FluxMQ compare to NATS?",
+    a: "NATS is a lightweight, cloud-native messaging system with excellent core performance. FluxMQ is focused on IoT use cases where MQTT 3.1.1/5.0 and AMQP wire-protocol compliance is required — connecting off-the-shelf device firmware without adapters or proxies. FluxMQ also ships durable queues, consumer group offsets, and dead-letter queues out of the box. Both share the single-binary, zero-dependency operational model.",
+  },
+  {
+    q: "How does FluxMQ compare to RabbitMQ?",
+    a: "RabbitMQ is a mature AMQP 0.9.1 broker with a rich plugin ecosystem. FluxMQ supports AMQP 0.9.1 and AMQP 1.0 alongside full MQTT 5.0, CoAP, and WebSocket — all in one Go binary with no Erlang runtime or external dependencies needed. FluxMQ targets IoT scale: 500K+ concurrent connections per node and 300K–500K msg/s. RabbitMQ suits complex enterprise routing topologies; FluxMQ is optimized for device-to-cloud pipelines at scale.",
+  },
 ];
 
 const faqSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": faqs.map(({ q, a }) => ({
+  mainEntity: faqs.map(({ q, a }) => ({
     "@type": "Question",
-    "name": q,
-    "acceptedAnswer": { "@type": "Answer", "text": a },
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
   })),
 });
 ---
 
 <BaseLayout
-  title="FluxMQ Message Broker — Abstract Machines"
+  title="FluxMQ — Open-Source MQTT 5.0 & AMQP Broker"
   description="High-performance MQTT 5.0, AMQP, CoAP, and WebSocket message broker. 500K+ connections, 300K–500K msg/s per node. Single Go binary, no external dependencies."
 >
   <Header />
@@ -193,11 +205,12 @@ const faqSchema = JSON.stringify({
               <span>Flux</span><span class="mq">MQ</span>
             </p>
             <h1 class="tagline">
-              High-performance multi-protocol message broker.
+              High-Throughput MQTT &amp; AMQP Broker. One Binary, Zero
+              Dependencies.
             </h1>
             <p
               class="lede"
-              style="margin-top:16px; max-width:48ch; margin-left:auto; margin-right:auto;"
+              style="margin-top:16px; margin-left:auto; margin-right:auto;"
             >
               Open source, high-throughput, low-latency, and scalable. MQTT,
               AMQP, CoAP, and WebSocket in a single Go binary with no external
@@ -207,22 +220,12 @@ const faqSchema = JSON.stringify({
               class="btn-row"
               style="margin-top:32px; justify-content:center;"
             >
-              <a
-                href="https://github.com/absmach/fluxmq"
-                class="btn btn-primary"
-                target="_blank"
-                rel="noopener">View on GitHub ↗</a
-              >
+              <a href="/contact" class="btn btn-primary">Contact Us →</a>
               <a
                 href="https://www.absmach.eu/docs/fluxmq"
                 class="btn"
                 target="_blank"
                 rel="noopener">Documentation ↗</a
-              >
-            </div>
-            <div style="margin-top:20px;">
-              <span class="badge success"
-                ><span class="dot"></span>Open Source · Apache 2.0</span
               >
             </div>
           </div>
@@ -250,8 +253,8 @@ const faqSchema = JSON.stringify({
             <div class="l">Local latency</div>
           </div>
           <div class="metric">
-            <div class="v">1 binary</div>
-            <div class="l">Zero external dependencies</div>
+            <div class="v">Apache 2.0</div>
+            <div class="l">Open-source license</div>
           </div>
         </div>
       </div>
@@ -425,7 +428,12 @@ graph TD
             quickstart.map(({ step, code }) => (
               <div class="fmq-qs-card">
                 <div class="fmq-qs-step">{step}</div>
-                <pre class="fmq-qs-code">{code}</pre>
+                <div class="fmq-qs-code-wrap">
+                  <pre class="fmq-qs-code">{code}</pre>
+                  <button class="fmq-copy-btn" aria-label="Copy code">
+                    Copy
+                  </button>
+                </div>
               </div>
             ))
           }
@@ -479,11 +487,18 @@ graph TD
             ))
           }
         </div>
+        <div style="margin-top:40px; text-align:center;">
+          <a href="/contact" class="btn btn-primary"
+            >Contact Sales for enterprise deployments →</a
+          >
+        </div>
       </div>
     </section>
 
     <!-- Performance -->
-    <section style="background:var(--surface-accent); color:var(--on-accent); padding:96px 0;">
+    <section
+      style="background:var(--surface-accent); color:var(--on-accent); padding:96px 0;"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
@@ -507,7 +522,9 @@ graph TD
             <div class="company" style="color:var(--on-accent-muted);">
               Single node
             </div>
-            <h3 class="title" style="color:var(--on-accent);">300K–500K msg/s</h3>
+            <h3 class="title" style="color:var(--on-accent);">
+              300K–500K msg/s
+            </h3>
             <p class="desc" style="color:var(--on-accent-dim);">
               Sustained throughput per node with sub-10ms local latency and up
               to 500,000 concurrent connections.
@@ -589,13 +606,13 @@ graph TD
             href="https://github.com/absmach/fluxmq"
             class="btn btn-primary"
             target="_blank"
-            rel="noopener">View on GitHub ↗</a
+            rel="noopener">GitHub ↗</a
           >
           <a
             href="https://www.absmach.eu/docs/fluxmq"
             class="btn"
             target="_blank"
-            rel="noopener">Documentation ↗</a
+            rel="noopener">Docs ↗</a
           >
         </div>
       </div>
@@ -619,12 +636,44 @@ graph TD
     }
   </script>
   <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareSourceCode",
+      "name": "FluxMQ",
+      "description": "High-performance MQTT 5.0, AMQP, CoAP, and WebSocket message broker. Single Go binary, no external dependencies.",
+      "codeRepository": "https://github.com/absmach/fluxmq",
+      "programmingLanguage": "Go",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "author": {
+        "@type": "Organization",
+        "name": "Abstract Machines"
+      }
+    }
+  </script>
   <script type="module" is:inline>
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
     mermaid.initialize({
       startOnLoad: true,
       theme: "neutral",
       fontFamily: "JetBrains Mono, monospace",
+    });
+  </script>
+  <script is:inline>
+    document.querySelectorAll(".fmq-copy-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var code = btn
+          .closest(".fmq-qs-code-wrap")
+          .querySelector(".fmq-qs-code").textContent;
+        navigator.clipboard.writeText(code).then(function () {
+          btn.textContent = "Copied!";
+          btn.classList.add("copied");
+          setTimeout(function () {
+            btn.textContent = "Copy";
+            btn.classList.remove("copied");
+          }, 2000);
+        });
+      });
     });
   </script>
 </BaseLayout>
@@ -733,6 +782,12 @@ graph TD
     letter-spacing: 0.1em;
     color: var(--ink-3);
   }
+  .fmq-qs-code-wrap {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
   .fmq-qs-code {
     background: var(--surface-accent);
     color: var(--on-accent-dim);
@@ -746,6 +801,31 @@ graph TD
     margin: 0;
     flex: 1;
     max-width: 100%;
+  }
+  .fmq-copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(246, 244, 238, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    line-height: 1.5;
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+  .fmq-copy-btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: rgba(246, 244, 238, 0.85);
+  }
+  .fmq-copy-btn.copied {
+    color: #7ecf7e;
   }
 
   /* Responsive */
