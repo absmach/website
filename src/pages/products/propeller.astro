@@ -43,6 +43,8 @@ const features = [
     icon: Network,
     name: "Powerful Service Mesh",
     desc: "Integrates with Magistrala for secure, efficient IoT device communication across your entire infrastructure.",
+    href: "/products/magistrala",
+    hrefLabel: "Magistrala →",
   },
   {
     icon: Server,
@@ -121,6 +123,8 @@ const solutions = [
     title: "IoT Automation",
     desc: "Deploy event-driven logic close to devices to reduce latency and cloud bandwidth costs.",
     tags: ["Rules", "Triggers", "Edge Logic"],
+    href: "/products/magistrala",
+    hrefLabel: "Pairs with Magistrala →",
   },
   {
     icon: Zap,
@@ -133,6 +137,8 @@ const solutions = [
     title: "MCU Workloads",
     desc: "Deploy Wasm binaries directly to Zephyr RTOS microcontrollers for ultra-low-power edge computing.",
     tags: ["Zephyr", "RISC-V", "MCU"],
+    href: "/products/a0",
+    hrefLabel: "A0 hardware →",
   },
 ];
 
@@ -186,8 +192,8 @@ const faqSchema = JSON.stringify({
 ---
 
 <BaseLayout
-  title="Propeller Wasm Orchestrator — Abstract Machines"
-  description="Deploy WebAssembly workloads from cloud to microcontrollers with sub-10ms boot times. Open-source Wasm orchestration for the cloud-edge continuum."
+  title="Propeller — Open-Source WebAssembly Orchestrator for Cloud-to-Edge"
+  description="Open-source WebAssembly orchestrator for the cloud-edge continuum. Deploy Wasm workloads from Kubernetes clusters to Zephyr RTOS microcontrollers — sub-10ms boot times, OCI registry support, MQTT via Magistrala, and FaaS at the edge."
 >
   <Header />
   <main>
@@ -216,30 +222,21 @@ const faqSchema = JSON.stringify({
               class="prod-logo-img"
               style="height:56px; margin-bottom:8px; filter:invert(1);"
             />
-            <h1 class="tagline">Deploy Wasm from Cloud to Microcontrollers.</h1>
+            <h1 class="tagline">Open-Source WebAssembly Orchestrator.</h1>
             <p class="lede" style="margin-top:16px; max-width:48ch;">
-              Propeller is a cutting-edge orchestrator for WebAssembly workloads
-              across the Cloud-Edge continuum. Seamlessly deploy portable,
-              lightweight Wasm applications from powerful cloud servers to
-              constrained microcontrollers with security and performance.
+              Deploy portable Wasm workloads across the full cloud-edge
+              continuum — from Kubernetes clusters to Zephyr RTOS
+              microcontrollers. OCI registry integration, MQTT messaging via
+              Magistrala, sub-10ms boot times, and FaaS at the edge. Apache 2.0.
             </p>
             <div class="btn-row" style="margin-top:32px;">
-              <a
-                href="https://www.absmach.eu/docs/propeller/getting-started"
-                class="btn btn-primary"
-                target="_blank"
-                rel="noopener">Get Started ↗</a
-              >
+              <a href="/contact" class="btn btn-primary">Contact Us →</a>
+
               <a
                 href="https://www.absmach.eu/docs/propeller"
                 class="btn"
                 target="_blank"
                 rel="noopener">Documentation ↗</a
-              >
-            </div>
-            <div style="margin-top:20px;">
-              <span class="badge success"
-                ><span class="dot"></span>Open Source · Apache 2.0</span
               >
             </div>
           </div>
@@ -258,9 +255,10 @@ const faqSchema = JSON.stringify({
           style="border:none; border-radius:0; border-left:1px solid var(--line-3);"
         >
           <div class="metric">
-            <div class="v">Cloud to MCU</div>
-            <div class="l">Deployment range</div>
+            <div class="v">Multi-Protocol</div>
+            <div class="l">MQTT · CoAP · WebSocket</div>
           </div>
+
           <div class="metric featured">
             <div class="v">&lt;10ms</div>
             <div class="l">Wasm boot time</div>
@@ -270,8 +268,8 @@ const faqSchema = JSON.stringify({
             <div class="l">Sandboxed isolation</div>
           </div>
           <div class="metric">
-            <div class="v">Multi-Protocol</div>
-            <div class="l">MQTT · CoAP · WebSocket</div>
+            <div class="v">Apache 2.0</div>
+            <div class="l">Open-source license</div>
           </div>
         </div>
       </div>
@@ -284,7 +282,7 @@ const faqSchema = JSON.stringify({
           <div class="left">
             <span class="kicker">Features</span>
             <h2 class="h-2" style="margin-top:14px;">
-              WebAssembly orchestration at scale.
+              WebAssembly orchestration across the cloud-edge continuum.
             </h2>
           </div>
           <p class="lede">
@@ -294,13 +292,18 @@ const faqSchema = JSON.stringify({
         </div>
         <div class="prop-feat-grid feature-grid">
           {
-            features.map(({ icon: Icon, name, desc }) => (
+            features.map(({ icon: Icon, name, desc, href, hrefLabel }) => (
               <div class="feature">
                 <div class="ic">
                   <Icon size={18} />
                 </div>
                 <div class="name">{name}</div>
                 <p class="desc">{desc}</p>
+                {href && (
+                  <a href={href} class="feat-link">
+                    {hrefLabel}
+                  </a>
+                )}
               </div>
             ))
           }
@@ -435,20 +438,27 @@ const faqSchema = JSON.stringify({
         </div>
         <div class="prop-sol-grid sol-grid">
           {
-            solutions.map(({ icon: Icon, title, desc, tags }) => (
-              <div class="sol-card">
-                <div class="icon-frame">
-                  <Icon size={22} />
+            solutions.map(
+              ({ icon: Icon, title, desc, tags, href, hrefLabel }) => (
+                <div class="sol-card">
+                  <div class="icon-frame">
+                    <Icon size={22} />
+                  </div>
+                  <h3 class="name">{title}</h3>
+                  <p class="desc">{desc}</p>
+                  <div class="tags">
+                    {tags.map((t) => (
+                      <span class="tag">{t}</span>
+                    ))}
+                  </div>
+                  {href && (
+                    <a href={href} class="sol-link">
+                      {hrefLabel}
+                    </a>
+                  )}
                 </div>
-                <h3 class="name">{title}</h3>
-                <p class="desc">{desc}</p>
-                <div class="tags">
-                  {tags.map((t) => (
-                    <span class="tag">{t}</span>
-                  ))}
-                </div>
-              </div>
-            ))
+              ),
+            )
           }
         </div>
       </div>
@@ -525,18 +535,41 @@ const faqSchema = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
       "name": "Propeller",
-      "description": "Deploy WebAssembly workloads from cloud to microcontrollers with sub-10ms boot times. Open-source Wasm orchestration for the cloud-edge continuum.",
+      "description": "Open-source WebAssembly orchestrator for the cloud-edge continuum. Deploy Wasm workloads from Kubernetes clusters to Zephyr RTOS microcontrollers — sub-10ms boot times, OCI registry support, MQTT via Magistrala, and FaaS at the edge.",
       "applicationCategory": "IoT",
       "operatingSystem": "Linux",
       "url": "https://www.absmach.eu/products/propeller",
       "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "keywords": "WebAssembly orchestrator,Wasm orchestrator,cloud-edge continuum,edge computing,WebAssembly IoT,Wasm microcontroller,Zephyr RTOS Wasm,OCI registry Wasm,FaaS edge,open-source WebAssembly,Wasm deployment,cloud to MCU",
+      "sameAs": "https://github.com/absmach/propeller",
       "author": {
         "@type": "Organization",
-        "name": "Abstract Machines"
+        "name": "Abstract Machines",
+        "url": "https://www.absmach.eu/"
       }
     }
   </script>
   <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Products",
+          "item": "https://www.absmach.eu/products/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Propeller",
+          "item": "https://www.absmach.eu/products/propeller"
+        }
+      ]
+    }
+  </script>
   <script is:inline>
     (() => {
       const tabs = document.querySelectorAll(".pui-tab");
@@ -844,6 +877,22 @@ const faqSchema = JSON.stringify({
     width: 100%;
     height: auto;
     display: block;
+  }
+
+  /* Internal cross-product links on feature and solution cards */
+  .feat-link,
+  .sol-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .feat-link:hover,
+  .sol-link:hover {
+    color: var(--ink);
   }
 
   /* Solutions responsive */

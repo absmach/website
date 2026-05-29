@@ -661,6 +661,26 @@ const faqSchema = JSON.stringify({
   }
   </script>
   <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Products",
+          "item": "https://www.absmach.eu/products/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Quarc",
+          "item": "https://www.absmach.eu/products/quarc"
+        }
+      ]
+    }
+  </script>
 </BaseLayout>
 
 <style>
