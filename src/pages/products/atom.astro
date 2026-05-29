@@ -217,6 +217,10 @@ const faqs = [
     q: "Is Atom open source?",
     a: "Yes. Atom is licensed under Apache 2.0. The source is at github.com/absmach/atom. All APIs — GraphQL, REST, and gRPC — are fully open with no commercial restrictions.",
   },
+  {
+    q: "Does Atom support compliance requirements like GDPR, SOC 2, HIPAA, or ISO 27001?",
+    a: "Atom's audit log records every authentication event, credential lifecycle change, and authorization check immutably — exportable to CSV for compliance reporting. This satisfies the access-log requirements for SOC 2 Type II, HIPAA audit trail obligations, and ISO 27001 access control controls. The explainability API (ask why a request was allowed or denied) provides the documentation chain auditors require. Runtime policy enforcement means access rights reflect revocations immediately, satisfying GDPR's right-to-erasure and minimal-access requirements without stale-token windows.",
+  },
 ];
 
 const faqSchema = JSON.stringify({
@@ -231,8 +235,8 @@ const faqSchema = JSON.stringify({
 ---
 
 <BaseLayout
-  title="Runtime RBAC, ABAC & Identity Platform — Abstract Machines"
-  description="Open-source identity and authorization platform with runtime RBAC, ABAC, authentication, and multi-tenant policy enforcement. Single Rust binary backed by PostgreSQL."
+  title="Atom — Open-Source IAM with Runtime RBAC & ABAC"
+  description="Open-source IAM platform with runtime RBAC, ABAC, JWT authentication, and a full Admin UI for policy management. Single Rust binary, zero sidecars, backed by PostgreSQL."
 >
   <Header />
   <main>
@@ -258,13 +262,13 @@ const faqSchema = JSON.stringify({
           <div style="text-align: left;">
             <p class="atom-wordmark">Atom</p>
           </div>
-          <h1 class="tagline">Identity and authorization in one deployable service.</h1>
+          <h1 class="tagline">Open-Source Identity &amp; Authorization — RBAC, ABAC, JWT in One Rust Binary.</h1>
           <p class="lede" style="margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;">
-            Open-source authentication, RBAC, ABAC, and runtime authorization
-            in a single Rust binary backed by PostgreSQL.
+            One Rust binary, one PostgreSQL database — no sidecars, no runtime dependencies.
+            Authentication, RBAC, ABAC, and live policy enforcement in a single deployable service.
           </p>
           <div class="btn-row" style="margin-top:32px; justify-content:center;">
-            <a href="https://github.com/absmach/atom" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
+            <a href="/contact" class="btn btn-primary">Contact Us →</a>
             <a href="/docs/atom" class="btn">Documentation ↗</a>
           </div>
           <div style="margin-top:20px;">
@@ -291,8 +295,8 @@ const faqSchema = JSON.stringify({
             <div class="l">Policy flexibility</div>
           </div>
           <div class="metric">
-            <div class="v">100%</div>
-            <div class="l">Online authorization</div>
+            <div class="v">Apache 2.0</div>
+            <div class="l">Open-source license</div>
           </div>
         </div>
       </div>
@@ -319,6 +323,42 @@ const faqSchema = JSON.stringify({
               <p class="desc">{desc}</p>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin UI — with screenshots -->
+    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Admin UI</span>
+            <h2 class="h-2" style="margin-top:14px;">Built for operators.</h2>
+          </div>
+          <p class="lede">
+            Manage every object in the system from one interface. No SQL
+            console, no curl scripts.
+          </p>
+        </div>
+        <div class="pui-layout">
+          <div class="pui-tabs" id="pui-tabs">
+            {uiFeatures.map(({ id, title, desc }, i) => (
+              <div class={`pui-tab${i === 0 ? " active" : ""}`} data-target={id}>
+                <button class="pui-tab-btn" type="button">
+                  <span class="pui-tab-title">{title}</span>
+                  <span class="pui-chevron">›</span>
+                </button>
+                <p class="pui-tab-desc">{desc}</p>
+              </div>
+            ))}
+          </div>
+          <div class="pui-panel">
+            {uiFeatures.map(({ id, img, alt }, i) => (
+              <div class={`pui-img-wrap${i === 0 ? " active" : ""}`} data-panel={id}>
+                <img src={img} alt={alt} class="pui-img" loading="lazy" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -445,42 +485,6 @@ const faqSchema = JSON.stringify({
               <div class="atom-policy-feature">
                 <div class="atom-policy-fname">{name}</div>
                 <div class="atom-policy-fdesc">{desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Admin UI — with screenshots -->
-    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
-      <div class="container-wide">
-        <div class="section-head">
-          <div class="left">
-            <span class="kicker">Admin UI</span>
-            <h2 class="h-2" style="margin-top:14px;">Built for operators.</h2>
-          </div>
-          <p class="lede">
-            Manage every object in the system from one interface. No SQL
-            console, no curl scripts.
-          </p>
-        </div>
-        <div class="pui-layout">
-          <div class="pui-tabs" id="pui-tabs">
-            {uiFeatures.map(({ id, title, desc }, i) => (
-              <div class={`pui-tab${i === 0 ? " active" : ""}`} data-target={id}>
-                <button class="pui-tab-btn" type="button">
-                  <span class="pui-tab-title">{title}</span>
-                  <span class="pui-chevron">›</span>
-                </button>
-                <p class="pui-tab-desc">{desc}</p>
-              </div>
-            ))}
-          </div>
-          <div class="pui-panel">
-            {uiFeatures.map(({ id, img, alt }, i) => (
-              <div class={`pui-img-wrap${i === 0 ? " active" : ""}`} data-panel={id}>
-                <img src={img} alt={alt} class="pui-img" loading="lazy" />
               </div>
             ))}
           </div>
@@ -656,7 +660,7 @@ const faqSchema = JSON.stringify({
           a VM, in Docker Compose, or on Kubernetes.
         </p>
         <div class="btn-row" style="justify-content:center;">
-          <a href="https://github.com/absmach/atom" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
+          <a href="/contact" class="btn btn-primary">Contact Us →</a>
           <a href="/docs/atom" class="btn">Documentation ↗</a>
         </div>
       </div>
@@ -683,6 +687,26 @@ const faqSchema = JSON.stringify({
   }
   </script>
   <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Products",
+          "item": "https://www.absmach.eu/products/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Atom",
+          "item": "https://www.absmach.eu/products/atom"
+        }
+      ]
+    }
+  </script>
   <script is:inline>
     (() => {
       const tabs = document.querySelectorAll("#pui-tabs .pui-tab");
