@@ -4,10 +4,21 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
 import { deployments } from "../../data/deployments";
+import { solutions } from "../../data/solutions";
 import Network from "lucide-astro/Network";
 import ShieldCheck from "lucide-astro/ShieldCheck";
 import BarChart from "lucide-astro/BarChart";
 import KeyRound from "lucide-astro/KeyRound";
+
+let githubStars = "2.6k";
+try {
+  const res = await fetch("https://api.github.com/repos/absmach/magistrala");
+  if (res.ok) {
+    const data = await res.json();
+    const count: number = data.stargazers_count;
+    githubStars = count >= 1000 ? `${(count / 1000).toFixed(1)}k` : String(count);
+  }
+} catch (_) {}
 
 const showcaseFeatures = [
   {
@@ -164,7 +175,7 @@ const faqSchema = JSON.stringify({
 ---
 
 <BaseLayout
-  title="Magistrala IoT Platform — Abstract Machines"
+  title="Magistrala — Open-Source IoT Platform for Connected Devices"
   description="Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. SDKs for Go, TypeScript, Python, and Rust."
 >
   <Header />
@@ -208,13 +219,7 @@ const faqSchema = JSON.stringify({
                 target="_blank"
                 rel="noopener">Start for Free ↗</a
               >
-              <a
-                href="https://www.absmach.eu/docs/magistrala"
-                class="btn"
-                target="_blank"
-                rel="noopener">Documentation ↗</a
-              >
-
+              <a href="/contact" class="btn">Contact Us →</a>
             </div>
             <div
               style="margin-top:20px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;"
@@ -318,7 +323,14 @@ const faqSchema = JSON.stringify({
           style="border:none; border-radius:0; "
         >
           <div class="metric featured">
-            <div class="v">400+</div>
+            <div class="v">
+              <a
+                href="https://deployments.absmach.eu/"
+                target="_blank"
+                rel="noopener"
+                aria-label="View production deployments">400+ ↗</a
+              >
+            </div>
             <div class="l">Production deployments</div>
           </div>
           <div class="metric">
@@ -335,7 +347,7 @@ const faqSchema = JSON.stringify({
                 href="https://github.com/absmach/magistrala"
                 target="_blank"
                 rel="noopener"
-                aria-label="GitHub stars">2.5k ↗</a
+                aria-label="GitHub stars">{githubStars} ↗</a
               >
             </div>
             <div class="l">GitHub Stars</div>
@@ -404,8 +416,54 @@ const faqSchema = JSON.stringify({
             ))
           }
         </div>
-        <div style="margin-top:32px; padding-top:24px;">
-          <a href="/solutions/" class="btn-link">See Magistrala IoT solution packs →</a>
+      </div>
+    </section>
+
+    <!-- Solutions section -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Solution Packs</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Industry-ready IoT solutions.
+            </h2>
+          </div>
+          <p class="lede">
+            Pre-configured dashboards, detection rules, and compliance reports
+            for your industry — deploy in minutes, not months.
+          </p>
+        </div>
+        <div class="mg-sol-grid">
+          {
+            solutions.map((sol) => (
+              <a href={`/solutions/${sol.slug}/`} class="sol-img-card">
+                <div class="sol-img-wrap">
+                  <img
+                    src={sol.image}
+                    alt={`${sol.title} IoT solution`}
+                    width="600"
+                    height="400"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="sol-img-body">
+                  <h3 class="sol-img-title">{sol.title}</h3>
+                  <p class="sol-img-desc">{sol.summary}</p>
+                  <span class="btn-link" style="font-size:13px; margin-top:auto;">
+                    Explore solution →
+                  </span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+        <div style="margin-top:32px; text-align:center;">
+          <a href="/solutions/" class="btn">View all solution packs →</a>
         </div>
       </div>
     </section>
@@ -752,7 +810,6 @@ const faqSchema = JSON.stringify({
             target="_blank"
             rel="noopener">Documentation ↗</a
           >
-          <a href="/contact" class="btn">Contact Sales</a>
         </div>
       </div>
     </section>
@@ -787,6 +844,22 @@ const faqSchema = JSON.stringify({
   /* ── Responsive grids ─────────────────────────────────────── */
   .mg-metrics {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* ── Solutions grid ──────────────────────────────────────── */
+  .mg-sol-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 1100px) {
+    .mg-sol-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 760px) {
+    .mg-sol-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .mg-sol-grid { grid-template-columns: 1fr; }
   }
   .mg-feat-grid {
     grid-template-columns: repeat(2, 1fr);
