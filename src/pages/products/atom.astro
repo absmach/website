@@ -51,18 +51,48 @@ const features = [
 ];
 
 const steps = [
-  ["01", "Run Atom", "Clone the repo and start the stack with Docker Compose. Atom migrates the database and seeds the admin account automatically."],
-  ["02", "Model your system", "Create tenants, entity kinds, and resource definitions through the Admin UI or API. Profiles let you describe your platform's vocabulary."],
-  ["03", "Enforce access", "Call the authorization endpoint from your services. The policy engine evaluates live state and returns ALLOW or DENY instantly."],
+  [
+    "01",
+    "Run Atom",
+    "Clone the repo and start the stack with Docker Compose. Atom migrates the database and seeds the admin account automatically.",
+  ],
+  [
+    "02",
+    "Model your system",
+    "Create tenants, entity kinds, and resource definitions through the Admin UI or API. Profiles let you describe your platform's vocabulary.",
+  ],
+  [
+    "03",
+    "Enforce access",
+    "Call the authorization endpoint from your services. The policy engine evaluates live state and returns ALLOW or DENY instantly.",
+  ],
 ];
 
 const policyFeatures = [
-  { name: "Explicit deny", desc: "A deny binding overrides any allow immediately — no policy ordering tricks." },
-  { name: "Group inheritance", desc: "Policies on a group propagate to all members in real time." },
-  { name: "ABAC conditions", desc: "Attach conditions to any binding — match on entity or resource attributes using dot-path assertions." },
-  { name: "Bulk checks", desc: "Check dozens of permissions in one call — designed for gateway-level enforcement." },
-  { name: "Explain endpoint", desc: "Get a full decision trace: matched policies, skipped bindings, ABAC evaluation, and final verdict." },
-  { name: "Deny by default", desc: "No matching allow policy means denied. Nothing is implicitly permitted." },
+  {
+    name: "Explicit deny",
+    desc: "A deny binding overrides any allow immediately — no policy ordering tricks.",
+  },
+  {
+    name: "Group inheritance",
+    desc: "Policies on a group propagate to all members in real time.",
+  },
+  {
+    name: "ABAC conditions",
+    desc: "Attach conditions to any binding — match on entity or resource attributes using dot-path assertions.",
+  },
+  {
+    name: "Bulk checks",
+    desc: "Check dozens of permissions in one call — designed for gateway-level enforcement.",
+  },
+  {
+    name: "Explain endpoint",
+    desc: "Get a full decision trace: matched policies, skipped bindings, ABAC evaluation, and final verdict.",
+  },
+  {
+    name: "Deny by default",
+    desc: "No matching allow policy means denied. Nothing is implicitly permitted.",
+  },
 ];
 
 const devSurface = [
@@ -191,7 +221,6 @@ const uiFeatures = [
   },
 ];
 
-
 const faqs = [
   {
     q: "How is Atom different from Keycloak?",
@@ -226,10 +255,10 @@ const faqs = [
 const faqSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": faqs.map(({ q, a }) => ({
+  mainEntity: faqs.map(({ q, a }) => ({
     "@type": "Question",
-    "name": q,
-    "acceptedAnswer": { "@type": "Answer", "text": a },
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
   })),
 });
 ---
@@ -240,7 +269,6 @@ const faqSchema = JSON.stringify({
 >
   <Header />
   <main>
-
     <!-- Hero -->
     <section class="prod-hero has-video">
       <video
@@ -262,17 +290,26 @@ const faqSchema = JSON.stringify({
           <div style="text-align: left;">
             <p class="atom-wordmark">Atom</p>
           </div>
-          <h1 class="tagline">Open-Source Identity &amp; Authorization — RBAC, ABAC, JWT in One Rust Binary.</h1>
-          <p class="lede" style="margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;">
-            One Rust binary, one PostgreSQL database — no sidecars, no runtime dependencies.
-            Authentication, RBAC, ABAC, and live policy enforcement in a single deployable service.
+          <h1 class="tagline">
+            Open-Source Identity &amp; Authorization — RBAC, ABAC, JWT in One
+            Rust Binary.
+          </h1>
+          <p
+            class="lede"
+            style="margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;"
+          >
+            One Rust binary, one PostgreSQL database — no sidecars, no runtime
+            dependencies. Authentication, RBAC, ABAC, and live policy
+            enforcement in a single deployable service.
           </p>
           <div class="btn-row" style="margin-top:32px; justify-content:center;">
             <a href="/contact" class="btn btn-primary">Contact Us →</a>
             <a href="/docs/atom" class="btn">Documentation ↗</a>
           </div>
           <div style="margin-top:20px;">
-            <span class="badge success"><span class="dot"></span>Open Source · Apache 2.0</span>
+            <span class="badge success"
+              ><span class="dot"></span>Open Source · Apache 2.0</span
+            >
           </div>
         </div>
       </div>
@@ -281,7 +318,10 @@ const faqSchema = JSON.stringify({
     <!-- Stats bar -->
     <div style="border-bottom:1px solid var(--line-3);">
       <div class="container-wide">
-        <div class="metrics atom-metrics" style="border:none; border-radius:0; border-left:1px solid var(--line-3);">
+        <div
+          class="metrics atom-metrics"
+          style="border:none; border-radius:0; border-left:1px solid var(--line-3);"
+        >
           <div class="metric featured">
             <div class="v">1 binary</div>
             <div class="l">Zero sidecars, zero dependencies</div>
@@ -308,27 +348,36 @@ const faqSchema = JSON.stringify({
         <div class="section-head">
           <div class="left">
             <span class="kicker">Features</span>
-            <h2 class="h-2" style="margin-top:14px;">Built for modern identity and access control.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Built for modern identity and access control.
+            </h2>
           </div>
           <p class="lede">
-            Authentication, authorization, identity management,
-            and policy enforcement — one service.
+            Authentication, authorization, identity management, and policy
+            enforcement — one service.
           </p>
         </div>
         <div class="feature-grid">
-          {features.map(({ icon: Icon, name, desc }) => (
-            <div class="feature">
-              <div class="ic atom-ic"><Icon size={20} /></div>
-              <div class="name">{name}</div>
-              <p class="desc">{desc}</p>
-            </div>
-          ))}
+          {
+            features.map(({ icon: Icon, name, desc }) => (
+              <div class="feature">
+                <div class="ic atom-ic">
+                  <Icon size={20} />
+                </div>
+                <div class="name">{name}</div>
+                <p class="desc">{desc}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
 
     <!-- Admin UI — with screenshots -->
-    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
@@ -342,34 +391,49 @@ const faqSchema = JSON.stringify({
         </div>
         <div class="pui-layout">
           <div class="pui-tabs" id="pui-tabs">
-            {uiFeatures.map(({ id, title, desc }, i) => (
-              <div class={`pui-tab${i === 0 ? " active" : ""}`} data-target={id}>
-                <button class="pui-tab-btn" type="button">
-                  <span class="pui-tab-title">{title}</span>
-                  <span class="pui-chevron">›</span>
-                </button>
-                <p class="pui-tab-desc">{desc}</p>
-              </div>
-            ))}
+            {
+              uiFeatures.map(({ id, title, desc }, i) => (
+                <div
+                  class={`pui-tab${i === 0 ? " active" : ""}`}
+                  data-target={id}
+                >
+                  <button class="pui-tab-btn" type="button">
+                    <span class="pui-tab-title">{title}</span>
+                    <span class="pui-chevron">›</span>
+                  </button>
+                  <p class="pui-tab-desc">{desc}</p>
+                </div>
+              ))
+            }
           </div>
           <div class="pui-panel">
-            {uiFeatures.map(({ id, img, alt }, i) => (
-              <div class={`pui-img-wrap${i === 0 ? " active" : ""}`} data-panel={id}>
-                <img src={img} alt={alt} class="pui-img" loading="lazy" />
-              </div>
-            ))}
+            {
+              uiFeatures.map(({ id, img, alt }, i) => (
+                <div
+                  class={`pui-img-wrap${i === 0 ? " active" : ""}`}
+                  data-panel={id}
+                >
+                  <img src={img} alt={alt} class="pui-img" loading="lazy" />
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
     </section>
 
     <!-- Architecture -->
-    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
             <span class="kicker">Architecture</span>
-            <h2 class="h-2" style="margin-top:14px;">Two modules. One binary.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Two modules. One binary.
+            </h2>
           </div>
           <p class="lede">
             Identity and Authorization run in the same process, backed by a
@@ -386,13 +450,17 @@ const faqSchema = JSON.stringify({
               <div class="atom-bd-module">
                 <div class="atom-bd-module-name">Identity Module</div>
                 <div class="atom-bd-module-tags">
-                  <span>entities</span><span>credentials</span><span>sessions</span><span>groups</span><span>ownerships</span>
+                  <span>entities</span><span>credentials</span><span
+                    >sessions</span
+                  ><span>groups</span><span>ownerships</span>
                 </div>
               </div>
               <div class="atom-bd-module">
                 <div class="atom-bd-module-name">Authorization Module</div>
                 <div class="atom-bd-module-tags">
-                  <span>resources</span><span>capabilities</span><span>roles</span><span>policy_bindings</span><span>PDP engine</span>
+                  <span>resources</span><span>capabilities</span><span
+                    >roles</span
+                  ><span>policy_bindings</span><span>PDP engine</span>
                 </div>
               </div>
             </div>
@@ -401,7 +469,9 @@ const faqSchema = JSON.stringify({
             <div class="atom-bd-db-row">
               <div class="atom-bd-db">
                 <div class="atom-bd-db-name">PostgreSQL</div>
-                <div class="atom-bd-db-sub">Single database · Auto-migrated on startup</div>
+                <div class="atom-bd-db-sub">
+                  Single database · Auto-migrated on startup
+                </div>
               </div>
             </div>
           </div>
@@ -436,17 +506,21 @@ const faqSchema = JSON.stringify({
         <div class="section-head">
           <div class="left">
             <span class="kicker">How it works</span>
-            <h2 class="h-2" style="margin-top:14px;">Deploy. Model. Enforce.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Deploy. Model. Enforce.
+            </h2>
           </div>
         </div>
         <div class="steps">
-          {steps.map(([num, title, desc]) => (
-            <div class="step">
-              <div class="num">{num}</div>
-              <h4>{title}</h4>
-              <p>{desc}</p>
-            </div>
-          ))}
+          {
+            steps.map(([num, title, desc]) => (
+              <div class="step">
+                <div class="num">{num}</div>
+                <h4>{title}</h4>
+                <p>{desc}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
@@ -456,8 +530,12 @@ const faqSchema = JSON.stringify({
       <div class="container-wide">
         <div class="section-head" style="color:inherit;">
           <div class="left">
-            <span class="kicker" style="color:rgba(246,244,238,0.5);">Policy Engine</span>
-            <h2 class="h-2" style="margin-top:14px; color:var(--paper);">One policy primitive. RBAC and ABAC unified.</h2>
+            <span class="kicker" style="color:rgba(246,244,238,0.5);"
+              >Policy Engine</span
+            >
+            <h2 class="h-2" style="margin-top:14px; color:var(--paper);">
+              One policy primitive. RBAC and ABAC unified.
+            </h2>
           </div>
           <p class="lede" style="color:rgba(246,244,238,0.65); max-width:38ch;">
             Both role-based and attribute-based access control are expressed
@@ -467,7 +545,8 @@ const faqSchema = JSON.stringify({
         <div class="atom-policy-layout">
           <div class="atom-policy-code-wrap">
             <div class="atom-policy-code-label">PolicyBinding</div>
-            <pre class="atom-policy-code">{`PolicyBinding {
+            <pre
+              class="atom-policy-code">{`PolicyBinding {
   subject:    group("operators")
   grant:      capability("publish")
   scope:      tenant("factory-a")
@@ -477,16 +556,19 @@ const faqSchema = JSON.stringify({
   }
 }`}</pre>
             <p class="atom-policy-note">
-              No permissions embedded in tokens. Every decision is evaluated online.
+              No permissions embedded in tokens. Every decision is evaluated
+              online.
             </p>
           </div>
           <div class="atom-policy-features">
-            {policyFeatures.map(({ name, desc }) => (
-              <div class="atom-policy-feature">
-                <div class="atom-policy-fname">{name}</div>
-                <div class="atom-policy-fdesc">{desc}</div>
-              </div>
-            ))}
+            {
+              policyFeatures.map(({ name, desc }) => (
+                <div class="atom-policy-feature">
+                  <div class="atom-policy-fname">{name}</div>
+                  <div class="atom-policy-fdesc">{desc}</div>
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
@@ -498,7 +580,9 @@ const faqSchema = JSON.stringify({
         <div class="section-head">
           <div class="left">
             <span class="kicker">Developer Surface</span>
-            <h2 class="h-2" style="margin-top:14px;">GraphQL-native. Runtime-ready.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              GraphQL-native. Runtime-ready.
+            </h2>
           </div>
           <p class="lede">
             One endpoint for management. A dedicated gRPC channel for
@@ -506,36 +590,52 @@ const faqSchema = JSON.stringify({
           </p>
         </div>
         <div class="feature-grid">
-          {devSurface.map(({ icon: Icon, name, desc }) => (
-            <div class="feature">
-              <div class="ic atom-ic"><Icon size={20} /></div>
-              <div class="name">{name}</div>
-              <p class="desc">{desc}</p>
-            </div>
-          ))}
+          {
+            devSurface.map(({ icon: Icon, name, desc }) => (
+              <div class="feature">
+                <div class="ic atom-ic">
+                  <Icon size={20} />
+                </div>
+                <div class="name">{name}</div>
+                <p class="desc">{desc}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
 
     <!-- Quick Start -->
-    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
             <span class="kicker">Quick start</span>
-            <h2 class="h-2" style="margin-top:14px;">Up and running in minutes.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Up and running in minutes.
+            </h2>
           </div>
         </div>
         <div class="atom-qs-grid">
-          {quickstart.map(({ step, code }) => (
-            <div class="atom-qs-card">
-              <div class="atom-qs-step">{step}</div>
-              <pre class="atom-qs-code">{code}</pre>
-            </div>
-          ))}
+          {
+            quickstart.map(({ step, code }) => (
+              <div class="atom-qs-card">
+                <div class="atom-qs-step">{step}</div>
+                <pre class="atom-qs-code">{code}</pre>
+              </div>
+            ))
+          }
         </div>
         <div class="btn-row" style="margin-top:40px;">
-          <a href="https://github.com/absmach/atom" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
+          <a
+            href="https://github.com/absmach/atom"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener">View on GitHub ↗</a
+          >
           <a href="/docs/atom" class="btn">Read docs ↗</a>
         </div>
       </div>
@@ -551,16 +651,22 @@ const faqSchema = JSON.stringify({
           </div>
         </div>
         <div class="sol-grid atom-sol-grid">
-          {solutions.map(({ icon: Icon, title, desc, tags }) => (
-            <div class="sol-card">
-              <div class="atom-sol-icon"><Icon size={22} /></div>
-              <h3 class="name">{title}</h3>
-              <p class="desc">{desc}</p>
-              <div class="tags">
-                {tags.map((t) => <span class="tag">{t}</span>)}
+          {
+            solutions.map(({ icon: Icon, title, desc, tags }) => (
+              <div class="sol-card">
+                <div class="atom-sol-icon">
+                  <Icon size={22} />
+                </div>
+                <h3 class="name">{title}</h3>
+                <p class="desc">{desc}</p>
+                <div class="tags">
+                  {tags.map((t) => (
+                    <span class="tag">{t}</span>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>
@@ -570,28 +676,49 @@ const faqSchema = JSON.stringify({
       <div class="container-wide">
         <div class="section-head" style="color:inherit;">
           <div class="left">
-            <span class="kicker" style="color:rgba(246,244,238,0.5);">Deployment</span>
-            <h2 class="h-2" style="margin-top:14px; color:var(--paper);">One binary.</h2>
+            <span class="kicker" style="color:rgba(246,244,238,0.5);"
+              >Deployment</span
+            >
+            <h2 class="h-2" style="margin-top:14px; color:var(--paper);">
+              One binary.
+            </h2>
           </div>
           <p class="lede" style="color:rgba(246,244,238,0.65); max-width:38ch;">
-            Self-contained and operational immediately after deployment.
-            No infrastructure assembly required.
+            Self-contained and operational immediately after deployment. No
+            infrastructure assembly required.
           </p>
         </div>
         <div class="atom-deploy-grid">
-          {[
-            ["Single Rust binary",   "No runtime dependencies, no JVM, no Node."],
-            ["PostgreSQL only",      "No Redis, no message queues, no coordination service."],
-            ["Auto migrations",      "Schema migrations run on startup automatically."],
-            ["Key generation",       "JWT signing key generated and stored on first boot."],
-            ["Docker Compose",       "Atom + PostgreSQL, ready in one command."],
-            ["Kubernetes",           "Single Deployment + Service. Config from env vars."],
-          ].map(([name, desc]) => (
-            <div class="atom-deploy-item">
-              <div class="atom-deploy-name">{name}</div>
-              <div class="atom-deploy-desc">{desc}</div>
-            </div>
-          ))}
+          {
+            [
+              [
+                "Single Rust binary",
+                "No runtime dependencies, no JVM, no Node.",
+              ],
+              [
+                "PostgreSQL only",
+                "No Redis, no message queues, no coordination service.",
+              ],
+              [
+                "Auto migrations",
+                "Schema migrations run on startup automatically.",
+              ],
+              [
+                "Key generation",
+                "JWT signing key generated and stored on first boot.",
+              ],
+              ["Docker Compose", "Atom + PostgreSQL, ready in one command."],
+              [
+                "Kubernetes",
+                "Single Deployment + Service. Config from env vars.",
+              ],
+            ].map(([name, desc]) => (
+              <div class="atom-deploy-item">
+                <div class="atom-deploy-name">{name}</div>
+                <div class="atom-deploy-desc">{desc}</div>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
@@ -637,7 +764,10 @@ const faqSchema = JSON.stringify({
     </section> -->
 
     <!-- FAQ -->
-    <section class="section" style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
@@ -655,9 +785,11 @@ const faqSchema = JSON.stringify({
         <span class="kicker">Get started</span>
         <h2 class="h-2" style="margin-top:14px;">Deploy Atom today.</h2>
         <p class="lede" style="margin:20px auto 36px;">
-          Identity, authentication, and authorization from one deployable
-          service. Apache 2.0. Single binary. Deploy alongside PostgreSQL on
-          a VM, in Docker Compose, or on Kubernetes.
+          Atom is the identity and authorization layer powering the <a
+            href="/products/magistrala"
+            style="color:inherit; text-decoration:underline;">Magistrala</a
+          > IoT platform. Deploy it standalone or as part of the full IoT stack —
+          single binary, Apache 2.0, PostgreSQL-backed.
         </p>
         <div class="btn-row" style="justify-content:center;">
           <a href="/contact" class="btn btn-primary">Contact Us →</a>
@@ -665,26 +797,25 @@ const faqSchema = JSON.stringify({
         </div>
       </div>
     </section>
-
   </main>
   <Footer />
   <script type="application/ld+json" is:inline>
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Atom",
-    "description": "Open-source identity and authorization platform. Runtime RBAC, ABAC, authentication, and multi-tenant policy enforcement in a single Rust binary backed by PostgreSQL.",
-    "applicationCategory": "SecurityApplication",
-    "operatingSystem": "Linux",
-    "url": "https://www.absmach.eu/products/atom",
-    "license": "https://www.apache.org/licenses/LICENSE-2.0",
-    "keywords": "identity platform,authorization platform,RBAC,ABAC,runtime authorization,policy decision point,authentication,OIDC,JWT,multi-tenant IAM,open-source IAM,Keycloak alternative,Cerbos alternative",
-    "author": {
-      "@type": "Organization",
-      "name": "Abstract Machines",
-      "url": "https://www.absmach.eu/"
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Atom",
+      "description": "Open-source identity and authorization platform. Runtime RBAC, ABAC, authentication, and multi-tenant policy enforcement in a single Rust binary backed by PostgreSQL.",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Linux",
+      "url": "https://www.absmach.eu/products/atom",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "keywords": "identity platform,authorization platform,RBAC,ABAC,runtime authorization,policy decision point,authentication,OIDC,JWT,multi-tenant IAM,open-source IAM,Keycloak alternative,Cerbos alternative",
+      "author": {
+        "@type": "Organization",
+        "name": "Abstract Machines",
+        "url": "https://www.absmach.eu/"
+      }
     }
-  }
   </script>
   <script is:inline type="application/ld+json" set:html={faqSchema} />
   <script type="application/ld+json" is:inline>
@@ -718,7 +849,9 @@ const faqSchema = JSON.stringify({
           tabs.forEach((t) => t.classList.remove("active"));
           panels.forEach((p) => p.classList.remove("active"));
           tab.classList.add("active");
-          document.querySelector(`.pui-img-wrap[data-panel="${target}"]`)?.classList.add("active");
+          document
+            .querySelector(`.pui-img-wrap[data-panel="${target}"]`)
+            ?.classList.add("active");
         });
       });
     })();
@@ -1146,9 +1279,16 @@ const faqSchema = JSON.stringify({
   .atom-col-atom {
     background: rgba(7, 55, 99, 0.04);
   }
-  .atom-yes    { color: var(--ink) !important; font-weight: 600 !important; }
-  .atom-no     { color: var(--ink-3) !important; }
-  .atom-partial { color: var(--ink-2) !important; }
+  .atom-yes {
+    color: var(--ink) !important;
+    font-weight: 600 !important;
+  }
+  .atom-no {
+    color: var(--ink-3) !important;
+  }
+  .atom-partial {
+    color: var(--ink-2) !important;
+  }
 
   /* ─── Responsive ────────────────────────────────────────────────── */
   @media (max-width: 980px) {

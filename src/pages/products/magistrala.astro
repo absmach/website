@@ -114,17 +114,18 @@ const sdks = [
 ];
 
 const integrations = [
-  "NATS",
-  "Kafka",
-  "RabbitMQ",
-  "FluxMQ",
-  "PostgreSQL",
-  "TimescaleDB",
-  "MongoDB",
-  "InfluxDB",
-  "SpiceDB",
-  "OAuth 2.0",
-  "JWT",
+  { name: "Atom", href: "/products/atom" },
+  { name: "FluxMQ", href: "/products/fluxmq" },
+  { name: "NATS" },
+  { name: "Kafka" },
+  { name: "RabbitMQ" },
+  { name: "PostgreSQL" },
+  { name: "TimescaleDB" },
+  { name: "MongoDB" },
+  { name: "InfluxDB" },
+  { name: "SpiceDB" },
+  { name: "OAuth 2.0" },
+  { name: "JWT" },
 ];
 
 
@@ -521,11 +522,12 @@ const faqSchema = JSON.stringify({
           <span class="kicker" style="display:block; margin-bottom:14px;">Edge Deployment</span>
           <h2 class="h-2">Magistrala runs where your devices are.</h2>
           <p
-            style="color:var(--ink-2); margin-top:20px; font-size:15px; line-height:1.65; max-width:48ch;"
+            style="color:var(--ink-2); margin-top:20px; line-height:1.65;"
           >
             The Magistrala Agent runs directly on edge devices and acts as a
             bridge to the cloud platform over MQTT. Deploy on any Linux
-            gateway (including A0 and A1) and manage it remotely.
+            gateway (including <a href="/products/a0" style="color:inherit; text-decoration:underline;">A0</a> and <a href="/products/a1" style="color:inherit; text-decoration:underline;">A1</a>) and manage it remotely.
+            Pair with <a href="/products/propeller" style="color:inherit; text-decoration:underline;">Propeller</a> to push WebAssembly workloads to the edge without reflashing firmware.
           </p>
           <ul
             style="list-style:none; padding:0; margin:24px 0 0; display:flex; flex-direction:column; gap:10px; font-size:14px; color:var(--ink-2); text-align:left;"
@@ -569,10 +571,10 @@ const faqSchema = JSON.stringify({
         </div>
         <div class="integ-grid">
           {
-            integrations.map((name) => (
+            integrations.map(({ name, href }) => (
               <div class="integ-chip">
                 <span class="dot" />
-                {name}
+                {href ? <a href={href}>{name}</a> : name}
               </div>
             ))
           }

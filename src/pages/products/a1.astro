@@ -128,10 +128,10 @@ const faqs = [
 const faqSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": faqs.map(({ q, a }) => ({
+  mainEntity: faqs.map(({ q, a }) => ({
     "@type": "Question",
-    "name": q,
-    "acceptedAnswer": { "@type": "Answer", "text": a },
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
   })),
 });
 ---
@@ -142,7 +142,6 @@ const faqSchema = JSON.stringify({
 >
   <Header />
   <main>
-
     <!-- Hero -->
     <section class="prod-hero has-video">
       <video
@@ -163,7 +162,8 @@ const faqSchema = JSON.stringify({
         <div class="hero-grid">
           <div class="hero-copy">
             <div class="logo-mark">
-              <span class="swatch" style="background:rgba(255,255,255,0.12);"></span>
+              <span class="swatch" style="background:rgba(255,255,255,0.12);"
+              ></span>
               A1 · Industrial Gateway · Hardware
             </div>
             <h1 class="tagline">A1 – Linux Gateway for Industrial IoT.</h1>
@@ -173,11 +173,18 @@ const faqSchema = JSON.stringify({
               capabilities, and scalability for industrial IoT applications.
             </p>
             <div class="btn-row" style="margin-top:32px;">
-              <a href="https://www.absmach.eu/docs/hardware/s1-gateway" class="btn btn-primary" target="_blank" rel="noopener">Learn More ↗</a>
+              <a
+                href="https://www.absmach.eu/docs/hardware/s1-gateway"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener">Learn More ↗</a
+              >
               <a href="/contact" class="btn">Contact Us</a>
             </div>
             <div style="margin-top:20px;">
-              <span class="badge success"><span class="dot"></span>Open Hardware</span>
+              <span class="badge success"
+                ><span class="dot"></span>Open Hardware</span
+              >
             </div>
           </div>
           <div class="hero-visual" style="padding:32px;">
@@ -194,7 +201,10 @@ const faqSchema = JSON.stringify({
     <!-- Stats bar -->
     <div style="border-bottom:1px solid var(--line-3);">
       <div class="container-wide">
-        <div class="a1-metrics metrics" style="border:none; border-radius:0; border-left:1px solid var(--line-3);">
+        <div
+          class="a1-metrics metrics"
+          style="border:none; border-radius:0; border-left:1px solid var(--line-3);"
+        >
           <div class="metric featured">
             <div class="v">RISC-V</div>
             <div class="l">BeagleV-Fire compute</div>
@@ -218,7 +228,6 @@ const faqSchema = JSON.stringify({
     <!-- A0 Board + BeagleV-Fire components -->
     <section class="section" style="border-bottom:1px solid var(--line-3);">
       <div class="container-wide">
-
         <!-- Component 1: A0 Board -->
         <div class="a1-component">
           <div class="a1-component-header">
@@ -236,18 +245,21 @@ const faqSchema = JSON.stringify({
             </div>
             <div class="a1-component-text">
               <p class="lede">
-                The <strong>A0 Board</strong> is the wireless connectivity core of the A1
-                gateway. It handles multi-protocol wireless data collection
-                (Wireless M-Bus, NB-IoT, LTE-M, WiFi, and BLE) and passes data
-                to the <strong>BeagleV-Fire</strong> for Linux-side processing and cloud backhaul.
+                The <strong>A0 Board</strong> is the wireless connectivity core of
+                the A1 gateway. It handles multi-protocol wireless data collection
+                (Wireless M-Bus, NB-IoT, LTE-M, WiFi, and BLE) and passes data to
+                the <strong>BeagleV-Fire</strong> for Linux-side processing and cloud
+                backhaul.
               </p>
               <ul class="a1-spec-list">
-                {a0BoardSpecs.map(spec => (
-                  <li class="a1-spec-item">
-                    <span class="a1-check">✓</span>
-                    <span>{spec}</span>
-                  </li>
-                ))}
+                {
+                  a0BoardSpecs.map((spec) => (
+                    <li class="a1-spec-item">
+                      <span class="a1-check">✓</span>
+                      <span>{spec}</span>
+                    </li>
+                  ))
+                }
               </ul>
             </div>
           </div>
@@ -272,24 +284,26 @@ const faqSchema = JSON.stringify({
             </div>
             <div class="a1-component-text">
               <p class="lede">
-                The <strong>BeagleV-Fire</strong> brings a full <strong>Linux operating system</strong> to the
-                A1 gateway on a RISC-V PolarFire SoC. It provides the compute
-                power needed for containerised workloads, edge AI inference,
-                advanced networking, and seamless cloud integration;
-                capabilities not available on a bare-metal RTOS.
+                The <strong>BeagleV-Fire</strong> brings a full <strong
+                  >Linux operating system</strong
+                > to the A1 gateway on a RISC-V PolarFire SoC. It provides the compute
+                power needed for containerised workloads, edge AI inference, advanced
+                networking, and seamless cloud integration; capabilities not available
+                on a bare-metal RTOS.
               </p>
               <ul class="a1-spec-list">
-                {beagleVFireSpecs.map(spec => (
-                  <li class="a1-spec-item">
-                    <span class="a1-check">✓</span>
-                    <span>{spec}</span>
-                  </li>
-                ))}
+                {
+                  beagleVFireSpecs.map((spec) => (
+                    <li class="a1-spec-item">
+                      <span class="a1-check">✓</span>
+                      <span>{spec}</span>
+                    </li>
+                  ))
+                }
               </ul>
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
@@ -298,26 +312,35 @@ const faqSchema = JSON.stringify({
       <div class="container-wide">
         <div class="section-head" style="text-align:center; display:block;">
           <span class="kicker">Features</span>
-          <h2 class="h-2" style="margin-top:14px;">RISC-V Linux gateway features.</h2>
+          <h2 class="h-2" style="margin-top:14px;">
+            RISC-V Linux gateway features.
+          </h2>
           <p class="lede" style="margin:12px auto 0; max-width:52ch;">
             A0 Board + BeagleV-Fire: the Linux-based gateway for demanding
             industrial and edge computing deployments.
           </p>
         </div>
         <div class="a1-feat-grid feature-grid" style="margin-top:48px;">
-          {features.map(({ icon: Icon, name, desc }) => (
-            <div class="feature">
-              <div class="ic"><Icon size={18} /></div>
-              <div class="name">{name}</div>
-              <p class="desc">{desc}</p>
-            </div>
-          ))}
+          {
+            features.map(({ icon: Icon, name, desc }) => (
+              <div class="feature">
+                <div class="ic">
+                  <Icon size={18} />
+                </div>
+                <div class="name">{name}</div>
+                <p class="desc">{desc}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
 
     <!-- Solutions -->
-    <section class="section" style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
@@ -326,16 +349,22 @@ const faqSchema = JSON.stringify({
           </div>
         </div>
         <div class="a1-sol-grid sol-grid">
-          {solutions.map(({ icon: Icon, title, desc, tags }) => (
-            <div class="sol-card">
-              <div class="icon-frame"><Icon size={22} /></div>
-              <h3 class="name">{title}</h3>
-              <p class="desc">{desc}</p>
-              <div class="tags">
-                {tags.map(t => <span class="tag">{t}</span>)}
+          {
+            solutions.map(({ icon: Icon, title, desc, tags }) => (
+              <div class="sol-card">
+                <div class="icon-frame">
+                  <Icon size={22} />
+                </div>
+                <h3 class="name">{title}</h3>
+                <p class="desc">{desc}</p>
+                <div class="tags">
+                  {tags.map((t) => (
+                    <span class="tag">{t}</span>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>
@@ -346,23 +375,38 @@ const faqSchema = JSON.stringify({
         <div class="section-head">
           <div class="left">
             <span class="kicker">Integrations</span>
-            <h2 class="h-2" style="margin-top:14px;">Connects with the full stack.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Connects with the full stack.
+            </h2>
           </div>
-          <p class="lede">A1 pairs with Magistrala for device management and Propeller for edge workload orchestration.</p>
+          <p class="lede">
+            A1 is built on the <a
+              href="/products/a0"
+              style="color:inherit; text-decoration:underline;">A0 board</a
+            > and pairs with <a
+              href="/products/magistrala"
+              style="color:inherit; text-decoration:underline;">Magistrala</a
+            > for device management and Propeller for edge workload orchestration.
+          </p>
         </div>
         <div class="integ-grid">
-          {integrations.map(name => (
-            <div class="integ-chip">
-              <span class="dot"></span>
-              {name}
-            </div>
-          ))}
+          {
+            integrations.map((name) => (
+              <div class="integ-chip">
+                <span class="dot" />
+                {name}
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
 
     <!-- FAQ -->
-    <section class="section" style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
@@ -378,34 +422,53 @@ const faqSchema = JSON.stringify({
     <section class="section">
       <div class="container-narrow" style="text-align:center;">
         <span class="kicker">Get started</span>
-        <h2 class="h-2" style="margin-top:14px;">Deploy Linux at the industrial edge.</h2>
-        <p class="lede" style="margin:20px auto 36px;">Read the documentation, explore the open hardware, or talk to the team about your deployment requirements.</p>
+        <h2 class="h-2" style="margin-top:14px;">
+          Deploy Linux at the industrial edge.
+        </h2>
+        <p class="lede" style="margin:20px auto 36px;">
+          Read the documentation, explore the open hardware, or talk to the team
+          about your deployment requirements.
+        </p>
         <div class="btn-row" style="justify-content:center;">
-          <a href="https://www.absmach.eu/docs/hardware/s1-gateway" class="btn btn-primary" target="_blank" rel="noopener">Learn More ↗</a>
+          <a
+            href="https://www.absmach.eu/docs/hardware/s1-gateway"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener">Learn More ↗</a
+          >
           <a href="/contact" class="btn">Contact Us</a>
         </div>
       </div>
-      <div class="container-narrow" style="margin-top:48px; padding-top:32px; border-top:1px solid var(--line-3);">
-        <p style="font-size:12px; color:var(--ink-4); text-align:center; line-height:1.6;">
-          A1 hardware was developed with support from the European Union's Horizon Europe research and innovation programme as part of the <a href="/projects/elastic" style="color:var(--ink-3); text-decoration:underline;">ELASTIC project</a>.
+      <div
+        class="container-narrow"
+        style="margin-top:48px; padding-top:32px; border-top:1px solid var(--line-3);"
+      >
+        <p
+          style="font-size:12px; color:var(--ink-4); text-align:center; line-height:1.6;"
+        >
+          A1 hardware was developed with support from the European Union's
+          Horizon Europe research and innovation programme as part of the <a
+            href="/projects/elastic"
+            style="color:var(--ink-3); text-decoration:underline;"
+            >ELASTIC project</a
+          >.
         </p>
       </div>
     </section>
-
   </main>
   <Footer />
   <script type="application/ld+json" is:inline>
-  {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "A1 Industrial Gateway",
-    "description": "RISC-V Linux gateway for industrial IoT with container and Wasm workload support. Full Linux OS, edge AI, and industrial-grade reliability.",
-    "url": "https://www.absmach.eu/products/a1",
-    "brand": {
-      "@type": "Brand",
-      "name": "Abstract Machines"
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "A1 Industrial Gateway",
+      "description": "RISC-V Linux gateway for industrial IoT with container and Wasm workload support. Full Linux OS, edge AI, and industrial-grade reliability.",
+      "url": "https://www.absmach.eu/products/a1",
+      "brand": {
+        "@type": "Brand",
+        "name": "Abstract Machines"
+      }
     }
-  }
   </script>
   <script is:inline type="application/ld+json" set:html={faqSchema} />
   <script type="application/ld+json" is:inline>

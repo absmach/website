@@ -143,14 +143,16 @@ const solutions = [
 ];
 
 const integrations = [
-  "WebAssembly",
-  "Kubernetes",
-  "Docker",
-  "Zephyr RTOS",
-  "Magistrala",
-  "Go Runtime",
-  "Rust Runtime",
-  "OCI Registry",
+  { name: "Magistrala", href: "/products/magistrala" },
+  { name: "A0 Gateway", href: "/products/a0" },
+  { name: "A1 Gateway", href: "/products/a1" },
+  { name: "WebAssembly" },
+  { name: "Kubernetes" },
+  { name: "Docker" },
+  { name: "Zephyr RTOS" },
+  { name: "Go Runtime" },
+  { name: "Rust Runtime" },
+  { name: "OCI Registry" },
 ];
 
 const faqs = [
@@ -227,7 +229,7 @@ const faqSchema = JSON.stringify({
               Deploy portable Wasm workloads across the full cloud-edge
               continuum — from Kubernetes clusters to Zephyr RTOS
               microcontrollers. OCI registry integration, MQTT messaging via
-              Magistrala, sub-10ms boot times, and FaaS at the edge. Apache 2.0.
+              <a href="/products/magistrala" style="color:inherit; text-decoration:underline;">Magistrala</a>, sub-10ms boot times, and FaaS at the edge. Apache 2.0.
             </p>
             <div class="btn-row" style="margin-top:32px;">
               <a href="/contact" class="btn btn-primary">Contact Us →</a>
@@ -477,10 +479,10 @@ const faqSchema = JSON.stringify({
         </div>
         <div class="integ-grid">
           {
-            integrations.map((name) => (
+            integrations.map(({ name, href }) => (
               <div class="integ-chip">
                 <span class="dot" />
-                {name}
+                {href ? <a href={href}>{name}</a> : name}
               </div>
             ))
           }
