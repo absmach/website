@@ -46,35 +46,98 @@ const features = [
 ];
 
 const steps = [
-  ["01", "Provision identities", "Generate post-quantum keys into isolated hardware-backed storage. Set KUE policy bits per slot — SIGN_ONLY, DECAP_ONLY, NO_EXPORT. Set once, enforced by hardware."],
-  ["02", "Establish secure channels", "Any host MCU connects over SPI. The Noise IK channel opens with a hybrid ML-KEM-768 + X25519 key exchange, giving forward secrecy from the first byte."],
-  ["03", "Anchor trust at runtime", "Verify firmware, sign messages, and decapsulate keys through the encrypted SPI channel. Every operation enforced by the KUE — the CPU never holds key bytes."],
+  [
+    "01",
+    "Provision identities",
+    "Generate post-quantum keys into isolated hardware-backed storage. Set KUE policy bits per slot — SIGN_ONLY, DECAP_ONLY, NO_EXPORT. Set once, enforced by hardware.",
+  ],
+  [
+    "02",
+    "Establish secure channels",
+    "Any host MCU connects over SPI. The Noise IK channel opens with a hybrid ML-KEM-768 + X25519 key exchange, giving forward secrecy from the first byte.",
+  ],
+  [
+    "03",
+    "Anchor trust at runtime",
+    "Verify firmware, sign messages, and decapsulate keys through the encrypted SPI channel. Every operation enforced by the KUE — the CPU never holds key bytes.",
+  ],
 ];
 
 const kuePolicy = [
-  { bit: "SIGN_ONLY",     meaning: "Slot usable only for ML-DSA signing" },
-  { bit: "DECAP_ONLY",    meaning: "Slot usable only for ML-KEM decapsulation" },
-  { bit: "NO_EXPORT",     meaning: "Key bytes never leave the key store" },
-  { bit: "NO_OVERWRITE",  meaning: "Slot cannot be re-provisioned" },
-  { bit: "COUNTER_LIMIT", meaning: "Use-count cap — operation blocked when reached" },
+  { bit: "SIGN_ONLY", meaning: "Slot usable only for ML-DSA signing" },
+  { bit: "DECAP_ONLY", meaning: "Slot usable only for ML-KEM decapsulation" },
+  { bit: "NO_EXPORT", meaning: "Key bytes never leave the key store" },
+  { bit: "NO_OVERWRITE", meaning: "Slot cannot be re-provisioned" },
+  {
+    bit: "COUNTER_LIMIT",
+    meaning: "Use-count cap — operation blocked when reached",
+  },
 ];
 
 const perfRows = [
-  { op: "ML-KEM-768 KeyGen", quarc: "< 0.5 ms", baseline: "~1.5 ms",  speedup: "≥ 3×" },
-  { op: "ML-KEM-768 Encaps", quarc: "< 0.5 ms", baseline: "~1.7 ms",  speedup: "≥ 3×" },
-  { op: "ML-KEM-768 Decaps", quarc: "< 0.5 ms", baseline: "~1.8 ms",  speedup: "≥ 3×" },
-  { op: "ML-DSA-65 KeyGen",  quarc: "< 2 ms",   baseline: "~6 ms",    speedup: "≥ 3×" },
-  { op: "ML-DSA-65 Sign",    quarc: "< 5 ms",   baseline: "~12 ms",   speedup: "≥ 2×" },
-  { op: "ML-DSA-65 Verify",  quarc: "< 2 ms",   baseline: "~5 ms",    speedup: "≥ 2×" },
+  {
+    op: "ML-KEM-768 KeyGen",
+    quarc: "< 0.5 ms",
+    baseline: "~1.5 ms",
+    speedup: "≥ 3×",
+  },
+  {
+    op: "ML-KEM-768 Encaps",
+    quarc: "< 0.5 ms",
+    baseline: "~1.7 ms",
+    speedup: "≥ 3×",
+  },
+  {
+    op: "ML-KEM-768 Decaps",
+    quarc: "< 0.5 ms",
+    baseline: "~1.8 ms",
+    speedup: "≥ 3×",
+  },
+  {
+    op: "ML-DSA-65 KeyGen",
+    quarc: "< 2 ms",
+    baseline: "~6 ms",
+    speedup: "≥ 3×",
+  },
+  {
+    op: "ML-DSA-65 Sign",
+    quarc: "< 5 ms",
+    baseline: "~12 ms",
+    speedup: "≥ 2×",
+  },
+  {
+    op: "ML-DSA-65 Verify",
+    quarc: "< 2 ms",
+    baseline: "~5 ms",
+    speedup: "≥ 2×",
+  },
 ];
 
 const securityGuarantees = [
-  { name: "No key exposure",          desc: "Key bytes never appear on the system bus — DMA from key store into engine registers only." },
-  { name: "Lifecycle enforcement",    desc: "MANUFACTURING → PROVISIONED → LOCKED → RMA. One-way FSM in RTL — state never decreases." },
-  { name: "Immutable secure boot",    desc: "Boot ROM is hardwired. ML-DSA firmware verification and rollback check run before any firmware executes." },
-  { name: "Constant-time crypto",     desc: "No secret-dependent memory access or timing behavior anywhere in the hardware engines." },
-  { name: "Zeroized scratchpads",     desc: "Sensitive intermediate values cleared automatically in RTL after every cryptographic operation." },
-  { name: "Replay-proof interface",   desc: "Noise IK with strictly monotonic nonces. Replayed commands are rejected before decryption." },
+  {
+    name: "No key exposure",
+    desc: "Key bytes never appear on the system bus — DMA from key store into engine registers only.",
+  },
+  {
+    name: "Lifecycle enforcement",
+    desc: "MANUFACTURING → PROVISIONED → LOCKED → RMA. One-way FSM in RTL — state never decreases.",
+  },
+  {
+    name: "Immutable secure boot",
+    desc: "Boot ROM is hardwired. ML-DSA firmware verification and rollback check run before any firmware executes.",
+  },
+  {
+    name: "Constant-time crypto",
+    desc: "No secret-dependent memory access or timing behavior anywhere in the hardware engines.",
+  },
+  {
+    name: "Zeroized scratchpads",
+    desc: "Sensitive intermediate values cleared automatically in RTL after every cryptographic operation.",
+  },
+  {
+    name: "Replay-proof interface",
+    desc: "Noise IK with strictly monotonic nonces. Replayed commands are rejected before decryption.",
+  },
 ];
 
 const solutions = [
@@ -177,10 +240,10 @@ const faqs = [
 const faqSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": faqs.map(({ q, a }) => ({
+  mainEntity: faqs.map(({ q, a }) => ({
     "@type": "Question",
-    "name": q,
-    "acceptedAnswer": { "@type": "Answer", "text": a },
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
   })),
 });
 ---
@@ -191,7 +254,6 @@ const faqSchema = JSON.stringify({
 >
   <Header />
   <main>
-
     <!-- Hero -->
     <section class="prod-hero has-video">
       <video
@@ -214,17 +276,27 @@ const faqSchema = JSON.stringify({
           <div style="text-align: left;">
             <p class="quarc-wordmark">Quarc</p>
           </div>
-          <h1 class="tagline">A secure element built for the post-quantum era.</h1>
-          <p class="lede" style="margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;">
+          <h1 class="tagline">
+            A secure element built for the post-quantum era.
+          </h1>
+          <p
+            class="lede"
+            style="margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;"
+          >
             Hardware-accelerated ML-KEM and ML-DSA on a fully open and auditable
             RISC-V architecture.
           </p>
           <div class="btn-row" style="margin-top:32px; justify-content:center;">
-            <a href="https://github.com/absmach/quarc" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span></a>
-            <a href="/contact" class="btn">Contact Us <span aria-hidden="true">→</span></a>
-          </div>
-          <div style="margin-top:20px;">
-            <span class="badge"><span class="dot"></span>Open Hardware · Apache 2.0 · Post-Quantum Ready</span>
+            <a
+              href="https://github.com/absmach/quarc"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >View on GitHub <span aria-hidden="true">↗</span></a
+            >
+            <a href="/contact" class="btn"
+              >Contact Us <span aria-hidden="true">→</span></a
+            >
           </div>
         </div>
       </div>
@@ -233,7 +305,10 @@ const faqSchema = JSON.stringify({
     <!-- Stats bar -->
     <div style="border-bottom:1px solid var(--line-3);">
       <div class="container-wide">
-        <div class="metrics quarc-metrics" style="border:none; border-radius:0; border-left:1px solid var(--line-3);">
+        <div
+          class="metrics quarc-metrics"
+          style="border:none; border-radius:0; border-left:1px solid var(--line-3);"
+        >
           <div class="metric featured">
             <div class="v">FIPS 203/204</div>
             <div class="l">NIST PQC standards</div>
@@ -247,7 +322,13 @@ const faqSchema = JSON.stringify({
             <div class="l">vs Cortex-M4 PQC</div>
           </div>
           <div class="metric">
-            <div class="v">100% open</div>
+            <div class="v">
+              <a
+                href="https://github.com/absmach/propeller"
+                target="_blank"
+                rel="noopener">Apache 2.0 ↗</a
+              >
+            </div>
             <div class="l">Toolchain &amp; RTL</div>
           </div>
         </div>
@@ -255,22 +336,33 @@ const faqSchema = JSON.stringify({
     </div>
 
     <!-- Context -->
-    <section class="section quarc-context-section" style="border-bottom:1px solid var(--line-3);">
+    <section
+      class="section quarc-context-section"
+      style="border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="quarc-context-grid">
           <div>
             <span class="kicker">The quantum gap</span>
-            <h2 class="h-2" style="margin-top:14px;">Every SE shipping today will be broken by quantum computers.</h2>
-            <p style="color:var(--ink-2); margin-top:20px; font-size:15px; line-height:1.7;">
-              Every Secure Element shipping today relies entirely on classical cryptography —
-              ECC, RSA, AES. Shor's algorithm on a cryptographically relevant quantum computer
-              breaks all of them. NIST finalised post-quantum standards in 2024 (FIPS 203, 204, 205).
-              Regulators in the EU, US and Germany project mandatory PQC adoption in critical
-              infrastructure by <strong>2030</strong>.
+            <h2 class="h-2" style="margin-top:14px;">
+              Every SE shipping today will be broken by quantum computers.
+            </h2>
+            <p
+              style="color:var(--ink-2); margin-top:20px; font-size:15px; line-height:1.7;"
+            >
+              Every Secure Element shipping today relies entirely on classical
+              cryptography — ECC, RSA, AES. Shor's algorithm on a
+              cryptographically relevant quantum computer breaks all of them.
+              NIST finalised post-quantum standards in 2024 (FIPS 203, 204,
+              205). Regulators in the EU, US and Germany project mandatory PQC
+              adoption in critical infrastructure by <strong>2030</strong>.
             </p>
-            <p style="color:var(--ink-2); margin-top:16px; font-size:15px; line-height:1.7;">
-              The IoT devices being deployed today will outlive that window. <strong>Quarc closes
-              the gap</strong> — hardware-accelerated ML-KEM-768 and ML-DSA-65, packaged with the
+            <p
+              style="color:var(--ink-2); margin-top:16px; font-size:15px; line-height:1.7;"
+            >
+              The IoT devices being deployed today will outlive that window. <strong
+                >Quarc closes the gap</strong
+              > — hardware-accelerated ML-KEM-768 and ML-DSA-65, packaged with the
               full SE feature set IoT silicon vendors expect.
             </p>
           </div>
@@ -327,7 +419,9 @@ const faqSchema = JSON.stringify({
         <div class="section-head">
           <div class="left">
             <span class="kicker">Features</span>
-            <h2 class="h-2" style="margin-top:14px;">Built for quantum-safe trust.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Built for quantum-safe trust.
+            </h2>
           </div>
           <p class="lede">
             Post-quantum cryptography, hardware-enforced key isolation, and open
@@ -335,28 +429,37 @@ const faqSchema = JSON.stringify({
           </p>
         </div>
         <div class="feature-grid">
-          {features.map(({ icon: Icon, name, desc }) => (
-            <div class="feature">
-              <div class="ic quarc-ic"><Icon size={20} /></div>
-              <div class="name">{name}</div>
-              <p class="desc">{desc}</p>
-            </div>
-          ))}
+          {
+            features.map(({ icon: Icon, name, desc }) => (
+              <div class="feature">
+                <div class="ic quarc-ic">
+                  <Icon size={20} />
+                </div>
+                <div class="name">{name}</div>
+                <p class="desc">{desc}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
 
     <!-- Architecture -->
-    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
             <span class="kicker">Architecture</span>
-            <h2 class="h-2" style="margin-top:14px;">Crypto-first. CPU-second.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Crypto-first. CPU-second.
+            </h2>
           </div>
           <p class="lede">
-            Ibex orchestrates. It does not do crypto. Every heavy operation
-            runs in a dedicated, constant-time hardware accelerator.
+            Ibex orchestrates. It does not do crypto. Every heavy operation runs
+            in a dedicated, constant-time hardware accelerator.
           </p>
         </div>
 
@@ -369,7 +472,9 @@ const faqSchema = JSON.stringify({
             <div class="quarc-bd-cpu">
               <div class="quarc-bd-block quarc-bd-block-full">
                 <div class="quarc-bd-block-name">Ibex RV32IMC</div>
-                <div class="quarc-bd-block-desc">Wishbone-lite bus · ~200 lines · formally verified</div>
+                <div class="quarc-bd-block-desc">
+                  Wishbone-lite bus · ~200 lines · formally verified
+                </div>
               </div>
             </div>
 
@@ -378,13 +483,17 @@ const faqSchema = JSON.stringify({
               <div class="quarc-bd-group">
                 <div class="quarc-bd-group-label">Crypto Engines</div>
                 <div class="quarc-bd-group-tags">
-                  <span>ML-KEM-768</span><span>ML-DSA-65</span><span>Keccak/SHAKE</span><span>NTT core</span><span>TRNG + DRBG</span>
+                  <span>ML-KEM-768</span><span>ML-DSA-65</span><span
+                    >Keccak/SHAKE</span
+                  ><span>NTT core</span><span>TRNG + DRBG</span>
                 </div>
               </div>
               <div class="quarc-bd-group">
                 <div class="quarc-bd-group-label">Key Store</div>
                 <div class="quarc-bd-group-tags">
-                  <span>KUE (RTL)</span><span>DMA-only access</span><span>No firmware reads</span>
+                  <span>KUE (RTL)</span><span>DMA-only access</span><span
+                    >No firmware reads</span
+                  >
                 </div>
               </div>
             </div>
@@ -445,17 +554,21 @@ const faqSchema = JSON.stringify({
         <div class="section-head">
           <div class="left">
             <span class="kicker">How it works</span>
-            <h2 class="h-2" style="margin-top:14px;">Provision. Verify. Trust.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Provision. Verify. Trust.
+            </h2>
           </div>
         </div>
         <div class="steps">
-          {steps.map(([num, title, desc]) => (
-            <div class="step">
-              <div class="num">{num}</div>
-              <h4>{title}</h4>
-              <p>{desc}</p>
-            </div>
-          ))}
+          {
+            steps.map(([num, title, desc]) => (
+              <div class="step">
+                <div class="num">{num}</div>
+                <h4>{title}</h4>
+                <p>{desc}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
@@ -465,12 +578,16 @@ const faqSchema = JSON.stringify({
       <div class="container-wide">
         <div class="section-head" style="color:inherit;">
           <div class="left">
-            <span class="kicker" style="color:rgba(255,255,255,0.5);">Performance</span>
-            <h2 class="h-2" style="color:#fff; margin-top:14px;">Hardware beats software. By a wide margin.</h2>
+            <span class="kicker" style="color:rgba(255,255,255,0.5);"
+              >Performance</span
+            >
+            <h2 class="h-2" style="color:#fff; margin-top:14px;">
+              Hardware beats software. By a wide margin.
+            </h2>
           </div>
           <p class="lede" style="color:rgba(255,255,255,0.65);">
-            Quarc at 50 MHz on ECP5-85K vs pqm4 on Cortex-M4 at 168 MHz.
-            ASIC at 200–400 MHz lifts every figure proportionally.
+            Quarc at 50 MHz on ECP5-85K vs pqm4 on Cortex-M4 at 168 MHz. ASIC at
+            200–400 MHz lifts every figure proportionally.
           </p>
         </div>
         <div class="quarc-perf-table-wrap">
@@ -484,14 +601,16 @@ const faqSchema = JSON.stringify({
               </tr>
             </thead>
             <tbody>
-              {perfRows.map(({ op, quarc, baseline, speedup }) => (
-                <tr>
-                  <td>{op}</td>
-                  <td class="quarc-perf-good">{quarc}</td>
-                  <td class="quarc-perf-base">{baseline}</td>
-                  <td class="quarc-perf-speedup">{speedup}</td>
-                </tr>
-              ))}
+              {
+                perfRows.map(({ op, quarc, baseline, speedup }) => (
+                  <tr>
+                    <td>{op}</td>
+                    <td class="quarc-perf-good">{quarc}</td>
+                    <td class="quarc-perf-base">{baseline}</td>
+                    <td class="quarc-perf-speedup">{speedup}</td>
+                  </tr>
+                ))
+              }
             </tbody>
           </table>
         </div>
@@ -499,12 +618,17 @@ const faqSchema = JSON.stringify({
     </section>
 
     <!-- Security Model -->
-    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
             <span class="kicker">Security Model</span>
-            <h2 class="h-2" style="margin-top:14px;">Hardware enforces. Firmware orchestrates.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Hardware enforces. Firmware orchestrates.
+            </h2>
           </div>
           <p class="lede">
             Quarc assumes firmware can fail. Every security-critical guarantee
@@ -512,49 +636,67 @@ const faqSchema = JSON.stringify({
           </p>
         </div>
         <div class="quarc-security-grid">
-          {securityGuarantees.map(({ name, desc }) => (
-            <div class="quarc-security-card">
-              <div class="quarc-security-name">{name}</div>
-              <div class="quarc-security-desc">{desc}</div>
-            </div>
-          ))}
+          {
+            securityGuarantees.map(({ name, desc }) => (
+              <div class="quarc-security-card">
+                <div class="quarc-security-name">{name}</div>
+                <div class="quarc-security-desc">{desc}</div>
+              </div>
+            ))
+          }
         </div>
 
         <!-- KUE + Lifecycle -->
         <div class="quarc-policy-grid">
           <div class="quarc-policy-card">
             <h3 class="quarc-policy-title">Key Usage Enforcer (KUE)</h3>
-            <p style="color:var(--ink-2); font-size:14px; margin-bottom:20px; line-height:1.6;">
-              Per-slot policy bits set at provisioning, enforced by hardware on every operation.
+            <p
+              style="color:var(--ink-2); font-size:14px; margin-bottom:20px; line-height:1.6;"
+            >
+              Per-slot policy bits set at provisioning, enforced by hardware on
+              every operation.
             </p>
             <table class="quarc-kue-table">
               <thead><tr><th>Policy bit</th><th>Meaning</th></tr></thead>
               <tbody>
-                {kuePolicy.map(({ bit, meaning }) => (
-                  <tr>
-                    <td><code>{bit}</code></td>
-                    <td>{meaning}</td>
-                  </tr>
-                ))}
+                {
+                  kuePolicy.map(({ bit, meaning }) => (
+                    <tr>
+                      <td>
+                        <code>{bit}</code>
+                      </td>
+                      <td>{meaning}</td>
+                    </tr>
+                  ))
+                }
               </tbody>
             </table>
           </div>
 
           <div class="quarc-policy-card">
             <h3 class="quarc-policy-title">Device lifecycle</h3>
-            <p style="color:var(--ink-2); font-size:14px; margin-bottom:20px; line-height:1.6;">
-              State transitions are one-way and irreversible. The FSM is implemented in RTL —
-              no firmware path can return to an earlier state.
+            <p
+              style="color:var(--ink-2); font-size:14px; margin-bottom:20px; line-height:1.6;"
+            >
+              State transitions are one-way and irreversible. The FSM is
+              implemented in RTL — no firmware path can return to an earlier
+              state.
             </p>
             <div class="quarc-lifecycle">
-              {["MANUFACTURING", "PROVISIONED", "LOCKED", "RMA"].map((state, i, arr) => (
-                <div class="quarc-lifecycle-row">
-                  <span class="quarc-state">{state}</span>
-                  {i < arr.length - 1 && (
-                    <span class="quarc-lc-arrow" aria-hidden="true">→</span>
-                  )}
-                </div>
-              ))}
+              {
+                ["MANUFACTURING", "PROVISIONED", "LOCKED", "RMA"].map(
+                  (state, i, arr) => (
+                    <div class="quarc-lifecycle-row">
+                      <span class="quarc-state">{state}</span>
+                      {i < arr.length - 1 && (
+                        <span class="quarc-lc-arrow" aria-hidden="true">
+                          →
+                        </span>
+                      )}
+                    </div>
+                  ),
+                )
+              }
               <p class="quarc-lifecycle-note">
                 Every SPI command is permission-gated against the current state.
               </p>
@@ -570,54 +712,74 @@ const faqSchema = JSON.stringify({
         <div class="section-head">
           <div class="left">
             <span class="kicker">Use cases</span>
-            <h2 class="h-2" style="margin-top:14px;">Where quantum-safe trust matters.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Where quantum-safe trust matters.
+            </h2>
           </div>
         </div>
         <div class="sol-grid quarc-sol-grid">
-          {solutions.map(({ icon: Icon, title, desc, tags }) => (
-            <div class="sol-card">
-              <div class="quarc-sol-icon"><Icon size={22} /></div>
-              <h3 class="name">{title}</h3>
-              <p class="desc">{desc}</p>
-              <div class="tags">
-                {tags.map((t) => <span class="tag">{t}</span>)}
+          {
+            solutions.map(({ icon: Icon, title, desc, tags }) => (
+              <div class="sol-card">
+                <div class="quarc-sol-icon">
+                  <Icon size={22} />
+                </div>
+                <h3 class="name">{title}</h3>
+                <p class="desc">{desc}</p>
+                <div class="tags">
+                  {tags.map((t) => (
+                    <span class="tag">{t}</span>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>
 
     <!-- Roadmap -->
-    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
             <span class="kicker">Roadmap</span>
-            <h2 class="h-2" style="margin-top:14px;">Built for the next decade of secure computing.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Built for the next decade of secure computing.
+            </h2>
           </div>
         </div>
         <div class="quarc-roadmap-grid">
-          {roadmap.map(({ version, label, status, items }) => (
-            <div class={`quarc-rm-card quarc-rm-${status}`}>
-              <div class="quarc-rm-header">
-                <span class="quarc-rm-version">{version}</span>
-                <span class="quarc-rm-label">{label}</span>
-                {status === "current" && (
-                  <span class="quarc-rm-badge">Current</span>
-                )}
+          {
+            roadmap.map(({ version, label, status, items }) => (
+              <div class={`quarc-rm-card quarc-rm-${status}`}>
+                <div class="quarc-rm-header">
+                  <span class="quarc-rm-version">{version}</span>
+                  <span class="quarc-rm-label">{label}</span>
+                  {status === "current" && (
+                    <span class="quarc-rm-badge">Current</span>
+                  )}
+                </div>
+                <ul class="quarc-rm-items">
+                  {items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
               </div>
-              <ul class="quarc-rm-items">
-                {items.map((item) => <li>{item}</li>)}
-              </ul>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>
 
     <!-- FAQ -->
-    <section class="section" style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
@@ -633,32 +795,46 @@ const faqSchema = JSON.stringify({
     <section class="section">
       <div class="container-narrow" style="text-align:center;">
         <span class="kicker">Get started</span>
-        <h2 class="h-2" style="margin-top:14px;">Prepare your systems for the post-quantum decade.</h2>
+        <h2 class="h-2" style="margin-top:14px;">
+          Prepare your systems for the post-quantum decade.
+        </h2>
         <p class="lede" style="margin:20px auto 36px;">
-          Open, auditable, hardware-enforced trust for next-generation connected systems.
-          Talk to us about evaluation kits, ASIC partnerships, and OEM silicon programmes.
+          Open, auditable, hardware-enforced trust for next-generation connected
+          systems. Talk to us about evaluation kits, ASIC partnerships, and OEM
+          silicon programmes.
         </p>
         <div class="btn-row" style="justify-content:center;">
-          <a href="/contact" class="btn btn-primary">Contact Us <span aria-hidden="true">→</span></a>
-          <a href="https://github.com/absmach/quarc" class="btn" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          <a href="/contact" class="btn btn-primary"
+            >Contact Us <span aria-hidden="true">→</span></a
+          >
+          <a
+            href="https://github.com/absmach/quarc"
+            class="btn"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub <span aria-hidden="true">↗</span></a
+          >
         </div>
       </div>
     </section>
-
   </main>
   <Footer />
 
   <script type="application/ld+json" is:inline>
-  {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "Quarc",
-    "description": "Open-source post-quantum secure element with hardware-accelerated ML-KEM and ML-DSA, built for IoT, industrial systems, confidential computing, and long-lived device trust.",
-    "url": "https://www.absmach.eu/products/quarc",
-    "brand": { "@type": "Brand", "name": "Abstract Machines" },
-    "manufacturer": { "@type": "Organization", "name": "Abstract Machines", "url": "https://www.absmach.eu/" },
-    "keywords": "post-quantum cryptography, secure element, ML-KEM, ML-DSA, FPGA, RISC-V, NIST PQC, hardware root of trust, open hardware"
-  }
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Quarc",
+      "description": "Open-source post-quantum secure element with hardware-accelerated ML-KEM and ML-DSA, built for IoT, industrial systems, confidential computing, and long-lived device trust.",
+      "url": "https://www.absmach.eu/products/quarc",
+      "brand": { "@type": "Brand", "name": "Abstract Machines" },
+      "manufacturer": {
+        "@type": "Organization",
+        "name": "Abstract Machines",
+        "url": "https://www.absmach.eu/"
+      },
+      "keywords": "post-quantum cryptography, secure element, ML-KEM, ML-DSA, FPGA, RISC-V, NIST PQC, hardware root of trust, open hardware"
+    }
   </script>
   <script is:inline type="application/ld+json" set:html={faqSchema} />
   <script type="application/ld+json" is:inline>
@@ -744,8 +920,13 @@ const faqSchema = JSON.stringify({
     color: var(--ink);
     font-weight: 500;
   }
-  .quarc-no  { color: var(--ink-3) !important; }
-  .quarc-yes { color: var(--ink) !important; font-weight: 600 !important; }
+  .quarc-no {
+    color: var(--ink-3) !important;
+  }
+  .quarc-yes {
+    color: var(--ink) !important;
+    font-weight: 600 !important;
+  }
 
   /* ─── Architecture block diagram ───────────────────────────────── */
   .quarc-arch-outer {
@@ -924,9 +1105,20 @@ const faqSchema = JSON.stringify({
     color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
   }
-  .quarc-perf-good    { color: rgba(255,255,255,0.95) !important; font-weight: 600 !important; font-family: "JetBrains Mono", monospace; }
-  .quarc-perf-base    { color: rgba(255,255,255,0.4)  !important; font-family: "JetBrains Mono", monospace; }
-  .quarc-perf-speedup { font-weight: 700 !important; font-family: "JetBrains Mono", monospace; color: rgba(255,255,255,0.95) !important; }
+  .quarc-perf-good {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 600 !important;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .quarc-perf-base {
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .quarc-perf-speedup {
+    font-weight: 700 !important;
+    font-family: "JetBrains Mono", monospace;
+    color: rgba(255, 255, 255, 0.95) !important;
+  }
 
   /* ─── Security model ────────────────────────────────────────────── */
   .quarc-security-grid {
@@ -1021,7 +1213,10 @@ const faqSchema = JSON.stringify({
     padding: 5px 10px;
     border-radius: var(--radius);
   }
-  .quarc-lc-arrow { color: var(--ink-3); font-size: 14px; }
+  .quarc-lc-arrow {
+    color: var(--ink-3);
+    font-size: 14px;
+  }
   .quarc-lifecycle-note {
     width: 100%;
     margin-top: 14px;
@@ -1111,19 +1306,44 @@ const faqSchema = JSON.stringify({
 
   /* ─── Responsive ────────────────────────────────────────────────── */
   @media (max-width: 980px) {
-    .quarc-context-grid   { grid-template-columns: 1fr; gap: 40px; }
-    .quarc-arch-outer     { grid-template-columns: 1fr; }
-    .quarc-bd-mid         { grid-template-columns: 1fr; }
-    .quarc-bd-bot         { grid-template-columns: repeat(2, 1fr); }
-    .quarc-security-grid  { grid-template-columns: repeat(2, 1fr); }
-    .quarc-policy-grid    { grid-template-columns: 1fr; }
-    .quarc-roadmap-grid   { grid-template-columns: 1fr; }
-    .quarc-sol-grid       { grid-template-columns: 1fr; }
+    .quarc-context-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .quarc-arch-outer {
+      grid-template-columns: 1fr;
+    }
+    .quarc-bd-mid {
+      grid-template-columns: 1fr;
+    }
+    .quarc-bd-bot {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .quarc-security-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .quarc-policy-grid {
+      grid-template-columns: 1fr;
+    }
+    .quarc-roadmap-grid {
+      grid-template-columns: 1fr;
+    }
+    .quarc-sol-grid {
+      grid-template-columns: 1fr;
+    }
   }
   @media (max-width: 640px) {
-    .quarc-wordmark       { font-size: 22px; }
-    .quarc-metrics        { grid-template-columns: 1fr; }
-    .quarc-bd-bot         { grid-template-columns: repeat(2, 1fr); }
-    .quarc-security-grid  { grid-template-columns: 1fr; }
+    .quarc-wordmark {
+      font-size: 22px;
+    }
+    .quarc-metrics {
+      grid-template-columns: 1fr;
+    }
+    .quarc-bd-bot {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .quarc-security-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
