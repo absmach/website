@@ -74,8 +74,8 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
 ---
 
 <BaseLayout
-  title="Blog — Abstract Machines"
-  description="Technical articles, product updates, and engineering deep dives from the Abstract Machines team."
+  title="IoT Engineering Blog — Abstract Machines"
+  description="Technical articles on IoT, MQTT, edge computing, open-source infrastructure, and product updates from the Abstract Machines engineering team."
 >
   <Header />
   <main>
@@ -84,7 +84,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
         <!-- page title -->
         <div class="mb-10">
           <span class="kicker">Blog</span>
-          <h1 class="h-1 mt-2">Engineering &amp; Updates</h1>
+          <h1 class="h-1 mt-2">IoT Engineering Blog</h1>
           <p class="lede mt-3">
             Technical articles, product announcements, and open-source deep
             dives from the Abstract Machines team.
@@ -146,7 +146,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                 </p>
                 <div
                   id="applied-tags"
-                  class="mt-2 hidden flex flex-wrap items-center gap-2"
+                  class="mt-2 hidden flex-wrap items-center gap-2"
                 >
                 </div>
               </div>
@@ -199,7 +199,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                       >
                         <Image
                           src={p.coverImage}
-                          alt=""
+                          alt={p.title}
                           width={1280}
                           height={720}
                           class="cover-image h-full w-full"

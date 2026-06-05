@@ -4,10 +4,21 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
 import { deployments } from "../../data/deployments";
+import { solutions } from "../../data/solutions";
 import Network from "lucide-astro/Network";
 import ShieldCheck from "lucide-astro/ShieldCheck";
 import BarChart from "lucide-astro/BarChart";
 import KeyRound from "lucide-astro/KeyRound";
+
+let githubStars = "2.6k";
+try {
+  const res = await fetch("https://api.github.com/repos/absmach/magistrala");
+  if (res.ok) {
+    const data = await res.json();
+    const count: number = data.stargazers_count;
+    githubStars = count >= 1000 ? `${(count / 1000).toFixed(1)}k` : String(count);
+  }
+} catch (_) {}
 
 const showcaseFeatures = [
   {
@@ -16,6 +27,7 @@ const showcaseFeatures = [
     desc: "Build live and historical dashboards with drag-and-drop widgets. Monitor alarms, track device state, and visualise sensor data without writing a line of code.",
     img: "/img/magistrala/dashboard-2.png",
     alt: "Magistrala dashboard overview",
+    width: 1903, height: 927,
     flipped: false,
   },
   {
@@ -24,6 +36,7 @@ const showcaseFeatures = [
     desc: "Define rules that transform messages, generate alarms, send notifications, and route data to external storage. Visual editor or API, your choice.",
     img: "/img/magistrala/rules-engine-1.png",
     alt: "Magistrala rules engine configuration",
+    width: 1644, height: 878,
     flipped: true,
   },
   {
@@ -32,6 +45,7 @@ const showcaseFeatures = [
     desc: "Rules fire alarms. Alarms have severity levels, assignees, and resolution workflows. Track everything from a single view across your entire fleet.",
     img: "/img/magistrala/alarms-2.png",
     alt: "Magistrala alarm management",
+    width: 1642, height: 870,
     flipped: false,
   },
   {
@@ -40,6 +54,7 @@ const showcaseFeatures = [
     desc: "Each domain has its own users, devices, channels, and policies, completely isolated from every other domain. Manage them all from a unified control plane.",
     img: "/img/magistrala/domains-1.png",
     alt: "Magistrala domain management",
+    width: 1704, height: 884,
     flipped: true,
   },
 ];
@@ -99,17 +114,18 @@ const sdks = [
 ];
 
 const integrations = [
-  "NATS",
-  "Kafka",
-  "RabbitMQ",
-  "FluxMQ",
-  "PostgreSQL",
-  "TimescaleDB",
-  "MongoDB",
-  "InfluxDB",
-  "SpiceDB",
-  "OAuth 2.0",
-  "JWT",
+  { name: "Atom", href: "/products/atom" },
+  { name: "FluxMQ", href: "/products/fluxmq" },
+  { name: "NATS" },
+  { name: "Kafka" },
+  { name: "RabbitMQ" },
+  { name: "PostgreSQL" },
+  { name: "TimescaleDB" },
+  { name: "MongoDB" },
+  { name: "InfluxDB" },
+  { name: "SpiceDB" },
+  { name: "OAuth 2.0" },
+  { name: "JWT" },
 ];
 
 
@@ -147,10 +163,20 @@ const faqs = [
     a: "Yes. Magistrala is modular and open source. You can replace, extend, or disable individual services, add custom storage backends, or build new protocol adapters without forking the core.",
   },
 ];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    "name": q,
+    "acceptedAnswer": { "@type": "Answer", "text": a },
+  })),
+});
 ---
 
 <BaseLayout
-  title="Magistrala IoT Platform — Abstract Machines"
+  title="Magistrala — Open-Source IoT Platform for Connected Devices"
   description="Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. SDKs for Go, TypeScript, Python, and Rust."
 >
   <Header />
@@ -163,6 +189,8 @@ const faqs = [
         muted
         loop
         playsinline
+        width="1920"
+        height="1080"
         poster="/video/hero-background-poster.webp"
         aria-hidden="true"
       >
@@ -176,6 +204,8 @@ const faqs = [
               src="/img/products/magistrala-logo.svg"
               alt="Magistrala"
               class="prod-logo-img"
+              width="1700"
+              height="400"
             />
             <h1 class="tagline">IoT solutions without complexity.</h1>
             <p class="lede" style="margin-top:16px; max-width:44ch;">
@@ -190,22 +220,9 @@ const faqs = [
                 target="_blank"
                 rel="noopener">Start for Free ↗</a
               >
-              <a
-                href="https://www.absmach.eu/docs/magistrala"
-                class="btn"
-                target="_blank"
-                rel="noopener">Documentation ↗</a
-              >
-
+              <a href="/contact" class="btn">Contact Us →</a>
             </div>
-            <div
-              style="margin-top:20px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;"
-            >
-              <span class="badge"><span class="dot active"></span>v0.20.0</span>
-              <span class="badge success"
-                ><span class="dot"></span>Open Source · Apache 2.0</span
-              >
-            </div>
+          
           </div>
           <div class="mg-diag-wrap">
             <div class="mg-diag">
@@ -300,7 +317,14 @@ const faqs = [
           style="border:none; border-radius:0; "
         >
           <div class="metric featured">
-            <div class="v">400+</div>
+            <div class="v">
+              <a
+                href="https://deployments.absmach.eu/"
+                target="_blank"
+                rel="noopener"
+                aria-label="View production deployments">400+ ↗</a
+              >
+            </div>
             <div class="l">Production deployments</div>
           </div>
           <div class="metric">
@@ -317,7 +341,7 @@ const faqs = [
                 href="https://github.com/absmach/magistrala"
                 target="_blank"
                 rel="noopener"
-                aria-label="GitHub stars">2.5k ↗</a
+                aria-label="GitHub stars">{githubStars} ↗</a
               >
             </div>
             <div class="l">GitHub Stars</div>
@@ -333,7 +357,7 @@ const faqs = [
           <div class="left">
             <span class="kicker">Platform</span>
             <h2 class="h-2" style="margin-top:14px;">
-             The platform powering every solution.
+              Open-source IoT platform features.
             </h2>
           </div>
           <p class="lede">
@@ -344,7 +368,7 @@ const faqs = [
         <!-- Showcase rows -->
         <div class="feat-showcase" style="margin-bottom:16px;">
           {
-            showcaseFeatures.map(({ tag, title, desc, img, alt, flipped }) => (
+            showcaseFeatures.map(({ tag, title, desc, img, alt, width, height, flipped }) => (
               <div
                 class={`feat-row${flipped ? " feat-flipped" : ""}`}
                 style="min-height:300px;"
@@ -358,6 +382,8 @@ const faqs = [
                   <img
                     src={img}
                     alt={alt}
+                    width={width}
+                    height={height}
                     loading="lazy"
                     style="width:100%; height:auto; object-fit:cover; object-position:top left;"
                   />
@@ -387,6 +413,55 @@ const faqs = [
       </div>
     </section>
 
+    <!-- Solutions section -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Solution Packs</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Industry-ready IoT solutions.
+            </h2>
+          </div>
+          <p class="lede">
+            Pre-configured dashboards, detection rules, and compliance reports
+            for your industry — deploy in minutes, not months.
+          </p>
+        </div>
+        <div class="mg-sol-grid">
+          {
+            solutions.map((sol) => (
+              <a href={`/solutions/${sol.slug}/`} class="sol-img-card">
+                <div class="sol-img-wrap">
+                  <img
+                    src={sol.image}
+                    alt={`${sol.title} IoT solution`}
+                    width="600"
+                    height="400"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="sol-img-body">
+                  <h3 class="sol-img-title">{sol.title}</h3>
+                  <p class="sol-img-desc">{sol.summary}</p>
+                  <span class="btn-link" style="font-size:13px; margin-top:auto;">
+                    Explore solution →
+                  </span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+        <div style="margin-top:32px; text-align:center;">
+          <a href="/solutions/" class="btn">View all solution packs →</a>
+        </div>
+      </div>
+    </section>
+
     <!-- SDK section -->
     <section
       class="section"
@@ -397,7 +472,7 @@ const faqs = [
           <div class="left">
             <span class="kicker">Developer SDKs</span>
             <h2 class="h-2" style="margin-top:14px;">
-              Integrate from any language.
+              Magistrala SDKs — Go, Python, TypeScript &amp; Rust.
             </h2>
           </div>
           <p class="lede">
@@ -440,11 +515,12 @@ const faqs = [
           <span class="kicker" style="display:block; margin-bottom:14px;">Edge Deployment</span>
           <h2 class="h-2">Magistrala runs where your devices are.</h2>
           <p
-            style="color:var(--ink-2); margin-top:20px; font-size:15px; line-height:1.65; max-width:48ch;"
+            style="color:var(--ink-2); margin-top:20px; line-height:1.65;"
           >
             The Magistrala Agent runs directly on edge devices and acts as a
             bridge to the cloud platform over MQTT. Deploy on any Linux
-            gateway (including A0 and A1) and manage it remotely.
+            gateway (including <a href="/products/a0" style="color:inherit; text-decoration:underline;">A0</a> and <a href="/products/a1" style="color:inherit; text-decoration:underline;">A1</a>) and manage it remotely.
+            Pair with <a href="/products/propeller" style="color:inherit; text-decoration:underline;">Propeller</a> to push WebAssembly workloads to the edge without reflashing firmware.
           </p>
           <ul
             style="list-style:none; padding:0; margin:24px 0 0; display:flex; flex-direction:column; gap:10px; font-size:14px; color:var(--ink-2); text-align:left;"
@@ -478,7 +554,7 @@ const faqs = [
           <div class="left">
             <span class="kicker">Integrations</span>
             <h2 class="h-2" style="margin-top:14px;">
-              Connects with your existing stack.
+              Integrations &amp; protocol support.
             </h2>
           </div>
           <p class="lede">
@@ -488,10 +564,10 @@ const faqs = [
         </div>
         <div class="integ-grid">
           {
-            integrations.map((name) => (
+            integrations.map(({ name, href }) => (
               <div class="integ-chip">
                 <span class="dot" />
-                {name}
+                {href ? <a href={href}>{name}</a> : name}
               </div>
             ))
           }
@@ -729,7 +805,6 @@ const faqs = [
             target="_blank"
             rel="noopener">Documentation ↗</a
           >
-          <a href="/contact" class="btn">Contact Sales</a>
         </div>
       </div>
     </section>
@@ -757,12 +832,49 @@ const faqs = [
     }
   }
   </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Products",
+          "item": "https://www.absmach.eu/products/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Magistrala",
+          "item": "https://www.absmach.eu/products/magistrala"
+        }
+      ]
+    }
+  </script>
 </BaseLayout>
 
 <style>
   /* ── Responsive grids ─────────────────────────────────────── */
   .mg-metrics {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* ── Solutions grid ──────────────────────────────────────── */
+  .mg-sol-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 1100px) {
+    .mg-sol-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 760px) {
+    .mg-sol-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .mg-sol-grid { grid-template-columns: 1fr; }
   }
   .mg-feat-grid {
     grid-template-columns: repeat(2, 1fr);

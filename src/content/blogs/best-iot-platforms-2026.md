@@ -48,7 +48,7 @@ This is a practical breakdown of five IoT platforms worth evaluating. For each o
 
 ## Magistrala
 
-[Magistrala](https://magistrala.absmach.eu/) is an open-source (Apache 2.0) IoT platform built as a **framework for constructing solutions**, not just running them. The distinction matters: most IoT platforms ship a fixed application you configure; Magistrala gives you the building blocks to design your own system architecture, rather than adapting your system to fit the platform.
+[Magistrala](/products/magistrala) is an open-source (Apache 2.0) IoT platform built as a **framework for constructing solutions**, not just running them. The distinction matters: most IoT platforms ship a fixed application you configure; Magistrala gives you the building blocks to design your own system architecture, rather than adapting your system to fit the platform.
 
 It is also one of the most deployed IoT platforms in the world, powering production systems across different environments and use cases.
 

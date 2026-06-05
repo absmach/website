@@ -51,18 +51,48 @@ const features = [
 ];
 
 const steps = [
-  ["01", "Run Atom", "Clone the repo and start the stack with Docker Compose. Atom migrates the database and seeds the admin account automatically."],
-  ["02", "Model your system", "Create tenants, entity kinds, and resource definitions through the Admin UI or API. Profiles let you describe your platform's vocabulary."],
-  ["03", "Enforce access", "Call the authorization endpoint from your services. The policy engine evaluates live state and returns ALLOW or DENY instantly."],
+  [
+    "01",
+    "Run Atom",
+    "Clone the repo and start the stack with Docker Compose. Atom migrates the database and seeds the admin account automatically.",
+  ],
+  [
+    "02",
+    "Model your system",
+    "Create tenants, entity kinds, and resource definitions through the Admin UI or API. Profiles let you describe your platform's vocabulary.",
+  ],
+  [
+    "03",
+    "Enforce access",
+    "Call the authorization endpoint from your services. The policy engine evaluates live state and returns ALLOW or DENY instantly.",
+  ],
 ];
 
 const policyFeatures = [
-  { name: "Explicit deny", desc: "A deny binding overrides any allow immediately — no policy ordering tricks." },
-  { name: "Group inheritance", desc: "Policies on a group propagate to all members in real time." },
-  { name: "ABAC conditions", desc: "Attach conditions to any binding — match on entity or resource attributes using dot-path assertions." },
-  { name: "Bulk checks", desc: "Check dozens of permissions in one call — designed for gateway-level enforcement." },
-  { name: "Explain endpoint", desc: "Get a full decision trace: matched policies, skipped bindings, ABAC evaluation, and final verdict." },
-  { name: "Deny by default", desc: "No matching allow policy means denied. Nothing is implicitly permitted." },
+  {
+    name: "Explicit deny",
+    desc: "A deny binding overrides any allow immediately — no policy ordering tricks.",
+  },
+  {
+    name: "Group inheritance",
+    desc: "Policies on a group propagate to all members in real time.",
+  },
+  {
+    name: "ABAC conditions",
+    desc: "Attach conditions to any binding — match on entity or resource attributes using dot-path assertions.",
+  },
+  {
+    name: "Bulk checks",
+    desc: "Check dozens of permissions in one call — designed for gateway-level enforcement.",
+  },
+  {
+    name: "Explain endpoint",
+    desc: "Get a full decision trace: matched policies, skipped bindings, ABAC evaluation, and final verdict.",
+  },
+  {
+    name: "Deny by default",
+    desc: "No matching allow policy means denied. Nothing is implicitly permitted.",
+  },
 ];
 
 const devSurface = [
@@ -191,7 +221,6 @@ const uiFeatures = [
   },
 ];
 
-
 const faqs = [
   {
     q: "How is Atom different from Keycloak?",
@@ -217,16 +246,29 @@ const faqs = [
     q: "Is Atom open source?",
     a: "Yes. Atom is licensed under Apache 2.0. The source is at github.com/absmach/atom. All APIs — GraphQL, REST, and gRPC — are fully open with no commercial restrictions.",
   },
+  {
+    q: "Does Atom support compliance requirements like GDPR, SOC 2, HIPAA, or ISO 27001?",
+    a: "Atom's audit log records every authentication event, credential lifecycle change, and authorization check immutably — exportable to CSV for compliance reporting. This satisfies the access-log requirements for SOC 2 Type II, HIPAA audit trail obligations, and ISO 27001 access control controls. The explainability API (ask why a request was allowed or denied) provides the documentation chain auditors require. Runtime policy enforcement means access rights reflect revocations immediately, satisfying GDPR's right-to-erasure and minimal-access requirements without stale-token windows.",
+  },
 ];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+});
 ---
 
 <BaseLayout
-  title="Atom Identity & Authorization Platform | Abstract Machines"
-  description="Open-source identity and authorization platform with runtime RBAC, ABAC, authentication, and multi-tenant policy enforcement. Single Rust binary backed by PostgreSQL."
+  title="Atom — Open-Source IAM with Runtime RBAC & ABAC"
+  description="Open-source IAM platform with runtime RBAC, ABAC, JWT authentication, and a full Admin UI for policy management. Single Rust binary, zero sidecars, backed by PostgreSQL."
 >
   <Header />
   <main>
-
     <!-- Hero -->
     <section class="prod-hero has-video">
       <video
@@ -235,6 +277,8 @@ const faqs = [
         muted
         loop
         playsinline
+        width="1920"
+        height="1080"
         poster="/video/hero-background-poster.webp"
         aria-hidden="true"
       >
@@ -246,17 +290,26 @@ const faqs = [
           <div style="text-align: left;">
             <p class="atom-wordmark">Atom</p>
           </div>
-          <h1 class="tagline">Identity and authorization in one deployable service.</h1>
-          <p class="lede" style="margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;">
-            Open-source authentication, RBAC, ABAC, and runtime authorization
-            in a single Rust binary backed by PostgreSQL.
+          <h1 class="tagline">
+            Open-Source Identity &amp; Authorization — RBAC, ABAC, JWT in One
+            Rust Binary.
+          </h1>
+          <p
+            class="lede"
+            style="margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;"
+          >
+            One Rust binary, one PostgreSQL database — no sidecars, no runtime
+            dependencies. Authentication, RBAC, ABAC, and live policy
+            enforcement in a single deployable service.
           </p>
           <div class="btn-row" style="margin-top:32px; justify-content:center;">
-            <a href="https://github.com/absmach/atom" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
-            <a href="/docs/atom" class="btn">Documentation ↗</a>
+            <a href="/docs/atom" class="btn btn-primary">Documentation ↗</a>
+            <a href="/contact" class="btn">Contact Us →</a>
           </div>
           <div style="margin-top:20px;">
-            <span class="badge success"><span class="dot"></span>Open Source · Apache 2.0</span>
+            <span class="badge success"
+              ><span class="dot"></span>Open Source · Apache 2.0</span
+            >
           </div>
         </div>
       </div>
@@ -265,7 +318,10 @@ const faqs = [
     <!-- Stats bar -->
     <div style="border-bottom:1px solid var(--line-3);">
       <div class="container-wide">
-        <div class="metrics atom-metrics" style="border:none; border-radius:0; border-left:1px solid var(--line-3);">
+        <div
+          class="metrics atom-metrics"
+          style="border:none; border-radius:0; border-left:1px solid var(--line-3);"
+        >
           <div class="metric featured">
             <div class="v">1 binary</div>
             <div class="l">Zero sidecars, zero dependencies</div>
@@ -279,8 +335,14 @@ const faqs = [
             <div class="l">Policy flexibility</div>
           </div>
           <div class="metric">
-            <div class="v">100%</div>
-            <div class="l">Online authorization</div>
+            <div class="v">
+              <a
+                href="https://github.com/absmach/atom"
+                target="_blank"
+                rel="noopener">Apache 2.0 ↗</a
+              >
+            </div>
+            <div class="l">Open-source license</div>
           </div>
         </div>
       </div>
@@ -292,32 +354,92 @@ const faqs = [
         <div class="section-head">
           <div class="left">
             <span class="kicker">Features</span>
-            <h2 class="h-2" style="margin-top:14px;">Built for modern identity and access control.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Built for modern identity and access control.
+            </h2>
           </div>
           <p class="lede">
-            Authentication, authorization, identity management,
-            and policy enforcement — one service.
+            Authentication, authorization, identity management, and policy
+            enforcement — one service.
           </p>
         </div>
         <div class="feature-grid">
-          {features.map(({ icon: Icon, name, desc }) => (
-            <div class="feature">
-              <div class="ic atom-ic"><Icon size={20} /></div>
-              <div class="name">{name}</div>
-              <p class="desc">{desc}</p>
-            </div>
-          ))}
+          {
+            features.map(({ icon: Icon, name, desc }) => (
+              <div class="feature">
+                <div class="ic atom-ic">
+                  <Icon size={20} />
+                </div>
+                <div class="name">{name}</div>
+                <p class="desc">{desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin UI — with screenshots -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Admin UI</span>
+            <h2 class="h-2" style="margin-top:14px;">Built for operators.</h2>
+          </div>
+          <p class="lede">
+            Manage every object in the system from one interface. No SQL
+            console, no curl scripts.
+          </p>
+        </div>
+        <div class="pui-layout">
+          <div class="pui-tabs" id="pui-tabs">
+            {
+              uiFeatures.map(({ id, title, desc }, i) => (
+                <div
+                  class={`pui-tab${i === 0 ? " active" : ""}`}
+                  data-target={id}
+                >
+                  <button class="pui-tab-btn" type="button">
+                    <span class="pui-tab-title">{title}</span>
+                    <span class="pui-chevron">›</span>
+                  </button>
+                  <p class="pui-tab-desc">{desc}</p>
+                </div>
+              ))
+            }
+          </div>
+          <div class="pui-panel">
+            {
+              uiFeatures.map(({ id, img, alt }, i) => (
+                <div
+                  class={`pui-img-wrap${i === 0 ? " active" : ""}`}
+                  data-panel={id}
+                >
+                  <img src={img} alt={alt} class="pui-img" loading="lazy" />
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Architecture -->
-    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
             <span class="kicker">Architecture</span>
-            <h2 class="h-2" style="margin-top:14px;">Two modules. One binary.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Two modules. One binary.
+            </h2>
           </div>
           <p class="lede">
             Identity and Authorization run in the same process, backed by a
@@ -334,13 +456,17 @@ const faqs = [
               <div class="atom-bd-module">
                 <div class="atom-bd-module-name">Identity Module</div>
                 <div class="atom-bd-module-tags">
-                  <span>entities</span><span>credentials</span><span>sessions</span><span>groups</span><span>ownerships</span>
+                  <span>entities</span><span>credentials</span><span
+                    >sessions</span
+                  ><span>groups</span><span>ownerships</span>
                 </div>
               </div>
               <div class="atom-bd-module">
                 <div class="atom-bd-module-name">Authorization Module</div>
                 <div class="atom-bd-module-tags">
-                  <span>resources</span><span>capabilities</span><span>roles</span><span>policy_bindings</span><span>PDP engine</span>
+                  <span>resources</span><span>capabilities</span><span
+                    >roles</span
+                  ><span>policy_bindings</span><span>PDP engine</span>
                 </div>
               </div>
             </div>
@@ -349,7 +475,9 @@ const faqs = [
             <div class="atom-bd-db-row">
               <div class="atom-bd-db">
                 <div class="atom-bd-db-name">PostgreSQL</div>
-                <div class="atom-bd-db-sub">Single database · Auto-migrated on startup</div>
+                <div class="atom-bd-db-sub">
+                  Single database · Auto-migrated on startup
+                </div>
               </div>
             </div>
           </div>
@@ -384,17 +512,21 @@ const faqs = [
         <div class="section-head">
           <div class="left">
             <span class="kicker">How it works</span>
-            <h2 class="h-2" style="margin-top:14px;">Deploy. Model. Enforce.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Deploy. Model. Enforce.
+            </h2>
           </div>
         </div>
         <div class="steps">
-          {steps.map(([num, title, desc]) => (
-            <div class="step">
-              <div class="num">{num}</div>
-              <h4>{title}</h4>
-              <p>{desc}</p>
-            </div>
-          ))}
+          {
+            steps.map(([num, title, desc]) => (
+              <div class="step">
+                <div class="num">{num}</div>
+                <h4>{title}</h4>
+                <p>{desc}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
@@ -404,8 +536,12 @@ const faqs = [
       <div class="container-wide">
         <div class="section-head" style="color:inherit;">
           <div class="left">
-            <span class="kicker" style="color:rgba(246,244,238,0.5);">Policy Engine</span>
-            <h2 class="h-2" style="margin-top:14px; color:var(--paper);">One policy primitive. RBAC and ABAC unified.</h2>
+            <span class="kicker" style="color:rgba(246,244,238,0.5);"
+              >Policy Engine</span
+            >
+            <h2 class="h-2" style="margin-top:14px; color:var(--paper);">
+              One policy primitive. RBAC and ABAC unified.
+            </h2>
           </div>
           <p class="lede" style="color:rgba(246,244,238,0.65); max-width:38ch;">
             Both role-based and attribute-based access control are expressed
@@ -415,7 +551,8 @@ const faqs = [
         <div class="atom-policy-layout">
           <div class="atom-policy-code-wrap">
             <div class="atom-policy-code-label">PolicyBinding</div>
-            <pre class="atom-policy-code">{`PolicyBinding {
+            <pre
+              class="atom-policy-code">{`PolicyBinding {
   subject:    group("operators")
   grant:      capability("publish")
   scope:      tenant("factory-a")
@@ -425,52 +562,19 @@ const faqs = [
   }
 }`}</pre>
             <p class="atom-policy-note">
-              No permissions embedded in tokens. Every decision is evaluated online.
+              No permissions embedded in tokens. Every decision is evaluated
+              online.
             </p>
           </div>
           <div class="atom-policy-features">
-            {policyFeatures.map(({ name, desc }) => (
-              <div class="atom-policy-feature">
-                <div class="atom-policy-fname">{name}</div>
-                <div class="atom-policy-fdesc">{desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Admin UI — with screenshots -->
-    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
-      <div class="container-wide">
-        <div class="section-head">
-          <div class="left">
-            <span class="kicker">Admin UI</span>
-            <h2 class="h-2" style="margin-top:14px;">Built for operators.</h2>
-          </div>
-          <p class="lede">
-            Manage every object in the system from one interface. No SQL
-            console, no curl scripts.
-          </p>
-        </div>
-        <div class="pui-layout">
-          <div class="pui-tabs" id="pui-tabs">
-            {uiFeatures.map(({ id, title, desc }, i) => (
-              <div class={`pui-tab${i === 0 ? " active" : ""}`} data-target={id}>
-                <button class="pui-tab-btn" type="button">
-                  <span class="pui-tab-title">{title}</span>
-                  <span class="pui-chevron">›</span>
-                </button>
-                <p class="pui-tab-desc">{desc}</p>
-              </div>
-            ))}
-          </div>
-          <div class="pui-panel">
-            {uiFeatures.map(({ id, img, alt }, i) => (
-              <div class={`pui-img-wrap${i === 0 ? " active" : ""}`} data-panel={id}>
-                <img src={img} alt={alt} class="pui-img" loading="lazy" />
-              </div>
-            ))}
+            {
+              policyFeatures.map(({ name, desc }) => (
+                <div class="atom-policy-feature">
+                  <div class="atom-policy-fname">{name}</div>
+                  <div class="atom-policy-fdesc">{desc}</div>
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
@@ -482,7 +586,9 @@ const faqs = [
         <div class="section-head">
           <div class="left">
             <span class="kicker">Developer Surface</span>
-            <h2 class="h-2" style="margin-top:14px;">GraphQL-native. Runtime-ready.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              GraphQL-native. Runtime-ready.
+            </h2>
           </div>
           <p class="lede">
             One endpoint for management. A dedicated gRPC channel for
@@ -490,36 +596,52 @@ const faqs = [
           </p>
         </div>
         <div class="feature-grid">
-          {devSurface.map(({ icon: Icon, name, desc }) => (
-            <div class="feature">
-              <div class="ic atom-ic"><Icon size={20} /></div>
-              <div class="name">{name}</div>
-              <p class="desc">{desc}</p>
-            </div>
-          ))}
+          {
+            devSurface.map(({ icon: Icon, name, desc }) => (
+              <div class="feature">
+                <div class="ic atom-ic">
+                  <Icon size={20} />
+                </div>
+                <div class="name">{name}</div>
+                <p class="desc">{desc}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
 
     <!-- Quick Start -->
-    <section class="section" style="background:var(--paper-2); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
             <span class="kicker">Quick start</span>
-            <h2 class="h-2" style="margin-top:14px;">Up and running in minutes.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Up and running in minutes.
+            </h2>
           </div>
         </div>
         <div class="atom-qs-grid">
-          {quickstart.map(({ step, code }) => (
-            <div class="atom-qs-card">
-              <div class="atom-qs-step">{step}</div>
-              <pre class="atom-qs-code">{code}</pre>
-            </div>
-          ))}
+          {
+            quickstart.map(({ step, code }) => (
+              <div class="atom-qs-card">
+                <div class="atom-qs-step">{step}</div>
+                <pre class="atom-qs-code">{code}</pre>
+              </div>
+            ))
+          }
         </div>
         <div class="btn-row" style="margin-top:40px;">
-          <a href="https://github.com/absmach/atom" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
+          <a
+            href="https://github.com/absmach/atom"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener">View on GitHub ↗</a
+          >
           <a href="/docs/atom" class="btn">Read docs ↗</a>
         </div>
       </div>
@@ -535,16 +657,22 @@ const faqs = [
           </div>
         </div>
         <div class="sol-grid atom-sol-grid">
-          {solutions.map(({ icon: Icon, title, desc, tags }) => (
-            <div class="sol-card">
-              <div class="atom-sol-icon"><Icon size={22} /></div>
-              <h3 class="name">{title}</h3>
-              <p class="desc">{desc}</p>
-              <div class="tags">
-                {tags.map((t) => <span class="tag">{t}</span>)}
+          {
+            solutions.map(({ icon: Icon, title, desc, tags }) => (
+              <div class="sol-card">
+                <div class="atom-sol-icon">
+                  <Icon size={22} />
+                </div>
+                <h3 class="name">{title}</h3>
+                <p class="desc">{desc}</p>
+                <div class="tags">
+                  {tags.map((t) => (
+                    <span class="tag">{t}</span>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>
@@ -554,28 +682,49 @@ const faqs = [
       <div class="container-wide">
         <div class="section-head" style="color:inherit;">
           <div class="left">
-            <span class="kicker" style="color:rgba(246,244,238,0.5);">Deployment</span>
-            <h2 class="h-2" style="margin-top:14px; color:var(--paper);">One binary.</h2>
+            <span class="kicker" style="color:rgba(246,244,238,0.5);"
+              >Deployment</span
+            >
+            <h2 class="h-2" style="margin-top:14px; color:var(--paper);">
+              One binary.
+            </h2>
           </div>
           <p class="lede" style="color:rgba(246,244,238,0.65); max-width:38ch;">
-            Self-contained and operational immediately after deployment.
-            No infrastructure assembly required.
+            Self-contained and operational immediately after deployment. No
+            infrastructure assembly required.
           </p>
         </div>
         <div class="atom-deploy-grid">
-          {[
-            ["Single Rust binary",   "No runtime dependencies, no JVM, no Node."],
-            ["PostgreSQL only",      "No Redis, no message queues, no coordination service."],
-            ["Auto migrations",      "Schema migrations run on startup automatically."],
-            ["Key generation",       "JWT signing key generated and stored on first boot."],
-            ["Docker Compose",       "Atom + PostgreSQL, ready in one command."],
-            ["Kubernetes",           "Single Deployment + Service. Config from env vars."],
-          ].map(([name, desc]) => (
-            <div class="atom-deploy-item">
-              <div class="atom-deploy-name">{name}</div>
-              <div class="atom-deploy-desc">{desc}</div>
-            </div>
-          ))}
+          {
+            [
+              [
+                "Single Rust binary",
+                "No runtime dependencies, no JVM, no Node.",
+              ],
+              [
+                "PostgreSQL only",
+                "No Redis, no message queues, no coordination service.",
+              ],
+              [
+                "Auto migrations",
+                "Schema migrations run on startup automatically.",
+              ],
+              [
+                "Key generation",
+                "JWT signing key generated and stored on first boot.",
+              ],
+              ["Docker Compose", "Atom + PostgreSQL, ready in one command."],
+              [
+                "Kubernetes",
+                "Single Deployment + Service. Config from env vars.",
+              ],
+            ].map(([name, desc]) => (
+              <div class="atom-deploy-item">
+                <div class="atom-deploy-name">{name}</div>
+                <div class="atom-deploy-desc">{desc}</div>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
@@ -621,7 +770,10 @@ const faqs = [
     </section> -->
 
     <!-- FAQ -->
-    <section class="section" style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
@@ -639,36 +791,76 @@ const faqs = [
         <span class="kicker">Get started</span>
         <h2 class="h-2" style="margin-top:14px;">Deploy Atom today.</h2>
         <p class="lede" style="margin:20px auto 36px;">
-          Identity, authentication, and authorization from one deployable
-          service. Apache 2.0. Single binary. Deploy alongside PostgreSQL on
-          a VM, in Docker Compose, or on Kubernetes.
+          Atom is the identity and authorization layer powering the <a
+            href="/products/magistrala"
+            style="color:inherit; text-decoration:underline;">Magistrala</a
+          > IoT platform. Deploy it standalone or as part of the full IoT stack —
+          single binary, Apache 2.0, PostgreSQL-backed.
         </p>
         <div class="btn-row" style="justify-content:center;">
-          <a href="https://github.com/absmach/atom" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
+          <a href="/contact" class="btn btn-primary">Contact Us →</a>
           <a href="/docs/atom" class="btn">Documentation ↗</a>
         </div>
       </div>
     </section>
-
   </main>
   <Footer />
   <script type="application/ld+json" is:inline>
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Atom",
-    "description": "Open-source identity and authorization platform. Runtime RBAC, ABAC, authentication, and multi-tenant policy enforcement in a single Rust binary backed by PostgreSQL.",
-    "applicationCategory": "SecurityApplication",
-    "operatingSystem": "Linux",
-    "url": "https://www.absmach.eu/products/atom",
-    "license": "https://www.apache.org/licenses/LICENSE-2.0",
-    "keywords": "identity platform,authorization platform,RBAC,ABAC,runtime authorization,policy decision point,authentication,OIDC,JWT,multi-tenant IAM,open-source IAM,Keycloak alternative,Cerbos alternative",
-    "author": {
-      "@type": "Organization",
-      "name": "Abstract Machines",
-      "url": "https://www.absmach.eu/"
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Atom",
+      "description": "Open-source identity and authorization platform. Runtime RBAC, ABAC, authentication, and multi-tenant policy enforcement in a single Rust binary backed by PostgreSQL.",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Linux",
+      "url": "https://www.absmach.eu/products/atom",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "keywords": "identity platform,authorization platform,RBAC,ABAC,runtime authorization,policy decision point,authentication,OIDC,JWT,multi-tenant IAM,open-source IAM,Keycloak alternative,Cerbos alternative",
+      "author": {
+        "@type": "Organization",
+        "name": "Abstract Machines",
+        "url": "https://www.absmach.eu/"
+      }
     }
-  }
+  </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Products",
+          "item": "https://www.absmach.eu/products/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Atom",
+          "item": "https://www.absmach.eu/products/atom"
+        }
+      ]
+    }
+  </script>
+  <script is:inline>
+    (() => {
+      const tabs = document.querySelectorAll("#pui-tabs .pui-tab");
+      const panels = document.querySelectorAll(".pui-img-wrap");
+
+      tabs.forEach((tab) => {
+        tab.querySelector(".pui-tab-btn").addEventListener("click", () => {
+          const target = tab.dataset.target;
+          tabs.forEach((t) => t.classList.remove("active"));
+          panels.forEach((p) => p.classList.remove("active"));
+          tab.classList.add("active");
+          document
+            .querySelector(`.pui-img-wrap[data-panel="${target}"]`)
+            ?.classList.add("active");
+        });
+      });
+    })();
   </script>
 </BaseLayout>
 
@@ -1093,9 +1285,16 @@ const faqs = [
   .atom-col-atom {
     background: rgba(7, 55, 99, 0.04);
   }
-  .atom-yes    { color: var(--ink) !important; font-weight: 600 !important; }
-  .atom-no     { color: var(--ink-3) !important; }
-  .atom-partial { color: var(--ink-2) !important; }
+  .atom-yes {
+    color: var(--ink) !important;
+    font-weight: 600 !important;
+  }
+  .atom-no {
+    color: var(--ink-3) !important;
+  }
+  .atom-partial {
+    color: var(--ink-2) !important;
+  }
 
   /* ─── Responsive ────────────────────────────────────────────────── */
   @media (max-width: 980px) {
@@ -1132,20 +1331,3 @@ const faqs = [
     }
   }
 </style>
-
-<script is:inline>
-  (() => {
-    const tabs = document.querySelectorAll("#pui-tabs .pui-tab");
-    const panels = document.querySelectorAll(".pui-img-wrap");
-
-    tabs.forEach((tab) => {
-      tab.querySelector(".pui-tab-btn").addEventListener("click", () => {
-        const target = tab.dataset.target;
-        tabs.forEach((t) => t.classList.remove("active"));
-        panels.forEach((p) => p.classList.remove("active"));
-        tab.classList.add("active");
-        document.querySelector(`.pui-img-wrap[data-panel="${target}"]`)?.classList.add("active");
-      });
-    });
-  })();
-</script>

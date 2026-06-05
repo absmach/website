@@ -16,6 +16,7 @@ import BarChart from "lucide-astro/BarChart";
 import Brain from "lucide-astro/Brain";
 import Radio from "lucide-astro/Radio";
 import CircuitBoard from "lucide-astro/CircuitBoard";
+import PropellerDiagram from "../../components/PropellerDiagram.astro";
 
 const features = [
   {
@@ -42,6 +43,8 @@ const features = [
     icon: Network,
     name: "Powerful Service Mesh",
     desc: "Integrates with Magistrala for secure, efficient IoT device communication across your entire infrastructure.",
+    href: "/products/magistrala",
+    hrefLabel: "Magistrala →",
   },
   {
     icon: Server,
@@ -120,6 +123,8 @@ const solutions = [
     title: "IoT Automation",
     desc: "Deploy event-driven logic close to devices to reduce latency and cloud bandwidth costs.",
     tags: ["Rules", "Triggers", "Edge Logic"],
+    href: "/products/magistrala",
+    hrefLabel: "Pairs with Magistrala →",
   },
   {
     icon: Zap,
@@ -132,18 +137,22 @@ const solutions = [
     title: "MCU Workloads",
     desc: "Deploy Wasm binaries directly to Zephyr RTOS microcontrollers for ultra-low-power edge computing.",
     tags: ["Zephyr", "RISC-V", "MCU"],
+    href: "/products/a0",
+    hrefLabel: "A0 hardware →",
   },
 ];
 
 const integrations = [
-  "WebAssembly",
-  "Kubernetes",
-  "Docker",
-  "Zephyr RTOS",
-  "Magistrala",
-  "Go Runtime",
-  "Rust Runtime",
-  "OCI Registry",
+  { name: "Magistrala", href: "/products/magistrala" },
+  { name: "A0 Gateway", href: "/products/a0" },
+  { name: "A1 Gateway", href: "/products/a1" },
+  { name: "WebAssembly" },
+  { name: "Kubernetes" },
+  { name: "Docker" },
+  { name: "Zephyr RTOS" },
+  { name: "Go Runtime" },
+  { name: "Rust Runtime" },
+  { name: "OCI Registry" },
 ];
 
 const faqs = [
@@ -172,11 +181,21 @@ const faqs = [
     a: "Getting started is easy: develop your application in WebAssembly, push your workloads to an OCI-compliant registry, use Propeller to orchestrate deployment across your infrastructure, and monitor and scale your workloads in real time. Check the documentation for detailed setup instructions.",
   },
 ];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+});
 ---
 
 <BaseLayout
-  title="Propeller Wasm Orchestrator — Abstract Machines"
-  description="Deploy WebAssembly workloads from cloud to microcontrollers with sub-10ms boot times. Open-source Wasm orchestration for the cloud-edge continuum."
+  title="Propeller — Open-Source WebAssembly Orchestrator for Cloud-to-Edge"
+  description="Open-source WebAssembly orchestrator for the cloud-edge continuum. Deploy Wasm workloads from Kubernetes clusters to Zephyr RTOS microcontrollers — sub-10ms boot times, OCI registry support, MQTT via Magistrala, and FaaS at the edge."
 >
   <Header />
   <main>
@@ -188,6 +207,8 @@ const faqs = [
         muted
         loop
         playsinline
+        width="1920"
+        height="1080"
         poster="/video/hero-background-poster.webp"
         aria-hidden="true"
       >
@@ -203,41 +224,28 @@ const faqs = [
               class="prod-logo-img"
               style="height:56px; margin-bottom:8px; filter:invert(1);"
             />
-            <h1 class="tagline">Deploy Wasm from Cloud to Microcontrollers.</h1>
+            <h1 class="tagline">Open-Source WebAssembly Orchestrator.</h1>
             <p class="lede" style="margin-top:16px; max-width:48ch;">
-              Propeller is a cutting-edge orchestrator for WebAssembly workloads
-              across the Cloud-Edge continuum. Seamlessly deploy portable,
-              lightweight Wasm applications from powerful cloud servers to
-              constrained microcontrollers with security and performance.
+              Deploy portable Wasm workloads across the full cloud-edge
+              continuum — from Kubernetes clusters to Zephyr RTOS
+              microcontrollers. OCI registry integration, MQTT messaging via
+              <a
+                href="/products/magistrala"
+                style="color:inherit; text-decoration:underline;">Magistrala</a
+              >, sub-10ms boot times, and FaaS at the edge. Apache 2.0.
             </p>
             <div class="btn-row" style="margin-top:32px;">
               <a
-                href="https://www.absmach.eu/docs/propeller/getting-started"
-                class="btn btn-primary"
-                target="_blank"
-                rel="noopener">Get Started ↗</a
-              >
-              <a
                 href="https://www.absmach.eu/docs/propeller"
-                class="btn"
+                class="btn btn-primary"
                 target="_blank"
                 rel="noopener">Documentation ↗</a
               >
-            </div>
-            <div style="margin-top:20px;">
-              <span class="badge success"
-                ><span class="dot"></span>Open Source · Apache 2.0</span
-              >
+              <a href="/contact" class="btn">Contact Us →</a>
             </div>
           </div>
           <div class="hero-visual">
-            <div class="arch-card">
-              <img
-                src="/img/products/propeller-architecture-diagram.svg"
-                alt="Propeller architecture diagram"
-                class="arch-img"
-              />
-            </div>
+            <PropellerDiagram />
           </div>
         </div>
       </div>
@@ -246,11 +254,15 @@ const faqs = [
     <!-- Stats bar -->
     <div style="border-bottom:1px solid var(--line-3);">
       <div class="container-wide">
-        <div class="prop-metrics metrics" style="border:none; border-radius:0; border-left:1px solid var(--line-3);">
+        <div
+          class="prop-metrics metrics"
+          style="border:none; border-radius:0; border-left:1px solid var(--line-3);"
+        >
           <div class="metric">
-            <div class="v">Cloud to MCU</div>
-            <div class="l">Deployment range</div>
+            <div class="v">Multi-Protocol</div>
+            <div class="l">MQTT · CoAP · WebSocket</div>
           </div>
+
           <div class="metric featured">
             <div class="v">&lt;10ms</div>
             <div class="l">Wasm boot time</div>
@@ -260,8 +272,14 @@ const faqs = [
             <div class="l">Sandboxed isolation</div>
           </div>
           <div class="metric">
-            <div class="v">Multi-Protocol</div>
-            <div class="l">MQTT · CoAP · WebSocket</div>
+            <div class="v">
+              <a
+                href="https://github.com/absmach/propeller"
+                target="_blank"
+                rel="noopener">Apache 2.0 ↗</a
+              >
+            </div>
+            <div class="l">Open-source license</div>
           </div>
         </div>
       </div>
@@ -274,7 +292,7 @@ const faqs = [
           <div class="left">
             <span class="kicker">Features</span>
             <h2 class="h-2" style="margin-top:14px;">
-              WebAssembly orchestration at scale.
+              WebAssembly orchestration across the cloud-edge continuum.
             </h2>
           </div>
           <p class="lede">
@@ -284,11 +302,18 @@ const faqs = [
         </div>
         <div class="prop-feat-grid feature-grid">
           {
-            features.map(({ icon: Icon, name, desc }) => (
+            features.map(({ icon: Icon, name, desc, href, hrefLabel }) => (
               <div class="feature">
-                <div class="ic"><Icon size={18} /></div>
+                <div class="ic">
+                  <Icon size={18} />
+                </div>
                 <div class="name">{name}</div>
                 <p class="desc">{desc}</p>
+                {href && (
+                  <a href={href} class="feat-link">
+                    {hrefLabel}
+                  </a>
+                )}
               </div>
             ))
           }
@@ -322,7 +347,9 @@ const faqs = [
               steps.map(({ icon: Icon, title, desc, num }) => (
                 <div class="hiw-step">
                   <div class="hiw-icon-wrap">
-                    <div class="hiw-icon"><Icon size={18} /></div>
+                    <div class="hiw-icon">
+                      <Icon size={18} />
+                    </div>
                   </div>
                   <div class="hiw-body">
                     <div class="hiw-num">{num}</div>
@@ -341,7 +368,9 @@ const faqs = [
           {
             steps.map(({ icon: Icon, title, desc, num }) => (
               <div class="hiw-vstep">
-                <div class="hiw-vicon"><Icon size={16} /></div>
+                <div class="hiw-vicon">
+                  <Icon size={16} />
+                </div>
                 <div class="hiw-vbody">
                   <span class="hiw-vnum">{num}</span>
                   <h3 class="hiw-vtitle">{title}</h3>
@@ -419,18 +448,27 @@ const faqs = [
         </div>
         <div class="prop-sol-grid sol-grid">
           {
-            solutions.map(({ icon: Icon, title, desc, tags }) => (
-              <div class="sol-card">
-                <div class="icon-frame"><Icon size={22} /></div>
-                <h3 class="name">{title}</h3>
-                <p class="desc">{desc}</p>
-                <div class="tags">
-                  {tags.map((t) => (
-                    <span class="tag">{t}</span>
-                  ))}
+            solutions.map(
+              ({ icon: Icon, title, desc, tags, href, hrefLabel }) => (
+                <div class="sol-card">
+                  <div class="icon-frame">
+                    <Icon size={22} />
+                  </div>
+                  <h3 class="name">{title}</h3>
+                  <p class="desc">{desc}</p>
+                  <div class="tags">
+                    {tags.map((t) => (
+                      <span class="tag">{t}</span>
+                    ))}
+                  </div>
+                  {href && (
+                    <a href={href} class="sol-link">
+                      {hrefLabel}
+                    </a>
+                  )}
                 </div>
-              </div>
-            ))
+              ),
+            )
           }
         </div>
       </div>
@@ -449,10 +487,10 @@ const faqs = [
         </div>
         <div class="integ-grid">
           {
-            integrations.map((name) => (
+            integrations.map(({ name, href }) => (
               <div class="integ-chip">
                 <span class="dot" />
-                {name}
+                {href ? <a href={href}>{name}</a> : name}
               </div>
             ))
           }
@@ -503,38 +541,70 @@ const faqs = [
   </main>
   <Footer />
   <script type="application/ld+json" is:inline>
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Propeller",
-    "description": "Deploy WebAssembly workloads from cloud to microcontrollers with sub-10ms boot times. Open-source Wasm orchestration for the cloud-edge continuum.",
-    "applicationCategory": "IoT",
-    "operatingSystem": "Linux",
-    "url": "https://www.absmach.eu/products/propeller",
-    "license": "https://www.apache.org/licenses/LICENSE-2.0",
-    "author": {
-      "@type": "Organization",
-      "name": "Abstract Machines"
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Propeller",
+      "description": "Open-source WebAssembly orchestrator for the cloud-edge continuum. Deploy Wasm workloads from Kubernetes clusters to Zephyr RTOS microcontrollers — sub-10ms boot times, OCI registry support, MQTT via Magistrala, and FaaS at the edge.",
+      "applicationCategory": "IoT",
+      "operatingSystem": "Linux",
+      "url": "https://www.absmach.eu/products/propeller",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "keywords": "WebAssembly orchestrator,Wasm orchestrator,cloud-edge continuum,edge computing,WebAssembly IoT,Wasm microcontroller,Zephyr RTOS Wasm,OCI registry Wasm,FaaS edge,open-source WebAssembly,Wasm deployment,cloud to MCU",
+      "sameAs": "https://github.com/absmach/propeller",
+      "author": {
+        "@type": "Organization",
+        "name": "Abstract Machines",
+        "url": "https://www.absmach.eu/"
+      }
     }
-  }
+  </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Products",
+          "item": "https://www.absmach.eu/products/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Propeller",
+          "item": "https://www.absmach.eu/products/propeller"
+        }
+      ]
+    }
+  </script>
+  <script is:inline>
+    (() => {
+      const tabs = document.querySelectorAll(".pui-tab");
+      const panels = document.querySelectorAll(".pui-img-wrap");
+
+      tabs.forEach((tab) => {
+        tab.querySelector(".pui-tab-btn").addEventListener("click", () => {
+          const target = tab.dataset.target;
+          tabs.forEach((t) => t.classList.remove("active"));
+          panels.forEach((p) => p.classList.remove("active"));
+          tab.classList.add("active");
+          document
+            .querySelector(`.pui-img-wrap[data-panel="${target}"]`)
+            ?.classList.add("active");
+        });
+      });
+    })();
   </script>
 </BaseLayout>
 
 <style>
-  /* Hero architecture card — light background forces light-mode SVG rendering */
-  .arch-card {
-    /* background: #ffffff; */
-    border-radius: 12px;
-    padding: clamp(8px, 3vw, 24px);
-    color-scheme: light;
-    width: 100%;
-    min-width: 0;
-  }
-  .arch-img {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    display: block;
+  /* ─── Hero visual — topology card ───────────────────────────── */
+  .prod-hero .hero-visual {
+    padding: 0;
+    overflow: hidden;
   }
 
   /* Metrics responsive */
@@ -542,23 +612,17 @@ const faqs = [
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   @media (max-width: 640px) {
-    .prod-hero .hero-visual {
-      aspect-ratio: auto;
-      max-height: none;
-      overflow: visible;
-    }
-    .arch-card {
-      padding: 0;
-    }
-    .arch-img {
-      max-height: 300px;
-      object-fit: contain;
-    }
     .prop-metrics {
       grid-template-columns: 1fr;
     }
     .prop-metrics .metric {
       border-right: none;
+    }
+    /* Override global constraints so the topology diagram shows in full */
+    .prod-hero .hero-visual {
+      max-height: none;
+      aspect-ratio: auto;
+      padding: 0 !important;
     }
   }
 
@@ -586,8 +650,12 @@ const faqs = [
     margin-top: 40px;
   }
   @media (max-width: 768px) {
-    .hiw-desktop { display: none; }
-    .hiw-mobile { display: block; }
+    .hiw-desktop {
+      display: none;
+    }
+    .hiw-mobile {
+      display: block;
+    }
   }
 
   /* Desktop timeline */
@@ -615,8 +683,12 @@ const faqs = [
     animation: hiw-beam 4s ease-in-out infinite;
   }
   @keyframes hiw-beam {
-    0% { left: -80px; }
-    100% { left: 100%; }
+    0% {
+      left: -80px;
+    }
+    100% {
+      left: 100%;
+    }
   }
   .hiw-step {
     position: relative;
@@ -817,6 +889,22 @@ const faqs = [
     display: block;
   }
 
+  /* Internal cross-product links on feature and solution cards */
+  .feat-link,
+  .sol-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .feat-link:hover,
+  .sol-link:hover {
+    color: var(--ink);
+  }
+
   /* Solutions responsive */
   .prop-sol-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -827,20 +915,3 @@ const faqs = [
     }
   }
 </style>
-
-<script is:inline>
-  (() => {
-    const tabs = document.querySelectorAll(".pui-tab");
-    const panels = document.querySelectorAll(".pui-img-wrap");
-
-    tabs.forEach((tab) => {
-      tab.querySelector(".pui-tab-btn").addEventListener("click", () => {
-        const target = tab.dataset.target;
-        tabs.forEach((t) => t.classList.remove("active"));
-        panels.forEach((p) => p.classList.remove("active"));
-        tab.classList.add("active");
-        document.querySelector(`.pui-img-wrap[data-panel="${target}"]`)?.classList.add("active");
-      });
-    });
-  })();
-</script>
