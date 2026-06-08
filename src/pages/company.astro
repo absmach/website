@@ -3,10 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FinalCTA from "../components/FinalCTA.astro";
-import Award from "lucide-astro/Award";
-import Code2 from "lucide-astro/Code2";
-import Cpu from "lucide-astro/Cpu";
-import ShieldCheck from "lucide-astro/ShieldCheck";
+import { Award, Code2, Cpu, ShieldCheck } from "@lucide/astro";
 
 const glance = [
   { label: "Founded", value: "2023" },
@@ -182,7 +179,9 @@ const team = [
           {
             values.map(({ ic: Ic, title, desc }) => (
               <div class="card">
-                <div class="val-icon"><Ic size={20} /></div>
+                <div class="val-icon">
+                  <Ic size={20} />
+                </div>
                 <h3 class="h-3" style="margin-top:16px;">
                   {title}
                 </h3>
@@ -214,10 +213,7 @@ const team = [
           {
             team.map((t) => (
               <div class="card" style="text-align:center;">
-                <div
-                  class="h-1"
-                  style="color:var(--ink); letter-spacing:-1px;"
-                >
+                <div class="h-1" style="color:var(--ink); letter-spacing:-1px;">
                   {t.count}
                 </div>
                 <h3 class="h-3" style="margin-top:8px;">
@@ -272,8 +268,7 @@ const team = [
                 </div>
                 <a
                   href="mailto:info@absmach.eu"
-                  style="font-size:14px; color:var(--ink-2);"
-                  >info@absmach.eu</a
+                  style="font-size:14px; color:var(--ink-2);">info@absmach.eu</a
                 >
               </div>
             </div>
@@ -314,33 +309,33 @@ const team = [
   </main>
   <Footer />
   <script is:inline type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Abstract Machines",
-    "url": "https://www.absmach.eu",
-    "logo": "https://www.absmach.eu/img/logos/abstract-machines_logo_landscape-black.png",
-    "description": "Open-source infrastructure company building secure IoT and edge computing systems.",
-    "foundingDate": "2023",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "141 Quai de Valmy",
-      "addressLocality": "Paris",
-      "postalCode": "75010",
-      "addressCountry": "FR"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "customer support",
-      "email": "info@absmach.eu"
-    },
-    "sameAs": [
-      "https://github.com/absmach",
-      "https://www.linkedin.com/company/abstract-machines",
-      "https://twitter.com/absmach",
-      "https://www.youtube.com/@absmach"
-    ]
-  }
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Abstract Machines",
+      "url": "https://www.absmach.eu",
+      "logo": "https://www.absmach.eu/img/logos/abstract-machines_logo_landscape-black.png",
+      "description": "Open-source infrastructure company building secure IoT and edge computing systems.",
+      "foundingDate": "2023",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "141 Quai de Valmy",
+        "addressLocality": "Paris",
+        "postalCode": "75010",
+        "addressCountry": "FR"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "info@absmach.eu"
+      },
+      "sameAs": [
+        "https://github.com/absmach",
+        "https://www.linkedin.com/company/abstract-machines",
+        "https://twitter.com/absmach",
+        "https://www.youtube.com/@absmach"
+      ]
+    }
   </script>
 </BaseLayout>
 

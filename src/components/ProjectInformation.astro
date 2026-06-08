@@ -70,7 +70,11 @@ const isExternal = (href, explicit) => {
       color-mix(in srgb, var(--panel) 74%, transparent),
       color-mix(in srgb, var(--surface) 78%, transparent)
     );
-    border-color: color-mix(in srgb, var(--border) 84%, rgba(255, 255, 255, 0.2));
+    border-color: color-mix(
+      in srgb,
+      var(--border) 84%,
+      rgba(255, 255, 255, 0.2)
+    );
     backdrop-filter: blur(14px) saturate(145%);
     -webkit-backdrop-filter: blur(14px) saturate(145%);
     box-shadow:

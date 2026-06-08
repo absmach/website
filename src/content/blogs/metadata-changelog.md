@@ -131,14 +131,14 @@ Existing entries stored as plain untyped values at the top level are handled aut
 
 ## New Supported Value Types
 
-| Type        | Description                        | Example value                                         |
-|-------------|------------------------------------|-------------------------------------------------------|
-| `string`    | Plain text                         | `"production"`                                        |
-| `integer`   | Whole number                       | `5`                                                   |
-| `double`    | Decimal number                     | `3.14`                                                |
-| `boolean`   | True or false                      | `true`                                                |
-| `json`      | Arbitrary JSON object              | `{"threshold": 100, "unit": "ms"}`                    |
-| `location`  | Geographic point                   | `{"latitude": -1.286, "longitude": 36.817, "address": "Nairobi"}` |
+| Type        | Description                        | Example value                                                       |
+| ----------- | ---------------------------------- | ------------------------------------------------------------------- |
+| `string`    | Plain text                         | `"production"`                                                      |
+| `integer`   | Whole number                       | `5`                                                                 |
+| `double`    | Decimal number                     | `3.14`                                                              |
+| `boolean`   | True or false                      | `true`                                                              |
+| `json`      | Arbitrary JSON object              | `{"threshold": 100, "unit": "ms"}`                                  |
+| `location`  | Geographic point                   | `{"latitude": -1.286, "longitude": 36.817, "address": "Nairobi"}`   |
 | `perimeter` | Polygon defined by coordinate list | `{"coordinates": [[-1.28, 36.81], [-1.29, 36.82], [-1.28, 36.83]]}` |
 
 The `location` and `perimeter` types integrate directly with map visualizations in dashboards, enabling geographic filtering and display without additional configuration.
@@ -149,8 +149,8 @@ The `location` and `perimeter` types integrate directly with map visualizations 
 
 The `subscribed` flag was previously stored under a nested `admin` key in user metadata. With v0.19.0, it is stored directly in flat `metadata`.
 
-| Field | Before | After |
-|-------|--------|-------|
+| Field                   | Before                      | After                 |
+| ----------------------- | --------------------------- | --------------------- |
 | Email subscription flag | `metadata.admin.subscribed` | `metadata.subscribed` |
 
 User preferences (`language` and `theme`) remain in `private_metadata` and are not affected by this change.
@@ -171,12 +171,12 @@ No API schema changes, no SDK updates, and no CLI flag changes are required to s
 
 ## Migration Summary
 
-| Scenario | Action Required |
-|----------|----------------|
+| Scenario                              | Action Required                                                 |
+| ------------------------------------- | --------------------------------------------------------------- |
 | Entity metadata stored under `ui` key | Upgrade to v0.19.0 — backend migration handles it automatically |
-| User fields stored under `admin` key | Upgrade to v0.19.0 — backend migration handles it automatically |
-| Plain (untyped) flat metadata values | Automatically handled — type is inferred by the UI |
-| New deployments | No action required |
+| User fields stored under `admin` key  | Upgrade to v0.19.0 — backend migration handles it automatically |
+| Plain (untyped) flat metadata values  | Automatically handled — type is inferred by the UI              |
+| New deployments                       | No action required                                              |
 
 ---
 

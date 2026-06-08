@@ -45,11 +45,26 @@ const objectives = [
 ];
 
 const outcomes = [
-  { title: "Cryptographic libraries", desc: "Post-quantum libraries and SDKs for 6G" },
-  { title: "Computing framework", desc: "Confidential computing framework for cloud-edge environments" },
-  { title: "Privacy protocols", desc: "Privacy-preserving protocols for heterogeneous 6G networks" },
-  { title: "Security tools", desc: "Quantum-resistant security tools and artifacts" },
-  { title: "Security standards", desc: "Enhanced security standards for future 6G deployments" },
+  {
+    title: "Cryptographic libraries",
+    desc: "Post-quantum libraries and SDKs for 6G",
+  },
+  {
+    title: "Computing framework",
+    desc: "Confidential computing framework for cloud-edge environments",
+  },
+  {
+    title: "Privacy protocols",
+    desc: "Privacy-preserving protocols for heterogeneous 6G networks",
+  },
+  {
+    title: "Security tools",
+    desc: "Quantum-resistant security tools and artifacts",
+  },
+  {
+    title: "Security standards",
+    desc: "Enhanced security standards for future 6G deployments",
+  },
 ];
 
 const responsibilities = [
@@ -85,7 +100,10 @@ const infoItems = [
 
 const infoLinks = [
   { label: "Visit Project Site", href: "https://confidential6g.eu/" },
-  { label: "View on CORDIS", href: "https://cordis.europa.eu/project/id/101096435" },
+  {
+    label: "View on CORDIS",
+    href: "https://cordis.europa.eu/project/id/101096435",
+  },
 ];
 
 const impactAreas = [
@@ -123,13 +141,27 @@ const impactAreas = [
             <h1>CONFIDENTIAL6G</h1>
             <p class="lede" style="max-width:560px; margin-top:16px;">
               Confidential Computing and Privacy-preserving Technologies for 6G.
-              Ensuring secure and private computation in the cloud-edge continuum.
+              Ensuring secure and private computation in the cloud-edge
+              continuum.
             </p>
             <div class="btn-row" style="margin-top:28px;">
-              <a href="https://confidential6g.eu/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Visit Project Site ↗</a>
-              <a href="https://cordis.europa.eu/project/id/101096435" class="btn" target="_blank" rel="noopener noreferrer">View on CORDIS ↗</a>
+              <a
+                href="https://confidential6g.eu/"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener noreferrer">Visit Project Site ↗</a
+              >
+              <a
+                href="https://cordis.europa.eu/project/id/101096435"
+                class="btn"
+                target="_blank"
+                rel="noopener noreferrer">View on CORDIS ↗</a
+              >
             </div>
-            <span class="badge complete" style="margin-top:24px; display:inline-flex;">
+            <span
+              class="badge complete"
+              style="margin-top:24px; display:inline-flex;"
+            >
               <span class="dot"></span>Completed
             </span>
           </div>
@@ -142,10 +174,22 @@ const impactAreas = [
           </div>
         </div>
         <div class="meta-grid">
-          <div><div class="l">Duration</div><div class="v">Jan 2023 – Dec 2025</div></div>
-          <div><div class="l">Funding</div><div class="v">Horizon Europe</div></div>
-          <div><div class="l">Total Budget</div><div class="v">€5 Million</div></div>
-          <div><div class="l">Coordinator</div><div class="v">WINGS ICT Solutions</div></div>
+          <div>
+            <div class="l">Duration</div><div class="v">
+              Jan 2023 – Dec 2025
+            </div>
+          </div>
+          <div>
+            <div class="l">Funding</div><div class="v">Horizon Europe</div>
+          </div>
+          <div>
+            <div class="l">Total Budget</div><div class="v">€5 Million</div>
+          </div>
+          <div>
+            <div class="l">Coordinator</div><div class="v">
+              WINGS ICT Solutions
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -154,23 +198,24 @@ const impactAreas = [
     <section class="section-pad-top">
       <div class="container-wide">
         <div class="content-grid">
-
           <!-- Left: main content -->
           <div class="main-content stack stack-lg">
-
             <!-- Description -->
             <div>
               <span class="kicker">Overview</span>
               <h2 class="h-2" style="margin-top:14px;">Project Description</h2>
-              <p style="margin-top:16px; color:var(--ink-2); line-height:1.7; font-size:15px;">
-                In CONFIDENTIAL6G, our goal is to ensure secure and private computation
-                in the cloud-edge continuum of 6G by developing modern cryptographic
-                techniques, tools, and libraries. We recognize the importance of
-                implementing privacy preservation and security of data in heterogeneous
-                environments and contexts, and thus, we prioritize researching security
-                enablers. We aim to tackle the potential danger posed by near-future
-                quantum computers, which can break contemporary encryptions, by exploring
-                novel cryptographic operations.
+              <p
+                style="margin-top:16px; color:var(--ink-2); line-height:1.7; font-size:15px;"
+              >
+                In CONFIDENTIAL6G, our goal is to ensure secure and private
+                computation in the cloud-edge continuum of 6G by developing
+                modern cryptographic techniques, tools, and libraries. We
+                recognize the importance of implementing privacy preservation
+                and security of data in heterogeneous environments and contexts,
+                and thus, we prioritize researching security enablers. We aim to
+                tackle the potential danger posed by near-future quantum
+                computers, which can break contemporary encryptions, by
+                exploring novel cryptographic operations.
               </p>
             </div>
 
@@ -181,29 +226,45 @@ const impactAreas = [
                 <div>
                   <h3 class="h-3">Key Objectives</h3>
                   <div class="stack stack-sm" style="margin-top:16px;">
-                    {objectives.map(({ title, desc }) => (
-                      <div class="obj-item">
-                        <div class="obj-check" aria-hidden="true">✓</div>
-                        <div>
-                          <div style="font-weight:600; font-size:14px;">{title}</div>
-                          <div style="font-size:13px; color:var(--ink-2); margin-top:4px; line-height:1.6;">{desc}</div>
+                    {
+                      objectives.map(({ title, desc }) => (
+                        <div class="obj-item">
+                          <div class="obj-check" aria-hidden="true">
+                            ✓
+                          </div>
+                          <div>
+                            <div style="font-weight:600; font-size:14px;">
+                              {title}
+                            </div>
+                            <div style="font-size:13px; color:var(--ink-2); margin-top:4px; line-height:1.6;">
+                              {desc}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))
+                    }
                   </div>
                 </div>
                 <div>
                   <h3 class="h-3">Expected Outcomes</h3>
                   <div class="stack stack-sm" style="margin-top:16px;">
-                    {outcomes.map(({ title, desc }) => (
-                      <div class="obj-item">
-                        <div class="obj-check" aria-hidden="true">✓</div>
-                        <div>
-                          <div style="font-weight:600; font-size:14px;">{title}</div>
-                          <div style="font-size:13px; color:var(--ink-2); margin-top:4px; line-height:1.6;">{desc}</div>
+                    {
+                      outcomes.map(({ title, desc }) => (
+                        <div class="obj-item">
+                          <div class="obj-check" aria-hidden="true">
+                            ✓
+                          </div>
+                          <div>
+                            <div style="font-weight:600; font-size:14px;">
+                              {title}
+                            </div>
+                            <div style="font-size:13px; color:var(--ink-2); margin-top:4px; line-height:1.6;">
+                              {desc}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))
+                    }
                   </div>
                 </div>
               </div>
@@ -213,95 +274,143 @@ const impactAreas = [
             <div>
               <span class="kicker">Our Role</span>
               <h2 class="h-2" style="margin-top:14px;">Our Involvement</h2>
-              <p style="margin-top:16px; color:var(--ink-2); line-height:1.7; font-size:15px;">
-                Abstract Machines serves as the technical manager of the Confidential6G
-                project, leading the coordination of technical activities and ensuring
-                successful delivery of project objectives. Our expertise in IoT
-                infrastructure and security makes us uniquely positioned to address the
-                privacy challenges in 6G networks.
+              <p
+                style="margin-top:16px; color:var(--ink-2); line-height:1.7; font-size:15px;"
+              >
+                Abstract Machines serves as the technical manager of the
+                Confidential6G project, leading the coordination of technical
+                activities and ensuring successful delivery of project
+                objectives. Our expertise in IoT infrastructure and security
+                makes us uniquely positioned to address the privacy challenges
+                in 6G networks.
               </p>
               <h3 class="h-3" style="margin-top:28px;">Our Responsibilities</h3>
               <div class="stack stack-sm" style="margin-top:16px;">
-                {responsibilities.map(({ title, desc }) => (
-                  <div class="obj-item">
-                    <div class="obj-check" aria-hidden="true">✓</div>
-                    <div>
-                      <div style="font-weight:600; font-size:14px;">{title}</div>
-                      <div style="font-size:13px; color:var(--ink-2); margin-top:4px; line-height:1.6;">{desc}</div>
+                {
+                  responsibilities.map(({ title, desc }) => (
+                    <div class="obj-item">
+                      <div class="obj-check" aria-hidden="true">
+                        ✓
+                      </div>
+                      <div>
+                        <div style="font-weight:600; font-size:14px;">
+                          {title}
+                        </div>
+                        <div style="font-size:13px; color:var(--ink-2); margin-top:4px; line-height:1.6;">
+                          {desc}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                }
               </div>
             </div>
-
           </div>
 
           <!-- Right: sidebar -->
           <aside class="stack stack-md">
-
             <!-- Project info card -->
             <div class="card">
               <div class="sidebar-section-label">Project</div>
-              <div style="font-weight:700; font-size:20px; margin-top:4px;">CONFIDENTIAL6G</div>
+              <div style="font-weight:700; font-size:20px; margin-top:4px;">
+                CONFIDENTIAL6G
+              </div>
               <div class="info-list" style="margin-top:20px;">
-                {infoItems.map(({ label, value, pill }) => (
-                  <div class="info-row">
-                    <div class="info-label">{label}</div>
-                    <div class="info-val">
-                      {pill ? (
-                        <span class="badge complete"><span class="dot"></span>{value}</span>
-                      ) : (
-                        value
-                      )}
+                {
+                  infoItems.map(({ label, value, pill }) => (
+                    <div class="info-row">
+                      <div class="info-label">{label}</div>
+                      <div class="info-val">
+                        {pill ? (
+                          <span class="badge complete">
+                            <span class="dot" />
+                            {value}
+                          </span>
+                        ) : (
+                          value
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                }
               </div>
               <div class="stack stack-sm" style="margin-top:20px;">
-                {infoLinks.map(({ label, href }) => (
-                  <a href={href} class="btn" style="width:100%; justify-content:space-between;" target="_blank" rel="noopener noreferrer">
-                    <span>{label}</span><span>↗</span>
-                  </a>
-                ))}
+                {
+                  infoLinks.map(({ label, href }) => (
+                    <a
+                      href={href}
+                      class="btn"
+                      style="width:100%; justify-content:space-between;"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <>
+                        <span>{label}</span>
+                        <span>↗</span>
+                      </>
+                    </a>
+                  ))
+                }
               </div>
             </div>
 
             <!-- Partners card -->
             <div class="card">
               <div class="sidebar-section-label">Network</div>
-              <div style="font-weight:700; font-size:18px; margin-top:4px;">Project Partners</div>
-              <p style="font-size:13px; color:var(--ink-3); margin-top:4px;">Organizations collaborating across this project.</p>
+              <div style="font-weight:700; font-size:18px; margin-top:4px;">
+                Project Partners
+              </div>
+              <p style="font-size:13px; color:var(--ink-3); margin-top:4px;">
+                Organizations collaborating across this project.
+              </p>
               <div class="partners-grid" style="margin-top:16px;">
-                {partners.map(({ alt, src }) => (
-                  <div class="partner-tile">
-                    <img src={src} alt={alt} loading="lazy" />
-                  </div>
-                ))}
+                {
+                  partners.map(({ alt, src }) => (
+                    <div class="partner-tile">
+                      <img src={src} alt={alt} loading="lazy" />
+                    </div>
+                  ))
+                }
               </div>
             </div>
-
           </aside>
         </div>
       </div>
     </section>
 
     <!-- Goals & Impact -->
-    <section style="background:var(--paper-2); border-top:1px solid var(--line-3);">
+    <section
+      style="background:var(--paper-2); border-top:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div style="text-align:center; margin-bottom:48px;">
           <span class="kicker">Goals & Impact</span>
-          <h2 class="h-2" style="margin-top:14px;">Project Goals &amp; Impact</h2>
+          <h2 class="h-2" style="margin-top:14px;">
+            Project Goals &amp; Impact
+          </h2>
         </div>
         <div class="impact-grid">
-          {impactAreas.map(({ icon, title, desc }) => (
-            <div class="card" style="text-align:center; display:flex; flex-direction:column; align-items:center; gap:16px;">
-              <div class="icon-frame" style="width:56px; height:56px; border-radius:50%; background:var(--paper-2); border:1px solid var(--line-3); display:flex; align-items:center; justify-content:center; font-size:22px;">
-                {icon}
+          {
+            impactAreas.map(({ icon, title, desc }) => (
+              <div
+                class="card"
+                style="text-align:center; display:flex; flex-direction:column; align-items:center; gap:16px;"
+              >
+                <div
+                  class="icon-frame"
+                  style="width:56px; height:56px; border-radius:50%; background:var(--paper-2); border:1px solid var(--line-3); display:flex; align-items:center; justify-content:center; font-size:22px;"
+                >
+                  {icon}
+                </div>
+                <h3 class="h-3" style="margin:0;">
+                  {title}
+                </h3>
+                <p style="font-size:14px; color:var(--ink-2); line-height:1.6; margin:0;">
+                  {desc}
+                </p>
               </div>
-              <h3 class="h-3" style="margin:0;">{title}</h3>
-              <p style="font-size:14px; color:var(--ink-2); line-height:1.6; margin:0;">{desc}</p>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>

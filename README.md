@@ -112,7 +112,7 @@ Production does not use `.dev.vars`.
 
 - `.dev.vars` is local-only for `wrangler pages dev`.
 - For production, configure values in Cloudflare Pages:
-Dashboard -> Pages -> your project -> Settings -> Variables and Secrets -> Production.
+  Dashboard -> Pages -> your project -> Settings -> Variables and Secrets -> Production.
 - No separate production env file is required in the repo.
 
 For local Cloudflare Pages function testing, copy `.dev.vars.example` to `.dev.vars` and fill the values.

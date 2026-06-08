@@ -3,12 +3,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FinalCTA from "../components/FinalCTA.astro";
-import DollarSign from "lucide-astro/DollarSign";
-import FlaskConical from "lucide-astro/FlaskConical";
-import Github from "lucide-astro/Github";
-import Globe from "lucide-astro/Globe";
-import TrendingUp from "lucide-astro/TrendingUp";
-import Zap from "lucide-astro/Zap";
+import {
+  DollarSign,
+  FlaskConical,
+  GitBranch,
+  Globe,
+  TrendingUp,
+  Zap,
+} from "@lucide/astro";
 
 const benefits = [
   {
@@ -17,7 +19,7 @@ const benefits = [
     desc: "Work from anywhere in Europe with flexible hours. We care about outcomes, not office time.",
   },
   {
-    ic: Github,
+    ic: GitBranch,
     title: "Open Source",
     desc: "Contribute to projects used by thousands of developers worldwide. Your work ships publicly.",
   },
@@ -73,19 +75,29 @@ const process = [
 >
   <Header />
   <main>
-
     <!-- Hero -->
-    <section class="section-tight careers-hero" style="background:var(--paper-2); border-bottom:1px solid var(--line-3); text-align:center;">
+    <section
+      class="section-tight careers-hero"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3); text-align:center;"
+    >
       <div class="container-wide">
         <span class="kicker">Careers</span>
         <h1 class="h-1" style="margin-top:8px;">Build the future with us.</h1>
-        <p class="lede" style="margin-top:16px; max-width:560px; margin-left:auto; margin-right:auto;">
-          Join a small, expert team pushing the boundaries of distributed systems,
-          IoT, and edge computing, openly, from wherever you are.
+        <p
+          class="lede"
+          style="margin-top:16px; max-width:560px; margin-left:auto; margin-right:auto;"
+        >
+          Join a small, expert team pushing the boundaries of distributed
+          systems, IoT, and edge computing, openly, from wherever you are.
         </p>
         <div class="btn-row" style="margin-top:28px; justify-content:center;">
           <a href="/contact/" class="btn btn-primary">Get in touch</a>
-          <a href="https://github.com/absmach" target="_blank" rel="noopener noreferrer" class="btn">View our work ↗</a>
+          <a
+            href="https://github.com/absmach"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn">View our work ↗</a
+          >
         </div>
       </div>
     </section>
@@ -96,24 +108,37 @@ const process = [
         <div class="section-head">
           <div class="left">
             <span class="kicker">Why join us</span>
-            <h2 class="h-2" style="margin-top:10px;">What makes us different</h2>
-            <p class="lede" style="margin-top:10px;">Six reasons people choose to work at Abstract Machines.</p>
+            <h2 class="h-2" style="margin-top:10px;">
+              What makes us different
+            </h2>
+            <p class="lede" style="margin-top:10px;">
+              Six reasons people choose to work at Abstract Machines.
+            </p>
           </div>
         </div>
         <div class="ben-grid" style="margin-top:36px;">
-          {benefits.map(({ ic: Ic, title, desc }) => (
-            <div class="card">
-              <div class="ben-icon"><Ic size={20} /></div>
-              <h3 class="h-3">{title}</h3>
-              <p style="margin-top:8px; font-size:14px; color:var(--ink-2); line-height:1.65;">{desc}</p>
-            </div>
-          ))}
+          {
+            benefits.map(({ ic: Ic, title, desc }) => (
+              <div class="card">
+                <div class="ben-icon">
+                  <Ic size={20} />
+                </div>
+                <h3 class="h-3">{title}</h3>
+                <p style="margin-top:8px; font-size:14px; color:var(--ink-2); line-height:1.65;">
+                  {desc}
+                </p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
 
     <!-- Hiring status callout -->
-    <section class="section-tight" style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+    <section
+      class="section-tight"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-narrow">
         <div class="hiring-callout">
           <div class="hiring-status">
@@ -121,10 +146,12 @@ const process = [
             <span class="hiring-label">Hiring status</span>
           </div>
           <h2 class="h-2" style="margin-top:14px;">No open roles right now</h2>
-          <p style="margin-top:12px; font-size:15px; color:var(--ink-2); line-height:1.65; max-width:520px;">
-            We don't have active listings, but we're always interested in hearing from
-            strong engineers, researchers, and solutions architects. Send us a note;
-            if there's a fit, we'll make room.
+          <p
+            style="margin-top:12px; font-size:15px; color:var(--ink-2); line-height:1.65; max-width:520px;"
+          >
+            We don't have active listings, but we're always interested in
+            hearing from strong engineers, researchers, and solutions
+            architects. Send us a note; if there's a fit, we'll make room.
           </p>
           <div class="btn-row" style="margin-top:24px;">
             <a href="/contact/" class="btn btn-primary">Send a note</a>
@@ -141,17 +168,25 @@ const process = [
           <div class="left">
             <span class="kicker">Process</span>
             <h2 class="h-2" style="margin-top:10px;">What to expect</h2>
-            <p class="lede" style="margin-top:10px;">A straightforward, respectful hiring process. No surprises.</p>
+            <p class="lede" style="margin-top:10px;">
+              A straightforward, respectful hiring process. No surprises.
+            </p>
           </div>
         </div>
         <div class="process-grid" style="margin-top:36px;">
-          {process.map((p) => (
-            <div class="card">
-              <span class="step-num">{p.step}</span>
-              <h3 class="h-3" style="margin-top:12px;">{p.title}</h3>
-              <p style="margin-top:8px; font-size:13px; color:var(--ink-2); line-height:1.65;">{p.desc}</p>
-            </div>
-          ))}
+          {
+            process.map((p) => (
+              <div class="card">
+                <span class="step-num">{p.step}</span>
+                <h3 class="h-3" style="margin-top:12px;">
+                  {p.title}
+                </h3>
+                <p style="margin-top:8px; font-size:13px; color:var(--ink-2); line-height:1.65;">
+                  {p.desc}
+                </p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
@@ -162,7 +197,6 @@ const process = [
       primary={{ label: "Get in touch", href: "/contact/" }}
       secondary={null}
     />
-
   </main>
   <Footer />
 </BaseLayout>
@@ -247,12 +281,22 @@ const process = [
 
   /* ── Responsive ─────────────────────────────────────────────── */
   @media (max-width: 980px) {
-    .ben-grid { grid-template-columns: repeat(2, 1fr); }
-    .process-grid { grid-template-columns: repeat(2, 1fr); }
-    .hiring-callout { padding: 28px 24px; }
+    .ben-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .process-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .hiring-callout {
+      padding: 28px 24px;
+    }
   }
   @media (max-width: 600px) {
-    .ben-grid { grid-template-columns: 1fr; }
-    .process-grid { grid-template-columns: 1fr; }
+    .ben-grid {
+      grid-template-columns: 1fr;
+    }
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

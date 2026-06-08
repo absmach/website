@@ -1,9 +1,41 @@
 ---
 const projects: [string, string, string, string, string, string, string][] = [
-  ["/img/logos/confidential6G.jpg", "CONFIDENTIAL6G", "Quantum-resistant security for 6G networks", "Completed", "EU Horizon Europe", "2023-2025", "/projects/confidential6g"],
-  ["/img/logos/elastic.png", "ELASTIC", "Next-gen network orchestration with WebAssembly", "Active", "EU Horizon Europe", "2024-2027", "/projects/elastic"],
-  ["/img/logos/lf.png", "EdgeX Foundry", "Linux Foundation's open-source edge platform", "Ongoing", "Linux Foundation", "2017-Present", "/projects"],
-  ["/img/logos/6g-ia-long.png", "6G-IA", "Shaping Europe's 6G vision and standards", "Member", "Industry Consortium", "2021-Present", "/projects"],
+  [
+    "/img/logos/confidential6G.jpg",
+    "CONFIDENTIAL6G",
+    "Quantum-resistant security for 6G networks",
+    "Completed",
+    "EU Horizon Europe",
+    "2023-2025",
+    "/projects/confidential6g",
+  ],
+  [
+    "/img/logos/elastic.png",
+    "ELASTIC",
+    "Next-gen network orchestration with WebAssembly",
+    "Active",
+    "EU Horizon Europe",
+    "2024-2027",
+    "/projects/elastic",
+  ],
+  [
+    "/img/logos/lf.png",
+    "EdgeX Foundry",
+    "Linux Foundation's open-source edge platform",
+    "Ongoing",
+    "Linux Foundation",
+    "2017-Present",
+    "/projects",
+  ],
+  [
+    "/img/logos/6g-ia-long.png",
+    "6G-IA",
+    "Shaping Europe's 6G vision and standards",
+    "Member",
+    "Industry Consortium",
+    "2021-Present",
+    "/projects",
+  ],
 ];
 ---
 
@@ -12,31 +44,40 @@ const projects: [string, string, string, string, string, string, string][] = [
     <div class="section-head">
       <div class="left">
         <span class="kicker">Research & projects</span>
-        <h2 class="h-1" style="margin-top:14px;">Advancing the edge, one programme at a time.</h2>
+        <h2 class="h-1" style="margin-top:14px;">
+          Advancing the edge, one programme at a time.
+        </h2>
       </div>
       <a href="/projects" class="btn-link">All projects →</a>
     </div>
     <div class="proj-grid">
-      {projects.map(([logo, name, tagline, status, fund, duration, href]) => (
-        <a class="proj-card" href={href}>
-          <div class="logo">
-            <img src={logo} alt={name} loading="lazy" />
-          </div>
-          <div>
-            <div class="row" style="gap:10px;">
-              <span class={`badge ${status === "Active" ? "active" : status === "Completed" ? "complete" : ""}`}>
-                <span class="dot"></span>{status}
-              </span>
+      {
+        projects.map(([logo, name, tagline, status, fund, duration, href]) => (
+          <a class="proj-card" href={href}>
+            <div class="logo">
+              <img src={logo} alt={name} loading="lazy" />
             </div>
-            <h3 class="name" style="margin-top:10px;">{name}</h3>
-            <p class="tagline">{tagline}</p>
-            <div class="meta">
-              <span>{fund}</span>
-              <span>{duration}</span>
+            <div>
+              <div class="row" style="gap:10px;">
+                <span
+                  class={`badge ${status === "Active" ? "active" : status === "Completed" ? "complete" : ""}`}
+                >
+                  <span class="dot" />
+                  {status}
+                </span>
+              </div>
+              <h3 class="name" style="margin-top:10px;">
+                {name}
+              </h3>
+              <p class="tagline">{tagline}</p>
+              <div class="meta">
+                <span>{fund}</span>
+                <span>{duration}</span>
+              </div>
             </div>
-          </div>
-        </a>
-      ))}
+          </a>
+        ))
+      }
     </div>
   </div>
 </section>

@@ -27,6 +27,8 @@ export async function GET(context: APIContext) {
           author: post.data.author?.name,
         };
       })
-      .sort((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0)),
+      .sort(
+        (a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0),
+      ),
   });
 }

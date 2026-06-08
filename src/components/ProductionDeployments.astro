@@ -6,28 +6,42 @@ import { deployments } from "../data/deployments";
   <div class="container-wide">
     <div class="section-head" style="color:inherit;">
       <div class="left">
-        <span class="kicker" style="color:rgba(246,244,238,0.5);">In production</span>
-        <h2 class="h-2" style="margin-top:14px; color:var(--paper);">Trusted by industry leaders.</h2>
+        <span class="kicker" style="color:rgba(246,244,238,0.5);"
+          >In production</span
+        >
+        <h2 class="h-2" style="margin-top:14px; color:var(--paper);">
+          Trusted by industry leaders.
+        </h2>
       </div>
       <p class="lede" style="color:rgba(246,244,238,0.65); max-width:36ch;">
-        Four flagship deployments, all built on the same open-source platform you can run yourself.
+        Four flagship deployments, all built on the same open-source platform
+        you can run yourself.
       </p>
     </div>
     <div class="pd-grid">
-      {deployments.map(({ logo, company, title, description, link, linkText }) => (
-        <div class="pd-card">
-          <div class="pd-logo-bar">
-            <img src={logo} alt={company} class="pd-logo" loading="lazy" />
-          </div>
-          <div class="pd-body">
-            <h3 class="pd-title">{title}</h3>
-            <p class="pd-desc">{description}</p>
-            <a href={link} class="pd-link" target="_blank" rel="noopener noreferrer">
-              {linkText} <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
-      ))}
+      {
+        deployments.map(
+          ({ logo, company, title, description, link, linkText }) => (
+            <div class="pd-card">
+              <div class="pd-logo-bar">
+                <img src={logo} alt={company} class="pd-logo" loading="lazy" />
+              </div>
+              <div class="pd-body">
+                <h3 class="pd-title">{title}</h3>
+                <p class="pd-desc">{description}</p>
+                <a
+                  href={link}
+                  class="pd-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {linkText} <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
+          ),
+        )
+      }
     </div>
   </div>
 </section>
@@ -53,7 +67,9 @@ import { deployments } from "../data/deployments";
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: background 0.2s ease, border-color 0.2s ease;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
   }
   .pd-card:hover {
     background: rgba(255, 255, 255, 0.07);

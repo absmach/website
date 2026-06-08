@@ -25,7 +25,7 @@ featured: false
 
 ## From Motivation to Architecture
 
-In the previous posts, we [introduced FluxMQ](https://www.absmach.eu/blog/fluxmq-announcement/) and explained the [motivation behind building a new message broker](https://www.absmach.eu/blog/fluxmq-motivation/). In this post, we shift focus from *why* to *how*.
+In the previous posts, we [introduced FluxMQ](https://www.absmach.eu/blog/fluxmq-announcement/) and explained the [motivation behind building a new message broker](https://www.absmach.eu/blog/fluxmq-motivation/). In this post, we shift focus from _why_ to _how_.
 This is not a deep dive into implementation details. Instead, the goal is to present the **high-level architecture**, the major building blocks, and the design principles that shape FluxMQ.
 Many of the decisions described here are the result of trade-offs. Some are still evolving. All of them are derived by operating real-world systems at scale.
 
@@ -55,11 +55,13 @@ These principles lead directly to the architecture described below.
 ---
 
 ## Evolution of the Architecture
+
 As we mentioned in earlier posts, we used AI tools for rapid prototyping. This allowed us to test major architectural decisions that would otherwise take weeks. We started somewhat naively — deliberately. In this chapter, we describe how we iteratively arrived at the current FluxMQ architecture. This is unlikely to be the final architecture. However, since the major features are already implemented, we do not expect significant changes unless load testing reveals problems.
 
 ### Iteration 1
 
 The initial architecture we envisioned included a few layers:
+
 - transport layer with TLS termination
 - protocol parsing and transformation servers
 - broker - messaging engine
@@ -74,15 +76,14 @@ There are a few problems with this approach:
 1. Protocols handle messages in a very different ways, and mapping them to a single internal broker/messaging engine is difficult and impractical. Each protocol has its own semantics and delivery state machine, and unifying them would mean either giving up some protocol features or bending of the messaging rules for the respective protocols. For example, acknowledgment for AMQP and for MQTT mean different things:
    - MQTT confirms the broker received or forwarded the packet.
    - AMQP confirms the consumer finished handling the message.
-Merging them under single _ack_ would mix *message-received* and *message processing is finished* (either on the producer or the consumer).
+     Merging them under single _ack_ would mix _message-received_ and _message processing is finished_ (either on the producer or the consumer).
 
 1. Implementation complexity. Since the service layer only translates protocols into the broker, this approach results in a single polyglot messaging engine. That engine must handle many protocol-specific behaviors, making it huge, complex, and difficult to debug and maintain.
 
-2. Transport-level concepts, such as connection handling and keep-alive/health checks, are often _part of the protocol_ and, more importantly, _part of the delivery model and client session management_. The separation is  logically clean, but the implementation inevitably mixes them.
-   
-3. Clustering. We are trying to build a broker that scales, where and how do we handle cluster-level operations that affect all parts of the system?
+1. Transport-level concepts, such as connection handling and keep-alive/health checks, are often _part of the protocol_ and, more importantly, _part of the delivery model and client session management_. The separation is logically clean, but the implementation inevitably mixes them.
+1. Clustering. We are trying to build a broker that scales, where and how do we handle cluster-level operations that affect all parts of the system?
 
-4. Storage implementation can differ internally, but if they are fundamentally different, we inevitably *leak the abstraction*. Consider key-value vs log store:
+1. Storage implementation can differ internally, but if they are fundamentally different, we inevitably _leak the abstraction_. Consider key-value vs log store:
 
 | Feature             | Key-Value Store | Log Store            |
 | ------------------- | --------------- | -------------------- |
@@ -107,15 +108,15 @@ This is not a different approach, but an iteration on top of the previous one - 
 In this iteration, we addressed a few of the previous comments:
 
 1. Protocol handling is addressed by server & brokers. Instead of tiny layer that is transforming messages into the internal representation and hands them to the messaging engine (marked in diagram as _Server_), we introduce another layer for **handling the protocol semantics** called _Broker_.
-Essentially, this makes FluxMQ closer to the collection of brokers than to a broker with protocol facades on top of it. Brokers handle messages lifecycle, client sessions, and message delivery **in a protocol-native way**. We avoid shared messaging logic, and keep each protocol close to its original design.
+   Essentially, this makes FluxMQ closer to the collection of brokers than to a broker with protocol facades on top of it. Brokers handle messages lifecycle, client sessions, and message delivery **in a protocol-native way**. We avoid shared messaging logic, and keep each protocol close to its original design.
 
 1. Overall complexity is not reduced, since each broker needs to be implemented just like in the previous approach, but it is _localized_ and _isolated_, which improves maintainability and testability significantly.
 
-2. Improvement, but brokers still do handle some of the transport (Server) layer because - message deliver requires connection.
+1. Improvement, but brokers still do handle some of the transport (Server) layer because - message deliver requires connection.
 
-3. Cluster is added to the shared messaging core.
+1. Cluster is added to the shared messaging core.
 
-4. Storage implementation is going to be similar to Kafka commit-logs. This fits our use-case of Event-driven architecture the best.
+1. Storage implementation is going to be similar to Kafka commit-logs. This fits our use-case of Event-driven architecture the best.
 
 ### Iteration 3
 
@@ -128,6 +129,7 @@ Routing and delivery crosses previously set layer boundaries - it is the require
 Think of this less as a layered architecture, but as a **message flow control system**, that often includes loops.
 
 > Implementation note: message brokers violate many typical service design principles. Some of them include:
+>
 > - Observability lacks natural boundaries. In the usual request-response communication, boundaries are request-scoped. A single "message" flows through accept → parse → auth → route → enqueue → persist → replicate → deliver → ack → redeliver… and those steps can be async, retried, reordered, or split across goroutines/nodes. You can't log on boundaries because boundaries are very vague.
 > - Backpressure and flow control. Slow consumers are suffocating the deployment. There is no such thing in request-response microservices.
 > - Delivery semantics become core design concern. Problem: Users ask for "exactly once", but networks and crashes exist. There is no such thing as 100%.
@@ -143,7 +145,9 @@ The queue links storage and brokers. It connects different brokers, enables prot
 Clustering is now present inside each broker for routing and client sharing. Extensions are also supported.
 
 ### Trade-offs
+
 In this architecture iteration, we need to make peace with a few trade-offs:
+
 - Abstraction leakage
   - Connections and/or sessions need to be propagated from transport layer to broker because we need to deliver messages to consumers eventually.
   - Broker needs to be aware of clustering. This is how routing, session takeover, work stealing, shared subscriptions (consumer groups)... work across the cluster.
@@ -234,7 +238,7 @@ Routing is intentionally **broker-centric**. Clients — especially constrained 
 
 The broker owns this complexity so clients can remain simple.
 
-However, some of the routing decisions had to be made that would result in  protocol-related compromises. We will talk about them in the next blogpost.
+However, some of the routing decisions had to be made that would result in protocol-related compromises. We will talk about them in the next blogpost.
 
 ---
 
@@ -311,6 +315,7 @@ In the next post, we’ll zoom in further and explore one of the core building b
 After that, we will discuss **queues and message flow**, and how FluxMQ reconciles messaging and event logs without collapsing them into the same abstraction.
 
 If you want to follow along or help shape the design:
+
 - 🌐 **Website:** https://www.absmach.eu/products/fluxmq
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
 - 📘 **Documentation:** https://www.absmach.eu/docs/fluxmq
