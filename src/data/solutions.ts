@@ -1,7 +1,7 @@
 import {
   Activity,
-  AlertTriangle,
-  BarChart,
+  ChartBar,
+  TriangleAlert,
   Building2,
   Car,
   Clock,
@@ -16,7 +16,7 @@ import {
   FlaskConical,
   Gauge,
   Heart,
-  Home,
+  House,
   Layers,
   Leaf,
   MapPin,
@@ -32,7 +32,7 @@ import {
   TrendingDown,
   TrendingUp,
   Users,
-  Waves,
+  WavesHorizontal,
   Wheat,
   Wind,
   Wrench,
@@ -105,7 +105,7 @@ export const solutions: Solution[] = [
         "The operational and financial costs of reactive water management are well documented.",
       items: [
         {
-          ic: Waves,
+          ic: WavesHorizontal,
           title: "Finding out about bursts from tenants, not telemetry",
           desc: "Most utilities hear about burst pipes from a complaint call. By then, the damage is done. The alarm should fire first.",
         },
@@ -430,12 +430,12 @@ export const solutions: Solution[] = [
           desc: "Real-time solar and wind generation tracking with curtailment alerts, yield forecasting, and performance benchmarking.",
         },
         {
-          ic: AlertTriangle,
+          ic: TriangleAlert,
           title: "Grid Fault Detection",
           desc: "Voltage sag, swell, and harmonic distortion detection across distribution feeders, enabling rapid fault isolation before customer impact.",
         },
         {
-          ic: BarChart,
+          ic: ChartBar,
           title: "Energy Audit & Reporting",
           desc: "Automated daily and monthly energy balance reports for utility billing reconciliation, regulatory submission, and carbon accounting.",
         },
@@ -708,7 +708,7 @@ export const solutions: Solution[] = [
           desc: "Microclimate frost risk alerts give operators a 2–4 hour warning window to activate frost protection measures for vulnerable crops.",
         },
         {
-          ic: BarChart,
+          ic: ChartBar,
           title: "Seasonal Yield Analysis",
           desc: "Historical sensor data and yield correlations improve season-on-season decision quality for irrigation, nutrition, and harvest timing.",
         },
@@ -924,7 +924,7 @@ export const solutions: Solution[] = [
         "The agronomic and financial costs of reactive irrigation management add up.",
       items: [
         {
-          ic: Waves,
+          ic: WavesHorizontal,
           title: "Finding out about burst pipes from wet ground, not telemetry",
           desc: "A burst irrigation pipe in the early hours drains the tank, wastes water, and can leave an entire zone unirrigated. The alarm should fire before the water is gone.",
         },
@@ -1110,7 +1110,7 @@ export const solutions: Solution[] = [
           desc: "Dense sensor networks across city districts provide neighbourhood-level air quality data for public information systems and pollution mapping.",
         },
         {
-          ic: Home,
+          ic: House,
           title: "Indoor Air Quality Management",
           desc: "CO₂ and VOC monitoring in offices, schools, and public buildings drives HVAC automation and ventilation alerts to maintain healthy indoor environments.",
         },

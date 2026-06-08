@@ -27,7 +27,7 @@ const publishedAt =
   post.data.date instanceof Date ? post.data.date : new Date(post.data.date);
 const coverImage = post.data.coverImage ?? post.data.heroImage ?? null;
 const coverVideo = post.data.coverVideo ?? null;
-const getYouTubeEmbedSrc = (rawUrl) => {
+const getYouTubeEmbedSrc = (rawUrl: string) => {
   try {
     const url = new URL(rawUrl);
     const hostname = url.hostname.replace(/^www\./, "");

@@ -1,7 +1,14 @@
 ---
-const { title = "Project Information", items = [], links = [] } = Astro.props;
+type InfoItem = { label: string; value: string; pill?: boolean };
+type InfoLink = { href: string; label: string; external?: boolean };
+interface Props {
+  title?: string;
+  items?: InfoItem[];
+  links?: InfoLink[];
+}
+const { title = "Project Information", items = [], links = [] }: Props = Astro.props;
 
-const isExternal = (href, explicit) => {
+const isExternal = (href: string, explicit?: boolean): boolean => {
   if (typeof explicit === "boolean") return explicit;
   return typeof href === "string" && /^https?:\/\//.test(href);
 };

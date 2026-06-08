@@ -1,11 +1,18 @@
 ---
 import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
+type Partner = { alt: string; src: ImageMetadata; logoClass?: string };
+interface Props {
+  title?: string;
+  partners?: Partner[];
+  logoClass?: string;
+}
 const {
   title = "Project Partners",
   partners = [],
   logoClass = "",
-} = Astro.props;
+}: Props = Astro.props;
 ---
 
 <div class="card-base project-partners">
