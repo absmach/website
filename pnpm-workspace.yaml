@@ -1,4 +1,5 @@
 allowBuilds:
   esbuild: true
+  node: true
   sharp: true
   workerd: true
