@@ -18,7 +18,7 @@ export default defineConfig({
   integrations: [
     tailwind(),
     sitemap({
-      filenameBase: "sitemap",
+      filenameBase: "sitemap-pages",
       serialize(item) {
         const path = new URL(item.url).pathname;
 
