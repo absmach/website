@@ -6,7 +6,11 @@ interface Props {
   items?: InfoItem[];
   links?: InfoLink[];
 }
-const { title = "Project Information", items = [], links = [] }: Props = Astro.props;
+const {
+  title = "Project Information",
+  items = [],
+  links = [],
+}: Props = Astro.props;
 
 const isExternal = (href: string, explicit?: boolean): boolean => {
   if (typeof explicit === "boolean") return explicit;
