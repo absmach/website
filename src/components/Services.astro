@@ -7,28 +7,34 @@ import { solutions } from "../data/solutions";
     <div class="section-head">
       <div class="left">
         <span class="kicker">Solutions · Production deployments</span>
-        <h2 class="h-1" style="margin-top:14px;">Infrastructure for demanding environments.</h2>
+        <h2 class="h-1" style="margin-top:14px;">
+          Infrastructure for demanding environments.
+        </h2>
       </div>
       <a href="/solutions" class="btn-link">All solutions →</a>
     </div>
     <div class="home-sol-grid">
-      {solutions.slice(0, 6).map((sol) => (
-        <a href={`/solutions/${sol.slug}/`} class="sol-img-card">
-          <div class="sol-img-wrap">
-            <img
-              src={sol.image}
-              alt={`${sol.title} solution`}
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <div class="sol-img-body">
-            <h3 class="sol-img-title">{sol.title}</h3>
-            <p class="sol-img-desc">{sol.summary}</p>
-            <span class="btn-link" style="font-size:13px; margin-top:auto;">Explore solution →</span>
-          </div>
-        </a>
-      ))}
+      {
+        solutions.slice(0, 6).map((sol) => (
+          <a href={`/solutions/${sol.slug}/`} class="sol-img-card">
+            <div class="sol-img-wrap">
+              <img
+                src={sol.image}
+                alt={`${sol.title} solution`}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="sol-img-body">
+              <h3 class="sol-img-title">{sol.title}</h3>
+              <p class="sol-img-desc">{sol.summary}</p>
+              <span class="btn-link" style="font-size:13px; margin-top:auto;">
+                Explore solution →
+              </span>
+            </div>
+          </a>
+        ))
+      }
     </div>
   </div>
 </section>
@@ -40,9 +46,13 @@ import { solutions } from "../data/solutions";
     gap: 16px;
   }
   @media (max-width: 980px) {
-    .home-sol-grid { grid-template-columns: repeat(2, 1fr); }
+    .home-sol-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
   @media (max-width: 640px) {
-    .home-sol-grid { grid-template-columns: 1fr; }
+    .home-sol-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

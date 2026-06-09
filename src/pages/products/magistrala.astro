@@ -5,10 +5,7 @@ import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
 import { deployments } from "../../data/deployments";
 import { solutions } from "../../data/solutions";
-import Network from "lucide-astro/Network";
-import ShieldCheck from "lucide-astro/ShieldCheck";
-import BarChart from "lucide-astro/BarChart";
-import KeyRound from "lucide-astro/KeyRound";
+import { Network, ShieldCheck, ChartBar, KeyRound } from "@lucide/astro";
 
 let githubStars = "2.6k";
 try {
@@ -16,9 +13,12 @@ try {
   if (res.ok) {
     const data = await res.json();
     const count: number = data.stargazers_count;
-    githubStars = count >= 1000 ? `${(count / 1000).toFixed(1)}k` : String(count);
+    githubStars =
+      count >= 1000 ? `${(count / 1000).toFixed(1)}k` : String(count);
   }
-} catch (_) {}
+} catch {
+  /* empty */
+}
 
 const showcaseFeatures = [
   {
@@ -27,7 +27,8 @@ const showcaseFeatures = [
     desc: "Build live and historical dashboards with drag-and-drop widgets. Monitor alarms, track device state, and visualise sensor data without writing a line of code.",
     img: "/img/magistrala/dashboard-2.png",
     alt: "Magistrala dashboard overview",
-    width: 1903, height: 927,
+    width: 1903,
+    height: 927,
     flipped: false,
   },
   {
@@ -36,7 +37,8 @@ const showcaseFeatures = [
     desc: "Define rules that transform messages, generate alarms, send notifications, and route data to external storage. Visual editor or API, your choice.",
     img: "/img/magistrala/rules-engine-1.png",
     alt: "Magistrala rules engine configuration",
-    width: 1644, height: 878,
+    width: 1644,
+    height: 878,
     flipped: true,
   },
   {
@@ -45,7 +47,8 @@ const showcaseFeatures = [
     desc: "Rules fire alarms. Alarms have severity levels, assignees, and resolution workflows. Track everything from a single view across your entire fleet.",
     img: "/img/magistrala/alarms-2.png",
     alt: "Magistrala alarm management",
-    width: 1642, height: 870,
+    width: 1642,
+    height: 870,
     flipped: false,
   },
   {
@@ -54,7 +57,8 @@ const showcaseFeatures = [
     desc: "Each domain has its own users, devices, channels, and policies, completely isolated from every other domain. Manage them all from a unified control plane.",
     img: "/img/magistrala/domains-1.png",
     alt: "Magistrala domain management",
-    width: 1704, height: 884,
+    width: 1704,
+    height: 884,
     flipped: true,
   },
 ];
@@ -71,7 +75,7 @@ const gridFeatures = [
     "Fine-grained permissions at user, group, domain, client, and channel level, backed by a distributed SpiceDB authorization engine.",
   ],
   [
-    BarChart,
+    ChartBar,
     "Reports & Analytics",
     "Scheduled or on-demand reports from device telemetry. Export to CSV, JSON, or pipe into your BI tools.",
   ],
@@ -128,7 +132,6 @@ const integrations = [
   { name: "JWT" },
 ];
 
-
 const faqs = [
   {
     q: "Can I self-host Magistrala?",
@@ -167,10 +170,10 @@ const faqs = [
 const faqSchema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": faqs.map(({ q, a }) => ({
+  mainEntity: faqs.map(({ q, a }) => ({
     "@type": "Question",
-    "name": q,
-    "acceptedAnswer": { "@type": "Answer", "text": a },
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
   })),
 });
 ---
@@ -209,9 +212,9 @@ const faqSchema = JSON.stringify({
             />
             <h1 class="tagline">IoT solutions without complexity.</h1>
             <p class="lede" style="margin-top:16px; max-width:44ch;">
-              Connect devices, build dashboards, define rules, and manage access,
-              all from a single open-source platform. Deploy in minutes, customise
-              every layer.
+              Connect devices, build dashboards, define rules, and manage
+              access, all from a single open-source platform. Deploy in minutes,
+              customise every layer.
             </p>
             <div class="btn-row" style="margin-top:32px;">
               <a
@@ -222,7 +225,6 @@ const faqSchema = JSON.stringify({
               >
               <a href="/contact" class="btn">Contact Us →</a>
             </div>
-          
           </div>
           <div class="mg-diag-wrap">
             <div class="mg-diag">
@@ -236,18 +238,21 @@ const faqSchema = JSON.stringify({
               >
                 <defs>
                   <linearGradient id="mgCurveFade" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#073763" stop-opacity="0"/>
-                    <stop offset="15%" stop-color="#073763" stop-opacity="0.18"/>
-                    <stop offset="85%" stop-color="#073763" stop-opacity="0.18"/>
-                    <stop offset="100%" stop-color="#073763" stop-opacity="0"/>
+                    <stop offset="0%" stop-color="#073763" stop-opacity="0"
+                    ></stop>
+                    <stop offset="15%" stop-color="#073763" stop-opacity="0.18"
+                    ></stop>
+                    <stop offset="85%" stop-color="#073763" stop-opacity="0.18"
+                    ></stop>
+                    <stop offset="100%" stop-color="#073763" stop-opacity="0"
+                    ></stop>
                   </linearGradient>
                 </defs>
                 <path
                   d="M -250 100 Q 200 -150 550 450"
                   stroke="url(#mgCurveFade)"
                   stroke-width="2"
-                  vector-effect="non-scaling-stroke"
-                />
+                  vector-effect="non-scaling-stroke"></path>
               </svg>
 
               <!-- Node 1 -->
@@ -258,11 +263,24 @@ const faqSchema = JSON.stringify({
                 </div>
                 <div class="mg-card">
                   <div class="mg-card-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+                      ></polygon>
                     </svg>
                   </div>
-                  <p class="mg-card-desc">Deploy a complete solution with devices, data, dashboards, and alerts already configured.</p>
+                  <p class="mg-card-desc">
+                    Deploy a complete solution with devices, data, dashboards,
+                    and alerts already configured.
+                  </p>
                 </div>
               </div>
 
@@ -274,16 +292,45 @@ const faqSchema = JSON.stringify({
                 </div>
                 <div class="mg-card">
                   <div class="mg-card-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
-                      <rect x="9" y="9" width="6" height="6"/>
-                      <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
-                      <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
-                      <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/>
-                      <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="4" y="4" width="16" height="16" rx="2" ry="2"
+                      ></rect>
+                      <rect x="9" y="9" width="6" height="6"></rect>
+                      <line x1="9" y1="1" x2="9" y2="4"></line><line
+                        x1="15"
+                        y1="1"
+                        x2="15"
+                        y2="4"></line>
+                      <line x1="9" y1="20" x2="9" y2="23"></line><line
+                        x1="15"
+                        y1="20"
+                        x2="15"
+                        y2="23"></line>
+                      <line x1="20" y1="9" x2="23" y2="9"></line><line
+                        x1="20"
+                        y1="15"
+                        x2="23"
+                        y2="15"></line>
+                      <line x1="1" y1="9" x2="4" y2="9"></line><line
+                        x1="1"
+                        y1="15"
+                        x2="4"
+                        y2="15"></line>
                     </svg>
                   </div>
-                  <p class="mg-card-desc">Extend with rules, integrations, and workflows tailored to your exact use case.</p>
+                  <p class="mg-card-desc">
+                    Extend with rules, integrations, and workflows tailored to
+                    your exact use case.
+                  </p>
                 </div>
               </div>
 
@@ -295,12 +342,25 @@ const faqSchema = JSON.stringify({
                 </div>
                 <div class="mg-card">
                   <div class="mg-card-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-                      <polyline points="17 6 23 6 23 12"/>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"
+                      ></polyline>
+                      <polyline points="17 6 23 6 23 12"></polyline>
                     </svg>
                   </div>
-                  <p class="mg-card-desc">A composable architecture that grows with your system, without feature overload.</p>
+                  <p class="mg-card-desc">
+                    A composable architecture that grows with your system,
+                    without feature overload.
+                  </p>
                 </div>
               </div>
             </div>
@@ -312,10 +372,7 @@ const faqSchema = JSON.stringify({
     <!-- Stats bar -->
     <div style="border-bottom:1px solid var(--line-3);">
       <div class="container-wide">
-        <div
-          class="metrics mg-metrics"
-          style="border:none; border-radius:0; "
-        >
+        <div class="metrics mg-metrics" style="border:none; border-radius:0; ">
           <div class="metric featured">
             <div class="v">
               <a
@@ -361,35 +418,38 @@ const faqSchema = JSON.stringify({
             </h2>
           </div>
           <p class="lede">
-           A complete, enterprise-grade IoT core. Open source and fully under your control.
+            A complete, enterprise-grade IoT core. Open source and fully under
+            your control.
           </p>
         </div>
 
         <!-- Showcase rows -->
         <div class="feat-showcase" style="margin-bottom:16px;">
           {
-            showcaseFeatures.map(({ tag, title, desc, img, alt, width, height, flipped }) => (
-              <div
-                class={`feat-row${flipped ? " feat-flipped" : ""}`}
-                style="min-height:300px;"
-              >
-                <div class="feat-info">
-                  <span class="feat-tag">{tag}</span>
-                  <h3>{title}</h3>
-                  <p>{desc}</p>
+            showcaseFeatures.map(
+              ({ tag, title, desc, img, alt, width, height, flipped }) => (
+                <div
+                  class={`feat-row${flipped ? " feat-flipped" : ""}`}
+                  style="min-height:300px;"
+                >
+                  <div class="feat-info">
+                    <span class="feat-tag">{tag}</span>
+                    <h3>{title}</h3>
+                    <p>{desc}</p>
+                  </div>
+                  <div class="feat-visual" style="align-items:flex-start;">
+                    <img
+                      src={img}
+                      alt={alt}
+                      width={width}
+                      height={height}
+                      loading="lazy"
+                      style="width:100%; height:auto; object-fit:cover; object-position:top left;"
+                    />
+                  </div>
                 </div>
-                <div class="feat-visual" style="align-items:flex-start;">
-                  <img
-                    src={img}
-                    alt={alt}
-                    width={width}
-                    height={height}
-                    loading="lazy"
-                    style="width:100%; height:auto; object-fit:cover; object-position:top left;"
-                  />
-                </div>
-              </div>
-            ))
+              ),
+            )
           }
         </div>
 
@@ -401,11 +461,18 @@ const faqSchema = JSON.stringify({
           {
             gridFeatures.map(([Icon, name, desc]) => (
               <div class="feature" style="padding:36px;">
-                <div class="ic" style="width:40px; height:40px; margin-bottom:18px;">
+                <div
+                  class="ic"
+                  style="width:40px; height:40px; margin-bottom:18px;"
+                >
                   <Icon size={20} />
                 </div>
-                <div class="name" style="font-size:18px; margin-bottom:10px;">{name}</div>
-                <p class="desc" style="font-size:15px; line-height:1.65;">{desc}</p>
+                <div class="name" style="font-size:18px; margin-bottom:10px;">
+                  {name}
+                </div>
+                <p class="desc" style="font-size:15px; line-height:1.65;">
+                  {desc}
+                </p>
               </div>
             ))
           }
@@ -448,7 +515,10 @@ const faqSchema = JSON.stringify({
                 <div class="sol-img-body">
                   <h3 class="sol-img-title">{sol.title}</h3>
                   <p class="sol-img-desc">{sol.summary}</p>
-                  <span class="btn-link" style="font-size:13px; margin-top:auto;">
+                  <span
+                    class="btn-link"
+                    style="font-size:13px; margin-top:auto;"
+                  >
                     Explore solution →
                   </span>
                 </div>
@@ -511,16 +581,26 @@ const faqSchema = JSON.stringify({
     <!-- Edge Agent section -->
     <section class="section">
       <div class="container-wide">
-        <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
-          <span class="kicker" style="display:block; margin-bottom:14px;">Edge Deployment</span>
-          <h2 class="h-2">Magistrala runs where your devices are.</h2>
-          <p
-            style="color:var(--ink-2); margin-top:20px; line-height:1.65;"
+        <div
+          style="display:flex; flex-direction:column; align-items:center; text-align:center;"
+        >
+          <span class="kicker" style="display:block; margin-bottom:14px;"
+            >Edge Deployment</span
           >
+          <h2 class="h-2">Magistrala runs where your devices are.</h2>
+          <p style="color:var(--ink-2); margin-top:20px; line-height:1.65;">
             The Magistrala Agent runs directly on edge devices and acts as a
-            bridge to the cloud platform over MQTT. Deploy on any Linux
-            gateway (including <a href="/products/a0" style="color:inherit; text-decoration:underline;">A0</a> and <a href="/products/a1" style="color:inherit; text-decoration:underline;">A1</a>) and manage it remotely.
-            Pair with <a href="/products/propeller" style="color:inherit; text-decoration:underline;">Propeller</a> to push WebAssembly workloads to the edge without reflashing firmware.
+            bridge to the cloud platform over MQTT. Deploy on any Linux gateway
+            (including <a
+              href="/products/a0"
+              style="color:inherit; text-decoration:underline;">A0</a
+            > and <a
+              href="/products/a1"
+              style="color:inherit; text-decoration:underline;">A1</a
+            >) and manage it remotely. Pair with <a
+              href="/products/propeller"
+              style="color:inherit; text-decoration:underline;">Propeller</a
+            > to push WebAssembly workloads to the edge without reflashing firmware.
           </p>
           <ul
             style="list-style:none; padding:0; margin:24px 0 0; display:flex; flex-direction:column; gap:10px; font-size:14px; color:var(--ink-2); text-align:left;"
@@ -576,7 +656,9 @@ const faqSchema = JSON.stringify({
     </section>
 
     <!-- Production Deployments -->
-    <section style="background:var(--surface-accent); color:var(--on-accent); padding:96px 0;">
+    <section
+      style="background:var(--surface-accent); color:var(--on-accent); padding:96px 0;"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
@@ -592,18 +674,11 @@ const faqSchema = JSON.stringify({
             platform you can run yourself.
           </p>
         </div>
-        <div
-          class="mg-depl-grid"
-        >
+        <div class="mg-depl-grid">
           {
             deployments.map((d) => (
-              <div
-                style="border:1px solid rgba(255,255,255,0.1); border-radius:var(--radius-lg); background:rgba(255,255,255,0.04); overflow:hidden; display:flex; flex-direction:column;"
-              >
-                <!-- logo bar -->
-                <div
-                  style="padding:24px 32px; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:center;"
-                >
+              <div style="border:1px solid rgba(255,255,255,0.1); border-radius:var(--radius-lg); background:rgba(255,255,255,0.04); overflow:hidden; display:flex; flex-direction:column;">
+                <div style="padding:24px 32px; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:center;">
                   <img
                     src={d.logo}
                     alt={d.company}
@@ -611,18 +686,11 @@ const faqSchema = JSON.stringify({
                     style="height:50px; width:auto; object-fit:contain; filter:brightness(0) invert(1); opacity:0.85;"
                   />
                 </div>
-                <!-- body -->
-                <div
-                  style="padding:32px; display:flex; flex-direction:column; gap:16px; flex:1;"
-                >
-                  <h3
-                    style="font-size:20px; font-weight:600; color:var(--on-accent); margin:0;"
-                  >
+                <div style="padding:32px; display:flex; flex-direction:column; gap:16px; flex:1;">
+                  <h3 style="font-size:20px; font-weight:600; color:var(--on-accent); margin:0;">
                     {d.title}
                   </h3>
-                  <p
-                    style="font-size:15px; line-height:1.65; color:var(--on-accent-dim); margin:0;"
-                  >
+                  <p style="font-size:15px; line-height:1.65; color:var(--on-accent-dim); margin:0;">
                     {d.description}
                   </p>
                   <a
@@ -654,22 +722,23 @@ const faqSchema = JSON.stringify({
             mission-critical IoT infrastructure.
           </p>
         </div>
-        <div style="border:1px solid var(--line-3); border-radius:var(--radius-lg); overflow:hidden;">
+        <div
+          style="border:1px solid var(--line-3); border-radius:var(--radius-lg); overflow:hidden;"
+        >
           <iframe
             src="https://deployments.absmach.eu?filter=hidden&sidebar=hidden"
             title="Magistrala Global Deployments"
             style="width:100%; height:600px; border:0; display:block;"
             loading="lazy"
-            allow="geolocation"
-          ></iframe>
+            allow="geolocation"></iframe>
         </div>
         <div style="display:flex; justify-content:center; margin-top:28px;">
           <a
             href="https://deployments.absmach.eu"
             class="btn btn-primary"
             target="_blank"
-            rel="noopener"
-          >View Full Deployments Dashboard ↗</a>
+            rel="noopener">View Full Deployments Dashboard ↗</a
+          >
         </div>
       </div>
     </section>
@@ -689,9 +758,7 @@ const faqSchema = JSON.stringify({
             tier and enterprise options.
           </p>
         </div>
-        <div
-          class="mg-pricing-grid"
-        >
+        <div class="mg-pricing-grid">
           <div
             class="cta-card"
             style="padding:40px; gap:20px; display:flex; flex-direction:column;"
@@ -811,26 +878,26 @@ const faqSchema = JSON.stringify({
   </main>
   <Footer />
   <script type="application/ld+json" is:inline>
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Magistrala",
-    "description": "Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. SDKs for Go, TypeScript, Python, and Rust.",
-    "applicationCategory": "IoT",
-    "operatingSystem": "Linux",
-    "url": "https://www.absmach.eu/products/magistrala",
-    "license": "https://www.apache.org/licenses/LICENSE-2.0",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD",
-      "description": "Free community tier with 10,000 messages/month. Enterprise pricing available."
-    },
-    "author": {
-      "@type": "Organization",
-      "name": "Abstract Machines"
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Magistrala",
+      "description": "Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. SDKs for Go, TypeScript, Python, and Rust.",
+      "applicationCategory": "IoT",
+      "operatingSystem": "Linux",
+      "url": "https://www.absmach.eu/products/magistrala",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free community tier with 10,000 messages/month. Enterprise pricing available."
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Abstract Machines"
+      }
     }
-  }
   </script>
   <script is:inline type="application/ld+json" set:html={faqSchema} />
   <script type="application/ld+json" is:inline>
@@ -868,13 +935,19 @@ const faqSchema = JSON.stringify({
     gap: 16px;
   }
   @media (max-width: 1100px) {
-    .mg-sol-grid { grid-template-columns: repeat(3, 1fr); }
+    .mg-sol-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
   @media (max-width: 760px) {
-    .mg-sol-grid { grid-template-columns: repeat(2, 1fr); }
+    .mg-sol-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
   @media (max-width: 500px) {
-    .mg-sol-grid { grid-template-columns: 1fr; }
+    .mg-sol-grid {
+      grid-template-columns: 1fr;
+    }
   }
   .mg-feat-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -984,7 +1057,9 @@ const faqSchema = JSON.stringify({
     font-size: 13px;
     font-weight: 500;
     color: var(--ink-3);
-    transition: border-color 0.2s, color 0.2s;
+    transition:
+      border-color 0.2s,
+      color 0.2s;
   }
   .mg-node:hover .mg-label {
     border-color: var(--ink-2);
@@ -1006,7 +1081,9 @@ const faqSchema = JSON.stringify({
     opacity: 0;
     pointer-events: none;
     transform: translateX(6px);
-    transition: opacity 0.15s ease, transform 0.15s ease;
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
     z-index: 30;
   }
   .mg-node:hover .mg-card {

@@ -83,7 +83,7 @@ The cloud model is built on elasticity, abstraction, and global accessibility, a
 
 ### 2. Edge Computing
 
-[Edge computing](https://aws.amazon.com/what-is/edge-computing/) moves computation closer to where data is generated — near machines, sensors, users, or industrial systems. Instead of transmitting raw data to centralized infrastructure, edge systems process and decide locally. This is described in foundational work such as Shi et al., *Edge Computing: Vision and Challenges* ([IEEE Internet of Things Journal, 2016](https://ieeexplore.ieee.org/document/7488250)).
+[Edge computing](https://aws.amazon.com/what-is/edge-computing/) moves computation closer to where data is generated — near machines, sensors, users, or industrial systems. Instead of transmitting raw data to centralized infrastructure, edge systems process and decide locally. This is described in foundational work such as Shi et al., _Edge Computing: Vision and Challenges_ ([IEEE Internet of Things Journal, 2016](https://ieeexplore.ieee.org/document/7488250)).
 
 Edge computing enables:
 

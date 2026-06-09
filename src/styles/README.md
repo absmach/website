@@ -31,7 +31,8 @@ That single change updates every color, shadow, and glass overlay across the ent
 
 ## Available themes
 
-### Blueprint *(default)*
+### Blueprint _(default)_
+
 Clean white background, deep navy ink, electric blue accent.
 Enterprise tech feel — confident and professional.
 
@@ -41,6 +42,7 @@ Enterprise tech feel — confident and professional.
 ```
 
 ### Parchment
+
 Warm cream background, near-black ink, same blue and orange accents.
 Editorial and refined — closer to Stripe Docs or the Linear blog.
 
@@ -50,6 +52,7 @@ Editorial and refined — closer to Stripe Docs or the Linear blog.
 ```
 
 ### Ember
+
 Warm ivory background, dark warm-brown ink, terracotta + teal accents.
 Inviting and artisan — Substack / Bear / craft editorial energy.
 
@@ -59,6 +62,7 @@ Inviting and artisan — Substack / Bear / craft editorial energy.
 ```
 
 ### Aurora
+
 Soft lavender-white background, deep indigo ink, vivid purple + orange.
 Colorful and modern — Linear / Vercel / Raycast gradient energy.
 
@@ -67,7 +71,8 @@ Colorful and modern — Linear / Vercel / Raycast gradient energy.
 --paper-2: #f2efff     --ink-2: #3730a3   --accent-2: #f97316
 ```
 
-### Midnight *(dark)*
+### Midnight _(dark)_
+
 Deep navy background, cool blue-white text, sky-blue accent.
 Developer-first premium dark — GitHub / Vercel dark / Raycast.
 
@@ -93,13 +98,13 @@ Each theme file declares `--font-sans` and `--font-mono`. To switch fonts:
 
 Suggested pairings per theme:
 
-| Theme     | Sans-serif          | Monospace         |
-|-----------|---------------------|-------------------|
-| Blueprint | Montserrat          | JetBrains Mono    |
-| Parchment | Plus Jakarta Sans   | JetBrains Mono    |
-| Ember     | Plus Jakarta Sans   | JetBrains Mono    |
-| Aurora    | Inter               | JetBrains Mono    |
-| Midnight  | Inter               | JetBrains Mono    |
+| Theme     | Sans-serif        | Monospace      |
+| --------- | ----------------- | -------------- |
+| Blueprint | Montserrat        | JetBrains Mono |
+| Parchment | Plus Jakarta Sans | JetBrains Mono |
+| Ember     | Plus Jakarta Sans | JetBrains Mono |
+| Aurora    | Inter             | JetBrains Mono |
+| Midnight  | Inter             | JetBrains Mono |
 
 ---
 
@@ -108,84 +113,94 @@ Suggested pairings per theme:
 Every theme file defines the same set of CSS custom properties. `global.css` consumes them exclusively — no hard-coded colours exist in the stylesheet.
 
 ### Surfaces
-| Variable | Purpose |
-|----------|---------|
-| `--paper` | Page background |
+
+| Variable    | Purpose                                           |
+| ----------- | ------------------------------------------------- |
+| `--paper`   | Page background                                   |
 | `--paper-2` | Slightly elevated surface (nav, callout sections) |
-| `--paper-3` | Further elevated surface (hover states, inputs) |
+| `--paper-3` | Further elevated surface (hover states, inputs)   |
 
 ### Text
-| Variable | Purpose |
-|----------|---------|
-| `--ink` | Primary text and primary-button background |
-| `--ink-2` | Body text, secondary headings |
-| `--ink-3` | Muted labels, kickers, metadata |
-| `--ink-4` | Placeholder text, disabled states |
+
+| Variable  | Purpose                                    |
+| --------- | ------------------------------------------ |
+| `--ink`   | Primary text and primary-button background |
+| `--ink-2` | Body text, secondary headings              |
+| `--ink-3` | Muted labels, kickers, metadata            |
+| `--ink-4` | Placeholder text, disabled states          |
 
 ### Borders
-| Variable | Purpose |
-|----------|---------|
-| `--line` | Strong borders (matches `--ink`) |
-| `--line-2` | Standard component borders |
-| `--line-3` | Subtle dividers |
+
+| Variable   | Purpose                          |
+| ---------- | -------------------------------- |
+| `--line`   | Strong borders (matches `--ink`) |
+| `--line-2` | Standard component borders       |
+| `--line-3` | Subtle dividers                  |
 
 ### Accent
-| Variable | Purpose |
-|----------|---------|
-| `--accent` | Primary interactive accent (links, focus rings, active chips) |
-| `--accent-2` | Secondary accent (orange highlights, CTA label on dark cards) |
-| `--accent-soft` | Tinted background behind accent elements |
+
+| Variable        | Purpose                                                       |
+| --------------- | ------------------------------------------------------------- |
+| `--accent`      | Primary interactive accent (links, focus rings, active chips) |
+| `--accent-2`    | Secondary accent (orange highlights, CTA label on dark cards) |
+| `--accent-soft` | Tinted background behind accent elements                      |
 
 ### Status
-| Variable | Purpose |
-|----------|---------|
+
+| Variable  | Purpose                          |
+| --------- | -------------------------------- |
 | `--green` | Success states, active badge dot |
-| `--warn` | Warning states, challenge icons |
+| `--warn`  | Warning states, challenge icons  |
 
 ### Elevation
-| Variable | Purpose |
-|----------|---------|
-| `--shadow-sm` | Subtle card lift |
-| `--shadow` | Standard card hover shadow |
-| `--shadow-lg` | Modal/hero image shadow |
+
+| Variable      | Purpose                    |
+| ------------- | -------------------------- |
+| `--shadow-sm` | Subtle card lift           |
+| `--shadow`    | Standard card hover shadow |
+| `--shadow-lg` | Modal/hero image shadow    |
 
 ### Dark-surface tokens
+
 Used by dark cards (`.card-dark`), the flagship bento tile, SDK code blocks, the contact form, and CTA dark variants.
 
-| Variable | Purpose |
-|----------|---------|
-| `--surface-accent` | Background of inverted/dark surfaces |
-| `--on-accent` | Primary text on `--surface-accent` |
-| `--on-accent-dim` | Body text on dark surfaces (~85% opacity) |
-| `--on-accent-muted` | Muted labels on dark surfaces (~60% opacity) |
-| `--on-accent-subtle` | Subtle text on dark surfaces (~50% opacity) |
-| `--dark-border` | Borders on dark section backgrounds |
-| `--dark-input-bg` | Form input background inside dark forms |
-| `--dark-input-border` | Form input border inside dark forms |
+| Variable              | Purpose                                      |
+| --------------------- | -------------------------------------------- |
+| `--surface-accent`    | Background of inverted/dark surfaces         |
+| `--on-accent`         | Primary text on `--surface-accent`           |
+| `--on-accent-dim`     | Body text on dark surfaces (~85% opacity)    |
+| `--on-accent-muted`   | Muted labels on dark surfaces (~60% opacity) |
+| `--on-accent-subtle`  | Subtle text on dark surfaces (~50% opacity)  |
+| `--dark-border`       | Borders on dark section backgrounds          |
+| `--dark-input-bg`     | Form input background inside dark forms      |
+| `--dark-input-border` | Form input border inside dark forms          |
 
 ### Glass overlays
+
 Used by video-background hero sections to blend the video into the page background.
 
-| Variable | Purpose |
-|----------|---------|
-| `--glass-start` | Horizontal gradient start (88% opacity) |
-| `--glass-mid` | Horizontal gradient mid (72% opacity) |
-| `--glass-end` | Horizontal gradient end (40% opacity) |
-| `--glass-top` | Vertical gradient top (30% opacity) |
-| `--glass-bottom` | Vertical gradient bottom (80% opacity) |
+| Variable         | Purpose                                    |
+| ---------------- | ------------------------------------------ |
+| `--glass-start`  | Horizontal gradient start (88% opacity)    |
+| `--glass-mid`    | Horizontal gradient mid (72% opacity)      |
+| `--glass-end`    | Horizontal gradient end (40% opacity)      |
+| `--glass-top`    | Vertical gradient top (30% opacity)        |
+| `--glass-bottom` | Vertical gradient bottom (80% opacity)     |
 | `--glass-visual` | Hero visual panel background (60% opacity) |
 
 ### System chrome
-| Variable | Purpose |
-|----------|---------|
-| `--scrollbar-thumb` | Scrollbar thumb colour |
-| `--backdrop` | Modal/drawer backdrop overlay |
+
+| Variable            | Purpose                       |
+| ------------------- | ----------------------------- |
+| `--scrollbar-thumb` | Scrollbar thumb colour        |
+| `--backdrop`        | Modal/drawer backdrop overlay |
 
 ### Shape & layout
-| Variable | Purpose |
-|----------|---------|
-| `--radius-sm` | Small border-radius (4 px) |
-| `--radius` | Default border-radius (8 px) |
-| `--radius-lg` | Large border-radius (14 px) |
-| `--container` | Standard content max-width (1200 px) |
-| `--container-wide` | Wide content max-width (1320 px) |
+
+| Variable           | Purpose                              |
+| ------------------ | ------------------------------------ |
+| `--radius-sm`      | Small border-radius (4 px)           |
+| `--radius`         | Default border-radius (8 px)         |
+| `--radius-lg`      | Large border-radius (14 px)          |
+| `--container`      | Standard content max-width (1200 px) |
+| `--container-wide` | Wide content max-width (1320 px)     |

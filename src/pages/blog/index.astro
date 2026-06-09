@@ -155,7 +155,9 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                 id="tag-panel"
                 class="mt-5 rounded border border-line-3 bg-paper-2 p-3 overflow-x-auto overflow-y-hidden lg:p-4 lg:max-h-72 lg:overflow-auto"
               >
-                <p class="hidden text-sm font-semibold text-ink-3 lg:block">Tags</p>
+                <p class="hidden text-sm font-semibold text-ink-3 lg:block">
+                  Tags
+                </p>
                 <div
                   class="flex flex-nowrap gap-2 whitespace-nowrap lg:mt-3 lg:flex-wrap"
                   id="tag-chips"
@@ -318,7 +320,9 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
               }
               appliedTagsEl.classList.remove("hidden");
               appliedTagsLabelEl?.classList.remove("hidden");
-              const limit = window.matchMedia("(min-width: 640px)").matches ? 4 : 2;
+              const limit = window.matchMedia("(min-width: 640px)").matches
+                ? 4
+                : 2;
               const shown = filters.slice(0, limit);
               const remaining = filters.length - shown.length;
               shown.forEach((filter) => {

@@ -32,9 +32,11 @@ const logos: [string, string][] = [
   <div class="container-wide">
     <div class="marquee-wrap">
       <div class="marquee-track">
-        {[...logos, ...logos].map(([file, name]) => (
-          <img src={file} alt={name} loading="lazy" />
-        ))}
+        {
+          [...logos, ...logos].map(([file, name]) => (
+            <img src={file} alt={name} loading="lazy" />
+          ))
+        }
       </div>
     </div>
   </div>

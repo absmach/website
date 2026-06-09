@@ -49,7 +49,7 @@ report_read
 report_remove_role_users
 report_update
 report_view_role_users
-````
+```
 
 This means domain administrators can correctly manage alarm and report resources through the same consistent authorization model used across Magistrala.
 
@@ -76,11 +76,11 @@ The v0.20.0 migration makes this state explicit for older deployments.
 
 In practical terms, the migration ensures that:
 
-* domain admin roles include the new Alarm and Report actions;
-* existing Rules have their built-in admin roles;
-* existing Reports have their built-in admin roles;
-* SpiceDB relationships are checked before writing, avoiding duplicate policy relationships;
-* the backfill can be safely re-run if interrupted.
+- domain admin roles include the new Alarm and Report actions;
+- existing Rules have their built-in admin roles;
+- existing Reports have their built-in admin roles;
+- SpiceDB relationships are checked before writing, avoiding duplicate policy relationships;
+- the backfill can be safely re-run if interrupted.
 
 ---
 
@@ -101,11 +101,11 @@ This is important because the migration touches authorization-related data. The 
 
 At minimum, make sure you can restore:
 
-* PostgreSQL service databases;
-* SpiceDB data;
-* environment configuration;
-* Docker Compose or Kubernetes manifests;
-* secrets used by Auth and SpiceDB.
+- PostgreSQL service databases;
+- SpiceDB data;
+- environment configuration;
+- Docker Compose or Kubernetes manifests;
+- secrets used by Auth and SpiceDB.
 
 ---
 
@@ -149,11 +149,11 @@ This script finds existing Rules Engine rules that do not yet have built-in admi
 
 For each rule, the script checks:
 
-* whether the rule already has a role;
-* whether the rule has a valid `domain_id`;
-* whether the rule has a `created_by` user;
-* whether the creator is a member of the domain;
-* whether the required SpiceDB policy relationship already exists.
+- whether the rule already has a role;
+- whether the rule has a valid `domain_id`;
+- whether the rule has a `created_by` user;
+- whether the creator is a member of the domain;
+- whether the required SpiceDB policy relationship already exists.
 
 If the creator is a domain member, the role is created with that member attached.
 
@@ -373,4 +373,3 @@ By adding the new Alarm and Report admin actions and backfilling built-in admin 
 For teams running Magistrala in production, the upgrade path is straightforward:
 
 start the v0.20.0 services, run the two backfill scripts, verify the results, and continue operating with a cleaner and more consistent access-control foundation.
-

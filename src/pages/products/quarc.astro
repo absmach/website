@@ -3,14 +3,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
-import Cpu from "lucide-astro/Cpu";
-import Lock from "lucide-astro/Lock";
-import ShieldCheck from "lucide-astro/ShieldCheck";
-import Link from "lucide-astro/Link";
-import Code2 from "lucide-astro/Code2";
-import Settings2 from "lucide-astro/Settings2";
-import Landmark from "lucide-astro/Landmark";
-import Monitor from "lucide-astro/Monitor";
+import {
+  Cpu,
+  Lock,
+  ShieldCheck,
+  Link,
+  SquareCode,
+  Settings2,
+  Landmark,
+  Monitor,
+} from "@lucide/astro";
 
 const features = [
   {
@@ -34,7 +36,7 @@ const features = [
     desc: "SPI channel runs Noise Protocol IK with hybrid ML-KEM-768 + X25519. AES-256-GCM payload encryption with monotonic nonces.",
   },
   {
-    icon: Code2,
+    icon: SquareCode,
     name: "Open & Auditable",
     desc: "100% open-source toolchain — Yosys, nextpnr, SymbiYosys. Verilog 2005 only. Formally verified bus, KUE, and lifecycle FSM.",
   },

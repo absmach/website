@@ -3,14 +3,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
-import Globe from "lucide-astro/Globe";
-import Database from "lucide-astro/Database";
-import Server from "lucide-astro/Server";
-import Zap from "lucide-astro/Zap";
-import Shield from "lucide-astro/Shield";
-import Wrench from "lucide-astro/Wrench";
-import Radio from "lucide-astro/Radio";
-import BarChart from "lucide-astro/BarChart";
+import {
+  Globe,
+  Database,
+  Server,
+  Zap,
+  Shield,
+  Wrench,
+  Radio,
+  ChartBar,
+} from "@lucide/astro";
 
 const features = [
   {
@@ -113,7 +115,7 @@ const solutions = [
     tags: ["Telemetry", "Edge", "WebSocket"],
   },
   {
-    icon: BarChart,
+    icon: ChartBar,
     title: "High-Throughput Pipelines",
     desc: "Stream millions of events per second with burst buffering and ingestion decoupling.",
     bullets: [
@@ -321,16 +323,16 @@ const faqSchema = JSON.stringify({
             <pre
               class="mermaid">
 graph TD
-    A[Setup and configuration] --> B["MQTT / WS / HTTP / CoAP<br />Servers"]
-    A --> C["AMQP 1.0<br />Server"]
-    A --> D["AMQP 0.9.1<br />Server"]
-    B --> E["MQTT v3.1.1 / v5 Broker"]
-    C --> F["AMQP Broker 1.0"]
-    D --> G["AMQP Broker 0.9.1"]
-    E --> H["Queue Manager<br />Bindings + Delivery"]
-    F --> H
-    G --> H
-    H --> I["Log Storage<br />+ Topic Index"]
+    A[Setup and configuration] --&gt; B["MQTT / WS / HTTP / CoAP<br />Servers"]
+    A --&gt; C["AMQP 1.0<br />Server"]
+    A --&gt; D["AMQP 0.9.1<br />Server"]
+    B --&gt; E["MQTT v3.1.1 / v5 Broker"]
+    C --&gt; F["AMQP Broker 1.0"]
+    D --&gt; G["AMQP Broker 0.9.1"]
+    E --&gt; H["Queue Manager<br />Bindings + Delivery"]
+    F --&gt; H
+    G --&gt; H
+    H --&gt; I["Log Storage<br />+ Topic Index"]
 
     style A fill:#073763,color:#f6f4ee,stroke:#073763
     style B fill:#1e3a5a,color:#f6f4ee,stroke:#1e3a5a
@@ -671,7 +673,7 @@ graph TD
   <script is:inline>
     document.querySelectorAll(".fmq-copy-btn").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        var code = btn
+        const code = btn
           .closest(".fmq-qs-code-wrap")
           .querySelector(".fmq-qs-code").textContent;
         navigator.clipboard.writeText(code).then(function () {

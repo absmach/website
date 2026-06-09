@@ -2,10 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-import Cpu from "lucide-astro/Cpu";
-import Radio from "lucide-astro/Radio";
-import ShieldCheck from "lucide-astro/ShieldCheck";
-import Boxes from "lucide-astro/Boxes";
+import { Cpu, Radio, ShieldCheck, Boxes } from "@lucide/astro";
 
 const hardwareProducts = [
   {
@@ -261,45 +258,45 @@ const capabilities = [
   </main>
   <Footer />
   <script type="application/ld+json" is:inline>
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Abstract Machines Hardware Products",
-    "description": "Open-hardware edge gateways and post-quantum secure element for IoT deployments.",
-    "url": "https://www.absmach.eu/products/hardware",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "item": {
-          "@type": "Product",
-          "name": "A0 Edge Gateway",
-          "description": "Low-power Zephyr RTOS gateway with Wireless M-Bus, NB-IoT, LTE-M, and Wasm support.",
-          "url": "https://www.absmach.eu/products/a0"
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Abstract Machines Hardware Products",
+      "description": "Open-hardware edge gateways and post-quantum secure element for IoT deployments.",
+      "url": "https://www.absmach.eu/products/hardware",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Product",
+            "name": "A0 Edge Gateway",
+            "description": "Low-power Zephyr RTOS gateway with Wireless M-Bus, NB-IoT, LTE-M, and Wasm support.",
+            "url": "https://www.absmach.eu/products/a0"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Product",
+            "name": "A1 Industrial Gateway",
+            "description": "RISC-V Linux gateway for industrial IoT with container and Wasm workload support.",
+            "url": "https://www.absmach.eu/products/a1"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Product",
+            "name": "Quarc",
+            "description": "Open-source post-quantum secure element with hardware-accelerated ML-KEM and ML-DSA.",
+            "url": "https://www.absmach.eu/products/quarc"
+          }
         }
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "item": {
-          "@type": "Product",
-          "name": "A1 Industrial Gateway",
-          "description": "RISC-V Linux gateway for industrial IoT with container and Wasm workload support.",
-          "url": "https://www.absmach.eu/products/a1"
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "item": {
-          "@type": "Product",
-          "name": "Quarc",
-          "description": "Open-source post-quantum secure element with hardware-accelerated ML-KEM and ML-DSA.",
-          "url": "https://www.absmach.eu/products/quarc"
-        }
-      }
-    ]
-  }
+      ]
+    }
   </script>
 </BaseLayout>
 
@@ -524,6 +521,5 @@ const capabilities = [
       min-height: auto;
       padding: 22px;
     }
-
   }
 </style>

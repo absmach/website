@@ -12,14 +12,12 @@ ogImage:
   url: "/img/blogs/building-the-s0/s0.png"
 category: blog
 tags:
-
-- A0
-- Baseboard
-- IoT
-- Gateway
-- PCB design
-- Hardware
-
+  - A0
+  - Baseboard
+  - IoT
+  - Gateway
+  - PCB design
+  - Hardware
 ---
 
 ## Design Journey
@@ -126,7 +124,7 @@ Looking back at this journey, here’s what we’d change:
 - More upfront mechanical planning — Create a 3D model early with all components placed before starting routing
 - [Impedance calculator](https://jlcpcb.com/pcb-impedance-calculator) from day one — Don’t wait until routing to think about controlled impedance
 - Bus sharing validation — Test SPI bus sharing scenarios on a breadboard first
-- Pin assignment review — Have a dedicated review session for all microcontroller pin assignments checking for   conflicts
+- Pin assignment review — Have a dedicated review session for all microcontroller pin assignments checking for conflicts
 - Reference design study — Spend more time with reference designs, especially for SD card interfaces and [Ethernet W5500](https://docs.wiznet.io/Product/Chip/Ethernet/W5500/ref-schematic)
 - Circuit simulation mandatory — Make LTSpice simulation a requirement before any new circuit enters the schematic
 - Simplicity first — Start with the simplest working solution, then optimize only if needed

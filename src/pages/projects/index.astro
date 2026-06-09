@@ -3,10 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FinalCTA from "../../components/FinalCTA.astro";
-import Lightbulb from "lucide-astro/Lightbulb";
-import Lock from "lucide-astro/Lock";
-import Network from "lucide-astro/Network";
-import ShieldCheck from "lucide-astro/ShieldCheck";
+import { Lightbulb, Lock, Network, ShieldCheck } from "@lucide/astro";
 
 const projects = [
   {
@@ -17,7 +14,12 @@ const projects = [
     status: "Completed",
     year: "2023–2025",
     funding: "EU Horizon Europe",
-    areas: ["6G Security", "Quantum Cryptography", "Network Architecture", "Privacy"],
+    areas: [
+      "6G Security",
+      "Quantum Cryptography",
+      "Network Architecture",
+      "Privacy",
+    ],
     logo: "/img/logos/confidential6G.jpg",
     link: "/projects/confidential6g",
   },
@@ -111,12 +113,14 @@ const impactStats = [
           <a href="#projects" class="btn">Explore projects</a>
         </div>
         <div class="meta-grid">
-          {impactStats.map(({ value, label }) => (
-            <div>
-              <div class="l">{label}</div>
-              <div class="v">{value}</div>
-            </div>
-          ))}
+          {
+            impactStats.map(({ value, label }) => (
+              <div>
+                <div class="l">{label}</div>
+                <div class="v">{value}</div>
+              </div>
+            ))
+          }
           <div>
             <div class="l">Funding source</div>
             <div class="v">EU Horizon Europe</div>
@@ -131,59 +135,108 @@ const impactStats = [
         <div class="section-head">
           <div class="left">
             <span class="kicker">Projects & collaborations</span>
-            <h2 class="h-2" style="margin-top:14px;">EU-funded research &amp; open-source participation.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              EU-funded research &amp; open-source participation.
+            </h2>
           </div>
         </div>
         <div class="proj-grid" style="margin-top:40px;">
-          {projects.map(({ name, tagline, description, status, year, funding, areas, logo, link }) => {
-            const isExternal = link.startsWith("http");
-            const badgeClass = status === "Active" ? "badge active" : status === "Completed" ? "badge complete" : "badge";
-            return (
-              <a class="proj-card" href={link} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined}>
-                <div class="logo">
-                  <img src={logo} alt={`${name} logo`} loading="lazy" />
-                </div>
-                <div>
-                  <span class={badgeClass}>
-                    <span class="dot"></span>{status}
-                  </span>
-                  <h3 class="name" style="margin-top:10px;">{name}</h3>
-                  <p class="tagline">{tagline}</p>
-                  <p style="font-size:13px; color:var(--ink-2); margin-top:10px; line-height:1.6;">{description}</p>
-                  <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:14px;">
-                    {areas.map((a) => <span class="tag">{a}</span>)}
-                  </div>
-                  <div class="meta">
-                    <span>{funding}</span>
-                    <span>{year}</span>
-                  </div>
-                </div>
-              </a>
-            );
-          })}
+          {
+            projects.map(
+              ({
+                name,
+                tagline,
+                description,
+                status,
+                year,
+                funding,
+                areas,
+                logo,
+                link,
+              }) => {
+                const isExternal = link.startsWith("http");
+                const badgeClass =
+                  status === "Active"
+                    ? "badge active"
+                    : status === "Completed"
+                      ? "badge complete"
+                      : "badge";
+                return (
+                  <a
+                    class="proj-card"
+                    href={link}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noopener noreferrer" : undefined}
+                  >
+                    <div class="logo">
+                      <img src={logo} alt={`${name} logo`} loading="lazy" />
+                    </div>
+                    <div>
+                      <span class={badgeClass}>
+                        <span class="dot" />
+                        {status}
+                      </span>
+                      <h3 class="name" style="margin-top:10px;">
+                        {name}
+                      </h3>
+                      <p class="tagline">{tagline}</p>
+                      <p style="font-size:13px; color:var(--ink-2); margin-top:10px; line-height:1.6;">
+                        {description}
+                      </p>
+                      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:14px;">
+                        {areas.map((a) => (
+                          <span class="tag">{a}</span>
+                        ))}
+                      </div>
+                      <div class="meta">
+                        <span>{funding}</span>
+                        <span>{year}</span>
+                      </div>
+                    </div>
+                  </a>
+                );
+              },
+            )
+          }
         </div>
       </div>
     </section>
 
     <!-- Research focus areas -->
-    <section style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+    <section
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
             <span class="kicker">Research focus</span>
-            <h2 class="h-2" style="margin-top:14px;">Core competencies driving our innovation.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Core competencies driving our innovation.
+            </h2>
           </div>
         </div>
         <div class="focus-grid" style="margin-top:40px;">
-          {researchAreas.map(({ title, description, icon: Icon }) => (
-            <div class="card" style="display:flex; flex-direction:column; gap:16px; text-align:center; align-items:center;">
-              <div class="icon-frame" style="width:56px; height:56px; border-radius:50%; background:color-mix(in srgb,var(--accent) 10%,transparent); border:1px solid color-mix(in srgb,var(--accent) 20%,transparent); display:flex; align-items:center; justify-content:center; color:var(--accent);">
-                <Icon size={22} />
+          {
+            researchAreas.map(({ title, description, icon: Icon }) => (
+              <div
+                class="card"
+                style="display:flex; flex-direction:column; gap:16px; text-align:center; align-items:center;"
+              >
+                <div
+                  class="icon-frame"
+                  style="width:56px; height:56px; border-radius:50%; background:color-mix(in srgb,var(--accent) 10%,transparent); border:1px solid color-mix(in srgb,var(--accent) 20%,transparent); display:flex; align-items:center; justify-content:center; color:var(--accent);"
+                >
+                  <Icon size={22} />
+                </div>
+                <h3 class="h-3" style="margin:0;">
+                  {title}
+                </h3>
+                <p style="font-size:14px; color:var(--ink-2); line-height:1.6; margin:0;">
+                  {description}
+                </p>
               </div>
-              <h3 class="h-3" style="margin:0;">{title}</h3>
-              <p style="font-size:14px; color:var(--ink-2); line-height:1.6; margin:0;">{description}</p>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>

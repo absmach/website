@@ -4,17 +4,77 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 
 const serviceLines: [string, string, string[]][] = [
-  ["Managed Deployments", "End-to-end deployment and operations for your infrastructure.", ["Infrastructure setup", "Monitoring & alerting", "Performance optimisation", "Security updates", "Backup & DR", "SLA-backed support"]],
-  ["Custom Development", "Tailored software for unique integration and extension requirements.", ["Custom protocols", "System integrations", "Feature development", "Custom firmware", "API design", "Performance optimisation"]],
-  ["Architecture & Consulting", "Expert guidance for infrastructure design and security.", ["Architecture review", "Stack selection", "Security audit", "Scalability planning", "Migration strategies", "Best practices"]],
-  ["Training & Support", "Empower your team to operate and extend the stack independently.", ["On-site & remote training", "Documentation", "Workshops", "Dedicated support", "Knowledge transfer", "Community access"]],
+  [
+    "Managed Deployments",
+    "End-to-end deployment and operations for your infrastructure.",
+    [
+      "Infrastructure setup",
+      "Monitoring & alerting",
+      "Performance optimisation",
+      "Security updates",
+      "Backup & DR",
+      "SLA-backed support",
+    ],
+  ],
+  [
+    "Custom Development",
+    "Tailored software for unique integration and extension requirements.",
+    [
+      "Custom protocols",
+      "System integrations",
+      "Feature development",
+      "Custom firmware",
+      "API design",
+      "Performance optimisation",
+    ],
+  ],
+  [
+    "Architecture & Consulting",
+    "Expert guidance for infrastructure design and security.",
+    [
+      "Architecture review",
+      "Stack selection",
+      "Security audit",
+      "Scalability planning",
+      "Migration strategies",
+      "Best practices",
+    ],
+  ],
+  [
+    "Training & Support",
+    "Empower your team to operate and extend the stack independently.",
+    [
+      "On-site & remote training",
+      "Documentation",
+      "Workshops",
+      "Dedicated support",
+      "Knowledge transfer",
+      "Community access",
+    ],
+  ],
 ];
 
 const process = [
-  ["01", "Discovery", "We review your requirements, existing stack, and goals to scope the right engagement."],
-  ["02", "Planning", "Technical specifications, timeline, and resource allocation, agreed before work begins."],
-  ["03", "Delivery", "Iterative development and deployment with regular milestone reviews."],
-  ["04", "Support", "Ongoing maintenance, monitoring, and optimisation to keep things running well."],
+  [
+    "01",
+    "Discovery",
+    "We review your requirements, existing stack, and goals to scope the right engagement.",
+  ],
+  [
+    "02",
+    "Planning",
+    "Technical specifications, timeline, and resource allocation, agreed before work begins.",
+  ],
+  [
+    "03",
+    "Delivery",
+    "Iterative development and deployment with regular milestone reviews.",
+  ],
+  [
+    "04",
+    "Support",
+    "Ongoing maintenance, monitoring, and optimisation to keep things running well.",
+  ],
 ];
 ---
 
@@ -27,10 +87,13 @@ const process = [
     <section class="page-hero">
       <div class="container-wide">
         <span class="kicker">Services</span>
-        <h1 class="h-1" style="margin-top:14px; max-width:18ch;">From requirements to running systems.</h1>
+        <h1 class="h-1" style="margin-top:14px; max-width:18ch;">
+          From requirements to running systems.
+        </h1>
         <p class="lede" style="margin-top:20px; max-width:52ch;">
-          We deploy, extend, and maintain the Abstract Machines stack for production environments.
-          Every engagement is with the engineers who built it.
+          We deploy, extend, and maintain the Abstract Machines stack for
+          production environments. Every engagement is with the engineers who
+          built it.
         </p>
       </div>
     </section>
@@ -44,38 +107,48 @@ const process = [
           </div>
         </div>
         <div class="val-grid">
-          {serviceLines.map(([title, description, bullets], index) => (
-            <div class="val">
-              <div class="num">{String(index + 1).padStart(2, "0")}</div>
-              <div style="flex:1;">
-                <h4>{title}</h4>
-                <p style="margin-bottom:14px;">{description}</p>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 18px; font-size:13px; color:var(--ink-2);">
-                  {bullets.map((bullet) => <div>→ {bullet}</div>)}
+          {
+            serviceLines.map(([title, description, bullets], index) => (
+              <div class="val">
+                <div class="num">{String(index + 1).padStart(2, "0")}</div>
+                <div style="flex:1;">
+                  <h4>{title}</h4>
+                  <p style="margin-bottom:14px;">{description}</p>
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 18px; font-size:13px; color:var(--ink-2);">
+                    {bullets.map((bullet) => (
+                      <div>→ {bullet}</div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>
 
-    <section style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);">
+    <section
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
             <span class="kicker">Process</span>
-            <h2 class="h-2" style="margin-top:14px;">From discovery to delivery.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              From discovery to delivery.
+            </h2>
           </div>
         </div>
         <div class="process-grid">
-          {process.map(([number, title, description]) => (
-            <div class="proc-card">
-              <div class="num">{number}</div>
-              <h4>{title}</h4>
-              <p>{description}</p>
-            </div>
-          ))}
+          {
+            process.map(([number, title, description]) => (
+              <div class="proc-card">
+                <div class="num">{number}</div>
+                <h4>{title}</h4>
+                <p>{description}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
@@ -85,31 +158,52 @@ const process = [
         <div class="section-head">
           <div class="left">
             <span class="kicker">Engagement models</span>
-            <h2 class="h-2" style="margin-top:14px;">Pick the shape that fits.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Pick the shape that fits.
+            </h2>
           </div>
         </div>
         <div class="depl-grid">
           <div class="depl-card">
             <div class="company">One-time</div>
             <h3 class="title">Project-Based</h3>
-            <p class="desc">Fixed scope and timeline with clear deliverables. Good for well-defined integrations or builds.</p>
+            <p class="desc">
+              Fixed scope and timeline with clear deliverables. Good for
+              well-defined integrations or builds.
+            </p>
           </div>
-          <div class="depl-card" style="background:var(--surface-accent); color:var(--on-accent); border-color:var(--surface-accent);">
-            <span class="badge" style="background:var(--on-accent); color:var(--surface-accent); border-color:var(--dark-border); align-self:flex-start;">Most common</span>
-            <div class="company" style="color:var(--on-accent-muted);">Monthly</div>
+          <div
+            class="depl-card"
+            style="background:var(--surface-accent); color:var(--on-accent); border-color:var(--surface-accent);"
+          >
+            <span
+              class="badge"
+              style="background:var(--on-accent); color:var(--surface-accent); border-color:var(--dark-border); align-self:flex-start;"
+              >Most common</span
+            >
+            <div class="company" style="color:var(--on-accent-muted);">
+              Monthly
+            </div>
             <h3 class="title" style="color:var(--on-accent);">Retainer</h3>
-            <p class="desc" style="color:var(--on-accent-dim);">Ongoing support and development at a predictable monthly cost. Most common engagement.</p>
+            <p class="desc" style="color:var(--on-accent-dim);">
+              Ongoing support and development at a predictable monthly cost.
+              Most common engagement.
+            </p>
           </div>
           <div class="depl-card">
             <div class="company">Hourly</div>
             <h3 class="title">Time & Materials</h3>
-            <p class="desc">Flexible engagement for evolving requirements or exploratory work.</p>
+            <p class="desc">
+              Flexible engagement for evolving requirements or exploratory work.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <section style="background:var(--paper-2); border-top:1px solid var(--line-3);">
+    <section
+      style="background:var(--paper-2); border-top:1px solid var(--line-3);"
+    >
       <div class="container-wide">
         <div class="callout">
           <span class="kicker">Ready to scope an engagement?</span>

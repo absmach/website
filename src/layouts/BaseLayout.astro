@@ -46,10 +46,28 @@ const ogImageUrl = resolveMetaUrl(ogImage);
     {ogImageUrl && <meta property="og:image:alt" content={ogImageAlt} />}
     {ogImageUrl && <meta property="og:image:width" content="1200" />}
     {ogImageUrl && <meta property="og:image:height" content="630" />}
-    {articlePublishedTime && <meta property="article:published_time" content={articlePublishedTime} />}
-    {articleAuthor && <meta property="article:author" content={articleAuthor} />}
-    {articleTags?.map((tag: string) => <meta property="article:tag" content={tag} />)}
-    <meta name="twitter:card" content={ogImageUrl ? "summary_large_image" : "summary"} />
+    {
+      articlePublishedTime && (
+        <meta
+          property="article:published_time"
+          content={articlePublishedTime}
+        />
+      )
+    }
+    {
+      articleAuthor && (
+        <meta property="article:author" content={articleAuthor} />
+      )
+    }
+    {
+      articleTags?.map((tag: string) => (
+        <meta property="article:tag" content={tag} />
+      ))
+    }
+    <meta
+      name="twitter:card"
+      content={ogImageUrl ? "summary_large_image" : "summary"}
+    />
     <meta name="twitter:site" content="@absmach" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -61,10 +79,19 @@ const ogImageUrl = resolveMetaUrl(ogImage);
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="alternate" type="application/rss+xml" title="Abstract Machines Blog" href="/rss.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Abstract Machines Blog"
+      href="/rss.xml"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
@@ -72,7 +99,10 @@ const ogImageUrl = resolveMetaUrl(ogImage);
       onload="this.media='all'"
     />
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet"
+      />
     </noscript>
   </head>
   <body>
