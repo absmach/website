@@ -1,0 +1,636 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FAQAccordion from "../components/FAQAccordion.astro";
+
+const comparisonRows = [
+  {
+    feature: "MQTT 3.1.1 & 5.0",
+    fluxmq: "Yes",
+    mosquitto: "Yes",
+  },
+  {
+    feature: "AMQP 0.9.1",
+    fluxmq: "Yes",
+    mosquitto: "No",
+  },
+  {
+    feature: "AMQP 1.0",
+    fluxmq: "Yes",
+    mosquitto: "No",
+  },
+  {
+    feature: "CoAP bridge",
+    fluxmq: "Yes",
+    mosquitto: "No",
+  },
+  {
+    feature: "Built-in horizontal clustering",
+    fluxmq: "Yes (embedded etcd)",
+    mosquitto: "No",
+  },
+  {
+    feature: "Durable message queues",
+    fluxmq: "Yes (consumer groups, DLQ)",
+    mosquitto: "No",
+  },
+  {
+    feature: "Kafka-style retention",
+    fluxmq: "Yes",
+    mosquitto: "No",
+  },
+  {
+    feature: "Raft-based replication",
+    fluxmq: "Yes",
+    mosquitto: "No",
+  },
+  {
+    feature: "Per-IP & per-client rate limiting",
+    fluxmq: "Yes",
+    mosquitto: "Plugin required",
+  },
+  {
+    feature: "mTLS inter-broker gRPC",
+    fluxmq: "Yes",
+    mosquitto: "N/A (no clustering)",
+  },
+  {
+    feature: "Zero external dependencies",
+    fluxmq: "Yes (single Go binary)",
+    mosquitto: "Yes (single C binary)",
+  },
+  {
+    feature: "License",
+    fluxmq: "Apache 2.0",
+    mosquitto: "EPL 2.0 / EDL 1.0",
+  },
+];
+
+const faqs = [
+  {
+    q: "Why do teams outgrow Mosquitto?",
+    a: "Mosquitto is a single-node broker. When deployments need high availability, horizontal scaling, or durable message delivery guarantees, Mosquitto cannot be extended without external orchestration. FluxMQ ships clustering, Raft replication, and durable queues out of the box.",
+  },
+  {
+    q: "Is FluxMQ a drop-in replacement for Mosquitto?",
+    a: "Yes for clients. Any MQTT 3.1.1 or 5.0 client that works with Mosquitto connects to FluxMQ without code changes — the wire protocol is identical. The operational difference is that FluxMQ is configured differently and adds AMQP, durable queues, and clustering on top.",
+  },
+  {
+    q: "Does FluxMQ support the same MQTT feature set as Mosquitto?",
+    a: "FluxMQ supports all standard MQTT 3.1.1 and 5.0 features including QoS 0/1/2, retained messages, Last Will and Testament, shared subscriptions, flow control, and user properties. MQTT 5.0 feature coverage is complete.",
+  },
+  {
+    q: "Can I run FluxMQ as a single node like Mosquitto?",
+    a: "Yes. FluxMQ runs as a single node with the same single-binary operational model as Mosquitto. Clustering is opt-in — add cluster peers in the YAML config when you are ready to scale.",
+  },
+  {
+    q: "What is the license difference?",
+    a: "Mosquitto is dual-licensed under the Eclipse Public License 2.0 and Eclipse Distribution License 1.0. FluxMQ is Apache 2.0. Both are open source. Apache 2.0 is generally considered more permissive for commercial use and integration into proprietary systems.",
+  },
+  {
+    q: "How does FluxMQ handle 500K+ concurrent connections?",
+    a: "FluxMQ uses zero-copy packet parsing, object pooling, and efficient trie-based topic matching to sustain high connection counts. Session ownership is tracked per broker node with sub-100ms session takeover when a node fails.",
+  },
+];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+});
+---
+
+<BaseLayout
+  title="Mosquitto Alternative — FluxMQ Enterprise MQTT Broker"
+  description="Looking for a Mosquitto alternative with clustering, durable queues, and AMQP? FluxMQ is an open-source MQTT 5.0 broker designed for enterprise IoT — 500K+ connections, no external dependencies, Apache 2.0."
+>
+  <Header />
+  <main>
+    <!-- Hero -->
+    <section class="page-hero">
+      <div class="container-wide">
+        <div class="hero-copy" style="max-width:700px;">
+          <span class="kicker">Mosquitto Alternative</span>
+          <h1 class="h-1" style="margin-top:14px; max-width:18ch;">
+            The enterprise Mosquitto alternative for production IoT.
+          </h1>
+          <p class="lede" style="margin-top:20px; max-width:52ch;">
+            Eclipse Mosquitto is excellent for development and small deployments. When
+            you need clustering, durable message delivery, AMQP support, and
+            100K+ connections, FluxMQ takes over where Mosquitto stops.
+          </p>
+          <div class="btn-row" style="margin-top:32px;">
+            <a href="/products/fluxmq" class="btn btn-primary">
+              FluxMQ Product Page →
+            </a>
+            <a
+              href="https://github.com/absmach/fluxmq"
+              class="btn"
+              target="_blank"
+              rel="noopener">GitHub ↗</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured snippet — definition block -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="alt-definition-block">
+          <h2 class="alt-definition-h2">
+            When does Mosquitto need an alternative?
+          </h2>
+          <p class="alt-definition-text">
+            Mosquitto is a single-node MQTT broker. It has no built-in
+            clustering, no durable queues, and no AMQP support. Teams that need
+            high availability, horizontal scaling beyond a single node, or
+            guaranteed message delivery to consumer groups typically migrate to a
+            distributed broker like FluxMQ.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What Mosquitto is good at -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Context</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              What Mosquitto is good at.
+            </h2>
+          </div>
+          <p class="lede">
+            Mosquitto is a mature, lightweight MQTT broker maintained by the
+            Eclipse Foundation. It's the right tool for many use cases.
+          </p>
+        </div>
+        <div class="alt-pros-grid">
+          <div class="alt-pro-card">
+            <div class="alt-pro-title">Development & testing</div>
+            <p class="alt-pro-desc">
+              Fast to spin up, minimal config, runs everywhere. The standard
+              choice for local development and integration testing.
+            </p>
+          </div>
+          <div class="alt-pro-card">
+            <div class="alt-pro-title">Constrained devices</div>
+            <p class="alt-pro-desc">
+              The <code>mosquitto</code> C binary is lean enough to run on embedded
+              Linux systems with very limited resources.
+            </p>
+          </div>
+          <div class="alt-pro-card">
+            <div class="alt-pro-title">Small deployments</div>
+            <p class="alt-pro-desc">
+              For a single-site installation with a few hundred devices and no
+              HA requirement, Mosquitto is simple and reliable.
+            </p>
+          </div>
+          <div class="alt-pro-card">
+            <div class="alt-pro-title">Broad client compatibility</div>
+            <p class="alt-pro-desc">
+              Every MQTT client library on the planet has been tested against
+              Mosquitto. It is the reference implementation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- When you need more -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Limitations</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Where Mosquitto hits its ceiling.
+            </h2>
+          </div>
+        </div>
+        <div class="alt-limit-grid">
+          <div class="alt-limit-item">
+            <div class="alt-limit-title">No built-in clustering</div>
+            <p class="alt-limit-desc">
+              Mosquitto is a single-node broker. High-availability setups
+              require external tooling — load balancers, shared state stores, or
+              broker bridges — none of which Mosquitto manages itself.
+            </p>
+          </div>
+          <div class="alt-limit-item">
+            <div class="alt-limit-title">No durable queues</div>
+            <p class="alt-limit-desc">
+              Mosquitto has QoS 1/2 and retained messages but no durable queue
+              semantics — consumer groups, offset tracking, dead-letter queues,
+              or Kafka-style retention with replay.
+            </p>
+          </div>
+          <div class="alt-limit-item">
+            <div class="alt-limit-title">MQTT only</div>
+            <p class="alt-limit-desc">
+              Mosquitto speaks MQTT. If your architecture also has AMQP services
+              (RabbitMQ consumers, SAP integrations, Azure Service Bus
+              connectors), you need a separate broker for that traffic.
+            </p>
+          </div>
+          <div class="alt-limit-item">
+            <div class="alt-limit-title">Limited at scale</div>
+            <p class="alt-limit-desc">
+              Mosquitto handles hundreds of thousands of connections on capable
+              hardware but cannot distribute that load across multiple nodes
+              natively. FluxMQ scales linearly by adding nodes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison table -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Comparison</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              FluxMQ vs Mosquitto — feature by feature.
+            </h2>
+          </div>
+        </div>
+        <div class="alt-table-wrap">
+          <table class="alt-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th class="alt-col-fluxmq">FluxMQ</th>
+                <th>Mosquitto</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                comparisonRows.map(({ feature, fluxmq, mosquitto }) => (
+                  <tr>
+                    <td>{feature}</td>
+                    <td class="alt-col-fluxmq alt-yes">{fluxmq}</td>
+                    <td
+                      class={
+                        mosquitto === "No" || mosquitto === "N/A (no clustering)"
+                          ? "alt-no"
+                          : mosquitto === "Yes"
+                            ? "alt-yes"
+                            : "alt-partial"
+                      }
+                    >
+                      {mosquitto}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p
+          style="font-size:12px; color:var(--ink-4); margin-top:12px; line-height:1.6;"
+        >
+          Sources: Eclipse Mosquitto documentation (mosquitto.org), FluxMQ
+          source code and documentation (github.com/absmach/fluxmq). Mosquitto
+          plugin ecosystem can extend some features; table reflects out-of-the-box
+          capabilities.
+        </p>
+      </div>
+    </section>
+
+    <!-- FluxMQ for enterprise -->
+    <section
+      style="background:var(--surface-accent); color:var(--on-accent); padding:80px 0;"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker" style="color:var(--on-accent-muted);"
+              >FluxMQ</span
+            >
+            <h2 class="h-1" style="margin-top:14px; color:var(--on-accent);">
+              Built for what Mosquitto doesn't cover.
+            </h2>
+          </div>
+          <p class="lede" style="color:var(--on-accent-dim); max-width:36ch;">
+            Same MQTT wire protocol. Full clustering, durable queues, and AMQP
+            support added. Apache 2.0 for all features.
+          </p>
+        </div>
+        <div class="alt-highlights-grid">
+          <div class="alt-highlight">
+            <div class="alt-highlight-v">500K+</div>
+            <div class="alt-highlight-l">Concurrent connections per node</div>
+          </div>
+          <div class="alt-highlight">
+            <div class="alt-highlight-v">300K+</div>
+            <div class="alt-highlight-l">Messages/sec per node</div>
+          </div>
+          <div class="alt-highlight">
+            <div class="alt-highlight-v">&lt;10ms</div>
+            <div class="alt-highlight-l">Local latency</div>
+          </div>
+          <div class="alt-highlight">
+            <div class="alt-highlight-v">Apache 2.0</div>
+            <div class="alt-highlight-l">All features, no enterprise tier</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Migration path -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Migration</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Moving from Mosquitto to FluxMQ.
+            </h2>
+          </div>
+          <p class="lede">
+            Client code does not change. Any MQTT 3.1.1 or 5.0 client that
+            connects to Mosquitto connects to FluxMQ without modification.
+          </p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="num">01</div>
+            <h4>Run FluxMQ alongside Mosquitto</h4>
+            <p>
+              Start FluxMQ on the same network. Point a test client at FluxMQ
+              on port 1883. Both brokers can run simultaneously during
+              migration.
+            </p>
+          </div>
+          <div class="step">
+            <div class="num">02</div>
+            <h4>Validate client compatibility</h4>
+            <p>
+              Connect your existing MQTT clients to FluxMQ. QoS levels,
+              retained messages, Last Will and Testament, and shared
+              subscriptions all work as expected.
+            </p>
+          </div>
+          <div class="step">
+            <div class="num">03</div>
+            <h4>Cut over and enable clustering</h4>
+            <p>
+              Redirect clients to FluxMQ. When ready for HA, add cluster nodes
+              in the YAML config. etcd handles coordination automatically.
+            </p>
+          </div>
+        </div>
+        <div style="margin-top:40px;">
+          <a href="/products/fluxmq" class="btn btn-primary"
+            >Explore FluxMQ →</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">FAQ</span>
+            <h2 class="h-2" style="margin-top:14px;">Common questions.</h2>
+          </div>
+        </div>
+        <FAQAccordion items={faqs} />
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+      <div class="container-narrow" style="text-align:center;">
+        <span class="kicker">Get started</span>
+        <h2 class="h-2" style="margin-top:14px;">
+          Ready to scale beyond Mosquitto?
+        </h2>
+        <p class="lede" style="margin:20px auto 36px;">
+          FluxMQ is open source, Apache 2.0, and ships as a single Go binary.
+          No external dependencies. Full clustering from day one.
+        </p>
+        <div class="btn-row" style="justify-content:center;">
+          <a
+            href="https://github.com/absmach/fluxmq"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener">View on GitHub ↗</a
+          >
+          <a
+            href="https://www.absmach.eu/docs/fluxmq"
+            class="btn"
+            target="_blank"
+            rel="noopener">Documentation ↗</a
+          >
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.absmach.eu/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mosquitto Alternative",
+          "item": "https://www.absmach.eu/mosquitto-alternative"
+        }
+      ]
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .alt-definition-block {
+    background: var(--paper-2);
+    border: 1px solid var(--line-3);
+    border-left: 4px solid var(--ink);
+    border-radius: var(--radius-lg);
+    padding: 32px 40px;
+    max-width: 820px;
+  }
+  .alt-definition-h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .alt-definition-text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  .alt-pros-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .alt-pro-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    background: var(--paper-2);
+  }
+  .alt-pro-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .alt-pro-desc {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .alt-limit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .alt-limit-item {
+    border-left: 3px solid var(--line-2);
+    padding-left: 20px;
+  }
+  .alt-limit-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .alt-limit-desc {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .alt-table-wrap {
+    overflow-x: auto;
+    margin-top: 48px;
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+  }
+  .alt-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .alt-table th {
+    padding: 14px 20px;
+    text-align: left;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    border-bottom: 1px solid var(--line-3);
+    background: var(--paper-2);
+  }
+  .alt-table td {
+    padding: 13px 20px;
+    border-bottom: 1px solid var(--line-3);
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+  .alt-table tr:last-child td {
+    border-bottom: none;
+  }
+  .alt-table td:first-child {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .alt-col-fluxmq {
+    background: rgba(7, 55, 99, 0.03);
+  }
+  .alt-yes {
+    color: var(--ink) !important;
+    font-weight: 600 !important;
+  }
+  .alt-no {
+    color: var(--ink-3) !important;
+  }
+  .alt-partial {
+    color: var(--ink-2) !important;
+  }
+
+  .alt-highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: 48px;
+  }
+  .alt-highlight {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 32px 24px;
+    text-align: center;
+  }
+  .alt-highlight-v {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--on-accent);
+    margin-bottom: 8px;
+  }
+  .alt-highlight-l {
+    font-size: 13px;
+    color: var(--on-accent-dim);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 980px) {
+    .alt-highlights-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .alt-pros-grid,
+    .alt-limit-grid {
+      grid-template-columns: 1fr;
+    }
+    .alt-highlights-grid {
+      grid-template-columns: 1fr;
+    }
+    .alt-definition-block {
+      padding: 24px;
+    }
+  }
+</style>
