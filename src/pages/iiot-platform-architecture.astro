@@ -10,62 +10,133 @@ const layers = [
     name: "Device & Sensor Layer",
     desc: "Physical endpoints — PLCs, RTUs, sensors, meters, actuators, and embedded modules. Devices communicate over field protocols (Modbus, OPC-UA, Wireless M-Bus, BACnet) or directly over IP (MQTT, CoAP, HTTP).",
     products: [],
-    keywords: ["microcontrollers", "PLCs", "RTUs", "sensors", "Modbus", "OPC-UA"],
+    keywords: [
+      "microcontrollers",
+      "PLCs",
+      "RTUs",
+      "sensors",
+      "Modbus",
+      "OPC-UA",
+    ],
   },
   {
     num: "02",
     name: "Connectivity & Edge Gateway Layer",
     desc: "Edge gateways aggregate device traffic, translate protocols, and act as the first hop toward the cloud. They run local logic to reduce bandwidth, filter noise, and operate offline when connectivity is lost.",
     products: [
-      { name: "A0 Gateway", href: "/products/a0", desc: "ESP32-C6 RISC-V module with 6 native radios" },
-      { name: "A1 Gateway", href: "/products/a1", desc: "RISC-V Linux gateway for heavier workloads" },
+      {
+        name: "A0 Gateway",
+        href: "/products/a0",
+        desc: "ESP32-C6 RISC-V module with 6 native radios",
+      },
+      {
+        name: "A1 Gateway",
+        href: "/products/a1",
+        desc: "RISC-V Linux gateway for heavier workloads",
+      },
     ],
-    keywords: ["protocol gateway", "edge computing", "protocol translation", "offline operation"],
+    keywords: [
+      "protocol gateway",
+      "edge computing",
+      "protocol translation",
+      "offline operation",
+    ],
   },
   {
     num: "03",
     name: "Message Broker & Transport Layer",
     desc: "The message broker decouples device producers from platform consumers. MQTT is the dominant protocol for constrained devices; AMQP bridges enterprise services. High-availability brokers with durable queues prevent data loss during outages.",
     products: [
-      { name: "FluxMQ", href: "/products/fluxmq", desc: "Enterprise MQTT 5.0 + AMQP broker, built-in clustering" },
+      {
+        name: "FluxMQ",
+        href: "/products/fluxmq",
+        desc: "Enterprise MQTT 5.0 + AMQP broker, built-in clustering",
+      },
     ],
-    keywords: ["MQTT broker", "message queue", "AMQP", "publish-subscribe", "QoS"],
+    keywords: [
+      "MQTT broker",
+      "message queue",
+      "AMQP",
+      "publish-subscribe",
+      "QoS",
+    ],
   },
   {
     num: "04",
     name: "IoT Platform & Device Management Layer",
     desc: "The platform manages device identity, telemetry ingestion, rules processing, dashboards, and multi-tenant access control. It is the operational core that operators interact with daily.",
     products: [
-      { name: "Magistrala", href: "/products/magistrala", desc: "Open-source IoT platform with RBAC, dashboards, rules engine" },
+      {
+        name: "Magistrala",
+        href: "/products/magistrala",
+        desc: "Open-source IoT platform with RBAC, dashboards, rules engine",
+      },
     ],
-    keywords: ["device management", "telemetry", "dashboards", "rules engine", "multi-tenancy"],
+    keywords: [
+      "device management",
+      "telemetry",
+      "dashboards",
+      "rules engine",
+      "multi-tenancy",
+    ],
   },
   {
     num: "05",
     name: "Identity & Authorization Layer",
     desc: "Every device, user, and service must be authenticated and authorized before accessing resources. Runtime policy evaluation prevents stale-permission windows that occur when permissions are embedded in tokens.",
     products: [
-      { name: "Atom", href: "/products/atom", desc: "Open-source IAM with runtime RBAC/ABAC for IoT" },
+      {
+        name: "Atom",
+        href: "/products/atom",
+        desc: "Open-source IAM with runtime RBAC/ABAC for IoT",
+      },
     ],
-    keywords: ["device identity", "IAM", "RBAC", "ABAC", "JWT", "authorization"],
+    keywords: [
+      "device identity",
+      "IAM",
+      "RBAC",
+      "ABAC",
+      "JWT",
+      "authorization",
+    ],
   },
   {
     num: "06",
     name: "Edge Compute & Orchestration Layer",
     desc: "WebAssembly workloads can be deployed and updated remotely on both cloud nodes and microcontrollers. This layer enables AI inference, data transformation, and protocol bridging at the edge without firmware reflashing.",
     products: [
-      { name: "Propeller", href: "/products/propeller", desc: "WebAssembly edge orchestrator, cloud-to-MCU" },
+      {
+        name: "Propeller",
+        href: "/products/propeller",
+        desc: "WebAssembly edge orchestrator, cloud-to-MCU",
+      },
     ],
-    keywords: ["WebAssembly", "edge AI", "FaaS", "OTA updates", "Wasm orchestration"],
+    keywords: [
+      "WebAssembly",
+      "edge AI",
+      "FaaS",
+      "OTA updates",
+      "Wasm orchestration",
+    ],
   },
   {
     num: "07",
     name: "Security & Cryptography Layer",
     desc: "Long-lived IoT devices must remain secure after classical PKI is broken by quantum computers. Hardware-accelerated post-quantum cryptography provides forward-secure device identity that outlives the deployment lifetime.",
     products: [
-      { name: "Quarc", href: "/products/quarc", desc: "Post-quantum secure element, ML-KEM & ML-DSA" },
+      {
+        name: "Quarc",
+        href: "/products/quarc",
+        desc: "Post-quantum secure element, ML-KEM & ML-DSA",
+      },
     ],
-    keywords: ["post-quantum cryptography", "secure element", "hardware root of trust", "ML-KEM", "ML-DSA"],
+    keywords: [
+      "post-quantum cryptography",
+      "secure element",
+      "hardware root of trust",
+      "ML-KEM",
+      "ML-DSA",
+    ],
   },
 ];
 
@@ -198,13 +269,15 @@ const faqSchema = JSON.stringify({
     <section class="section" style="border-bottom:1px solid var(--line-3);">
       <div class="container-wide">
         <div class="pillar-definition-block">
-          <h2 class="pillar-definition-h2">What is IIoT platform architecture?</h2>
+          <h2 class="pillar-definition-h2">
+            What is IIoT platform architecture?
+          </h2>
           <p class="pillar-definition-text">
             IIoT platform architecture describes how industrial IoT systems are
-            structured across multiple layers: physical devices and sensors, edge
-            gateways for local processing, a message broker for telemetry
-            transport, a central IoT platform for device management and dashboards,
-            and identity and security layers. Each layer has defined
+            structured across multiple layers: physical devices and sensors,
+            edge gateways for local processing, a message broker for telemetry
+            transport, a central IoT platform for device management and
+            dashboards, and identity and security layers. Each layer has defined
             responsibilities, protocols, and scaling characteristics.
           </p>
         </div>
@@ -284,8 +357,8 @@ const faqSchema = JSON.stringify({
           <div class="pillar-stack-row">
             <div class="pillar-stack-label">Applications & Dashboards</div>
             <div class="pillar-stack-product">
-              <a href="/products/magistrala">Magistrala</a> — visual dashboards,
-              alarm management, reports, rules engine
+              <a href="/products/magistrala">Magistrala</a> — visual dashboards, alarm
+              management, reports, rules engine
             </div>
           </div>
           <div class="pillar-stack-row">
@@ -326,15 +399,15 @@ const faqSchema = JSON.stringify({
           <div class="pillar-stack-row">
             <div class="pillar-stack-label">Edge Gateway (RTOS / MCU)</div>
             <div class="pillar-stack-product">
-              <a href="/products/a0">A0 Gateway</a> — ESP32-C6 RISC-V, Zephyr, 6
-              radios (Wi-Fi 6, BLE, NB-IoT, M-Bus, Thread, Ethernet)
+              <a href="/products/a0">A0 Gateway</a> — ESP32-C6 RISC-V, Zephyr, 6 radios
+              (Wi-Fi 6, BLE, NB-IoT, M-Bus, Thread, Ethernet)
             </div>
           </div>
           <div class="pillar-stack-row">
             <div class="pillar-stack-label">Hardware Security</div>
             <div class="pillar-stack-product">
-              <a href="/products/quarc">Quarc</a> — post-quantum secure element,
-              ML-KEM-768, ML-DSA-65, hardware root of trust
+              <a href="/products/quarc">Quarc</a> — post-quantum secure element, ML-KEM-768,
+              ML-DSA-65, hardware root of trust
             </div>
           </div>
         </div>
@@ -386,7 +459,9 @@ const faqSchema = JSON.stringify({
         <div class="section-head">
           <div class="left">
             <span class="kicker">Design decisions</span>
-            <h2 class="h-2" style="margin-top:14px;">Edge vs cloud processing.</h2>
+            <h2 class="h-2" style="margin-top:14px;">
+              Edge vs cloud processing.
+            </h2>
           </div>
           <p class="lede">
             The decision of where to process data has significant implications
@@ -398,8 +473,8 @@ const faqSchema = JSON.stringify({
             <h3 class="pillar-edge-title">Process at the edge when:</h3>
             <ul class="pillar-edge-list">
               <li>
-                Control loops require sub-100ms response times (cloud round-trips
-                introduce too much latency)
+                Control loops require sub-100ms response times (cloud
+                round-trips introduce too much latency)
               </li>
               <li>
                 Devices operate in locations with intermittent connectivity —
@@ -410,8 +485,8 @@ const faqSchema = JSON.stringify({
                 relevant to the cloud (bandwidth reduction)
               </li>
               <li>
-                Data sovereignty or regulatory requirements restrict transmission
-                of raw device data off-premises
+                Data sovereignty or regulatory requirements restrict
+                transmission of raw device data off-premises
               </li>
               <li>
                 AI inference must run close to the sensor to be actionable (e.g.
@@ -423,20 +498,20 @@ const faqSchema = JSON.stringify({
             <h3 class="pillar-edge-title">Process in the cloud when:</h3>
             <ul class="pillar-edge-list">
               <li>
-                Long-term storage and historical analysis are the primary use case
-                — cloud storage is cheaper and more scalable
+                Long-term storage and historical analysis are the primary use
+                case — cloud storage is cheaper and more scalable
               </li>
               <li>
-                Cross-site correlation is needed — aggregating data from hundreds
-                of sites for fleet-level analytics
+                Cross-site correlation is needed — aggregating data from
+                hundreds of sites for fleet-level analytics
               </li>
               <li>
-                Heavy ML training runs that require GPU resources not available at
-                the edge
+                Heavy ML training runs that require GPU resources not available
+                at the edge
               </li>
               <li>
-                Compliance reporting and audit trails that must be tamper-proof and
-                centrally managed
+                Compliance reporting and audit trails that must be tamper-proof
+                and centrally managed
               </li>
               <li>
                 Real-time dashboards and alerting that operators access from
@@ -470,8 +545,8 @@ const faqSchema = JSON.stringify({
             <p class="pillar-security-desc">
               Every device needs a unique cryptographic identity issued at
               manufacture or provisioning. Device certificates or API keys
-              authenticate the device to the message broker and platform. When
-              a device is decommissioned, its credentials must be revoked and
+              authenticate the device to the message broker and platform. When a
+              device is decommissioned, its credentials must be revoked and
               access blocked immediately — runtime policy evaluation (not
               token-embedded permissions) guarantees this.
             </p>
@@ -494,15 +569,11 @@ const faqSchema = JSON.stringify({
             <h3 class="pillar-security-name">Secure boot & OTA updates</h3>
             <p class="pillar-security-desc">
               Firmware must be signed and the signature verified at boot before
-              execution. OTA updates must be delivered over authenticated, encrypted
-              channels and must include rollback protection — a failed update
-              must not brick the device or leave it in an unknown state.
+              execution. OTA updates must be delivered over authenticated,
+              encrypted channels and must include rollback protection — a failed
+              update must not brick the device or leave it in an unknown state.
             </p>
-            <a
-              href="/products/quarc"
-              class="btn-link"
-              style="font-size:13px;"
-            >
+            <a href="/products/quarc" class="btn-link" style="font-size:13px;">
               Quarc — hardware-enforced secure boot →
             </a>
           </div>
@@ -516,11 +587,7 @@ const faqSchema = JSON.stringify({
               (signatures) for device identity and firmware signing, especially
               for devices with 10+ year deployment lifetimes.
             </p>
-            <a
-              href="/products/quarc"
-              class="btn-link"
-              style="font-size:13px;"
-            >
+            <a href="/products/quarc" class="btn-link" style="font-size:13px;">
               Quarc — PQC secure element →
             </a>
           </div>

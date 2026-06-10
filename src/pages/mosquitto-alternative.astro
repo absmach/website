@@ -120,9 +120,10 @@ const faqSchema = JSON.stringify({
             The enterprise Mosquitto alternative for production IoT.
           </h1>
           <p class="lede" style="margin-top:20px; max-width:52ch;">
-            Eclipse Mosquitto is excellent for development and small deployments. When
-            you need clustering, durable message delivery, AMQP support, and
-            100K+ connections, FluxMQ takes over where Mosquitto stops.
+            Eclipse Mosquitto is excellent for development and small
+            deployments. When you need clustering, durable message delivery,
+            AMQP support, and 100K+ connections, FluxMQ takes over where
+            Mosquitto stops.
           </p>
           <div class="btn-row" style="margin-top:32px;">
             <a href="/products/fluxmq" class="btn btn-primary">
@@ -150,8 +151,8 @@ const faqSchema = JSON.stringify({
             Mosquitto is a single-node MQTT broker. It has no built-in
             clustering, no durable queues, and no AMQP support. Teams that need
             high availability, horizontal scaling beyond a single node, or
-            guaranteed message delivery to consumer groups typically migrate to a
-            distributed broker like FluxMQ.
+            guaranteed message delivery to consumer groups typically migrate to
+            a distributed broker like FluxMQ.
           </p>
         </div>
       </div>
@@ -284,7 +285,8 @@ const faqSchema = JSON.stringify({
                     <td class="alt-col-fluxmq alt-yes">{fluxmq}</td>
                     <td
                       class={
-                        mosquitto === "No" || mosquitto === "N/A (no clustering)"
+                        mosquitto === "No" ||
+                        mosquitto === "N/A (no clustering)"
                           ? "alt-no"
                           : mosquitto === "Yes"
                             ? "alt-yes"
@@ -304,8 +306,8 @@ const faqSchema = JSON.stringify({
         >
           Sources: Eclipse Mosquitto documentation (mosquitto.org), FluxMQ
           source code and documentation (github.com/absmach/fluxmq). Mosquitto
-          plugin ecosystem can extend some features; table reflects out-of-the-box
-          capabilities.
+          plugin ecosystem can extend some features; table reflects
+          out-of-the-box capabilities.
         </p>
       </div>
     </section>
@@ -370,18 +372,17 @@ const faqSchema = JSON.stringify({
             <div class="num">01</div>
             <h4>Run FluxMQ alongside Mosquitto</h4>
             <p>
-              Start FluxMQ on the same network. Point a test client at FluxMQ
-              on port 1883. Both brokers can run simultaneously during
-              migration.
+              Start FluxMQ on the same network. Point a test client at FluxMQ on
+              port 1883. Both brokers can run simultaneously during migration.
             </p>
           </div>
           <div class="step">
             <div class="num">02</div>
             <h4>Validate client compatibility</h4>
             <p>
-              Connect your existing MQTT clients to FluxMQ. QoS levels,
-              retained messages, Last Will and Testament, and shared
-              subscriptions all work as expected.
+              Connect your existing MQTT clients to FluxMQ. QoS levels, retained
+              messages, Last Will and Testament, and shared subscriptions all
+              work as expected.
             </p>
           </div>
           <div class="step">
@@ -394,8 +395,7 @@ const faqSchema = JSON.stringify({
           </div>
         </div>
         <div style="margin-top:40px;">
-          <a href="/products/fluxmq" class="btn btn-primary"
-            >Explore FluxMQ →</a
+          <a href="/products/fluxmq" class="btn btn-primary">Explore FluxMQ →</a
           >
         </div>
       </div>
@@ -425,8 +425,8 @@ const faqSchema = JSON.stringify({
           Ready to scale beyond Mosquitto?
         </h2>
         <p class="lede" style="margin:20px auto 36px;">
-          FluxMQ is open source, Apache 2.0, and ships as a single Go binary.
-          No external dependencies. Full clustering from day one.
+          FluxMQ is open source, Apache 2.0, and ships as a single Go binary. No
+          external dependencies. Full clustering from day one.
         </p>
         <div class="btn-row" style="justify-content:center;">
           <a
