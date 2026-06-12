@@ -499,12 +499,7 @@ const nextReadPosts = allPosts
     }
   </main>
 
-  <div
-    id="blog-lb"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Image zoom"
-  >
+  <div id="blog-lb" role="dialog" aria-modal="true" aria-label="Image zoom">
     <button id="blog-lb-close" aria-label="Close image">
       <svg
         width="16"
@@ -706,18 +701,14 @@ const nextReadPosts = allPosts
         post.addEventListener("click", (e) => {
           const img = (e.target as Element).closest("img");
           if (!img) return;
-          openLb(
-            (img as HTMLImageElement).src,
-            img.getAttribute("alt") ?? "",
-          );
+          openLb((img as HTMLImageElement).src, img.getAttribute("alt") ?? "");
         });
         lbClose?.addEventListener("click", closeLb);
         lb.addEventListener("click", (e) => {
           if (e.target === lb) closeLb();
         });
         document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape" && lb.classList.contains("is-open"))
-            closeLb();
+          if (e.key === "Escape" && lb.classList.contains("is-open")) closeLb();
         });
       }
     }
