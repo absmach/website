@@ -571,18 +571,27 @@ const nextReadPosts = allPosts
   }
   :global(.blog-img-grid > p) {
     margin: 0 !important;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 1rem;
+    border: 1px solid var(--line-3);
   }
   :global(.blog-img-grid > p > img) {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
     margin: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
   }
 
-  /* Make post images look clickable */
+  /* Make post images look clickable, and unify border style */
   :global(#post img) {
     cursor: zoom-in;
     transition: opacity 0.15s;
+    border: 1px solid var(--line-3) !important;
+    border-radius: 1rem !important;
   }
   :global(#post img:hover) {
     opacity: 0.85;
