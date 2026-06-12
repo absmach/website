@@ -22,23 +22,17 @@ featured: true
 
 ## Introducing Atom
 
-We've been building [Magistrala](https://www.absmach.eu/products/magistrala) - an open-source IoT platform - for years. As it grew, so did the authorization problem. Devices, users, groups, tenants, services: all of them interrelated, all of them needing fine-grained access control. Our original architecture handled this the way most systems do - entity state in one service, authorization policies in another, connected over events.
+We've been building [Magistrala](https://www.absmach.eu/products/magistrala) - an open-source IoT platform - for years. As the platform grew, authorization became harder to reason about. Devices, users, groups, tenants, and services were all interrelated, and all needed fine-grained access control. Our original architecture followed a familiar pattern: entity state in one service, authorization policies in another, connected over events. That approach carried us a long way, but its tradeoffs became more visible at scale.
 
-It worked, until it didn't.
+Under sustained load, event queues could fall behind. Authorization checks sometimes observed state before synchronization had completed. Listing which resources a user could access often required cross-service joins at query time. Onboarding a new tenant touched multiple systems that then had to converge. None of these problems was surprising on its own, but together they made the system harder to operate with confidence.
 
-Event queues backed up under load. Authorization checks returned stale results because the sync hadn't caught up. Listing which resources a user could access required cross-service joins at query time. Onboarding a new tenant meant writing to three systems and hoping they converged. Every incident post-mortem included the phrase "transient sync lag." We had run this in production long enough to understand the real cost.
-
-The realization was uncomfortable: we didn't have a scaling problem. We had a complexity problem that we'd been treating as a scaling problem.
-
-So we rebuilt it.
-
-Meet <a href="https://www.absmach.eu/products/atom">**Atom**</a>.
+Over time, we came to see the issue less as raw scale and more as architectural complexity. That work became <a href="https://www.absmach.eu/products/atom">**Atom**</a>: a simpler model that keeps identity state and authorization policy together in one transactional store.
 
 ---
 
 ## What Is Atom?
 
-**Atom** is a **free and open-source identity and authorization service** that stores entities and their access policies in the same transactional store.
+**Atom** is a **free and open-source identity and authorization service** that stores entities and their access policies in the same transactional store (PostgreSQL).
 
 At its core, Atom is built around five ideas:
 
@@ -48,7 +42,7 @@ At its core, Atom is built around five ideas:
 - **Relationship-based access control** - permission model built on Actions, Permission Blocks, Roles, and Role Assignments
 - **Single binary, minimal infrastructure** - one Rust binary backed by PostgreSQL; no dedicated cache, no message broker, no separate policy engine
 
-Atom is built for production. It is already running as the identity and authorization layer for [Magistrala](https://www.absmach.eu/products/magistrala) and Ultraviolet's [Cube-AI](https://www.ultraviolet.rs/products/cube-ai), a sovereign AI platform. v0.1.0 is a hardened release, not an experiment.
+Atom is designed for production environments, but v0.1.0 is still an early release. It is already being integrated into [Magistrala](https://www.absmach.eu/products/magistrala) and Ultraviolet's [Cube-AI](https://www.ultraviolet.rs/products/cube-ai), a sovereign AI platform, and those deployments are helping harden the API, operational model, and testing surface.
 
 ---
 
@@ -127,9 +121,7 @@ Atom may **not** be the right fit if your access control requirements are simple
 
 Building identity and authorization infrastructure is not something you do because it's interesting. It is critical, unglamorous infrastructure that has to be correct at all times.
 
-So why build another one?
-
-Because the split model - identity in one service, authorization in another - creates a class of bugs that cannot be fixed by tightening the event pipeline. You can add retries, idempotency keys, dead-letter queues, and reconciliation jobs. You will still have windows of inconsistency. The consistency problem is structural, not operational.
+We built Atom because the split model - identity in one service, authorization in another - creates a class of bugs that cannot be fixed by tightening the event pipeline. You can add retries, idempotency keys, dead-letter queues, and reconciliation jobs, but you will still have windows of inconsistency. The consistency problem is structural, not operational.
 
 We needed:
 
@@ -142,9 +134,7 @@ Existing Zanzibar-style systems solve the consistency problem but require specia
 
 ### Why Choose Atom?
 
-Most teams accumulate separate services for identity management, authorization policy evaluation, and group membership. Each adds operational surface area, integration overhead, and another system to keep in sync.
-
-Atom consolidates this into one service, one data store, one API.
+Most teams accumulate separate services for identity management, authorization policy evaluation, and group membership. Each adds operational surface area, integration overhead, and another system to keep in sync. Atom consolidates those concerns into one service, one data store, and one API.
 
 **The result:**
 
@@ -171,7 +161,7 @@ Issues, feedback, and contributions are open. If you're evaluating Atom for a pr
 
 ## What's Next?
 
-This release marks the beginning. Upcoming posts will cover:
+This release marks the beginning; upcoming posts will cover:
 
 - Getting started: deploying Atom and building your first authorization model
 - The engineering story: how we replaced a distributed auth system with a single binary
