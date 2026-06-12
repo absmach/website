@@ -141,7 +141,7 @@ A tenant is the top-level isolation boundary. All entities, roles, and authoriza
 
 ![Empty tenants list](/img/blogs/getting-started-with-atom/03-tenants-empty.png)
 
-Click **Create**, fill in a name (`acme-corp`) and display name (`Acme Corporation`), then click **Create tenant**.
+Click **Create**, fill in a name (`acme-corp`), then click **Create tenant**.
 
 ![Tenant create dialog filled](/img/blogs/getting-started-with-atom/05-tenant-create-filled.png)
 
@@ -161,7 +161,7 @@ Click the tenant to inspect it. Copy the **ID** — you'll need it when using th
 ```bash
 QUERY='mutation CreateTenant($input: CreateTenantInput!) { createTenant(input: $input) { id name } }'
 PAYLOAD=$(jq -n --arg q "$QUERY" \
-  '{"query":$q,"variables":{"input":{"name":"acme-corp","displayName":"Acme Corporation"}}}')
+  '{"query":$q,"variables":{"input":{"name":"acme-corp"}}}')
 
 TENANT_ID=$(curl -s -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
@@ -466,24 +466,26 @@ The `reason` field isn't decorative. In a distributed system where multiple serv
 
 ## Troubleshooting
 
-**Login fails with "Sign in failed."** Verify `ADMIN_SECRET` in your `.env` matches the password you are entering. Restart the containers after editing `.env`.
+Most issues during setup fall into a few predictable categories — authentication, timing, and silent GraphQL errors. Here's how to work through each.
 
-**`401 Unauthorized` on API requests.** Your token has expired or was not captured. Re-run the login curl command and reassign `$TOKEN`.
+1. **Login fails with "Sign in failed."** The most common cause is a mismatch between `ADMIN_SECRET` in your `.env` and the password you're typing. Edit the file, then restart the containers entirely — changes to `.env` are not picked up by running containers.
 
-**`null` values after curl mutations.** The mutation returned a GraphQL error that `jq -r` silently converted to `null`. Drop the `| jq -r ...` pipe and inspect the full response for an `errors` array.
+2. **`401 Unauthorized` on API requests.** Tokens are short-lived. If you're seeing this mid-session, your token has expired or wasn't captured correctly. Re-run the login curl command, reassign `$TOKEN`, and retry.
 
-**Postgres connection refused on startup.** The database container may not be fully initialized. Wait 15–20 seconds after `docker compose up postgres -d` before starting the `atom-ui` profile.
+3. **`null` values after curl mutations.** This is a silent GraphQL error, not a missing field. The `jq -r` pipe converts error objects to `null` without any warning. Drop the pipe entirely and inspect the raw response — look for an `errors` array in the JSON.
 
-**Authorization check returns `"unknown action 'read'"`.** In Atom v0.1.0 the `read` action is only registered for built-in resource kinds (`channel`, `rule`, `report`, `alarm`). Use `kind: "channel"` when creating your test resource, or insert the appropriate row into `action_applicability` for a custom resource kind.
+4. **Postgres connection refused on startup.** The database container needs a moment to fully initialize before accepting connections. If you see this, wait 15–20 seconds after `docker compose up postgres -d` before bringing up the `atom-ui` profile.
+
+5. **Authorization check returns `"unknown action 'read'"`.** In Atom v0.1.0, the `read` action is only registered for built-in resource kinds (`channel`, `rule`, `report`, `alarm`). Use `kind: "channel"` for your test resource, or add the appropriate row to `action_applicability` if you're working with a custom kind.
 
 ## Next Steps
 
-You now have a working Atom deployment with tenant isolation, typed entity modeling, permission blocks, role assignments, and verified allow and deny authorization decisions.
+With a working deployment behind you, you've touched every core layer of Atom: tenant isolation, typed entity modeling, permission blocks, role assignment, and verified allow and deny decisions. What comes next depends on the shape of your use case.
 
-**Groups**: Use `createGroup` and group membership mutations to model teams, device fleets, or service clusters. Group-level role assignments propagate to all member entities, which is essential for IoT deployments managing large device populations.
+1. **Groups** let you model teams, device fleets, or service clusters as a unit. Use `createGroup` and the group membership mutations to assign roles at the group level — those assignments propagate automatically to every member entity. For IoT deployments managing large device populations, this is the feature that makes policy administration tractable.
 
-**Custom HTTP endpoints**: The Endpoints interface in the Atom UI lets you define REST routes backed by GraphQL operations — the integration path for services that can't speak GraphQL natively.
+2. **Custom HTTP endpoints** are the integration path for services that can't speak GraphQL natively. The Endpoints interface in the Atom UI lets you define REST routes backed by GraphQL operations, so existing HTTP clients can talk to Atom without any code changes on their end.
 
-**mTLS and workload identity**: Atom supports certificate-bound tokens for device and workload entities, the right foundation for edge computing scenarios where password-based authentication isn't appropriate.
+3. **mTLS and workload identity** are the right foundation for edge and device scenarios where password-based authentication isn't appropriate. Atom supports certificate-bound tokens for device and workload entities, giving you strong identity at the hardware level.
 
-**Relationship-based access control**: Atom's graph model supports entity relationships that influence authorization decisions. A workload authorized by its parent device group is a policy structure that flat RBAC can't represent cleanly.
+4. **Relationship-based access control** is where Atom's graph model separates itself from flat RBAC. Entity relationships can directly influence authorization decisions — a workload that inherits authorization from its parent device group is a policy structure that role tables alone can't represent. If your access model has hierarchy or delegation in it, this is worth exploring early.
