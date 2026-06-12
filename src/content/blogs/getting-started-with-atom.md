@@ -201,14 +201,14 @@ Both entities are now listed under acme-corp.
 QUERY='mutation CreateEntity($input: CreateEntityInput!) { createEntity(input: $input) { id } }'
 
 PAYLOAD=$(jq -n --arg q "$QUERY" --arg tid "$TENANT_ID" \
-  '{"query":$q,"variables":{"input":{"tenantId":$tid,"name":"alice","kind":"human"}}}')
+  '{"query":$q,"variables":{"input":{"tenantId":$tid,"name":"alice","kind":"human","attributes":{}}}}')
 ALICE_ID=$(curl -s -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d "$PAYLOAD" | jq -r '.data.createEntity.id')
 
 PAYLOAD=$(jq -n --arg q "$QUERY" --arg tid "$TENANT_ID" \
-  '{"query":$q,"variables":{"input":{"tenantId":$tid,"name":"billing-service","kind":"service"}}}')
+  '{"query":$q,"variables":{"input":{"tenantId":$tid,"name":"billing-service","kind":"service","attributes":{}}}}')
 SERVICE_ID=$(curl -s -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
@@ -251,14 +251,24 @@ The permission block appears in the list.
 <summary><strong>Using curl instead</strong></summary>
 
 ```bash
-QUERY='mutation CreatePermissionBlock($input: CreatePermissionBlockInput!) { createPermissionBlock(input: $input) { id } }'
-PAYLOAD=$(jq -n --arg q "$QUERY" --arg rid "$ROLE_ID" \
-  '{"query":$q,"variables":{"input":{"roleId":$rid,"objectKind":"resource","actions":["read","write"],"effect":"allow"}}}')
-
-curl -s -X POST http://localhost:8080/graphql \
+# Look up action IDs for read and write on resource objects
+AQ='{ actions(objectKind: "resource") { items { id name } } }'
+ACTION_IDS=$(curl -s -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
-  -d "$PAYLOAD" | jq .
+  -d "$(jq -n --arg q "$AQ" '{"query":$q}')" \
+  | jq '[.data.actions.items[] | select(.name == "read" or .name == "write") | .id]')
+
+QUERY='mutation CreatePermissionBlock($input: CreatePermissionBlockInput!) { createPermissionBlock(input: $input) { id } }'
+PAYLOAD=$(jq -n --arg q "$QUERY" --arg tid "$TENANT_ID" --argjson aids "$ACTION_IDS" \
+  '{"query":$q,"variables":{"input":{"tenantId":$tid,"scopeMode":"object_kind","objectKind":"resource","actionIds":$aids,"effect":"allow"}}}')
+
+BLOCK_ID=$(curl -s -X POST http://localhost:8080/graphql \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d "$PAYLOAD" | jq -r '.data.createPermissionBlock.id')
+
+echo "Permission block: $BLOCK_ID"
 ```
 
 </details>
@@ -295,6 +305,16 @@ ROLE_ID=$(curl -s -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d "$PAYLOAD" | jq -r '.data.createRole.id')
+
+# Attach the permission block created in the previous step
+ATTACH_QUERY='mutation ReplaceRolePermissionBlocks($roleId: ID!, $permissionBlockIds: [ID!]!) { replaceRolePermissionBlocks(roleId: $roleId, permissionBlockIds: $permissionBlockIds) }'
+ATTACH_PAYLOAD=$(jq -n --arg q "$ATTACH_QUERY" --arg rid "$ROLE_ID" --arg bid "$BLOCK_ID" \
+  '{"query":$q,"variables":{"roleId":$rid,"permissionBlockIds":[$bid]}}')
+
+curl -s -X POST http://localhost:8080/graphql \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d "$ATTACH_PAYLOAD" | jq .
 ```
 
 </details>
