@@ -89,6 +89,14 @@ For advanced cases, Direct Policies attach a Permission Block directly to a subj
 
 The optional Next UI runs at `:3005` and ships with workflows for tenants, entities, groups, roles, policies, audit, and authorization debugging. The **API Endpoint Builder** lets you define custom HTTP routes under `/api/custom/*` backed by inline GraphQL operations - useful for exposing Atom operations through domain-specific REST paths without writing a wrapper service. The **GraphQL playground** includes schema introspection, starter operations, and copyable curl/fetch snippets.
 
+![Entities list](/img/blogs/atom-announcement/08-entities-list.png)
+
+![Permission blocks list](/img/blogs/atom-announcement/16-permission-blocks-list.png)
+
+![GraphQL playground](/img/blogs/atom-announcement/26-playground.png)
+
+![Authorization debugger — Alice allowed](/img/blogs/atom-announcement/33-authz-debugger-alice-allowed.png)
+
 ### Single Binary, Minimal Infrastructure
 
 Atom ships as a single Rust binary. The only required dependency is PostgreSQL. No Kafka, no Redis, no sidecar sync process. Migrations apply automatically on startup.
