@@ -87,7 +87,7 @@ The optional Next UI runs at `:3005` and ships with workflows for tenants, entit
 
 ![Permission blocks list](/img/blogs/atom-announcement/16-permission-blocks-list.png)
 
-![GraphQL playground](/img/blogs/atom-announcement/26-playground.png)
+![Create role form](/img/blogs/atom-announcement/23-role-create-permblock-attached.png)
 
 ![Authorization debugger — Alice allowed](/img/blogs/atom-announcement/33-authz-debugger-alice-allowed.png)
 
