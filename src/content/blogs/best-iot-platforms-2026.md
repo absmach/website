@@ -11,7 +11,7 @@ coverImage: "/img/blogs/best-iot-platforms-2026/hero.jpg"
 ogImage:
   url: "/img/blogs/best-iot-platforms-2026/hero.jpg"
 category: blog
-featured: true
+featured: false
 tags:
   - IoT
   - IIoT

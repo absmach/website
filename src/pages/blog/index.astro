@@ -25,6 +25,7 @@ const getBadgeClass = (tag: string) =>
 
 const PRODUCT_CATEGORIES = [
   { key: "MG", label: "Magistrala", matchTags: ["mg", "magistrala"] },
+  { key: "ATOM", label: "Atom", matchTags: ["atom"] },
   { key: "FLUXMQ", label: "FluxMQ", matchTags: ["fluxmq"] },
   { key: "PROPELLER", label: "Propeller", matchTags: ["propeller"] },
   { key: "A0", label: "A0", matchTags: ["a0", "a0 gateway"] },
@@ -296,6 +297,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
 
             const PRODUCT_MATCHERS = {
               MG: ["mg", "magistrala"],
+              ATOM: ["atom"],
               FLUXMQ: ["fluxmq"],
               PROPELLER: ["propeller", "properller"],
               A0: ["a0", "a0 gateway"],
