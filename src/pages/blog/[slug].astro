@@ -498,6 +498,30 @@ const nextReadPosts = allPosts
       )
     }
   </main>
+
+  <div
+    id="blog-lb"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image zoom"
+  >
+    <button id="blog-lb-close" aria-label="Close image">
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <img id="blog-lb-img" src="" alt="" />
+  </div>
+
   <Footer />
   <script
     is:inline
@@ -541,9 +565,164 @@ const nextReadPosts = allPosts
   .cover-image {
     object-fit: cover;
   }
+
+  /* Consecutive-image 2-column grid — needs :global() because the div is
+     created by JS and markdown <img> elements lack Astro's scoping attribute */
+  :global(.blog-img-grid) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin: 1.5rem 0 !important;
+  }
+  :global(.blog-img-grid > p) {
+    margin: 0 !important;
+  }
+  :global(.blog-img-grid > p > img) {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 !important;
+  }
+
+  /* Make post images look clickable */
+  :global(#post img) {
+    cursor: zoom-in;
+    transition: opacity 0.15s;
+  }
+  :global(#post img:hover) {
+    opacity: 0.85;
+  }
+
+  /* Lightbox */
+  #blog-lb {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  #blog-lb.is-open {
+    display: flex;
+  }
+  #blog-lb-img {
+    max-width: min(92vw, 1200px);
+    max-height: 88vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 0.75rem;
+    display: block;
+    margin: 0;
+    border: none;
+  }
+  #blog-lb-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: white;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  #blog-lb-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
 </style>
 
 <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const post = document.getElementById("post");
+    if (post) {
+      // Group consecutive image-only <p> elements into a 2-column grid
+      function isImgOnlyP(el: Element): boolean {
+        if (el.tagName !== "P") return false;
+        let imgCount = 0;
+        for (const node of el.childNodes) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            if ((node.textContent ?? "").trim() !== "") return false;
+          } else if (
+            node.nodeType === Node.ELEMENT_NODE &&
+            (node as Element).tagName === "IMG"
+          ) {
+            imgCount++;
+          } else {
+            return false;
+          }
+        }
+        return imgCount === 1;
+      }
+
+      const children = Array.from(post.children);
+      let i = 0;
+      while (i < children.length) {
+        if (isImgOnlyP(children[i])) {
+          let j = i + 1;
+          while (j < children.length && isImgOnlyP(children[j])) j++;
+          const group = children.slice(i, j);
+          if (group.length >= 2) {
+            const grid = document.createElement("div");
+            grid.className = "blog-img-grid";
+            post.insertBefore(grid, group[0]);
+            group.forEach((p) => grid.appendChild(p));
+          }
+          i = j;
+        } else {
+          i++;
+        }
+      }
+
+      // Lightbox
+      const lb = document.getElementById("blog-lb");
+      const lbImg = document.getElementById(
+        "blog-lb-img",
+      ) as HTMLImageElement | null;
+      const lbClose = document.getElementById("blog-lb-close");
+
+      if (lb && lbImg) {
+        const openLb = (src: string, alt: string) => {
+          lbImg.src = src;
+          lbImg.alt = alt;
+          lb.classList.add("is-open");
+          document.body.style.overflow = "hidden";
+        };
+        const closeLb = () => {
+          lb.classList.remove("is-open");
+          document.body.style.overflow = "";
+        };
+
+        post.addEventListener("click", (e) => {
+          const img = (e.target as Element).closest("img");
+          if (!img) return;
+          openLb(
+            (img as HTMLImageElement).src,
+            img.getAttribute("alt") ?? "",
+          );
+        });
+        lbClose?.addEventListener("click", closeLb);
+        lb.addEventListener("click", (e) => {
+          if (e.target === lb) closeLb();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && lb.classList.contains("is-open"))
+            closeLb();
+        });
+      }
+    }
+  });
+
   document.addEventListener("DOMContentLoaded", () => {
     const coverImages = document.querySelectorAll(".cover-image");
 
