@@ -163,7 +163,7 @@ Issues, feedback, and contributions are open. If you're evaluating Atom for a pr
 
 This release marks the beginning; upcoming posts will cover:
 
-- Getting started: deploying Atom and building your first authorization model
+- [Getting started](/blog/getting-started-with-atom/): deploying Atom and building your first authorization model
 - The engineering story: how we replaced a distributed auth system with a single binary
 - How Atom compares to Keycloak, OpenFGA, SpiceDB, and Permify
 
