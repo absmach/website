@@ -1,0 +1,1083 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FAQAccordion from "../components/FAQAccordion.astro";
+
+const layers = [
+  {
+    num: "01",
+    name: "Device & Sensor Layer",
+    desc: "Physical endpoints — PLCs, RTUs, sensors, meters, actuators, and embedded modules. Devices communicate over field protocols (Modbus, OPC-UA, Wireless M-Bus, BACnet) or directly over IP (MQTT, CoAP, HTTP).",
+    products: [],
+    keywords: [
+      "microcontrollers",
+      "PLCs",
+      "RTUs",
+      "sensors",
+      "Modbus",
+      "OPC-UA",
+    ],
+  },
+  {
+    num: "02",
+    name: "Connectivity & Edge Gateway Layer",
+    desc: "Edge gateways aggregate device traffic, translate protocols, and act as the first hop toward the cloud. They run local logic to reduce bandwidth, filter noise, and operate offline when connectivity is lost.",
+    products: [
+      {
+        name: "A0 Gateway",
+        href: "/products/a0",
+        desc: "ESP32-C6 RISC-V module with 6 native radios",
+      },
+      {
+        name: "A1 Gateway",
+        href: "/products/a1",
+        desc: "RISC-V Linux gateway for heavier workloads",
+      },
+    ],
+    keywords: [
+      "protocol gateway",
+      "edge computing",
+      "protocol translation",
+      "offline operation",
+    ],
+  },
+  {
+    num: "03",
+    name: "Message Broker & Transport Layer",
+    desc: "The message broker decouples device producers from platform consumers. MQTT is the dominant protocol for constrained devices; AMQP bridges enterprise services. High-availability brokers with durable queues prevent data loss during outages.",
+    products: [
+      {
+        name: "FluxMQ",
+        href: "/products/fluxmq",
+        desc: "Enterprise MQTT 5.0 + AMQP broker, built-in clustering",
+      },
+    ],
+    keywords: [
+      "MQTT broker",
+      "message queue",
+      "AMQP",
+      "publish-subscribe",
+      "QoS",
+    ],
+  },
+  {
+    num: "04",
+    name: "IoT Platform & Device Management Layer",
+    desc: "The platform manages device identity, telemetry ingestion, rules processing, dashboards, and multi-tenant access control. It is the operational core that operators interact with daily.",
+    products: [
+      {
+        name: "Magistrala",
+        href: "/products/magistrala",
+        desc: "Open-source IoT platform with RBAC, dashboards, rules engine",
+      },
+    ],
+    keywords: [
+      "device management",
+      "telemetry",
+      "dashboards",
+      "rules engine",
+      "multi-tenancy",
+    ],
+  },
+  {
+    num: "05",
+    name: "Identity & Authorization Layer",
+    desc: "Every device, user, and service must be authenticated and authorized before accessing resources. Runtime policy evaluation prevents stale-permission windows that occur when permissions are embedded in tokens.",
+    products: [
+      {
+        name: "Atom",
+        href: "/products/atom",
+        desc: "Open-source IAM with runtime RBAC/ABAC for IoT",
+      },
+    ],
+    keywords: [
+      "device identity",
+      "IAM",
+      "RBAC",
+      "ABAC",
+      "JWT",
+      "authorization",
+    ],
+  },
+  {
+    num: "06",
+    name: "Edge Compute & Orchestration Layer",
+    desc: "WebAssembly workloads can be deployed and updated remotely on both cloud nodes and microcontrollers. This layer enables AI inference, data transformation, and protocol bridging at the edge without firmware reflashing.",
+    products: [
+      {
+        name: "Propeller",
+        href: "/products/propeller",
+        desc: "WebAssembly edge orchestrator, cloud-to-MCU",
+      },
+    ],
+    keywords: [
+      "WebAssembly",
+      "edge AI",
+      "FaaS",
+      "OTA updates",
+      "Wasm orchestration",
+    ],
+  },
+  {
+    num: "07",
+    name: "Security & Cryptography Layer",
+    desc: "Long-lived IoT devices must remain secure after classical PKI is broken by quantum computers. Hardware-accelerated post-quantum cryptography provides forward-secure device identity that outlives the deployment lifetime.",
+    products: [
+      {
+        name: "Quarc",
+        href: "/products/quarc",
+        desc: "Post-quantum secure element, ML-KEM & ML-DSA",
+      },
+    ],
+    keywords: [
+      "post-quantum cryptography",
+      "secure element",
+      "hardware root of trust",
+      "ML-KEM",
+      "ML-DSA",
+    ],
+  },
+];
+
+const protocols = [
+  {
+    name: "MQTT",
+    full: "Message Queuing Telemetry Transport",
+    version: "3.1.1 / 5.0",
+    use: "Primary IoT telemetry protocol. Lightweight publish-subscribe with QoS 0/1/2, retained messages, and Last Will. MQTT 5.0 adds shared subscriptions, flow control, and user properties.",
+    transport: "TCP / WebSocket",
+  },
+  {
+    name: "AMQP",
+    full: "Advanced Message Queuing Protocol",
+    version: "0.9.1 / 1.0",
+    use: "Enterprise message queuing. Used for integrating IoT data streams with ERP, MES, and cloud services. Supports transactions, routing topologies, and dead-letter queues.",
+    transport: "TCP",
+  },
+  {
+    name: "CoAP",
+    full: "Constrained Application Protocol",
+    version: "RFC 7252",
+    use: "REST-like protocol optimised for constrained devices with limited bandwidth. Runs over UDP, includes DTLS for security. Common in smart metering and sensor networks.",
+    transport: "UDP / DTLS",
+  },
+  {
+    name: "OPC-UA",
+    full: "Open Platform Communications Unified Architecture",
+    version: "—",
+    use: "Industrial automation standard for PLC and SCADA integration. Rich information model, complex address space, and built-in security. Common in manufacturing and process control.",
+    transport: "TCP / WebSocket",
+  },
+  {
+    name: "Modbus",
+    full: "Modbus RTU / TCP",
+    version: "—",
+    use: "Ubiquitous serial protocol in industrial automation. Runs over RS-485 (RTU) or Ethernet (TCP). No built-in security — requires gateway-level encryption for remote access.",
+    transport: "RS-485 / TCP",
+  },
+  {
+    name: "Wireless M-Bus",
+    full: "EN 13757",
+    version: "868 MHz",
+    use: "European standard for wireless utility meter reading. Used for smart metering of electricity, gas, heat, and water. Operates at 868 MHz sub-GHz for range and wall penetration.",
+    transport: "868 MHz RF",
+  },
+];
+
+const faqs = [
+  {
+    q: "What is IIoT platform architecture?",
+    a: "IIoT platform architecture describes how industrial IoT systems are structured — the layers, components, and protocols that connect physical devices to cloud applications. A typical architecture includes device and sensor layers, edge gateways, message brokers, an IoT platform for device management and dashboards, an identity and authorization layer, and optional edge compute and cryptography layers.",
+  },
+  {
+    q: "What is the difference between IoT and IIoT?",
+    a: "IoT (Internet of Things) is the broad category of connected devices — consumer electronics, smart home devices, wearables. IIoT (Industrial Internet of Things) specifically refers to connected devices in industrial contexts: manufacturing, energy, utilities, transportation, and infrastructure. IIoT systems typically have higher reliability requirements, longer device lifetimes, and stricter security and compliance needs.",
+  },
+  {
+    q: "Why is MQTT the dominant protocol for IIoT?",
+    a: "MQTT was designed for constrained devices over unreliable networks. Its publish-subscribe model decouples producers from consumers. Quality of Service levels (0/1/2) provide flexible delivery guarantees. It runs over TCP with minimal overhead, making it suitable for everything from microcontrollers to cloud-scale brokers. MQTT 5.0 adds features like shared subscriptions, topic aliases, and enhanced authentication that enterprise deployments need.",
+  },
+  {
+    q: "What is an IoT gateway and do I need one?",
+    a: "An IoT gateway is a device that aggregates data from local sensors and field devices and forwards it to a cloud platform. Gateways are necessary when field devices speak non-IP protocols (Modbus, Wireless M-Bus, Bluetooth), when local processing or offline buffering is required, or when you want to reduce cloud bandwidth by aggregating and filtering data at the edge. For devices with native IP and MQTT support, a gateway is optional.",
+  },
+  {
+    q: "How does edge computing fit into IIoT architecture?",
+    a: "Edge computing moves processing from the cloud to the device or gateway. In IIoT this reduces latency for time-critical control loops, lowers cloud bandwidth costs, and enables operation during cloud connectivity loss. Edge compute layers typically run lightweight runtimes — containers, WebAssembly, or native binaries — on gateway hardware. WebAssembly is increasingly used because it provides sandboxed isolation, sub-10ms startup, and portability from cloud servers down to microcontrollers.",
+  },
+  {
+    q: "What is a message broker in IIoT architecture?",
+    a: "A message broker is the central routing component for device telemetry. Devices publish messages to topics; platform services subscribe to those topics. The broker decouples producers from consumers, handles delivery guarantees (QoS), and can buffer messages during downstream failures. In enterprise IIoT, brokers also provide durable queues with consumer groups so multiple downstream services can consume the same data stream independently.",
+  },
+  {
+    q: "How should IoT device identity be managed?",
+    a: "Each device needs a unique cryptographic identity — typically a certificate or API key associated with a device record in the platform. That identity controls which topics the device can publish and subscribe to. Runtime policy evaluation (rather than token-embedded permissions) ensures that when a device is decommissioned or its credentials are revoked, access is blocked immediately without waiting for tokens to expire.",
+  },
+  {
+    q: "Why does post-quantum cryptography matter for IIoT now?",
+    a: "Industrial devices deployed today often remain in the field for 10–20 years. Quantum computers capable of breaking ECC and RSA are projected to become practical within that window. NIST finalised post-quantum cryptography standards in 2024. EU and US regulators project mandatory PQC adoption in critical infrastructure by 2030. Devices that ship now with only classical cryptography will be vulnerable before end-of-life.",
+  },
+];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+});
+---
+
+<BaseLayout
+  title="IIoT Platform Architecture Explained — Complete Guide"
+  description="A complete guide to Industrial IoT platform architecture. Understand the device, connectivity, message broker, platform, identity, edge compute, and security layers — with protocol comparisons and open-source implementation examples."
+>
+  <Header />
+  <main>
+    <!-- Hero -->
+    <section
+      class="page-hero"
+      style="padding-top:80px; padding-bottom:80px; background:var(--surface-accent); color:var(--on-accent);"
+    >
+      <div class="container-wide">
+        <div class="hero-copy" style="max-width:760px;">
+          <span
+            class="kicker"
+            style="color:rgba(246,244,238,0.55); margin-bottom:16px; display:block;"
+            >IIoT Architecture Guide</span
+          >
+          <h1
+            class="h-1"
+            style="color:var(--on-accent); margin-top:14px; max-width:18ch;"
+          >
+            Industrial IoT Platform Architecture: Layers, Protocols, and
+            Components Explained.
+          </h1>
+          <p class="lede" style="color:var(--on-accent-dim); max-width:60ch;">
+            A practical guide to how industrial IoT systems are structured —
+            from sensor to cloud, including edge computing, device identity, and
+            post-quantum security.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured snippet — definition block -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="pillar-definition-block">
+          <h2 class="pillar-definition-h2">
+            What is IIoT platform architecture?
+          </h2>
+          <p class="pillar-definition-text">
+            IIoT platform architecture describes how industrial IoT systems are
+            structured across multiple layers: physical devices and sensors,
+            edge gateways for local processing, a message broker for telemetry
+            transport, a central IoT platform for device management and
+            dashboards, and identity and security layers. Each layer has defined
+            responsibilities, protocols, and scaling characteristics.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture layers -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Architecture</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              The seven layers of IIoT platform architecture.
+            </h2>
+          </div>
+          <p class="lede">
+            Industrial IoT systems are built from distinct functional layers.
+            Understanding each layer's role helps you choose the right
+            components and avoid common design pitfalls.
+          </p>
+        </div>
+        <div class="pillar-layers">
+          {
+            layers.map(({ num, name, desc, products, keywords }) => (
+              <div class="pillar-layer">
+                <div class="pillar-layer-num">{num}</div>
+                <div class="pillar-layer-body">
+                  <h3 class="pillar-layer-name">{name}</h3>
+                  <p class="pillar-layer-desc">{desc}</p>
+                  {keywords.length > 0 && (
+                    <div class="pillar-layer-tags">
+                      {keywords.map((k) => (
+                        <span class="pillar-tag">{k}</span>
+                      ))}
+                    </div>
+                  )}
+                  {products.length > 0 && (
+                    <div class="pillar-layer-products">
+                      <span class="pillar-layer-products-label">
+                        Abstract Machines:
+                      </span>
+                      {products.map(({ name: pname, href, desc: pdesc }) => (
+                        <a href={href} class="pillar-product-link">
+                          <strong>{pname}</strong> — {pdesc}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture diagram / stack -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Stack overview</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              How the Abstract Machines stack maps to each layer.
+            </h2>
+          </div>
+          <p class="lede">
+            Each product addresses a specific architectural layer. They can be
+            deployed individually or as an integrated stack.
+          </p>
+        </div>
+        <div class="pillar-stack">
+          <div class="pillar-stack-row">
+            <div class="pillar-stack-label">Applications & Dashboards</div>
+            <div class="pillar-stack-product">
+              <a href="/products/magistrala">Magistrala</a> — visual dashboards, alarm
+              management, reports, rules engine
+            </div>
+          </div>
+          <div class="pillar-stack-row">
+            <div class="pillar-stack-label">Device Management & Platform</div>
+            <div class="pillar-stack-product">
+              <a href="/products/magistrala">Magistrala</a> — device provisioning,
+              channel management, multi-tenancy, SDKs
+            </div>
+          </div>
+          <div class="pillar-stack-row">
+            <div class="pillar-stack-label">Identity & Authorization</div>
+            <div class="pillar-stack-product">
+              <a href="/products/atom">Atom</a> — runtime RBAC/ABAC, JWT, OIDC, device
+              credentials, policy engine
+            </div>
+          </div>
+          <div class="pillar-stack-row">
+            <div class="pillar-stack-label">Message Transport</div>
+            <div class="pillar-stack-product">
+              <a href="/products/fluxmq">FluxMQ</a> — MQTT 5.0, AMQP, CoAP, durable
+              queues, 500K+ connections/node
+            </div>
+          </div>
+          <div class="pillar-stack-row">
+            <div class="pillar-stack-label">Edge Compute & Orchestration</div>
+            <div class="pillar-stack-product">
+              <a href="/products/propeller">Propeller</a> — WebAssembly orchestrator,
+              OCI registry, FaaS at the edge, Zephyr support
+            </div>
+          </div>
+          <div class="pillar-stack-row">
+            <div class="pillar-stack-label">Edge Gateway (Linux)</div>
+            <div class="pillar-stack-product">
+              <a href="/products/a1">A1 Gateway</a> — RISC-V Linux, containers, Wasm,
+              EU-manufactured
+            </div>
+          </div>
+          <div class="pillar-stack-row">
+            <div class="pillar-stack-label">Edge Gateway (RTOS / MCU)</div>
+            <div class="pillar-stack-product">
+              <a href="/products/a0">A0 Gateway</a> — ESP32-C6 RISC-V, Zephyr, 6 radios
+              (Wi-Fi 6, BLE, NB-IoT, M-Bus, Thread, Ethernet)
+            </div>
+          </div>
+          <div class="pillar-stack-row">
+            <div class="pillar-stack-label">Hardware Security</div>
+            <div class="pillar-stack-product">
+              <a href="/products/quarc">Quarc</a> — post-quantum secure element, ML-KEM-768,
+              ML-DSA-65, hardware root of trust
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Protocols -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Protocols</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              IIoT protocols: which to use and when.
+            </h2>
+          </div>
+          <p class="lede">
+            Protocol selection depends on device constraints, network
+            conditions, data volume, and integration requirements. Most
+            production deployments use multiple protocols.
+          </p>
+        </div>
+        <div class="pillar-proto-grid">
+          {
+            protocols.map(({ name, full, version, use, transport }) => (
+              <div class="pillar-proto-card">
+                <div class="pillar-proto-header">
+                  <span class="pillar-proto-name">{name}</span>
+                  <span class="pillar-proto-transport">{transport}</span>
+                </div>
+                <div class="pillar-proto-full">{full}</div>
+                {version !== "—" && (
+                  <div class="pillar-proto-version">{version}</div>
+                )}
+                <p class="pillar-proto-use">{use}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Edge vs Cloud -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Design decisions</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Edge vs cloud processing.
+            </h2>
+          </div>
+          <p class="lede">
+            The decision of where to process data has significant implications
+            for latency, bandwidth costs, offline resilience, and security.
+          </p>
+        </div>
+        <div class="pillar-edge-grid">
+          <div class="pillar-edge-card">
+            <h3 class="pillar-edge-title">Process at the edge when:</h3>
+            <ul class="pillar-edge-list">
+              <li>
+                Control loops require sub-100ms response times (cloud
+                round-trips introduce too much latency)
+              </li>
+              <li>
+                Devices operate in locations with intermittent connectivity —
+                local processing must continue offline
+              </li>
+              <li>
+                Data volume is high but only aggregates or anomalies are
+                relevant to the cloud (bandwidth reduction)
+              </li>
+              <li>
+                Data sovereignty or regulatory requirements restrict
+                transmission of raw device data off-premises
+              </li>
+              <li>
+                AI inference must run close to the sensor to be actionable (e.g.
+                real-time vision, predictive maintenance)
+              </li>
+            </ul>
+          </div>
+          <div class="pillar-edge-card">
+            <h3 class="pillar-edge-title">Process in the cloud when:</h3>
+            <ul class="pillar-edge-list">
+              <li>
+                Long-term storage and historical analysis are the primary use
+                case — cloud storage is cheaper and more scalable
+              </li>
+              <li>
+                Cross-site correlation is needed — aggregating data from
+                hundreds of sites for fleet-level analytics
+              </li>
+              <li>
+                Heavy ML training runs that require GPU resources not available
+                at the edge
+              </li>
+              <li>
+                Compliance reporting and audit trails that must be tamper-proof
+                and centrally managed
+              </li>
+              <li>
+                Real-time dashboards and alerting that operators access from
+                anywhere
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Security section -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Security</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              IIoT security architecture.
+            </h2>
+          </div>
+          <p class="lede">
+            Industrial IoT systems have distinct security requirements compared
+            to consumer IoT. Devices are long-lived, operate in physical
+            environments, and often control critical infrastructure.
+          </p>
+        </div>
+        <div class="pillar-security-grid">
+          <div class="pillar-security-item">
+            <h3 class="pillar-security-name">Device identity</h3>
+            <p class="pillar-security-desc">
+              Every device needs a unique cryptographic identity issued at
+              manufacture or provisioning. Device certificates or API keys
+              authenticate the device to the message broker and platform. When a
+              device is decommissioned, its credentials must be revoked and
+              access blocked immediately — runtime policy evaluation (not
+              token-embedded permissions) guarantees this.
+            </p>
+            <a href="/products/atom" class="btn-link" style="font-size:13px;"
+              >Atom — runtime IAM →</a
+            >
+          </div>
+          <div class="pillar-security-item">
+            <h3 class="pillar-security-name">Transport security</h3>
+            <p class="pillar-security-desc">
+              All device-to-broker and broker-to-platform communication should
+              be encrypted. TLS 1.2+ for MQTT and HTTPS. mTLS for inter-service
+              communication. DTLS for CoAP over UDP. For constrained devices
+              where TLS is too heavy, lighter alternatives exist but increase
+              risk — the gateway should terminate TLS on behalf of downstream
+              devices.
+            </p>
+          </div>
+          <div class="pillar-security-item">
+            <h3 class="pillar-security-name">Secure boot & OTA updates</h3>
+            <p class="pillar-security-desc">
+              Firmware must be signed and the signature verified at boot before
+              execution. OTA updates must be delivered over authenticated,
+              encrypted channels and must include rollback protection — a failed
+              update must not brick the device or leave it in an unknown state.
+            </p>
+            <a href="/products/quarc" class="btn-link" style="font-size:13px;">
+              Quarc — hardware-enforced secure boot →
+            </a>
+          </div>
+          <div class="pillar-security-item">
+            <h3 class="pillar-security-name">Post-quantum preparedness</h3>
+            <p class="pillar-security-desc">
+              Industrial devices deployed today may be in the field when quantum
+              computers become capable of breaking ECC and RSA. NIST finalised
+              post-quantum cryptography standards in 2024 (FIPS 203, 204, 205).
+              New designs should evaluate ML-KEM (key encapsulation) and ML-DSA
+              (signatures) for device identity and firmware signing, especially
+              for devices with 10+ year deployment lifetimes.
+            </p>
+            <a href="/products/quarc" class="btn-link" style="font-size:13px;">
+              Quarc — PQC secure element →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">FAQ</span>
+            <h2 class="h-2" style="margin-top:14px;">Common questions.</h2>
+          </div>
+        </div>
+        <FAQAccordion items={faqs} />
+      </div>
+    </section>
+
+    <!-- Products CTA grid -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Abstract Machines Products</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Open-source components for every layer.
+            </h2>
+          </div>
+          <p class="lede">
+            Abstract Machines builds open-source infrastructure for each layer
+            of the IIoT stack. All products are Apache 2.0.
+          </p>
+        </div>
+        <div class="pillar-products-grid">
+          <a href="/products/magistrala" class="pillar-product-card">
+            <div class="pillar-product-name">Magistrala</div>
+            <div class="pillar-product-layer">IoT Platform</div>
+            <p class="pillar-product-desc">
+              Multi-protocol IoT platform with device management, visual
+              dashboards, rules engine, and RBAC.
+            </p>
+          </a>
+          <a href="/products/fluxmq" class="pillar-product-card">
+            <div class="pillar-product-name">FluxMQ</div>
+            <div class="pillar-product-layer">Message Broker</div>
+            <p class="pillar-product-desc">
+              Enterprise MQTT 5.0 + AMQP broker. Clustering, durable queues,
+              500K+ connections/node.
+            </p>
+          </a>
+          <a href="/products/atom" class="pillar-product-card">
+            <div class="pillar-product-name">Atom</div>
+            <div class="pillar-product-layer">Identity & Authorization</div>
+            <p class="pillar-product-desc">
+              Runtime RBAC/ABAC for IoT. Single Rust binary, PostgreSQL-backed,
+              live policy evaluation.
+            </p>
+          </a>
+          <a href="/products/propeller" class="pillar-product-card">
+            <div class="pillar-product-name">Propeller</div>
+            <div class="pillar-product-layer">Edge Compute</div>
+            <p class="pillar-product-desc">
+              WebAssembly orchestrator from cloud to Zephyr RTOS
+              microcontrollers. OCI registry, FaaS at the edge.
+            </p>
+          </a>
+          <a href="/products/a1" class="pillar-product-card">
+            <div class="pillar-product-name">A1 Gateway</div>
+            <div class="pillar-product-layer">Linux Edge Gateway</div>
+            <p class="pillar-product-desc">
+              RISC-V Linux gateway for industrial IoT. Containers, Wasm, and
+              EU-manufactured.
+            </p>
+          </a>
+          <a href="/products/a0" class="pillar-product-card">
+            <div class="pillar-product-name">A0 Gateway</div>
+            <div class="pillar-product-layer">RTOS Edge Module</div>
+            <p class="pillar-product-desc">
+              ESP32-C6 RISC-V with 6 native radios — Wi-Fi 6, BLE, NB-IoT,
+              Wireless M-Bus, Thread, Ethernet.
+            </p>
+          </a>
+          <a href="/products/quarc" class="pillar-product-card">
+            <div class="pillar-product-name">Quarc</div>
+            <div class="pillar-product-layer">PQC Secure Element</div>
+            <p class="pillar-product-desc">
+              Post-quantum cryptography secure element. Hardware-accelerated
+              ML-KEM-768 and ML-DSA-65.
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.absmach.eu/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "IIoT Platform Architecture",
+          "item": "https://www.absmach.eu/iiot-platform-architecture"
+        }
+      ]
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .pillar-definition-block {
+    background: var(--paper-2);
+    border: 1px solid var(--line-3);
+    border-left: 4px solid var(--ink);
+    border-radius: var(--radius-lg);
+    padding: 32px 40px;
+    max-width: 860px;
+  }
+  .pillar-definition-h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .pillar-definition-text {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* Architecture layers */
+  .pillar-layers {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 48px;
+  }
+  .pillar-layer {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line-3);
+    align-items: start;
+  }
+  .pillar-layer:last-child {
+    border-bottom: none;
+  }
+  .pillar-layer-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding-top: 4px;
+  }
+  .pillar-layer-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .pillar-layer-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0 0 14px;
+  }
+  .pillar-layer-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .pillar-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    background: var(--paper-2);
+    border: 1px solid var(--line-3);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+  .pillar-layer-products {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+    padding: 14px 18px;
+    background: rgba(7, 55, 99, 0.03);
+    border: 1px solid rgba(7, 55, 99, 0.1);
+    border-radius: var(--radius);
+  }
+  .pillar-layer-products-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-4);
+    margin-bottom: 4px;
+  }
+  .pillar-product-link {
+    font-size: 13px;
+    color: var(--ink-2);
+    text-decoration: none;
+    line-height: 1.5;
+  }
+  .pillar-product-link:hover {
+    color: var(--ink);
+  }
+  .pillar-product-link strong {
+    color: var(--ink);
+  }
+
+  /* Stack diagram */
+  .pillar-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 48px;
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .pillar-stack-row {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--line-3);
+    background: var(--paper);
+  }
+  .pillar-stack-row:last-child {
+    border-bottom: none;
+  }
+  .pillar-stack-label {
+    padding: 16px 20px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-3);
+    background: var(--paper-2);
+    border-right: 1px solid var(--line-3);
+    display: flex;
+    align-items: center;
+  }
+  .pillar-stack-product {
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+  }
+  .pillar-stack-product a {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+    margin-right: 4px;
+  }
+  .pillar-stack-product a:hover {
+    text-decoration: underline;
+  }
+
+  /* Protocols */
+  .pillar-proto-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .pillar-proto-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    background: var(--paper-2);
+  }
+  .pillar-proto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .pillar-proto-name {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .pillar-proto-transport {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .pillar-proto-full {
+    font-size: 12px;
+    color: var(--ink-3);
+    margin-bottom: 4px;
+  }
+  .pillar-proto-version {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-4);
+    margin-bottom: 12px;
+  }
+  .pillar-proto-use {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin: 12px 0 0;
+  }
+
+  /* Edge vs Cloud */
+  .pillar-edge-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .pillar-edge-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    background: var(--paper);
+  }
+  .pillar-edge-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .pillar-edge-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .pillar-edge-list li {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    padding-left: 16px;
+    position: relative;
+  }
+  .pillar-edge-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--ink-3);
+  }
+
+  /* Security */
+  .pillar-security-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .pillar-security-item {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    background: var(--paper-2);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .pillar-security-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0;
+  }
+  .pillar-security-desc {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin: 0;
+    flex: 1;
+  }
+
+  /* Products grid */
+  .pillar-products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .pillar-product-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    background: var(--paper-2);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.15s ease;
+  }
+  .pillar-product-card:hover {
+    border-color: var(--ink-3);
+  }
+  .pillar-product-name {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .pillar-product-layer {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+  }
+  .pillar-product-desc {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.6;
+    margin: 4px 0 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .pillar-products-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 980px) {
+    .pillar-proto-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .pillar-edge-grid,
+    .pillar-security-grid {
+      grid-template-columns: 1fr;
+    }
+    .pillar-products-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .pillar-stack-row {
+      grid-template-columns: 180px 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .pillar-layer {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .pillar-layer-num {
+      padding-top: 0;
+    }
+    .pillar-proto-grid {
+      grid-template-columns: 1fr;
+    }
+    .pillar-products-grid {
+      grid-template-columns: 1fr;
+    }
+    .pillar-stack-row {
+      grid-template-columns: 1fr;
+    }
+    .pillar-stack-label {
+      border-right: none;
+      border-bottom: 1px solid var(--line-3);
+      padding: 10px 16px;
+    }
+    .pillar-stack-product {
+      padding: 12px 16px;
+    }
+    .pillar-definition-block {
+      padding: 24px;
+    }
+  }
+</style>

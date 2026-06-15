@@ -223,12 +223,17 @@ const faqSchema = JSON.stringify({
               style="margin-top:32px; justify-content:center;"
             >
               <a
-                href="https://www.absmach.eu/docs/fluxmq"
+                href="https://github.com/absmach/fluxmq"
                 class="btn btn-primary"
+                target="_blank"
+                rel="noopener">GitHub ↗</a
+              >
+              <a
+                href="https://www.absmach.eu/docs/fluxmq"
+                class="btn"
                 target="_blank"
                 rel="noopener">Documentation ↗</a
               >
-              <a href="/contact" class="btn">Contact Us →</a>
             </div>
           </div>
         </div>
@@ -597,6 +602,44 @@ graph TD
       </div>
     </section>
 
+    <!-- Compare -->
+    <section class="section" style="border-top:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Compare</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              See how FluxMQ stacks up.
+            </h2>
+          </div>
+        </div>
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+          <a
+            href="/emqx-alternative"
+            style="flex:1; min-width:240px; padding:24px; border:1px solid var(--line-3); border-radius:var(--radius); text-decoration:none; color:var(--ink); background:var(--paper-2);"
+          >
+            <div style="font-weight:600; font-size:15px;">FluxMQ vs EMQX →</div>
+            <div style="font-size:13px; color:var(--ink-3); margin-top:6px;">
+              Apache 2.0 open-source vs commercial BSL licensing — feature
+              comparison and migration guide.
+            </div>
+          </a>
+          <a
+            href="/mosquitto-alternative"
+            style="flex:1; min-width:240px; padding:24px; border:1px solid var(--line-3); border-radius:var(--radius); text-decoration:none; color:var(--ink); background:var(--paper-2);"
+          >
+            <div style="font-weight:600; font-size:15px;">
+              FluxMQ vs Mosquitto →
+            </div>
+            <div style="font-size:13px; color:var(--ink-3); margin-top:6px;">
+              When to move beyond a single-node broker to a distributed,
+              production-grade alternative.
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section
       class="section"
@@ -605,12 +648,25 @@ graph TD
       <div class="container-narrow" style="text-align:center;">
         <span class="kicker">Get started</span>
         <h2 class="h-2" style="margin-top:14px;">Drop in FluxMQ today.</h2>
-        <p class="lede" style="margin:20px auto 36px;">
+        <p class="lede" style="margin:20px auto 24px;">
           FluxMQ is the recommended message broker for <a
             href="/products/magistrala"
             style="color:inherit; text-decoration:underline;">Magistrala</a
-          > IoT platform deployments. Download the binary, read the documentation,
-          or explore the source on GitHub.
+          > IoT platform deployments. Pair it with <a
+            href="/products/atom"
+            style="color:inherit; text-decoration:underline;">Atom</a
+          > for device identity and runtime authorization. Download the binary, read
+          the documentation, or explore the source on GitHub.
+        </p>
+        <p style="margin:0 auto 36px; font-size:14px; color:var(--ink-3);">
+          Evaluating brokers? See our detailed comparisons: <a
+            href="/emqx-alternative"
+            style="color:inherit; text-decoration:underline;">FluxMQ vs EMQX</a
+          > and <a
+            href="/mosquitto-alternative"
+            style="color:inherit; text-decoration:underline;"
+            >FluxMQ vs Mosquitto</a
+          >.
         </p>
         <div class="btn-row" style="justify-content:center;">
           <a
