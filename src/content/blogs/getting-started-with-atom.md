@@ -13,7 +13,8 @@ author:
   name: "Ian Muchiri"
   picture: "https://avatars.githubusercontent.com/u/100555904?v=4"
 coverImage: "/img/blogs/getting-started-with-atom/hero.png"
-ogImage: "/img/blogs/getting-started-with-atom/hero.png"
+ogImage:
+  url: "/img/blogs/getting-started-with-atom/hero.png"
 slug: "getting-started-with-atom"
 ---
 
@@ -22,6 +23,22 @@ slug: "getting-started-with-atom"
 By the end of this guide, you'll have Atom v0.1.0 running locally, a tenant with two entities, a role backed by a permission block, and a verified `authzCheck` returning both allow and deny results. This targets platform engineers evaluating Atom's fine-grained authorization model before committing to an integration. Each step is shown using the management UI; curl equivalents are included for automation or CI use.
 
 You need Docker and Git. No prior Atom experience required.
+
+_Atom Service Architecture_
+
+```mermaid
+flowchart LR
+    Client["Client (Browser / curl)"]
+    subgraph Docker["Docker Compose"]
+        PG[(PostgreSQL)]
+        API["Atom API :8080"]
+        UI["Next.js UI :3005"]
+    end
+    API --> PG
+    UI --> API
+    Client -->|GraphQL| API
+    Client -->|HTTP| UI
+```
 
 ## Prerequisites
 
@@ -44,22 +61,6 @@ cp .env.example .env
 ```
 
 ## Start the Services
-
-_Atom Service Architecture_
-
-```mermaid
-flowchart LR
-    Client["Client (Browser / curl)"]
-    subgraph Docker["Docker Compose"]
-        PG[(PostgreSQL)]
-        API["Atom API :8080"]
-        UI["Next.js UI :3005"]
-    end
-    API --> PG
-    UI --> API
-    Client -->|GraphQL| API
-    Client -->|HTTP| UI
-```
 
 Start PostgreSQL first, then bring up the API and management UI:
 
