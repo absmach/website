@@ -49,8 +49,8 @@ flowchart LR
     ER -->|emit| EV
     EV -.->|"backed-up or failed"| PR
     EV -.->|"= sync gap"| AS
-    style EQ fill:#fee2e2,stroke:#ef4444
-    style EV fill:#fca5a5,stroke:#ef4444
+    style EQ fill:#314b70
+    style EV fill:#043d4d
 ```
 
 Most identity and authorization systems are built as separate concerns. Identity services manage entities: users, devices, organizations, groups. Authorization services manage who can do what: policies, roles, permission evaluations. This separation looks clean in architecture diagrams.
@@ -86,7 +86,7 @@ flowchart LR
     end
     D -->|"atomic write"| US
     Q -->|"single indexed traversal"| US
-    style US fill:#d1fae5,stroke:#10b981
+    style US fill:#314b70
 ```
 
 The root cause is that identity and authorization live in separate stores. The fix is to eliminate the boundary entirely.
