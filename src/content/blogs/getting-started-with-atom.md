@@ -262,10 +262,6 @@ Navigate to **Permission Blocks** and click **Create**. The wizard has five step
 
 ![Permission block - review (read + write)](/img/blogs/getting-started-with-atom/18-permblock-rw-step5-review.png)
 
-The read+write block appears in the list.
-
-![Read+write permission block created](/img/blogs/getting-started-with-atom/19-permblock-rw-created.png)
-
 ### Read-only block
 
 Click **Create** again and go through the same steps. Steps 1 and 2 are identical. In **Step 3**, select only `read`.
