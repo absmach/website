@@ -28,11 +28,12 @@ You need Docker and Git. No prior Atom experience required.
 
 Before diving in, it helps to have a picture of what you're running and what you're building.
 
-**Service architecture**: Atom runs as three containers under Docker Compose. The API exposes a GraphQL endpoint on port 8080 and persists everything to PostgreSQL. The Next.js management UI on port 3005 sits in front of the API and is what you'll use throughout this guide. Your browser and `curl` commands talk to both.
+**Service architecture**: Atom runs as three containers under Docker Compose. The API exposes a GraphQL endpoint on port 8080 and persists everything to PostgreSQL. The Next.js management UI on port 3005 sits in front of the API and is what you'll use throughout this guide. Your browser talks to the UI; `curl` commands in this guide go directly to the API on port 8080.
 
 ```mermaid
 flowchart LR
-    Client["Client (Browser / curl)"]
+    Browser["Browser"]
+    Curl["curl"]
     subgraph Docker["Docker Compose"]
         PG[(PostgreSQL)]
         API["Atom API :8080"]
@@ -40,8 +41,8 @@ flowchart LR
     end
     API --> PG
     UI --> API
-    Client -->|GraphQL| API
-    Client -->|HTTP| UI
+    Browser -->|HTTP| UI
+    Curl -->|GraphQL| API
 ```
 
 ## Prerequisites
@@ -64,7 +65,13 @@ Copy the example env file:
 cp .env.example .env
 ```
 
-`.env.example` ships with working local defaults: admin login `admin` / `12345678`, password login allowed before email verification, and certificates disabled. A fresh copy boots with no SMTP, OAuth, or CA setup required.
+`.env.example` ships with working local defaults so you can boot the stack without any external service setup. To keep things simple, a few features are disabled out of the box:
+
+- **Email verification** - disabled so you don't need an SMTP provider to create and log in with accounts.
+- **Certificate management** - disabled so you don't need to map CA files or bootstrap TLS certificates locally.
+- **OAuth** - not configured, so social login buttons won't appear until you add provider credentials.
+
+You can enable any of these by setting the relevant config parameters - see the [Atom configuration docs](https://github.com/absmach/atom#configuration) for details.
 
 ## Start the Services
 
