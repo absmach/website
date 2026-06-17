@@ -44,39 +44,6 @@ flowchart LR
     Client -->|HTTP| UI
 ```
 
-**Authorization data model**: everything you'll create in this guide fits into six concepts. A **tenant** is the top-level isolation boundary; all other objects live inside one. **Entities** are the actors (humans, devices, services). **Resources** are the objects being protected. **Permission blocks** declare what actions are allowed or denied on a given resource scope. **Roles** group one or more permission blocks under a named label. Access is then granted by either assigning a role to an entity, or creating a **direct policy** that attaches a permission block to an entity without going through a role.
-
-```mermaid
-erDiagram
-    TENANT ||--o{ ENTITY : "contains"
-    TENANT ||--o{ RESOURCE : "contains"
-    TENANT ||--o{ ROLE : "contains"
-    ROLE ||--o{ PERMISSION_BLOCK : "has"
-    ROLE ||--o{ ROLE_ASSIGNMENT : "assigned via"
-    ENTITY ||--o{ ROLE_ASSIGNMENT : "receives"
-    ENTITY ||--o{ DIRECT_POLICY : "receives"
-    DIRECT_POLICY ||--|| PERMISSION_BLOCK : "attaches"
-    ENTITY {
-        string id
-        string name
-        string kind
-    }
-    RESOURCE {
-        string id
-        string name
-        string kind
-    }
-    ROLE {
-        string id
-        string name
-    }
-    PERMISSION_BLOCK {
-        string objectKind
-        string actions
-        string effect
-    }
-```
-
 ## Prerequisites
 
 - Docker Engine 24+ and Docker Compose v2
