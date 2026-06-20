@@ -26,6 +26,15 @@ const currentSlug = post.data.slug ?? post.slug;
 const publishedAt =
   post.data.date instanceof Date ? post.data.date : new Date(post.data.date);
 const coverImage = post.data.coverImage ?? post.data.heroImage ?? null;
+const isRasterImage = (url: string | null | undefined): boolean => {
+  if (!url) return false;
+  const ext = url.split("?")[0].split(".").pop()?.toLowerCase();
+  return ["jpg", "jpeg", "png", "webp", "gif", "avif"].includes(ext ?? "");
+};
+const ogImageSrc =
+  post.data.ogImage?.url ??
+  (isRasterImage(coverImage) ? coverImage : null) ??
+  "/img/logos/social-preview.png";
 const coverVideo = post.data.coverVideo ?? null;
 const getYouTubeEmbedSrc = (rawUrl: string) => {
   try {
@@ -150,7 +159,7 @@ const nextReadPosts = allPosts
   title={title}
   description={description}
   ogType="article"
-  ogImage={coverImage ?? "/img/logos/social-preview.png"}
+  ogImage={ogImageSrc}
   ogImageAlt={post.data.title}
   canonical={canonical}
   articlePublishedTime={publishedAt.toISOString()}
