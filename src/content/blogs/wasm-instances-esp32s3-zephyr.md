@@ -8,7 +8,7 @@ author:
   picture: "https://avatars.githubusercontent.com/u/44696487?s=96&v=4"
 coverImage: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.svg"
 ogImage:
-  url: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.svg"
+  url: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.png"
 tags:
   - WebAssembly
   - ESP32

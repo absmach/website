@@ -30,6 +30,8 @@ featured: false # optional (featured posts are pinned above non-featured posts o
 draft: false # optional (set true to hide from /blog/)
 coverImage: "/img/blogs/my-new-post/cover.png" # optional (URL or local path)
 coverVideo: "https://www.youtube.com/watch?v=R3GfuzLMPkA" # optional (YouTube only, hero video)
+ogImage:
+  url: "/img/blogs/my-new-post/cover.png" # optional — overrides coverImage for social sharing (must be JPG, PNG, or WebP)
 canonical: "https://www.absmach.eu/blog/my-new-post/" # optional
 slug: "my-new-post" # optional override
 ---
@@ -44,6 +46,7 @@ Notes:
 - `coverVideo` is for the hero video and currently supports YouTube links only (not Google Drive). It renders as an embedded iframe with autoplay (muted).
 - `coverImage` is still used as the hero fallback image (and can also act as the poster image when applicable).
 - Accepted `coverVideo` YouTube formats include `youtube.com/watch?v=...`, `youtu.be/...`, `youtube.com/shorts/...`, and `youtube.com/embed/...`.
+- **`ogImage.url` must be a raster format — JPG, PNG, or WebP.** SVG files are not supported by social platforms (LinkedIn, Twitter/X, Slack, iMessage, etc.) and will cause the social preview to fall back to an unrelated image. If your `coverImage` is an SVG, add a separate `ogImage` pointing to a raster export of the same graphic. If `ogImage` is omitted and `coverImage` is an SVG, the renderer automatically uses the generic `social-preview.png`.
 
 ## 3) Add images
 
