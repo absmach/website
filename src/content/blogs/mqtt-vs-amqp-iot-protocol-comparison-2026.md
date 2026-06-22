@@ -164,11 +164,3 @@ AMQP client libraries exist for many platforms, but the protocol's complexity an
 ### What happens when an MQTT client disconnects and reconnects?
 
 With a persistent session (Clean Session = false in MQTT 3.1.1, or Clean Start = false in MQTT 5.0), the broker retains the client's subscriptions and queues QoS 1 and QoS 2 messages published during the offline period. When the client reconnects, it resumes its subscriptions and receives the queued messages. QoS 0 messages published during the disconnect are not retained.
-
-<!--
-  provider:      local:claude
-  model:         claude-sonnet-4-6
-  review_score:  0.82
-  tokens:        193,947 in / 27,731 out
-  generated_at:  2026-06-22T16:39:11.519586+00:00
--->
