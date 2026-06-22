@@ -1,13 +1,3 @@
-Analyzing the three actionable comments:
-
-- **id:3454823653**: Empty suggestion at line 174 — remove the trailing HTML metadata comment block.
-- **id:3454861962**: Add `- fluxmq` tag — already present in the current content, no change needed.
-- **id:3454864446** and **id:3454943647**: Fix `pnpm check` / `pnpm format:check` failures — the HTML comment block at the end is the likely cause.
-
-One change: remove the trailing `<!-- ... -->` metadata comment.
-
-COMMIT: Remove trailing HTML metadata comment to fix pnpm format:check
-
 ---
 title: "MQTT vs AMQP: Which Protocol Fits Your IoT Stack in 2026"
 description: "MQTT is the right call for constrained devices; AMQP handles complex routing where delivery semantics matter. This mqtt vs amqp breakdown covers protocol tradeoffs, delivery guarantees, and when native dual-protocol support actually simplifies your architecture."
