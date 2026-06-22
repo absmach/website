@@ -4,6 +4,7 @@ description: "MQTT is the right call for constrained devices; AMQP handles compl
 date: "2026-06-22"
 tags:
   - mqtt vs amqp
+  - fluxmq
   - mqtt
   - amqp
   - iot
