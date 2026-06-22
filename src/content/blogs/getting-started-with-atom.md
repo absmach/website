@@ -202,11 +202,65 @@ echo "Alice: $ALICE_ID  Service: $SERVICE_ID"
 
 </details>
 
+## Register Action Applicability
+
+Before creating a resource, you need to tell Atom which actions are valid for the `invoice` object type. This matters for two reasons: the authorization engine rejects permission blocks that reference unregistered actions, and the resource list itself is access-filtered — resources only appear if the current user has a matching `read` grant, which requires `read` to be registered for that type first.
+
+Navigate to **Actions** in the sidebar and scroll down to the **Action Applicability** section. Click **Create**. In the sheet that opens, set:
+
+- **Action**: `read`
+- **Object kind**: `resource`
+- **Object type**: `resource:invoice`
+
+Confirm to save.
+
+![Create action applicability for read](/img/blogs/getting-started-with-atom/12b-action-applicability-read.png)
+
+Click **Create** again and repeat with **Action** set to `write`, keeping the same object kind and object type.
+
+![Create action applicability for write](/img/blogs/getting-started-with-atom/12c-action-applicability-write.png)
+
+Once both are registered, the authorization engine will recognise `read` and `write` as valid operations on `resource:invoice` objects.
+
+<details>
+<summary><strong>Using curl instead</strong></summary>
+
+```bash
+# First, look up the action IDs for 'read' and 'write'
+ACTIONS=$(curl -s -X POST http://localhost:8080/graphql \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"query":"{ actions { items { id name } } }"}')
+
+READ_ID=$(echo "$ACTIONS" | jq -r '.data.actions.items[] | select(.name=="read") | .id')
+WRITE_ID=$(echo "$ACTIONS" | jq -r '.data.actions.items[] | select(.name=="write") | .id')
+
+QUERY='mutation AddActionApplicability($input: AddActionApplicabilityInput!) { addActionApplicability(input: $input) { id } }'
+
+# Register read for resource:invoice
+PAYLOAD=$(jq -n --arg q "$QUERY" --arg aid "$READ_ID" \
+  '{"query":$q,"variables":{"input":{"actionId":$aid,"objectKind":"resource","objectType":"resource:invoice"}}}')
+curl -s -X POST http://localhost:8080/graphql \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d "$PAYLOAD" | jq .
+
+# Register write for resource:invoice
+PAYLOAD=$(jq -n --arg q "$QUERY" --arg aid "$WRITE_ID" \
+  '{"query":$q,"variables":{"input":{"actionId":$aid,"objectKind":"resource","objectType":"resource:invoice"}}}')
+curl -s -X POST http://localhost:8080/graphql \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d "$PAYLOAD" | jq .
+```
+
+</details>
+
 ## Create a Resource
 
-Before defining access rules, you need a resource to protect. Navigate to **Resources** and click **Create**. Set **Kind** to `channel` and **Name** to `invoice-events`.
+Now create the resource you'll protect. Navigate to **Resources** and click **Create**. Set **Kind** to `invoice` and **Name** to `invoice-events`.
 
-> **Note on resource kinds:** In Atom v0.1.0, action applicability (which actions are valid for which object types) is pre-seeded for the built-in resource kinds: `channel`, `rule`, `report`, and `alarm`. Using `channel` here gives you a working demo without any extra setup.
+Resource kinds are free-form strings — there's no fixed list. The `kind` you set here becomes the sub-type the authorization engine uses when evaluating permission blocks and filtering the resource list.
 
 ![Create resource dialog](/img/blogs/getting-started-with-atom/12-resource-create.png)
 
@@ -224,7 +278,7 @@ Click the resource to inspect it and **copy the ID**; you'll need it in the next
 ```bash
 QUERY='mutation CreateResource($input: CreateResourceInput!) { createResource(input: $input) { id name kind } }'
 PAYLOAD=$(jq -n --arg q "$QUERY" --arg tid "$TENANT_ID" \
-  '{"query":$q,"variables":{"input":{"tenantId":$tid,"kind":"channel","name":"invoice-events"}}}')
+  '{"query":$q,"variables":{"input":{"tenantId":$tid,"kind":"invoice","name":"invoice-events"}}}')
 
 RESOURCE_ID=$(curl -s -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
@@ -248,7 +302,7 @@ Navigate to **Permission Blocks** and click **Create**. The wizard has five step
 
 ![Permission block - step 1, boundary](/img/blogs/getting-started-with-atom/15-permblock-rw-step1-boundary.png)
 
-**Step 2: Scope**: Select **Exact object** as the scope mode, **Resource** as the object kind, **channel** as the object type, and paste the `invoice-events` resource ID you copied in the previous step.
+**Step 2: Scope**: Select **Exact object** as the scope mode, **Resource** as the object kind, **resource:invoice** as the object type, and paste the `invoice-events` resource ID you copied in the previous step.
 
 ![Permission block - step 2, scope](/img/blogs/getting-started-with-atom/16-permblock-rw-step2-scope.png)
 
@@ -280,11 +334,20 @@ Both permission blocks are now listed.
 <summary><strong>Using curl instead</strong></summary>
 
 ```bash
+# Look up action IDs (reuse $READ_ID and $WRITE_ID from the earlier step, or re-fetch)
+ACTIONS=$(curl -s -X POST http://localhost:8080/graphql \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"query":"{ actions { items { id name } } }"}')
+READ_ID=$(echo "$ACTIONS" | jq -r '.data.actions.items[] | select(.name=="read") | .id')
+WRITE_ID=$(echo "$ACTIONS" | jq -r '.data.actions.items[] | select(.name=="write") | .id')
+
 QUERY='mutation CreatePermissionBlock($input: CreatePermissionBlockInput!) { createPermissionBlock(input: $input) { id } }'
 
 # Read+Write block
 PAYLOAD=$(jq -n --arg q "$QUERY" --arg tid "$TENANT_ID" --arg rid "$RESOURCE_ID" \
-  '{"query":$q,"variables":{"input":{"tenantId":$tid,"scopeMode":"object","objectKind":"resource","objectType":"resource:channel","objectId":$rid,"effect":"allow","actions":["read","write"]}}}')
+  --arg rid_act "$READ_ID" --arg wid_act "$WRITE_ID" \
+  '{"query":$q,"variables":{"input":{"tenantId":$tid,"scopeMode":"object","objectKind":"resource","objectType":"resource:invoice","objectId":$rid,"effect":"allow","actionIds":[$rid_act,$wid_act]}}}')
 RW_BLOCK_ID=$(curl -s -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
@@ -292,7 +355,8 @@ RW_BLOCK_ID=$(curl -s -X POST http://localhost:8080/graphql \
 
 # Read-only block
 PAYLOAD=$(jq -n --arg q "$QUERY" --arg tid "$TENANT_ID" --arg rid "$RESOURCE_ID" \
-  '{"query":$q,"variables":{"input":{"tenantId":$tid,"scopeMode":"object","objectKind":"resource","objectType":"resource:channel","objectId":$rid,"effect":"allow","actions":["read"]}}}')
+  --arg rid_act "$READ_ID" \
+  '{"query":$q,"variables":{"input":{"tenantId":$tid,"scopeMode":"object","objectKind":"resource","objectType":"resource:invoice","objectId":$rid,"effect":"allow","actionIds":[$rid_act]}}}')
 R_BLOCK_ID=$(curl -s -X POST http://localhost:8080/graphql \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
@@ -417,7 +481,7 @@ Both policies are now listed.
 <summary><strong>Using curl instead</strong></summary>
 
 ```bash
-QUERY='mutation CreatePolicy($input: CreatePolicyInput!) { createPolicy(input: $input) { id } }'
+QUERY='mutation CreateDirectPolicy($input: CreateDirectPolicyInput!) { createDirectPolicy(input: $input) { id } }'
 
 # Alice → read-only block
 PAYLOAD=$(jq -n --arg q "$QUERY" --arg tid "$TENANT_ID" --arg sid "$ALICE_ID" --arg bid "$R_BLOCK_ID" \
@@ -444,7 +508,7 @@ Navigate to **Authz** in the sidebar. The Authorization Debugger lets you check 
 
 ![Authorization debugger](/img/blogs/getting-started-with-atom/37-authz-debugger.png)
 
-For each check, fill in **Who**, **Can do**, **Target type** (Resource), and **Resource** (invoice-events channel), then click **Explain decision**.
+For each check, fill in **Who**, **Can do**, **Target type** (Resource), and **Resource** (invoice-events), then click **Explain decision**.
 
 ### billing-service can read
 
@@ -541,7 +605,7 @@ Most issues during setup fall into a few predictable categories: authentication,
 
 4. **Postgres connection refused on startup.** The database container needs a moment to fully initialize before accepting connections. If you see this, wait 15–20 seconds after starting and then check again.
 
-5. **Authorization check returns `"unknown action 'read'"`.** In Atom v0.1.0, the `read` action is only registered for built-in resource kinds (`channel`, `rule`, `report`, `alarm`). Use `kind: "channel"` for your test resource, or add the appropriate row to `action_applicability` if you're working with a custom kind.
+5. **Authorization check returns `"unknown action 'read'"`.** This means the action has no registered applicability for your resource kind. Go to **Actions**, find `read` (or `write`), and add an applicability entry for **Resource** / **invoice**. The authorization engine only recognizes an action as valid for an object type after that mapping exists.
 
 ## Next Steps
 
@@ -549,7 +613,7 @@ With a working deployment behind you, you've touched every core layer of Atom: t
 
 1. **Profiles** let you define custom subtypes for entities. A `Profile` describes an entity subtype, for example `client`, `gateway`, or `water_meter`, so entities can be organized and filtered beyond their base `kind`. Navigate to **Profiles** in the sidebar to explore the built-in profiles or create your own.
 
-2. **Actions and Action Applicability** control which operations are valid for which object types. Atom uses global action names like `read`, `write`, `publish`, and `subscribe`. Action Applicability declares that, for example, `publish` is a valid action for `resource:channel` objects. This is a validity check, not an access grant; a permission block must still cover the action. Navigate to **Actions** to see the registered applicability rules.
+2. **Actions and Action Applicability** control which operations are valid for which object types. Atom uses global action names like `read`, `write`, `publish`, and `subscribe`. Action Applicability declares that, for example, `read` is a valid action for `resource:invoice` objects — which is what you registered in this guide. This is a validity check, not an access grant; a permission block must still cover the action. Navigate to **Actions** to see all registered applicability rules and add more as your model grows.
 
 3. **The GraphQL Playground** at **Developer → Playground** in the sidebar gives you direct access to the Atom API under your current session. Use it to explore available mutations and queries, inspect responses, and test more advanced operations like role assignments, group membership, or conditional permission blocks.
 

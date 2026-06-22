@@ -586,6 +586,45 @@ const nextReadPosts = allPosts
     border: none !important;
   }
 
+  /* Copy button */
+  :global(.code-block-wrap) {
+    position: relative;
+  }
+  :global(.copy-btn) {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.55);
+    cursor: pointer;
+    opacity: 0;
+    transition:
+      opacity 0.15s,
+      background 0.15s,
+      color 0.15s;
+    z-index: 2;
+  }
+  :global(.code-block-wrap:hover .copy-btn) {
+    opacity: 1;
+  }
+  :global(.copy-btn:hover) {
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+  }
+  :global(.copy-btn.copied) {
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.3);
+    background: rgba(74, 222, 128, 0.08);
+    opacity: 1;
+  }
+
   /* Make post images look clickable, and unify border style */
   :global(#post img) {
     cursor: zoom-in;
@@ -709,6 +748,38 @@ const nextReadPosts = allPosts
         } else {
           i++;
         }
+      }
+
+      // Copy buttons on code blocks
+      const preBlocks = post.querySelectorAll<HTMLPreElement>(
+        "pre:not([data-language='mermaid'])",
+      );
+      for (const pre of preBlocks) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "code-block-wrap";
+        pre.parentNode?.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+
+        const btn = document.createElement("button");
+        btn.className = "copy-btn";
+        btn.setAttribute("aria-label", "Copy code");
+        btn.innerHTML =
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+        wrapper.appendChild(btn);
+
+        btn.addEventListener("click", () => {
+          const text = pre.querySelector("code")?.innerText ?? pre.innerText;
+          navigator.clipboard.writeText(text).then(() => {
+            btn.innerHTML =
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+            btn.classList.add("copied");
+            setTimeout(() => {
+              btn.innerHTML =
+                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+              btn.classList.remove("copied");
+            }, 2000);
+          });
+        });
       }
 
       // Lightbox
