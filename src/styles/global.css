@@ -1721,6 +1721,20 @@ section {
   --tw-prose-td-borders: var(--line-3);
 }
 
+/* Tailwind Typography adds literal backtick characters via ::before/::after on
+   inline <code> elements. Remove them and style the element directly instead. */
+.prose-theme :where(code):not(:where(pre *)) {
+  background: var(--paper-2);
+  border: 1px solid var(--line-3);
+  border-radius: 0.25rem;
+  padding: 0.1em 0.35em;
+  font-size: 0.875em;
+}
+.prose-theme :where(code):not(:where(pre *))::before,
+.prose-theme :where(code):not(:where(pre *))::after {
+  content: none;
+}
+
 /* utilities ---------------------------------------------------------------- */
 
 .divider {
