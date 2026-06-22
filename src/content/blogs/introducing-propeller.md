@@ -28,7 +28,7 @@ Meet **Propeller**. Propeller is an open-source edge orchestration runtime that 
 
 ## What Is Propeller?
 
-*Propeller System Architecture*
+_Propeller System Architecture_
 
 ```mermaid
 flowchart TD
@@ -47,7 +47,6 @@ flowchart TD
     style MCU2 fill:#4a1942,color:#fff
 ```
 
-
 WebAssembly edge computing means running sandboxed, portable workloads on constrained devices without reflashing firmware. The WebAssembly Micro Runtime (WAMR) runs on Zephyr RTOS with a minimal memory footprint, enabling OTA deployment of sensor processing logic, ML inference models, and protocol bridges to microcontrollers from a central orchestrator.
 
 Propeller is built on that foundation. It provides cloud-to-MCU deployment via OCI-compatible module registries, Wasm isolation on Zephyr using WAMR, and an mTLS-secured control plane from orchestrator to gateway to device. The telemetry fabric is MQTT-native with multitenancy support. Key exchange is post-quantum from the start. The orchestrator is written in Go with distributed systems design as the baseline, not an afterthought.
@@ -64,7 +63,7 @@ On a Zephyr-based A0 gateway, a Wasm module runs in a sandboxed linear memory sp
 
 ### OTA Without a Maintenance Window
 
-*OTA Module Deployment Flow*
+_OTA Module Deployment Flow_
 
 ```mermaid
 sequenceDiagram
@@ -84,7 +83,6 @@ sequenceDiagram
     MCU-->>GW: module active
     GW-->>Orch: deployment confirmed
 ```
-
 
 Propeller treats Wasm modules as OCI artifacts. Your CI pipeline builds a module, pushes it to a registry, and tags a deployment. The Propeller agent on the gateway pulls the artifact, validates the cryptographic signature, and loads the module into the WAMR runtime without interrupting other running modules or requiring a device reboot.
 
