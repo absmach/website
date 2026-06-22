@@ -11,6 +11,9 @@ tags:
 featured: false
 draft: false
 slug: "introducing-propeller"
+author:
+  name: "Abstract Machines"
+  picture: "https://avatars.githubusercontent.com/u/126989860?s=200&v=4"
 ---
 
 ## Introducing Propeller
