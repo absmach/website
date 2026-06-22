@@ -12,9 +12,9 @@ tags:
   - message-streaming
 featured: false
 draft: false
-coverImage: "/output/abstract-machines/fluxmq/images/blog_20260622-210328.png"
+coverImage: "/img/blogs/mqtt-vs-amqp-iot-protocol-comparison-2026/cover.png"
 ogImage:
-  url: "/output/abstract-machines/fluxmq/images/blog_20260622-210328.png"
+  url: "/img/blogs/mqtt-vs-amqp-iot-protocol-comparison-2026/cover.png"
 slug: "mqtt-vs-amqp-iot-protocol-comparison-2026"
 author:
   name: "Abstract Machines"
