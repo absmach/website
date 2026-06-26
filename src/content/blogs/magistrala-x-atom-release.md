@@ -1,20 +1,23 @@
 ---
-title: "Magistrala v0.40.0 Release: Magistrala X Atom is here!"
+title: "Magistrala v0.40.0 Release: Magistrala x Atom is here!"
 description: "Magistrala v0.40.0 ships with Atom as its core identity and authorization layer, removing the standalone users, clients, channels, and domains services in favor of a single, unified system that handles entities, tenants, groups, and resources."
 date: "2026-06-26"
+excerpt: "Magistrala v0.40.0 ships with Atom as its built-in identity and authorization layer. The standalone users, clients, channels, and domains services are gone. Atom handles all entity management — and MQTT, CoAP, HTTP, WebSocket, mTLS, and multi-tenancy all continue working without modification."
+author:
+  name: "Abstract Machines"
+  picture: "https://avatars.githubusercontent.com/u/126989860?s=200&v=4"
+ogImage:
+  url: /img/blogs/magistrala-x-atom-release/cover.jpg
+coverImage: /img/blogs/magistrala-x-atom-release/cover.jpg
+slug: magistrala-x-atom-release
 tags:
   - magistrala
   - open-source
   - IoT
   - edge computing
   - MQTT
-featured: false
-draft: false
-slug: "magistrala-x-atom-release"
-excerpt: "Magistrala v0.40.0 ships with Atom as its built-in identity and authorization layer. The standalone users, clients, channels, and domains services are gone. Atom handles all entity management — and MQTT, CoAP, HTTP, WebSocket, mTLS, and multi-tenancy all continue working without modification."
-author:
-  name: "Abstract Machines"
-  picture: "https://avatars.githubusercontent.com/u/126989860?s=200&v=4"
+category: announcement
+featured: true
 ---
 
 ## What's New
