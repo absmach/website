@@ -30,7 +30,8 @@ _Magistrala + Atom Architecture_
 
 ```mermaid
 flowchart TD
-    Device["Device / Client"] -->|"Protocol Request\n(MQTT · CoAP · HTTP · WebSocket · mTLS)"| MG["Magistrala"]
+    Device["Device / Client"] -->|"Protocol Request\n(MQTT · CoAP · HTTP · WebSocket · mTLS)"| FLUXMQ["FluxMQ"]
+    FLUXMQ --> MG["Magistrala"]
     MG --> ATOM["Atom"]
     ATOM -->|"BootstrapMagistralaActions\non startup"| ACTIONS["Register: read, write,\ndelete, manage, publish,\nsubscribe, execute, list"]
     ATOM -->|"Manages"| ENTITIES["Users · Clients · Domains\nGroups · Channels · Resources"]
