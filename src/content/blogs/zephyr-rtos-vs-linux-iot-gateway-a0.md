@@ -12,6 +12,9 @@ tags:
 featured: false
 draft: false
 slug: "zephyr-rtos-vs-linux-iot-gateway-a0"
+coverImage: "/img/blogs/zephyr-rtos-vs-linux-iot-gateway-a0/hero.png"
+ogImage:
+  url: "/img/blogs/zephyr-rtos-vs-linux-iot-gateway-a0/hero.png"
 author:
   name: "Abstract Machines"
   picture: "https://avatars.githubusercontent.com/u/126989860?s=200&v=4"
