@@ -1,0 +1,525 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { Cpu, Radio, ShieldCheck, Boxes } from "@lucide/astro";
+
+const hardwareProducts = [
+  {
+    href: "/products/a0",
+    category: "Hardware · Edge",
+    name: "A0 Gateway",
+    image: "/img/products/s0-board.webp",
+    alt: "A0 edge gateway board",
+    description:
+      "A low-power Zephyr RTOS gateway for wireless metering, remote sensing, and constrained edge deployments.",
+    specs: [
+      "ESP32-C6 RISC-V",
+      "Wireless M-Bus",
+      "NB-IoT / LTE-M",
+      "Wasm runtime",
+    ],
+    cta: "Explore A0",
+  },
+  {
+    href: "/products/a1",
+    category: "Hardware · Industrial",
+    name: "A1 Gateway",
+    image: "/img/products/s1-beagle.png",
+    alt: "A1 industrial gateway with BeagleV-Fire compute board",
+    description:
+      "A Linux-based industrial gateway pairing A0 wireless connectivity with RISC-V compute for richer edge workloads.",
+    specs: ["Full Linux", "BeagleV-Fire", "Containers + Wasm", "Edge AI"],
+    cta: "Explore A1",
+  },
+  {
+    href: "/products/quarc",
+    category: "Hardware · Security",
+    name: "Quarc",
+    description:
+      "A post-quantum secure element for hardware-rooted identity, firmware trust, and long-lived device security.",
+    specs: ["ML-KEM", "ML-DSA", "Secure boot", "Open RTL"],
+    cta: "Explore Quarc",
+  },
+];
+
+const capabilities = [
+  {
+    icon: Radio,
+    name: "Field connectivity",
+    desc: "Connect meters, sensors, and controllers over Wireless M-Bus, NB-IoT, LTE-M, WiFi, BLE, Ethernet, and M-Bus.",
+  },
+  {
+    icon: Cpu,
+    name: "Edge compute",
+    desc: "Run Zephyr, Linux, containers, or WebAssembly workloads near the data source before forwarding to the cloud.",
+  },
+  {
+    icon: ShieldCheck,
+    name: "Hardware trust",
+    desc: "Anchor device identity, secure boot, updates, and future post-quantum security in auditable hardware.",
+  },
+  {
+    icon: Boxes,
+    name: "Open stack",
+    desc: "Use open hardware with Magistrala, Propeller, FluxMQ, and Atom for a coherent edge-to-cloud deployment model.",
+  },
+];
+---
+
+<BaseLayout
+  title="Open-Hardware IoT Gateways & Post-Quantum Secure Element — Abstract Machines"
+  description="A0 and A1 open-hardware edge gateways plus the Quarc post-quantum secure element — purpose-built for secure, connected IoT deployments from the extreme edge to the cloud."
+>
+  <Header />
+  <main>
+    <section class="prod-hero has-video hardware-hero">
+      <video
+        class="hero-bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        width="1920"
+        height="1080"
+        poster="/video/hero-background-poster.webp"
+        aria-hidden="true"
+      >
+        <source src="/video/hero-background.webm" type="video/webm" />
+        <source src="/video/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div class="container-wide">
+        <div class="hardware-hero-copy">
+          <div class="logo-mark">
+            <span class="swatch" style="background:rgba(255,255,255,0.12);"
+            ></span>
+            Hardware · Edge · Security
+          </div>
+          <h1 class="tagline">Hardware for secure connected systems.</h1>
+          <p class="lede" style="margin-top:16px;">
+            Abstract Machines hardware brings connectivity, compute, and
+            hardware-rooted trust to IoT deployments. Start with low-power field
+            gateways, scale to Linux edge compute, and secure the fleet with
+            post-quantum hardware.
+          </p>
+          <div class="btn-row hardware-hero-actions" style="margin-top:32px;">
+            <a href="#hardware-products" class="btn btn-primary"
+              >View Products</a
+            >
+            <a href="/contact" class="btn">Talk to Us</a>
+          </div>
+          <div class="hardware-hero-pills">
+            <span class="badge success"
+              ><span class="dot"></span>Open Hardware</span
+            >
+            <span class="badge"
+              ><span class="dot"></span>Edge-to-cloud ready</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div
+          class="metrics hardware-metrics"
+          style="border:none; border-radius:0; border-left:1px solid var(--line-3);"
+        >
+          <div class="metric featured">
+            <div class="v">3</div>
+            <div class="l">Hardware products</div>
+          </div>
+          <div class="metric">
+            <div class="v">Zephyr</div>
+            <div class="l">Low-power edge</div>
+          </div>
+          <div class="metric">
+            <div class="v">Linux</div>
+            <div class="l">Industrial gateway</div>
+          </div>
+          <div class="metric">
+            <div class="v">PQC</div>
+            <div class="l">Hardware root of trust</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section
+      class="section"
+      id="hardware-products"
+      style="border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Hardware Products</span>
+            <h2 class="h-1" style="margin-top:14px;">
+              Gateways and trust anchors for the edge.
+            </h2>
+          </div>
+          <a
+            href="https://www.absmach.eu/docs/hardware"
+            class="btn-link"
+            target="_blank"
+            rel="noopener">Hardware docs ↗</a
+          >
+        </div>
+
+        <div class="hardware-card-grid">
+          {
+            hardwareProducts.map((product) => (
+              <a
+                href={product.href}
+                class={`hardware-card${product.image ? "" : " hardware-card-text-only"}`}
+              >
+                {product.image && (
+                  <div class="hardware-card-media">
+                    <img src={product.image} alt={product.alt} loading="lazy" />
+                  </div>
+                )}
+                <div class="hardware-card-body">
+                  <div class="hardware-card-top">
+                    <div>
+                      <p class="pcat">{product.category}</p>
+                      <h3>{product.name}</h3>
+                    </div>
+                    <span class="arrow">→</span>
+                  </div>
+                  <p>{product.description}</p>
+                  <div class="hardware-specs">
+                    {product.specs.map((spec) => (
+                      <span>{spec}</span>
+                    ))}
+                  </div>
+                  <span class="hardware-card-cta">{product.cta} →</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Capabilities</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Built for field, edge, and fleet operations.
+            </h2>
+          </div>
+        </div>
+        <div class="hardware-cap-grid">
+          {
+            capabilities.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div class="hardware-cap-card">
+                  <div class="hardware-cap-icon">
+                    <Icon size={22} />
+                  </div>
+                  <h3>{item.name}</h3>
+                  <p>{item.desc}</p>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="section hardware-bottom-cta"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3);"
+    >
+      <div class="container-narrow" style="text-align:center;">
+        <span class="kicker">Get started</span>
+        <h2 class="h-2" style="margin-top:14px;">
+          Build your edge hardware stack.
+        </h2>
+        <p class="lede" style="margin:20px auto 36px;">
+          Explore the hardware documentation, compare A0 and A1, or talk to the
+          team about gateway and secure element requirements.
+        </p>
+        <div class="btn-row" style="justify-content:center;">
+          <a
+            href="https://www.absmach.eu/docs/hardware"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener">Hardware docs ↗</a
+          >
+          <a href="/contact" class="btn">Contact Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Abstract Machines Hardware Products",
+      "description": "Open-hardware edge gateways and post-quantum secure element for IoT deployments.",
+      "url": "https://www.absmach.eu/products/hardware",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Product",
+            "name": "A0 Edge Gateway",
+            "description": "Low-power Zephyr RTOS gateway with Wireless M-Bus, NB-IoT, LTE-M, and Wasm support.",
+            "url": "https://www.absmach.eu/products/a0"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Product",
+            "name": "A1 Industrial Gateway",
+            "description": "RISC-V Linux gateway for industrial IoT with container and Wasm workload support.",
+            "url": "https://www.absmach.eu/products/a1"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Product",
+            "name": "Quarc",
+            "description": "Open-source post-quantum secure element with hardware-accelerated ML-KEM and ML-DSA.",
+            "url": "https://www.absmach.eu/products/quarc"
+          }
+        }
+      ]
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .hardware-hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .hardware-hero-copy {
+    text-align: center;
+  }
+
+  .hardware-hero-copy .lede {
+    max-width: none;
+    text-align: center;
+  }
+
+  .hardware-hero-copy .logo-mark {
+    display: flex;
+    width: max-content;
+    margin: 0 0 4px;
+    text-align: left;
+  }
+
+  .hardware-hero-actions {
+    justify-content: center;
+  }
+
+  .hardware-metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .hardware-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .hardware-card {
+    display: grid;
+    grid-template-rows: 240px 1fr;
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--paper);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .hardware-card-text-only {
+    grid-template-rows: 1fr;
+  }
+
+  .hardware-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--line-2);
+    box-shadow: var(--shadow);
+  }
+
+  .hardware-card-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    border-bottom: 1px solid var(--line-3);
+    background: var(--paper-2);
+  }
+
+  .hardware-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .hardware-card-body {
+    display: flex;
+    min-height: 300px;
+    flex-direction: column;
+    padding: 28px;
+  }
+
+  .hardware-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .hardware-card .pcat {
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin: 0 0 10px;
+  }
+
+  .hardware-card h3,
+  .hardware-cap-card h3 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+
+  .hardware-card p,
+  .hardware-cap-card p {
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .hardware-card .arrow {
+    color: var(--ink-3);
+    transition:
+      transform 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .hardware-card:hover .arrow {
+    color: var(--ink);
+    transform: translateX(4px);
+  }
+
+  .hardware-specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 22px;
+  }
+
+  .hardware-specs span {
+    border: 1px solid var(--line-3);
+    border-radius: 4px;
+    padding: 5px 9px;
+    background: var(--paper-2);
+    color: var(--ink-2);
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+  }
+
+  .hardware-card-cta {
+    display: inline-flex;
+    margin-top: 22px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .hardware-cap-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .hardware-cap-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    background: var(--paper);
+    padding: 28px;
+  }
+
+  .hardware-cap-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 24px;
+    border: 1px solid var(--line-3);
+    border-radius: 50%;
+    background: var(--paper-2);
+  }
+
+  @media (max-width: 980px) {
+    .hardware-card-grid,
+    .hardware-cap-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hardware-card-grid .hardware-card:first-child {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hardware-hero-copy .logo-mark {
+      font-size: 9px;
+      max-width: 100%;
+      width: fit-content;
+    }
+
+    .hardware-metrics,
+    .hardware-card-grid,
+    .hardware-cap-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hardware-card-grid .hardware-card:first-child {
+      grid-column: span 1;
+    }
+
+    .hardware-card {
+      grid-template-rows: 220px 1fr;
+    }
+
+    .hardware-card-text-only {
+      grid-template-rows: 1fr;
+    }
+
+    .hardware-card-body {
+      min-height: auto;
+      padding: 22px;
+    }
+  }
+</style>

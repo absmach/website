@@ -19,6 +19,7 @@ tags:
   - observability
   - monitoring
 ---
+
 FluxMQ is a multi-protocol message broker supporting multiple versions of MQTT, AMQP, and HTTP. Running a message broker in production without observability means guessing. You know messages are flowing, but how many clients are connected? Which sessions are active or stale? Are all cluster nodes healthy? Which topics are active right now?
 
 The FluxMQ dashboard answers these questions out of the box.
@@ -99,7 +100,8 @@ The current dashboard covers the core operational view. Upcoming work includes a
 If you have a specific use case or a gap you're running into, [open an issue](https://github.com/absmach/fluxmq/issues) on GitHub.
 
 Get involved or stay up to date:
-- 🌐 **Website:** https://fluxmq.absmach.eu
+
+- 🌐 **Website:** https://www.absmach.eu/products/fluxmq
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
-- 📘 **Documentation:** https://fluxmq.absmach.eu/docs
+- 📘 **Documentation:** https://www.absmach.eu/docs/fluxmq
 - 💬 **Discord:** https://discord.gg/HvB5QuzF

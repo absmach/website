@@ -26,7 +26,7 @@ This isn't just a technical decision — it's the result of lessons learned from
 
 ## Why we split: The original vision
 
-[Magistrala](https://github.com/absmach/magistrala) began as a comprehensive, full-stack open-source IoT platform. It handled everything from device connectivity and messaging to multi-tenancy, access control, channels, clients,  groups, the Rules Engine, Alarms, Reports, and device Bootstrap.
+[Magistrala](https://github.com/absmach/magistrala) began as a comprehensive, full-stack open-source IoT platform. It handled everything from device connectivity and messaging to multi-tenancy, access control, channels, clients, groups, the Rules Engine, Alarms, Reports, and device Bootstrap.
 
 As the platform matured, we saw an opportunity to extract its messaging and event-driven core into something more general-purpose — a foundation that could support not just IoT workloads, but any event-driven application architecture.
 
@@ -39,6 +39,7 @@ So we created [SuperMQ](https://github.com/absmach/supermq).
 The split was designed around a clean separation of concerns:
 
 **SuperMQ** would be the general-purpose, event-driven messaging core:
+
 - Device and user management (clients, channels, users, groups, domains)
 - Multi-protocol connectivity (MQTT, HTTP, CoAP, WebSocket)
 - Multi-tenancy and domain isolation
@@ -46,6 +47,7 @@ The split was designed around a clean separation of concerns:
 - Event streams and internal message routing
 
 **Magistrala** would sit on top as the IoT application layer:
+
 - Rules Engine for real-time data processing
 - Alarms for threshold monitoring and alerts
 - Reports for data aggregation and analytics
@@ -90,6 +92,7 @@ While we were maintaining the SuperMQ/Magistrala split, we also realized that me
 **[FluxMQ](https://github.com/absmach/fluxmq)** emerged as the true messaging backbone — a high-performance, versatile message broker designed for both cloud and edge deployments.
 
 **What FluxMQ provides:**
+
 - **Multi-protocol support** — MQTT, MQTT-SN, CoAP, WebSocket, HTTP
 - **Edge and cloud deployment** — runs efficiently on resource-constrained devices and scales in the cloud
 - **Clustering and high availability** — distributed architecture with built-in replication
@@ -105,7 +108,9 @@ FluxMQ handles the low-level messaging infrastructure, while Magistrala provides
 With the merger complete, the Abstract Machines stack is now clearly defined across **four focused projects**:
 
 ### 1. [Magistrala](https://github.com/absmach/magistrala) — Cloud IoT Platform Framework
+
 The unified platform that combines infrastructure and intelligence:
+
 - **Multi-tenancy** — Domain-based tenant isolation with complete data separation
 - **Access control** — Policy-based RBAC/ABAC via SpiceDB
 - **Device management** — Clients, groups, channels, and multi-protocol connectivity
@@ -118,7 +123,9 @@ The unified platform that combines infrastructure and intelligence:
 Magistrala is the complete IoT platform framework — infrastructure and application layer combined.
 
 ### 2. [FluxMQ](https://github.com/absmach/fluxmq) — Messaging Backbone
+
 The versatile, high-performance message broker for cloud and edge:
+
 - **Multi-protocol** — MQTT, MQTT-SN, CoAP, WebSocket, HTTP
 - **Cloud and edge** — Runs on constrained devices and scales in the cloud
 - **Clustering** — Distributed architecture with replication
@@ -127,8 +134,10 @@ The versatile, high-performance message broker for cloud and edge:
 
 FluxMQ handles messaging. Magistrala (and other systems) build on top of it.
 
-### 3. [A0](https://absmach.eu/a0) — IoT Gateway Hardware
+### 3. [A0](https://www.absmach.eu/products/a0) — IoT Gateway Hardware
+
 Modular, open-source IoT gateway solutions:
+
 - **Smart metering** — Energy monitoring and consumption tracking
 - **Industrial IoT** — Multi-protocol connectivity for industrial systems
 - **Edge computing** — Local processing and data aggregation
@@ -137,7 +146,9 @@ Modular, open-source IoT gateway solutions:
 The A0 module and Base Board deliver connectivity at the edge.
 
 ### 4. [Propeller](https://github.com/absmach/propeller) — WebAssembly Orchestrator
+
 Next-generation orchestration for distributed workloads:
+
 - **WebAssembly-native** — Run Wasm workloads across cloud and edge
 - **Cloud-Edge continuum** — Deploy and manage from datacenter to device
 - **Lightweight and secure** — Minimal overhead with sandboxed execution

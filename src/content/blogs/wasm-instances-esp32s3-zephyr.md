@@ -8,7 +8,7 @@ author:
   picture: "https://avatars.githubusercontent.com/u/44696487?s=96&v=4"
 coverImage: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.svg"
 ogImage:
-  url: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.svg"
+  url: "/img/blogs/wasm-instances-on-esp32s3/zephyr-cover.png"
 tags:
   - WebAssembly
   - ESP32
@@ -30,17 +30,17 @@ How many concurrent WebAssembly instances can you run on a $4 microcontroller? W
 
 The test board is an **[ESP32-S3-WROOM-1](https://www.espressif.com/en/products/modules/esp32-s3-wroom-1)** — a dual-core Xtensa LX7 at 240 MHz with 512 KB of internal SRAM and no external RAM. At roughly $4 in quantity, it sits at the low end of what embedded teams reach for when they need processing headroom on a budget.
 
-| Attribute      | Value                          |
-| -------------- | ------------------------------ |
-| SoC            | ESP32-S3                       |
-| CPU            | 2 × Xtensa LX7 @ 240 MHz       |
-| Internal SRAM  | 512 KB                         |
-| Flash          | 8 MB (WROOM-1 module)          |
-| External RAM   | None                           |
-| Price          | ~$4                            |
-| RTOS           | Zephyr 4.3.99                  |
-| WASM Runtime   | WAMR classic interpreter       |
-| Active cores   | 1 (`esp32s3_devkitc/esp32s3/procpu`) |
+| Attribute     | Value                                |
+| ------------- | ------------------------------------ |
+| SoC           | ESP32-S3                             |
+| CPU           | 2 × Xtensa LX7 @ 240 MHz             |
+| Internal SRAM | 512 KB                               |
+| Flash         | 8 MB (WROOM-1 module)                |
+| External RAM  | None                                 |
+| Price         | ~$4                                  |
+| RTOS          | Zephyr 4.3.99                        |
+| WASM Runtime  | WAMR classic interpreter             |
+| Active cores  | 1 (`esp32s3_devkitc/esp32s3/procpu`) |
 
 The Zephyr target `esp32s3_devkitc/esp32s3/procpu` pins execution to Core 0. Core 1 is not used. This is a deliberate choice: Zephyr's Xtensa SMP support on ESP32-S3 was still maturing at the time of this test, and single-core removes any SMP scheduling variables from the results. Everything measured here comes from 240 MHz of a single Xtensa LX7.
 
@@ -57,7 +57,7 @@ Zephyr's WAMR integration defaults to the **classic interpreter** (`WASM_ENABLE_
 The key to running many concurrent instances on constrained hardware is WAMR's shared-module architecture. Instead of loading a separate copy of the WASM module for each task, you parse the bytecode once and instantiate it many times.
 
 ![Shared module architecture diagram](/img/blogs/wasm-instances-on-esp32s3/shared-module-arch.svg)
-*Figure 1. WAMR shared-module architecture: `wasm_runtime_load()` parses bytecode once into an immutable `wasm_module_t`; each `wasm_runtime_instantiate()` creates an isolated instance with its own linear memory and interpreter stack.*
+_Figure 1. WAMR shared-module architecture: `wasm_runtime_load()` parses bytecode once into an immutable `wasm_module_t`; each `wasm_runtime_instantiate()` creates an isolated instance with its own linear memory and interpreter stack._
 
 The API maps directly:
 
@@ -79,7 +79,7 @@ The parsed `wasm_module_t` is shared and immutable. Each `wasm_module_inst_t` ca
 Every instance follows the same lifecycle from load to teardown:
 
 ![WASM instance lifecycle diagram](/img/blogs/wasm-instances-on-esp32s3/wasm-lifecycle.svg)
-*Figure 2. WASM instance lifecycle: load → instantiate → execute → destroy → unload. Multiple instances share the single `wasm_module_t` produced by load; unload happens once, after all instances are destroyed.*
+_Figure 2. WASM instance lifecycle: load → instantiate → execute → destroy → unload. Multiple instances share the single `wasm_module_t` produced by load; unload happens once, after all instances are destroyed._
 
 Each Zephyr thread runs one instance to completion, then calls `wasm_runtime_destroy_exec_env` and `wasm_runtime_deinstantiate`. Once all threads have finished, `wasm_runtime_unload` releases the shared module. Post-teardown heap measurements confirm that WAMR leaves no allocations behind.
 
@@ -205,7 +205,7 @@ Understanding the results requires understanding where every byte lives on Zephy
 The ESP32-S3's 512 KB SRAM is divided between the Zephyr kernel, pre-allocated thread stacks, the malloc arena, and a small headroom margin.
 
 ![Zephyr DRAM layout diagram](/img/blogs/wasm-instances-on-esp32s3/zephyr-dram-layout.svg)
-*Figure 3. Zephyr DRAM layout on ESP32-S3: thread stacks are pre-allocated in `.noinit` and never compete with the malloc arena used by WAMR.*
+_Figure 3. Zephyr DRAM layout on ESP32-S3: thread stacks are pre-allocated in `.noinit` and never compete with the malloc arena used by WAMR._
 
 ```text
 Zephyr DRAM layout (399 KB usable dram0_0_seg):
@@ -224,7 +224,7 @@ The trade-off is that the stack pool is fixed at boot. The benchmark pre-allocat
 All threads run on Core 0. The Zephyr scheduler time-slices them cooperatively and preemptively. With 24 threads simultaneously active, the CPU is 100% utilised from the moment the second instance starts.
 
 ![Zephyr scheduling and concurrency limits diagram](/img/blogs/wasm-instances-on-esp32s3/zephyr-scheduling-arena-stack.svg)
-*Figure 4. Two independent ceilings bound concurrency: stack slots cap CPU-bound workloads at 24; the 192 KB malloc arena caps stateful workloads at 2.*
+_Figure 4. Two independent ceilings bound concurrency: stack slots cap CPU-bound workloads at 24; the 192 KB malloc arena caps stateful workloads at 2._
 
 Two independent ceilings determine the peak:
 
@@ -331,7 +331,7 @@ Identical pattern to MEM. The MSG workload also declares `(memory 1 1)`, so the 
 Arena consumption across all three experiments:
 
 ![Arena consumption chart](/img/blogs/wasm-instances-on-esp32s3/arena-consumption.svg)
-*Figure 5. Malloc arena consumption as instance count grows for each workload. CPU workloads spend ~6 KB per instance; MEM/MSG spend ~70 KB. The 192 KB ceiling terminates MEM/MSG at 2 instances; CPU hits the stack-slot ceiling first at 24, with 40 KB of arena still available.*
+_Figure 5. Malloc arena consumption as instance count grows for each workload. CPU workloads spend ~6 KB per instance; MEM/MSG spend ~70 KB. The 192 KB ceiling terminates MEM/MSG at 2 instances; CPU hits the stack-slot ceiling first at 24, with 40 KB of arena still available._
 
 ---
 
@@ -340,7 +340,7 @@ Arena consumption across all three experiments:
 [Propeller](https://github.com/absmach/propeller) is an open-source orchestration system for WebAssembly workloads on embedded devices. A manager node compiles tasks to WASM and dispatches them over MQTT to a fleet of proplets — worker nodes that load and run the binaries. A single proplet might serve tasks from several independent deployments simultaneously.
 
 ![Propeller edge dispatch diagram](/img/blogs/wasm-instances-on-esp32s3/propeller-edge-dispatch.svg)
-*Figure 6. Propeller dispatch model: the manager sends compiled WASM binaries over MQTT; each proplet loads the binary via WAMR and runs it in an isolated instance. Multiple concurrent instances run within the same proplet process.*
+_Figure 6. Propeller dispatch model: the manager sends compiled WASM binaries over MQTT; each proplet loads the binary via WAMR and runs it in an isolated instance. Multiple concurrent instances run within the same proplet process._
 
 This benchmark answers the capacity question for the Zephyr proplet configuration:
 
@@ -366,4 +366,4 @@ The benchmark source is at [examples/esp32s3-wasm-benchmark-zephyr](https://gith
 
 ---
 
-*Measurements: ESP32-S3-WROOM-1, Zephyr 4.3.99, WAMR classic interpreter, single core (`esp32s3_devkitc/esp32s3/procpu`). Timing via `k_cycle_get_64()` — latency values unreliable on this target; iteration counts used for duration estimates. All experiments run in-process with no external tooling.*
+_Measurements: ESP32-S3-WROOM-1, Zephyr 4.3.99, WAMR classic interpreter, single core (`esp32s3_devkitc/esp32s3/procpu`). Timing via `k_cycle_get_64()` — latency values unreliable on this target; iteration counts used for duration estimates. All experiments run in-process with no external tooling._

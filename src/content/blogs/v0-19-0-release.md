@@ -12,15 +12,15 @@ ogImage:
   url: /img/blogs/v0-19-0-release/homepage.png
 slug: magistrala-v0-19-0
 tags:
-- Magistrala
-- Release
-- v0.19.0
-- IoT Platform
-- MQTT
-- AMQP
-- HTTP
-- CoAP
-- Distributed Systems
+  - Magistrala
+  - Release
+  - v0.19.0
+  - IoT Platform
+  - MQTT
+  - AMQP
+  - HTTP
+  - CoAP
+  - Distributed Systems
 title: Magistrala v0.19.0 is Here!
 ---
 
@@ -45,9 +45,9 @@ The MQTT adapter (mGate) now supports **TLS and mutual TLS (mTLS) termination**,
 
 Security is essential in IoT deployments, especially when devices communicate over public or semi-trusted networks. With TLS support in the adapter itself, operators can now:
 
--   enable encrypted MQTT communication
--   authenticate devices with client certificates
--   configure TLS behavior entirely via **environment variables**
+- enable encrypted MQTT communication
+- authenticate devices with client certificates
+- configure TLS behavior entirely via **environment variables**
 
 This simplifies deployments while significantly improving the security posture of IoT infrastructure.
 
@@ -61,10 +61,10 @@ Previously, refresh tokens remained valid until expiration. With token revocatio
 
 This enables several important capabilities:
 
--   **Log out from other devices**
--   **Revoking compromised sessions**
--   **Security response after password changes**
--   **Administrative session management**
+- **Log out from other devices**
+- **Revoking compromised sessions**
+- **Security response after password changes**
+- **Administrative session management**
 
 In practice, this means that authentication state can now be **actively controlled**, not just passively expired.
 This feature lays the groundwork for upcoming improvements such as **session management in the Magistrala UI**.
@@ -80,20 +80,20 @@ These improvements were primarily driven by the needs of the **Magistrala UI**, 
 
 ### Filtering by Creation Time
 
-Entities can now be filtered by creation timestamp using:
-    - created_from
-    - created_to
+Entities can now be filtered by creation timestamp using: - created_from - created_to
 
 Example:
+
 ```bash
     GET /clients?created_from=2026-01-01
 ```
+
 This is particularly useful for:
 
--   UI pagination
--   operational debugging
--   activity auditing
--   filtering recently created resources
+- UI pagination
+- operational debugging
+- activity auditing
+- filtering recently created resources
 
 ---
 
@@ -101,23 +101,25 @@ This is particularly useful for:
 
 Tag filtering has been extended with logical semantics:
 
--   `,` represents **OR**
--   `+` represents **AND**
+- `,` represents **OR**
+- `+` represents **AND**
 
 Examples:
+
 ```bash
     tag=sensor,device
     tag=sensor+temperature
 ```
+
 This allows building expressive queries while keeping the API simple.
 
 The feature is supported across multiple entities including:
 
--   clients
--   channels
--   users
--   groups
--   domains
+- clients
+- channels
+- users
+- groups
+- domains
 
 These improvements make the Magistrala API significantly more **UI-friendly and operationally powerful**.
 
@@ -129,9 +131,9 @@ We also performed an internal refactor of **Personal Access Tokens (PATs)** to a
 
 Changes include:
 
--   clearer separation between **PAT logic and policy enforcement**
--   simplified authorization flow
--   removal of redundant auth checks
+- clearer separation between **PAT logic and policy enforcement**
+- simplified authorization flow
+- removal of redundant auth checks
 
 This reduces internal overhead and results in **fewer authorization calls**, improving performance and maintainability.
 
@@ -162,9 +164,9 @@ This enables the UI to attach richer and cleaner metadata to entities without af
 
 The **Makefile** was refactored to improve:
 
--   architecture-aware builds
--   support for Apple Silicon environments
--   developer workflow consistency
+- architecture-aware builds
+- support for Apple Silicon environments
+- developer workflow consistency
 
 ---
 
@@ -178,8 +180,8 @@ Docker images now use the **latest stable Go version (1.26.0)** instead of a rel
 
 We updated internal tooling and regenerated generated assets, including:
 
--   updated **Protoc dependencies**
--   regenerated generated files
+- updated **Protoc dependencies**
+- regenerated generated files
 
 ---
 
@@ -187,9 +189,9 @@ We updated internal tooling and regenerated generated assets, including:
 
 Routine dependency updates were included for:
 
--   Go libraries
--   OpenTelemetry
--   gRPC
+- Go libraries
+- OpenTelemetry
+- gRPC
 
 These updates bring **bug fixes, security patches, and long-term
 stability improvements**.
@@ -200,11 +202,11 @@ stability improvements**.
 
 Magistrala continues to evolve alongside other projects in the **Abstract Machines ecosystem**.
 
--   **Magistrala** focuses on **device management, identity, and access
-    control**
--   **SuperMQ** provides a **high-performance messaging backbone**
--   **FluxMQ** focuses on **large-scale distributed messaging and stream
-    processing**
+- **Magistrala** focuses on **device management, identity, and access
+  control**
+- **SuperMQ** provides a **high-performance messaging backbone**
+- **FluxMQ** focuses on **large-scale distributed messaging and stream
+  processing**
 
 Together, these projects aim to provide a **modular and scalable foundation for modern IoT platforms and distributed messaging systems**.
 
@@ -237,5 +239,5 @@ We would love to hear your feedback and ideas.
 
 - 🌐 Website: https://magistrala.absmach.eu
 - ⚙️ GitHub: https://github.com/absmach/magistrala
-- 📘 Documentation: https://magistrala.absmach.eu/docs
+- 📘 Documentation: https://www.absmach.eu/docs/magistrala
 - 💬 Matrix: https://matrix.to/#/#magistrala:matrix.org

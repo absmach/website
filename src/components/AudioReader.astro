@@ -4,7 +4,7 @@ const { target = "#post" } = Astro.props;
 
 <div
   id="ar-shell"
-  class="audio-reader-shell z-40 my-6 rounded-2xl border border-subtle px-4 py-3 shadow-[var(--shadow-soft)]"
+  class="audio-reader-shell z-40 my-6 rounded-2xl border border-line-3 px-4 py-3 shadow-[var(--shadow)]"
 >
   <div class="audio-player">
     <div class="audio-left">
@@ -129,7 +129,7 @@ const { target = "#post" } = Astro.props;
           <span>Speed</span>
           <select
             id="ar-rate"
-            class="audio-glass-control audio-select text-sm text-primary"
+            class="audio-glass-control audio-select text-sm text-ink"
           >
             <option value="0.5">0.5x</option>
             <option value="0.75">0.75x</option>
@@ -146,7 +146,7 @@ const { target = "#post" } = Astro.props;
           <span>Voice</span>
           <select
             id="ar-voice"
-            class="audio-glass-control audio-select audio-voice-select text-sm text-primary"
+            class="audio-glass-control audio-select audio-voice-select text-sm text-ink"
           ></select>
         </label>
       </div>
@@ -307,8 +307,7 @@ const { target = "#post" } = Astro.props;
     gap: 0.5rem;
     padding: 0.5rem 0.6rem;
     border-radius: 0.78rem;
-    border: 1px solid
-      color-mix(in srgb, var(--border) 90%, transparent);
+    border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
     background: color-mix(in srgb, var(--panel) 98%, var(--surface));
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -477,12 +476,11 @@ const { target = "#post" } = Astro.props;
   .audio-glass-control {
     border: 1px solid
       color-mix(in srgb, var(--border) 70%, rgba(255, 255, 255, 0.42));
-    background:
-      linear-gradient(
-        160deg,
-        color-mix(in srgb, var(--surface-2) 44%, rgba(255, 255, 255, 0.2)),
-        color-mix(in srgb, var(--surface) 38%, transparent)
-      );
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--surface-2) 44%, rgba(255, 255, 255, 0.2)),
+      color-mix(in srgb, var(--surface) 38%, transparent)
+    );
     backdrop-filter: blur(13px) saturate(152%);
     -webkit-backdrop-filter: blur(13px) saturate(152%);
     box-shadow:
@@ -492,13 +490,16 @@ const { target = "#post" } = Astro.props;
   }
 
   :root[data-theme="dark"] .audio-glass-control {
-    border-color: color-mix(in srgb, var(--border) 74%, rgba(255, 255, 255, 0.2));
-    background:
-      linear-gradient(
-        160deg,
-        color-mix(in srgb, var(--surface-2) 34%, rgba(255, 255, 255, 0.05)),
-        color-mix(in srgb, var(--surface) 32%, transparent)
-      );
+    border-color: color-mix(
+      in srgb,
+      var(--border) 74%,
+      rgba(255, 255, 255, 0.2)
+    );
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--surface-2) 34%, rgba(255, 255, 255, 0.05)),
+      color-mix(in srgb, var(--surface) 32%, transparent)
+    );
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.18),
       inset 0 -1px 0 rgba(255, 255, 255, 0.06),
@@ -592,13 +593,16 @@ const { target = "#post" } = Astro.props;
 
   :root[data-theme="dark"] .audio-toggle {
     color: color-mix(in srgb, #ffffff 88%, var(--accent) 12%);
-    border-color: color-mix(in srgb, var(--border) 72%, rgba(255, 255, 255, 0.28));
-    background:
-      linear-gradient(
-        160deg,
-        color-mix(in srgb, var(--surface-2) 48%, rgba(45, 212, 255, 0.08)),
-        color-mix(in srgb, var(--surface) 44%, transparent)
-      );
+    border-color: color-mix(
+      in srgb,
+      var(--border) 72%,
+      rgba(255, 255, 255, 0.28)
+    );
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--surface-2) 48%, rgba(45, 212, 255, 0.08)),
+      color-mix(in srgb, var(--surface) 44%, transparent)
+    );
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.34),
       inset 0 -1px 0 rgba(255, 255, 255, 0.1),
@@ -607,13 +611,16 @@ const { target = "#post" } = Astro.props;
 
   :root[data-theme="dark"] .audio-toggle.is-playing {
     color: #ffffff;
-    background:
-      linear-gradient(
-        160deg,
-        color-mix(in srgb, var(--accent) 48%, var(--surface-2)),
-        color-mix(in srgb, var(--surface) 52%, transparent)
-      );
-    border-color: color-mix(in srgb, var(--accent) 62%, rgba(255, 255, 255, 0.34));
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--accent) 48%, var(--surface-2)),
+      color-mix(in srgb, var(--surface) 52%, transparent)
+    );
+    border-color: color-mix(
+      in srgb,
+      var(--accent) 62%,
+      rgba(255, 255, 255, 0.34)
+    );
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.42),
       0 8px 16px color-mix(in srgb, var(--accent) 18%, transparent);
@@ -954,7 +961,6 @@ const { target = "#post" } = Astro.props;
     let currentSentenceIndex = -1;
     let playheadSentenceIndex = 0;
     let hasCompleted = false;
-    let activeUtterance = null;
     let isUserPaused = false;
     let isMuted = false;
     let isPinned = false;
@@ -1415,7 +1421,6 @@ const { target = "#post" } = Astro.props;
       ) {
         speechSynthesis.cancel();
       }
-      activeUtterance = null;
       updateToggleButton();
     };
 
@@ -1443,7 +1448,9 @@ const { target = "#post" } = Astro.props;
         }
         if (!textNodes.length) return;
 
-        const rawText = textNodes.map((entry) => entry.nodeValue || "").join("");
+        const rawText = textNodes
+          .map((entry) => entry.nodeValue || "")
+          .join("");
         const normalized = normalizeTextWithMap(rawText);
         if (!normalized.text) return;
 
@@ -1541,8 +1548,6 @@ const { target = "#post" } = Astro.props;
         utterance.lang = document.documentElement.lang || "en-US";
       }
 
-      activeUtterance = utterance;
-
       let didStart = false;
 
       utterance.onstart = () => {
@@ -1567,7 +1572,6 @@ const { target = "#post" } = Astro.props;
           hasCompleted = true;
           isUserPaused = false;
           updateSeekUi(playheadSentenceIndex, true, true);
-          activeUtterance = null;
           setStatus("Completed");
           updateToggleButton();
           return;
@@ -1580,7 +1584,6 @@ const { target = "#post" } = Astro.props;
       utterance.onerror = () => {
         if (currentSession !== sessionId) return;
         clearActiveSentence();
-        activeUtterance = null;
         isUserPaused = false;
         setStatus("Could not play audio. Try another voice.");
         updateToggleButton();
@@ -1810,7 +1813,10 @@ const { target = "#post" } = Astro.props;
     });
 
     window.addEventListener("resize", refreshActiveSentenceHighlight);
-    window.addEventListener("orientationchange", refreshActiveSentenceHighlight);
+    window.addEventListener(
+      "orientationchange",
+      refreshActiveSentenceHighlight,
+    );
 
     if (getSupportsSpeech()) {
       loadVoices();

@@ -1,0 +1,999 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import {
+  Radio,
+  Battery,
+  Layers,
+  Shield,
+  Zap,
+  LockOpen,
+  Gauge,
+  Settings2,
+  MapPin,
+  Brain,
+} from "@lucide/astro";
+
+const radios = [
+  {
+    name: "Wi-Fi 6",
+    standard: "802.11ax",
+    use: "High-bandwidth cloud backhaul",
+  },
+  {
+    name: "Bluetooth 5",
+    standard: "BLE 5.0 LE",
+    use: "Sensor pairing & local control",
+  },
+  {
+    name: "IEEE 802.15.4",
+    standard: "Thread / 6LoWPAN",
+    use: "Low-power mesh device networks",
+  },
+  {
+    name: "Wireless M-Bus",
+    standard: "868 MHz / EN 13757",
+    use: "Utility meter reading",
+  },
+  {
+    name: "NB-IoT / LTE-M",
+    standard: "SIM7080G",
+    use: "Cellular cloud connection",
+  },
+  {
+    name: "Ethernet",
+    standard: "W5500 (Baseboard)",
+    use: "Wired LAN / gateway uplink",
+  },
+];
+
+const a0BoardSpecs = [
+  "ESP32-C6 RISC-V Core",
+  "Wi-Fi 6 (802.11ax) + BLE 5",
+  "IEEE 802.15.4 (Thread / 6LoWPAN)",
+  "Wireless M-Bus (868 MHz)",
+  "NB-IoT / LTE-M (SIM7080G)",
+  "Zephyr RTOS",
+  "Open Source Hardware",
+];
+
+const baseboardSpecs = [
+  "W5500 Ethernet Controller",
+  "TSS721A M-Bus Transceiver",
+  "SD Card Data Logging",
+  "24V DC Power Input (18–36V)",
+  "Battery Backup & Charging",
+  "DIN-Rail Mountable",
+];
+
+const features = [
+  {
+    icon: Radio,
+    name: "Six Native Radios",
+    desc: "Wi-Fi 6 (802.11ax), BLE 5, IEEE 802.15.4 (Thread / 6LoWPAN), Wireless M-Bus (868 MHz), NB-IoT / LTE-M, and Ethernet — all sharing one Zephyr networking stack. Connect meters, sensors, and gateways without external bridges.",
+  },
+  {
+    icon: Battery,
+    name: "Low Power Design",
+    desc: "Ultra-low power operation with battery backup and charging. Perfect for remote deployments.",
+  },
+  {
+    icon: Layers,
+    name: "Modular Architecture",
+    desc: "ESP32-C6 RISC-V core with expansion options. Add Ethernet, M-Bus, and SD card logging.",
+  },
+  {
+    icon: Shield,
+    name: "Secure by Design",
+    desc: "Secure boot, flash encryption, and hardware crypto accelerators built into the ESP32-C6. mTLS for cloud backhaul. Zephyr RTOS provides memory protection and process isolation for mission-critical industrial deployments.",
+  },
+  {
+    icon: Zap,
+    name: "Edge Computing — Wasm",
+    desc: "WAMR (WebAssembly Micro Runtime) on Zephyr lets you deploy and update logic remotely via Propeller. Run AI inference, data transforms, and custom processing on-device without firmware reflashing.",
+  },
+  {
+    icon: LockOpen,
+    name: "Open Source",
+    desc: "All hardware designs and firmware are open source. Customise and extend as needed.",
+  },
+];
+
+const solutions = [
+  {
+    icon: Gauge,
+    title: "Smart Metering",
+    desc: "Collect utility consumption data from wireless meters and relay it securely to Magistrala.",
+    tags: ["Wireless M-Bus", "NB-IoT", "Billing"],
+  },
+  {
+    icon: Settings2,
+    title: "Industrial Automation",
+    desc: "Monitor equipment health and trigger alerts at the edge without cloud round-trips.",
+    tags: ["Sensors", "Edge Logic", "Alerts"],
+  },
+  {
+    icon: MapPin,
+    title: "Remote Deployments",
+    desc: "Battery-backed operation in locations without permanent power: pipelines, silos, and remote infrastructure.",
+    tags: ["Battery", "Low-Power", "Remote"],
+  },
+  {
+    icon: Brain,
+    title: "Edge AI",
+    desc: "Execute lightweight inference workloads on-device using Propeller's Wasm runtime.",
+    tags: ["Wasm", "Inference", "On-Device"],
+  },
+];
+
+const integrations = [
+  "Magistrala",
+  "Propeller",
+  "Zephyr RTOS",
+  "W5500 Ethernet",
+  "SIM7080G (NB-IoT/LTE-M)",
+  "TSS721A (M-Bus)",
+];
+
+const faqs = [
+  {
+    q: "What is Zephyr RTOS?",
+    a: "Zephyr is a small, scalable real-time operating system designed for resource-constrained and embedded devices. It is maintained by the Linux Foundation and supports a wide range of microcontrollers including the ESP32-C6 used on the A0 Board.",
+  },
+  {
+    q: "What is the difference between A0 and A1?",
+    a: "A0 runs Zephyr RTOS on an ESP32-C6 microcontroller, optimised for low power and constrained environments. A1 runs full Linux on a RISC-V compute board (BeagleV-Fire) and supports containers and heavier workloads.",
+  },
+  {
+    q: "Do I need the Baseboard to use A0?",
+    a: "No. The A0 Board is fully functional on its own for wireless applications. The Baseboard adds wired Ethernet, M-Bus transceiver, SD card logging, industrial power input, and DIN-rail mounting for more demanding deployments.",
+  },
+  {
+    q: "Can I customise the A0 firmware?",
+    a: "Yes. The A0 firmware is open source. You can modify, extend, or replace it. The hardware schematics are also published, so you can adapt the board design for your specific requirements.",
+  },
+  {
+    q: "Does A0 support Propeller Wasm workloads?",
+    a: "Yes. A0 includes a lightweight Propeller runtime for Zephyr RTOS that allows the device to receive and execute Wasm workloads deployed remotely through the Propeller manager.",
+  },
+];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+});
+---
+
+<BaseLayout
+  title="A0 — Open-Source IoT Module | Wi-Fi 6, BLE, NB-IoT, RISC-V"
+  description="Open-source IoT module with 6 native radios — Wi-Fi 6, BLE 5, IEEE 802.15.4, Wireless M-Bus, NB-IoT/LTE-M, and Ethernet. ESP32-C6 RISC-V, Zephyr RTOS, Wasm-ready. EU-manufactured."
+  ogImage="/img/og/og-a0.png"
+  ogImageAlt="A0 — RISC-V Battery-Ready IoT Module"
+>
+  <Header />
+  <main>
+    <!-- Hero -->
+    <section class="prod-hero has-video">
+      <video
+        class="hero-bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        width="1920"
+        height="1080"
+        poster="/video/hero-background-poster.webp"
+        aria-hidden="true"
+      >
+        <source src="/video/hero-background.webm" type="video/webm" />
+        <source src="/video/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div class="container-wide">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="logo-mark">
+              <span class="swatch" style="background:rgba(255,255,255,0.12);"
+              ></span>
+              A0 · Edge Gateway · Hardware
+            </div>
+            <h1 class="tagline">
+              Six Native Radios. RISC-V Battery-Ready IoT Module.
+            </h1>
+            <p class="lede" style="margin-top:16px; max-width:48ch;">
+              Wi-Fi 6, BLE 5, IEEE 802.15.4, Wireless M-Bus, NB-IoT/LTE-M, and
+              Ethernet on an open ESP32-C6 RISC-V module running Zephyr RTOS.
+              Battery-backed, Wasm-ready, and manufactured in the EU.
+            </p>
+            <div class="btn-row" style="margin-top:32px;">
+              <a
+                href="https://www.absmach.eu/docs/hardware/s0-gateway/getting-started"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener">Start Building ↗</a
+              >
+              <a href="/contact" class="btn">Contact Us</a>
+            </div>
+          </div>
+          <div class="hero-visual" style="padding:16px;">
+            <img
+              src="/img/products/s0-board.webp"
+              alt="A0 edge gateway board"
+              style="object-fit:contain; max-height:420px;"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats bar -->
+    <div style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div
+          class="a0-metrics metrics"
+          style="border:none; border-radius:0; border-left:1px solid var(--line-3);"
+        >
+          <div class="metric featured">
+            <div class="v">ESP32-C6</div>
+            <div class="l">RISC-V microcontroller</div>
+          </div>
+          <div class="metric">
+            <div class="v">6</div>
+            <div class="l">Native wireless radios</div>
+          </div>
+          <div class="metric">
+            <div class="v">Wasm</div>
+            <div class="l">Edge compute ready</div>
+          </div>
+          <div class="metric">
+            <div class="v">
+              <a
+                href="https://github.com/absmach/a0"
+                target="_blank"
+                rel="noopener">Apache 2.0 ↗</a
+              >
+            </div>
+            <div class="l">Hardware &amp; firmware</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- A0 Board + Baseboard components -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <!-- Component 1: A0 Board -->
+        <div class="a0-component">
+          <div class="a0-component-header">
+            <span class="kicker">Component 1</span>
+            <h2 class="h-2" style="margin-top:8px;">A0 Board</h2>
+          </div>
+          <div class="a0-component-body">
+            <div class="a0-img-wrap">
+              <img
+                src="/img/products/s0-board-detail.webp"
+                alt="A0 Board"
+                class="a0-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="a0-component-text">
+              <p class="lede">
+                The <strong>A0 Board</strong> is the wireless compute core of the
+                A0 gateway. Built on the ESP32-C6 RISC-V microcontroller running <strong
+                  >Zephyr RTOS</strong
+                >, it handles multi-protocol wireless data collection and cloud
+                backhaul in a compact, low-power form factor.
+              </p>
+              <ul class="a0-spec-list">
+                {
+                  a0BoardSpecs.map((spec) => (
+                    <li class="a0-spec-item">
+                      <span class="a0-check">✓</span>
+                      <span>{spec}</span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="a0-divider"></div>
+
+        <!-- Component 2: Baseboard -->
+        <div class="a0-component">
+          <div class="a0-component-header">
+            <span class="kicker">Component 2</span>
+            <h2 class="h-2" style="margin-top:8px;">Baseboard</h2>
+          </div>
+          <div class="a0-component-body">
+            <div class="a0-img-wrap">
+              <img
+                src="/img/products/s0-baseboard.webp"
+                alt="A0 Baseboard"
+                class="a0-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="a0-component-text">
+              <p class="lede">
+                The <strong>Baseboard</strong> extends the A0 Board into a complete
+                industrial gateway. It adds wired Ethernet, M-Bus transceiver, SD
+                card logging, 24V DC power, battery backup, and DIN-rail mounting:
+                everything needed for professional smart metering and industrial installations.
+              </p>
+              <ul class="a0-spec-list">
+                {
+                  baseboardSpecs.map((spec) => (
+                    <li class="a0-spec-item">
+                      <span class="a0-check">✓</span>
+                      <span>{spec}</span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Six Radios -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Wireless</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Six native radios. One module.
+            </h2>
+          </div>
+          <p class="lede">
+            No external bridges. Every radio is on-board and shares the same
+            Zephyr networking stack — switch protocols in firmware without
+            hardware changes.
+          </p>
+        </div>
+        <div class="a0-radio-grid">
+          {
+            radios.map(({ name, standard, use }) => (
+              <div class="a0-radio-card">
+                <div class="a0-radio-name">{name}</div>
+                <div class="a0-radio-std">{standard}</div>
+                <div class="a0-radio-use">{use}</div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head" style="text-align:center; display:block;">
+          <span class="kicker">Features</span>
+          <h2 class="h-2" style="margin-top:14px;">
+            Built for Industrial IoT.
+          </h2>
+          <p class="lede" style="margin:12px auto 0; max-width:52ch;">
+            Everything you need for smart metering and industrial automation in
+            a modular, open-source platform.
+          </p>
+        </div>
+        <div class="a0-feat-grid feature-grid" style="margin-top:48px;">
+          {
+            features.map(({ icon: Icon, name, desc }) => (
+              <div class="feature">
+                <div class="ic">
+                  <Icon size={18} />
+                </div>
+                <div class="name">{name}</div>
+                <p class="desc">{desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Solutions -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Solutions</span>
+            <h2 class="h-2" style="margin-top:14px;">Where A0 deploys.</h2>
+          </div>
+        </div>
+        <div class="a0-sol-grid sol-grid">
+          {
+            solutions.map(({ icon: Icon, title, desc, tags }) => (
+              <div class="sol-card">
+                <div class="icon-frame">
+                  <Icon size={22} />
+                </div>
+                <h3 class="name">{title}</h3>
+                <p class="desc">{desc}</p>
+                <div class="tags">
+                  {tags.map((t) => (
+                    <span class="tag">{t}</span>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Software Platform: Wasm + BeagleV-Fire -->
+    <section class="section a0-platform-section">
+      <div class="container-wide">
+        <div class="a0-platform-grid">
+          <!-- Wasm / Propeller -->
+          <div class="a0-platform-card">
+            <span class="kicker">Edge Intelligence</span>
+            <h3 class="h-2" style="margin-top:12px;">
+              Deploy Wasm. No reflash.
+            </h3>
+            <p class="lede" style="margin-top:14px;">
+              WAMR (WebAssembly Micro Runtime) on Zephyr lets A0 receive and
+              execute workloads pushed from <a
+                href="/products/propeller"
+                style="color:var(--ink); text-decoration:underline; font-weight:600;"
+                >Propeller</a
+              > over MQTT. Update device logic — AI inference, data transforms, protocol
+              bridges — without shipping a new firmware image.
+            </p>
+            <div class="a0-sw-stack">
+              <span>Zephyr RTOS</span>
+              <span class="a0-sw-arrow">→</span>
+              <span>WAMR runtime</span>
+              <span class="a0-sw-arrow">→</span>
+              <span>Propeller deploy</span>
+            </div>
+            <a
+              href="/products/propeller"
+              class="btn-link"
+              style="margin-top:20px; display:inline-block; font-size:14px;"
+              >Explore Propeller →</a
+            >
+          </div>
+
+          <!-- BeagleV-Fire -->
+          <div class="a0-platform-card a0-platform-card-dark">
+            <span class="kicker" style="color:rgba(246,244,238,0.45);"
+              >RISC-V Linux Gateway</span
+            >
+            <h3 class="h-2" style="margin-top:12px; color:var(--on-accent);">
+              Add BeagleV-Fire. Get Linux.
+            </h3>
+            <p
+              class="lede"
+              style="margin-top:14px; color:var(--on-accent-dim);"
+            >
+              Plug A0 onto a BeagleV-Fire RISC-V Linux board and the combination
+              becomes the
+              <a
+                href="/products/a1"
+                style="color:var(--on-accent); text-decoration:underline; font-weight:600;"
+                >A1 gateway</a
+              >
+              — full Linux compute with containers, Node-RED, and local AI, plus A0's
+              six radios for device connectivity.
+            </p>
+            <div class="a0-bvf-stack">
+              <div class="a0-bvf-pill">A0 Board · Zephyr · 6 radios</div>
+              <span class="a0-bvf-plus">+</span>
+              <div class="a0-bvf-pill">
+                BeagleV-Fire · RISC-V Linux · PolarFire FPGA
+              </div>
+              <span class="a0-bvf-plus">↓</span>
+              <div class="a0-bvf-pill a0-bvf-result">
+                A1 Gateway · Full Linux + 6 radios
+              </div>
+            </div>
+            <a
+              href="/products/a1"
+              class="btn"
+              style="margin-top:20px; background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.2); color:var(--on-accent); display:inline-flex;"
+              >Explore A1 →</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integrations -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Integrations</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Connects with the full stack.
+            </h2>
+          </div>
+          <p class="lede">
+            A0 is designed to run <a
+              href="/products/magistrala"
+              style="color:inherit; text-decoration:underline;">Magistrala</a
+            > and <a
+              href="/products/propeller"
+              style="color:inherit; text-decoration:underline;">Propeller</a
+            > workloads at the extreme edge.
+          </p>
+        </div>
+        <div class="integ-grid">
+          {
+            integrations.map((name) => (
+              <div class="integ-chip">
+                <span class="dot" />
+                {name}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Production deployments -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Production</span>
+            <h2 class="h-2" style="margin-top:14px;">Running in the field.</h2>
+          </div>
+          <p class="lede">
+            A0 hardware is deployed in production environments and backed by
+            European Commission research funding.
+          </p>
+        </div>
+        <div class="a0-depl-grid">
+          <div class="a0-depl-card">
+            <div class="a0-depl-tag">Smart Factory</div>
+            <h3 class="a0-depl-name">Ericsson Smart Factory</h3>
+            <p class="a0-depl-desc">
+              A0 deployed for industrial IoT sensor collection and edge
+              processing in Ericsson's smart factory environment, validating
+              multi-protocol wireless at production scale.
+            </p>
+          </div>
+          <div class="a0-depl-card">
+            <div class="a0-depl-tag">EU Horizon Europe</div>
+            <h3 class="a0-depl-name">ELASTIC Project</h3>
+            <p class="a0-depl-desc">
+              A0 hardware was developed under the EU Horizon Europe ELASTIC
+              research programme — validating cloud-to-MCU IoT architectures
+              across industrial edge deployments.
+            </p>
+            <a
+              href="/projects/elastic"
+              class="btn-link"
+              style="font-size:13px; margin-top:14px; display:inline-block;"
+              >ELASTIC project →</a
+            >
+          </div>
+          <div class="a0-depl-card a0-depl-eu">
+            <div class="a0-depl-tag">Manufacturing</div>
+            <h3 class="a0-depl-name">Made in the EU</h3>
+            <p class="a0-depl-desc">
+              Designed, manufactured, and quality-controlled within the European
+              Union. Eligible for EU public sector and defence procurement
+              requiring domestic supply chains.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">FAQ</span>
+            <h2 class="h-2" style="margin-top:14px;">Common questions.</h2>
+          </div>
+        </div>
+        <FAQAccordion items={faqs} />
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3);"
+    >
+      <div class="container-narrow" style="text-align:center;">
+        <span class="kicker">Get started</span>
+        <h2 class="h-2" style="margin-top:14px;">
+          Start building at the edge.
+        </h2>
+        <p class="lede" style="margin:20px auto 36px;">
+          Read the getting-started guide, explore the open hardware schematics,
+          or get in touch with the team.
+        </p>
+        <div class="btn-row" style="justify-content:center;">
+          <a
+            href="https://www.absmach.eu/docs/hardware/s0-gateway/getting-started"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener">Start Building ↗</a
+          >
+          <a href="/contact" class="btn">Contact Us</a>
+        </div>
+      </div>
+      <div
+        class="container-narrow"
+        style="margin-top:48px; padding-top:32px; border-top:1px solid var(--line-3);"
+      >
+        <p
+          style="font-size:12px; color:var(--ink-4); text-align:center; line-height:1.6;"
+        >
+          A0 hardware was developed with support from the European Union's
+          Horizon Europe research and innovation programme as part of the <a
+            href="/projects/elastic"
+            style="color:var(--ink-3); text-decoration:underline;"
+            >ELASTIC project</a
+          >.
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "A0 Edge Gateway",
+      "description": "Open-source IoT module with 6 native radios — Wi-Fi 6, BLE 5, IEEE 802.15.4, Wireless M-Bus, NB-IoT/LTE-M, and Ethernet. ESP32-C6 RISC-V, Zephyr RTOS, Wasm-ready. EU-manufactured.",
+      "url": "https://www.absmach.eu/products/a0",
+      "sku": "A0-GATEWAY-V1",
+      "category": "IoT Hardware / Edge Gateway",
+      "brand": {
+        "@type": "Brand",
+        "name": "Abstract Machines"
+      },
+      "manufacturer": {
+        "@type": "Organization",
+        "name": "Abstract Machines",
+        "url": "https://www.absmach.eu/"
+      },
+      "countryOfOrigin": "EU",
+      "offers": {
+        "@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "url": "https://www.absmach.eu/contact",
+        "priceCurrency": "EUR",
+        "seller": {
+          "@type": "Organization",
+          "name": "Abstract Machines",
+          "url": "https://www.absmach.eu/"
+        }
+      }
+    }
+  </script>
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Products",
+          "item": "https://www.absmach.eu/products/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "A0",
+          "item": "https://www.absmach.eu/products/a0"
+        }
+      ]
+    }
+  </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
+</BaseLayout>
+
+<style>
+  /* Metrics */
+  .a0-metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  @media (max-width: 640px) {
+    .a0-metrics {
+      grid-template-columns: 1fr;
+    }
+    .a0-metrics .metric {
+      border-right: none;
+    }
+  }
+
+  /* Component sections */
+  .a0-component {
+    padding: 48px 0;
+  }
+  .a0-component-header {
+    margin-bottom: 40px;
+  }
+  .a0-component-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    .a0-component-body {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  .a0-img-wrap {
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--paper-2);
+    border: 1px solid var(--line-3);
+  }
+  .a0-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 15px;
+  }
+
+  .a0-component-text .lede {
+    color: var(--ink-2);
+    margin-bottom: 24px;
+  }
+  .a0-component-text strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .a0-spec-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .a0-spec-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .a0-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--paper-3);
+    color: var(--ink-2);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+
+  .a0-divider {
+    height: 1px;
+    background: var(--line-3);
+  }
+
+  /* Features grid */
+  .a0-feat-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 980px) {
+    .a0-feat-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .a0-feat-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Solutions grid */
+  .a0-sol-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 640px) {
+    .a0-sol-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ─── Six Radios ─────────────────────────────────────────────── */
+  .a0-radio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 48px;
+  }
+  .a0-radio-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+    background: var(--paper);
+  }
+  .a0-radio-name {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .a0-radio-std {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .a0-radio-use {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  @media (max-width: 768px) {
+    .a0-radio-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 480px) {
+    .a0-radio-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ─── Software Platform ──────────────────────────────────────── */
+  .a0-platform-section {
+    border-top: 1px solid var(--line-3);
+    border-bottom: 1px solid var(--line-3);
+  }
+  .a0-platform-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .a0-platform-card {
+    padding: 40px 40px;
+    background: var(--paper-2);
+  }
+  .a0-platform-card-dark {
+    background: var(--surface-accent);
+    color: var(--on-accent);
+  }
+  .a0-sw-stack {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    padding: 14px 16px;
+    background: var(--paper);
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+  }
+  .a0-sw-stack span {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+  .a0-sw-arrow {
+    color: var(--ink-4) !important;
+  }
+  .a0-bvf-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 24px;
+  }
+  .a0-bvf-pill {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    padding: 10px 14px;
+    border: 1px solid rgba(246, 244, 238, 0.15);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--on-accent-dim);
+  }
+  .a0-bvf-result {
+    background: rgba(255, 122, 74, 0.1);
+    border-color: rgba(255, 122, 74, 0.3);
+    color: #ff7a4a;
+    font-weight: 600;
+  }
+  .a0-bvf-plus {
+    font-size: 16px;
+    font-weight: 700;
+    color: rgba(246, 244, 238, 0.25);
+    text-align: center;
+    line-height: 1;
+    padding: 0 6px;
+  }
+  @media (max-width: 768px) {
+    .a0-platform-grid {
+      grid-template-columns: 1fr;
+    }
+    .a0-platform-card {
+      padding: 32px 24px;
+    }
+  }
+
+  /* ─── Production deployments ─────────────────────────────────── */
+  .a0-depl-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .a0-depl-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    background: var(--paper-2);
+  }
+  .a0-depl-eu {
+    background: rgba(7, 55, 99, 0.04);
+    border-color: rgba(7, 55, 99, 0.18);
+  }
+  .a0-depl-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .a0-depl-name {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .a0-depl-desc {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+  @media (max-width: 768px) {
+    .a0-depl-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

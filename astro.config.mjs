@@ -8,30 +8,44 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   site: "https://www.absmach.eu",
   output: "static",
+  devToolbar: { enabled: false },
+
+  redirects: {
+    "/products/s0": "/products/a0",
+    "/products/s1": "/products/a1",
+  },
 
   integrations: [
     tailwind(),
     sitemap({
-      filenameBase: "sitemap", // This will output sitemap.xml
-      changefreq: "hourly",
-      priority: 1.0,
+      filenameBase: "sitemap-pages",
       serialize(item) {
-        // Example: Get last modified date from frontmatter for content collections
-        // let modifiedTime = item.frontmatter?.lastModified;
+        const path = new URL(item.url).pathname;
 
-        // Example: If you have a custom function to get the date
-        // const urlPath = new URL(item.url).pathname;
-        // let modifiedTime = getLastModDate(urlPath);
+        if (/^\/(privacy|imprint|terms)\/?$/.test(path)) {
+          item.priority = 0.3;
+          item.changefreq = "yearly";
+        } else if (/^\/blog\/[^/]+\/?$/.test(path)) {
+          item.priority = 0.8;
+          item.changefreq = "monthly";
+        } else if (/^\/blog\/?$/.test(path)) {
+          item.priority = 0.8;
+          item.changefreq = "daily";
+        } else if (/^\/solutions\/[^/]+\/?$/.test(path)) {
+          item.priority = 0.8;
+          item.changefreq = "weekly";
+        } else if (/^\/products\/[^/]+\/?$/.test(path)) {
+          item.priority = 0.9;
+          item.changefreq = "weekly";
+        } else if (path === "/" || path === "") {
+          item.priority = 1.0;
+          item.changefreq = "daily";
+        } else {
+          item.priority = 0.7;
+          item.changefreq = "weekly";
+        }
 
-        // If a valid date is found, add it to the sitemap item
-        // The value should be an ISO formatted date string
-        // if (modifiedTime) {
-        //   item.lastmod = new Date(modifiedTime).toISOString();
-        // }
-
-        // For a simple, site-wide lastmod (less ideal for fresh content, but works)
-        item.lastmod = new Date().toISOString(); // Sets all pages to the build time
-
+        item.lastmod = new Date().toISOString();
         return item;
       },
     }),

@@ -11,7 +11,7 @@ coverImage: "/img/blogs/best-iot-platforms-2026/hero.jpg"
 ogImage:
   url: "/img/blogs/best-iot-platforms-2026/hero.jpg"
 category: blog
-featured: true
+featured: false
 tags:
   - IoT
   - IIoT
@@ -48,7 +48,7 @@ This is a practical breakdown of five IoT platforms worth evaluating. For each o
 
 ## Magistrala
 
-[Magistrala](https://magistrala.absmach.eu/) is an open-source (Apache 2.0) IoT platform built as a **framework for constructing solutions**, not just running them. The distinction matters: most IoT platforms ship a fixed application you configure; Magistrala gives you the building blocks to design your own system architecture, rather than adapting your system to fit the platform.
+[Magistrala](/products/magistrala) is an open-source (Apache 2.0) IoT platform built as a **framework for constructing solutions**, not just running them. The distinction matters: most IoT platforms ship a fixed application you configure; Magistrala gives you the building blocks to design your own system architecture, rather than adapting your system to fit the platform.
 
 It is also one of the most deployed IoT platforms in the world, powering production systems across different environments and use cases.
 
@@ -241,5 +241,5 @@ If your use case is standard and well defined, managed platforms are faster. If 
 To see how Magistrala works in practice, the [Magistrala as a Framework](/blog/magistrala-as-framework) post walks through how Magistrala functions as a framework. You can also try the platform directly:
 
 - **Cloud**: [cloud.magistrala.absmach.eu](https://cloud.magistrala.absmach.eu)
-- **Documentation**: [magistrala.absmach.eu/docs](https://magistrala.absmach.eu/docs)
+- **Documentation**: [magistrala.absmach.eu/docs](https://www.absmach.eu/docs/magistrala)
 - **GitHub**: [github.com/absmach/magistrala](https://github.com/absmach/magistrala)

@@ -1,0 +1,1153 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import { deployments } from "../../data/deployments";
+import { solutions } from "../../data/solutions";
+import { Network, ShieldCheck, ChartBar, KeyRound } from "@lucide/astro";
+
+let githubStars = "2.6k";
+try {
+  const res = await fetch("https://api.github.com/repos/absmach/magistrala");
+  if (res.ok) {
+    const data = await res.json();
+    const count: number = data.stargazers_count;
+    githubStars =
+      count >= 1000 ? `${(count / 1000).toFixed(1)}k` : String(count);
+  }
+} catch {
+  /* empty */
+}
+
+const showcaseFeatures = [
+  {
+    tag: "Dashboards",
+    title: "Visual dashboards, no code required.",
+    desc: "Build live and historical dashboards with drag-and-drop widgets. Monitor alarms, track device state, and visualise sensor data without writing a line of code.",
+    img: "/img/magistrala/dashboard-2.png",
+    alt: "Magistrala dashboard overview",
+    width: 1903,
+    height: 927,
+    flipped: false,
+  },
+  {
+    tag: "Rules Engine",
+    title: "Process messages, trigger actions.",
+    desc: "Define rules that transform messages, generate alarms, send notifications, and route data to external storage. Visual editor or API, your choice.",
+    img: "/img/magistrala/rules-engine-1.png",
+    alt: "Magistrala rules engine configuration",
+    width: 1644,
+    height: 878,
+    flipped: true,
+  },
+  {
+    tag: "Alarm Management",
+    title: "From sensor to acknowledgment.",
+    desc: "Rules fire alarms. Alarms have severity levels, assignees, and resolution workflows. Track everything from a single view across your entire fleet.",
+    img: "/img/magistrala/alarms-2.png",
+    alt: "Magistrala alarm management",
+    width: 1642,
+    height: 870,
+    flipped: false,
+  },
+  {
+    tag: "Multitenancy",
+    title: "One platform, many isolated domains.",
+    desc: "Each domain has its own users, devices, channels, and policies, completely isolated from every other domain. Manage them all from a unified control plane.",
+    img: "/img/magistrala/domains-1.png",
+    alt: "Magistrala domain management",
+    width: 1704,
+    height: 884,
+    flipped: true,
+  },
+];
+
+const gridFeatures = [
+  {
+    icon: Network,
+    name: "Multi-Protocol Messaging",
+    desc: "MQTT, CoAP, HTTP, and WebSocket. Devices speak whatever protocol they need to; Magistrala handles the translation.",
+  },
+  {
+    icon: ShieldCheck,
+    name: "Identity & Access Control",
+    desc: "Fine-grained permissions at user, group, domain, client, and channel level, powered by Atom — Magistrala's dedicated auth and identity service.",
+    href: "/products/atom",
+  },
+  {
+    icon: ChartBar,
+    name: "Reports & Analytics",
+    desc: "Scheduled or on-demand reports from device telemetry. Export to CSV, JSON, or pipe into your BI tools.",
+  },
+  {
+    icon: KeyRound,
+    name: "Personal Access Tokens",
+    desc: "Issue scoped tokens for CI/CD pipelines, service accounts, and third-party integrations with configurable expiry and permissions.",
+  },
+];
+
+const sdks = [
+  {
+    lang: "Go",
+    name: "Go SDK",
+    install: "go get github.com/absmach/magistrala",
+    snippet: `sdk := magistrala.NewSDK(\n  magistrala.Config{\n    MsgURL: apiURL,\n  },\n)\nsdk.SendMessages(msg, key)`,
+    href: "https://github.com/absmach/magistrala/tree/main/pkg/sdk",
+  },
+  {
+    lang: "TypeScript",
+    name: "JS / TS SDK",
+    install: "npm install @absmach/magistrala-sdk",
+    snippet: `import { SDK } from\n  "@absmach/magistrala-sdk";\nconst sdk = new SDK({ msgURL });\nawait sdk.messages.send(\n  msg, clientKey\n);`,
+    href: "https://github.com/absmach/magistrala-sdk-ts",
+  },
+  {
+    lang: "Python",
+    name: "Python SDK",
+    install: "pip install magistrala-sdk",
+    snippet: `from magistrala import SDK\nsdk = SDK(msg_url=api_url)\nsdk.messages.send(\n  msg, client_key\n)`,
+    href: "https://github.com/absmach/supermq-sdk-py",
+  },
+  {
+    lang: "Rust",
+    name: "Rust SDK",
+    install: "cargo add magistrala-sdk",
+    snippet: `let sdk = magistrala::SDK::new(\n  api_url\n);\nsdk.messages()\n  .send(&msg, key)\n  .await?;`,
+    href: "https://github.com/absmach/supermq-sdk-rust",
+  },
+];
+
+const integrations = [
+  { name: "Atom", href: "/products/atom" },
+  { name: "FluxMQ", href: "/products/fluxmq" },
+  { name: "NATS" },
+  { name: "Kafka" },
+  { name: "RabbitMQ" },
+  { name: "PostgreSQL" },
+  { name: "TimescaleDB" },
+  { name: "MongoDB" },
+  { name: "InfluxDB" },
+  { name: "SpiceDB" },
+  { name: "OAuth 2.0" },
+  { name: "JWT" },
+];
+
+const faqs = [
+  {
+    q: "Can I self-host Magistrala?",
+    a: "Yes. Magistrala is fully open source under the Apache 2.0 license. You can run it on your own infrastructure, a private cloud, or on-premises. Docker Compose and Kubernetes manifests are provided in the repository.",
+  },
+  {
+    q: "What protocols does Magistrala support?",
+    a: "Magistrala has native support for MQTT 3.1.1 and 5.0, CoAP, HTTP, and WebSocket. Devices can switch between protocols without any changes on the platform side. LoRa, OPC-UA, and Modbus are supported via adapter services.",
+  },
+  {
+    q: "Which SDKs are available?",
+    a: "Official SDKs are available for Go, TypeScript/JavaScript, Python, and Rust. Each SDK covers authentication, device management, channel operations, and message publishing.",
+  },
+  {
+    q: "Does Magistrala run on edge devices?",
+    a: "Yes. The Magistrala Agent runs on edge devices and acts as a bridge to the cloud platform over MQTT. It also manages Node-RED flows, executes remote commands, and handles heartbeat monitoring, giving you full control of the device from the cloud.",
+  },
+  {
+    q: "Is there a message limit on the free tier?",
+    a: "The free cloud tier includes 10,000 messages per month, with 10 users, 10 clients, 10 channels, and 10 groups. There are no limits on the open-source self-hosted version.",
+  },
+  {
+    q: "How is Magistrala different from a plain MQTT broker?",
+    a: "Magistrala is a full IoT platform. Beyond messaging, it provides device identity, multi-tenancy, fine-grained access control via Atom, dashboards, a rules engine, alarm management, reports, and personal access tokens; things a bare broker does not offer.",
+  },
+  {
+    q: "Can I customise the platform?",
+    a: "Yes. Magistrala is modular and open source. You can replace, extend, or disable individual services, add custom storage backends, or build new protocol adapters without forking the core.",
+  },
+];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+});
+---
+
+<BaseLayout
+  title="Magistrala — Open-Source IoT Platform for Connected Devices"
+  description="Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. SDKs for Go, TypeScript, Python, and Rust."
+  ogImage="/img/og/og-magistrala.png"
+  ogImageAlt="Magistrala — Open-Source IoT Platform"
+>
+  <Header />
+  <main>
+    <!-- Hero -->
+    <section class="prod-hero has-video">
+      <video
+        class="hero-bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        width="1920"
+        height="1080"
+        poster="/video/hero-background-poster.webp"
+        aria-hidden="true"
+      >
+        <source src="/video/hero-background.webm" type="video/webm" />
+        <source src="/video/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div class="container-wide">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <img
+              src="/img/products/magistrala-logo.svg"
+              alt="Magistrala"
+              class="prod-logo-img"
+              width="1700"
+              height="400"
+            />
+            <h1 class="tagline">IoT solutions without complexity.</h1>
+            <p class="lede" style="margin-top:16px; max-width:44ch;">
+              Connect devices, build dashboards, define rules, and manage
+              access, all from a single open-source platform. Deploy in minutes,
+              customise every layer.
+            </p>
+            <div class="btn-row" style="margin-top:32px;">
+              <a
+                href="https://cloud.magistrala.absmach.eu"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener">Start for Free ↗</a
+              >
+              <a href="/contact" class="btn">Contact Us →</a>
+            </div>
+          </div>
+          <div class="mg-diag-wrap">
+            <div class="mg-diag">
+              <!-- Curved guide line -->
+              <svg
+                class="mg-diag-svg"
+                viewBox="0 0 550 450"
+                fill="none"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <defs>
+                  <linearGradient id="mgCurveFade" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#073763" stop-opacity="0"
+                    ></stop>
+                    <stop offset="15%" stop-color="#073763" stop-opacity="0.18"
+                    ></stop>
+                    <stop offset="85%" stop-color="#073763" stop-opacity="0.18"
+                    ></stop>
+                    <stop offset="100%" stop-color="#073763" stop-opacity="0"
+                    ></stop>
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M -250 100 Q 200 -150 550 450"
+                  stroke="url(#mgCurveFade)"
+                  stroke-width="2"
+                  vector-effect="non-scaling-stroke"></path>
+              </svg>
+
+              <!-- Node 1 -->
+              <div class="mg-node" style="left:181px;top:65px;">
+                <div class="mg-node-inner">
+                  <div class="mg-dot"></div>
+                  <div class="mg-label">/ Working system instantly</div>
+                </div>
+                <div class="mg-card">
+                  <div class="mg-card-icon">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+                      ></polygon>
+                    </svg>
+                  </div>
+                  <p class="mg-card-desc">
+                    Deploy a complete solution with devices, data, dashboards,
+                    and alerts already configured.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Node 2 -->
+              <div class="mg-node" style="left:346px;top:180px;">
+                <div class="mg-node-inner">
+                  <div class="mg-dot"></div>
+                  <div class="mg-label">/ Customize everything</div>
+                </div>
+                <div class="mg-card">
+                  <div class="mg-card-icon">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="4" y="4" width="16" height="16" rx="2" ry="2"
+                      ></rect>
+                      <rect x="9" y="9" width="6" height="6"></rect>
+                      <line x1="9" y1="1" x2="9" y2="4"></line><line
+                        x1="15"
+                        y1="1"
+                        x2="15"
+                        y2="4"></line>
+                      <line x1="9" y1="20" x2="9" y2="23"></line><line
+                        x1="15"
+                        y1="20"
+                        x2="15"
+                        y2="23"></line>
+                      <line x1="20" y1="9" x2="23" y2="9"></line><line
+                        x1="20"
+                        y1="15"
+                        x2="23"
+                        y2="15"></line>
+                      <line x1="1" y1="9" x2="4" y2="9"></line><line
+                        x1="1"
+                        y1="15"
+                        x2="4"
+                        y2="15"></line>
+                    </svg>
+                  </div>
+                  <p class="mg-card-desc">
+                    Extend with rules, integrations, and workflows tailored to
+                    your exact use case.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Node 3 -->
+              <div class="mg-node" style="left:490px;top:354px;">
+                <div class="mg-node-inner">
+                  <div class="mg-dot"></div>
+                  <div class="mg-label">/ Scale without complexity</div>
+                </div>
+                <div class="mg-card">
+                  <div class="mg-card-icon">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"
+                      ></polyline>
+                      <polyline points="17 6 23 6 23 12"></polyline>
+                    </svg>
+                  </div>
+                  <p class="mg-card-desc">
+                    A composable architecture that grows with your system,
+                    without feature overload.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats bar -->
+    <div style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="metrics mg-metrics" style="border:none; border-radius:0; ">
+          <div class="metric featured">
+            <div class="v">
+              <a
+                href="https://deployments.absmach.eu/"
+                target="_blank"
+                rel="noopener"
+                aria-label="View production deployments">400+ ↗</a
+              >
+            </div>
+            <div class="l">Production deployments</div>
+          </div>
+          <div class="metric">
+            <div class="v">13+</div>
+            <div class="l">Global partners</div>
+          </div>
+          <div class="metric">
+            <div class="v">4+</div>
+            <div class="l">Protocols</div>
+          </div>
+          <div class="metric">
+            <div class="v">
+              <a
+                href="https://github.com/absmach/magistrala"
+                target="_blank"
+                rel="noopener"
+                aria-label="GitHub stars">{githubStars} ↗</a
+              >
+            </div>
+            <div class="l">GitHub Stars</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature showcase -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Platform</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Open-source IoT platform features.
+            </h2>
+          </div>
+          <p class="lede">
+            A complete, enterprise-grade IoT core. Open source and fully under
+            your control.
+          </p>
+        </div>
+
+        <!-- Showcase rows -->
+        <div class="feat-showcase" style="margin-bottom:16px;">
+          {
+            showcaseFeatures.map(
+              ({ tag, title, desc, img, alt, width, height, flipped }) => (
+                <div
+                  class={`feat-row${flipped ? " feat-flipped" : ""}`}
+                  style="min-height:300px;"
+                >
+                  <div class="feat-info">
+                    <span class="feat-tag">{tag}</span>
+                    <h3>{title}</h3>
+                    <p>{desc}</p>
+                  </div>
+                  <div class="feat-visual" style="align-items:flex-start;">
+                    <img
+                      src={img}
+                      alt={alt}
+                      width={width}
+                      height={height}
+                      loading="lazy"
+                      style="width:100%; height:auto; object-fit:cover; object-position:top left;"
+                    />
+                  </div>
+                </div>
+              ),
+            )
+          }
+        </div>
+
+        <!-- Remaining features grid -->
+        <div
+          class="feature-grid mg-feat-grid"
+          style="gap:20px; margin-top: 80px;"
+        >
+          {
+            gridFeatures.map(({ icon: Icon, name, desc, href }) => (
+              <div class="feature" style="padding:36px;">
+                <div
+                  class="ic"
+                  style="width:40px; height:40px; margin-bottom:18px;"
+                >
+                  <Icon size={20} />
+                </div>
+                <div class="name" style="font-size:18px; margin-bottom:10px;">
+                  {name}
+                </div>
+                <p class="desc" style="font-size:15px; line-height:1.65;">
+                  {desc}
+                </p>
+                {href && (
+                  <a
+                    href={href}
+                    class="btn-link"
+                    style="font-size:13px; margin-top:12px; display:inline-block;"
+                  >
+                    Learn more →
+                  </a>
+                )}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Solutions section -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Solution Packs</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Industry-ready IoT solutions.
+            </h2>
+          </div>
+          <p class="lede">
+            Pre-configured dashboards, detection rules, and compliance reports
+            for your industry — deploy in minutes, not months.
+          </p>
+        </div>
+        <div class="mg-sol-grid">
+          {
+            solutions.map((sol) => (
+              <a href={`/solutions/${sol.slug}/`} class="sol-img-card">
+                <div class="sol-img-wrap">
+                  <img
+                    src={sol.image}
+                    alt={`${sol.title} IoT solution`}
+                    width="600"
+                    height="400"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="sol-img-body">
+                  <h3 class="sol-img-title">{sol.title}</h3>
+                  <p class="sol-img-desc">{sol.summary}</p>
+                  <span
+                    class="btn-link"
+                    style="font-size:13px; margin-top:auto;"
+                  >
+                    Explore solution →
+                  </span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+        <div style="margin-top:32px; text-align:center;">
+          <a href="/solutions/" class="btn">View all solution packs →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SDK section -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Developer SDKs</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Magistrala SDKs — Go, Python, TypeScript &amp; Rust.
+            </h2>
+          </div>
+          <p class="lede">
+            Official SDKs for Go, TypeScript, Python, and Rust. Connect to
+            Magistrala in minutes from the language your team already uses.
+          </p>
+        </div>
+        <div class="sdk-grid">
+          {
+            sdks.map(({ lang, name, install, snippet, href }) => (
+              <div class="sdk-card">
+                <div class="sdk-lang">{lang}</div>
+                <div class="sdk-name">{name}</div>
+                <div class="sdk-snippet">{snippet}</div>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:auto;">
+                  <code style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink-3); background:var(--paper-3); padding:6px 10px; border-radius:var(--radius-sm);">
+                    {install}
+                  </code>
+                  <a
+                    href={href}
+                    class="btn-link"
+                    target="_blank"
+                    rel="noopener"
+                    style="font-size:13px;"
+                  >
+                    View on GitHub ↗
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Edge Agent section -->
+    <section class="section">
+      <div class="container-wide">
+        <div
+          style="display:flex; flex-direction:column; align-items:center; text-align:center;"
+        >
+          <span class="kicker" style="display:block; margin-bottom:14px;"
+            >Edge Deployment</span
+          >
+          <h2 class="h-2">Magistrala runs where your devices are.</h2>
+          <p style="color:var(--ink-2); margin-top:20px; line-height:1.65;">
+            The Magistrala Agent runs directly on edge devices and acts as a
+            bridge to the cloud platform over MQTT. Deploy on any Linux gateway
+            (including <a
+              href="/products/a0"
+              style="color:inherit; text-decoration:underline;">A0</a
+            > and <a
+              href="/products/a1"
+              style="color:inherit; text-decoration:underline;">A1</a
+            >) and manage it remotely. Pair with <a
+              href="/products/propeller"
+              style="color:inherit; text-decoration:underline;">Propeller</a
+            > to push WebAssembly workloads to the edge without reflashing firmware.
+          </p>
+          <ul
+            style="list-style:none; padding:0; margin:24px 0 0; display:flex; flex-direction:column; gap:10px; font-size:14px; color:var(--ink-2); text-align:left;"
+          >
+            <li>→ MQTT bridge to the cloud platform</li>
+            <li>→ Manage Node-RED flows remotely</li>
+            <li>→ Execute shell commands from the UI</li>
+            <li>→ Heartbeat monitoring for local services</li>
+            <li>→ Bootstrap configuration from cloud</li>
+          </ul>
+          <div class="btn-row" style="margin-top:32px; justify-content:center;">
+            <a
+              href="https://www.absmach.eu/docs/magistrala/dev-guide/agent"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener">Agent Documentation ↗</a
+            >
+            <a href="/products/a1" class="btn">A1 Gateway →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integrations -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Integrations</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Integrations &amp; protocol support.
+            </h2>
+          </div>
+          <p class="lede">
+            Magistrala integrates natively with the data stores, brokers, and
+            auth systems your team already runs.
+          </p>
+        </div>
+        <div class="integ-grid">
+          {
+            integrations.map(({ name, href }) => (
+              <div class="integ-chip">
+                <span class="dot" />
+                {href ? <a href={href}>{name}</a> : name}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Production Deployments -->
+    <section
+      style="background:var(--surface-accent); color:var(--on-accent); padding:96px 0;"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker" style="color:var(--on-accent-muted);"
+              >In production</span
+            >
+            <h2 class="h-1" style="margin-top:14px; color:var(--on-accent);">
+              Trusted by industry leaders.
+            </h2>
+          </div>
+          <p class="lede" style="color:var(--on-accent-dim); max-width:36ch;">
+            Four flagship deployments, all built on the same open-source
+            platform you can run yourself.
+          </p>
+        </div>
+        <div class="mg-depl-grid">
+          {
+            deployments.map((d) => (
+              <div style="border:1px solid rgba(255,255,255,0.1); border-radius:var(--radius-lg); background:rgba(255,255,255,0.04); overflow:hidden; display:flex; flex-direction:column;">
+                <div style="padding:24px 32px; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:center;">
+                  <img
+                    src={d.logo}
+                    alt={d.company}
+                    loading="lazy"
+                    style="height:50px; width:auto; object-fit:contain; filter:brightness(0) invert(1); opacity:0.85;"
+                  />
+                </div>
+                <div style="padding:32px; display:flex; flex-direction:column; gap:16px; flex:1;">
+                  <h3 style="font-size:20px; font-weight:600; color:var(--on-accent); margin:0;">
+                    {d.title}
+                  </h3>
+                  <p style="font-size:15px; line-height:1.65; color:var(--on-accent-dim); margin:0;">
+                    {d.description}
+                  </p>
+                  <a
+                    href={d.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; color:var(--on-accent-dim); margin-top:auto; text-decoration:none;"
+                  >
+                    {d.linkText} ↗
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Global Deployments Map -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Global Reach</span>
+            <h2 class="h-2" style="margin-top:14px;">Deployed worldwide.</h2>
+          </div>
+          <p class="lede">
+            Organizations across the globe rely on Magistrala for
+            mission-critical IoT infrastructure.
+          </p>
+        </div>
+        <div
+          style="border:1px solid var(--line-3); border-radius:var(--radius-lg); overflow:hidden;"
+        >
+          <iframe
+            src="https://deployments.absmach.eu?filter=hidden&sidebar=hidden"
+            title="Magistrala Global Deployments"
+            style="width:100%; height:600px; border:0; display:block;"
+            loading="lazy"
+            allow="geolocation"></iframe>
+        </div>
+        <div style="display:flex; justify-content:center; margin-top:28px;">
+          <a
+            href="https://deployments.absmach.eu"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener">View Full Deployments Dashboard ↗</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Pricing</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Start free. Scale when you're ready.
+            </h2>
+          </div>
+          <p class="lede">
+            Self-host for free forever, or use the managed cloud with a free
+            tier and enterprise options.
+          </p>
+        </div>
+        <div class="mg-pricing-grid">
+          <div
+            class="cta-card"
+            style="padding:40px; gap:20px; display:flex; flex-direction:column;"
+          >
+            <div>
+              <div class="label">Free tier</div>
+              <h3 style="margin-top:8px;">Community</h3>
+              <p
+                style="font-size:36px; font-weight:700; margin:12px 0 0; color:var(--ink);"
+              >
+                $0<span
+                  style="font-size:15px; font-weight:400; color:var(--ink-3);"
+                >
+                  / month</span
+                >
+              </p>
+            </div>
+            <ul
+              style="list-style:none; padding:0; margin:0; flex:1; display:flex; flex-direction:column; gap:9px; font-size:14px; color:var(--ink-2);"
+            >
+              <li>→ 10 users</li>
+              <li>→ 10 clients</li>
+              <li>→ 10 channels</li>
+              <li>→ 10 groups</li>
+              <li>→ 10,000 messages / month</li>
+              <li>→ Community support</li>
+            </ul>
+            <a
+              href="https://cloud.magistrala.absmach.eu"
+              class="btn"
+              target="_blank"
+              rel="noopener"
+              style="margin-top:auto; text-align:center; justify-content:center;"
+              >Start Free ↗</a
+            >
+          </div>
+          <div
+            class="cta-card dark"
+            style="padding:40px; gap:20px; display:flex; flex-direction:column;"
+          >
+            <div>
+              <div class="label">Enterprise</div>
+              <h3 style="margin-top:8px; color:var(--paper);">Enterprise</h3>
+              <p
+                style="font-size:20px; font-weight:600; margin:12px 0 0; color:rgba(246,244,238,0.75);"
+              >
+                Custom pricing
+              </p>
+            </div>
+            <ul
+              style="list-style:none; padding:0; margin:0; flex:1; display:flex; flex-direction:column; gap:9px; font-size:14px; color:rgba(246,244,238,0.8);"
+            >
+              <li>→ Multitenant support</li>
+              <li>→ Unlimited users</li>
+              <li>→ Custom dashboards</li>
+              <li>→ Unlimited clients</li>
+              <li>→ Unlimited channels</li>
+              <li>→ Unlimited groups</li>
+              <li>→ Unlimited messages</li>
+              <li>→ Premium SLA support</li>
+              <li>→ Dedicated infrastructure</li>
+            </ul>
+            <a
+              href="/contact"
+              class="btn"
+              style="margin-top:auto; text-align:center; justify-content:center; background:rgba(246,244,238,0.1); border-color:rgba(246,244,238,0.25); color:var(--paper);"
+              >Contact Sales</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">FAQ</span>
+            <h2 class="h-2" style="margin-top:14px;">Common questions.</h2>
+          </div>
+        </div>
+        <FAQAccordion items={faqs} />
+      </div>
+    </section>
+
+    <!-- Architecture guide -->
+    <section class="section" style="border-top:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+          <a
+            href="/iiot-platform-architecture"
+            style="flex:1; min-width:260px; padding:24px; border:1px solid var(--line-3); border-radius:var(--radius); text-decoration:none; color:var(--ink); background:var(--paper-2);"
+          >
+            <div
+              style="font-size:11px; font-family:'JetBrains Mono',monospace; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink-4); margin-bottom:10px;"
+            >
+              Guide
+            </div>
+            <div style="font-weight:600; font-size:15px;">
+              IIoT Platform Architecture Explained →
+            </div>
+            <div style="font-size:13px; color:var(--ink-3); margin-top:6px;">
+              How Magistrala fits into a seven-layer industrial IoT stack:
+              protocols, edge compute, identity, and security.
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+      <div class="container-narrow" style="text-align:center;">
+        <span class="kicker">Get started</span>
+        <h2 class="h-2" style="margin-top:14px;">
+          Ready to connect your devices?
+        </h2>
+        <p class="lede" style="margin:20px auto 24px;">
+          Start with the free tier, self-host the open-source platform, or talk
+          to us about enterprise deployments.
+        </p>
+        <p style="margin:0 auto 36px; font-size:14px; color:var(--ink-3);">
+          Planning your IIoT stack? Read our <a
+            href="/iiot-platform-architecture"
+            style="color:inherit; text-decoration:underline;"
+            >IIoT platform architecture guide</a
+          >.
+        </p>
+        <div class="btn-row" style="justify-content:center;">
+          <a
+            href="https://cloud.magistrala.absmach.eu"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener">Start for Free ↗</a
+          >
+          <a
+            href="https://www.absmach.eu/docs/magistrala"
+            class="btn"
+            target="_blank"
+            rel="noopener">Documentation ↗</a
+          >
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Magistrala",
+      "description": "Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. SDKs for Go, TypeScript, Python, and Rust.",
+      "applicationCategory": "IoT",
+      "operatingSystem": "Linux",
+      "url": "https://www.absmach.eu/products/magistrala",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free community tier with 10,000 messages/month. Enterprise pricing available."
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Abstract Machines"
+      }
+    }
+  </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Products",
+          "item": "https://www.absmach.eu/products/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Magistrala",
+          "item": "https://www.absmach.eu/products/magistrala"
+        }
+      ]
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  /* ── Responsive grids ─────────────────────────────────────── */
+  .mg-metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* ── Solutions grid ──────────────────────────────────────── */
+  .mg-sol-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 1100px) {
+    .mg-sol-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 760px) {
+    .mg-sol-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 500px) {
+    .mg-sol-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .mg-feat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .mg-depl-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .mg-pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 880px;
+  }
+  @media (max-width: 980px) {
+    .mg-depl-grid {
+      grid-template-columns: 1fr;
+    }
+    .mg-pricing-grid {
+      max-width: 100%;
+    }
+  }
+  @media (max-width: 640px) {
+    .mg-metrics {
+      grid-template-columns: 1fr;
+    }
+    .mg-metrics .metric {
+      border-right: none;
+    }
+    .mg-feat-grid {
+      grid-template-columns: 1fr;
+    }
+    .mg-pricing-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Magistrala hero diagram ───────────────────────────────── */
+  .mg-diag-wrap {
+    position: relative;
+    display: none;
+    justify-content: flex-end;
+    width: 100%;
+    height: 550px;
+  }
+  @media (min-width: 981px) {
+    .mg-diag-wrap {
+      display: flex;
+      transform: translateX(-128px);
+    }
+  }
+  @media (min-width: 1280px) {
+    .mg-diag-wrap {
+      transform: translateX(-154px);
+    }
+  }
+  .mg-diag {
+    position: relative;
+    width: 550px;
+    height: 450px;
+    flex-shrink: 0;
+  }
+  .mg-diag-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  /* Nodes */
+  .mg-node {
+    position: absolute;
+  }
+  .mg-node-inner {
+    position: relative;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+  .mg-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--ink);
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px rgba(7, 55, 99, 0.12);
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease;
+  }
+  .mg-node:hover .mg-dot {
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+  .mg-label {
+    position: absolute;
+    left: 20px;
+    top: -30px;
+    padding-bottom: 6px;
+    padding-right: 48px;
+    border-bottom: 1.5px solid var(--line-2);
+    white-space: nowrap;
+    -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
+    mask-image: linear-gradient(to right, black 60%, transparent 100%);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-3);
+    transition:
+      border-color 0.2s,
+      color 0.2s;
+  }
+  .mg-node:hover .mg-label {
+    border-color: var(--ink-2);
+    color: var(--ink);
+  }
+
+  /* Hover card */
+  .mg-card {
+    position: absolute;
+    right: calc(100% + 20px);
+    top: -24px;
+    width: 220px;
+    padding: 16px;
+    background: var(--paper);
+    border: 1px solid var(--line-3);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(6px);
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
+    z-index: 30;
+  }
+  .mg-node:hover .mg-card {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+  .mg-card-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--line-3);
+    background: var(--paper-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    color: var(--ink-2);
+  }
+  .mg-card-desc {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-2);
+    line-height: 1.55;
+    margin: 0;
+  }
+</style>

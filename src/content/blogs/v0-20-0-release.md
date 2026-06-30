@@ -12,16 +12,16 @@ ogImage:
   url: /img/blogs/v0-20-0-release/homepage.png
 slug: magistrala-v0-20-0
 tags:
-- Magistrala
-- Release
-- v0.20.0
-- IoT Platform
-- FluxMQ
-- Rules Engine
-- Reports
-- Alarms
-- Access Control
-- Distributed Systems
+  - Magistrala
+  - Release
+  - v0.20.0
+  - IoT Platform
+  - FluxMQ
+  - Rules Engine
+  - Reports
+  - Alarms
+  - Access Control
+  - Distributed Systems
 title: Magistrala v0.20.0 is Here!
 featured: false
 ---
@@ -54,11 +54,11 @@ The result is a more complete IoT platform framework, where device management, i
 
 This unification includes major service and deployment updates such as:
 
--   FluxMQ integration as the messaging backbone
--   integrated support for alarms, rules engine, reports, certificates, provisioning, and readers
--   updated Docker Compose configuration for the expanded stack
--   refreshed OpenAPI documentation for the expanded service set
--   SDK and CLI support for the integrated service set
+- FluxMQ integration as the messaging backbone
+- integrated support for alarms, rules engine, reports, certificates, provisioning, and readers
+- updated Docker Compose configuration for the expanded stack
+- refreshed OpenAPI documentation for the expanded service set
+- SDK and CLI support for the integrated service set
 
 For operators and developers, this means fewer boundaries between related projects and a clearer path for deploying a full IoT system from one repository.
 
@@ -71,10 +71,10 @@ Magistrala is now built more directly around [**FluxMQ**](https://github.com/abs
 The v0.20.0 work replaces older messaging paths with FluxMQ-oriented infrastructure and updates internal event handling across the platform.
 This gives Magistrala a stronger foundation for:
 
--   high-throughput message routing
--   event-driven service communication
--   stream-oriented internal workflows
--   scaling messaging and IoT workloads together
+- high-throughput message routing
+- event-driven service communication
+- stream-oriented internal workflows
+- scaling messaging and IoT workloads together
 
 This change also makes the relationship between Magistrala and FluxMQ more explicit: FluxMQ provides the messaging backbone, while Magistrala provides the platform services around it.
 
@@ -182,11 +182,11 @@ This improves consistency for access-management workflows around automation and 
 
 The v0.20.0 cycle included multiple updates to Docker and CI:
 
--   Docker images now use newer Go 1.26.x Alpine images
--   Docker publishing issues were fixed
--   GitHub Container Registry publishing was introduced
--   CI scripts and workflows were refreshed
--   Make and UPX dependencies were removed from the build path
+- Docker images now use newer Go 1.26.x Alpine images
+- Docker publishing issues were fixed
+- GitHub Container Registry publishing was introduced
+- CI scripts and workflows were refreshed
+- Make and UPX dependencies were removed from the build path
 
 These changes make the build and release process simpler and more reliable for maintainers and contributors.
 
@@ -213,15 +213,15 @@ This brings topic handling closer to common MQTT-style conventions and makes exa
 
 Routine dependency updates were included across the release cycle, including:
 
--   Go libraries
--   OpenTelemetry
--   gRPC
--   SpiceDB
--   NATS
--   CoAP
--   Slack
--   PostgreSQL drivers
--   Docker CLI
+- Go libraries
+- OpenTelemetry
+- gRPC
+- SpiceDB
+- NATS
+- CoAP
+- Slack
+- PostgreSQL drivers
+- Docker CLI
 
 These updates bring bug fixes, compatibility improvements, and long-term stability improvements.
 
@@ -233,8 +233,8 @@ Magistrala continues to evolve as the platform layer for building secure, scalab
 
 With v0.20.0, the relationship between Magistrala and FluxMQ becomes clearer:
 
--   **Magistrala** focuses on device management, identity, access control, provisioning, automation, reporting, and observability
--   **FluxMQ** provides the messaging and event-streaming backbone
+- **Magistrala** focuses on device management, identity, access control, provisioning, automation, reporting, and observability
+- **FluxMQ** provides the messaging and event-streaming backbone
 
 Together, they provide a modular foundation for modern IoT platforms and distributed messaging systems.
 
@@ -274,5 +274,5 @@ We would love to hear your feedback and ideas.
 
 - 🌐 Website: https://magistrala.absmach.eu
 - ⚙️ GitHub: https://github.com/absmach/magistrala
-- 📘 Documentation: https://magistrala.absmach.eu/docs
+- 📘 Documentation: https://www.absmach.eu/docs/magistrala
 - 💬 Matrix: https://matrix.to/#/#magistrala:matrix.org

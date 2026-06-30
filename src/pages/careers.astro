@@ -1,184 +1,302 @@
 ---
-// pages/careers.astro
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FinalCTA from "../components/FinalCTA.astro";
+import {
+  DollarSign,
+  FlaskConical,
+  GitBranch,
+  Globe,
+  TrendingUp,
+  Zap,
+} from "@lucide/astro";
+
 const benefits = [
   {
+    ic: Globe,
     title: "Remote-First",
-    description: "Work from anywhere in Europe with flexible hours",
-    icon: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+    desc: "Work from anywhere in Europe with flexible hours. We care about outcomes, not office time.",
   },
   {
+    ic: GitBranch,
     title: "Open Source",
-    description: "Contribute to projects used by thousands",
-    icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+    desc: "Contribute to projects used by thousands of developers worldwide. Your work ships publicly.",
   },
   {
+    ic: FlaskConical,
     title: "Research",
-    description: "Work on cutting-edge EU research projects",
-    icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
+    desc: "Work on cutting-edge EU Horizon Europe projects in confidential computing and 6G networks.",
   },
   {
+    ic: TrendingUp,
     title: "Growth",
-    description: "Continuous learning and conference attendance",
-    icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6",
+    desc: "Continuous learning, conference attendance, and the space to explore new technologies.",
   },
   {
+    ic: Zap,
     title: "Impact",
-    description: "Build infrastructure used by industry leaders",
-    icon: "M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z",
+    desc: "Build infrastructure running at Nokia, Intel, and Ericsson scale. What you ship matters.",
   },
   {
+    ic: DollarSign,
     title: "Competitive",
-    description: "Market-rate compensation and equity",
-    icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+    desc: "Market-rate compensation and equity. We reward the people who make the work excellent.",
+  },
+];
+
+const process = [
+  {
+    step: "01",
+    title: "Apply",
+    desc: "Send us your CV and a short note about what interests you. No cover letter required.",
+  },
+  {
+    step: "02",
+    title: "Screen",
+    desc: "A 30-minute intro call with someone from the team to discuss your background and interests.",
+  },
+  {
+    step: "03",
+    title: "Interview",
+    desc: "Technical and values assessment, relevant to the role, no whiteboard puzzles.",
+  },
+  {
+    step: "04",
+    title: "Offer",
+    desc: "We move quickly. If it's a fit, you'll have an offer within a few days of the final round.",
   },
 ];
 ---
 
-<BaseLayout title="Careers">
+<BaseLayout
+  title="Careers — Abstract Machines"
+  description="Join Abstract Machines and help build open-source infrastructure for IoT and edge computing. Remote-first, research-driven, based in Paris."
+>
   <Header />
-  <!-- Hero -->
-  <section class="py-32 px-6 hero-grid">
-    <div class="max-w-7xl mx-auto text-center">
-      <h1 class="text-6xl md:text-7xl font-display font-bold mb-6">
-        Build the Future With Us
-      </h1>
-      <p class="text-2xl text-muted max-w-3xl mx-auto">
-        Join a team pushing the boundaries of distributed systems and edge
-        computing
-      </p>
-    </div>
-  </section>
-
-  <!-- Why Join -->
-  <section class="py-32 px-6">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl font-display font-bold mb-4">
-          Why Abstract Machines?
-        </h2>
-        <p class="text-xl text-muted">What makes us different</p>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {
-          benefits.map((benefit) => (
-            <div class="p-8 rounded-2xl border border-subtle bg-panel transition-all hover:border-accent hover:shadow-[var(--shadow-soft)]">
-              <div class="w-14 h-14 bg-electric-cyan/10 rounded-xl flex items-center justify-center mb-6">
-                <svg
-                  class="w-7 h-7 text-electric-cyan"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d={benefit.icon}
-                  />
-                </svg>
-              </div>
-              <h3 class="text-xl font-display font-bold mb-3">
-                {benefit.title}
-              </h3>
-              <p class="text-muted">{benefit.description}</p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Open Positions -->
-  <section class="py-32 px-6">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl font-display font-bold mb-4">Open Positions</h2>
-        <p class="text-xl text-muted">We are not hiring right now</p>
-      </div>
-
-      <div class="max-w-3xl mx-auto rounded-2xl border border-subtle bg-panel p-8 text-center">
-        <p class="text-muted">
-          There are currently no open positions. You can still reach out via
-          our
-          <a href="/contact/" class="text-primary underline-offset-4 hover:underline"> contact page</a>.
+  <main>
+    <!-- Hero -->
+    <section
+      class="section-tight careers-hero"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3); text-align:center;"
+    >
+      <div class="container-wide">
+        <span class="kicker">Careers</span>
+        <h1 class="h-1" style="margin-top:8px;">Build the future with us.</h1>
+        <p
+          class="lede"
+          style="margin-top:16px; max-width:560px; margin-left:auto; margin-right:auto;"
+        >
+          Join a small, expert team pushing the boundaries of distributed
+          systems, IoT, and edge computing, openly, from wherever you are.
         </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Application Process -->
-  <section class="py-32 px-6">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl font-display font-bold mb-4">Our Process</h2>
-        <p class="text-xl text-muted">What to expect when you apply</p>
-      </div>
-
-      <div class="grid md:grid-cols-4 gap-8">
-        <div class="text-center">
-          <div
-            class="w-16 h-16 bg-electric-cyan/10 rounded-full flex items-center justify-center mx-auto mb-4"
+        <div class="btn-row" style="margin-top:28px; justify-content:center;">
+          <a href="/contact/" class="btn btn-primary">Get in touch</a>
+          <a
+            href="https://github.com/absmach"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn">View our work ↗</a
           >
-            <span class="text-2xl font-display font-bold text-electric-cyan"
-              >1</span
-            >
-          </div>
-          <h3 class="font-display font-bold mb-2">Apply</h3>
-          <p class="text-sm text-muted">Submit your application via email</p>
         </div>
+      </div>
+    </section>
 
-        <div class="text-center">
-          <div
-            class="w-16 h-16 bg-electric-cyan/10 rounded-full flex items-center justify-center mx-auto mb-4"
-          >
-            <span class="text-2xl font-display font-bold text-electric-cyan"
-              >2</span
-            >
+    <!-- Benefits -->
+    <section>
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Why join us</span>
+            <h2 class="h-2" style="margin-top:10px;">
+              What makes us different
+            </h2>
+            <p class="lede" style="margin-top:10px;">
+              Six reasons people choose to work at Abstract Machines.
+            </p>
           </div>
-          <h3 class="font-display font-bold mb-2">Screen</h3>
-          <p class="text-sm text-muted">Initial conversation with our team</p>
         </div>
+        <div class="ben-grid" style="margin-top:36px;">
+          {
+            benefits.map(({ ic: Ic, title, desc }) => (
+              <div class="card">
+                <div class="ben-icon">
+                  <Ic size={20} />
+                </div>
+                <h3 class="h-3">{title}</h3>
+                <p style="margin-top:8px; font-size:14px; color:var(--ink-2); line-height:1.65;">
+                  {desc}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
 
-        <div class="text-center">
-          <div
-            class="w-16 h-16 bg-electric-cyan/10 rounded-full flex items-center justify-center mx-auto mb-4"
-          >
-            <span class="text-2xl font-display font-bold text-electric-cyan"
-              >3</span
-            >
+    <!-- Hiring status callout -->
+    <section
+      class="section-tight"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-narrow">
+        <div class="hiring-callout">
+          <div class="hiring-status">
+            <span class="hiring-dot"></span>
+            <span class="hiring-label">Hiring status</span>
           </div>
-          <h3 class="font-display font-bold mb-2">Interview</h3>
-          <p class="text-sm text-muted">
-            Technical and cultural fit assessment
+          <h2 class="h-2" style="margin-top:14px;">No open roles right now</h2>
+          <p
+            style="margin-top:12px; font-size:15px; color:var(--ink-2); line-height:1.65; max-width:520px;"
+          >
+            We don't have active listings, but we're always interested in
+            hearing from strong engineers, researchers, and solutions
+            architects. Send us a note; if there's a fit, we'll make room.
           </p>
-        </div>
-
-        <div class="text-center">
-          <div
-            class="w-16 h-16 bg-electric-cyan/10 rounded-full flex items-center justify-center mx-auto mb-4"
-          >
-            <span class="text-2xl font-display font-bold text-electric-cyan"
-              >4</span
-            >
+          <div class="btn-row" style="margin-top:24px;">
+            <a href="/contact/" class="btn btn-primary">Send a note</a>
+            <a href="mailto:info@absmach.eu" class="btn">info@absmach.eu</a>
           </div>
-          <h3 class="font-display font-bold mb-2">Offer</h3>
-          <p class="text-sm text-muted">Welcome to the team!</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CTA -->
-  <FinalCTA
-    title="Don't See a Fit?"
-    subtitle="We're always interested in hearing from talented people. Send us your resume and let's talk!"
-    primary={{ label: "Get in Touch", href: "/contact/", external: false }}
-    secondary={null}
-  />
+    <!-- Process -->
+    <section>
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Process</span>
+            <h2 class="h-2" style="margin-top:10px;">What to expect</h2>
+            <p class="lede" style="margin-top:10px;">
+              A straightforward, respectful hiring process. No surprises.
+            </p>
+          </div>
+        </div>
+        <div class="process-grid" style="margin-top:36px;">
+          {
+            process.map((p) => (
+              <div class="card">
+                <span class="step-num">{p.step}</span>
+                <h3 class="h-3" style="margin-top:12px;">
+                  {p.title}
+                </h3>
+                <p style="margin-top:8px; font-size:13px; color:var(--ink-2); line-height:1.65;">
+                  {p.desc}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <FinalCTA
+      title="Don't see a fit?"
+      subtitle="We're always interested in hearing from talented people. Send us your details and let's talk."
+      primary={{ label: "Get in touch", href: "/contact/" }}
+      secondary={null}
+    />
+  </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  /* ── Benefits ───────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .careers-hero {
+      text-align: left !important;
+    }
+    .careers-hero .lede {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    .careers-hero .btn-row {
+      justify-content: flex-start !important;
+    }
+  }
+
+  .ben-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .ben-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--paper-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-2);
+    margin-bottom: 14px;
+  }
+
+  /* ── Hiring status ──────────────────────────────────────────── */
+  .hiring-callout {
+    background: var(--paper);
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    padding: 36px 40px;
+  }
+  .hiring-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: color-mix(in srgb, var(--ink-3) 8%, transparent);
+    border: 1px solid var(--line-3);
+    border-radius: 999px;
+    padding: 5px 12px;
+  }
+  .hiring-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ink-3);
+    flex-shrink: 0;
+  }
+  .hiring-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+  }
+
+  /* ── Process ────────────────────────────────────────────────── */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .step-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-4);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 980px) {
+    .ben-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .process-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .hiring-callout {
+      padding: 28px 24px;
+    }
+  }
+  @media (max-width: 600px) {
+    .ben-grid {
+      grid-template-columns: 1fr;
+    }
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

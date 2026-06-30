@@ -16,21 +16,26 @@ const getBadgeChips = (category = "", featured = false) => {
   return chips;
 };
 
-const getBadgeClass = (tag) =>
+const getBadgeClass = (tag: string) =>
   tag === "featured"
-    ? "inline-flex rounded-md border border-subtle bg-surface px-2.5 py-1 text-xs font-semibold capitalize text-accent"
+    ? "inline-flex rounded border border-accent bg-accent-soft px-2.5 py-1 text-xs font-semibold capitalize text-accent"
     : tag === "blog"
-      ? "inline-flex rounded-md border border-subtle bg-surface-2 px-2.5 py-1 text-xs font-semibold capitalize text-muted"
-      : "inline-flex rounded-md border border-accent/35 bg-accent/15 px-2.5 py-1 text-xs font-semibold capitalize text-primary";
+      ? "inline-flex rounded border border-line-3 bg-paper-2 px-2.5 py-1 text-xs font-semibold capitalize text-ink-3"
+      : "inline-flex rounded border border-accent/35 bg-accent/15 px-2.5 py-1 text-xs font-semibold capitalize text-accent";
 
 const PRODUCT_CATEGORIES = [
   { key: "MG", label: "Magistrala", matchTags: ["mg", "magistrala"] },
+  { key: "ATOM", label: "Atom", matchTags: ["atom"] },
   { key: "FLUXMQ", label: "FluxMQ", matchTags: ["fluxmq"] },
+<<<<<<< HEAD
   {
     key: "PROPELLER",
     label: "Propeller",
     matchTags: ["propeller"],
   },
+=======
+  { key: "PROPELLER", label: "Propeller", matchTags: ["propeller"] },
+>>>>>>> main
   { key: "A0", label: "A0", matchTags: ["a0", "a0 gateway"] },
   { key: "A1", label: "A1", matchTags: ["a1", "a1 gateway"] },
 ];
@@ -43,11 +48,11 @@ const categoryTagSet = new Set(
 
 const normalized = posts
   .map((p) => {
-    const d = new Date(p.data.date); // ✅ convert once
+    const d = new Date(p.data.date);
     return {
       title: p.data.title,
       description: p.data.description,
-      date: d, // ✅ now it's Date
+      date: d,
       dateISO: d.toISOString(),
       tags: p.data.tags ?? [],
       category: p.data.category ?? "",
@@ -72,74 +77,70 @@ const normalized = posts
 
 const blogData = JSON.stringify(normalized).replace(/</g, "\\u003c");
 
-// all tags
 const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
   .filter((tag) => !categoryTagSet.has(tag.toLowerCase().trim()))
   .sort((a, b) => a.localeCompare(b));
 ---
 
 <BaseLayout
-  title="Blog | Abstract Machines"
-  description="Technical articles, product updates, and engineering deep dives from the Abstract Machines team."
+  title="IoT Engineering Blog — Abstract Machines"
+  description="Technical articles on IoT, MQTT, edge computing, open-source infrastructure, and product updates from the Abstract Machines engineering team."
 >
   <Header />
   <main>
-    <section class="py-16">
+    <section class="section-tight">
       <div class="container-wide">
-        <div class="flex flex-col gap-10 lg:flex-row lg:items-start">
+        <!-- page title -->
+        <div class="mb-10">
+          <span class="kicker">Blog</span>
+          <h1 class="h-1 mt-2">IoT Engineering Blog</h1>
+          <p class="lede mt-3">
+            Technical articles, product announcements, and open-source deep
+            dives from the Abstract Machines team.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-8 lg:flex-row lg:items-start">
+          <!-- sidebar -->
           <aside
-            class="w-full self-start lg:sticky lg:top-24 lg:z-40 lg:w-[22rem] xl:w-[24rem] lg:flex-shrink-0"
+            class="w-full self-start lg:sticky lg:top-24 lg:z-40 lg:w-72 lg:flex-shrink-0"
           >
-            <div class="card-base p-4 lg:p-6">
-              <h1 class="text-2xl font-semibold tracking-tight">Blog</h1>
-              <p class="mt-2 text-sm text-muted">
-                Search posts and filter by product category and tags.
-              </p>
+            <div class="card">
+              <p class="text-sm font-semibold text-ink-3">Search</p>
+              <input
+                id="blog-search"
+                type="text"
+                placeholder="Title, description, author…"
+                class="blog-search mt-2"
+              />
 
-              <div class="mt-6">
-                <label
-                  class="text-sm font-semibold text-muted"
-                  for="blog-search"
-                >
-                  Search
-                </label>
-                <input
-                  id="blog-search"
-                  type="text"
-                  placeholder="Search title, description, author..."
-                  class="input-base mt-2 w-full rounded-xl px-4 py-3 outline-none focus:outline-2 focus:outline-accent focus:outline-offset-2"
-                />
+              <p class="mt-5 text-sm font-semibold text-ink-3">Categories</p>
+              <div
+                id="category-chips"
+                class="mt-2 flex gap-1.5 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible"
+              >
+                {
+                  PRODUCT_CATEGORIES.map((category) => (
+                    <button
+                      type="button"
+                      class="product-chip"
+                      data-product={category.key}
+                      aria-pressed="false"
+                    >
+                      {category.label}
+                    </button>
+                  ))
+                }
               </div>
 
-              <div class="mt-5">
-                <p class="text-sm font-semibold text-muted">Categories</p>
-                <div
-                  id="category-chips"
-                  class="mt-2 flex gap-1 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible"
-                >
-                  {
-                    PRODUCT_CATEGORIES.map((category) => (
-                      <button
-                        type="button"
-                        class="product-chip flex-none whitespace-nowrap rounded-full border border-subtle bg-surface-2 px-3 py-2 text-xs font-semibold text-muted transition-colors hover:text-primary"
-                        data-product={category.key}
-                        aria-pressed="false"
-                      >
-                        {category.label}
-                      </button>
-                    ))
-                  }
-                </div>
-              </div>
-
-              <div class="mt-6 flex items-center justify-between gap-3">
-                <p id="result-count" class="text-sm font-semibold text-muted">
+              <div class="mt-5 flex items-center justify-between gap-3">
+                <p id="result-count" class="text-sm font-semibold text-ink-3">
                   {normalized.length} post(s)
                 </p>
                 <button
                   id="clear-filters"
                   type="button"
-                  class="rounded-xl border border-subtle bg-panel px-3 py-2 text-sm font-semibold text-muted hover:text-primary"
+                  class="btn btn-ghost text-sm"
                 >
                   Clear
                 </button>
@@ -148,22 +149,22 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
               <div class="mt-4">
                 <p
                   id="applied-tags-label"
-                  class="hidden text-xs font-semibold text-muted"
+                  class="hidden text-xs font-semibold text-ink-3"
                 >
-                  Selected filters
+                  Active filters
                 </p>
                 <div
                   id="applied-tags"
-                  class="hidden mt-2 flex flex-wrap items-center gap-2"
+                  class="mt-2 hidden flex-wrap items-center gap-2"
                 >
                 </div>
               </div>
 
               <div
                 id="tag-panel"
-                class="mt-5 rounded-2xl border border-subtle bg-surface-2 p-3 overflow-x-auto overflow-y-hidden lg:p-4 lg:max-h-72 lg:overflow-auto"
+                class="mt-5 rounded border border-line-3 bg-paper-2 p-3 overflow-x-auto overflow-y-hidden lg:p-4 lg:max-h-72 lg:overflow-auto"
               >
-                <p class="hidden text-sm font-semibold text-muted lg:block">
+                <p class="hidden text-sm font-semibold text-ink-3 lg:block">
                   Tags
                 </p>
                 <div
@@ -174,7 +175,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                     allTags.map((t) => (
                       <button
                         type="button"
-                        class="tag-chip flex-none whitespace-nowrap rounded-full border border-subtle bg-surface-2 px-3 py-2 text-xs font-semibold text-muted transition-colors hover:text-primary"
+                        class="tag-chip"
                         data-tag={t}
                         aria-pressed="false"
                       >
@@ -187,20 +188,21 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
             </div>
           </aside>
 
+          <!-- post grid -->
           <div class="min-w-0 flex-1">
             <div class="grid gap-6 md:grid-cols-2" id="blog-results">
               {
                 normalized.map((p, index) => (
                   <a
                     href={p.href}
-                    class={`card-base block overflow-hidden !p-0 hover:shadow-[var(--shadow-strong)] ${
+                    class={`card block overflow-hidden !p-0 hover:shadow ${
                       p.featured ? "md:col-span-2" : ""
                     }`}
                     data-post-href={p.href}
                   >
                     {p.coverImage && (
                       <div
-                        class={`overflow-hidden border-b border-subtle ${
+                        class={`overflow-hidden border-b border-line-3 ${
                           p.featured
                             ? "aspect-[16/7] md:aspect-[16/6]"
                             : "aspect-video"
@@ -208,7 +210,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                       >
                         <Image
                           src={p.coverImage}
-                          alt=""
+                          alt={p.title}
                           width={1280}
                           height={720}
                           class="cover-image h-full w-full"
@@ -219,19 +221,17 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                     )}
                     <div class="p-6">
                       {p.badgeChips?.length > 0 && (
-                        <div class="mb-3">
-                          <div class="flex flex-wrap gap-2">
-                            {p.badgeChips.map((chip) => (
-                              <span class={getBadgeClass(chip)}>{chip}</span>
-                            ))}
-                          </div>
+                        <div class="mb-3 flex flex-wrap gap-2">
+                          {p.badgeChips.map((chip) => (
+                            <span class={getBadgeClass(chip)}>{chip}</span>
+                          ))}
                         </div>
                       )}
-                      <h2 class="text-xl font-semibold leading-snug text-primary">
+                      <h2 class="text-xl font-semibold leading-snug">
                         {p.title}
                       </h2>
-                      <p class="mt-3 text-muted">{p.description}</p>
-                      <div class="mt-5 flex items-center gap-3 text-sm text-muted">
+                      <p class="mt-2 text-ink-3">{p.description}</p>
+                      <div class="mt-4 flex items-center gap-3 text-sm text-ink-3">
                         {p.authorPicture && (
                           <img
                             src={p.authorPicture}
@@ -240,7 +240,7 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                                 ? `${p.author} profile photo`
                                 : "Author profile photo"
                             }
-                            class="h-8 w-8 rounded-full border border-subtle object-cover"
+                            class="h-8 w-8 rounded-full border border-line-3 object-cover"
                             loading="lazy"
                             decoding="async"
                           />
@@ -262,9 +262,9 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                         </div>
                       </div>
                       {p.tags?.length > 0 && (
-                        <div class="mt-5 flex flex-wrap gap-2">
+                        <div class="mt-4 flex flex-wrap gap-2">
                           {p.tags.map((t) => (
-                            <span class="rounded-full border border-subtle bg-surface-2 px-3 py-1 text-xs font-semibold text-muted">
+                            <span class="rounded-full border border-line-3 bg-paper-2 px-3 py-1 text-xs font-semibold text-ink-3">
                               {t}
                             </span>
                           ))}
@@ -274,8 +274,8 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                   </a>
                 ))
               }
-              <div id="blog-empty-state" class="card-base md:col-span-2 hidden">
-                <p class="text-muted">No posts match your filters.</p>
+              <div id="blog-empty-state" class="card md:col-span-2 hidden">
+                <p class="text-ink-3">No posts match your filters.</p>
               </div>
             </div>
           </div>
@@ -301,10 +301,11 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
             const cardEls = Array.from(
               resultsEl?.querySelectorAll("[data-post-href]") || [],
             );
-
             const chipEls = Array.from(document.querySelectorAll(".tag-chip"));
+
             const PRODUCT_MATCHERS = {
               MG: ["mg", "magistrala"],
+              ATOM: ["atom"],
               FLUXMQ: ["fluxmq"],
               PROPELLER: ["propeller", "properller"],
               A0: ["a0", "a0 gateway"],
@@ -317,40 +318,32 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
 
             function syncAppliedTags() {
               if (!appliedTagsEl) return;
-
               const tags = Array.from(state.tags);
               const filters = state.product
                 ? [`Category: ${state.product}`, ...tags]
                 : tags;
               appliedTagsEl.replaceChildren();
-
               if (!filters.length) {
                 appliedTagsEl.classList.add("hidden");
                 appliedTagsLabelEl?.classList.add("hidden");
                 return;
               }
-
               appliedTagsEl.classList.remove("hidden");
               appliedTagsLabelEl?.classList.remove("hidden");
-
               const limit = window.matchMedia("(min-width: 640px)").matches
                 ? 4
                 : 2;
               const shown = filters.slice(0, limit);
               const remaining = filters.length - shown.length;
-
               shown.forEach((filter) => {
                 const el = document.createElement("span");
-                el.className =
-                  "rounded-full border border-subtle bg-surface-2 px-2 py-0.5 text-xs font-semibold text-muted";
+                el.className = "tag";
                 el.textContent = filter;
                 appliedTagsEl.appendChild(el);
               });
-
               if (remaining > 0) {
                 const el = document.createElement("span");
-                el.className =
-                  "rounded-full border border-subtle bg-surface-2 px-2 py-0.5 text-xs font-semibold text-muted";
+                el.className = "tag";
                 el.textContent = `+${remaining}`;
                 appliedTagsEl.appendChild(el);
               }
@@ -358,42 +351,24 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
 
             function applyChipState(el, on) {
               el.setAttribute("aria-pressed", on ? "true" : "false");
-              el.classList.toggle("bg-accent/10", on);
-              el.classList.toggle("border-accent/30", on);
-              el.classList.toggle("border-subtle", !on);
-              el.classList.toggle("shadow-sm", on);
-              el.classList.toggle("text-primary", on);
-              el.classList.toggle("bg-surface-2", !on);
-              el.classList.toggle("text-muted", !on);
             }
-
             function applyProductChipState(el, on) {
               el.setAttribute("aria-pressed", on ? "true" : "false");
-              el.classList.toggle("bg-accent/10", on);
-              el.classList.toggle("border-accent/30", on);
-              el.classList.toggle("border-subtle", !on);
-              el.classList.toggle("shadow-sm", on);
-              el.classList.toggle("text-primary", on);
-              el.classList.toggle("bg-surface-2", !on);
-              el.classList.toggle("text-muted", !on);
             }
 
             function postMatchesCategory(post, productKey) {
               const matchers = PRODUCT_MATCHERS[productKey] || [];
               if (!matchers.length) return true;
-
               const tagSet = new Set((post.tags || []).map(normalize));
               const searchableText = normalize(
                 `${post.title} ${post.description} ${(post.tags || []).join(" ")}`,
               );
-
               return matchers.some(
                 (matcher) =>
                   tagSet.has(matcher) || searchableText.includes(matcher),
               );
             }
 
-            // --- URL helpers ---
             function readFromURL() {
               const params = new URLSearchParams(location.search);
               state.q = params.get("q") || "";
@@ -405,7 +380,6 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
               const product = (params.get("product") || "").toUpperCase();
               state.product = PRODUCT_KEYS.has(product) ? product : "";
               if (searchEl) searchEl.value = state.q;
-
               chipEls.forEach((el) => {
                 const tag = el.dataset.tag;
                 applyChipState(el, state.tags.has(tag));
@@ -414,7 +388,6 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                 const productKey = (el.dataset.product || "").toUpperCase();
                 applyProductChipState(el, state.product === productKey);
               });
-
               syncAppliedTags();
             }
 
@@ -431,7 +404,6 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
               history.replaceState(null, "", qs ? `${base}?${qs}` : base);
             }
 
-            // --- render ---
             function matches(post) {
               const q = state.q.toLowerCase().trim();
               const hay = (
@@ -444,11 +416,8 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                 (post.tags || []).join(" ")
               ).toLowerCase();
               if (q && !hay.includes(q)) return false;
-
-              if (state.product && !postMatchesCategory(post, state.product)) {
+              if (state.product && !postMatchesCategory(post, state.product))
                 return false;
-              }
-
               if (state.tags.size) {
                 const ptags = new Set(post.tags || []);
                 for (const t of state.tags) if (!ptags.has(t)) return false;
@@ -459,24 +428,19 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
             function render() {
               const filtered = data.filter(matches);
               if (countEl) countEl.textContent = `${filtered.length} post(s)`;
-
               if (!resultsEl) return;
               const visibleHrefs = new Set(filtered.map((p) => p.href));
-
               cardEls.forEach((card) => {
                 const href = card.dataset.postHref;
                 const isVisible = href ? visibleHrefs.has(href) : false;
                 card.classList.toggle("hidden", !isVisible);
               });
-
               if (emptyStateEl) {
                 emptyStateEl.classList.toggle("hidden", filtered.length !== 0);
               }
-
               writeToURL();
             }
 
-            // --- events ---
             searchEl?.addEventListener("input", () => {
               state.q = searchEl.value;
               render();
@@ -487,7 +451,6 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
                 const tag = el.dataset.tag;
                 if (state.tags.has(tag)) state.tags.delete(tag);
                 else state.tags.add(tag);
-
                 applyChipState(el, state.tags.has(tag));
                 syncAppliedTags();
                 render();
@@ -498,7 +461,6 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
               el.addEventListener("click", () => {
                 const productKey = (el.dataset.product || "").toUpperCase();
                 state.product = state.product === productKey ? "" : productKey;
-
                 productChipEls.forEach((chip) => {
                   const chipKey = (chip.dataset.product || "").toUpperCase();
                   applyProductChipState(chip, state.product === chipKey);
@@ -519,7 +481,6 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
               render();
             });
 
-            // init
             readFromURL();
             render();
           })();
@@ -531,35 +492,28 @@ const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
 </BaseLayout>
 
 <style>
-    .cover-image {
-        object-fit: cover;
-    }
+  .cover-image {
+    object-fit: cover;
+  }
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const coverImages = document.querySelectorAll('.cover-image');
-        
-        coverImages.forEach((img) => {
-            if (img instanceof HTMLImageElement) {
-                const checkOrientation = () => {
-                    if (img.naturalHeight > img.naturalWidth) {
-                        img.style.objectFit = 'contain';
-                        const parent = img.parentElement;
-                        if (parent) {
-                            parent.style.backgroundColor = 'transparent';
-                        }
-                    } else {
-                        img.style.objectFit = 'cover';
-                    }
-                };
-                
-                if (img.complete) {
-                    checkOrientation();
-                } else {
-                    img.addEventListener('load', checkOrientation);
-                }
-            }
-        });
+  document.addEventListener("DOMContentLoaded", () => {
+    const coverImages = document.querySelectorAll(".cover-image");
+    coverImages.forEach((img) => {
+      if (img instanceof HTMLImageElement) {
+        const checkOrientation = () => {
+          if (img.naturalHeight > img.naturalWidth) {
+            img.style.objectFit = "contain";
+            const parent = img.parentElement;
+            if (parent) parent.style.backgroundColor = "transparent";
+          } else {
+            img.style.objectFit = "cover";
+          }
+        };
+        if (img.complete) checkOrientation();
+        else img.addEventListener("load", checkOrientation);
+      }
     });
+  });
 </script>

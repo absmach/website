@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 
 export const prerender = true;
 
-const DEFAULT_SITE = "https://absmach.eu";
+const DEFAULT_SITE = "https://www.absmach.eu/";
 
 export async function GET(context: APIContext) {
   const posts = await getCollection("blogs", ({ data }) => !data.draft);
@@ -27,6 +27,8 @@ export async function GET(context: APIContext) {
           author: post.data.author?.name,
         };
       })
-      .sort((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0)),
+      .sort(
+        (a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0),
+      ),
   });
 }

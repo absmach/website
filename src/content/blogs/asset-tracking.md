@@ -27,7 +27,7 @@ tags:
 
 Modern asset tracking systems are no longer just GPS dashboards—they are distributed, real-time data pipelines. Vehicles, construction equipment, containers, and industrial machinery continuously generate telemetry: location, speed, fuel levels, temperature, vibration, and operational metrics. Turning that raw stream into actionable intelligence requires secure device connectivity, scalable ingestion, real-time processing, and automated decision logic.
 
-[Magistrala](https://magistrala.absmach.eu/) is an open-source IoT platform designed for exactly this. It connects GPS trackers and sensors over MQTT, HTTP, CoAP, or WebSocket, processes telemetry in real time with a built-in Rules Engine, and persists structured data for dashboards, alerts, compliance, and analytics.
+[Magistrala](/products/magistrala) is an open-source IoT platform designed for exactly this. It connects GPS trackers and sensors over MQTT, HTTP, CoAP, or WebSocket, processes telemetry in real time with a built-in Rules Engine, and persists structured data for dashboards, alerts, compliance, and analytics.
 
 Instead of building custom ingestion pipelines, alerting systems, and reporting engines from scratch, teams can use Magistrala as the foundation for a production-ready asset tracking system—fully self-hostable, multi-tenant, and enterprise secure.
 
@@ -71,8 +71,6 @@ The dashboard gives operators a live, unified view of the entire fleet. Vehicle 
 
 ![Dashboard Count Card, Value Card and Alarms](/img/blogs/tracking-usecase/Dashboard_count_card_value_card_alarms.png)
 
-
-
 ### Automated Alarms
 
 The Rules Engine monitors every incoming reading and raises alarms automatically when conditions are exceeded—no manual checking required. Alerts appear instantly in the alarm table and are delivered via email and Slack:
@@ -101,17 +99,17 @@ All stored telemetry feeds directly into the reporting engine. Reports can be sc
 
 Magistrala's asset tracking capabilities extend well beyond fleet management:
 
-| Use Case | What You Can Do |
-|---|---|
-| 🚛 **Logistics & Shipments** | Real-time location, proof of delivery, and accurate ETAs across hundreds of vehicles |
-| 🏗️ **Construction Equipment** | Track excavators and cranes across job sites, prevent theft, and monitor idle time |
-| 🚗 **Vehicle Leasing** | Monitor mileage, vehicle condition, and driver behavior for usage-based models |
-| 🏥 **Healthcare** | Locate medical equipment across departments with full compliance audit trails |
-| 🚲 **Car Sharing & Mobility** | Enable reservations, dynamic pricing, and EV charging management |
-| 🔧 **Rental Services** | Track tools and equipment with usage monitoring and theft prevention |
-| 🏭 **Industrial Manufacturing** | Locate specialized machinery and trigger maintenance based on actual usage |
-| 📋 **Insurance Telematics** | Power usage-based insurance with real driving data and behavior analytics |
-| 🚌 **Public Transportation** | Deliver real-time vehicle tracking and arrival predictions for passengers |
+| Use Case                        | What You Can Do                                                                      |
+| ------------------------------- | ------------------------------------------------------------------------------------ |
+| 🚛 **Logistics & Shipments**    | Real-time location, proof of delivery, and accurate ETAs across hundreds of vehicles |
+| 🏗️ **Construction Equipment**   | Track excavators and cranes across job sites, prevent theft, and monitor idle time   |
+| 🚗 **Vehicle Leasing**          | Monitor mileage, vehicle condition, and driver behavior for usage-based models       |
+| 🏥 **Healthcare**               | Locate medical equipment across departments with full compliance audit trails        |
+| 🚲 **Car Sharing & Mobility**   | Enable reservations, dynamic pricing, and EV charging management                     |
+| 🔧 **Rental Services**          | Track tools and equipment with usage monitoring and theft prevention                 |
+| 🏭 **Industrial Manufacturing** | Locate specialized machinery and trigger maintenance based on actual usage           |
+| 📋 **Insurance Telematics**     | Power usage-based insurance with real driving data and behavior analytics            |
+| 🚌 **Public Transportation**    | Deliver real-time vehicle tracking and arrival predictions for passengers            |
 
 ---
 
@@ -127,10 +125,10 @@ Magistrala is released under the Apache 2.0 license. You own your deployment, yo
 
 Security is not an add-on. Magistrala includes:
 
-* Mutual TLS authentication
-* Fine-grained access control (ABAC/RBAC)
-* Domain-level multi-tenancy isolation
-* Complete audit logging
+- Mutual TLS authentication
+- Fine-grained access control (ABAC/RBAC)
+- Domain-level multi-tenancy isolation
+- Complete audit logging
 
 This makes it suitable for regulated industries, large fleets, and multi-organization deployments.
 
@@ -138,9 +136,9 @@ This makes it suitable for regulated industries, large fleets, and multi-organiz
 
 Magistrala is designed to handle millions of devices and high-throughput telemetry streams. Deploy:
 
-* Fully managed in the cloud
-* Self-hosted in your own infrastructure
-* At the edge for low-latency environments
+- Fully managed in the cloud
+- Self-hosted in your own infrastructure
+- At the edge for low-latency environments
 
 Horizontal scaling ensures your tracking system grows with your operations.
 
@@ -148,10 +146,10 @@ Horizontal scaling ensures your tracking system grows with your operations.
 
 Integrate trackers and external systems using standard protocols:
 
-* MQTT
-* HTTP
-* CoAP
-* WebSocket
+- MQTT
+- HTTP
+- CoAP
+- WebSocket
 
 Clean REST APIs, structured telemetry, and extensible services allow you to build custom dashboards, automation workflows, billing logic, or analytics pipelines.
 
@@ -159,10 +157,10 @@ Clean REST APIs, structured telemetry, and extensible services allow you to buil
 
 Asset tracking is more than map visualization. With the built-in Rules Engine and reporting capabilities, Magistrala enables:
 
-* Real-time alarms
-* Usage-based billing calculations
-* Predictive maintenance logic
-* Scheduled compliance reports
+- Real-time alarms
+- Usage-based billing calculations
+- Predictive maintenance logic
+- Scheduled compliance reports
 
 You’re not just collecting GPS coordinates—you’re building an operational intelligence system.
 
@@ -173,10 +171,10 @@ You’re not just collecting GPS coordinates—you’re building an operational 
 Magistrala gives you the building blocks to design a production-ready asset tracking platform—secure device connectivity, real-time telemetry processing, automated rules, and structured reporting.
 Whether you're managing fleets, heavy equipment, medical devices, or logistics operations, you can start small and scale to millions of messages without changing architecture.
 
-* Connect your first GPS tracker in minutes
-* Stream data over MQTT, HTTP, CoAP, or WebSocket
-* Configure real-time alarms with the Rules Engine
-* Build dashboards and reports on persisted telemetry
+- Connect your first GPS tracker in minutes
+- Stream data over MQTT, HTTP, CoAP, or WebSocket
+- Configure real-time alarms with the Rules Engine
+- Build dashboards and reports on persisted telemetry
 
 Deploy in the cloud or self-host on your own infrastructure. No vendor lock-in. Full control.
 
@@ -191,6 +189,6 @@ Deploy in the cloud or self-host on your own infrastructure. No vendor lock-in. 
 <a href="https://cloud.magistrala.absmach.eu" class="button-primary !flex !w-full !justify-center !rounded-xl !px-5 !py-3.5 text-sm">Start Free Cloud Trial</a>
 <a href="https://github.com/absmach/magistrala" class="button-secondary !flex !w-full !justify-center !rounded-xl !px-5 !py-3.5 text-sm">Self-Host Open Source (GitHub)</a>
 </div>
-<p class="mt-4 text-sm text-muted">Need implementation help? <a href="https://magistrala.absmach.eu/docs" class="font-semibold text-accent hover:underline">Read the documentation</a> or <a href="https://matrix.to/#/!zhoyNzJKBUyyhHtgPr" class="font-semibold text-accent hover:underline">join the community</a>.</p>
+<p class="mt-4 text-sm text-muted">Need implementation help? <a href="https://www.absmach.eu/docs/magistrala" class="font-semibold text-accent hover:underline">Read the documentation</a> or <a href="https://matrix.to/#/!zhoyNzJKBUyyhHtgPr" class="font-semibold text-accent hover:underline">join the community</a>.</p>
 </div>
 </section>

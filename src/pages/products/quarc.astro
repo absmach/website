@@ -1,0 +1,1353 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import {
+  Cpu,
+  Lock,
+  ShieldCheck,
+  Link,
+  SquareCode,
+  Settings2,
+  Landmark,
+  Monitor,
+} from "@lucide/astro";
+
+const features = [
+  {
+    icon: Cpu,
+    name: "Hardware-Accelerated PQC",
+    desc: "Dedicated ML-KEM-768 and ML-DSA-65 engines with a shared NTT core. ≥ 3× faster than software PQC on Cortex-M4.",
+  },
+  {
+    icon: Lock,
+    name: "Key Usage Enforcer",
+    desc: "Key bytes never leave the secure store. Per-slot policy bits enforced by hardware — firmware cannot read or misuse key material.",
+  },
+  {
+    icon: ShieldCheck,
+    name: "Anti-Rollback Secure Boot",
+    desc: "Immutable Boot ROM verifies firmware with ML-DSA-65 and checks the hardware monotonic counter. Any failed boot halts the device.",
+  },
+  {
+    icon: Link,
+    name: "Encrypted Host Channel",
+    desc: "SPI channel runs Noise Protocol IK with hybrid ML-KEM-768 + X25519. AES-256-GCM payload encryption with monotonic nonces.",
+  },
+  {
+    icon: SquareCode,
+    name: "Open & Auditable",
+    desc: "100% open-source toolchain — Yosys, nextpnr, SymbiYosys. Verilog 2005 only. Formally verified bus, KUE, and lifecycle FSM.",
+  },
+  {
+    icon: Settings2,
+    name: "ASIC-Ready",
+    desc: "No FPGA-specific primitives. The same RTL ports to 40 nm / 22 nm FD-SOI — targeting FIPS 140-3 Level 3 and Common Criteria EAL5+.",
+  },
+];
+
+const steps = [
+  [
+    "01",
+    "Provision identities",
+    "Generate post-quantum keys into isolated hardware-backed storage. Set KUE policy bits per slot — SIGN_ONLY, DECAP_ONLY, NO_EXPORT. Set once, enforced by hardware.",
+  ],
+  [
+    "02",
+    "Establish secure channels",
+    "Any host MCU connects over SPI. The Noise IK channel opens with a hybrid ML-KEM-768 + X25519 key exchange, giving forward secrecy from the first byte.",
+  ],
+  [
+    "03",
+    "Anchor trust at runtime",
+    "Verify firmware, sign messages, and decapsulate keys through the encrypted SPI channel. Every operation enforced by the KUE — the CPU never holds key bytes.",
+  ],
+];
+
+const kuePolicy = [
+  { bit: "SIGN_ONLY", meaning: "Slot usable only for ML-DSA signing" },
+  { bit: "DECAP_ONLY", meaning: "Slot usable only for ML-KEM decapsulation" },
+  { bit: "NO_EXPORT", meaning: "Key bytes never leave the key store" },
+  { bit: "NO_OVERWRITE", meaning: "Slot cannot be re-provisioned" },
+  {
+    bit: "COUNTER_LIMIT",
+    meaning: "Use-count cap — operation blocked when reached",
+  },
+];
+
+const perfRows = [
+  {
+    op: "ML-KEM-768 KeyGen",
+    quarc: "< 0.5 ms",
+    baseline: "~1.5 ms",
+    speedup: "≥ 3×",
+  },
+  {
+    op: "ML-KEM-768 Encaps",
+    quarc: "< 0.5 ms",
+    baseline: "~1.7 ms",
+    speedup: "≥ 3×",
+  },
+  {
+    op: "ML-KEM-768 Decaps",
+    quarc: "< 0.5 ms",
+    baseline: "~1.8 ms",
+    speedup: "≥ 3×",
+  },
+  {
+    op: "ML-DSA-65 KeyGen",
+    quarc: "< 2 ms",
+    baseline: "~6 ms",
+    speedup: "≥ 3×",
+  },
+  {
+    op: "ML-DSA-65 Sign",
+    quarc: "< 5 ms",
+    baseline: "~12 ms",
+    speedup: "≥ 2×",
+  },
+  {
+    op: "ML-DSA-65 Verify",
+    quarc: "< 2 ms",
+    baseline: "~5 ms",
+    speedup: "≥ 2×",
+  },
+];
+
+const securityGuarantees = [
+  {
+    name: "No key exposure",
+    desc: "Key bytes never appear on the system bus — DMA from key store into engine registers only.",
+  },
+  {
+    name: "Lifecycle enforcement",
+    desc: "MANUFACTURING → PROVISIONED → LOCKED → RMA. One-way FSM in RTL — state never decreases.",
+  },
+  {
+    name: "Immutable secure boot",
+    desc: "Boot ROM is hardwired. ML-DSA firmware verification and rollback check run before any firmware executes.",
+  },
+  {
+    name: "Constant-time crypto",
+    desc: "No secret-dependent memory access or timing behavior anywhere in the hardware engines.",
+  },
+  {
+    name: "Zeroized scratchpads",
+    desc: "Sensitive intermediate values cleared automatically in RTL after every cryptographic operation.",
+  },
+  {
+    name: "Replay-proof interface",
+    desc: "Noise IK with strictly monotonic nonces. Replayed commands are rejected before decryption.",
+  },
+];
+
+const solutions = [
+  {
+    icon: Cpu,
+    title: "IoT Root of Trust",
+    desc: "Quantum-safe device identity, signed OTA updates, secure boot with rollback protection, and fleet attestation.",
+    tags: ["IoT", "OTA", "Device Identity"],
+  },
+  {
+    icon: Landmark,
+    title: "Industrial & Infrastructure",
+    desc: "Energy, transport, and water systems — long-lived devices that will outlive the classical PKI window.",
+    tags: ["Industrial", "Critical Infrastructure", "Longevity"],
+  },
+  {
+    icon: Monitor,
+    title: "Automotive & V2X",
+    desc: "ML-DSA-signed messages, attested firmware, and quantum-safe key provisioning across the OEM supply chain.",
+    tags: ["Automotive", "V2X", "OEM"],
+  },
+  {
+    icon: ShieldCheck,
+    title: "Confidential Computing",
+    desc: "PQC attestation reports and sealing keys for confidential VMs — anchoring post-quantum trust in cloud and edge platforms.",
+    tags: ["TEE", "Confidential Computing", "Cloud"],
+  },
+];
+
+const roadmap = [
+  {
+    version: "v1",
+    label: "FPGA Prototype",
+    status: "current",
+    items: [
+      "ULX3S · ECP5-85K FPGA",
+      "Hardware-accelerated ML-KEM-768 + ML-DSA-65",
+      "Key Usage Enforcer (KUE)",
+      "Device lifecycle FSM (RTL)",
+      "Anti-rollback secure boot",
+      "Noise IK encrypted SPI channel",
+      "100% open-source toolchain",
+    ],
+  },
+  {
+    version: "v2",
+    label: "Hardened SE (ASIC)",
+    status: "roadmap",
+    items: [
+      "Silicon PUF — hardware-rooted identity",
+      "Real OTP / NVM for persistent key storage",
+      "Active tamper detection (voltage, temperature, light, EMP)",
+      "Boolean-masked NTT for side-channel resistance",
+      "SLH-DSA (FIPS 205) hash-based signatures",
+      "Common Criteria EAL4+ certification path",
+      "FIPS 140-3 Level 3",
+    ],
+  },
+  {
+    version: "v3",
+    label: "TEE Root of Trust",
+    status: "roadmap",
+    items: [
+      "PQC attestation reports for confidential computing",
+      "Sealing keys bound to firmware measurement",
+      "Quantum-safe key migration between devices",
+      "PCIe or I3C platform interface",
+      "Targets: AMD SEV-SNP · Intel TDX · Arm CCA",
+    ],
+  },
+];
+
+const faqs = [
+  {
+    q: "What is a post-quantum secure element?",
+    a: "A secure element designed to resist attacks from future quantum computers. Classical SE cryptography — ECC and RSA — is broken by Shor's algorithm on a cryptographically relevant quantum computer. Quarc replaces those with NIST-standardised ML-KEM (FIPS 203) and ML-DSA (FIPS 204) running in dedicated hardware accelerators.",
+  },
+  {
+    q: "How does the Key Usage Enforcer work?",
+    a: "The KUE is a small RTL policy engine between the key store and the crypto engines. Per-slot policy bits (SIGN_ONLY, DECAP_ONLY, NO_EXPORT, NO_OVERWRITE, COUNTER_LIMIT) are set at provisioning and enforced by hardware on every operation. Key bytes DMA directly into engine registers — they never appear on the main bus. A firmware call requesting DSA_SIGN on a DECAP_ONLY slot is rejected by RTL, not software.",
+  },
+  {
+    q: "What does 100% open toolchain mean?",
+    a: "Every byte of the Quarc bitstream is produced by open-source tools: Yosys for synthesis, nextpnr-ecp5 for place-and-route, sv2v for Ibex SystemVerilog conversion, SymbiYosys for formal verification, and Icarus Verilog / Verilator for simulation. No proprietary EDA in the synthesis path. The bitstream is reproducible from the published RTL.",
+  },
+  {
+    q: "Is Quarc production silicon?",
+    a: "Quarc v1 targets FPGA prototyping on the ULX3S (ECP5-85K). The v2 roadmap targets an ASIC at 40 nm or 22 nm FD-SOI — no RTL rewrite required. v3 extends to a TEE root-of-trust for confidential computing platforms.",
+  },
+  {
+    q: "Can Quarc integrate with existing MCUs?",
+    a: "Yes. Any host MCU — STM32, ESP32, or your own — drives Quarc over SPI. The encrypted Noise IK channel opens with a CHANNEL_INIT command. From the host's perspective, Quarc is an SPI peripheral that handles all post-quantum cryptography.",
+  },
+  {
+    q: "Why does post-quantum security matter now?",
+    a: "Devices deployed today may still be operating when quantum attacks become practical. NIST finalised PQC standards in 2024. EU and US regulators project mandatory PQC adoption in critical infrastructure by 2030. Quarc closes the gap so devices deployed today aren't vulnerable at end-of-life.",
+  },
+];
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+});
+---
+
+<BaseLayout
+  title="Quarc — Post-Quantum Secure Element for IoT | Open-Source"
+  description="Quarc is an open-source post-quantum cryptography secure element with hardware-accelerated ML-KEM-768 and ML-DSA-65, built for IoT, industrial systems, confidential computing, and long-lived device trust."
+  ogImage="/img/og/og-quarc.png"
+  ogImageAlt="Quarc — Post-Quantum Secure Element"
+>
+  <Header />
+  <main>
+    <!-- Hero -->
+    <section class="prod-hero has-video">
+      <video
+        class="hero-bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        width="1920"
+        height="1080"
+        poster="/video/hero-background-poster.webp"
+        aria-hidden="true"
+      >
+        <source src="/video/hero-background.webm" type="video/webm" />
+        <source src="/video/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div class="container-wide">
+        <div class="hero-copy" style="text-align: center;">
+          <div style="text-align: left;">
+            <p class="quarc-wordmark">Quarc</p>
+          </div>
+          <h1 class="tagline">
+            A secure element built for the post-quantum era.
+          </h1>
+          <p
+            class="lede"
+            style="margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;"
+          >
+            Hardware-accelerated ML-KEM and ML-DSA on a fully open and auditable
+            RISC-V architecture.
+          </p>
+          <div class="btn-row" style="margin-top:32px; justify-content:center;">
+            <a
+              href="https://github.com/absmach/quarc"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >View on GitHub <span aria-hidden="true">↗</span></a
+            >
+            <a href="/contact" class="btn"
+              >Contact Us <span aria-hidden="true">→</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats bar -->
+    <div style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div
+          class="metrics quarc-metrics"
+          style="border:none; border-radius:0; border-left:1px solid var(--line-3);"
+        >
+          <div class="metric featured">
+            <div class="v">FIPS 203/204</div>
+            <div class="l">NIST PQC standards</div>
+          </div>
+          <div class="metric">
+            <div class="v">&lt;0.5ms</div>
+            <div class="l">ML-KEM operations</div>
+          </div>
+          <div class="metric">
+            <div class="v">≥3× faster</div>
+            <div class="l">vs Cortex-M4 PQC</div>
+          </div>
+          <div class="metric">
+            <div class="v">
+              <a
+                href="https://github.com/absmach/propeller"
+                target="_blank"
+                rel="noopener">Apache 2.0 ↗</a
+              >
+            </div>
+            <div class="l">Toolchain &amp; RTL</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Context -->
+    <section
+      class="section quarc-context-section"
+      style="border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="quarc-context-grid">
+          <div>
+            <span class="kicker">The quantum gap</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Every SE shipping today will be broken by quantum computers.
+            </h2>
+            <p
+              style="color:var(--ink-2); margin-top:20px; font-size:15px; line-height:1.7;"
+            >
+              Every Secure Element shipping today relies entirely on classical
+              cryptography — ECC, RSA, AES. Shor's algorithm on a
+              cryptographically relevant quantum computer breaks all of them.
+              NIST finalised post-quantum standards in 2024 (FIPS 203, 204,
+              205). Regulators in the EU, US and Germany project mandatory PQC
+              adoption in critical infrastructure by <strong>2030</strong>.
+            </p>
+            <p
+              style="color:var(--ink-2); margin-top:16px; font-size:15px; line-height:1.7;"
+            >
+              The IoT devices being deployed today will outlive that window. <strong
+                >Quarc closes the gap</strong
+              > — hardware-accelerated ML-KEM-768 and ML-DSA-65, packaged with the
+              full SE feature set IoT silicon vendors expect.
+            </p>
+          </div>
+          <div class="quarc-compare-table-wrap">
+            <table class="quarc-compare-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Classical SE today</th>
+                  <th>Quarc</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>PQC hardware accelerator</td>
+                  <td class="quarc-no">None</td>
+                  <td class="quarc-yes">ML-KEM-768 + ML-DSA-65</td>
+                </tr>
+                <tr>
+                  <td>Hybrid PQC + classical</td>
+                  <td class="quarc-no">No</td>
+                  <td class="quarc-yes">Yes (v1)</td>
+                </tr>
+                <tr>
+                  <td>Open auditable toolchain</td>
+                  <td class="quarc-no">No</td>
+                  <td class="quarc-yes">Yes — Yosys / nextpnr</td>
+                </tr>
+                <tr>
+                  <td>HDL transparency</td>
+                  <td class="quarc-no">Vendor-locked</td>
+                  <td class="quarc-yes">Verilog 2005 + sv2v</td>
+                </tr>
+                <tr>
+                  <td>Migration path to ASIC</td>
+                  <td class="quarc-no">Locked</td>
+                  <td class="quarc-yes">No RTL rewrite</td>
+                </tr>
+                <tr>
+                  <td>TEE root-of-trust roadmap</td>
+                  <td class="quarc-no">No</td>
+                  <td class="quarc-yes">Yes (v3)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Features</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Built for quantum-safe trust.
+            </h2>
+          </div>
+          <p class="lede">
+            Post-quantum cryptography, hardware-enforced key isolation, and open
+            hardware in one auditable secure element.
+          </p>
+        </div>
+        <div class="feature-grid">
+          {
+            features.map(({ icon: Icon, name, desc }) => (
+              <div class="feature">
+                <div class="ic quarc-ic">
+                  <Icon size={20} />
+                </div>
+                <div class="name">{name}</div>
+                <p class="desc">{desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Architecture</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Crypto-first. CPU-second.
+            </h2>
+          </div>
+          <p class="lede">
+            Ibex orchestrates. It does not do crypto. Every heavy operation runs
+            in a dedicated, constant-time hardware accelerator.
+          </p>
+        </div>
+
+        <div class="quarc-arch-outer">
+          <!-- Left: Quarc SoC block -->
+          <div class="quarc-block-diagram">
+            <div class="quarc-bd-label">Quarc SoC (ECP5-85K v1)</div>
+
+            <!-- CPU row -->
+            <div class="quarc-bd-cpu">
+              <div class="quarc-bd-block quarc-bd-block-full">
+                <div class="quarc-bd-block-name">Ibex RV32IMC</div>
+                <div class="quarc-bd-block-desc">
+                  Wishbone-lite bus · ~200 lines · formally verified
+                </div>
+              </div>
+            </div>
+
+            <!-- Crypto + Memory row -->
+            <div class="quarc-bd-mid">
+              <div class="quarc-bd-group">
+                <div class="quarc-bd-group-label">Crypto Engines</div>
+                <div class="quarc-bd-group-tags">
+                  <span>ML-KEM-768</span><span>ML-DSA-65</span><span
+                    >Keccak/SHAKE</span
+                  ><span>NTT core</span><span>TRNG + DRBG</span>
+                </div>
+              </div>
+              <div class="quarc-bd-group">
+                <div class="quarc-bd-group-label">Key Store</div>
+                <div class="quarc-bd-group-tags">
+                  <span>KUE (RTL)</span><span>DMA-only access</span><span
+                    >No firmware reads</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Boot + Lifecycle row -->
+            <div class="quarc-bd-bot">
+              <div class="quarc-bd-block quarc-bd-block-accent">
+                <div class="quarc-bd-block-name">Boot ROM</div>
+                <div class="quarc-bd-block-desc">Immutable</div>
+              </div>
+              <div class="quarc-bd-block quarc-bd-block-accent">
+                <div class="quarc-bd-block-name">TRNG Health</div>
+                <div class="quarc-bd-block-desc">SP 800-90B</div>
+              </div>
+              <div class="quarc-bd-block quarc-bd-block-accent">
+                <div class="quarc-bd-block-name">Lifecycle FSM</div>
+                <div class="quarc-bd-block-desc">One-way · RTL</div>
+              </div>
+              <div class="quarc-bd-block quarc-bd-block-accent">
+                <div class="quarc-bd-block-name">Rollback Counter</div>
+                <div class="quarc-bd-block-desc">Hardware monotonic</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Host interface block -->
+          <div class="quarc-host-block">
+            <div class="quarc-bd-label">Host Interface</div>
+            <div class="quarc-host-flow">
+              <div class="quarc-host-item">
+                <div class="quarc-host-name">Host MCU</div>
+                <div class="quarc-host-sub">STM32 / ESP32 / any</div>
+              </div>
+              <div class="quarc-host-arrow">↓</div>
+              <div class="quarc-host-item">
+                <div class="quarc-host-name">SPI</div>
+                <div class="quarc-host-sub">Physical interface</div>
+              </div>
+              <div class="quarc-host-arrow">↓</div>
+              <div class="quarc-host-item quarc-host-item-accent">
+                <div class="quarc-host-name">Noise IK</div>
+                <div class="quarc-host-sub">ML-KEM-768 + X25519</div>
+              </div>
+              <div class="quarc-host-arrow">↓</div>
+              <div class="quarc-host-item quarc-host-item-accent">
+                <div class="quarc-host-name">AES-256-GCM</div>
+                <div class="quarc-host-sub">Payload encryption</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">How it works</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Provision. Verify. Trust.
+            </h2>
+          </div>
+        </div>
+        <div class="steps">
+          {
+            steps.map(([num, title, desc]) => (
+              <div class="step">
+                <div class="num">{num}</div>
+                <h4>{title}</h4>
+                <p>{desc}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Performance — dark section -->
+    <section class="quarc-perf-section">
+      <div class="container-wide">
+        <div class="section-head" style="color:inherit;">
+          <div class="left">
+            <span class="kicker" style="color:rgba(255,255,255,0.5);"
+              >Performance</span
+            >
+            <h2 class="h-2" style="color:#fff; margin-top:14px;">
+              Hardware beats software. By a wide margin.
+            </h2>
+          </div>
+          <p class="lede" style="color:rgba(255,255,255,0.65);">
+            Quarc at 50 MHz on ECP5-85K vs pqm4 on Cortex-M4 at 168 MHz. ASIC at
+            200–400 MHz lifts every figure proportionally.
+          </p>
+        </div>
+        <div class="quarc-perf-table-wrap">
+          <table class="quarc-perf-table">
+            <thead>
+              <tr>
+                <th>Operation</th>
+                <th>Quarc target</th>
+                <th>pqm4 · M4 @ 168 MHz</th>
+                <th>Speed-up</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                perfRows.map(({ op, quarc, baseline, speedup }) => (
+                  <tr>
+                    <td>{op}</td>
+                    <td class="quarc-perf-good">{quarc}</td>
+                    <td class="quarc-perf-base">{baseline}</td>
+                    <td class="quarc-perf-speedup">{speedup}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Security Model -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Security Model</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Hardware enforces. Firmware orchestrates.
+            </h2>
+          </div>
+          <p class="lede">
+            Quarc assumes firmware can fail. Every security-critical guarantee
+            is enforced directly in RTL — not in software.
+          </p>
+        </div>
+        <div class="quarc-security-grid">
+          {
+            securityGuarantees.map(({ name, desc }) => (
+              <div class="quarc-security-card">
+                <div class="quarc-security-name">{name}</div>
+                <div class="quarc-security-desc">{desc}</div>
+              </div>
+            ))
+          }
+        </div>
+
+        <!-- KUE + Lifecycle -->
+        <div class="quarc-policy-grid">
+          <div class="quarc-policy-card">
+            <h3 class="quarc-policy-title">Key Usage Enforcer (KUE)</h3>
+            <p
+              style="color:var(--ink-2); font-size:14px; margin-bottom:20px; line-height:1.6;"
+            >
+              Per-slot policy bits set at provisioning, enforced by hardware on
+              every operation.
+            </p>
+            <table class="quarc-kue-table">
+              <thead><tr><th>Policy bit</th><th>Meaning</th></tr></thead>
+              <tbody>
+                {
+                  kuePolicy.map(({ bit, meaning }) => (
+                    <tr>
+                      <td>
+                        <code>{bit}</code>
+                      </td>
+                      <td>{meaning}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <div class="quarc-policy-card">
+            <h3 class="quarc-policy-title">Device lifecycle</h3>
+            <p
+              style="color:var(--ink-2); font-size:14px; margin-bottom:20px; line-height:1.6;"
+            >
+              State transitions are one-way and irreversible. The FSM is
+              implemented in RTL — no firmware path can return to an earlier
+              state.
+            </p>
+            <div class="quarc-lifecycle">
+              {
+                ["MANUFACTURING", "PROVISIONED", "LOCKED", "RMA"].map(
+                  (state, i, arr) => (
+                    <div class="quarc-lifecycle-row">
+                      <span class="quarc-state">{state}</span>
+                      {i < arr.length - 1 && (
+                        <span class="quarc-lc-arrow" aria-hidden="true">
+                          →
+                        </span>
+                      )}
+                    </div>
+                  ),
+                )
+              }
+              <p class="quarc-lifecycle-note">
+                Every SPI command is permission-gated against the current state.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use cases -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Use cases</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Where quantum-safe trust matters.
+            </h2>
+          </div>
+        </div>
+        <div class="sol-grid quarc-sol-grid">
+          {
+            solutions.map(({ icon: Icon, title, desc, tags }) => (
+              <div class="sol-card">
+                <div class="quarc-sol-icon">
+                  <Icon size={22} />
+                </div>
+                <h3 class="name">{title}</h3>
+                <p class="desc">{desc}</p>
+                <div class="tags">
+                  {tags.map((t) => (
+                    <span class="tag">{t}</span>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Roadmap</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Built for the next decade of secure computing.
+            </h2>
+          </div>
+        </div>
+        <div class="quarc-roadmap-grid">
+          {
+            roadmap.map(({ version, label, status, items }) => (
+              <div class={`quarc-rm-card quarc-rm-${status}`}>
+                <div class="quarc-rm-header">
+                  <span class="quarc-rm-version">{version}</span>
+                  <span class="quarc-rm-label">{label}</span>
+                  {status === "current" && (
+                    <span class="quarc-rm-badge">Current</span>
+                  )}
+                </div>
+                <ul class="quarc-rm-items">
+                  {items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section
+      class="section"
+      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
+    >
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">FAQ</span>
+            <h2 class="h-2" style="margin-top:14px;">Common questions.</h2>
+          </div>
+        </div>
+        <FAQAccordion items={faqs} />
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+      <div class="container-narrow" style="text-align:center;">
+        <span class="kicker">Get started</span>
+        <h2 class="h-2" style="margin-top:14px;">
+          Prepare your systems for the post-quantum decade.
+        </h2>
+        <p class="lede" style="margin:20px auto 36px;">
+          Open, auditable, hardware-enforced trust for next-generation connected
+          systems. Talk to us about evaluation kits, ASIC partnerships, and OEM
+          silicon programmes.
+        </p>
+        <div class="btn-row" style="justify-content:center;">
+          <a href="/contact" class="btn btn-primary"
+            >Contact Us <span aria-hidden="true">→</span></a
+          >
+          <a
+            href="https://github.com/absmach/quarc"
+            class="btn"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub <span aria-hidden="true">↗</span></a
+          >
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Quarc",
+      "description": "Open-source post-quantum secure element with hardware-accelerated ML-KEM and ML-DSA, built for IoT, industrial systems, confidential computing, and long-lived device trust.",
+      "url": "https://www.absmach.eu/products/quarc",
+      "brand": { "@type": "Brand", "name": "Abstract Machines" },
+      "manufacturer": {
+        "@type": "Organization",
+        "name": "Abstract Machines",
+        "url": "https://www.absmach.eu/"
+      },
+      "keywords": "post-quantum cryptography, secure element, ML-KEM, ML-DSA, FPGA, RISC-V, NIST PQC, hardware root of trust, open hardware"
+    }
+  </script>
+  <script is:inline type="application/ld+json" set:html={faqSchema} />
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Products",
+          "item": "https://www.absmach.eu/products/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Quarc",
+          "item": "https://www.absmach.eu/products/quarc"
+        }
+      ]
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  /* ─── Hero wordmark ─────────────────────────────────────────────── */
+  .quarc-wordmark {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    display: block;
+    margin: 0 0 2px;
+    line-height: 1;
+    text-align: left;
+  }
+
+  /* ─── Stats bar ─────────────────────────────────────────────────── */
+  .quarc-metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* ─── Feature icons ─────────────────────────────────────────────── */
+  .quarc-ic {
+    color: var(--ink-2);
+    display: flex;
+    align-items: center;
+  }
+
+  /* ─── Context ───────────────────────────────────────────────────── */
+  .quarc-context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .quarc-compare-table-wrap {
+    overflow-x: auto;
+  }
+  .quarc-compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .quarc-compare-table th {
+    padding: 10px 16px;
+    text-align: left;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    border-bottom: 1px solid var(--line-3);
+  }
+  .quarc-compare-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line-3);
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+  .quarc-compare-table td:first-child {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .quarc-no {
+    color: var(--ink-3) !important;
+  }
+  .quarc-yes {
+    color: var(--ink) !important;
+    font-weight: 600 !important;
+  }
+
+  /* ─── Architecture block diagram ───────────────────────────────── */
+  .quarc-arch-outer {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 16px;
+    margin-top: 48px;
+    align-items: stretch;
+  }
+  .quarc-block-diagram {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .quarc-host-block {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .quarc-bd-label {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--accent-2);
+    margin-bottom: 2px;
+  }
+
+  /* CPU row */
+  .quarc-bd-cpu {
+    display: flex;
+  }
+  .quarc-bd-block {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    background: var(--paper-2);
+  }
+  .quarc-bd-block-full {
+    flex: 1;
+  }
+  .quarc-bd-block-accent {
+    flex: 1;
+    border-color: rgba(7, 55, 99, 0.2);
+    background: rgba(7, 55, 99, 0.03);
+  }
+  .quarc-bd-block-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .quarc-bd-block-desc {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+
+  /* Mid row */
+  .quarc-bd-mid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .quarc-bd-group {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    background: var(--paper-2);
+  }
+  .quarc-bd-group-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  .quarc-bd-group-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .quarc-bd-group-tags span {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-2);
+    background: var(--paper);
+    border: 1px solid var(--line-3);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+
+  /* Bottom row */
+  .quarc-bd-bot {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  /* Host interface */
+  .quarc-host-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+  .quarc-host-item {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    background: var(--paper-2);
+  }
+  .quarc-host-item-accent {
+    border-color: rgba(7, 55, 99, 0.2);
+    background: rgba(7, 55, 99, 0.03);
+  }
+  .quarc-host-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .quarc-host-sub {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-top: 3px;
+  }
+  .quarc-host-arrow {
+    font-size: 14px;
+    color: var(--ink-3);
+    text-align: center;
+    line-height: 1;
+    padding: 1px 0;
+  }
+
+  /* ─── Performance (dark) ────────────────────────────────────────── */
+  .quarc-perf-section {
+    background: var(--surface-accent);
+    color: var(--on-accent);
+    padding: 80px 0;
+  }
+  .quarc-perf-table-wrap {
+    margin-top: 48px;
+    overflow-x: auto;
+  }
+  .quarc-perf-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .quarc-perf-table th {
+    padding: 12px 20px;
+    text-align: left;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.45);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .quarc-perf-table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .quarc-perf-table td:first-child {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+  }
+  .quarc-perf-good {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 600 !important;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .quarc-perf-base {
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .quarc-perf-speedup {
+    font-weight: 700 !important;
+    font-family: "JetBrains Mono", monospace;
+    color: rgba(255, 255, 255, 0.95) !important;
+  }
+
+  /* ─── Security model ────────────────────────────────────────────── */
+  .quarc-security-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+  .quarc-security-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    background: var(--paper);
+  }
+  .quarc-security-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .quarc-security-desc {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+
+  .quarc-policy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 12px;
+  }
+  .quarc-policy-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    background: var(--paper);
+  }
+  .quarc-policy-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .quarc-kue-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .quarc-kue-table th {
+    padding: 8px 12px;
+    text-align: left;
+    color: var(--ink-3);
+    border-bottom: 1px solid var(--line-3);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .quarc-kue-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--line-3);
+    color: var(--ink-2);
+  }
+  .quarc-kue-table code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    background: var(--paper-2);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+  .quarc-lifecycle {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .quarc-lifecycle-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .quarc-state {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--paper-2);
+    border: 1px solid var(--line-3);
+    padding: 5px 10px;
+    border-radius: var(--radius);
+  }
+  .quarc-lc-arrow {
+    color: var(--ink-3);
+    font-size: 14px;
+  }
+  .quarc-lifecycle-note {
+    width: 100%;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  /* ─── Use cases ─────────────────────────────────────────────────── */
+  .quarc-sol-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .quarc-sol-icon {
+    color: var(--ink-2);
+    margin-bottom: 12px;
+    display: flex;
+  }
+
+  /* ─── Roadmap ────────────────────────────────────────────────────── */
+  .quarc-roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .quarc-rm-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    background: var(--paper);
+  }
+  .quarc-rm-current {
+    border-color: rgba(7, 55, 99, 0.3);
+    box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.12);
+  }
+  .quarc-rm-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .quarc-rm-version {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .quarc-rm-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .quarc-rm-badge {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(7, 55, 99, 0.8);
+    border: 1px solid rgba(7, 55, 99, 0.3);
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+  .quarc-rm-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .quarc-rm-items li {
+    font-size: 13px;
+    color: var(--ink-2);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .quarc-rm-items li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--ink-3);
+    font-size: 11px;
+  }
+
+  /* ─── Responsive ────────────────────────────────────────────────── */
+  @media (max-width: 980px) {
+    .quarc-context-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .quarc-arch-outer {
+      grid-template-columns: 1fr;
+    }
+    .quarc-bd-mid {
+      grid-template-columns: 1fr;
+    }
+    .quarc-bd-bot {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .quarc-security-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .quarc-policy-grid {
+      grid-template-columns: 1fr;
+    }
+    .quarc-roadmap-grid {
+      grid-template-columns: 1fr;
+    }
+    .quarc-sol-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .quarc-wordmark {
+      font-size: 22px;
+    }
+    .quarc-metrics {
+      grid-template-columns: 1fr;
+    }
+    .quarc-bd-bot {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .quarc-security-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

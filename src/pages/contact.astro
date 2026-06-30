@@ -2,363 +2,265 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import Hero from "../components/Hero.astro";
-import Section from "../components/Section.astro";
 
 const email = "info@absmach.eu";
-const githubOrg = "https://github.com/absmach";
-const linkedin = "https://www.linkedin.com/company/abstract-machines/";
-const twitter = "https://twitter.com/absmach";
-const youtube = "https://www.youtube.com/@absmach";
-const matrix = "https://matrix.to/#/#supermq:matrix.org";
 const contactApiEndpoint = "/api/contact";
 ---
 
 <BaseLayout
-  title="Contact | Abstract Machines"
-  description="Talk to Abstract Machines about production deployments, integrations, and open-source support."
+  title="IoT Platform Deployment, Support & Partnerships — Abstract Machines"
+  description="Talk to Abstract Machines about production IoT deployments, integrations, research partnerships, and open-source support. Based in Paris, working globally."
 >
   <Header />
   <main>
-    <Hero
-      eyebrow="Contact"
-      title="Talk to engineers"
-      subtitle="If you’re evaluating Magistrala or deploying cloud–edge infrastructure in production, reach out. We reply quickly."
-      primary={{ label: "Email us", href: `mailto:${email}` }}
-      secondary={{
-        label: "Connect on LinkedIn",
-        href: linkedin,
-        external: true,
-      }}
-      backgroundClass="hero-grid"
-    >
-      <div
-        class="rounded-2xl border border-subtle bg-panel p-6 shadow-[var(--shadow-strong)] md:p-8"
-      >
-        <!-- Primary contact -->
-        <div>
-          <p class="section-label">Primary contact</p>
-          <a
-            href="mailto:info@absmach.eu"
-            class="mt-2 block text-xl font-semibold text-primary hover:underline"
+    <section class="page-hero">
+      <div class="container-wide">
+        <div class="grid">
+          <div class="stack stack-md">
+            <span class="kicker">Contact</span>
+            <h1 class="h-display">Start a conversation.</h1>
+          </div>
+          <p class="lede">
+            Whether you're planning a production deployment, evaluating our
+            stack, or exploring a research collaboration, we're direct and
+            straightforward to work with.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container-wide">
+        <div class="contact-grid">
+          <form
+            class="contact-form"
+            method="post"
+            action={contactApiEndpoint}
+            data-contact-form
           >
-            info@absmach.eu
-          </a>
-          <p class="mt-1 text-sm text-muted">
-            Best for architecture reviews, production deployments, and security
-            discussions.
-          </p>
+            <span class="kicker" style="color:rgba(246,244,238,0.6);"
+              >Send a message</span
+            >
+            <h2 class="h-2" style="margin:14px 0 24px; color:var(--paper);">
+              We typically reply in 1-2 business days.
+            </h2>
+            <div class="form-fields-row">
+              <div class="field">
+                <label for="name">Name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  placeholder="Jane Doe"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="jane@company.com"
+                  required
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label for="organization">Company</label>
+              <input
+                id="organization"
+                name="organization"
+                type="text"
+                autocomplete="organization"
+                placeholder="Acme Manufacturing"
+              />
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="What are you building? What do you need help with? Any scale or security constraints?"
+                required></textarea>
+            </div>
+            <div aria-hidden="true" style="position:absolute; left:-5000px;">
+              <label for="company">Company</label>
+              <input
+                id="company"
+                name="company"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+            <button
+              type="submit"
+              class="btn"
+              style="width:100%; justify-content:center; background:var(--paper); color:var(--ink); border-color:rgba(255,255,255,0.25);"
+              data-contact-submit
+            >
+              Send message →
+            </button>
+            <p
+              style="min-height:24px; margin:14px 0 0; color:rgba(246,244,238,0.75); font-size:14px;"
+              role="status"
+              aria-live="polite"
+              data-contact-status
+            >
+            </p>
+          </form>
+
+          <div class="contact-side">
+            <div class="card">
+              <span class="kicker">Direct email</span>
+              <h3 class="h-4" style="margin-top:10px;">
+                <a href={`mailto:${email}`}>{email}</a>
+              </h3>
+              <p class="ink-2" style="font-size:14px; margin:8px 0 0;">
+                Best for architecture reviews, production deployments, and
+                security discussions.
+              </p>
+            </div>
+            <div class="card">
+              <h3 class="h-4">Other channels</h3>
+              <ul class="channels">
+                <li>
+                  <span class="lbl">GitHub</span><a
+                    href="https://github.com/absmach"
+                    target="_blank"
+                    rel="noopener noreferrer">github.com/absmach</a
+                  >
+                </li>
+                <li>
+                  <span class="lbl">LinkedIn</span><a
+                    href="https://www.linkedin.com/company/abstract-machines"
+                    target="_blank"
+                    rel="noopener noreferrer">Abstract Machines</a
+                  >
+                </li>
+                <li>
+                  <span class="lbl">Twitter</span><a
+                    href="https://twitter.com/absmach"
+                    target="_blank"
+                    rel="noopener noreferrer">@absmach</a
+                  >
+                </li>
+                <li>
+                  <span class="lbl">YouTube</span><a
+                    href="https://www.youtube.com/@absmach"
+                    target="_blank"
+                    rel="noopener noreferrer">@absmach</a
+                  >
+                </li>
+                <li>
+                  <span class="lbl">Matrix</span><a
+                    href="https://matrix.to/#/#absmach:matrix.org"
+                    target="_blank"
+                    rel="noopener noreferrer">#absmach:matrix.org</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="card card-dark">
+              <span class="kicker" style="color:rgba(246,244,238,0.6);"
+                >Office</span
+              >
+              <p style="margin:12px 0 0; font-size:15px; line-height:1.6;">
+                141 Quai de Valmy<br />75010 Paris, France
+              </p>
+            </div>
+          </div>
         </div>
-
-        <div class="my-6 border-t border-subtle"></div>
-
-        <!-- Secondary channels -->
-        <div class="space-y-3 text-sm">
-          <div class="flex items-center justify-between">
-            <span class="text-muted">GitHub</span>
-            <a
-              href="https://github.com/absmach"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="font-medium hover:underline"
-            >
-              github.com/absmach
-            </a>
-          </div>
-
-          <div class="flex items-center justify-between">
-            <span class="text-muted">LinkedIn</span>
-            <a
-              href="https://www.linkedin.com/company/abstract-machines"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="font-medium hover:underline"
-            >
-              Abstract Machines
-            </a>
-          </div>
-
-          <div class="flex items-center justify-between">
-            <span class="text-muted">Twitter</span>
-            <a
-              href="https://twitter.com/absmach"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="font-medium hover:underline"
-            >
-              @absmach
-            </a>
-          </div>
-
-          <div class="flex items-center justify-between">
-            <span class="text-muted">YouTube</span>
-            <a
-              href="https://www.youtube.com/@absmach"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="font-medium hover:underline"
-            >
-              @absmach
-            </a>
-          </div>
-
-          <div class="flex items-center justify-between">
-            <span class="text-muted">Matrix</span>
-            <a
-              href="https://matrix.to/#/#supermq:matrix.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="font-medium hover:underline"
-            >
-              #supermq:matrix.org
-            </a>
-          </div>
-        </div>
-
-        <p class="mt-6 text-xs text-muted">
-          We typically respond within 1–2 business days.
-        </p>
       </div>
-    </Hero>
-
-    <!-- Contact options -->
-    <Section
-      title="Choose the fastest path"
-      subtitle="Email works best for technical discussions. GitHub is ideal for issues and PRs."
-    >
-      <div class="grid gap-4 md:grid-cols-3">
-        <a
-          href={`mailto:${email}`}
-          class="rounded-2xl border border-subtle bg-panel p-6 shadow-[var(--shadow-soft)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-strong)]"
-        >
-          <p class="section-label">Email</p>
-          <h3 class="mt-2 text-lg font-semibold">Production & deployments</h3>
-          <p class="mt-2 text-muted">
-            Architecture questions, rollout plans, security reviews, and
-            enterprise deployments.
-          </p>
-          <p class="mt-4 font-medium">Email us →</p>
-        </a>
-
-        <a
-          href={githubOrg}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="rounded-2xl border border-subtle bg-panel p-6 shadow-[var(--shadow-soft)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-strong)]"
-        >
-          <p class="section-label">GitHub</p>
-          <h3 class="mt-2 text-lg font-semibold">Open-source support</h3>
-          <p class="mt-2 text-muted">
-            Bugs, feature requests, roadmap discussions, and contributions.
-          </p>
-          <p class="mt-4 font-medium">Open GitHub →</p>
-        </a>
-
-        <a
-          href={linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="rounded-2xl border border-subtle bg-panel p-6 shadow-[var(--shadow-soft)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-strong)]"
-        >
-          <p class="section-label">LinkedIn</p>
-          <h3 class="mt-2 text-lg font-semibold">Partnerships</h3>
-          <p class="mt-2 text-muted">
-            Research collaboration, ecosystem partnerships, and business
-            inquiries.
-          </p>
-          <p class="mt-4 font-medium">Visit LinkedIn →</p>
-        </a>
-      </div>
-    </Section>
-
-    <!-- Message form -->
-    <Section
-      title="Send a message"
-      subtitle="Send details directly from the form. If delivery fails, use email fallback."
-    >
-      <form
-        class="grid gap-4 md:grid-cols-2"
-        method="post"
-        action={contactApiEndpoint}
-        data-contact-form
-      >
-        <label class="flex flex-col gap-2">
-          <span class="text-sm text-muted">Name</span>
-          <input
-            class="input-base rounded-xl px-4 py-3"
-            name="name"
-            autocomplete="name"
-            required
-          />
-        </label>
-
-        <label class="flex flex-col gap-2">
-          <span class="text-sm text-muted">Email</span>
-          <input
-            class="input-base rounded-xl px-4 py-3"
-            name="email"
-            type="email"
-            autocomplete="email"
-            required
-          />
-        </label>
-
-        <label class="flex flex-col gap-2 md:col-span-2">
-          <span class="text-sm text-muted">Message</span>
-          <textarea
-            class="input-base min-h-[160px] rounded-xl px-4 py-3"
-            name="message"
-            required
-            placeholder="What are you building? What do you need help with? Any scale/security constraints?"
-          ></textarea>
-        </label>
-
-        <div class="hidden" aria-hidden="true">
-          <label for="company">
-            Company
-          </label>
-          <input
-            id="company"
-            name="company"
-            tabindex="-1"
-            autocomplete="off"
-          />
-        </div>
-
-        <div class="md:col-span-2 flex flex-wrap items-center gap-3">
-          <button class="button-primary" type="submit" data-contact-submit>
-            Send message
-          </button>
-
-          <a
-            class="button-secondary"
-            href={`mailto:${email}?subject=${encodeURIComponent("Abstract Machines — Inquiry")}`}
-          >
-            Send via email
-          </a>
-
-          <p class="text-sm text-muted">
-            Prefer GitHub? Open an issue in our
-            <a
-              href="https://github.com/absmach"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="font-semibold"
-            >
-              repositories
-            </a>.
-          </p>
-        </div>
-
-        <p
-          class="md:col-span-2 min-h-6 text-sm text-muted"
-          role="status"
-          aria-live="polite"
-          data-contact-status
-        ></p>
-      </form>
-    </Section>
-    <script is:inline>
-      (() => {
-        const form = document.querySelector("[data-contact-form]");
-        if (!(form instanceof HTMLFormElement)) return;
-
-        const statusEl = document.querySelector("[data-contact-status]");
-        const submitButton = form.querySelector("[data-contact-submit]");
-        if (!(statusEl instanceof HTMLElement)) return;
-        if (!(submitButton instanceof HTMLButtonElement)) return;
-
-        const defaultLabel = submitButton.textContent?.trim() || "Send message";
-
-        const setStatus = (text, tone = "muted") => {
-          statusEl.textContent = text;
-          statusEl.classList.remove("text-muted", "text-primary", "text-accent");
-          if (tone === "success") {
-            statusEl.classList.add("text-accent");
-            return;
-          }
-          if (tone === "error") {
-            statusEl.classList.add("text-primary");
-            return;
-          }
-          statusEl.classList.add("text-muted");
-        };
-
-        form.addEventListener("submit", async (event) => {
-          event.preventDefault();
-          submitButton.disabled = true;
-          submitButton.setAttribute("aria-busy", "true");
-          submitButton.textContent = "Sending...";
-          setStatus("Sending your message...");
-
-          try {
-            const response = await fetch(form.action, {
-              method: "POST",
-              body: new FormData(form),
-              headers: {
-                Accept: "application/json",
-              },
-            });
-
-            let payload = null;
-            try {
-              payload = await response.json();
-            } catch {
-              payload = null;
-            }
-
-            if (!response.ok || !payload?.ok) {
-              throw new Error(
-                payload?.error ||
-                  "Unable to send your message. Please use direct email.",
-              );
-            }
-
-            form.reset();
-            setStatus(
-              payload?.message || "Thanks. Your message has been sent.",
-              "success",
-            );
-          } catch (error) {
-            setStatus(
-              error instanceof Error
-                ? error.message
-                : "Unable to send your message. Please use direct email.",
-              "error",
-            );
-          } finally {
-            submitButton.disabled = false;
-            submitButton.removeAttribute("aria-busy");
-            submitButton.textContent = defaultLabel;
-          }
-        });
-      })();
-    </script>
-    <!-- Registered office -->
-    <!-- <Section
-      title="Registered office"
-      subtitle="Company registered address. Not a walk-in office."
-    >
-      <div
-        class="rounded-2xl border border-subtle bg-white/60 p-6 text-sm text-muted shadow-sm"
-      >
-        <p class="font-medium text-primary">Abstract Machines</p>
-        <p class="mt-2">
-          141 Quai de Valmy<br />
-          75010 Paris<br />
-          France
-        </p>
-
-        <a
-          href="https://maps.google.com/?q=141+Quai+de+Valmy+75010+Paris+France"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="mt-4 inline-block text-sm font-medium hover:underline"
-        >
-          View on map →
-        </a>
-      </div>
-    </Section> -->
+    </section>
   </main>
   <Footer />
+  <script is:inline type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Contact Abstract Machines",
+      "url": "https://www.absmach.eu/contact",
+      "description": "Contact Abstract Machines for IoT platform deployments, integrations, research partnerships, and support.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Abstract Machines",
+        "url": "https://www.absmach.eu",
+        "email": "info@absmach.eu"
+      }
+    }
+  </script>
+  <script is:inline>
+    (() => {
+      const form = document.querySelector("[data-contact-form]");
+      if (!(form instanceof HTMLFormElement)) return;
+
+      const statusEl = document.querySelector("[data-contact-status]");
+      const submitButton = form.querySelector("[data-contact-submit]");
+      if (!(statusEl instanceof HTMLElement)) return;
+      if (!(submitButton instanceof HTMLButtonElement)) return;
+
+      const defaultLabel = submitButton.textContent?.trim() || "Send message";
+
+      const setStatus = (text, tone = "muted") => {
+        statusEl.textContent = text;
+        statusEl.style.color =
+          tone === "success"
+            ? "#b8f7c5"
+            : tone === "error"
+              ? "#ffb199"
+              : "rgba(246,244,238,0.75)";
+      };
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        submitButton.disabled = true;
+        submitButton.setAttribute("aria-busy", "true");
+        submitButton.textContent = "Sending...";
+        setStatus("Sending your message...");
+
+        try {
+          const response = await fetch(form.action, {
+            method: "POST",
+            body: new FormData(form),
+            headers: { Accept: "application/json" },
+          });
+
+          let payload = null;
+          try {
+            payload = await response.json();
+          } catch {
+            payload = null;
+          }
+
+          if (!response.ok || !payload?.ok) {
+            throw new Error(
+              payload?.error ||
+                "Unable to send your message. Please use direct email.",
+            );
+          }
+
+          form.reset();
+          setStatus(
+            payload?.message || "Thanks. Your message has been sent.",
+            "success",
+          );
+        } catch (error) {
+          setStatus(
+            error instanceof Error
+              ? error.message
+              : "Unable to send your message. Please use direct email.",
+            "error",
+          );
+        } finally {
+          submitButton.disabled = false;
+          submitButton.removeAttribute("aria-busy");
+          submitButton.textContent = defaultLabel;
+        }
+      });
+    })();
+  </script>
 </BaseLayout>

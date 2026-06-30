@@ -1,67 +1,563 @@
 ---
-const {
-  eyebrow,
-  title,
-  subtitle,
-  primary,
-  secondary,
-  tertiary,
-  backgroundClass = "",
-} = Astro.props;
+
 ---
 
-<section class={`py-20 ${backgroundClass}`}>
+<section class="hero-asym has-video">
+  <video
+    class="hero-bg-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    width="1920"
+    height="1080"
+    poster="/video/hero-background-poster.webp"
+    aria-hidden="true"
+  >
+    <source src="/video/hero-background.webm" type="video/webm" />
+    <source src="/video/hero-background.mp4" type="video/mp4" />
+  </video>
   <div class="container-wide">
-    <div class="grid gap-10 lg:grid-cols-12 lg:items-center">
-      <div class="lg:col-span-7">
-        {eyebrow && <p class="section-label">{eyebrow}</p>}
-        <h1 class="mt-4 text-4xl font-semibold md:text-5xl">{title}</h1>
-        {subtitle && <p class="mt-6 text-lg text-muted">{subtitle}</p>}
-        {Astro.slots.meta && <div class="mt-4"><slot name="meta" /></div>}
-        <div class="mt-8 flex flex-wrap items-center gap-4">
-          {
-            primary && (
-              <a
-                class="button-primary"
-                href={primary.href}
-                target={primary.external ? "_blank" : undefined}
-                rel={primary.external ? "noopener noreferrer" : undefined}
-              >
-                {primary.label}
-              </a>
-            )
-          }
-          {
-            secondary && (
-              <a
-                class="button-secondary"
-                href={secondary.href}
-                target={secondary.external ? "_blank" : undefined}
-                rel={secondary.external ? "noopener noreferrer" : undefined}
-              >
-                {secondary.label}
-              </a>
-            )
-          }
-          {
-            tertiary && (
-              <a
-                class="nav-link"
-                href={tertiary.href}
-                target={tertiary.external ? "_blank" : undefined}
-                rel={tertiary.external ? "noopener noreferrer" : undefined}
-              >
-                {tertiary.label}
-              </a>
-            )
-          }
+    <div class="grid">
+      <div class="stack stack-lg">
+        <span class="kicker">Paris · Open Source · Since 2023</span>
+        <h1 class="h-display">Unified stack for secure IoT.</h1>
+        <p class="lede">
+          One secure, open-source platform covering identity, messaging, device
+          management, edge orchestration, and hardware — everything you need to
+          build and operate IoT systems end to end.
+        </p>
+        <div class="btn-row">
+          <a href="/products" class="btn btn-primary"
+            >Explore products <span aria-hidden="true">→</span></a
+          >
+          <a
+            href="https://github.com/absmach"
+            class="btn"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub <span aria-hidden="true">↗</span></a
+          >
         </div>
       </div>
-      <div class="lg:col-span-5">
-        <!-- <div class="card-base"> -->
-        <slot />
-        <!-- </div> -->
+
+      <div class="product-stack" aria-label="Product architecture stack">
+        <span class="ps-mark ps-tl" aria-hidden="true"></span>
+        <span class="ps-mark ps-tr" aria-hidden="true"></span>
+        <span class="ps-mark ps-bl" aria-hidden="true"></span>
+        <span class="ps-mark ps-br" aria-hidden="true"></span>
+
+        <!-- Row 1: Magistrala — flagship platform, full width -->
+        <a href="/products/magistrala" class="ps-cell ps-span ps-magistrala">
+          <span class="ps-name">Magistrala</span>
+          <span class="ps-tag">IoT Platform</span>
+        </a>
+
+        <!-- Row 2: FluxMQ + Atom — platform components -->
+        <a href="/products/fluxmq" class="ps-cell ps-half ps-fluxmq">
+          <span class="ps-name">FluxMQ</span>
+          <span class="ps-tag">Message Broker</span>
+        </a>
+        <a href="/products/atom" class="ps-cell ps-half ps-atom">
+          <span class="ps-name">Atom</span>
+          <span class="ps-tag">Identity &amp; Auth</span>
+        </a>
+
+        <!-- Row 3: Edge & Hardware — four equal tiles -->
+        <a href="/products/propeller" class="ps-cell ps-propeller">
+          <span class="ps-name">Propeller</span>
+          <span class="ps-tag">Edge Orchestrator</span>
+        </a>
+        <a href="/products/a0" class="ps-cell ps-a0">
+          <span class="ps-name">A0</span>
+          <span class="ps-tag">Zephyr gateway</span>
+        </a>
+        <a href="/products/a1" class="ps-cell ps-a1">
+          <span class="ps-name">A1</span>
+          <span class="ps-tag">Linux gateway</span>
+        </a>
+        <a href="/products/quarc" class="ps-cell ps-quarc">
+          <span class="ps-name">Quarc</span>
+          <span class="ps-tag">Post-quantum</span>
+        </a>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* ─── Keyframes ────────────────────────────────────────────────── */
+
+  @keyframes cellFlyIn {
+    from {
+      opacity: 0;
+      transform: var(--fly-from, translate(0, 30px));
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes cellBorderReveal {
+    from {
+      border-color: transparent;
+    }
+    to {
+      border-color: rgba(7, 55, 99, 0.2);
+    }
+  }
+
+  @keyframes containerReveal {
+    to {
+      border-color: rgba(7, 55, 99, 0.25);
+    }
+  }
+
+  @keyframes markReveal {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* step 1: flash bright, step 2: settle to featured state */
+  @keyframes magistralaHighlight {
+    0% {
+      background: rgba(7, 55, 99, 0.04);
+      box-shadow: none;
+    }
+    45% {
+      background: rgba(7, 55, 99, 0.14);
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.35);
+    }
+    100% {
+      background: rgba(7, 55, 99, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.22);
+    }
+  }
+
+  /* slow breathing glow after the highlight settles */
+  @keyframes magistralaPulse {
+    0%,
+    100% {
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.18);
+    }
+    50% {
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.36);
+    }
+  }
+
+  /* ─── Container ────────────────────────────────────────────────── */
+
+  .product-stack {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: relative;
+    min-width: 0;
+    border: 1px solid transparent;
+    animation: containerReveal 0.5s ease-out 1.1s forwards;
+  }
+
+  /* ─── Cells (shared base) ──────────────────────────────────────── */
+
+  .ps-cell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 28px 30px;
+    min-height: 140px;
+    border-bottom: 1px solid transparent;
+    background: rgba(7, 55, 99, 0.04);
+    animation:
+      cellFlyIn 1s cubic-bezier(0.25, 1, 0.5, 1) both,
+      cellBorderReveal 0.35s ease-out both;
+    transition: background 0.2s ease;
+  }
+  .ps-cell:hover {
+    background: rgba(7, 55, 99, 0.08);
+    cursor: pointer;
+  }
+  .ps-cell:hover .ps-name {
+    color: var(--ink);
+  }
+  .ps-cell:focus-visible {
+    outline: 2px solid rgba(7, 55, 99, 0.5);
+    outline-offset: -2px;
+  }
+
+  /* Grid spans */
+  .ps-cell.ps-span {
+    grid-column: 1 / -1;
+  }
+  .ps-cell.ps-half {
+    grid-column: span 2;
+  }
+
+  /* ─── Row-specific sizing ──────────────────────────────────────── */
+
+  .ps-magistrala {
+    min-height: 180px;
+    padding: 34px 34px;
+  }
+
+  .ps-fluxmq,
+  .ps-atom {
+    min-height: 140px;
+  }
+
+  /* Edge row: no bottom border */
+  .ps-propeller,
+  .ps-a0,
+  .ps-a1,
+  .ps-quarc {
+    min-height: 130px;
+    border-bottom: none;
+  }
+
+  /* Internal column separators */
+  .ps-fluxmq {
+    border-right: 1px solid transparent;
+  }
+  .ps-propeller,
+  .ps-a0,
+  .ps-a1 {
+    border-right: 1px solid transparent;
+  }
+
+  /* Slightly smaller type for edge row */
+  .ps-propeller .ps-name,
+  .ps-a0 .ps-name,
+  .ps-a1 .ps-name,
+  .ps-quarc .ps-name {
+    font-size: 19px;
+  }
+  .ps-propeller .ps-tag,
+  .ps-a0 .ps-tag,
+  .ps-a1 .ps-tag,
+  .ps-quarc .ps-tag {
+    font-size: 9px;
+    padding: 3px 9px;
+    right: 14px;
+  }
+
+  /* ─── Per-cell fly directions & stagger ───────────────────────── */
+
+  /* Magistrala drops from above */
+  .ps-magistrala {
+    --fly-from: translate(0, -50px);
+    animation:
+      cellFlyIn 1s cubic-bezier(0.25, 1, 0.5, 1) 0s both,
+      cellBorderReveal 0.35s ease-out 0.85s both,
+      magistralaHighlight 0.75s ease-in-out 1.45s forwards,
+      magistralaPulse 3.5s ease-in-out 2.25s infinite;
+  }
+
+  /* FluxMQ slides in from left */
+  .ps-fluxmq {
+    --fly-from: translate(-50px, 0);
+    animation:
+      cellFlyIn 1s cubic-bezier(0.25, 1, 0.5, 1) 0.12s both,
+      cellBorderReveal 0.35s ease-out 0.95s both;
+  }
+
+  /* Atom slides in from right */
+  .ps-atom {
+    --fly-from: translate(50px, 0);
+    animation-delay: 0.12s, 0.95s;
+  }
+
+  /* Edge row rises from below — staggered */
+  .ps-propeller {
+    --fly-from: translate(0, 50px);
+    animation-delay: 0.24s, 1.05s;
+  }
+  .ps-a0 {
+    --fly-from: translate(0, 50px);
+    animation-delay: 0.28s, 1.08s;
+  }
+  .ps-a1 {
+    --fly-from: translate(0, 50px);
+    animation-delay: 0.32s, 1.08s;
+  }
+  .ps-quarc {
+    --fly-from: translate(0, 50px);
+    animation-delay: 0.36s, 1.08s;
+  }
+
+  /* ─── Typography ───────────────────────────────────────────────── */
+
+  .ps-name {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: 0;
+  }
+
+  .ps-tag {
+    position: absolute;
+    bottom: 20px;
+    right: 28px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--ink);
+    background: rgba(7, 55, 99, 0.07);
+    padding: 4px 11px;
+    border: 1px solid rgba(7, 55, 99, 0.22);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* ─── Corner marks ─────────────────────────────────────────────── */
+
+  .ps-mark {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    animation: markReveal 0.4s ease-out 1.2s both;
+  }
+  .ps-mark::before,
+  .ps-mark::after {
+    content: "";
+    position: absolute;
+    background: rgba(7, 55, 99, 0.25);
+  }
+  .ps-mark::before {
+    width: 1px;
+    height: 18px;
+  }
+  .ps-mark::after {
+    height: 1px;
+    width: 18px;
+  }
+
+  .ps-tl {
+    top: 0;
+    left: 0;
+  }
+  .ps-tl::before {
+    top: -18px;
+    left: -1px;
+  }
+  .ps-tl::after {
+    top: -1px;
+    left: -18px;
+  }
+
+  .ps-tr {
+    top: 0;
+    right: 0;
+  }
+  .ps-tr::before {
+    top: -18px;
+    right: -1px;
+  }
+  .ps-tr::after {
+    top: -1px;
+    right: -18px;
+  }
+
+  .ps-bl {
+    bottom: 0;
+    left: 0;
+  }
+  .ps-bl::before {
+    bottom: -18px;
+    left: -1px;
+  }
+  .ps-bl::after {
+    bottom: -1px;
+    left: -18px;
+  }
+
+  .ps-br {
+    bottom: 0;
+    right: 0;
+  }
+  .ps-br::before {
+    bottom: -18px;
+    right: -1px;
+  }
+  .ps-br::after {
+    bottom: -1px;
+    right: -18px;
+  }
+
+  /* ─── Row-divider edge ticks ───────────────────────────────────── */
+
+  /* Tick marks at left/right edges of the Magistrala row divider */
+  .ps-cell.ps-span::before {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: -18px;
+    width: 18px;
+    height: 1px;
+    background: rgba(7, 55, 99, 0.25);
+  }
+  .ps-cell.ps-span::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    right: -18px;
+    width: 18px;
+    height: 1px;
+    background: rgba(7, 55, 99, 0.25);
+  }
+
+  /* ─── Reduced motion ────────────────────────────────────────────── */
+
+  @media (prefers-reduced-motion: reduce) {
+    .ps-cell,
+    .ps-mark,
+    .product-stack {
+      animation: none;
+    }
+    .product-stack {
+      border-color: rgba(7, 55, 99, 0.25);
+    }
+    .ps-cell {
+      border-bottom-color: rgba(7, 55, 99, 0.2);
+      opacity: 1;
+      transform: none;
+    }
+    .ps-fluxmq,
+    .ps-propeller,
+    .ps-a0,
+    .ps-a1 {
+      border-right-color: rgba(7, 55, 99, 0.2);
+    }
+    .ps-propeller,
+    .ps-a0,
+    .ps-a1,
+    .ps-quarc {
+      border-bottom: none;
+    }
+    .ps-magistrala {
+      background: rgba(7, 55, 99, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.22);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .product-stack {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: min(calc(100% - 28px), 340px);
+      margin: 14px auto 0;
+      justify-self: center;
+      border-color: rgba(7, 55, 99, 0.22);
+      animation: none;
+    }
+    .ps-mark {
+      animation: none;
+      opacity: 1;
+    }
+    .ps-mark::before {
+      height: 12px;
+    }
+    .ps-mark::after {
+      width: 12px;
+    }
+    .ps-tl::before {
+      top: -12px;
+    }
+    .ps-tl::after {
+      left: -12px;
+    }
+    .ps-tr::before {
+      top: -12px;
+    }
+    .ps-tr::after {
+      right: -12px;
+    }
+    .ps-bl::before {
+      bottom: -12px;
+    }
+    .ps-bl::after {
+      left: -12px;
+    }
+    .ps-br::before {
+      bottom: -12px;
+    }
+    .ps-br::after {
+      right: -12px;
+    }
+    .ps-cell.ps-span::before,
+    .ps-cell.ps-span::after {
+      display: block;
+      width: 12px;
+      background: rgba(7, 55, 99, 0.25);
+    }
+    .ps-cell.ps-span::before {
+      left: -12px;
+    }
+    .ps-cell.ps-span::after {
+      right: -12px;
+    }
+    .ps-cell,
+    .ps-magistrala,
+    .ps-fluxmq,
+    .ps-atom,
+    .ps-propeller,
+    .ps-a0,
+    .ps-a1,
+    .ps-quarc {
+      min-height: 76px;
+      padding: 14px;
+      animation: none;
+      border-color: rgba(7, 55, 99, 0.18);
+      transform: none;
+      opacity: 1;
+    }
+    .ps-magistrala {
+      grid-column: 1 / -1;
+      min-height: 88px;
+      background: rgba(7, 55, 99, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(7, 55, 99, 0.18);
+    }
+    .ps-half {
+      grid-column: span 1;
+    }
+    .ps-propeller,
+    .ps-a0,
+    .ps-a1 {
+      border-right: 1px solid rgba(7, 55, 99, 0.18);
+      border-bottom: 1px solid rgba(7, 55, 99, 0.18);
+    }
+    .ps-quarc {
+      border-bottom: 1px solid rgba(7, 55, 99, 0.18);
+    }
+    .ps-name,
+    .ps-propeller .ps-name,
+    .ps-a0 .ps-name,
+    .ps-a1 .ps-name,
+    .ps-quarc .ps-name {
+      font-size: 14px;
+      line-height: 1.1;
+    }
+    .ps-tag,
+    .ps-propeller .ps-tag,
+    .ps-a0 .ps-tag,
+    .ps-a1 .ps-tag,
+    .ps-quarc .ps-tag {
+      position: static;
+      align-self: flex-start;
+      margin-top: 14px;
+      max-width: 100%;
+      white-space: normal;
+      font-size: 8px;
+      line-height: 1.25;
+      padding: 3px 7px;
+      letter-spacing: 0.08em;
+    }
+  }
+</style>

@@ -1,373 +1,801 @@
 ---
-import { Image } from "astro:assets";
+const pathname = Astro.url.pathname;
 
-const navItems = [
-  { label: "Products", href: "/products", external: false },
-  { label: "Solutions", href: "/solutions", external: false },
-  { label: "Services", href: "/services", external: false },
-  { label: "Projects", href: "/projects", external: false },
-  { label: "Company", href: "/company", external: false },
-  { label: "Careers", href: "/careers", external: false },
-  { label: "Blog", href: "/blog", external: false },
-  { label: "Contact Us", href: "/contact", external: false },
+const isActive = (href: string) => {
+  if (href === "/") return pathname === "/";
+  return pathname.startsWith(href);
+};
+
+const products = [
+  {
+    group: "Platform Software",
+    items: [
+      {
+        label: "Magistrala",
+        desc: "IoT Platform",
+        href: "/products/magistrala",
+        logo: "/img/products/magistrala.png",
+      },
+      {
+        label: "FluxMQ",
+        desc: "Message Broker",
+        href: "/products/fluxmq",
+        logo: undefined,
+      },
+      {
+        label: "Atom",
+        desc: "Identity & Auth",
+        href: "/products/atom",
+        logo: undefined,
+      },
+    ],
+  },
+  {
+    group: "Edge & Hardware",
+    items: [
+      {
+        label: "Propeller",
+        desc: "Edge Orchestrator",
+        href: "/products/propeller",
+        logo: "/img/products/propeller.png",
+      },
+      {
+        label: "A0",
+        desc: "Zephyr Gateway",
+        href: "/products/a0",
+        logo: "/img/products/s0.png",
+      },
+      {
+        label: "A1",
+        desc: "Linux Gateway",
+        href: "/products/a1",
+        logo: undefined,
+      },
+      {
+        label: "Quarc",
+        desc: "Post-quantum Secure Element",
+        href: "/products/quarc",
+        logo: undefined,
+      },
+    ],
+  },
+];
+
+const solutions = [
+  {
+    label: "Smart Water Metering",
+    desc: "Eliminate NRW and automate AMI billing in real time.",
+    href: "/solutions/smart-water",
+  },
+  {
+    label: "Smart City",
+    desc: "Unify traffic, energy, and civic infrastructure in one dashboard.",
+    href: "/solutions/smart-city",
+  },
+  {
+    label: "Smart Energy",
+    desc: "Balance grid loads and monitor renewable generation.",
+    href: "/solutions/smart-energy",
+  },
+  {
+    label: "Cold Storage",
+    desc: "HACCP-compliant cold chain monitoring across all zones.",
+    href: "/solutions/cold-storage",
+  },
+  {
+    label: "Smart Farming",
+    desc: "Precision irrigation and crop stress monitoring.",
+    href: "/solutions/smart-farming",
+  },
+  {
+    label: "Oil & Gas",
+    desc: "Pipeline integrity monitoring and predictive maintenance.",
+    href: "/solutions/oil-gas",
+  },
+  {
+    label: "Smart Irrigation",
+    desc: "Sensor-driven irrigation schedules that eliminate water waste.",
+    href: "/solutions/smart-irrigation",
+  },
+  {
+    label: "Air Quality",
+    desc: "Track PM2.5, CO₂, and pollutants with regulatory reporting.",
+    href: "/solutions/air-quality",
+  },
+];
+
+const projects = [
+  {
+    label: "ELASTIC",
+    desc: "6G edge orchestration",
+    href: "/projects/elastic",
+    logo: "/img/logos/elastic-dark.png",
+  },
+  {
+    label: "Confidential 6G",
+    desc: "Post-quantum 6G security",
+    href: "/projects/confidential6g",
+    logo: "/img/logos/confidential6G.jpg",
+  },
+];
+
+const docs = [
+  {
+    group: "Software",
+    items: [
+      {
+        label: "Magistrala",
+        desc: "IoT Platform",
+        href: "https://www.absmach.eu/docs/magistrala",
+        logo: "/img/products/magistrala.png",
+      },
+      {
+        label: "FluxMQ",
+        desc: "Message Broker",
+        href: "https://www.absmach.eu/docs/fluxmq",
+        logo: undefined,
+      },
+      {
+        label: "Atom",
+        desc: "Identity & Auth",
+        href: "https://www.absmach.eu/docs/atom",
+        logo: undefined,
+      },
+      {
+        label: "Propeller",
+        desc: "Wasm Orchestrator",
+        href: "https://www.absmach.eu/docs/propeller",
+        logo: "/img/products/propeller.png",
+      },
+    ],
+  },
+  {
+    group: "Hardware",
+    items: [
+      {
+        label: "A0 Gateway",
+        desc: "Zephyr RTOS Gateway",
+        href: "https://www.absmach.eu/docs/hardware/s0-gateway/",
+        logo: "/img/products/s0.png",
+      },
+      {
+        label: "A1 Gateway",
+        desc: "Linux Industrial Gateway",
+        href: "https://www.absmach.eu/docs/hardware/s1-gateway/",
+        logo: undefined,
+      },
+    ],
+  },
+];
+
+const plainLinks = [
+  { label: "Company", href: "/company" },
+  { label: "Blog", href: "/blog" },
 ];
 ---
 
-<header class="sticky top-4 z-50 px-4 sm:px-6">
-  <div
-    class="mx-auto w-full max-w-7xl
-           isolate rounded-3xl
-           site-header-glass
-           bg-white/10
-           backdrop-blur-3xl backdrop-saturate-150
-           border border-white/30
-           shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_12px_32px_rgba(0,0,0,0.25)]"
-  >
-    <!-- <div
-      class="mx-auto w-full max-w-6xl isolate rounded-2xl
-    bg-gradient-to-b from-white/70 to-white/40 backdrop-blur-md border
-    border-black/10 shadow-[0_10px_30px_rgba(0,0,0,0.12)]
-    dark:bg-slate-950/55 dark:backdrop-brightness-50
-    dark:backdrop-saturate-100 dark:border-white/10
-    dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)] dark:[background-image:none]"
-    > -->
-    <nav
-      class="flex items-center justify-between py-3 px-4 sm:py-4 sm:px-6"
-      aria-label="Primary"
-    >
-      <a href="/" class="flex items-center gap-3 text-primary font-semibold">
-        <Image
-          src="/img/logos/abstract-machines_logo_landscape-black.png"
-          alt="Abstract Machines"
-          width={249}
-          height={30}
-          priority
-          class="header-logo block h-auto w-auto max-h-[30px] max-w-[min(250px,55vw)] object-contain"
-        />
-      </a>
-      <button
-        type="button"
-        class="nav-pill inline-flex flex-shrink-0 items-center justify-center lg:hidden"
-        aria-label="Open menu"
-        aria-controls="site-menu"
-        aria-expanded="false"
-        data-mobile-menu-open
-      >
-        <svg
-          class="h-5 w-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          aria-hidden="true"
-        >
-          <path d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-      </button>
-      <div class="hidden items-center gap-6 lg:flex">
-        <ul class="site-header-links flex items-center gap-4 text-sm xl:gap-6 xl:text-base">
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="site-nav-inner">
+    <a href="/" class="brand" aria-label="Abstract Machines home">
+      <img
+        src="/img/logos/abstract-machines_logo_landscape-black.png"
+        alt="Abstract Machines"
+        width="149"
+        height="22"
+      />
+    </a>
+
+    <ul class="nav-links" role="list">
+      <!-- Products dropdown -->
+      <li class="nav-item has-dropdown">
+        <a href="/products" class={isActive("/products") ? "active" : ""}>
+          Products
+          <svg
+            class="nav-chevron"
+            width="10"
+            height="6"
+            viewBox="0 0 10 6"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M1 1l4 4 4-4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+        <div class="nav-dropdown dropdown-products">
           {
-            navItems.map((item) => (
-              <li>
-                <a
-                  class="nav-link whitespace-nowrap"
-                  href={item.href}
-                  target={item.external ? "_blank" : undefined}
-                  rel={item.external ? "noopener noreferrer" : undefined}
-                >
-                  {item.label}
-                </a>
-              </li>
+            products.map(({ group, items }) => (
+              <div class="dropdown-group">
+                <div class="dropdown-group-label">{group}</div>
+                {items.map(({ label, desc, href, logo }) => (
+                  <a
+                    href={href}
+                    class={`dropdown-item${logo ? " has-logo" : ""}${isActive(href) ? " active" : ""}`}
+                  >
+                    {logo && (
+                      <img
+                        src={logo}
+                        alt=""
+                        class="dropdown-logo"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <div class="dropdown-text">
+                      <span class="dropdown-name">{label}</span>
+                      <span class="dropdown-desc">{desc}</span>
+                    </div>
+                  </a>
+                ))}
+              </div>
             ))
           }
-          <li>
-            <a
-              href="https://github.com/absmach"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Abstract Machines on GitHub"
-              class="github-link"
-            >
-              <svg
-                fill="currentColor"
-                fill-rule="evenodd"
-                height="1em"
-                style="flex:none;line-height:1"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
+        </div>
+      </li>
+
+      <!-- Solutions dropdown -->
+      <li class="nav-item has-dropdown">
+        <a href="/solutions" class={isActive("/solutions") ? "active" : ""}>
+          Solutions
+          <svg
+            class="nav-chevron"
+            width="10"
+            height="6"
+            viewBox="0 0 10 6"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M1 1l4 4 4-4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+        <div class="nav-dropdown dropdown-solutions">
+          {
+            solutions.map(({ label, desc, href }) => (
+              <a
+                href={href}
+                class={`dropdown-item${isActive(href) ? " active" : ""}`}
               >
-                <title>Abstract Machines on GitHub</title>
-                <path
-                  d="M12 0c6.63 0 12 5.276 12 11.79-.001 5.067-3.29 9.567-8.175 11.187-.6.118-.825-.25-.825-.56 0-.398.015-1.665.015-3.242 0-1.105-.375-1.813-.81-2.181 2.67-.295 5.475-1.297 5.475-5.822 0-1.297-.465-2.344-1.23-3.169.12-.295.54-1.503-.12-3.125 0 0-1.005-.324-3.3 1.209a11.32 11.32 0 00-3-.398c-1.02 0-2.04.133-3 .398-2.295-1.518-3.3-1.209-3.3-1.209-.66 1.622-.24 2.83-.12 3.125-.765.825-1.23 1.887-1.23 3.169 0 4.51 2.79 5.527 5.46 5.822-.345.294-.66.81-.765 1.577-.69.31-2.415.81-3.495-.973-.225-.354-.9-1.223-1.845-1.209-1.005.015-.405.56.015.781.51.28 1.095 1.327 1.23 1.666.24.663 1.02 1.93 4.035 1.385 0 .988.015 1.916.015 2.196 0 .31-.225.664-.825.56C3.303 21.374-.003 16.867 0 11.791 0 5.276 5.37 0 12 0z"
-                >
-                </path>
-              </svg>
+                <span class="dropdown-name">{label}</span>
+                <span class="dropdown-desc">{desc}</span>
+              </a>
+            ))
+          }
+        </div>
+      </li>
+
+      <!-- Services (plain) -->
+      <li>
+        <a href="/services" class={isActive("/services") ? "active" : ""}
+          >Services</a
+        >
+      </li>
+
+      <!-- Projects dropdown -->
+      <li class="nav-item has-dropdown">
+        <a href="/projects" class={isActive("/projects") ? "active" : ""}>
+          Projects
+          <svg
+            class="nav-chevron"
+            width="10"
+            height="6"
+            viewBox="0 0 10 6"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M1 1l4 4 4-4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+        <div class="nav-dropdown dropdown-projects">
+          {
+            projects.map(({ label, desc, href, logo }) => (
+              <a
+                href={href}
+                class={`dropdown-item${logo ? " has-logo" : ""}${isActive(href) ? " active" : ""}`}
+              >
+                {logo && (
+                  <img
+                    src={logo}
+                    alt=""
+                    class="dropdown-logo"
+                    aria-hidden="true"
+                  />
+                )}
+                <div class="dropdown-text">
+                  <span class="dropdown-name">{label}</span>
+                  <span class="dropdown-desc">{desc}</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </li>
+
+      <!-- Plain links -->
+      {
+        plainLinks.map(({ label, href }) => (
+          <li>
+            <a href={href} class={isActive(href) ? "active" : ""}>
+              {label}
             </a>
           </li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-</header>
+        ))
+      }
 
-<div
-  id="site-menu"
-  class="fixed inset-0 z-[70] hidden lg:hidden"
-  aria-hidden="true"
-  data-mobile-menu
->
-  <div
-    class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-200 motion-reduce:transition-none"
-    data-mobile-menu-overlay
-    data-mobile-menu-close
-  >
-  </div>
-  <aside
-    class="absolute left-0 top-0 h-full w-[min(20rem,85vw)] rounded-r-3xl overflow-hidden bg-[color:var(--drawer-bg)] backdrop-blur-2xl backdrop-saturate-150 border-r border-white/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_24px_60px_rgba(0,0,0,0.25)] -translate-x-full transition-transform duration-300 ease-out motion-reduce:transition-none"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Site menu"
-    data-mobile-menu-panel
-  >
-    <div
-      class="flex items-center justify-between border-b border-subtle px-4 py-4"
-    >
-      <span class="text-base font-semibold">Menu</span>
+      <!-- Docs dropdown -->
+      <li class="nav-item has-dropdown">
+        <a href="#">
+          Docs
+          <svg
+            class="nav-chevron"
+            width="10"
+            height="6"
+            viewBox="0 0 10 6"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M1 1l4 4 4-4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+        <div class="nav-dropdown dropdown-docs">
+          {
+            docs.map(({ group, items }) => (
+              <div class="dropdown-group">
+                <div class="dropdown-group-label">{group}</div>
+                {items.map(({ label, desc, href, logo }) => (
+                  <a
+                    href={href}
+                    class={`dropdown-item${logo ? " has-logo" : ""}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {logo && (
+                      <img
+                        src={logo}
+                        alt=""
+                        class="dropdown-logo"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <div class="dropdown-text">
+                      <span class="dropdown-name">{label}</span>
+                      <span class="dropdown-desc">{desc}</span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            ))
+          }
+        </div>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <a
+        href="https://github.com/absmach"
+        class="btn"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="padding:8px 14px; font-size:13px;"
+      >
+        GitHub ↗
+      </a>
+      <a
+        href="/contact"
+        class="btn btn-primary"
+        style="padding:8px 14px; font-size:13px;"
+      >
+        Contact us
+      </a>
       <button
-        type="button"
-        class="nav-pill inline-flex items-center justify-center"
-        aria-label="Close menu"
-        data-mobile-menu-close
+        class="nav-hamburger"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav-drawer"
+        id="nav-hamburger-btn"
       >
         <svg
-          class="h-5 w-5"
-          viewBox="0 0 24 24"
+          width="22"
+          height="22"
+          viewBox="0 0 22 22"
           fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
           aria-hidden="true"
         >
-          <path d="M6 6l12 12M18 6L6 18"></path>
+          <path
+            d="M3 6h16M3 11h16M3 16h16"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"></path>
         </svg>
       </button>
     </div>
-    <nav class="px-4 py-4">
-      <ul class="space-y-1">
+  </div>
+</nav>
+
+<!-- Mobile drawer -->
+<div
+  class="nav-drawer"
+  id="mobile-nav-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Site navigation"
+>
+  <div class="nav-drawer-backdrop" id="nav-drawer-backdrop"></div>
+  <div class="nav-drawer-panel">
+    <button
+      class="nav-drawer-close"
+      aria-label="Close menu"
+      id="nav-drawer-close">✕</button
+    >
+
+    <!-- Products -->
+    <details class="nav-drawer-section">
+      <summary class="nav-drawer-link nav-drawer-summary">Products</summary>
+      <div class="nav-drawer-sub">
+        <a href="/products" class="nav-drawer-sublink nav-drawer-sublink-all"
+          >All Products →</a
+        >
         {
-          navItems.map((item) => (
-            <li>
-              <a
-                class="block rounded-xl px-4 py-3 text-primary hover:bg-[color:var(--surface-2)] focus-visible:bg-[color:var(--surface-2)]"
-                href={item.href}
-                target={item.external ? "_blank" : undefined}
-                rel={item.external ? "noopener noreferrer" : undefined}
-                data-mobile-menu-link
-              >
-                {item.label}
-              </a>
-            </li>
+          products.map(({ group, items }) => (
+            <>
+              <div class="nav-drawer-sub-group">{group}</div>
+              {items.map(({ label, desc, href }) => (
+                <a href={href} class="nav-drawer-sublink">
+                  {label} <span class="nav-drawer-subdesc">{desc}</span>
+                </a>
+              ))}
+            </>
           ))
         }
-        <li class="mt-2 border-t border-subtle pt-2">
-          <a
-            class="block rounded-xl px-4 py-3 text-primary hover:bg-[color:var(--surface-2)] focus-visible:bg-[color:var(--surface-2)]"
-            href="https://github.com/absmach"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-mobile-menu-link
-          >
-            GitHub
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </aside>
+      </div>
+    </details>
+
+    <!-- Solutions -->
+    <details class="nav-drawer-section">
+      <summary class="nav-drawer-link nav-drawer-summary">Solutions</summary>
+      <div class="nav-drawer-sub">
+        <a href="/solutions" class="nav-drawer-sublink nav-drawer-sublink-all"
+          >All Solutions →</a
+        >
+        {
+          solutions.map(({ label, href }) => (
+            <a href={href} class="nav-drawer-sublink">
+              {label}
+            </a>
+          ))
+        }
+      </div>
+    </details>
+
+    <a href="/services" class="nav-drawer-link">Services</a>
+
+    <!-- Projects -->
+    <details class="nav-drawer-section">
+      <summary class="nav-drawer-link nav-drawer-summary">Projects</summary>
+      <div class="nav-drawer-sub">
+        <a href="/projects" class="nav-drawer-sublink nav-drawer-sublink-all"
+          >All Projects →</a
+        >
+        {
+          projects.map(({ label, href }) => (
+            <a href={href} class="nav-drawer-sublink">
+              {label}
+            </a>
+          ))
+        }
+      </div>
+    </details>
+
+    {
+      plainLinks.map(({ label, href }) => (
+        <a href={href} class="nav-drawer-link">
+          {label}
+        </a>
+      ))
+    }
+
+    <!-- Docs -->
+    <details class="nav-drawer-section">
+      <summary class="nav-drawer-link nav-drawer-summary">Docs</summary>
+      <div class="nav-drawer-sub">
+        {
+          docs.map(({ group, items }) => (
+            <>
+              <div class="nav-drawer-sub-group">{group}</div>
+              {items.map(({ label, desc, href }) => (
+                <a
+                  href={href}
+                  class="nav-drawer-sublink"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {label} <span class="nav-drawer-subdesc">{desc}</span>
+                </a>
+              ))}
+            </>
+          ))
+        }
+      </div>
+    </details>
+
+    <div class="nav-drawer-actions">
+      <a
+        href="https://github.com/absmach"
+        class="btn"
+        target="_blank"
+        rel="noopener noreferrer">GitHub ↗</a
+      >
+      <a href="/contact" class="btn btn-primary">Contact us</a>
+    </div>
+  </div>
 </div>
 
 <style>
-  .site-header-glass {
+  /* ── Dropdown trigger ───────────────────────────────────── */
+  .nav-item {
     position: relative;
-    overflow: hidden;
-    border-color: color-mix(in srgb, var(--border) 62%, rgba(255, 255, 255, 0.45));
-    background:
-      linear-gradient(
-        140deg,
-        color-mix(in srgb, var(--panel) 74%, rgba(255, 255, 255, 0.22)),
-        color-mix(in srgb, var(--surface) 58%, transparent)
-      );
-    backdrop-filter: blur(18px) saturate(165%) brightness(0.96);
-    -webkit-backdrop-filter: blur(18px) saturate(165%) brightness(0.96);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.45),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.18),
-      0 12px 30px rgba(0, 0, 0, 0.24);
+  }
+  .nav-item > a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .nav-chevron {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .nav-item:hover .nav-chevron,
+  .nav-item:focus-within .nav-chevron {
+    transform: rotate(180deg);
   }
 
-  .site-header-glass::before {
+  /* ── Dropdown panel ─────────────────────────────────────── */
+  .nav-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    translate: -50% -6px;
+    background: var(--paper);
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    box-shadow:
+      0 12px 40px -8px rgba(0, 0, 0, 0.12),
+      0 2px 8px -2px rgba(0, 0, 0, 0.06);
+    padding: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.15s ease,
+      translate 0.15s ease;
+    z-index: 200;
+  }
+  /* Invisible bridge fills the gap between the link and the panel */
+  .nav-dropdown::before {
     content: "";
     position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    background:
-      linear-gradient(
-        110deg,
-        rgba(255, 255, 255, 0.18),
-        rgba(255, 255, 255, 0) 45%
-      ),
-      radial-gradient(
-        65% 120% at 0% 50%,
-        color-mix(in srgb, var(--accent) 10%, transparent),
-        transparent 70%
-      );
-    opacity: 0.9;
-    z-index: 0;
+    top: -10px;
+    left: 0;
+    right: 0;
+    height: 10px;
+  }
+  .nav-item:hover .nav-dropdown,
+  .nav-item:focus-within .nav-dropdown {
+    opacity: 1;
+    pointer-events: auto;
+    translate: -50% 0;
   }
 
-  .site-header-glass nav {
-    position: relative;
-    z-index: 1;
+  /* Products / Docs: two groups side by side */
+  .dropdown-products,
+  .dropdown-docs {
+    display: flex;
+    gap: 12px;
+    min-width: 560px;
+  }
+  .dropdown-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .dropdown-group-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-4);
+    padding: 4px 2px;
   }
 
-  :root[data-theme="dark"] .site-header-glass {
-    border-color: color-mix(in srgb, var(--border) 58%, rgba(255, 255, 255, 0.32));
-    background:
-      linear-gradient(
-        140deg,
-        color-mix(in srgb, var(--panel) 84%, rgba(255, 255, 255, 0.08)),
-        color-mix(in srgb, var(--surface) 70%, rgba(255, 255, 255, 0.03))
-      );
-    backdrop-filter: blur(18px) saturate(172%) brightness(0.7);
-    -webkit-backdrop-filter: blur(18px) saturate(172%) brightness(0.7);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.22),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.08),
-      0 16px 34px rgba(0, 0, 0, 0.38);
+  /* Solutions: 2-col grid */
+  .dropdown-solutions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    min-width: 520px;
   }
 
-  :root[data-theme="dark"] .site-header-glass::before {
-    background:
-      linear-gradient(
-        110deg,
-        rgba(255, 255, 255, 0.11),
-        rgba(255, 255, 255, 0) 45%
-      ),
-      radial-gradient(
-        70% 120% at 0% 50%,
-        color-mix(in srgb, var(--accent) 18%, transparent),
-        transparent 72%
-      );
+  /* Projects: single column */
+  .dropdown-projects {
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
-  :root[data-theme="dark"] .site-header-links .nav-link {
-    color: color-mix(in srgb, var(--text) 72%, var(--muted));
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  /* Dropdown items */
+  .dropdown-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line-3);
+    background: var(--paper);
+    text-decoration: none;
+    transition:
+      border-color 0.15s ease,
+      background 0.15s ease;
+  }
+  .dropdown-item.has-logo {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+  .dropdown-item:hover {
+    background: var(--paper-2);
+    border-color: var(--line-2);
+  }
+  .dropdown-item.active {
+    border-color: var(--line-2);
+    background: var(--paper-2);
+  }
+  .dropdown-item.active .dropdown-name {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .dropdown-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .dropdown-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .dropdown-desc {
+    font-size: 11px;
+    color: var(--ink-3);
+    font-family: "JetBrains Mono", monospace;
+  }
+  .dropdown-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
   }
 
-  :root[data-theme="dark"] .site-header-links .nav-link:hover,
-  :root[data-theme="dark"] .site-header-links .nav-link:focus {
-    color: color-mix(in srgb, var(--text) 92%, white);
+  /* ── Mobile drawer additions ────────────────────────────── */
+  .nav-drawer-section {
+    border: none;
+    background: none;
   }
-
-  :root[data-theme="dark"] .site-header-links .github-link {
-    color: color-mix(in srgb, var(--text) 80%, var(--muted));
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+  .nav-drawer-summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-drawer-summary::-webkit-details-marker {
+    display: none;
+  }
+  .nav-drawer-summary::after {
+    content: "+";
+    font-family: "JetBrains Mono", monospace;
+    font-size: 16px;
+    color: var(--ink-3);
+    flex-shrink: 0;
+  }
+  .nav-drawer-section[open] .nav-drawer-summary::after {
+    content: "−";
+  }
+  .nav-drawer-sub {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0 8px 16px;
+    border-left: 2px solid var(--line-3);
+    margin-left: 4px;
+    gap: 2px;
+  }
+  .nav-drawer-sublink {
+    font-size: 14px;
+    color: var(--ink-2);
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+    display: block;
+  }
+  .nav-drawer-sublink:hover {
+    color: var(--ink);
+    background: var(--paper-2);
+  }
+  .nav-drawer-sublink-all {
+    font-size: 12px;
+    font-family: "JetBrains Mono", monospace;
+    color: var(--ink-3);
+    margin-bottom: 4px;
+  }
+  .nav-drawer-sub-group {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-4);
+    padding: 8px 8px 2px;
+  }
+  .nav-drawer-subdesc {
+    color: var(--ink-3);
+    font-size: 12px;
   }
 </style>
 
 <script is:inline>
   (() => {
-    const menu = document.querySelector("[data-mobile-menu]");
-    const openButton = document.querySelector("[data-mobile-menu-open]");
-    if (!menu || !openButton) return;
+    const btn = document.getElementById("nav-hamburger-btn");
+    const drawer = document.getElementById("mobile-nav-drawer");
+    const backdrop = document.getElementById("nav-drawer-backdrop");
+    const closeBtn = document.getElementById("nav-drawer-close");
+    if (!btn || !drawer) return;
 
-    const overlay = menu.querySelector("[data-mobile-menu-overlay]");
-    const panel = menu.querySelector("[data-mobile-menu-panel]");
-    const closeButtons = menu.querySelectorAll("[data-mobile-menu-close]");
-    const links = menu.querySelectorAll("[data-mobile-menu-link]");
-
-    let isOpen = false;
-    let lastFocused = null;
-    let previousOverflow = "";
-
-    const setOpen = (nextOpen) => {
-      if (nextOpen === isOpen) return;
-      isOpen = nextOpen;
-
-      if (isOpen) {
-        lastFocused = document.activeElement;
-        previousOverflow = document.documentElement.style.overflow;
-        document.documentElement.style.overflow = "hidden";
-
-        menu.classList.remove("hidden");
-        menu.setAttribute("aria-hidden", "false");
-        openButton.setAttribute("aria-expanded", "true");
-
-        requestAnimationFrame(() => {
-          overlay?.classList.remove("opacity-0");
-          overlay?.classList.add("opacity-100");
-          panel?.classList.remove("-translate-x-full");
-          panel?.classList.add("translate-x-0");
-        });
-
-        const focusTarget = panel?.querySelector(
-          "button, a, [tabindex]:not([tabindex='-1'])",
-        );
-        focusTarget?.focus?.();
-        return;
-      }
-
-      openButton.setAttribute("aria-expanded", "false");
-      menu.setAttribute("aria-hidden", "true");
-      document.documentElement.style.overflow = previousOverflow;
-
-      overlay?.classList.remove("opacity-100");
-      overlay?.classList.add("opacity-0");
-      panel?.classList.remove("translate-x-0");
-      panel?.classList.add("-translate-x-full");
-
-      const finish = () => {
-        menu.classList.add("hidden");
-        if (lastFocused && typeof lastFocused.focus === "function") {
-          lastFocused.focus();
-        } else {
-          openButton.focus();
-        }
-      };
-
-      if (!panel) return finish();
-
-      const fallback = window.setTimeout(finish, 350);
-      panel.addEventListener(
-        "transitionend",
-        () => {
-          window.clearTimeout(fallback);
-          finish();
-        },
-        { once: true },
-      );
+    const open = () => {
+      drawer.classList.add("open");
+      btn.setAttribute("aria-expanded", "true");
+      document.documentElement.style.overflow = "hidden";
+    };
+    const close = () => {
+      drawer.classList.remove("open");
+      btn.setAttribute("aria-expanded", "false");
+      document.documentElement.style.overflow = "";
     };
 
-    openButton.addEventListener("click", () => setOpen(true));
-    closeButtons.forEach((button) =>
-      button.addEventListener("click", () => setOpen(false)),
-    );
-    links.forEach((link) =>
-      link.addEventListener("click", () => setOpen(false)),
-    );
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") setOpen(false);
+    btn.addEventListener("click", open);
+    closeBtn?.addEventListener("click", close);
+    backdrop?.addEventListener("click", close);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
     });
 
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const handleChange = (event) => {
-      if (event.matches) setOpen(false);
-    };
-    if (mq.addEventListener) mq.addEventListener("change", handleChange);
-    else if (mq.addListener) mq.addListener(handleChange);
+    // Close on non-summary link click
+    drawer
+      .querySelectorAll("a")
+      .forEach((a) => a.addEventListener("click", close));
+
+    const mq = window.matchMedia("(min-width: 981px)");
+    mq.addEventListener("change", (e) => {
+      if (e.matches) close();
+    });
   })();
 </script>

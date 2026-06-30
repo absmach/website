@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Theme: Ember
+   Warm ivory background · dark warm-brown ink · terracotta + teal accents
+   Feels: inviting, artisan, editorial warmth — Notion / Substack meets craft
+   ========================================================================== */
+
+/* FONT PAIRING (update --font-* AND the Google Fonts URL in BaseLayout.astro)
+   Current:      Montserrat + JetBrains Mono
+   Alternative:  "Plus Jakarta Sans" — slightly warmer, editorial
+     URL: https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap
+*/
+
+:root {
+  /* === Typography === */
+  --font-sans: "Montserrat";
+  --font-mono: "JetBrains Mono";
+
+  /* === Surfaces === */
+  --paper: #fdfaf6;
+  --paper-2: #f5ede0;
+  --paper-3: #ece0ce;
+
+  /* === Text === */
+  --ink: #1c110a;
+  --ink-2: #3d2315;
+  --ink-3: #7a5040;
+  --ink-4: #b89080;
+
+  /* === Borders === */
+  --line: #1c110a;
+  --line-2: #d5c4b0;
+  --line-3: #e8dcd0;
+
+  /* === Accent === */
+  --accent: #c2410c;
+  --accent-2: #0369a1;
+  --accent-soft: #fde8de;
+
+  /* === Status === */
+  --green: #166534;
+  --warn: #92400e;
+
+  /* === Elevation === */
+  --shadow-sm: 0 1px 2px rgba(28, 17, 10, 0.07);
+  --shadow: 0 4px 14px rgba(28, 17, 10, 0.09), 0 1px 2px rgba(28, 17, 10, 0.05);
+  --shadow-lg:
+    0 18px 60px -20px rgba(28, 17, 10, 0.22), 0 4px 14px rgba(28, 17, 10, 0.1);
+
+  /* === Glass overlays (used in video hero sections) === */
+  /* Derived from --paper-2 (#f5ede0) */
+  --glass-start: rgba(245, 237, 224, 0.9);
+  --glass-mid: rgba(245, 237, 224, 0.74);
+  --glass-end: rgba(245, 237, 224, 0.4);
+  --glass-top: rgba(245, 237, 224, 0.3);
+  --glass-bottom: rgba(245, 237, 224, 0.82);
+  --glass-visual: rgba(245, 237, 224, 0.62);
+
+  /* === Accent surface (dark cards, code blocks, contact form) === */
+  --surface-accent: var(--ink); /* #1c110a — dark warm brown */
+  --on-accent: #fdfaf6; /* warm ivory — text on dark surface */
+  --on-accent-dim: rgba(253, 250, 246, 0.85);
+  --on-accent-muted: rgba(253, 250, 246, 0.6);
+  --on-accent-subtle: rgba(253, 250, 246, 0.5);
+  --dark-border: rgba(253, 250, 246, 0.15);
+  --dark-input-bg: rgba(255, 255, 255, 0.05);
+  --dark-input-border: rgba(255, 255, 255, 0.15);
+
+  /* === System chrome === */
+  --scrollbar-thumb: rgba(28, 17, 10, 0.25);
+  --backdrop: rgba(28, 17, 10, 0.45);
+
+  /* === Shape === */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 14px;
+
+  /* === Layout === */
+  --container: 1200px;
+  --container-wide: 1320px;
+}

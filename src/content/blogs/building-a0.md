@@ -1,6 +1,6 @@
 ---
 title: "Building the A0: The IoT Gateway of the future"
-slug: "building_the_A0"
+slug: "building_the_a0"
 excerpt: "Road to A0: The IoT gateway for the future."
 description: "The journey to building the A0 IoT gateway, the challenges faced and the solutions implemented. "
 date: "2026-02-23"
@@ -12,27 +12,25 @@ ogImage:
   url: "/img/blogs/building-the-a0/a0.png"
 category: blog
 tags:
-
-- A0
-- Baseboard
-- IoT
-- Gateway
-- PCB design
-- Hardware
-
+  - A0
+  - Baseboard
+  - IoT
+  - Gateway
+  - PCB design
+  - Hardware
 ---
 
 ## Design Journey
 
 The journey of a thousand miles begins with the first step. When we set out to design the A0 gateway board, we had a clear vision: create a comprehensive solution for aggregating smart meter data from both wireless and wired M-Bus meters. What followed was an educational journey through PCB design challenges, debugging sessions, and valuable lessons that shaped not just our board, but our approach to hardware design.
 
-![A0 board](/img/blogs/building-the-a0/a0.png)
+![A0 board](/img/blogs/building-the-s0/s0.png)
 
 ![Baseboard](/img/blogs/building-the-a0/baseboard.png)
 
 ## The Vision
 
-The [A0](https://hardware.absmach.eu/a0) is a dual-board system designed to act as a smart meter gateway with impressive connectivity options:
+The [A0](https://www.absmach.eu/products/a0/) is a dual-board system designed to act as a smart meter gateway with impressive connectivity options:
 
 The A0 Main Board features:
 
@@ -126,7 +124,7 @@ Looking back at this journey, here’s what we’d change:
 - More upfront mechanical planning — Create a 3D model early with all components placed before starting routing
 - [Impedance calculator](https://jlcpcb.com/pcb-impedance-calculator) from day one — Don’t wait until routing to think about controlled impedance
 - Bus sharing validation — Test SPI bus sharing scenarios on a breadboard first
-- Pin assignment review — Have a dedicated review session for all microcontroller pin assignments checking for   conflicts
+- Pin assignment review — Have a dedicated review session for all microcontroller pin assignments checking for conflicts
 - Reference design study — Spend more time with reference designs, especially for SD card interfaces and [Ethernet W5500](https://docs.wiznet.io/Product/Chip/Ethernet/W5500/ref-schematic)
 - Circuit simulation mandatory — Make LTSpice simulation a requirement before any new circuit enters the schematic
 - Simplicity first — Start with the simplest working solution, then optimize only if needed

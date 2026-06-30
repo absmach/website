@@ -130,7 +130,7 @@ Dashboard templates are an enterprise feature because the problems they solve ar
 
 The concrete benefits are worth stating plainly. You stop creating dashboards per user. You manage one layout instead of many. Every user gets a consistent experience. New users are onboarded without a dashboard provisioning step. And when something needs to change, you change it once.
 
-If you want to dig into the specifics, the [Magistrala documentation](https://magistrala.absmach.eu/docs/user-guide/dashboards/templates) covers dashboard templates in detail, including how to set up tag-based data sources and configure sharing.
+If you want to dig into the specifics, the [Magistrala documentation](https://www.absmach.eu/docs/magistrala/user-guide/dashboards/templates) covers dashboard templates in detail, including how to set up tag-based data sources and configure sharing.
 
 Dashboard templates are part of Magistrala's enterprise offering. If you're evaluating Magistrala for a multi-user or multi-tenant deployment and want to talk through your use case, [reach out to us](https://magistrala.absmach.eu/contact) and we'll help you figure out whether this fits what you're building.
 

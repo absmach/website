@@ -31,6 +31,7 @@ This post shows how **Magistrala Agent** solves that problem by letting you **re
 ## What We're Building
 
 A local **mock Linux device** (Docker Compose) that simulates an edge gateway running:
+
 - **Magistrala Agent**: connects to Magistrala cloud MQTT, manages Node-RED
 - **Node-RED**: runs data pipelines, publishes SenML telemetry
 - **NATS**: internal message bus between agent services
@@ -39,7 +40,6 @@ Connected to the **Magistrala cloud** which receives telemetry, stores it via th
 
 ---
 
-
 ## Why Agent + Node-RED?
 
 Node-RED is excellent for visual flow-based IoT pipelines. But once deployed, updating flows typically requires direct access to the device (Node-RED UI on port 1880, which you don't expose publicly).
@@ -47,6 +47,7 @@ Node-RED is excellent for visual flow-based IoT pipelines. But once deployed, up
 Magistrala Agent bridges this gap. It acts as a **secure proxy for Node-RED management**, receiving commands from the Magistrala cloud over the same encrypted MQTT channel already used for telemetry, then forwarding them to Node-RED's local REST API.
 
 This means you can:
+
 - Deploy new flows to any device from anywhere
 - Fetch and inspect the currently running flows
 - Check Node-RED's health and runtime state
@@ -69,6 +70,7 @@ make run_provision
 ```
 
 The provisioning script creates:
+
 1. A Magistrala Client (device identity + credentials)
 2. A Channel
 3. A Client-Channel connection
@@ -108,8 +110,16 @@ curl http://localhost:9999/health
 ```
 
 Expected response:
+
 ```json
-{"status":"pass","version":"0.0.0","commit":"ffffffff","description":"agent service","build_time":"1970-01-01_00:00:00","instance_id":""}
+{
+  "status": "pass",
+  "version": "0.0.0",
+  "commit": "ffffffff",
+  "description": "agent service",
+  "build_time": "1970-01-01_00:00:00",
+  "instance_id": ""
+}
 ```
 
 ```bash
@@ -120,8 +130,9 @@ curl -s -X POST http://localhost:9999/nodered \
 ```
 
 Expected response:
+
 ```json
-{"service":"agent","response":"..."}
+{ "service": "agent", "response": "..." }
 ```
 
 ---
@@ -147,6 +158,7 @@ curl -s -X POST http://localhost:9999/nodered \
 ```
 
 Expected response:
+
 ```json
 {
   "service": "agent",
@@ -165,6 +177,7 @@ curl -s -X POST http://localhost:9999/nodered \
 ```
 
 Expected response (abbreviated):
+
 ```json
 {
   "service": "agent",
@@ -183,6 +196,7 @@ curl -s -X POST http://localhost:9999/nodered \
 ```
 
 Expected response:
+
 ```json
 {
   "service": "agent",
@@ -202,11 +216,11 @@ This is the core use case: sending commands from the Magistrala cloud to the dev
 
 The agent uses a single Magistrala channel with three subtopics to separate concerns:
 
-| Subtopic | Direction | Used by | Purpose |
-|----------|-----------|---------|----------|
-| `m/<domain-id>/c/<channel-id>/req` | Cloud → Device | Agent | Receives commands (deploy flows, fetch flows, exec, etc.) |
-| `m/<domain-id>/c/<channel-id>/data` | Device → Cloud | Node-RED | Publishes SenML telemetry upstream |
-| `m/<domain-id>/c/<channel-id>/res` | Device → Cloud | Agent | Publishes command responses back to the cloud |
+| Subtopic                            | Direction      | Used by  | Purpose                                                   |
+| ----------------------------------- | -------------- | -------- | --------------------------------------------------------- |
+| `m/<domain-id>/c/<channel-id>/req`  | Cloud → Device | Agent    | Receives commands (deploy flows, fetch flows, exec, etc.) |
+| `m/<domain-id>/c/<channel-id>/data` | Device → Cloud | Node-RED | Publishes SenML telemetry upstream                        |
+| `m/<domain-id>/c/<channel-id>/res`  | Device → Cloud | Agent    | Publishes command responses back to the cloud             |
 
 The agent and Node-RED share the same channel but use different MQTT client IDs: `<client-id>` for the agent and `<client-id>-nr` for Node-RED. The `-nr` suffix is automatically patched into flows by the agent at deploy time, preventing session conflicts on the broker.
 
@@ -215,7 +229,7 @@ The agent and Node-RED share the same channel but use different MQTT client IDs:
 All agent commands use [SenML](https://tools.ietf.org/html/rfc8428) JSON arrays:
 
 ```json
-[{"bn": "<request-id>:", "n": "<subsystem>", "vs": "<command>[,<payload>]"}]
+[{ "bn": "<request-id>:", "n": "<subsystem>", "vs": "<command>[,<payload>]" }]
 ```
 
 For Node-RED, `n` is `nodered` and `vs` is `nodered-deploy,<base64-flow>`.
@@ -248,8 +262,9 @@ mosquitto_sub \
 ```
 
 Expected response on the `res` topic:
+
 ```json
-[{"bn":"req-1:","n":"nodered-deploy","t":1743580812.123,"vs":""}]
+[{ "bn": "req-1:", "n": "nodered-deploy", "t": 1743580812.123, "vs": "" }]
 ```
 
 Open Node-RED on port 1880 and you will see the new **Modbus Holding Registers** tab is now active:
@@ -277,8 +292,16 @@ mosquitto_pub \
 ```
 
 Expected response on the `res` topic:
+
 ```json
-[{"bn":"req-2:","n":"nodered-flows","t":1743580820.456,"vs":"[{\"id\":\"flow-speed\",\"type\":\"tab\",...}]"}]
+[
+  {
+    "bn": "req-2:",
+    "n": "nodered-flows",
+    "t": 1743580820.456,
+    "vs": "[{\"id\":\"flow-speed\",\"type\":\"tab\",...}]"
+  }
+]
 ```
 
 The `vs` field contains the full flows JSON as a string.
@@ -306,10 +329,15 @@ Simulates a speed/RPM/gear sensor publishing SenML every 15 seconds to `m/<domai
 
 ```json
 [
-  {"bn": "speed-sensor:", "bt": 1743580800000000000,
-   "n": "speed", "u": "km/h", "v": 87},
-  {"n": "rpm",   "u": "rpm",  "v": 2340},
-  {"n": "gear",              "v": 4}
+  {
+    "bn": "speed-sensor:",
+    "bt": 1743580800000000000,
+    "n": "speed",
+    "u": "km/h",
+    "v": 87
+  },
+  { "n": "rpm", "u": "rpm", "v": 2340 },
+  { "n": "gear", "v": 4 }
 ]
 ```
 
@@ -317,21 +345,27 @@ Simulates a speed/RPM/gear sensor publishing SenML every 15 seconds to `m/<domai
 
 Simulates polling 4 Modbus FC03 holding registers every 10 seconds:
 
-| Register | Measurement | Unit |
-|----------|-------------|------|
-| HR0 | Voltage | V |
-| HR1 | Current (scaled ×10) | A |
-| HR2 | Power | W |
-| HR3 | Temperature | °C |
+| Register | Measurement          | Unit |
+| -------- | -------------------- | ---- |
+| HR0      | Voltage              | V    |
+| HR1      | Current (scaled ×10) | A    |
+| HR2      | Power                | W    |
+| HR3      | Temperature          | °C   |
 
 Published SenML:
+
 ```json
 [
-  {"bn": "modbus-device:", "bt": 1743580800000000000,
-   "n": "hr0", "u": "V",   "v": 231},
-  {"n": "hr1", "u": "A",   "v": 14.2},
-  {"n": "hr2", "u": "W",   "v": 3280},
-  {"n": "hr3", "u": "Cel", "v": 47}
+  {
+    "bn": "modbus-device:",
+    "bt": 1743580800000000000,
+    "n": "hr0",
+    "u": "V",
+    "v": 231
+  },
+  { "n": "hr1", "u": "A", "v": 14.2 },
+  { "n": "hr2", "u": "W", "v": 3280 },
+  { "n": "hr3", "u": "Cel", "v": 47 }
 ]
 ```
 
@@ -341,12 +375,12 @@ The Magistrala Rule Engine's `save_senml` rule stores every message automaticall
 
 ## Command Reference
 
-| Command | HTTP payload | MQTT `vs` |
-|---------|-------------|-----------|
-| Deploy flows | `{"command":"nodered-deploy","flows":"<base64>"}` | `nodered-deploy,<base64>` |
-| Fetch flows | `{"command":"nodered-flows"}` | `nodered-flows` |
-| Ping | `{"command":"nodered-ping"}` | `nodered-ping` |
-| Runtime state | `{"command":"nodered-state"}` | `nodered-state` |
+| Command         | HTTP payload                                        | MQTT `vs`                   |
+| --------------- | --------------------------------------------------- | --------------------------- |
+| Deploy flows    | `{"command":"nodered-deploy","flows":"<base64>"}`   | `nodered-deploy,<base64>`   |
+| Fetch flows     | `{"command":"nodered-flows"}`                       | `nodered-flows`             |
+| Ping            | `{"command":"nodered-ping"}`                        | `nodered-ping`              |
+| Runtime state   | `{"command":"nodered-state"}`                       | `nodered-state`             |
 | Add single flow | `{"command":"nodered-add-flow","flows":"<base64>"}` | `nodered-add-flow,<base64>` |
 
 ---

@@ -39,7 +39,7 @@ FluxMQ is not an experiment, a toy, or a “because we can” project. It is the
 
 ## Context: Messaging as a Core, Not a Dependency
 
-As mentioned in the [announcement post](https://absmach.eu/blog/fluxmq-announcement/), FluxMQ grew out of our work on [SuperMQ](https://github.com/absmach/supermq), a core for event-driven distributed systems that itself evolved from the IoT platform [Magistrala](https://magistrala.abmach.eu).
+As mentioned in the [announcement post](https://www.absmach.eu/blog/fluxmq-announcement/), FluxMQ grew out of our work on [SuperMQ](https://github.com/absmach/supermq), a core for event-driven distributed systems that itself evolved from the IoT platform [Magistrala](https://magistrala.abmach.eu).
 
 In most systems, messaging is treated as _plumbing_ — something you wire up and forget about.
 In our case, messaging is **the product**.
@@ -52,6 +52,7 @@ For us, routing, protocol translation, access control, persistence, replay, fan-
 One of the most important realizations we made is that **the broker defines the shape of the system built on top of it**.
 
 Using an external broker means:
+
 - accepting its internal abstractions
 - adapting to its operational model
 - working around its limitations
@@ -110,6 +111,7 @@ By treating **MQTT and AMQP as peer**, standards-based protocols — each used w
 To avoid protocol collisions and to preserve long-term extensibility, FluxMQ does not rely on a single shared messaging engine with multiple protocol adapters layered on top.
 Instead, each supported protocol is implemented _independently_, with its own native semantics and expectations. These protocol implementations are connected through an **integration layer**, which we refer to internally as a `queue`. This layer is responsible for interoperability, message flow, and persistence, without forcing one protocol’s semantics onto another.
 This approach provides two key benefits:
+
 - **Isolation**: Protocols do not leak assumptions or behaviors into each other, reducing accidental coupling and semantic mismatches.
 - **Extensibility**: New, more advanced protocols can be added in the future with a reasonable degree of isolation, while still participating in the same messaging workflows.
 
@@ -224,10 +226,11 @@ We’ll outline:
 - and the design constraints that shaped these choices
 
 If you care about messaging systems, protocol design, or distributed architecture — now is the perfect time to get involved:
-- 🌐 **Website:** https://fluxmq.absmach.eu
+
+- 🌐 **Website:** https://www.absmach.eu/products/fluxmq
 - ⚙️ **GitHub:** https://github.com/absmach/fluxmq
-- 📘 **Documentation:** https://fluxmq.absmach.eu/docs
+- 📘 **Documentation:** https://www.absmach.eu/docs/fluxmq
 - 💬 **Discord:** https://discord.gg/HvB5QuzF
- 
+
 We’re building this in the open.  
 And we’re just getting started.

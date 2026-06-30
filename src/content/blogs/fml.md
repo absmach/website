@@ -26,19 +26,19 @@ You have machine learning models running on factory sensors, roadside traffic ca
 
 But you still need one shared base model that continuously improves across all those devices.
 
-This is exactly the problem that federated machine learning, or FML, was designed to solve. Here you will see [Propeller](https://propeller.absmach.eu/) run full federated learning end to end with [Docker Compose](https://docs.docker.com/compose/).
+This is exactly the problem that federated machine learning, or FML, was designed to solve. Here you will see [Propeller](https://www.absmach.eu/products/propeller/) run full federated learning end to end with [Docker Compose](https://docs.docker.com/compose/).
 
 ## What you need to know
 
-[Propeller](https://propeller.absmach.eu/) is a [WebAssembly](https://webassembly.org/) (WASM) orchestrator designed to run your workloads reliably at the edge. You write WASM modules, push them to an [OCI registry](https://opencontainers.org/), and Propeller runs them everywhere. It handles scheduling, message routing, and task lifecycle management so you do not have to.
+[Propeller](https://www.absmach.eu/products/propeller/) is a [WebAssembly](https://webassembly.org/) (WASM) orchestrator designed to run your workloads reliably at the edge. You write WASM modules, push them to an [OCI registry](https://opencontainers.org/), and Propeller runs them everywhere. It handles scheduling, message routing, and task lifecycle management so you do not have to.
 
 Federated machine learning is built on one simple idea: keep learning close to the data. Think of autocomplete and predictive text on your phone as a perfect illustrative example here. Your device learns from your typing patterns, and that personal data never leaves your phone. Instead, it occasionally sends a small update describing what it learned, never the actual text. Those updates from millions of phones are combined together to improve one shared global model. The model improves for everyone without collecting private data or moving large datasets across networks.
 
 The key point is that federated learning in Propeller is not a separate execution mode. There is no special "FML runner" hiding somewhere deep inside the Propeller system at all. It is simply the same WASM task runner you would use for any other workload.
 
-The only thing that changes between a regular task and a federated one is context. When those variables are set, the [Proplet](https://propeller.absmach.eu/) immediately knows it is in a federated round. It fetches the model from the model registry and the training dataset from the local data store, passes both to your WASM module as environment variables, and sends the resulting update to the coordinator once training completes. For the operator, it looks like any ordinary WASM task running on the edge device.
+The only thing that changes between a regular task and a federated one is context. When those variables are set, the [Proplet](https://www.absmach.eu/products/propeller/) immediately knows it is in a federated round. It fetches the model from the model registry and the training dataset from the local data store, passes both to your WASM module as environment variables, and sends the resulting update to the coordinator once training completes. For the operator, it looks like any ordinary WASM task running on the edge device.
 
-For more detailed information about all component behavior and configuration, refer to the [Propeller docs](https://propeller.absmach.eu/).
+For more detailed information about all component behavior and configuration, refer to the [Propeller docs](https://www.absmach.eu/products/propeller/).
 
 ![Simple view of who does what in federated learning: operator, devices, coordinator, and model store](/img/blogs/federated-ml/simple-who-does-what.svg)
 
@@ -416,7 +416,7 @@ TASK_ID="<task-id-from-response>"
 curl -sS -X POST http://localhost:7070/tasks/$TASK_ID/start | jq .
 ```
 
-For complete task lifecycle documentation and full API details, refer to the [Propeller API docs](https://propeller.absmach.eu/docs/manager).
+For complete task lifecycle documentation and full API details, refer to the [Propeller API docs](https://www.absmach.eu/docs/propeller/manager).
 
 ## Limitations and good practices
 

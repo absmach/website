@@ -1,6 +1,14 @@
 ---
-const { eyebrow, title, subtitle, center = false, id, className = "" } = Astro.props;
+const {
+  eyebrow,
+  title,
+  subtitle,
+  center = false,
+  id,
+  className = "",
+} = Astro.props;
 ---
+
 <section id={id} class={`py-16 ${className}`}>
   <div class="container-wide">
     <div class={center ? "text-center" : ""}>
