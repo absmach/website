@@ -12,15 +12,13 @@ ogImage:
   url: "/img/blogs/beagle-to-magistrala-connection/beaglev-fire.png"
 category: blog
 tags:
-
-- Abstract Machines
-- Magistrala
-- BeagleV Fire
-- S1
-- IoT
-- MQTT
-- CoAP
-
+  - Abstract Machines
+  - Magistrala
+  - BeagleV Fire
+  - S1
+  - IoT
+  - MQTT
+  - CoAP
 ---
 
 Today, the [BeagleV-Fire](https://www.beagleboard.org/boards/beaglev-fire) is one of the most exciting RISC-V development boards built for experiments in AI acceleration, FPGAs, Linux, and real hardware exploration. But one of its biggest strengths is how easily it can integrate with modern IoT platforms.
@@ -67,7 +65,7 @@ magistrala-cli users create <first_name> <last_name> <email> <username> <passwor
 example:
 
 ```bash
- magistrala-cli users create john doe johndoe@example.com johndoe 12345678 
+ magistrala-cli users create john doe johndoe@example.com johndoe 12345678
 ```
 
 Expected Response:
@@ -112,7 +110,7 @@ export DOMAIN_ID="56a4462e-5001-4bcf-b421-dbbe3d59c53c"
 ### Create a Client
 
 ```bash
-# command: magistrala-cli clients create '{"name":"client-name"}' $DOMAIN_ID $USER_TOKEN 
+# command: magistrala-cli clients create '{"name":"client-name"}' $DOMAIN_ID $USER_TOKEN
 # This command returns the client id and the client key
 # Then save the client ID and client secret as CLIENT_ID and CLIENT_KEY
 # export CLIENT_ID=<your-client-id>
@@ -125,7 +123,7 @@ export CLIENT_KEY="6b648c99-d753-4ccb-9954-db6a504f0737"
 ### Create a Channel
 
 ```bash
-# command: magistrala-cli channels create '{"name":"channel-name"}' $DOMAIN_ID $USER_TOKEN 
+# command: magistrala-cli channels create '{"name":"channel-name"}' $DOMAIN_ID $USER_TOKEN
 # This command returns the channel id
 # Then save the channel ID as CHANNEL_ID
 # export CHANNEL_ID=<your-channel-id>
@@ -179,7 +177,7 @@ Set the environment variables by configuring the connection details from the cre
 
 ```bash
 export MAGISTRALA_HOST=<your-computer-ip>
-# Magistrala runs in your PC Therefore use your PC's IP  
+# Magistrala runs in your PC Therefore use your PC's IP
 export DOMAIN_ID="56a4462e-5001-4bcf-b421-dbbe3d59c53c"
 export CHANNEL_ID="0efb859c-f606-442d-9c9e-fd924cfee654"
 export CLIENT_ID="bd2733d1-fcda-4974-bd7b-63b87a2e150f"
