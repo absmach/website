@@ -29,7 +29,7 @@ Custom Nodes fix that. Write a Lua or Go script once in the Custom Nodes section
 
 ## Prerequisites
 
-- A Magistrala instance (self-hosted or hosted) running a version of the Rules Engine with Custom Nodes support
+- A Magistrala instance (self-hosted or hosted) running a version with Custom Nodes support
 - Access to a domain where you can create channels, rules, and Custom Nodes
 - At least one channel already receiving JSON payloads over MQTT, HTTP, CoAP, or WebSocket
 - Basic familiarity with Lua, the default Custom Node language (Go is also supported)
@@ -44,7 +44,7 @@ Open the Magistrala UI and click **Custom Nodes** in the sidebar. The first time
 
 Click **+ Create**. The dialog asks for a few fields before you can save:
 
-- **Name**: required, must be unique within the domain, for example `alarm-severity-classifier`
+- **Name**: required, must be unique within the domain, for example `Alarm Node`
 - **Description**: optional, useful once you have more than a few nodes
 - **Icon**: required, chosen from a searchable icon picker
 - **Tags**: optional, comma-separated; press Enter after each tag to commit it
@@ -94,7 +94,7 @@ end
 return logicFunction()
 ```
 
-Set Name to `alarm-severity-classifier`, pick an icon, add tags like `alarms, severity` if you want the node searchable later, and click **Create**. The node appears in the Custom Nodes table at version `v1`.
+Set Name to `Alarm Node`, pick an icon, add tags like `alarms, severity` if you want the node searchable later, and click **Create**. The node appears in the Custom Nodes table at version `v1`.
 
 ![Filled-in Create Custom Node dialog](/img/blogs/how-to-reuse-rule-logic-magistrala-custom-nodes/create-custom-node-filled.png)
 
@@ -104,7 +104,7 @@ Every node you create shows up in the Custom Nodes table, alongside Icon, Name, 
 
 ![Custom Nodes table with entries](/img/blogs/how-to-reuse-rule-logic-magistrala-custom-nodes/custom-nodes-list.png)
 
-Confirm your `alarm-severity-classifier` node shows Language: Lua and Version: v1. That version number matters, since you'll edit this node later in the tutorial.
+Confirm your `Alarm Node` node shows Language: Lua and Version: v1. That version number matters, since you'll edit this node later in the tutorial.
 
 ## Wire the Custom Node into a rule
 
@@ -112,7 +112,7 @@ _Rule pipeline with a Custom Node_
 
 ```mermaid
 flowchart LR
-    A["Channel Subscriber\n(sensors-vibration)"] --> B["Custom Node\nalarm-severity-classifier\n(embedded snapshot v1)"]
+    A["Channel Subscriber\n(sensors-vibration)"] --> B["Custom Node\nAlarm Node\n(embedded snapshot v1)"]
     B --> C["Channel Publisher\n(alarms-classified)"]
 
     subgraph Rule["Rule"]
@@ -124,13 +124,13 @@ flowchart LR
 
 Create a new rule, or open an existing one, and add an input node. Choose **Channel Subscriber** and point it at the channel that receives your sensor payloads, for example `sensors-vibration`.
 
-Click **Add Logic** on the canvas. A **Select a logic type** dialog opens, listing the built-in options (Comparison and Code Editor) side by side with every Custom Node you've created in the domain. Click your `alarm-severity-classifier` node to drop it onto the canvas, then connect it to the Channel Subscriber's output.
+Click **Add Logic** on the canvas. A **Select a logic type** dialog opens, listing the built-in options (Comparison and Code Editor) side by side with every Custom Node you've created in the domain. Click your `Alarm Node` node to drop it onto the canvas, then connect it to the Channel Subscriber's output.
 
 ![Select a logic type dialog showing a custom node](/img/blogs/how-to-reuse-rule-logic-magistrala-custom-nodes/select-logic-type.png)
 
 Add an output node, choose **Channel Publisher**, point it at a channel for classified alarms, for example `alarms-classified`, and connect the logic node's output to it. Click **Save**.
 
-Success looks like a rule with three connected nodes: Channel Subscriber, alarm-severity-classifier, and Channel Publisher. Behind the scenes, Magistrala embeds a snapshot of the node's current version (v1) into the rule. That's what keeps the rule's behavior independent of anything that happens to the shared Custom Node, until you decide otherwise.
+Success looks like a rule with three connected nodes: Channel Subscriber, Alarm Node, and Channel Publisher. Behind the scenes, Magistrala embeds a snapshot of the node's current version (v1) into the rule. That's what keeps the rule's behavior independent of anything that happens to the shared Custom Node, until you decide otherwise.
 
 ## Edit the shared node and trigger the Outdated badge
 
@@ -138,14 +138,14 @@ _Versioning: shared node edits vs. embedded snapshots_
 
 ```mermaid
 flowchart TD
-    N1["Custom Node\nalarm-severity-classifier v1\n(threshold = 2000)"] -->|used at creation time| R1["Rule A\nembeds snapshot v1"]
-    N1 -->|edit threshold to 2500| N2["Custom Node\nalarm-severity-classifier v2\n(threshold = 2500)"]
+    N1["Custom Node\nAlarm Node v1\n(threshold = 2000)"] -->|used at creation time| R1["Rule A\nembeds snapshot v1"]
+    N1 -->|edit threshold to 2500| N2["Custom Node\nAlarm Node v2\n(threshold = 2500)"]
     N2 -->|snapshot differs from rule| Badge["Outdated badge\nshown on Rule A"]
     R1 -->|behavior unchanged| Prod["Production traffic\nstill classified at 2000"]
     Badge -->|user opts in| Update["Manually update Rule A\nto snapshot v2"]
 ```
 
-Suppose your team decides the alarm threshold should move from 2000 to 2500. Open **Custom Nodes**, click **Edit** on `alarm-severity-classifier`, and update the threshold value in the Code field:
+Suppose your team decides the alarm threshold should move from 2000 to 2500. Open **Custom Nodes**, click **Edit** on `Alarm Node`, and update the threshold value in the Code field:
 
 ```lua
 function logicFunction()
@@ -188,7 +188,7 @@ return logicFunction()
 
 Click **Save**. The table now shows Version: v2 for this node, and the Updated By/At columns reflect the change.
 
-Go back to the rule you built earlier. The `alarm-severity-classifier` node's card now displays an **Outdated** badge, because the rule's saved snapshot is still pinned to v1. Magistrala doesn't rewrite that snapshot automatically. A threshold tweak in one node can't silently change behavior across every rule that uses it, which is the whole point.
+Go back to the rule you built earlier. The `Alarm Node` node's card now displays an **Outdated** badge, because the rule's saved snapshot is still pinned to v1. Magistrala doesn't rewrite that snapshot automatically. A threshold tweak in one node can't silently change behavior across every rule that uses it, which is the whole point.
 
 ![Rule canvas showing the Outdated badge on a node](/img/blogs/how-to-reuse-rule-logic-magistrala-custom-nodes/rule-outdated-node.png)
 
@@ -246,6 +246,6 @@ A value below the threshold produces no output at all, since the Lua script only
 
 With one alarm-severity node reused across every rule that needs it, a threshold change becomes a single edit and a deliberate Sync, not a search across your entire rule library. That difference compounds as your rule count grows. Teams running dozens of rules across MQTT, CoAP, HTTP, and WebSocket inputs get consistent scoring logic without maintaining a separate codebase outside the platform.
 
-Custom Nodes are scoped per domain, so plan naming and tagging conventions early, especially in multi-tenant deployments where separate teams manage their own domains independently. If your logic is CPU-intensive, or needs capabilities beyond Lua's sandbox, revisit the same workflow using Go instead. The Custom Node dialog, table, versioning, and sync behavior work identically no matter which language you pick.
+Learn more about custom nodes [here](https://www.absmach.eu/docs/magistrala/user-guide/rules-engine/custom-nodes/)
 
-From here, read through the Rules Engine reference in the [Magistrala documentation](https://www.absmach.eu/docs/magistrala/) to see the full set of built-in input, logic, and output node types you can combine with your own Custom Nodes.
+From here, read through the Rules Engine reference in the [Magistrala documentation](https://www.absmach.eu/docs/magistrala/user-guide/rules-engine/overview/) to see the full set of built-in input, logic, and output node types you can combine with your own Custom Nodes.
