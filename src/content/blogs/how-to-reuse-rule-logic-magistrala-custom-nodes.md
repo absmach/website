@@ -17,9 +17,9 @@ tags:
   - device-management
 featured: false
 draft: false
-coverImage: "/img/blogs/how-to-reuse-rule-logic-magistrala-custom-nodes/rule-with-custom-node.png"
+coverImage: "/img/blogs/how-to-reuse-rule-logic-magistrala-custom-nodes/hero.png"
 ogImage:
-  url: "/img/blogs/how-to-reuse-rule-logic-magistrala-custom-nodes/rule-with-custom-node.png"
+  url: "/img/blogs/how-to-reuse-rule-logic-magistrala-custom-nodes/hero.png"
 slug: "how-to-reuse-rule-logic-magistrala-custom-nodes"
 ---
 
