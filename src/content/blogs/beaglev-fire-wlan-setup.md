@@ -11,7 +11,7 @@ coverImage: "/img/blogs/beaglev-fire-wlan-setup/beagle.png"
 ogImage:
   url: "/img/blogs/beaglev-fire-wlan-setup/beagle.png"
 category: blog
-featured: true
+featured: false
 tags:
   - A1
   - Embedded Linux
