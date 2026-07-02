@@ -63,8 +63,9 @@ The services that previously handled users, clients, channels, and domains have 
 | Clients service  | Atom entity management (device kind) |
 | Domains service  | Atom tenant management               |
 | Channels service | Atom resource management             |
+| Groups service   | Atom Group management                |
 
-Groups are managed by Atom as well. This consolidation removes several independently-running processes from a typical Magistrala deployment, reducing the number of databases, ports, and configuration surfaces to maintain.
+This consolidation removes several independently-running processes from a typical Magistrala deployment, reducing the number of databases, ports, and configuration surfaces to maintain.
 
 ## Automatic Resource Projection
 
