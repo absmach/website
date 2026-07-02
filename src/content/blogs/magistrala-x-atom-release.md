@@ -1,7 +1,7 @@
 ---
 title: "Magistrala v0.40.0 Release: Magistrala x Atom is here!"
 description: "Magistrala v0.40.0 ships with Atom as its core identity and authorization layer, removing the standalone users, clients, channels, and domains services in favor of a single, unified system that handles entities, tenants, groups, and resources."
-date: "2026-06-26"
+date: "2026-07-02"
 excerpt: "Magistrala v0.40.0 ships with Atom as its built-in identity and authorization layer. The standalone users, clients, channels, and domains services are gone. Atom handles all entity management — and MQTT, CoAP, HTTP, WebSocket, mTLS, and multi-tenancy all continue working without modification."
 author:
   name: "Abstract Machines"
