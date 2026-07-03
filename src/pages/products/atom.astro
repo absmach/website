@@ -194,35 +194,49 @@ const uiFeatures = [
   {
     id: "dashboard",
     title: "Dashboard",
-    desc: "Live platform summary — entity counts, recent activity, authorization outcomes, and expiring credentials at a glance.",
+    desc: "Platform-wide counts for tenants, entities, profiles, and groups, plus operational signals — DB pool pressure, signing key risk, audit retention, and expiring credentials — alongside entity mix and resource breakdowns.",
     img: "/img/atom-ui/dashboard.png",
     alt: "Atom Admin Dashboard",
   },
   {
+    id: "tenants",
+    title: "Tenants",
+    desc: "Create top-level tenants that scope entities, resources, groups, and roles. Freeze, disable, or inspect any tenant without touching the others.",
+    img: "/img/atom-ui/tenants.png",
+    alt: "Atom Tenant Management",
+  },
+  {
     id: "entities",
     title: "Entity Management",
-    desc: "Create, update, and manage humans, devices, services, workloads, and applications with credentials and group membership.",
+    desc: "Create, update, and manage humans, devices, services, workloads, and applications with credentials and tenant scoping.",
     img: "/img/atom-ui/entities.png",
     alt: "Atom Entity Management",
   },
   {
-    id: "policies",
-    title: "Policy Bindings",
-    desc: "Create and inspect RBAC and ABAC bindings. Set explicit deny rules and view all bindings for any subject or resource.",
-    img: "/img/atom-ui/policies.png",
-    alt: "Atom Policy Bindings",
+    id: "permission-blocks",
+    title: "Permission Blocks",
+    desc: "Define reusable scope, effect, action, and ABAC condition sets — the building blocks every role and direct policy attaches to.",
+    img: "/img/atom-ui/permission-blocks.png",
+    alt: "Atom Permission Blocks",
   },
   {
     id: "roles",
     title: "Roles",
-    desc: "Define roles and assign capabilities. Role membership is evaluated live — no token reissuance when roles change.",
+    desc: "Bundle Permission Blocks into named roles and assign them to entities or Principal Groups. Role membership is evaluated live — no token reissuance when roles change.",
     img: "/img/atom-ui/roles.png",
     alt: "Atom Roles Management",
   },
   {
+    id: "policies",
+    title: "Direct Policies",
+    desc: "Grant a Permission Block straight to a subject for advanced cases that bypass roles entirely. Normal access should prefer role assignments.",
+    img: "/img/atom-ui/policies.png",
+    alt: "Atom Direct Policies",
+  },
+  {
     id: "debugger",
     title: "Authorization Debugger",
-    desc: "Run explain queries interactively. See matched policies, skipped bindings, and ABAC evaluation steps without writing any code.",
+    desc: "Ask why a request was allowed or denied. The explain endpoint returns a full decision trace — matched permissions, skipped grants, and the effective role or policy that decided it.",
     img: "/img/atom-ui/authorization-debugger.png",
     alt: "Atom Authorization Debugger",
   },
@@ -488,9 +502,9 @@ const faqSchema = JSON.stringify({
               <div class="atom-bd-module">
                 <div class="atom-bd-module-name">Authorization Module</div>
                 <div class="atom-bd-module-tags">
-                  <span>resources</span><span>capabilities</span><span
+                  <span>resources</span><span>actions</span><span
                     >roles</span
-                  ><span>policy_bindings</span><span>PDP engine</span>
+                  ><span>permission_blocks</span><span>PDP engine</span>
                 </div>
               </div>
             </div>
@@ -578,7 +592,7 @@ const faqSchema = JSON.stringify({
             <pre
               class="atom-policy-code">{`PolicyBinding {
   subject:    group("operators")
-  grant:      capability("publish")
+  grant:      action("publish")
   scope:      tenant("factory-a")
   effect:     allow
   conditions: {
