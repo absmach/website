@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
+import AnnouncementBanner from "../../components/AnnouncementBanner.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
 import {
@@ -17,13 +18,16 @@ import {
   LayoutGrid,
   ShieldCheck,
   MapPin,
+  KeySquare,
+  RotateCcw,
+  Activity,
 } from "@lucide/astro";
 
 const features = [
   {
     icon: Users,
     name: "Identity Model",
-    desc: "Humans, devices, services, workloads, and applications share one identity model. No special user class.",
+    desc: "Humans, devices, services, workloads, and applications share one identity model. No special user class. Human-readable aliases sit alongside UUIDs for every entity, tenant, and resource.",
   },
   {
     icon: Zap,
@@ -49,6 +53,21 @@ const features = [
     icon: SquareCode,
     name: "Open Source",
     desc: "Apache 2.0. GraphQL, REST, and gRPC APIs. Single Rust binary, PostgreSQL auto-migrated on startup. No vendor lock-in.",
+  },
+  {
+    icon: KeySquare,
+    name: "Scoped Access Tokens",
+    desc: "Self-service, least-privilege bearer tokens for CLI and automation use, minted with a permission ceiling narrower than the owner's full grants.",
+  },
+  {
+    icon: RotateCcw,
+    name: "Soft-Delete & Restore",
+    desc: "Deleted tenants, entities, groups, roles, and resources are tombstoned, not erased. Restore them before the configurable retention window purges them for good.",
+  },
+  {
+    icon: Activity,
+    name: "Telemetry",
+    desc: "Built-in metrics for request latency and system health, ready to scrape for production monitoring.",
   },
 ];
 
@@ -111,7 +130,7 @@ const devSurface = [
   {
     icon: Server,
     name: "gRPC Runtime",
-    desc: "High-throughput authorization checks over gRPC — used by Magistrala and microservice backends.",
+    desc: "High-throughput authentication and authorization checks over gRPC, optionally TLS-secured — used by Magistrala and microservice backends.",
   },
   {
     icon: Terminal,
@@ -271,6 +290,7 @@ const faqSchema = JSON.stringify({
   ogImage="/img/og/og-atom.png"
   ogImageAlt="Atom — Identity & Authorization Platform"
 >
+  <AnnouncementBanner product="atom" />
   <Header />
   <main>
     <!-- Hero -->
