@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
+import AnnouncementBanner from "../../components/AnnouncementBanner.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
 import { deployments } from "../../data/deployments";
@@ -87,37 +88,6 @@ const gridFeatures = [
   },
 ];
 
-const sdks = [
-  {
-    lang: "Go",
-    name: "Go SDK",
-    install: "go get github.com/absmach/magistrala",
-    snippet: `sdk := magistrala.NewSDK(\n  magistrala.Config{\n    MsgURL: apiURL,\n  },\n)\nsdk.SendMessages(msg, key)`,
-    href: "https://github.com/absmach/magistrala/tree/main/pkg/sdk",
-  },
-  {
-    lang: "TypeScript",
-    name: "JS / TS SDK",
-    install: "npm install @absmach/magistrala-sdk",
-    snippet: `import { SDK } from\n  "@absmach/magistrala-sdk";\nconst sdk = new SDK({ msgURL });\nawait sdk.messages.send(\n  msg, clientKey\n);`,
-    href: "https://github.com/absmach/magistrala-sdk-ts",
-  },
-  {
-    lang: "Python",
-    name: "Python SDK",
-    install: "pip install magistrala-sdk",
-    snippet: `from magistrala import SDK\nsdk = SDK(msg_url=api_url)\nsdk.messages.send(\n  msg, client_key\n)`,
-    href: "https://github.com/absmach/supermq-sdk-py",
-  },
-  {
-    lang: "Rust",
-    name: "Rust SDK",
-    install: "cargo add magistrala-sdk",
-    snippet: `let sdk = magistrala::SDK::new(\n  api_url\n);\nsdk.messages()\n  .send(&msg, key)\n  .await?;`,
-    href: "https://github.com/absmach/supermq-sdk-rust",
-  },
-];
-
 const integrations = [
   { name: "Atom", href: "/products/atom" },
   { name: "FluxMQ", href: "/products/fluxmq" },
@@ -141,10 +111,6 @@ const faqs = [
   {
     q: "What protocols does Magistrala support?",
     a: "Magistrala has native support for MQTT 3.1.1 and 5.0, CoAP, HTTP, and WebSocket. Devices can switch between protocols without any changes on the platform side. LoRa, OPC-UA, and Modbus are supported via adapter services.",
-  },
-  {
-    q: "Which SDKs are available?",
-    a: "Official SDKs are available for Go, TypeScript/JavaScript, Python, and Rust. Each SDK covers authentication, device management, channel operations, and message publishing.",
   },
   {
     q: "Does Magistrala run on edge devices?",
@@ -177,10 +143,11 @@ const faqSchema = JSON.stringify({
 
 <BaseLayout
   title="Magistrala — Open-Source IoT Platform for Connected Devices"
-  description="Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. SDKs for Go, TypeScript, Python, and Rust."
+  description="Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. GraphQL-native access via Atom."
   ogImage="/img/og/og-magistrala.png"
   ogImageAlt="Magistrala — Open-Source IoT Platform"
 >
+  <AnnouncementBanner product="magistrala" />
   <Header />
   <main>
     <!-- Hero -->
@@ -540,52 +507,6 @@ const faqSchema = JSON.stringify({
       </div>
     </section>
 
-    <!-- SDK section -->
-    <section
-      class="section"
-      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
-    >
-      <div class="container-wide">
-        <div class="section-head">
-          <div class="left">
-            <span class="kicker">Developer SDKs</span>
-            <h2 class="h-2" style="margin-top:14px;">
-              Magistrala SDKs — Go, Python, TypeScript &amp; Rust.
-            </h2>
-          </div>
-          <p class="lede">
-            Official SDKs for Go, TypeScript, Python, and Rust. Connect to
-            Magistrala in minutes from the language your team already uses.
-          </p>
-        </div>
-        <div class="sdk-grid">
-          {
-            sdks.map(({ lang, name, install, snippet, href }) => (
-              <div class="sdk-card">
-                <div class="sdk-lang">{lang}</div>
-                <div class="sdk-name">{name}</div>
-                <div class="sdk-snippet">{snippet}</div>
-                <div style="display:flex; flex-direction:column; gap:6px; margin-top:auto;">
-                  <code style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink-3); background:var(--paper-3); padding:6px 10px; border-radius:var(--radius-sm);">
-                    {install}
-                  </code>
-                  <a
-                    href={href}
-                    class="btn-link"
-                    target="_blank"
-                    rel="noopener"
-                    style="font-size:13px;"
-                  >
-                    View on GitHub ↗
-                  </a>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
     <!-- Edge Agent section -->
     <section class="section">
       <div class="container-wide">
@@ -922,7 +843,7 @@ const faqSchema = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
       "name": "Magistrala",
-      "description": "Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. SDKs for Go, TypeScript, Python, and Rust.",
+      "description": "Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. GraphQL-native access via Atom.",
       "applicationCategory": "IoT",
       "operatingSystem": "Linux",
       "url": "https://www.absmach.eu/products/magistrala",

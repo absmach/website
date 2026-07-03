@@ -1,0 +1,69 @@
+---
+import { announcements } from "../data/announcements";
+
+interface Props {
+  product: string;
+}
+
+const { product } = Astro.props;
+const announcement = announcements[product];
+---
+
+{
+  announcement && (
+    <div class="announce-bar">
+      <div class="container-wide announce-bar-inner">
+        <span class="announce-bar-badge">New</span>
+        <p class="announce-bar-text">{announcement.text}</p>
+        <a href={announcement.href} class="announce-bar-link">
+          {announcement.linkText} →
+        </a>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .announce-bar {
+    background: var(--surface-accent);
+    border-bottom: 1px solid var(--line-3);
+  }
+  .announce-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 28px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  .announce-bar-badge {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--on-accent);
+    background: rgba(255, 255, 255, 0.15);
+    padding: 3px 9px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .announce-bar-text {
+    font-size: 13px;
+    margin: 0;
+    color: var(--on-accent-dim);
+  }
+  .announce-bar-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--on-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .announce-bar-link:hover {
+    text-decoration-thickness: 2px;
+  }
+</style>

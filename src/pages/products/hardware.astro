@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
+import AnnouncementBanner from "../../components/AnnouncementBanner.astro";
 import Footer from "../../components/Footer.astro";
 import { Cpu, Radio, ShieldCheck, Boxes } from "@lucide/astro";
 
@@ -71,6 +72,7 @@ const capabilities = [
   title="Open-Hardware IoT Gateways & Post-Quantum Secure Element — Abstract Machines"
   description="A0 and A1 open-hardware edge gateways plus the Quarc post-quantum secure element — purpose-built for secure, connected IoT deployments from the extreme edge to the cloud."
 >
+  <AnnouncementBanner product="hardware" />
   <Header />
   <main>
     <section class="prod-hero has-video hardware-hero">

@@ -1822,46 +1822,6 @@ section {
   max-width: 42ch;
 }
 
-/* SDK cards ---------------------------------------------------------------- */
-
-.sdk-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-.sdk-card {
-  padding: 28px;
-  border: 1px solid var(--line-3);
-  border-radius: var(--radius);
-  background: var(--paper);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.sdk-lang {
-  font-family: var(--font-mono), monospace;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--ink-3);
-}
-.sdk-name {
-  font-weight: 600;
-  font-size: 22px;
-  letter-spacing: 0;
-}
-.sdk-snippet {
-  background: var(--surface-accent);
-  color: var(--on-accent-dim);
-  border-radius: var(--radius-sm);
-  padding: 14px 16px;
-  font-family: var(--font-mono), monospace;
-  font-size: 14px;
-  line-height: 1.8;
-  flex: 1;
-  white-space: pre;
-  overflow: hidden;
-}
 /* FAQ accordion ------------------------------------------------------------ */
 
 .faq-list {
@@ -2022,9 +1982,6 @@ section {
   .feat-row.feat-flipped .feat-info {
     order: 1;
   }
-  .sdk-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .bento {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: none;
@@ -2143,8 +2100,7 @@ section {
   .cta-cluster,
   .process-grid,
   .proj-grid,
-  .val-grid,
-  .sdk-grid {
+  .val-grid {
     grid-template-columns: 1fr;
   }
   .proj-card {
@@ -2226,12 +2182,6 @@ section {
   /* metrics: scale down large value */
   .metric .v {
     font-size: 28px;
-  }
-  /* SDK snippet: allow wrapping instead of horizontal scroll */
-  .sdk-snippet {
-    white-space: pre-wrap;
-    word-break: break-word;
-    font-size: 12px;
   }
   /* Blog filter chips: ensure 44px touch target */
   .product-chip,

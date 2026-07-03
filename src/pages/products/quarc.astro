@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
+import AnnouncementBanner from "../../components/AnnouncementBanner.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
 import {
@@ -256,6 +257,7 @@ const faqSchema = JSON.stringify({
   ogImage="/img/og/og-quarc.png"
   ogImageAlt="Quarc — Post-Quantum Secure Element"
 >
+  <AnnouncementBanner product="quarc" />
   <Header />
   <main>
     <!-- Hero -->
