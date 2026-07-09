@@ -116,7 +116,6 @@ const eeFeatures = [
   "Alarms",
   "Reports",
   "Audit logs",
-  "Priority security patches & updates",
 ];
 
 // ── Compare Community with the Private Cloud tiers ─────────────────
@@ -124,7 +123,6 @@ const eeFeatures = [
 // true → included, false → not included, string → specific value.
 // Self-hosted Community is bounded only by your own hardware.
 const compareCols = ["Community", "Prototype", "Business", "Enterprise", "Custom"];
-const HW = "Your hardware";
 const compareGroups = [
   {
     group: "Platform",
@@ -151,15 +149,15 @@ const compareGroups = [
   {
     group: "Capacity",
     rows: [
-      { f: "Devices", cells: [HW, "~200", "~5k", "~50k", "Custom"] },
-      { f: "Messages / month", cells: [HW, "~1M", "~10M", "~100M", "Custom"] },
+      { f: "Devices", cells: [false, "~200", "~5k", "~50k", "Custom"] },
+      { f: "Messages / month", cells: [false, "~1M", "~10M", "~100M", "Custom"] },
       {
         f: "Message storage",
-        cells: [HW, "80 GB", "180 GB", "300 GB", "Custom"],
+        cells: [false, "80 GB", "180 GB", "300 GB", "Custom"],
       },
       {
         f: "Data transfer / month",
-        cells: [HW, "3 TB", "8 TB", "8 TB", "Custom"],
+        cells: [false, "3 TB", "8 TB", "8 TB", "Custom"],
       },
     ],
   },
@@ -539,6 +537,16 @@ const pricingFaqs = [
           <ul class="mg-price-feats">
             <li class="mg-inherit">Everything in Community Edition, plus:</li>
             {eeFeatures.map((f) => <li>→ {f}</li>)}
+            <li>
+              → Priority security patches &amp;{" "}
+              <span
+                class="mg-term"
+                data-term-monthly="updates"
+                data-term-perpetual="updates for the purchased version"
+              >
+                updates
+              </span>
+            </li>
             <li class="mg-cap-feat">
               → No limits — unlimited devices, messages, and features
             </li>
@@ -719,6 +727,12 @@ const pricingFaqs = [
           .forEach((n) => {
             const t = n.dataset[`note${cap(mode)}`];
             if (t !== undefined) n.textContent = t;
+          });
+        scope
+          .querySelectorAll<HTMLElement>(".mg-term")
+          .forEach((el) => {
+            const t = el.dataset[`term${cap(mode)}`];
+            if (t !== undefined) el.textContent = t;
           });
       }),
     );
