@@ -1,4 +1,5 @@
 ---
+import { Boxes, Cloud, Server, Users } from "@lucide/astro";
 import FAQAccordion from "./FAQAccordion.astro";
 
 interface Props {
@@ -6,7 +7,8 @@ interface Props {
 }
 const { showHead = true } = Astro.props;
 
-const pricingTiers = [
+// ── Private Cloud: fully managed, dedicated instances ──────────────
+const privateTiers = [
   {
     name: "Starter",
     goodFor: "Small proofs of concept and testing.",
@@ -100,10 +102,34 @@ const pricingTiers = [
   },
 ];
 
+// ── Community Edition (free, open source) ──────────────────────────
+const communityFeatures = [
+  "Unlimited devices and assets",
+  "Unlimited software updates",
+  "Ability to contribute",
+  "Community support",
+];
+
+// ── Self-managed: run Magistrala Enterprise in your own environment ─
+const eeFeatures = [
+  "Commercial UI with whitelabeling",
+  "Dashboards",
+  "Rules Engine & custom message formats",
+  "Alarms",
+  "Reports",
+  "Audit logs",
+  "Priority security patches & updates",
+  "Enterprise support",
+];
+
 const pricingFaqs = [
   {
-    q: "What's included in a managed plan?",
-    a: "Every managed tier covers hosting, deployment, monitoring, and the updates listed for that tier. Higher tiers add dashboards, audit logs, rules engine, alarms, reports, and scheduled backups. You focus on your devices and data; we run the platform.",
+    q: "What's the difference between Community, Private Cloud, and Self-managed?",
+    a: "Community Edition is the free, open-source platform you run yourself. Private Cloud is a fully managed, dedicated instance we host and operate for you. Self-managed is Magistrala Enterprise Edition running in your own environment — either licensed to you to operate, or deployed and operated by us on your infrastructure.",
+  },
+  {
+    q: "What's included in a Private Cloud plan?",
+    a: "Every Private Cloud tier covers hosting, deployment, monitoring, and the updates listed for that tier. Higher tiers add dashboards, audit logs, rules engine, alarms, reports, and scheduled backups. You focus on your devices and data; we run the platform.",
   },
   {
     q: "What counts as a device?",
@@ -111,7 +137,7 @@ const pricingFaqs = [
   },
   {
     q: "Do I get a dedicated instance?",
-    a: "Yes. Every plan runs on a dedicated instance — no shared infrastructure. We provision, run, and manage the instance for you.",
+    a: "Yes. Every Private Cloud plan runs on a dedicated instance — no shared infrastructure. We provision, run, and manage the instance for you.",
   },
   {
     q: "What does “~250 devices · 1M messages / month” actually mean?",
@@ -133,19 +159,23 @@ const pricingFaqs = [
   },
   {
     q: "How does annual billing work?",
-    a: "Annual plans are billed once per year and work out roughly 10% cheaper than paying monthly. You can switch between monthly and annual billing when your term renews.",
+    a: "Annual Private Cloud plans are billed once per year and work out roughly 10% cheaper than paying monthly. You can switch between monthly and annual billing when your term renews.",
+  },
+  {
+    q: "What's the difference between a monthly and a perpetual self-managed license?",
+    a: "A monthly license (€300 per cluster) is billed each month for as long as you use it. A perpetual license (€3,999 per cluster) is a one-time payment that lets you keep running that version indefinitely. Both cover the full Magistrala Enterprise Edition feature set.",
   },
   {
     q: "Can I deploy on my own cloud or on-premises?",
-    a: "Yes, through the Custom plan. We can deploy Magistrala into your AWS, GCP, or Azure account, or fully on-premises, including air-gapped environments, with data residency handled on your infrastructure.",
+    a: "Yes. With a self-managed license you run Magistrala Enterprise yourself, anywhere. With the “Managed by us” option we deploy and operate it on your infrastructure — AWS, GCP, Azure, or on-premises, including air-gapped environments — aligned to your SLA, security, and data-residency policies.",
   },
   {
     q: "Do you offer a custom SLA and high availability?",
-    a: "Enterprise, Dedicated, and Custom plans support defined uptime SLAs and high-availability clustering. Response-time commitments and dedicated support hours scale with the tier; the Custom plan is tailored to your requirements.",
+    a: "Yes. Private Cloud Enterprise and Custom plans, and self-managed “Managed by us” deployments, support defined uptime SLAs and high-availability clustering. Response-time commitments and dedicated support hours scale with the plan and are tailored to your requirements.",
   },
   {
     q: "Is self-hosting free?",
-    a: "Partly. Magistrala core is open source under the Apache 2.0 license and free to self-host forever, as is the Magistrala Community Edition. The Enterprise Edition — which unlocks the full feature set, including the rules engine, alarms, reports, audit logs, and dashboards — is not free to self-host. See the self-hosting options for what each edition includes.",
+    a: "Partly. Magistrala core is open source under the Apache 2.0 license and free to self-host forever, as is the Community Edition. The Enterprise Edition — which unlocks the full feature set, including the rules engine, alarms, reports, audit logs, and dashboards — requires a self-managed license or a managed plan.",
   },
 ];
 ---
@@ -158,96 +188,267 @@ const pricingFaqs = [
           <div class="left">
             <span class="kicker">Pricing</span>
             <h2 class="h-2" style="margin-top:14px;">
-              Managed Magistrala, priced to scale.
+              Choose how you run Magistrala.
             </h2>
           </div>
           <p class="lede">
-            Fully managed deployments with hosting, updates, and support. Pick
-            the tier that matches your fleet and move up as you grow.
+            Free and open source, fully managed in our private cloud, or
+            self-managed in your own environment — same platform, your choice of
+            operating model.
           </p>
         </div>
       )
     }
 
-    <div class="mg-price-wrap">
-      <div class="mg-price-toggle" role="group" aria-label="Billing period">
-        <button type="button" class="mg-price-opt is-active" data-billing="monthly"
-          >Monthly</button
+    <!-- Tabs -->
+    <div class="mg-tabs-wrap">
+      <div class="mg-tabs" role="tablist" aria-label="Pricing options">
+        <button
+          type="button"
+          class="mg-tab"
+          data-tab="community"
+          role="tab"
+          aria-selected="false"
         >
-        <button type="button" class="mg-price-opt" data-billing="annual"
-          >Annual <span class="mg-save">Save 10%</span></button
+          <Users size={16} /> Community
+        </button>
+        <button
+          type="button"
+          class="mg-tab is-active"
+          data-tab="private"
+          role="tab"
+          aria-selected="true"
         >
+          <Cloud size={16} /> Private Cloud
+        </button>
+        <button
+          type="button"
+          class="mg-tab"
+          data-tab="self"
+          role="tab"
+          aria-selected="false"
+        >
+          <Server size={16} /> Self-managed
+        </button>
       </div>
     </div>
 
-    <div class="mg-pricing-grid">
-      {
-        pricingTiers.map((tier) => (
-          <div
-            class={`cta-card mg-price-card${tier.featured ? " is-featured" : ""}${tier.contact ? " is-custom" : ""}`}
-          >
-            {tier.featured && <span class="mg-badge">Popular</span>}
-            <div class="mg-price-head">
-              <div class="label">{tier.name}</div>
-              <div class="mg-price-block">
-                <div class="mg-price">
-                  {tier.contact ? (
-                    <span class="mg-price-contact">Contact</span>
-                  ) : (
-                    <Fragment>
-                      <span
-                        class="mg-amount"
-                        data-monthly={tier.monthly}
-                        data-annual={Math.round((tier.annual ?? 0) / 12)}
-                      >
-                        €{tier.monthly}
-                      </span>
-                      <span class="mg-per">/ month</span>
-                    </Fragment>
-                  )}
-                </div>
-                {!tier.contact && (
-                  <div class="mg-price-note" data-annual-total={tier.annual}>
-                    billed monthly
-                  </div>
-                )}
-              </div>
-              <div class="mg-goodfor">{tier.goodFor}</div>
-            </div>
-            <ul class="mg-price-feats">
-              {tier.inherits && (
-                <li class="mg-inherit">Everything in {tier.inherits}, plus:</li>
-              )}
-              {tier.features.map((feature) => (
-                <li>→ {feature}</li>
-              ))}
-              {tier.capacity && <li class="mg-cap-feat">→ {tier.capacity}</li>}
-              {tier.transfer && <li>→ {tier.transfer}</li>}
-            </ul>
+    <!-- ── Community panel ─────────────────────────────────────── -->
+    <div class="mg-tabpanel" data-panel="community" role="tabpanel" hidden>
+      <div class="mg-ce-card cta-card">
+        <div class="mg-ce-main">
+          <span class="label">Community Edition · Free</span>
+          <h3 class="mg-ce-title">Your free ticket to IoT.</h3>
+          <p class="mg-ce-desc">
+            Get started with Community Edition (CE): a free, open-source (Apache
+            2.0) IoT platform. A powerful, scalable, multi-tenant solution for
+            collecting, processing, visualizing, and managing your IoT data and
+            devices with maximum agility.
+          </p>
+          <ul class="mg-ce-feats">
+            {communityFeatures.map((f) => <li>→ {f}</li>)}
+          </ul>
+          <div class="btn-row" style="margin-top:28px;">
             <a
-              href="/contact"
-              class={`btn${tier.featured ? " btn-primary" : ""}`}
-              style="margin-top:auto; text-align:center; justify-content:center;"
+              href="https://github.com/absmach/magistrala"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener">Install ↗</a
             >
-              {tier.cta} →
-            </a>
+            <a
+              href="https://www.absmach.eu/docs/magistrala"
+              class="btn"
+              target="_blank"
+              rel="noopener">Documentation ↗</a
+            >
           </div>
-        ))
-      }
+        </div>
+        <div class="mg-ce-visual" aria-hidden="true">
+          <Boxes size={120} strokeWidth={1} />
+        </div>
+      </div>
     </div>
 
-    <p
-      style="margin-top:32px; text-align:center; font-size:14px; color:var(--ink-3);"
-    >
-      Prefer to run it yourself? The <a
-        href="/open-source"
-        style="color:inherit; text-decoration:underline;">open-source platform</a
-      > is free forever. Need more than 100k devices?{" "}
-      <a href="/contact" style="color:inherit; text-decoration:underline;"
-        >Talk to us</a
-      >.
-    </p>
+    <!-- ── Private Cloud panel ─────────────────────────────────── -->
+    <div class="mg-tabpanel" data-panel="private" role="tabpanel">
+      <p class="mg-panel-intro">
+        All-inclusive hosting and infrastructure on dedicated instances, so you
+        can focus on building your solutions.
+      </p>
 
+      <div class="mg-price-wrap">
+        <div class="mg-price-toggle" role="group" aria-label="Billing period">
+          <button type="button" class="mg-price-opt is-active" data-billing="monthly"
+            >Monthly</button
+          >
+          <button type="button" class="mg-price-opt" data-billing="annual"
+            >Annual <span class="mg-save">Save 10%</span></button
+          >
+        </div>
+      </div>
+
+      <div class="mg-pricing-grid">
+        {
+          privateTiers.map((tier) => (
+            <div
+              class={`cta-card mg-price-card${tier.featured ? " is-featured" : ""}${tier.contact ? " is-custom" : ""}`}
+            >
+              {tier.featured && <span class="mg-badge">Popular</span>}
+              <div class="mg-price-head">
+                <div class="label">{tier.name}</div>
+                <div class="mg-price-block">
+                  <div class="mg-price">
+                    {tier.contact ? (
+                      <span class="mg-price-contact">Contact</span>
+                    ) : (
+                      <Fragment>
+                        <span
+                          class="mg-amount"
+                          data-amt-monthly={tier.monthly}
+                          data-amt-annual={Math.round((tier.annual ?? 0) / 12)}
+                        >
+                          €{tier.monthly}
+                        </span>
+                        <span class="mg-per">/ month</span>
+                      </Fragment>
+                    )}
+                  </div>
+                  {!tier.contact && (
+                    <div
+                      class="mg-price-note"
+                      data-note-monthly="billed monthly"
+                      data-note-annual={`€${(tier.annual ?? 0).toLocaleString()} billed yearly`}
+                    >
+                      billed monthly
+                    </div>
+                  )}
+                </div>
+                <div class="mg-goodfor">{tier.goodFor}</div>
+              </div>
+              <ul class="mg-price-feats">
+                {tier.inherits && (
+                  <li class="mg-inherit">Everything in {tier.inherits}, plus:</li>
+                )}
+                {tier.features.map((feature) => (
+                  <li>→ {feature}</li>
+                ))}
+                {tier.capacity && <li class="mg-cap-feat">→ {tier.capacity}</li>}
+                {tier.transfer && <li>→ {tier.transfer}</li>}
+              </ul>
+              <a
+                href="/contact"
+                class={`btn${tier.featured ? " btn-primary" : ""}`}
+                style="margin-top:auto; text-align:center; justify-content:center;"
+              >
+                {tier.cta} →
+              </a>
+            </div>
+          ))
+        }
+      </div>
+
+      <p
+        style="margin-top:32px; text-align:center; font-size:14px; color:var(--ink-3);"
+      >
+        Need more than 100k devices or a bespoke setup?{" "}
+        <a href="/contact" style="color:inherit; text-decoration:underline;"
+          >Talk to us</a
+        >.
+      </p>
+    </div>
+
+    <!-- ── Self-managed panel ──────────────────────────────────── -->
+    <div class="mg-tabpanel" data-panel="self" role="tabpanel" hidden>
+      <p class="mg-panel-intro">
+        Run Magistrala Enterprise Edition in your own environment — license it
+        and operate it yourself, or have us deploy and run it for you.
+      </p>
+
+      <div class="mg-price-wrap">
+        <div class="mg-price-toggle" role="group" aria-label="License term">
+          <button type="button" class="mg-price-opt is-active" data-billing="monthly"
+            >Monthly</button
+          >
+          <button type="button" class="mg-price-opt" data-billing="perpetual"
+            >Perpetual</button
+          >
+        </div>
+      </div>
+
+      <div class="mg-self-grid">
+        <div class="cta-card mg-price-card is-featured">
+          <span class="mg-badge">License</span>
+          <div class="mg-price-head">
+            <div class="label">License only</div>
+            <div class="mg-price-block">
+              <div class="mg-price">
+                <span
+                  class="mg-amount"
+                  data-amt-monthly="300"
+                  data-amt-perpetual="3999"
+                >
+                  €300
+                </span>
+              </div>
+              <div
+                class="mg-price-note"
+                data-note-monthly="per cluster · billed monthly"
+                data-note-perpetual="per cluster · one-time license"
+              >
+                per cluster · billed monthly
+              </div>
+            </div>
+            <div class="mg-goodfor">
+              Magistrala Enterprise Edition license for your own deployment. You
+              run and operate it; we license the software, per cluster.
+            </div>
+          </div>
+          <ul class="mg-price-feats">
+            <li class="mg-inherit">Everything in Community Edition, plus:</li>
+            {eeFeatures.map((f) => <li>→ {f}</li>)}
+          </ul>
+          <a
+            href="/contact"
+            class="btn btn-primary"
+            style="margin-top:auto; text-align:center; justify-content:center;"
+          >
+            Get a license →
+          </a>
+        </div>
+
+        <div class="cta-card mg-price-card">
+          <div class="mg-price-head">
+            <div class="label">Managed by us</div>
+            <div class="mg-price-block">
+              <div class="mg-price">
+                <span class="mg-price-contact">Contact</span>
+              </div>
+            </div>
+            <div class="mg-goodfor">
+              We deploy and operate Magistrala Enterprise on your infrastructure,
+              aligned to your SLA, security, and data policies.
+            </div>
+          </div>
+          <ul class="mg-price-feats">
+            <li class="mg-inherit">Everything in License only, plus:</li>
+            <li>→ Deployed on your infrastructure</li>
+            <li>→ Your SLA &amp; uptime targets</li>
+            <li>→ Your security &amp; data-residency policies</li>
+            <li>→ Compliance &amp; certification support</li>
+            <li>→ Operated, monitored &amp; updated by our team</li>
+          </ul>
+          <a
+            href="/contact"
+            class="btn"
+            style="margin-top:auto; text-align:center; justify-content:center;"
+          >
+            Contact us →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Shared pricing FAQ ──────────────────────────────────── -->
     <div class="mg-price-faq">
       <div class="mg-price-faq-head">
         <span class="kicker">Pricing FAQ</span>
@@ -261,38 +462,146 @@ const pricingFaqs = [
 </section>
 
 <script>
-  const toggle = document.querySelector(".mg-price-toggle");
-  if (toggle) {
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+  // Tab switching
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".mg-tab");
+  const panels = document.querySelectorAll<HTMLElement>(".mg-tabpanel");
+  tabs.forEach((tab) =>
+    tab.addEventListener("click", () => {
+      const name = tab.dataset.tab;
+      tabs.forEach((t) => {
+        const on = t.dataset.tab === name;
+        t.classList.toggle("is-active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      panels.forEach((p) => {
+        p.hidden = p.dataset.panel !== name;
+      });
+    }),
+  );
+
+  // Billing / term toggles (scoped to their own panel)
+  document.querySelectorAll<HTMLElement>(".mg-price-toggle").forEach((toggle) => {
     const opts = toggle.querySelectorAll<HTMLButtonElement>(".mg-price-opt");
-    const amounts = document.querySelectorAll<HTMLElement>(".mg-amount");
-    const notes = document.querySelectorAll<HTMLElement>(".mg-price-note");
-
-    const setBilling = (mode: string) => {
-      opts.forEach((o) =>
-        o.classList.toggle("is-active", o.dataset.billing === mode),
-      );
-      amounts.forEach((a) => {
-        const value = mode === "annual" ? a.dataset.annual : a.dataset.monthly;
-        a.textContent = `€${value}`;
-      });
-      notes.forEach((n) => {
-        const total = Number(n.dataset.annualTotal);
-        n.textContent =
-          mode === "annual"
-            ? `€${total.toLocaleString()} billed yearly`
-            : "billed monthly";
-      });
-    };
-
-    opts.forEach((o) =>
-      o.addEventListener("click", () =>
-        setBilling(o.dataset.billing ?? "monthly"),
-      ),
+    const scope: ParentNode = toggle.closest(".mg-tabpanel") ?? document;
+    opts.forEach((opt) =>
+      opt.addEventListener("click", () => {
+        const mode = opt.dataset.billing ?? "monthly";
+        opts.forEach((o) => o.classList.toggle("is-active", o === opt));
+        scope
+          .querySelectorAll<HTMLElement>(".mg-amount")
+          .forEach((a) => {
+            const v = a.dataset[`amt${cap(mode)}`];
+            if (v !== undefined) a.textContent = `€${v}`;
+          });
+        scope
+          .querySelectorAll<HTMLElement>(".mg-price-note")
+          .forEach((n) => {
+            const t = n.dataset[`note${cap(mode)}`];
+            if (t !== undefined) n.textContent = t;
+          });
+      }),
     );
-  }
+  });
 </script>
 
 <style>
+  /* ── Tabs ─────────────────────────────────────────────────── */
+  .mg-tabs-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .mg-tabs {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px;
+    border: 1px solid var(--line-3);
+    border-radius: 999px;
+    background: var(--paper);
+  }
+  .mg-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink-3);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+  .mg-tab.is-active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .mg-panel-intro {
+    text-align: center;
+    max-width: 60ch;
+    margin: 0 auto 32px;
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+
+  /* ── Community Edition card ───────────────────────────────── */
+  .mg-ce-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 32px;
+    align-items: center;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 48px;
+  }
+  .mg-ce-title {
+    margin: 10px 0 0;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .mg-ce-desc {
+    margin: 14px 0 0;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-2);
+    max-width: 60ch;
+  }
+  .mg-ce-feats {
+    list-style: none;
+    padding: 0;
+    margin: 22px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .mg-ce-visual {
+    display: flex;
+    justify-content: center;
+    color: var(--line-2);
+    opacity: 0.5;
+  }
+  @media (max-width: 720px) {
+    .mg-ce-card {
+      grid-template-columns: 1fr;
+      padding: 32px 26px;
+    }
+    .mg-ce-visual {
+      display: none;
+    }
+  }
+
+  /* ── Pricing grid (Private Cloud) ─────────────────────────── */
   .mg-pricing-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -316,6 +625,21 @@ const pricingFaqs = [
     .mg-goodfor,
     .mg-price-block {
       min-height: 0;
+    }
+  }
+
+  /* ── Self-managed grid ────────────────────────────────────── */
+  .mg-self-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 820px;
+    margin: 0 auto;
+    align-items: stretch;
+  }
+  @media (max-width: 640px) {
+    .mg-self-grid {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -368,7 +692,7 @@ const pricingFaqs = [
     color: var(--paper);
   }
 
-  /* ── Tier cards ───────────────────────────────────────────── */
+  /* ── Tier / option cards ──────────────────────────────────── */
   .mg-price-card {
     position: relative;
     padding: 32px 26px;
@@ -451,6 +775,11 @@ const pricingFaqs = [
   .mg-cap-feat {
     font-weight: 600;
     color: var(--ink);
+  }
+
+  /* Self-managed cards have shorter descriptions — relax the min-height */
+  .mg-self-grid .mg-goodfor {
+    min-height: 3.5em;
   }
 
   /* ── Pricing FAQ ──────────────────────────────────────────── */
