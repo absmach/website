@@ -851,30 +851,32 @@ const faqSchema = JSON.stringify({
                 class={`cta-card mg-price-card${tier.featured ? " is-featured" : ""}${tier.contact ? " is-custom" : ""}`}
               >
                 {tier.featured && <span class="mg-badge">Popular</span>}
-                <div>
+                <div class="mg-price-head">
                   <div class="label">{tier.name}</div>
-                  <div class="mg-goodfor">{tier.goodFor}</div>
-                  <div class="mg-price">
-                    {tier.contact ? (
-                      <span class="mg-price-contact">Contact</span>
-                    ) : (
-                      <Fragment>
-                        <span
-                          class="mg-amount"
-                          data-monthly={tier.monthly}
-                          data-annual={Math.round((tier.annual ?? 0) / 12)}
-                        >
-                          €{tier.monthly}
-                        </span>
-                        <span class="mg-per">/ month</span>
-                      </Fragment>
+                  <div class="mg-price-block">
+                    <div class="mg-price">
+                      {tier.contact ? (
+                        <span class="mg-price-contact">Contact</span>
+                      ) : (
+                        <Fragment>
+                          <span
+                            class="mg-amount"
+                            data-monthly={tier.monthly}
+                            data-annual={Math.round((tier.annual ?? 0) / 12)}
+                          >
+                            €{tier.monthly}
+                          </span>
+                          <span class="mg-per">/ month</span>
+                        </Fragment>
+                      )}
+                    </div>
+                    {!tier.contact && (
+                      <div class="mg-price-note" data-annual-total={tier.annual}>
+                        billed monthly
+                      </div>
                     )}
                   </div>
-                  {!tier.contact && (
-                    <div class="mg-price-note" data-annual-total={tier.annual}>
-                      billed monthly
-                    </div>
-                  )}
+                  <div class="mg-goodfor">{tier.goodFor}</div>
                 </div>
                 <ul class="mg-price-feats">
                   {tier.inherits && (
@@ -1153,6 +1155,10 @@ const faqSchema = JSON.stringify({
     .mg-pricing-grid {
       grid-template-columns: 1fr;
     }
+    .mg-goodfor,
+    .mg-price-block {
+      min-height: 0;
+    }
   }
 
   /* ── Pricing: billing toggle ──────────────────────────────── */
@@ -1229,18 +1235,24 @@ const faqSchema = JSON.stringify({
     background: var(--accent);
     color: #fff;
   }
+  .mg-price-head {
+    display: block;
+  }
+  .mg-price-block {
+    margin-top: 14px;
+    min-height: 62px;
+  }
   .mg-goodfor {
-    margin-top: 8px;
-    font-size: 12.5px;
+    margin-top: 14px;
+    min-height: 130px;
+    font-size: 13px;
     line-height: 1.5;
     color: var(--ink-3);
-    min-height: 4.5em;
   }
   .mg-price {
     display: flex;
     align-items: baseline;
     gap: 6px;
-    margin-top: 16px;
   }
   .mg-amount,
   .mg-price-contact {
