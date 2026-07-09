@@ -10,36 +10,26 @@ const { showHead = true } = Astro.props;
 // ── Private Cloud: fully managed, dedicated instances ──────────────
 const privateTiers = [
   {
-    name: "Starter",
-    goodFor: "Small proofs of concept and testing.",
-    monthly: 50,
-    annual: 540,
+    name: "Prototype",
+    goodFor:
+      "Pilot projects and small deployments with low message bandwidth and non-critical message loss.",
+    monthly: 150,
+    annual: 1620,
     transfer: "3 TB data transfer",
-    capacity: "~50 devices · 100k messages / month",
+    capacity: "~200 devices · 1M messages / month",
     inherits: null,
     featured: false,
     contact: false,
     cta: "Get started",
     features: [
       "Commercial UI with whitelabeling",
-      "Basic UI patches",
+      "Basic UI and Backend patches",
+      "Security updates",
       "Security fixes",
       "Community support",
+      "Dashboards",
+      "Audit logs",
     ],
-  },
-  {
-    name: "Prototype",
-    goodFor:
-      "Pilot projects and small deployments with low message bandwidth, where occasional message loss is acceptable.",
-    monthly: 200,
-    annual: 2160,
-    transfer: "5 TB data transfer",
-    capacity: "~250 devices · 1M messages / month",
-    inherits: "Starter",
-    featured: false,
-    contact: false,
-    cta: "Get started",
-    features: ["UI and backend updates", "Dashboards", "Audit logs"],
   },
   {
     name: "Business",
@@ -125,11 +115,11 @@ const eeFeatures = [
 const pricingFaqs = [
   {
     q: "What's the difference between Community, Private Cloud, and Self-managed?",
-    a: "Community Edition is the free, open-source platform you run yourself. Private Cloud is a fully managed, dedicated instance we host and operate for you. Self-managed is Magistrala Enterprise Edition running in your own environment — either licensed to you to operate, or deployed and operated by us on your infrastructure.",
+    a: "Community Edition is the free platform you run yourself. In includes a free and open-source version of the backend services, and a free version of the UI. Private Cloud is a fully managed, dedicated instance we host and operate for you. Self-managed is Magistrala Enterprise Edition running in your own environment — either licensed to you to operate, or deployed and operated by us on your infrastructure.",
   },
   {
     q: "What's included in a Private Cloud plan?",
-    a: "Every Private Cloud tier covers hosting, deployment, monitoring, and the updates listed for that tier. Higher tiers add dashboards, audit logs, rules engine, alarms, reports, and scheduled backups. You focus on your devices and data; we run the platform.",
+    a: "Every Private Cloud tier covers license, hosting, deployment, monitoring, dashboards, audit logs, and the updates listed for that tier. Higher tiers add the rules engine, alarms, reports, and scheduled backups. You focus on your devices and data; we run the platform.",
   },
   {
     q: "What counts as a device?",
@@ -140,7 +130,7 @@ const pricingFaqs = [
     a: "Yes. Every Private Cloud plan runs on a dedicated instance — no shared infrastructure. We provision, run, and manage the instance for you.",
   },
   {
-    q: "What does “~250 devices · 1M messages / month” actually mean?",
+    q: "What does “~200 devices · 1M messages / month” actually mean?",
     a: "Because each tier is a dedicated instance, that figure is a rough estimate of how many concurrent devices and messages the instance can comfortably handle. It is not a hard cap — we don't limit you artificially; the only real limit is the hardware and how it's set up. We deliberately avoid a messages-per-second metric, because it's a weak and misleading number for a few reasons:",
     points: [
       "Message size varies enormously. A ping is a message, and so is a 100 MB binary upload — they don't cost the same, and they aren't the same priority.",
@@ -163,15 +153,15 @@ const pricingFaqs = [
   },
   {
     q: "What's the difference between a monthly and a perpetual self-managed license?",
-    a: "A monthly license (€300 per cluster) is billed each month for as long as you use it. A perpetual license (€3,999 per cluster) is a one-time payment that lets you keep running that version indefinitely. Both cover the full Magistrala Enterprise Edition feature set.",
+    a: "A monthly license (€300 per cluster) is billed each month for as long as you use it. A perpetual license (€3,999) is a one-time payment that lets you keep running that version indefinitely. Both cover a single cluster deployment of the full Magistrala Enterprise Edition feature set.",
   },
   {
     q: "Can I deploy on my own cloud or on-premises?",
-    a: "Yes. With a self-managed license you run Magistrala Enterprise yourself, anywhere. With the “Managed by us” option we deploy and operate it on your infrastructure — AWS, GCP, Azure, or on-premises, including air-gapped environments — aligned to your SLA, security, and data-residency policies.",
+    a: "Yes. With a self-managed license you run Magistrala Enterprise yourself, anywhere. With the “Self-managed” option we deploy and operate it on your infrastructure — AWS, GCP, Azure, or on-premises, including air-gapped environments — aligned to your SLA, security, and data-residency policies.",
   },
   {
     q: "Do you offer a custom SLA and high availability?",
-    a: "Yes. Private Cloud Enterprise and Custom plans, and self-managed “Managed by us” deployments, support defined uptime SLAs and high-availability clustering. Response-time commitments and dedicated support hours scale with the plan and are tailored to your requirements.",
+    a: "Yes. Private Cloud Enterprise and Custom plans, and self-managed “Self-managed” deployments, support defined uptime SLAs and high-availability clustering. Response-time commitments and dedicated support hours scale with the plan and are tailored to your requirements.",
   },
   {
     q: "Is self-hosting free?",
@@ -620,16 +610,13 @@ const pricingFaqs = [
   /* ── Pricing grid (Private Cloud) ─────────────────────────── */
   .mg-pricing-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     align-items: stretch;
+    max-width: 1080px;
+    margin: 0 auto;
   }
-  @media (max-width: 1200px) {
-    .mg-pricing-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  @media (max-width: 820px) {
+  @media (max-width: 1024px) {
     .mg-pricing-grid {
       grid-template-columns: repeat(2, 1fr);
     }
