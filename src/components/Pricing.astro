@@ -97,7 +97,8 @@ const communityFeatures = [
   "Unlimited clients, channels, groups, tenants, messages",
   "Every update, free forever",
   "Full control of your data and infrastructure",
-  "Open source under Apache 2.0 — no lock-in",
+  "Open-source backend under Apache 2.0",
+  "Free-to-use UI, deployed as a Docker container",
   "Community support",
 ];
 
@@ -119,7 +120,7 @@ const pricingFaqs = [
     bullets: [
       {
         label: "Community",
-        text: "the free, open-source edition (Apache 2.0) you run yourself — the backend services plus a free, open-source version of the UI.",
+        text: "free to run yourself — open-source backend services (Apache 2.0) plus a free-to-use UI you deploy as a Docker container.",
       },
       {
         label: "Private Cloud",
@@ -179,7 +180,7 @@ const pricingFaqs = [
   },
   {
     q: "Is self-hosting free?",
-    a: "Partly. Magistrala core is open source under the Apache 2.0 license and free to self-host forever, as is the Community Edition. The Enterprise Edition — which unlocks the full feature set, including the rules engine, alarms, reports, audit logs, and dashboards — requires a self-managed license or a managed plan.",
+    a: "Partly. The Magistrala backend is open source under the Apache 2.0 license and free to self-host forever, and the Community Edition UI is free to use and deploy as a Docker container. The Enterprise Edition — which unlocks the full feature set, including the rules engine, alarms, reports, audit logs, and dashboards — requires a self-managed license or a managed plan.",
   },
 ];
 ---
@@ -244,11 +245,11 @@ const pricingFaqs = [
           <span class="label">Community Edition · Free</span>
           <h3 class="mg-ce-title">Free — and it always will be.</h3>
           <p class="mg-ce-desc">
-            The Community Edition is the open-source core of Magistrala, released
-            under Apache 2.0. Run the full multi-tenant IoT platform on your own
-            hardware, keep complete control of your data and deployment, and
-            build without license fees, seat limits, or vendor lock-in. It's
-            yours to run, extend, and own.
+            Community Edition is free to run yourself. The backend services are
+            open source under Apache 2.0; the UI is free to use and deploy as a
+            Docker container. Run the full multi-tenant IoT platform on your own
+            hardware, keep complete control of your data, and build without
+            license fees, seat limits, or vendor lock-in.
           </p>
           <ul class="mg-ce-feats">
             {communityFeatures.map((f) => <li>→ {f}</li>)}
