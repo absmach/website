@@ -106,11 +106,14 @@ const integrations = [
 const pricingTiers = [
   {
     name: "Starter",
-    capacity: "~50 devices · 100k messages",
+    goodFor: "Small proofs of concept and testing.",
     monthly: 50,
     annual: 540,
+    transfer: "3 TB data transfer",
+    capacity: "~50 devices · 100k messages / month",
     inherits: null,
     featured: false,
+    contact: false,
     cta: "Get started",
     features: [
       "Commercial UI with whitelabeling",
@@ -120,55 +123,76 @@ const pricingTiers = [
     ],
   },
   {
-    name: "Growth",
-    capacity: "~250 devices · 1M messages",
-    monthly: 150,
-    annual: 1620,
+    name: "Prototype",
+    goodFor:
+      "Pilot projects and small deployments with low message bandwidth, where occasional message loss is acceptable.",
+    monthly: 200,
+    annual: 2160,
+    transfer: "5 TB data transfer",
+    capacity: "~250 devices · 1M messages / month",
     inherits: "Starter",
     featured: false,
+    contact: false,
     cta: "Get started",
     features: ["UI and backend updates", "Dashboards", "Audit logs"],
   },
   {
     name: "Business",
-    capacity: "~1k devices · 10M messages",
-    monthly: 350,
-    annual: 3780,
-    inherits: "Growth",
+    goodFor:
+      "Deployments where availability matters and flexibility and features are important. This is where your business starts.",
+    monthly: 500,
+    annual: 5400,
+    transfer: "8 TB data transfer",
+    capacity: "~10k devices · 100M messages / month",
+    inherits: "Prototype",
     featured: true,
+    contact: false,
     cta: "Get started",
     features: [
       "Rules Engine & custom message format",
-      "Priority support & issue addressing",
-    ],
-  },
-  {
-    name: "Enterprise",
-    capacity: "~10k devices · 100M messages",
-    monthly: 500,
-    annual: 5400,
-    inherits: "Business",
-    featured: false,
-    cta: "Get started",
-    features: [
       "Alarms",
       "Reports",
+      "Priority support & issue addressing",
       "Dedicated support 2h / month",
       "Weekly backup, 3-month retention",
     ],
   },
   {
-    name: "Dedicated",
-    capacity: "~100k devices · 1B messages",
-    monthly: 750,
-    annual: 8100,
-    inherits: "Enterprise",
+    name: "Enterprise",
+    goodFor: "Larger deployments where stability and performance matter.",
+    monthly: 1000,
+    annual: 10800,
+    transfer: "8 TB data transfer",
+    capacity: "~100k devices · 1B messages / month",
+    inherits: "Business",
     featured: false,
-    cta: "Contact sales",
+    contact: false,
+    cta: "Get started",
     features: [
       "Highest-priority support & issue addressing",
-      "Dedicated support 12h / month",
-      "Daily backup, 3-month retention",
+      "Dedicated support 12h / month (instead of 2)",
+      "Daily backup, 3-month retention (instead of weekly)",
+    ],
+  },
+  {
+    name: "Custom",
+    goodFor:
+      "Large production deployments where HA and SLA matter — huge device and message volumes, no acceptable message loss, and strict data residency and compliance.",
+    monthly: null,
+    annual: null,
+    transfer: null,
+    capacity: null,
+    inherits: null,
+    featured: false,
+    contact: true,
+    cta: "Contact sales",
+    features: [
+      "Deploy on our dedicated cloud, your cloud (AWS, GCP, Azure), or on-premises",
+      "Custom SLA with defined uptime guarantees",
+      "High-availability clustering",
+      "Dedicated infrastructure & data residency",
+      "Custom integrations & message formats",
+      "Priority engineering support",
     ],
   },
 ];
@@ -809,24 +833,34 @@ const faqSchema = JSON.stringify({
         <div class="mg-pricing-grid">
           {
             pricingTiers.map((tier) => (
-              <div class={`cta-card mg-price-card${tier.featured ? " is-featured" : ""}`}>
+              <div
+                class={`cta-card mg-price-card${tier.featured ? " is-featured" : ""}${tier.contact ? " is-custom" : ""}`}
+              >
                 {tier.featured && <span class="mg-badge">Popular</span>}
                 <div>
                   <div class="label">{tier.name}</div>
-                  <div class="mg-capacity">{tier.capacity}</div>
+                  <div class="mg-goodfor">{tier.goodFor}</div>
                   <div class="mg-price">
-                    <span
-                      class="mg-amount"
-                      data-monthly={tier.monthly}
-                      data-annual={Math.round(tier.annual / 12)}
-                    >
-                      €{tier.monthly}
-                    </span>
-                    <span class="mg-per">/ month</span>
+                    {tier.contact ? (
+                      <span class="mg-price-contact">Contact</span>
+                    ) : (
+                      <Fragment>
+                        <span
+                          class="mg-amount"
+                          data-monthly={tier.monthly}
+                          data-annual={Math.round((tier.annual ?? 0) / 12)}
+                        >
+                          €{tier.monthly}
+                        </span>
+                        <span class="mg-per">/ month</span>
+                      </Fragment>
+                    )}
                   </div>
-                  <div class="mg-price-note" data-annual-total={tier.annual}>
-                    billed monthly
-                  </div>
+                  {!tier.contact && (
+                    <div class="mg-price-note" data-annual-total={tier.annual}>
+                      billed monthly
+                    </div>
+                  )}
                 </div>
                 <ul class="mg-price-feats">
                   {tier.inherits && (
@@ -835,6 +869,10 @@ const faqSchema = JSON.stringify({
                   {tier.features.map((feature) => (
                     <li>→ {feature}</li>
                   ))}
+                  {tier.capacity && (
+                    <li class="mg-cap-feat">→ {tier.capacity}</li>
+                  )}
+                  {tier.transfer && <li>→ {tier.transfer}</li>}
                 </ul>
                 <a
                   href="/contact"
@@ -846,30 +884,6 @@ const faqSchema = JSON.stringify({
               </div>
             ))
           }
-        </div>
-
-        <div class="mg-custom">
-          <div class="mg-custom-main">
-            <div class="label">Custom</div>
-            <h3>Bring your own cloud, on your terms.</h3>
-            <p>
-              For large or regulated deployments, we run Magistrala wherever you
-              need it, tailored to your scale, compliance, and integration
-              requirements.
-            </p>
-            <ul class="mg-custom-feats">
-              <li>→ Deploy on your cloud (AWS, GCP, Azure) or on-premises</li>
-              <li>→ Custom SLA with defined uptime guarantees</li>
-              <li>→ High-availability clustering</li>
-              <li>→ Dedicated infrastructure &amp; data residency</li>
-              <li>→ Custom integrations &amp; message formats</li>
-              <li>→ Priority engineering support</li>
-            </ul>
-          </div>
-          <div class="mg-custom-aside">
-            <div class="mg-custom-price">Custom pricing</div>
-            <a href="/contact" class="btn mg-custom-btn">Contact sales →</a>
-          </div>
         </div>
 
         <p
@@ -1201,10 +1215,12 @@ const faqSchema = JSON.stringify({
     background: var(--accent);
     color: #fff;
   }
-  .mg-capacity {
-    margin-top: 6px;
-    font-size: 13px;
-    color: var(--ink-2);
+  .mg-goodfor {
+    margin-top: 8px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink-3);
+    min-height: 4.5em;
   }
   .mg-price {
     display: flex;
@@ -1212,11 +1228,15 @@ const faqSchema = JSON.stringify({
     gap: 6px;
     margin-top: 16px;
   }
-  .mg-amount {
+  .mg-amount,
+  .mg-price-contact {
     font-size: 34px;
     font-weight: 700;
     color: var(--ink);
     line-height: 1;
+  }
+  .mg-price-contact {
+    font-size: 28px;
   }
   .mg-per {
     font-size: 13px;
@@ -1244,80 +1264,12 @@ const faqSchema = JSON.stringify({
     font-weight: 600;
     color: var(--ink);
   }
-
-  /* ── Pricing: custom / dedicated banner ───────────────────── */
-  .mg-custom {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
-    gap: 40px;
-    align-items: center;
-    padding: 40px;
-    border-radius: var(--radius-lg);
-    background: var(--surface-accent);
-    color: var(--on-accent);
-    border: 1px solid var(--surface-accent);
-  }
-  .mg-custom-main .label {
-    font-family: var(--font-mono), monospace;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--accent-2);
-  }
-  .mg-custom-main h3 {
-    margin: 10px 0 0;
-    font-size: 26px;
+  .mg-cap-feat {
     font-weight: 600;
-    color: var(--on-accent);
-  }
-  .mg-custom-main > p {
-    margin: 12px 0 0;
-    max-width: 62ch;
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--on-accent-dim);
-  }
-  .mg-custom-feats {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0 0;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px 28px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: var(--on-accent-dim);
-  }
-  .mg-custom-aside {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-  }
-  .mg-custom-price {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--on-accent);
-  }
-  .mg-custom-btn {
-    background: var(--on-accent);
     color: var(--ink);
-    border-color: var(--on-accent);
   }
-  .mg-custom-btn:hover {
-    background: #fff;
-    border-color: #fff;
-  }
-  @media (max-width: 820px) {
-    .mg-custom {
-      grid-template-columns: 1fr;
-      gap: 28px;
-      padding: 32px 26px;
-    }
-    .mg-custom-feats {
-      grid-template-columns: 1fr;
-    }
+  .mg-price-card.is-custom {
+    background: var(--paper-2);
   }
 
   /* ── Pricing FAQ ──────────────────────────────────────────── */
