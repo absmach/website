@@ -7,12 +7,14 @@ interface Props {
 }
 const { showHead = true } = Astro.props;
 
+const fmt = (n: number) => n.toLocaleString("en-US");
+
 // ── Private Cloud: fully managed, dedicated instances ──────────────
 const privateTiers = [
   {
     name: "Prototype",
     goodFor:
-      "Pilot projects and small deployments with low message bandwidth and non-critical message loss.",
+      "Pilot projects and small deployments with low message bandwidth and best-effort delivery.",
     monthly: 150,
     annual: 1620,
     storage: "80 GB storage for messages",
@@ -269,7 +271,7 @@ const pricingFaqs = [
   },
   {
     q: "Can I change plans later?",
-    a: "Yes, but only up - due to the hardware limitations and guarantees. You can move up between tiers at any time. Going down is possible, but you need to contact us because it requires a migration from our side. Changes are prorated, so you only pay for what you use in a billing period.",
+    a: "Yes. Upgrades are available at any time. Downgrades require a migration on our side, so please contact us to arrange one. Changes are prorated, so you only pay for what you use in a billing period.",
   },
   {
     q: "How does annual billing work?",
@@ -419,10 +421,10 @@ const pricingFaqs = [
                       <Fragment>
                         <span
                           class="mg-amount"
-                          data-amt-monthly={tier.monthly}
-                          data-amt-annual={Math.round((tier.annual ?? 0) / 12)}
+                          data-amt-monthly={fmt(tier.monthly ?? 0)}
+                          data-amt-annual={fmt(Math.round((tier.annual ?? 0) / 12))}
                         >
-                          €{tier.monthly}
+                          €{fmt(tier.monthly ?? 0)}
                         </span>
                         <span class="mg-per">/ month</span>
                       </Fragment>
@@ -432,7 +434,7 @@ const pricingFaqs = [
                     <div
                       class="mg-price-note"
                       data-note-monthly="billed monthly"
-                      data-note-annual={`€${(tier.annual ?? 0).toLocaleString()} billed yearly`}
+                      data-note-annual={`€${fmt(tier.annual ?? 0)} billed yearly`}
                     >
                       billed monthly
                     </div>
@@ -512,7 +514,7 @@ const pricingFaqs = [
                 <span
                   class="mg-amount"
                   data-amt-monthly="300"
-                  data-amt-perpetual="3999"
+                  data-amt-perpetual="3,999"
                 >
                   €300
                 </span>
