@@ -117,32 +117,46 @@ const eeFeatures = [
   "Priority security patches & updates",
 ];
 
-// ── Community vs Enterprise Edition comparison ─────────────────────
-// Enterprise Edition ships at two service levels, mirrored by the
-// Business and Enterprise plans. Cell values: true → included,
-// false → not included, string → the specific value for that column.
+// ── Compare Community with the Private Cloud tiers ─────────────────
+// Columns: Community + every Private Cloud tier. Cell values:
+// true → included, false → not included, string → specific value.
+// Self-hosted Community is bounded only by your own hardware.
+const compareCols = ["Community", "Prototype", "Business", "Enterprise", "Custom"];
+const HW = "Your hardware";
 const compareGroups = [
   {
     group: "Platform",
     rows: [
-      { f: "Open-source backend (Apache 2.0)", ce: true, biz: true, ent: true },
+      {
+        f: "Open-source backend (Apache 2.0)",
+        cells: [true, true, true, true, true],
+      },
       {
         f: "Multi-protocol messaging (MQTT, CoAP, HTTP, WebSocket)",
-        ce: true,
-        biz: true,
-        ent: true,
+        cells: [true, true, true, true, true],
       },
       {
         f: "Multi-tenancy & fine-grained access control",
-        ce: true,
-        biz: true,
-        ent: true,
+        cells: [true, true, true, true, true],
       },
       {
         f: "Unlimited clients, channels, groups & messages",
-        ce: true,
-        biz: true,
-        ent: true,
+        cells: [true, true, true, true, true],
+      },
+    ],
+  },
+  {
+    group: "Capacity",
+    rows: [
+      { f: "Devices", cells: [HW, "~200", "~10k", "~100k", "Custom"] },
+      { f: "Messages / month", cells: [HW, "1M", "100M", "1B", "Custom"] },
+      {
+        f: "Message storage",
+        cells: [HW, "80 GB", "180 GB", "300 GB", "Custom"],
+      },
+      {
+        f: "Data transfer / month",
+        cells: [HW, "3 TB", "8 TB", "8 TB", "Custom"],
       },
     ],
   },
@@ -151,12 +165,16 @@ const compareGroups = [
     rows: [
       {
         f: "User interface",
-        ce: "Free community UI",
-        biz: "Commercial + whitelabel",
-        ent: "Commercial + whitelabel",
+        cells: [
+          "Free community UI",
+          "Commercial + whitelabel",
+          "Commercial + whitelabel",
+          "Commercial + whitelabel",
+          "Commercial + whitelabel",
+        ],
       },
-      { f: "Dashboards", ce: false, biz: true, ent: true },
-      { f: "Audit logs", ce: false, biz: true, ent: true },
+      { f: "Dashboards", cells: [false, true, true, true, true] },
+      { f: "Audit logs", cells: [false, true, true, true, true] },
     ],
   },
   {
@@ -164,12 +182,10 @@ const compareGroups = [
     rows: [
       {
         f: "Rules Engine & custom message formats",
-        ce: false,
-        biz: true,
-        ent: true,
+        cells: [false, false, true, true, true],
       },
-      { f: "Alarms", ce: false, biz: true, ent: true },
-      { f: "Reports", ce: false, biz: true, ent: true },
+      { f: "Alarms", cells: [false, false, true, true, true] },
+      { f: "Reports", cells: [false, false, true, true, true] },
     ],
   },
   {
@@ -177,39 +193,35 @@ const compareGroups = [
     rows: [
       {
         f: "Security patches & updates",
-        ce: "Community",
-        biz: "Priority",
-        ent: "Priority",
+        cells: ["Community", "Standard", "Priority", "Priority", "Priority"],
       },
       {
         f: "Support",
-        ce: "Community",
-        biz: "Priority",
-        ent: "Highest priority",
+        cells: [
+          "Community",
+          "Community",
+          "Priority",
+          "Highest priority",
+          "Highest priority",
+        ],
       },
       {
         f: "Dedicated support hours",
-        ce: false,
-        biz: "2h / month",
-        ent: "12h / month",
+        cells: [false, false, "2h / month", "12h / month", "Custom"],
       },
       {
         f: "Backups",
-        ce: false,
-        biz: "Weekly · 3-month retention",
-        ent: "Daily · 3-month retention",
+        cells: [
+          false,
+          false,
+          "Weekly · 3-month",
+          "Daily · 3-month",
+          "Custom",
+        ],
       },
       {
         f: "Dedicated instance",
-        ce: "Self-hosted",
-        biz: true,
-        ent: true,
-      },
-      {
-        f: "Uptime SLA & high-availability clustering",
-        ce: false,
-        biz: false,
-        ent: false,
+        cells: ["Self-hosted", true, true, true, true],
       },
     ],
   },
@@ -588,14 +600,14 @@ const pricingFaqs = [
     <!-- ── Compare editions ────────────────────────────────────── -->
     <div class="mg-compare">
       <div class="mg-compare-head">
-        <span class="kicker">Editions</span>
+        <span class="kicker">Editions &amp; plans</span>
         <h3 class="h-3" style="margin-top:12px;">
-          Community vs Enterprise Edition.
+          Community vs Private Cloud plans.
         </h3>
         <p class="mg-compare-sub">
-          Enterprise Edition powers both the managed Private Cloud plans and
-          self-managed licenses, at two service levels — Business and
-          Enterprise.
+          Everything in the free Community Edition, plus what each managed
+          Private Cloud tier adds. Self-hosted Community is bounded only by your
+          own hardware.
         </p>
       </div>
       <div class="mg-compare-scroll">
@@ -603,9 +615,9 @@ const pricingFaqs = [
           <thead>
             <tr>
               <th scope="col">Feature</th>
-              <th scope="col">Community</th>
-              <th scope="col">EE · Business</th>
-              <th scope="col">EE · Enterprise</th>
+              {compareCols.map((c) => (
+                <th scope="col">{c}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -613,14 +625,14 @@ const pricingFaqs = [
               compareGroups.map((grp) => (
                 <Fragment>
                   <tr class="mg-compare-group">
-                    <th scope="colgroup" colspan="4">
+                    <th scope="colgroup" colspan={compareCols.length + 1}>
                       {grp.group}
                     </th>
                   </tr>
                   {grp.rows.map((row) => (
                     <tr>
                       <th scope="row">{row.f}</th>
-                      {[row.ce, row.biz, row.ent].map((c) => (
+                      {row.cells.map((c) => (
                         <td>
                           {typeof c === "boolean" ? (
                             c ? (
@@ -644,8 +656,9 @@ const pricingFaqs = [
         </table>
       </div>
       <p class="mg-compare-foot">
-        A formal uptime SLA and high-availability clustering are available on the
-        Custom plan (and self-managed “Managed by us”) only.
+        Capacity figures are soft guidance bounded by hardware, not hard caps. A
+        formal uptime SLA and high-availability clustering are available on the
+        Custom plan only.
       </p>
     </div>
 
@@ -1041,7 +1054,7 @@ const pricingFaqs = [
 
   /* ── Compare editions table ───────────────────────────────── */
   .mg-compare {
-    max-width: 960px;
+    max-width: 1120px;
     margin: 72px auto 0;
   }
   .mg-compare-head {
@@ -1064,7 +1077,7 @@ const pricingFaqs = [
   }
   .mg-compare-table {
     width: 100%;
-    min-width: 620px;
+    min-width: 880px;
     border-collapse: collapse;
     font-size: 14px;
   }
@@ -1085,7 +1098,7 @@ const pricingFaqs = [
     text-align: left;
   }
   .mg-compare-table thead th:first-child {
-    width: 40%;
+    width: 26%;
   }
   .mg-compare-table tbody th[scope="row"] {
     font-weight: 500;
