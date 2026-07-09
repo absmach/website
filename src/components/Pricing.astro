@@ -115,7 +115,21 @@ const eeFeatures = [
 const pricingFaqs = [
   {
     q: "What's the difference between Community, Private Cloud, and Self-managed?",
-    a: "Community Edition is the free platform you run yourself. In includes a free and open-source version of the backend services, and a free version of the UI. Private Cloud is a fully managed, dedicated instance we host and operate for you. Self-managed is Magistrala Enterprise Edition running in your own environment — either licensed to you to operate, or deployed and operated by us on your infrastructure.",
+    a: "Same platform, three ways to run it:",
+    bullets: [
+      {
+        label: "Community",
+        text: "the free, open-source edition (Apache 2.0) you run yourself — the backend services plus a free, open-source version of the UI.",
+      },
+      {
+        label: "Private Cloud",
+        text: "a fully managed, dedicated instance of Magistrala Enterprise Edition that we host and operate for you.",
+      },
+      {
+        label: "Self-managed",
+        text: "Magistrala Enterprise Edition in your own environment — licensed to you to run yourself, or deployed and operated by us on your infrastructure.",
+      },
+    ],
   },
   {
     q: "What's included in a Private Cloud plan?",
