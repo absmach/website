@@ -1,5 +1,5 @@
 ---
-import { Boxes, Cloud, Server, Users } from "@lucide/astro";
+import { Boxes, Check, Cloud, Server, Users } from "@lucide/astro";
 import FAQAccordion from "./FAQAccordion.astro";
 
 interface Props {
@@ -117,6 +117,104 @@ const eeFeatures = [
   "Priority security patches & updates",
 ];
 
+// ── Community vs Enterprise Edition comparison ─────────────────────
+// Enterprise Edition ships at two service levels, mirrored by the
+// Business and Enterprise plans. Cell values: true → included,
+// false → not included, string → the specific value for that column.
+const compareGroups = [
+  {
+    group: "Platform",
+    rows: [
+      { f: "Open-source backend (Apache 2.0)", ce: true, biz: true, ent: true },
+      {
+        f: "Multi-protocol messaging (MQTT, CoAP, HTTP, WebSocket)",
+        ce: true,
+        biz: true,
+        ent: true,
+      },
+      {
+        f: "Multi-tenancy & fine-grained access control",
+        ce: true,
+        biz: true,
+        ent: true,
+      },
+      {
+        f: "Unlimited clients, channels, groups & messages",
+        ce: true,
+        biz: true,
+        ent: true,
+      },
+    ],
+  },
+  {
+    group: "Interface & data",
+    rows: [
+      {
+        f: "User interface",
+        ce: "Free community UI",
+        biz: "Commercial + whitelabel",
+        ent: "Commercial + whitelabel",
+      },
+      { f: "Dashboards", ce: false, biz: true, ent: true },
+      { f: "Audit logs", ce: false, biz: true, ent: true },
+    ],
+  },
+  {
+    group: "Enterprise features",
+    rows: [
+      {
+        f: "Rules Engine & custom message formats",
+        ce: false,
+        biz: true,
+        ent: true,
+      },
+      { f: "Alarms", ce: false, biz: true, ent: true },
+      { f: "Reports", ce: false, biz: true, ent: true },
+    ],
+  },
+  {
+    group: "Operations & support",
+    rows: [
+      {
+        f: "Security patches & updates",
+        ce: "Community",
+        biz: "Priority",
+        ent: "Priority",
+      },
+      {
+        f: "Support",
+        ce: "Community",
+        biz: "Priority",
+        ent: "Highest priority",
+      },
+      {
+        f: "Dedicated support hours",
+        ce: false,
+        biz: "2h / month",
+        ent: "12h / month",
+      },
+      {
+        f: "Backups",
+        ce: false,
+        biz: "Weekly · 3-month retention",
+        ent: "Daily · 3-month retention",
+      },
+      {
+        f: "Dedicated instance",
+        ce: "Self-hosted",
+        biz: true,
+        ent: true,
+      },
+      {
+        f: "Uptime SLA & high-availability clustering",
+        ce: false,
+        biz: false,
+        ent: false,
+      },
+    ],
+  },
+];
+
 const pricingFaqs = [
   {
     q: "What's the difference between Community, Private Cloud, and Self-managed?",
@@ -176,11 +274,11 @@ const pricingFaqs = [
   },
   {
     q: "Can I deploy on my own cloud or on-premises?",
-    a: "Yes. With a self-managed license you run Magistrala Enterprise yourself, anywhere. With the “Self-managed” option we deploy and operate it on your infrastructure — AWS, GCP, Azure, or on-premises, including air-gapped environments — aligned to your SLA, security, and data-residency policies.",
+    a: "Yes. With a self-managed license you run Magistrala Enterprise yourself, anywhere. With the “Managed by us” option we deploy and operate it on your infrastructure — AWS, GCP, Azure, or on-premises, including air-gapped environments — aligned to your SLA, security, and data-residency policies.",
   },
   {
     q: "Do you offer a custom SLA and high availability?",
-    a: "Yes. Private Cloud Enterprise and Custom plans, and self-managed “Self-managed” deployments, support defined uptime SLAs and high-availability clustering. Response-time commitments and dedicated support hours scale with the plan and are tailored to your requirements.",
+    a: "A formal uptime SLA and high-availability clustering are part of the Custom plan and the self-managed “Managed by us” option only. The standard Private Cloud tiers (Prototype, Business, Enterprise) each run as a single dedicated instance with proactive monitoring and support, but without a contractual SLA or clustering. If you need a guaranteed uptime target or active-active high availability, that's what the Custom plan is for — response times and architecture are tailored to your requirements.",
   },
   {
     q: "Is self-hosting free?",
@@ -472,6 +570,83 @@ const pricingFaqs = [
           </a>
         </div>
       </div>
+    </div>
+
+    <!-- ── Emphasis: no artificial gates ───────────────────────── -->
+    <div class="mg-emphasis">
+      <span class="mg-emphasis-kicker">No artificial gates</span>
+      <h3 class="mg-emphasis-title">Features, not fences.</h3>
+      <p>
+        We don't meter you with arbitrary caps — no “10 devices”, no “400
+        messages”, no “3 dashboards”. You either have a feature or you don't.
+        Once you're licensed, the only limits are soft ones, set by your
+        hardware and configuration — never by us. And every deployment, Private
+        Cloud or self-managed, is a full, dedicated instance. Never shared.
+      </p>
+    </div>
+
+    <!-- ── Compare editions ────────────────────────────────────── -->
+    <div class="mg-compare">
+      <div class="mg-compare-head">
+        <span class="kicker">Editions</span>
+        <h3 class="h-3" style="margin-top:12px;">
+          Community vs Enterprise Edition.
+        </h3>
+        <p class="mg-compare-sub">
+          Enterprise Edition powers both the managed Private Cloud plans and
+          self-managed licenses, at two service levels — Business and
+          Enterprise.
+        </p>
+      </div>
+      <div class="mg-compare-scroll">
+        <table class="mg-compare-table">
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col">Community</th>
+              <th scope="col">EE · Business</th>
+              <th scope="col">EE · Enterprise</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              compareGroups.map((grp) => (
+                <Fragment>
+                  <tr class="mg-compare-group">
+                    <th scope="colgroup" colspan="4">
+                      {grp.group}
+                    </th>
+                  </tr>
+                  {grp.rows.map((row) => (
+                    <tr>
+                      <th scope="row">{row.f}</th>
+                      {[row.ce, row.biz, row.ent].map((c) => (
+                        <td>
+                          {typeof c === "boolean" ? (
+                            c ? (
+                              <span class="mg-yes">
+                                <Check size={16} />
+                              </span>
+                            ) : (
+                              <span class="mg-no">—</span>
+                            )
+                          ) : (
+                            <span class="mg-val">{c}</span>
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </Fragment>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="mg-compare-foot">
+        A formal uptime SLA and high-availability clustering are available on the
+        Custom plan (and self-managed “Managed by us”) only.
+      </p>
     </div>
 
     <!-- ── Shared pricing FAQ ──────────────────────────────────── -->
@@ -826,5 +1001,126 @@ const pricingFaqs = [
   }
   .mg-price-faq-head .kicker {
     display: block;
+  }
+
+  /* ── Emphasis band ────────────────────────────────────────── */
+  .mg-emphasis {
+    max-width: 900px;
+    margin: 8px auto 0;
+    padding: 44px 48px;
+    text-align: center;
+    background: var(--surface-accent);
+    color: var(--on-accent);
+    border-radius: var(--radius-lg);
+  }
+  .mg-emphasis-kicker {
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent-2);
+  }
+  .mg-emphasis-title {
+    margin: 10px 0 0;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--on-accent);
+  }
+  .mg-emphasis p {
+    margin: 14px auto 0;
+    max-width: 64ch;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--on-accent-dim);
+  }
+  @media (max-width: 600px) {
+    .mg-emphasis {
+      padding: 32px 24px;
+    }
+  }
+
+  /* ── Compare editions table ───────────────────────────────── */
+  .mg-compare {
+    max-width: 960px;
+    margin: 72px auto 0;
+  }
+  .mg-compare-head {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .mg-compare-head .kicker {
+    display: block;
+  }
+  .mg-compare-sub {
+    margin: 12px auto 0;
+    max-width: 60ch;
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+  .mg-compare-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+  }
+  .mg-compare-table {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .mg-compare-table th,
+  .mg-compare-table td {
+    padding: 12px 16px;
+    text-align: center;
+  }
+  .mg-compare-table thead th {
+    background: var(--paper-2);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-3);
+  }
+  .mg-compare-table thead th:first-child,
+  .mg-compare-table tbody th[scope="row"] {
+    text-align: left;
+  }
+  .mg-compare-table thead th:first-child {
+    width: 40%;
+  }
+  .mg-compare-table tbody th[scope="row"] {
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+  .mg-compare-table tbody tr:not(.mg-compare-group) + tr:not(.mg-compare-group),
+  .mg-compare-table tbody tr:not(.mg-compare-group):first-child {
+    border-top: 1px solid var(--line-3);
+  }
+  .mg-compare-group th {
+    text-align: left;
+    background: var(--paper-2);
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    padding-top: 16px;
+    padding-bottom: 10px;
+    border-top: 1px solid var(--line-3);
+  }
+  .mg-yes {
+    display: inline-flex;
+    color: var(--accent);
+  }
+  .mg-no {
+    color: var(--ink-4);
+  }
+  .mg-val {
+    color: var(--ink-2);
+  }
+  .mg-compare-foot {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-3);
   }
 </style>
