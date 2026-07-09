@@ -207,6 +207,20 @@ const pricingFaqs = [
     a: "A device is any client that connects to the platform and exchanges messages, regardless of protocol (MQTT, CoAP, HTTP, or WebSocket). The device and message figures on each tier are guidance for typical workloads, not hard quotas.",
   },
   {
+    q: "Do I get a dedicated instance?",
+    a: "Yes. Every plan runs on a dedicated instance — no shared infrastructure. We provision, run, and manage the instance for you.",
+  },
+  {
+    q: "What does “~250 devices · 1M messages / month” actually mean?",
+    a: "Because each tier is a dedicated instance, that figure is a rough estimate of how many concurrent devices and messages the instance can comfortably handle. It is not a hard cap — we don't limit you artificially; the only real limit is the hardware and how it's set up. We deliberately avoid a messages-per-second metric, because it's a weak and misleading number for a few reasons:",
+    points: [
+      "Message size varies enormously. A ping is a message, and so is a 100 MB binary upload — they don't cost the same, and they aren't the same priority.",
+      "Networking hiccups and load balancing have an outsized impact as you approach the upper limit of throughput.",
+      "Messages carry different delivery modes and quality-of-service guarantees — not all messages are equally important.",
+      "Throughput also depends on delivery semantics: whether it includes consumer delivery and message persistence. Slow consumers can effectively serialize your infrastructure — and sometimes that's the intended behaviour, especially in low-bandwidth, high-QoS environments.",
+    ],
+  },
+  {
     q: "What happens if I exceed my device or message limit?",
     a: "Limits are soft. We monitor usage and reach out to move you to the tier that fits, rather than cutting you off mid-cycle. If a burst is temporary, nothing breaks.",
   },
@@ -224,7 +238,7 @@ const pricingFaqs = [
   },
   {
     q: "Do you offer a custom SLA and high availability?",
-    a: "Enterprise, Dedicated, and Custom plans support defined uptime SLAs and high-availability clustering. Response-time commitments and dedicated support hours scale with the tier; the Custom plan is tailored to your requirements.",
+    a: "Custom plans support defined uptime SLAs and high-availability clustering. Response-time commitments and dedicated support hours scale with the tier; the Custom plan is tailored to your requirements.",
   },
   {
     q: "Is self-hosting free?",

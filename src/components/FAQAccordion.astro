@@ -1,17 +1,45 @@
 ---
 interface Props {
-  items: { q: string; a: string }[];
+  items: { q: string; a: string; points?: string[] }[];
 }
 const { items } = Astro.props;
 ---
 
 <div class="faq-list">
   {
-    items.map(({ q, a }) => (
+    items.map(({ q, a, points }) => (
       <details class="faq-item">
         <summary class="faq-q">{q}</summary>
         <p class="faq-a">{a}</p>
+        {points && points.length > 0 && (
+          <ol class="faq-a-list">
+            {points.map((point) => (
+              <li>{point}</li>
+            ))}
+          </ol>
+        )}
       </details>
     ))
   }
 </div>
+
+<style>
+  .faq-item:has(.faq-a-list) .faq-a {
+    padding-bottom: 10px;
+  }
+  .faq-a-list {
+    margin: 0;
+    padding: 0 24px 20px 44px;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.65;
+    list-style: decimal;
+  }
+  .faq-a-list li {
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+  .faq-a-list li:last-child {
+    margin-bottom: 0;
+  }
+</style>
