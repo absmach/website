@@ -1,0 +1,468 @@
+---
+import FAQAccordion from "./FAQAccordion.astro";
+
+interface Props {
+  showHead?: boolean;
+}
+const { showHead = true } = Astro.props;
+
+const pricingTiers = [
+  {
+    name: "Starter",
+    goodFor: "Small proofs of concept and testing.",
+    monthly: 50,
+    annual: 540,
+    transfer: "3 TB data transfer",
+    capacity: "~50 devices · 100k messages / month",
+    inherits: null,
+    featured: false,
+    contact: false,
+    cta: "Get started",
+    features: [
+      "Commercial UI with whitelabeling",
+      "Basic UI patches",
+      "Security fixes",
+      "Community support",
+    ],
+  },
+  {
+    name: "Prototype",
+    goodFor:
+      "Pilot projects and small deployments with low message bandwidth, where occasional message loss is acceptable.",
+    monthly: 200,
+    annual: 2160,
+    transfer: "5 TB data transfer",
+    capacity: "~250 devices · 1M messages / month",
+    inherits: "Starter",
+    featured: false,
+    contact: false,
+    cta: "Get started",
+    features: ["UI and backend updates", "Dashboards", "Audit logs"],
+  },
+  {
+    name: "Business",
+    goodFor:
+      "Deployments where availability matters and flexibility and features are important. This is where your business starts.",
+    monthly: 500,
+    annual: 5400,
+    transfer: "8 TB data transfer",
+    capacity: "~10k devices · 100M messages / month",
+    inherits: "Prototype",
+    featured: true,
+    contact: false,
+    cta: "Get started",
+    features: [
+      "Rules Engine & custom message format",
+      "Alarms",
+      "Reports",
+      "Priority support & issue addressing",
+      "Dedicated support 2h / month",
+      "Weekly backup, 3-month retention",
+    ],
+  },
+  {
+    name: "Enterprise",
+    goodFor: "Larger deployments where stability and performance matter.",
+    monthly: 1000,
+    annual: 10800,
+    transfer: "8 TB data transfer",
+    capacity: "~100k devices · 1B messages / month",
+    inherits: "Business",
+    featured: false,
+    contact: false,
+    cta: "Get started",
+    features: [
+      "Highest-priority support & issue addressing",
+      "Dedicated support 12h / month (instead of 2)",
+      "Daily backup, 3-month retention (instead of weekly)",
+    ],
+  },
+  {
+    name: "Custom",
+    goodFor:
+      "Large production deployments where HA and SLA matter — huge device and message volumes, no acceptable message loss, and strict data residency and compliance.",
+    monthly: null,
+    annual: null,
+    transfer: null,
+    capacity: null,
+    inherits: null,
+    featured: false,
+    contact: true,
+    cta: "Contact sales",
+    features: [
+      "Deploy on our dedicated cloud, your cloud (AWS, GCP, Azure), or on-premises",
+      "Custom SLA with defined uptime guarantees",
+      "High-availability clustering",
+      "Dedicated infrastructure & data residency",
+      "Custom integrations & message formats",
+      "Priority engineering support",
+    ],
+  },
+];
+
+const pricingFaqs = [
+  {
+    q: "What's included in a managed plan?",
+    a: "Every managed tier covers hosting, deployment, monitoring, and the updates listed for that tier. Higher tiers add dashboards, audit logs, rules engine, alarms, reports, and scheduled backups. You focus on your devices and data; we run the platform.",
+  },
+  {
+    q: "What counts as a device?",
+    a: "A device is any client that connects to the platform and exchanges messages, regardless of protocol (MQTT, CoAP, HTTP, or WebSocket). The device and message figures on each tier are guidance for typical workloads, not hard quotas.",
+  },
+  {
+    q: "Do I get a dedicated instance?",
+    a: "Yes. Every plan runs on a dedicated instance — no shared infrastructure. We provision, run, and manage the instance for you.",
+  },
+  {
+    q: "What does “~250 devices · 1M messages / month” actually mean?",
+    a: "Because each tier is a dedicated instance, that figure is a rough estimate of how many concurrent devices and messages the instance can comfortably handle. It is not a hard cap — we don't limit you artificially; the only real limit is the hardware and how it's set up. We deliberately avoid a messages-per-second metric, because it's a weak and misleading number for a few reasons:",
+    points: [
+      "Message size varies enormously. A ping is a message, and so is a 100 MB binary upload — they don't cost the same, and they aren't the same priority.",
+      "Networking hiccups and load balancing have an outsized impact as you approach the upper limit of throughput.",
+      "Messages carry different delivery modes and quality-of-service guarantees — not all messages are equally important.",
+      "Throughput also depends on delivery semantics: whether it includes consumer delivery and message persistence. Slow consumers can effectively serialize your infrastructure — and sometimes that's the intended behaviour, especially in low-bandwidth, high-QoS environments.",
+    ],
+  },
+  {
+    q: "What happens if I exceed my device or message limit?",
+    a: "Limits are soft. We monitor usage and reach out to move you to the tier that fits, rather than cutting you off mid-cycle. If a burst is temporary, nothing breaks.",
+  },
+  {
+    q: "Can I change plans later?",
+    a: "Yes, but only up - due to the hardware limitations and guarantees. You can move up between tiers at any time. Going down is possible, but you need to contact us because it requires a migration from our side. Changes are prorated, so you only pay for what you use in a billing period.",
+  },
+  {
+    q: "How does annual billing work?",
+    a: "Annual plans are billed once per year and work out roughly 10% cheaper than paying monthly. You can switch between monthly and annual billing when your term renews.",
+  },
+  {
+    q: "Can I deploy on my own cloud or on-premises?",
+    a: "Yes, through the Custom plan. We can deploy Magistrala into your AWS, GCP, or Azure account, or fully on-premises, including air-gapped environments, with data residency handled on your infrastructure.",
+  },
+  {
+    q: "Do you offer a custom SLA and high availability?",
+    a: "Enterprise, Dedicated, and Custom plans support defined uptime SLAs and high-availability clustering. Response-time commitments and dedicated support hours scale with the tier; the Custom plan is tailored to your requirements.",
+  },
+  {
+    q: "Is self-hosting free?",
+    a: "Partly. Magistrala core is open source under the Apache 2.0 license and free to self-host forever, as is the Magistrala Community Edition. The Enterprise Edition — which unlocks the full feature set, including the rules engine, alarms, reports, audit logs, and dashboards — is not free to self-host. See the self-hosting options for what each edition includes.",
+  },
+];
+---
+
+<section class="section" id="pricing">
+  <div class="container-wide">
+    {
+      showHead && (
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Pricing</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Managed Magistrala, priced to scale.
+            </h2>
+          </div>
+          <p class="lede">
+            Fully managed deployments with hosting, updates, and support. Pick
+            the tier that matches your fleet and move up as you grow.
+          </p>
+        </div>
+      )
+    }
+
+    <div class="mg-price-wrap">
+      <div class="mg-price-toggle" role="group" aria-label="Billing period">
+        <button type="button" class="mg-price-opt is-active" data-billing="monthly"
+          >Monthly</button
+        >
+        <button type="button" class="mg-price-opt" data-billing="annual"
+          >Annual <span class="mg-save">Save 10%</span></button
+        >
+      </div>
+    </div>
+
+    <div class="mg-pricing-grid">
+      {
+        pricingTiers.map((tier) => (
+          <div
+            class={`cta-card mg-price-card${tier.featured ? " is-featured" : ""}${tier.contact ? " is-custom" : ""}`}
+          >
+            {tier.featured && <span class="mg-badge">Popular</span>}
+            <div class="mg-price-head">
+              <div class="label">{tier.name}</div>
+              <div class="mg-price-block">
+                <div class="mg-price">
+                  {tier.contact ? (
+                    <span class="mg-price-contact">Contact</span>
+                  ) : (
+                    <Fragment>
+                      <span
+                        class="mg-amount"
+                        data-monthly={tier.monthly}
+                        data-annual={Math.round((tier.annual ?? 0) / 12)}
+                      >
+                        €{tier.monthly}
+                      </span>
+                      <span class="mg-per">/ month</span>
+                    </Fragment>
+                  )}
+                </div>
+                {!tier.contact && (
+                  <div class="mg-price-note" data-annual-total={tier.annual}>
+                    billed monthly
+                  </div>
+                )}
+              </div>
+              <div class="mg-goodfor">{tier.goodFor}</div>
+            </div>
+            <ul class="mg-price-feats">
+              {tier.inherits && (
+                <li class="mg-inherit">Everything in {tier.inherits}, plus:</li>
+              )}
+              {tier.features.map((feature) => (
+                <li>→ {feature}</li>
+              ))}
+              {tier.capacity && <li class="mg-cap-feat">→ {tier.capacity}</li>}
+              {tier.transfer && <li>→ {tier.transfer}</li>}
+            </ul>
+            <a
+              href="/contact"
+              class={`btn${tier.featured ? " btn-primary" : ""}`}
+              style="margin-top:auto; text-align:center; justify-content:center;"
+            >
+              {tier.cta} →
+            </a>
+          </div>
+        ))
+      }
+    </div>
+
+    <p
+      style="margin-top:32px; text-align:center; font-size:14px; color:var(--ink-3);"
+    >
+      Prefer to run it yourself? The <a
+        href="/open-source"
+        style="color:inherit; text-decoration:underline;">open-source platform</a
+      > is free forever. Need more than 100k devices?{" "}
+      <a href="/contact" style="color:inherit; text-decoration:underline;"
+        >Talk to us</a
+      >.
+    </p>
+
+    <div class="mg-price-faq">
+      <div class="mg-price-faq-head">
+        <span class="kicker">Pricing FAQ</span>
+        <h3 class="h-3" style="margin-top:12px;">
+          Questions about plans &amp; billing.
+        </h3>
+      </div>
+      <FAQAccordion items={pricingFaqs} />
+    </div>
+  </div>
+</section>
+
+<script>
+  const toggle = document.querySelector(".mg-price-toggle");
+  if (toggle) {
+    const opts = toggle.querySelectorAll<HTMLButtonElement>(".mg-price-opt");
+    const amounts = document.querySelectorAll<HTMLElement>(".mg-amount");
+    const notes = document.querySelectorAll<HTMLElement>(".mg-price-note");
+
+    const setBilling = (mode: string) => {
+      opts.forEach((o) =>
+        o.classList.toggle("is-active", o.dataset.billing === mode),
+      );
+      amounts.forEach((a) => {
+        const value = mode === "annual" ? a.dataset.annual : a.dataset.monthly;
+        a.textContent = `€${value}`;
+      });
+      notes.forEach((n) => {
+        const total = Number(n.dataset.annualTotal);
+        n.textContent =
+          mode === "annual"
+            ? `€${total.toLocaleString()} billed yearly`
+            : "billed monthly";
+      });
+    };
+
+    opts.forEach((o) =>
+      o.addEventListener("click", () =>
+        setBilling(o.dataset.billing ?? "monthly"),
+      ),
+    );
+  }
+</script>
+
+<style>
+  .mg-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    align-items: stretch;
+  }
+  @media (max-width: 1200px) {
+    .mg-pricing-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 820px) {
+    .mg-pricing-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .mg-pricing-grid {
+      grid-template-columns: 1fr;
+    }
+    .mg-goodfor,
+    .mg-price-block {
+      min-height: 0;
+    }
+  }
+
+  /* ── Billing toggle ───────────────────────────────────────── */
+  .mg-price-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 44px;
+  }
+  .mg-price-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--line-3);
+    border-radius: 999px;
+    background: var(--paper);
+  }
+  .mg-price-opt {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink-3);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+  .mg-price-opt.is-active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .mg-save {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .mg-price-opt.is-active .mg-save {
+    background: rgba(246, 244, 238, 0.2);
+    color: var(--paper);
+  }
+
+  /* ── Tier cards ───────────────────────────────────────────── */
+  .mg-price-card {
+    position: relative;
+    padding: 32px 26px;
+    gap: 16px;
+    min-height: 0;
+  }
+  .mg-price-card.is-featured {
+    border-color: var(--ink);
+    box-shadow: var(--shadow-lg);
+  }
+  .mg-price-card.is-custom {
+    background: var(--paper-2);
+  }
+  .mg-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: var(--font-mono), monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+  }
+  .mg-price-head {
+    display: block;
+  }
+  .mg-price-block {
+    margin-top: 14px;
+    min-height: 62px;
+  }
+  .mg-goodfor {
+    margin-top: 14px;
+    min-height: 130px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+  .mg-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .mg-amount,
+  .mg-price-contact {
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .mg-price-contact {
+    font-size: 28px;
+  }
+  .mg-per {
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  .mg-price-note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--ink-3);
+    min-height: 16px;
+  }
+  .mg-price-feats {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .mg-inherit,
+  .mg-cap-feat {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ── Pricing FAQ ──────────────────────────────────────────── */
+  .mg-price-faq {
+    max-width: 860px;
+    margin: 64px auto 0;
+  }
+  .mg-price-faq-head {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .mg-price-faq-head .kicker {
+    display: block;
+  }
+</style>
