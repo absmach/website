@@ -15,6 +15,7 @@ const privateTiers = [
       "Pilot projects and small deployments with low message bandwidth and non-critical message loss.",
     monthly: 150,
     annual: 1620,
+    storage: "80 GB storage for messages",
     transfer: "3 TB data transfer",
     capacity: "~200 devices · 1M messages / month",
     inherits: null,
@@ -37,6 +38,7 @@ const privateTiers = [
       "Deployments where availability matters and flexibility and features are important. This is where your business starts.",
     monthly: 500,
     annual: 5400,
+    storage: "180 GB storage for messages",
     transfer: "8 TB data transfer",
     capacity: "~10k devices · 100M messages / month",
     inherits: "Prototype",
@@ -57,6 +59,7 @@ const privateTiers = [
     goodFor: "Larger deployments where stability and performance matter.",
     monthly: 1000,
     annual: 10800,
+    storage: "300 GB storage for messages",
     transfer: "8 TB data transfer",
     capacity: "~100k devices · 1B messages / month",
     inherits: "Business",
@@ -75,6 +78,7 @@ const privateTiers = [
       "Large production deployments where HA and SLA matter — huge device and message volumes, no acceptable message loss, and strict data residency and compliance.",
     monthly: null,
     annual: null,
+    storage: null,
     transfer: null,
     capacity: null,
     inherits: null,
@@ -270,7 +274,7 @@ const pricingFaqs = [
           </div>
         </div>
         <div class="mg-ce-visual" aria-hidden="true">
-          <Boxes size={120} strokeWidth={1} />
+          <Boxes size={120} />
         </div>
       </div>
     </div>
@@ -339,6 +343,7 @@ const pricingFaqs = [
                   <li>→ {feature}</li>
                 ))}
                 {tier.capacity && <li class="mg-cap-feat">→ {tier.capacity}</li>}
+                {tier.storage && <li>→ {tier.storage}</li>}
                 {tier.transfer && (
                   <li>
                     → {tier.transfer}
