@@ -11,6 +11,7 @@ export default defineConfig({
   devToolbar: { enabled: false },
 
   redirects: {
+    "/pricing": "/magistrala/pricing/",
     "/products/s0": "/products/a0",
     "/products/s1": "/products/a1",
   },
