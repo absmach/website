@@ -121,7 +121,13 @@ const eeFeatures = [
 // Columns: Community + every Private Cloud tier. Cell values:
 // true → included, false → not included, string → specific value.
 // Self-hosted Community is bounded only by your own hardware.
-const compareCols = ["Community", "Prototype", "Business", "Enterprise", "Custom"];
+const compareCols = [
+  "Community",
+  "Prototype",
+  "Business",
+  "Enterprise",
+  "Custom",
+];
 const compareGroups = [
   {
     group: "Platform",
@@ -149,7 +155,10 @@ const compareGroups = [
     group: "Capacity",
     rows: [
       { f: "Devices", cells: [false, "~200", "~5k", "~50k", "Custom"] },
-      { f: "Messages / month", cells: [false, "~1M", "~10M", "~100M", "Custom"] },
+      {
+        f: "Messages / month",
+        cells: [false, "~1M", "~10M", "~100M", "Custom"],
+      },
       {
         f: "Message storage",
         cells: [false, "80 GB", "180 GB", "300 GB", "Custom"],
@@ -205,13 +214,7 @@ const compareGroups = [
       },
       {
         f: "Backups",
-        cells: [
-          false,
-          false,
-          "Weekly · 3-month",
-          "Daily · 3-month",
-          "Custom",
-        ],
+        cells: [false, false, "Weekly · 3-month", "Daily · 3-month", "Custom"],
       },
       {
         f: "Dedicated instance",
@@ -396,8 +399,10 @@ const pricingFaqs = [
 
       <div class="mg-price-wrap">
         <div class="mg-price-toggle" role="group" aria-label="Billing period">
-          <button type="button" class="mg-price-opt is-active" data-billing="monthly"
-            >Monthly</button
+          <button
+            type="button"
+            class="mg-price-opt is-active"
+            data-billing="monthly">Monthly</button
           >
           <button type="button" class="mg-price-opt" data-billing="annual"
             >Annual <span class="mg-save">Save 10%</span></button
@@ -423,7 +428,9 @@ const pricingFaqs = [
                         <span
                           class="mg-amount"
                           data-amt-monthly={fmt(tier.monthly ?? 0)}
-                          data-amt-annual={fmt(Math.round((tier.annual ?? 0) / 12))}
+                          data-amt-annual={fmt(
+                            Math.round((tier.annual ?? 0) / 12),
+                          )}
                         >
                           €{fmt(tier.monthly ?? 0)}
                         </span>
@@ -445,12 +452,16 @@ const pricingFaqs = [
               </div>
               <ul class="mg-price-feats">
                 {tier.inherits && (
-                  <li class="mg-inherit">Everything in {tier.inherits}, plus:</li>
+                  <li class="mg-inherit">
+                    Everything in {tier.inherits}, plus:
+                  </li>
                 )}
                 {tier.features.map((feature) => (
                   <li>→ {feature}</li>
                 ))}
-                {tier.capacity && <li class="mg-cap-feat">→ {tier.capacity}</li>}
+                {tier.capacity && (
+                  <li class="mg-cap-feat">→ {tier.capacity}</li>
+                )}
                 {tier.storage && <li>→ {tier.storage}</li>}
                 {tier.transfer && (
                   <li>
@@ -509,8 +520,10 @@ const pricingFaqs = [
 
       <div class="mg-price-wrap">
         <div class="mg-price-toggle" role="group" aria-label="License term">
-          <button type="button" class="mg-price-opt is-active" data-billing="monthly"
-            >Monthly</button
+          <button
+            type="button"
+            class="mg-price-opt is-active"
+            data-billing="monthly">Monthly</button
           >
           <button type="button" class="mg-price-opt" data-billing="perpetual"
             >Perpetual</button
@@ -582,8 +595,8 @@ const pricingFaqs = [
               </div>
             </div>
             <div class="mg-goodfor">
-              We deploy and operate Magistrala Enterprise on your infrastructure,
-              aligned to your SLA, security, and data policies.
+              We deploy and operate Magistrala Enterprise on your
+              infrastructure, aligned to your SLA, security, and data policies.
             </div>
           </div>
           <ul class="mg-price-feats">
@@ -618,9 +631,7 @@ const pricingFaqs = [
           <thead>
             <tr>
               <th scope="col">Feature</th>
-              {compareCols.map((c) => (
-                <th scope="col">{c}</th>
-              ))}
+              {compareCols.map((c) => <th scope="col">{c}</th>)}
             </tr>
           </thead>
           <tbody>
@@ -708,34 +719,30 @@ const pricingFaqs = [
   );
 
   // Billing / term toggles (scoped to their own panel)
-  document.querySelectorAll<HTMLElement>(".mg-price-toggle").forEach((toggle) => {
-    const opts = toggle.querySelectorAll<HTMLButtonElement>(".mg-price-opt");
-    const scope: ParentNode = toggle.closest(".mg-tabpanel") ?? document;
-    opts.forEach((opt) =>
-      opt.addEventListener("click", () => {
-        const mode = opt.dataset.billing ?? "monthly";
-        opts.forEach((o) => o.classList.toggle("is-active", o === opt));
-        scope
-          .querySelectorAll<HTMLElement>(".mg-amount")
-          .forEach((a) => {
+  document
+    .querySelectorAll<HTMLElement>(".mg-price-toggle")
+    .forEach((toggle) => {
+      const opts = toggle.querySelectorAll<HTMLButtonElement>(".mg-price-opt");
+      const scope: ParentNode = toggle.closest(".mg-tabpanel") ?? document;
+      opts.forEach((opt) =>
+        opt.addEventListener("click", () => {
+          const mode = opt.dataset.billing ?? "monthly";
+          opts.forEach((o) => o.classList.toggle("is-active", o === opt));
+          scope.querySelectorAll<HTMLElement>(".mg-amount").forEach((a) => {
             const v = a.dataset[`amt${cap(mode)}`];
             if (v !== undefined) a.textContent = `€${v}`;
           });
-        scope
-          .querySelectorAll<HTMLElement>(".mg-price-note")
-          .forEach((n) => {
+          scope.querySelectorAll<HTMLElement>(".mg-price-note").forEach((n) => {
             const t = n.dataset[`note${cap(mode)}`];
             if (t !== undefined) n.textContent = t;
           });
-        scope
-          .querySelectorAll<HTMLElement>(".mg-term")
-          .forEach((el) => {
+          scope.querySelectorAll<HTMLElement>(".mg-term").forEach((el) => {
             const t = el.dataset[`term${cap(mode)}`];
             if (t !== undefined) el.textContent = t;
           });
-      }),
-    );
-  });
+        }),
+      );
+    });
 </script>
 
 <style>
