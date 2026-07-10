@@ -37,6 +37,19 @@ This is a write-up of that port. If you're trying to bring ESP-Hosted up on anyt
 
 The ESP-Hosted driver source tree comes with a Raspberry-Pi-flavored `rpi_init.sh`, GPIO numbers like `22` and `27` baked into headers, and a build process that assumes you're cross-compiling against the Pi's kernel. None of that applies on a BeagleV-Fire — but the _driver itself_ is mostly portable C. The work is figuring out which knobs to turn so it talks to the right hardware on the right pins.
 
+## Hardware Pin Connections
+
+The table below shows the pin connection for this setup:
+
+| PIN       | ESP32C6 | BEAGLEV-FIRE |
+| --------- | ------- | ------------ |
+| MISO      | IO2     | P9_21        |
+| MOSI      | IO7     | P9_18        |
+| SCK       | IO6     | P9_22        |
+| CS        | IO10    | P9_17        |
+| DATAREADY | IO4     | P8_16        |
+| HANDSHAKE | IO3     | P8_15        |
+
 ## Porting the bring-up scripts
 
 The Pi version of the bring-up flow centres on a script called `rpi_init.sh`. It does what you'd expect — sets a few module parameters, `modprobe`s the kernel module, and prints a few status lines. On a BeagleV-Fire, what needs to happen is similar in _shape_, but different in almost every detail. The Pi script assumes:
