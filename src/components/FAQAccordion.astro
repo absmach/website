@@ -1,17 +1,103 @@
 ---
 interface Props {
-  items: { q: string; a: string }[];
+  items: {
+    q: string;
+    a: string;
+    points?: string[];
+    bullets?: { label: string; text: string }[];
+    link?: { href: string; label: string };
+  }[];
 }
 const { items } = Astro.props;
 ---
 
 <div class="faq-list">
   {
-    items.map(({ q, a }) => (
+    items.map(({ q, a, points, bullets, link }) => (
       <details class="faq-item">
         <summary class="faq-q">{q}</summary>
         <p class="faq-a">{a}</p>
+        {points && points.length > 0 && (
+          <ol class="faq-a-list">
+            {points.map((point) => (
+              <li>{point}</li>
+            ))}
+          </ol>
+        )}
+        {bullets && bullets.length > 0 && (
+          <ul class="faq-a-bullets">
+            {bullets.map((b) => (
+              <li>
+                <strong>{b.label}</strong> — {b.text}
+              </li>
+            ))}
+          </ul>
+        )}
+        {link && (
+          <a class="faq-a-link" href={link.href}>
+            {link.label} →
+          </a>
+        )}
       </details>
     ))
   }
 </div>
+
+<style>
+  .faq-item:has(.faq-a-list) .faq-a {
+    padding-bottom: 10px;
+  }
+  .faq-a-list {
+    margin: 0;
+    padding: 0 24px 20px 44px;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.65;
+    list-style: decimal;
+  }
+  .faq-a-list li {
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+  .faq-a-list li:last-child {
+    margin-bottom: 0;
+  }
+  .faq-item:has(.faq-a-bullets) .faq-a {
+    padding-bottom: 10px;
+  }
+  .faq-a-bullets {
+    margin: 0;
+    padding: 0 24px 20px 40px;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.65;
+    list-style: disc;
+  }
+  .faq-a-bullets li {
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+  .faq-a-bullets li:last-child {
+    margin-bottom: 0;
+  }
+  .faq-a-bullets strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .faq-a-link {
+    display: inline-block;
+    margin: 0 24px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease;
+  }
+  .faq-a-link:hover {
+    border-bottom-color: var(--accent);
+  }
+  .faq-item:has(.faq-a-link) .faq-a {
+    padding-bottom: 10px;
+  }
+</style>

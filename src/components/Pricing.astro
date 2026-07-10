@@ -1,0 +1,1174 @@
+---
+import { Boxes, Check, Cloud, Server, Users } from "@lucide/astro";
+import FAQAccordion from "./FAQAccordion.astro";
+
+interface Props {
+  showHead?: boolean;
+}
+const { showHead = true } = Astro.props;
+
+const fmt = (n: number) => n.toLocaleString("en-US");
+
+// ── Private Cloud: fully managed, dedicated instances ──────────────
+const privateTiers = [
+  {
+    name: "Prototype",
+    goodFor:
+      "Pilot projects and small deployments with low message bandwidth and best-effort delivery.",
+    monthly: 150,
+    annual: 1620,
+    storage: "80 GB storage for messages",
+    transfer: "3 TB data transfer",
+    capacity: "~200 devices · 1M messages / month",
+    inherits: null,
+    featured: false,
+    contact: false,
+    cta: "Get started",
+    features: [
+      "Commercial UI with whitelabeling",
+      "Basic UI and Backend patches",
+      "Security updates",
+      "Security fixes",
+      "Community support",
+      "Dashboards",
+    ],
+  },
+  {
+    name: "Business",
+    goodFor:
+      "Deployments where availability matters and flexibility and features are important. This is where your business starts.",
+    monthly: 500,
+    annual: 5400,
+    storage: "180 GB storage for messages",
+    transfer: "8 TB data transfer",
+    capacity: "~5k devices · 10M messages / month",
+    inherits: "Prototype",
+    featured: true,
+    contact: false,
+    cta: "Get started",
+    features: [
+      "Rules Engine & custom message format",
+      "Alarms",
+      "Reports",
+      "Priority support & issue addressing",
+      "Dedicated support 2h / month",
+      "Weekly backup, 3-month retention",
+    ],
+  },
+  {
+    name: "Enterprise",
+    goodFor: "Larger deployments where stability and performance matter.",
+    monthly: 1000,
+    annual: 10800,
+    storage: "300 GB storage for messages",
+    transfer: "8 TB data transfer",
+    capacity: "~50k devices · 100M messages / month",
+    inherits: "Business",
+    featured: false,
+    contact: false,
+    cta: "Get started",
+    features: [
+      "Higher-priority support & issue addressing",
+      "Dedicated support 12h / month (instead of 2)",
+      "Daily backup, 3-month retention (instead of weekly)",
+    ],
+  },
+  {
+    name: "Custom",
+    goodFor:
+      "Large production deployments where HA and SLA matter — huge device and message volumes, no acceptable message loss, and strict data residency and compliance.",
+    monthly: null,
+    annual: null,
+    storage: null,
+    transfer: null,
+    capacity: null,
+    inherits: null,
+    featured: false,
+    contact: true,
+    cta: "Contact sales",
+    features: [
+      "Deploy on our dedicated cloud, your cloud (AWS, GCP, Azure), or on-premises",
+      "Custom SLA with defined uptime guarantees",
+      "High-availability clustering",
+      "Dedicated infrastructure & data residency",
+      "Custom integrations & message formats",
+      "Priority engineering support",
+    ],
+  },
+];
+
+// ── Community Edition (free, open source) ──────────────────────────
+const communityFeatures = [
+  "Unlimited clients, channels, groups, tenants, messages",
+  "Every update, free forever",
+  "Full control of your data and infrastructure",
+  "Open-source backend under Apache 2.0",
+  "Free-to-use UI, deployed as a Docker container",
+  "Community support",
+];
+
+// ── Self-managed: run Magistrala Enterprise in your own environment ─
+const eeFeatures = [
+  "Commercial UI with whitelabeling",
+  "Dashboards",
+  "Rules Engine & custom message formats",
+  "Alarms",
+  "Reports",
+  "Audit logs",
+];
+
+// ── Compare Community with the Private Cloud tiers ─────────────────
+// Columns: Community + every Private Cloud tier. Cell values:
+// true → included, false → not included, string → specific value.
+// Self-hosted Community is bounded only by your own hardware.
+const compareCols = [
+  "Community",
+  "Prototype",
+  "Business",
+  "Enterprise",
+  "Custom",
+];
+const compareGroups = [
+  {
+    group: "Platform",
+    rows: [
+      {
+        f: "Open-source backend (Apache 2.0)",
+        cells: [true, true, true, true, true],
+      },
+      {
+        f: "Multi-protocol messaging (MQTT, CoAP, HTTP, WebSocket)",
+        cells: [true, true, true, true, true],
+      },
+      {
+        f: "Multi-tenancy & fine-grained access control",
+        cells: [true, true, true, true, true],
+      },
+      {
+        f: "Unlimited clients, channels, groups & messages",
+        cells: [true, true, true, true, true],
+        note: true,
+      },
+    ],
+  },
+  {
+    group: "Capacity",
+    rows: [
+      { f: "Devices", cells: [false, "~200", "~5k", "~50k", "Custom"] },
+      {
+        f: "Messages / month",
+        cells: [false, "~1M", "~10M", "~100M", "Custom"],
+      },
+      {
+        f: "Message storage",
+        cells: [false, "80 GB", "180 GB", "300 GB", "Custom"],
+      },
+      {
+        f: "Data transfer / month",
+        cells: [false, "3 TB", "8 TB", "8 TB", "Custom"],
+      },
+    ],
+  },
+  {
+    group: "Interface & data",
+    rows: [
+      { f: "Audit logs", cells: [true, true, true, true, true] },
+      {
+        f: "Commercial UI with whitelabeling",
+        cells: [false, true, true, true, true],
+      },
+      { f: "Dashboards", cells: [false, true, true, true, true] },
+    ],
+  },
+  {
+    group: "Enterprise features",
+    rows: [
+      {
+        f: "Rules Engine & custom message formats",
+        cells: [false, false, true, true, true],
+      },
+      { f: "Alarms", cells: [false, false, true, true, true] },
+      { f: "Reports", cells: [false, false, true, true, true] },
+    ],
+  },
+  {
+    group: "Operations & support",
+    rows: [
+      {
+        f: "Security patches & updates",
+        cells: ["Community", "Standard", "Priority", "Priority", "Priority"],
+      },
+      {
+        f: "Support",
+        cells: [
+          "Community",
+          "Community",
+          "Priority",
+          "Higher priority",
+          "Higher priority",
+        ],
+      },
+      {
+        f: "Dedicated support hours",
+        cells: [false, false, "2h / month", "12h / month", "Custom"],
+      },
+      {
+        f: "Backups",
+        cells: [false, false, "Weekly · 3-month", "Daily · 3-month", "Custom"],
+      },
+      {
+        f: "Dedicated instance",
+        cells: ["Self-hosted", true, true, true, true],
+      },
+    ],
+  },
+];
+
+const pricingFaqs = [
+  {
+    q: "What's the difference between Community, Private Cloud, and Self-managed?",
+    a: "Same platform, three ways to run it:",
+    bullets: [
+      {
+        label: "Community",
+        text: "free to run yourself — open-source backend services (Apache 2.0) plus a free-to-use UI you deploy as a Docker container.",
+      },
+      {
+        label: "Private Cloud",
+        text: "a fully managed, dedicated instance of Magistrala Enterprise Edition that we host and operate for you.",
+      },
+      {
+        label: "Self-managed",
+        text: "Magistrala Enterprise Edition in your own environment — licensed to you to run yourself, or deployed and operated by us on your infrastructure.",
+      },
+    ],
+  },
+  {
+    q: "What's included in a Private Cloud plan?",
+    a: "Every Private Cloud tier covers license, hosting, deployment, monitoring, dashboards, audit logs, and the updates listed for that tier. Higher tiers add the rules engine, alarms, reports, and scheduled backups. You focus on your devices and data; we run the platform.",
+  },
+  {
+    q: "What counts as a device?",
+    a: "A device is any client that connects to the platform and exchanges messages, regardless of protocol (MQTT, CoAP, HTTP, or WebSocket). The device and message figures on each tier are guidance for typical workloads, not hard quotas.",
+  },
+  {
+    q: "Do I get a dedicated instance?",
+    a: "Yes. Every Private Cloud plan runs on a dedicated instance — no shared infrastructure. We provision, run, and manage the instance for you.",
+  },
+  {
+    q: "What does “~200 devices · 1M messages / month” actually mean?",
+    a: "Because each tier is a dedicated instance, that figure is a rough estimate of how many concurrent devices and messages the instance can comfortably handle. It is not a hard cap — we don't limit you artificially; the only real limit is the hardware and how it's set up. We deliberately avoid a messages-per-second metric, because it's a weak and misleading number for a few reasons:",
+    points: [
+      "Message size varies enormously. A ping is a message, and so is a 100 MB binary upload — they don't cost the same, and they aren't the same priority.",
+      "Networking hiccups and load balancing have an outsized impact as you approach the upper limit of throughput.",
+      "Messages carry different delivery modes and quality-of-service guarantees — not all messages are equally important.",
+      "Throughput also depends on delivery semantics: whether it includes consumer delivery and message persistence. Slow consumers can effectively serialize your infrastructure — and sometimes that's the intended behaviour, especially in low-bandwidth, high-QoS environments.",
+    ],
+  },
+  {
+    q: "What happens if I exceed my device or message limit?",
+    a: "Limits are soft. We monitor usage and reach out to move you to the tier that fits, rather than cutting you off mid-cycle. If a burst is temporary, nothing breaks.",
+  },
+  {
+    q: "Can I change plans later?",
+    a: "Yes. Upgrades are available at any time. Downgrades require a migration on our side, so please contact us to arrange one. Changes are prorated, so you only pay for what you use in a billing period.",
+  },
+  {
+    q: "How does annual billing work?",
+    a: "Annual Private Cloud plans are billed once per year and work out roughly 10% cheaper than paying monthly. You can switch between monthly and annual billing when your term renews.",
+  },
+  {
+    q: "What's the difference between a monthly and a perpetual self-managed license?",
+    a: "Both cover a single-cluster deployment of the full Magistrala Enterprise Edition feature set — the difference is how updates work. A monthly license (€300 per cluster) gives your access to the latest release for as long as your subscription is active. A perpetual license (€3,999 per cluster) is a one-time payment that lets you run the version you bought indefinitely, including patches and minor updates for that version — but not upgrades to future major releases.",
+  },
+  {
+    q: "Can I deploy on my own cloud or on-premises?",
+    a: "Yes. With a self-managed license you run Magistrala Enterprise yourself, anywhere. With the “Managed by us” option we deploy and operate it on your infrastructure — AWS, GCP, Azure, or on-premises, including air-gapped environments — aligned to your SLA, security, and data-residency policies.",
+  },
+  {
+    q: "Do you offer a custom SLA and high availability?",
+    a: "A formal uptime SLA and high-availability clustering are part of the Custom plan and the self-managed “Managed by us” option only. The standard Private Cloud tiers (Prototype, Business, Enterprise) each run as a single dedicated instance with proactive monitoring and support, but without a contractual SLA or clustering. If you need a guaranteed uptime target or active-active high availability, that's what the Custom plan is for — response times and architecture are tailored to your requirements.",
+  },
+  {
+    q: "Is self-hosting free?",
+    a: "Partly. The Magistrala backend is open source under the Apache 2.0 license and free to self-host forever, and the Community Edition UI is free to use and deploy as a Docker container. The Enterprise Edition — which unlocks the full feature set, including the rules engine, alarms, reports, audit logs, and dashboards — requires a self-managed license or a managed plan.",
+  },
+];
+---
+
+<section class="section" id="pricing">
+  <div class="container-wide">
+    {
+      showHead && (
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">Pricing</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              Choose how you run Magistrala.
+            </h2>
+          </div>
+          <p class="lede">
+            Free and open source, fully managed in our private cloud, or
+            self-managed in your own environment — same platform, your choice of
+            operating model.
+          </p>
+        </div>
+      )
+    }
+
+    <!-- Tabs -->
+    <div class="mg-tabs-wrap">
+      <div class="mg-tabs" role="tablist" aria-label="Pricing options">
+        <button
+          type="button"
+          class="mg-tab"
+          data-tab="community"
+          role="tab"
+          aria-selected="false"
+        >
+          <Users size={16} /> Community
+        </button>
+        <button
+          type="button"
+          class="mg-tab is-active"
+          data-tab="private"
+          role="tab"
+          aria-selected="true"
+        >
+          <Cloud size={16} /> Private Cloud
+        </button>
+        <button
+          type="button"
+          class="mg-tab"
+          data-tab="self"
+          role="tab"
+          aria-selected="false"
+        >
+          <Server size={16} /> Self-managed
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Community panel ─────────────────────────────────────── -->
+    <div class="mg-tabpanel" data-panel="community" role="tabpanel" hidden>
+      <p class="mg-panel-intro">
+        Free and open source, forever. Run the full platform on your own
+        hardware and keep complete control of your data.
+      </p>
+      <div class="mg-ce-card cta-card">
+        <div class="mg-ce-main">
+          <span class="label">Community Edition · Free</span>
+          <h3 class="mg-ce-title">Free — and it always will be.</h3>
+          <p class="mg-ce-desc">
+            Community Edition is free to run yourself. The backend services are
+            open source under Apache 2.0; the UI is free to use and deploy as a
+            Docker container. Run the full multi-tenant IoT platform on your own
+            hardware, keep complete control of your data, and build without
+            license fees, seat limits, or vendor lock-in.
+          </p>
+          <ul class="mg-ce-feats">
+            {communityFeatures.map((f) => <li>→ {f}</li>)}
+          </ul>
+          <div class="btn-row" style="margin-top:28px;">
+            <a
+              href="https://github.com/absmach/magistrala"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener">Get started ↗</a
+            >
+            <a
+              href="https://www.absmach.eu/docs/magistrala"
+              class="btn"
+              target="_blank"
+              rel="noopener">Documentation ↗</a
+            >
+          </div>
+        </div>
+        <div class="mg-ce-visual" aria-hidden="true">
+          <Boxes size={120} />
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Private Cloud panel ─────────────────────────────────── -->
+    <div class="mg-tabpanel" data-panel="private" role="tabpanel">
+      <p class="mg-panel-intro">
+        All-inclusive hosting and infrastructure on dedicated instances, so you
+        can focus on building your solutions.
+      </p>
+
+      <div class="mg-price-wrap">
+        <div class="mg-price-toggle" role="group" aria-label="Billing period">
+          <button
+            type="button"
+            class="mg-price-opt is-active"
+            data-billing="monthly">Monthly</button
+          >
+          <button type="button" class="mg-price-opt" data-billing="annual"
+            >Annual <span class="mg-save">Save 10%</span></button
+          >
+        </div>
+      </div>
+
+      <div class="mg-pricing-grid">
+        {
+          privateTiers.map((tier) => (
+            <div
+              class={`cta-card mg-price-card${tier.featured ? " is-featured" : ""}${tier.contact ? " is-custom" : ""}`}
+            >
+              {tier.featured && <span class="mg-badge">Popular</span>}
+              <div class="mg-price-head">
+                <div class="label">{tier.name}</div>
+                <div class="mg-price-block">
+                  <div class="mg-price">
+                    {tier.contact ? (
+                      <span class="mg-price-contact">Contact</span>
+                    ) : (
+                      <Fragment>
+                        <span
+                          class="mg-amount"
+                          data-amt-monthly={fmt(tier.monthly ?? 0)}
+                          data-amt-annual={fmt(
+                            Math.round((tier.annual ?? 0) / 12),
+                          )}
+                        >
+                          €{fmt(tier.monthly ?? 0)}
+                        </span>
+                        <span class="mg-per">/ month</span>
+                      </Fragment>
+                    )}
+                  </div>
+                  {!tier.contact && (
+                    <div
+                      class="mg-price-note"
+                      data-note-monthly="billed monthly"
+                      data-note-annual={`€${fmt(tier.annual ?? 0)} billed yearly`}
+                    >
+                      billed monthly
+                    </div>
+                  )}
+                </div>
+                <div class="mg-goodfor">{tier.goodFor}</div>
+              </div>
+              <ul class="mg-price-feats">
+                {tier.inherits && (
+                  <li class="mg-inherit">
+                    Everything in {tier.inherits}, plus:
+                  </li>
+                )}
+                {tier.features.map((feature) => (
+                  <li>→ {feature}</li>
+                ))}
+                {tier.capacity && (
+                  <li class="mg-cap-feat">→ {tier.capacity}</li>
+                )}
+                {tier.storage && <li>→ {tier.storage}</li>}
+                {tier.transfer && (
+                  <li>
+                    → {tier.transfer}
+                    <span class="mg-ast">*</span>
+                  </li>
+                )}
+              </ul>
+              <a
+                href="/contact"
+                class={`btn${tier.featured ? " btn-primary" : ""}`}
+                style="margin-top:auto; text-align:center; justify-content:center;"
+              >
+                {tier.cta} →
+              </a>
+            </div>
+          ))
+        }
+      </div>
+
+      <p
+        style="margin-top:32px; text-align:center; font-size:13px; color:var(--ink-3);"
+      >
+        * Data transfer is a soft guide — extra transfer is billed at €20 per
+        additional TB / month.
+      </p>
+      <p
+        style="margin-top:8px; text-align:center; font-size:14px; color:var(--ink-3);"
+      >
+        Need more than 50k devices or a bespoke setup?{" "}
+        <a href="/contact" style="color:inherit; text-decoration:underline;"
+          >Talk to us</a
+        >.
+      </p>
+
+      <!-- ── Emphasis: no artificial gates ───────────────────────── -->
+      <div class="mg-emphasis">
+        <span class="mg-emphasis-kicker">No artificial gates</span>
+        <h3 class="mg-emphasis-title">Features, not fences.</h3>
+        <p>
+          We don't meter you with arbitrary caps — no “10 devices”, no “400
+          messages”, no “3 dashboards”. You either have a feature or you don't.
+          Once you're licensed, the only limits are soft ones, set by your
+          hardware and configuration — never by us. And every deployment,
+          Private Cloud or self-managed, is a full, dedicated instance.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── Self-managed panel ──────────────────────────────────── -->
+    <div class="mg-tabpanel" data-panel="self" role="tabpanel" hidden>
+      <p class="mg-panel-intro">
+        Run Magistrala Enterprise Edition in your own environment — license it
+        and operate it yourself, or have us deploy and run it for you.
+      </p>
+
+      <div class="mg-price-wrap">
+        <div class="mg-price-toggle" role="group" aria-label="License term">
+          <button
+            type="button"
+            class="mg-price-opt is-active"
+            data-billing="monthly">Monthly</button
+          >
+          <button type="button" class="mg-price-opt" data-billing="perpetual"
+            >Perpetual</button
+          >
+        </div>
+      </div>
+
+      <div class="mg-self-grid">
+        <div class="cta-card mg-price-card is-featured">
+          <span class="mg-badge">License</span>
+          <div class="mg-price-head">
+            <div class="label">License only</div>
+            <div class="mg-price-block">
+              <div class="mg-price">
+                <span
+                  class="mg-amount"
+                  data-amt-monthly="300"
+                  data-amt-perpetual="3,999"
+                >
+                  €300
+                </span>
+              </div>
+              <div
+                class="mg-price-note"
+                data-note-monthly="per cluster · billed monthly"
+                data-note-perpetual="per cluster · one-time license"
+              >
+                per cluster · billed monthly
+              </div>
+            </div>
+            <div class="mg-goodfor">
+              Magistrala Enterprise Edition license for your own deployment. You
+              run and operate it; we license the software, per cluster.
+            </div>
+          </div>
+          <ul class="mg-price-feats">
+            <li class="mg-inherit">Everything in Community Edition, plus:</li>
+            {eeFeatures.map((f) => <li>→ {f}</li>)}
+            <li>
+              → Priority security patches &amp;{" "}
+              <span
+                class="mg-term"
+                data-term-monthly="updates"
+                data-term-perpetual="updates for the purchased version"
+              >
+                updates
+              </span>
+            </li>
+            <li class="mg-cap-feat">
+              → No limits — unlimited devices, messages, and features
+            </li>
+            <li class="mg-excl">Support not included — purchased separately</li>
+          </ul>
+          <a
+            href="/contact"
+            class="btn btn-primary"
+            style="margin-top:auto; text-align:center; justify-content:center;"
+          >
+            Get a license →
+          </a>
+        </div>
+
+        <div class="cta-card mg-price-card">
+          <div class="mg-price-head">
+            <div class="label">Managed by us</div>
+            <div class="mg-price-block">
+              <div class="mg-price">
+                <span class="mg-price-contact">Contact</span>
+              </div>
+            </div>
+            <div class="mg-goodfor">
+              We deploy and operate Magistrala Enterprise on your
+              infrastructure, aligned to your SLA, security, and data policies.
+            </div>
+          </div>
+          <ul class="mg-price-feats">
+            <li class="mg-inherit">Everything in License only, plus:</li>
+            <li>→ Deployed on your infrastructure</li>
+            <li>→ Your SLA &amp; uptime targets</li>
+            <li>→ Your security &amp; data-residency policies</li>
+            <li>→ Compliance &amp; certification support</li>
+            <li>→ Operated, monitored &amp; updated by our team</li>
+          </ul>
+          <a
+            href="/contact"
+            class="btn"
+            style="margin-top:auto; text-align:center; justify-content:center;"
+          >
+            Contact us →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Compare editions ────────────────────────────────────── -->
+    <div class="mg-compare">
+      <div class="mg-compare-head">
+        <span class="kicker">Editions &amp; plans</span>
+        <h3 class="h-3" style="margin-top:12px;">
+          Community vs Private Cloud plans.
+        </h3>
+      </div>
+      <div class="mg-compare-scroll">
+        <table class="mg-compare-table">
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              {compareCols.map((c) => <th scope="col">{c}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              compareGroups.map((grp) => (
+                <Fragment>
+                  <tr class="mg-compare-group">
+                    <th scope="colgroup" colspan={compareCols.length + 1}>
+                      {grp.group}
+                    </th>
+                  </tr>
+                  {grp.rows.map((row) => (
+                    <tr>
+                      <th scope="row">
+                        {row.f}
+                        {"note" in row && <span class="mg-ast-sup"> *</span>}
+                      </th>
+                      {row.cells.map((c) => (
+                        <td>
+                          {typeof c === "boolean" ? (
+                            c ? (
+                              <span class="mg-yes">
+                                <Check size={16} />
+                              </span>
+                            ) : (
+                              <span class="mg-no">—</span>
+                            )
+                          ) : (
+                            <span class="mg-val">{c}</span>
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </Fragment>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="mg-compare-foot">
+        * Limits are purely hardware- and setup-related — we never impose
+        artificial caps. Capacity figures are soft guidance, not hard limits. A
+        formal uptime SLA and high-availability clustering are available on the
+        Custom plan only.
+      </p>
+      <p class="mg-compare-note">
+        No license keys, no activation, no phone-home. We don't lock your
+        deployment or track your activity, so your data never leaves the
+        deployments you choose.
+      </p>
+    </div>
+
+    <!-- ── Shared pricing FAQ ──────────────────────────────────── -->
+    <div class="mg-price-faq">
+      <div class="mg-price-faq-head">
+        <span class="kicker">Pricing FAQ</span>
+        <h3 class="h-3" style="margin-top:12px;">
+          Questions about plans &amp; billing.
+        </h3>
+      </div>
+      <FAQAccordion items={pricingFaqs} />
+    </div>
+  </div>
+</section>
+
+<script>
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+  // Tab switching
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".mg-tab");
+  const panels = document.querySelectorAll<HTMLElement>(".mg-tabpanel");
+  tabs.forEach((tab) =>
+    tab.addEventListener("click", () => {
+      const name = tab.dataset.tab;
+      tabs.forEach((t) => {
+        const on = t.dataset.tab === name;
+        t.classList.toggle("is-active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      panels.forEach((p) => {
+        p.hidden = p.dataset.panel !== name;
+      });
+    }),
+  );
+
+  // Billing / term toggles (scoped to their own panel)
+  document
+    .querySelectorAll<HTMLElement>(".mg-price-toggle")
+    .forEach((toggle) => {
+      const opts = toggle.querySelectorAll<HTMLButtonElement>(".mg-price-opt");
+      const scope: ParentNode = toggle.closest(".mg-tabpanel") ?? document;
+      opts.forEach((opt) =>
+        opt.addEventListener("click", () => {
+          const mode = opt.dataset.billing ?? "monthly";
+          opts.forEach((o) => o.classList.toggle("is-active", o === opt));
+          scope.querySelectorAll<HTMLElement>(".mg-amount").forEach((a) => {
+            const v = a.dataset[`amt${cap(mode)}`];
+            if (v !== undefined) a.textContent = `€${v}`;
+          });
+          scope.querySelectorAll<HTMLElement>(".mg-price-note").forEach((n) => {
+            const t = n.dataset[`note${cap(mode)}`];
+            if (t !== undefined) n.textContent = t;
+          });
+          scope.querySelectorAll<HTMLElement>(".mg-term").forEach((el) => {
+            const t = el.dataset[`term${cap(mode)}`];
+            if (t !== undefined) el.textContent = t;
+          });
+        }),
+      );
+    });
+</script>
+
+<style>
+  /* ── Tabs ─────────────────────────────────────────────────── */
+  .mg-tabs-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .mg-tabs {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px;
+    border: 1px solid var(--line-3);
+    border-radius: 999px;
+    background: var(--paper);
+  }
+  .mg-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink-3);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+  .mg-tab.is-active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .mg-panel-intro {
+    text-align: center;
+    max-width: 60ch;
+    margin: 0 auto 32px;
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+
+  /* ── Community Edition card ───────────────────────────────── */
+  .mg-ce-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 32px;
+    align-items: center;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 48px;
+  }
+  .mg-ce-title {
+    margin: 10px 0 0;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .mg-ce-desc {
+    margin: 14px 0 0;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-2);
+    max-width: 60ch;
+  }
+  .mg-ce-feats {
+    list-style: none;
+    padding: 0;
+    margin: 22px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .mg-ce-visual {
+    display: flex;
+    justify-content: center;
+    color: var(--line-2);
+    opacity: 0.5;
+  }
+  @media (max-width: 720px) {
+    .mg-ce-card {
+      grid-template-columns: 1fr;
+      padding: 32px 26px;
+    }
+    .mg-ce-visual {
+      display: none;
+    }
+  }
+
+  /* ── Pricing grid (Private Cloud) ─────────────────────────── */
+  .mg-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: stretch;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  @media (max-width: 1024px) {
+    .mg-pricing-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .mg-pricing-grid {
+      grid-template-columns: 1fr;
+    }
+    .mg-goodfor,
+    .mg-price-block {
+      min-height: 0;
+    }
+  }
+
+  /* ── Self-managed grid ────────────────────────────────────── */
+  .mg-self-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 820px;
+    margin: 0 auto;
+    align-items: stretch;
+  }
+  @media (max-width: 640px) {
+    .mg-self-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Billing toggle ───────────────────────────────────────── */
+  .mg-price-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 44px;
+  }
+  .mg-price-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--line-3);
+    border-radius: 999px;
+    background: var(--paper);
+  }
+  .mg-price-opt {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink-3);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+  .mg-price-opt.is-active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .mg-save {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .mg-price-opt.is-active .mg-save {
+    background: rgba(246, 244, 238, 0.2);
+    color: var(--paper);
+  }
+
+  /* ── Tier / option cards ──────────────────────────────────── */
+  .mg-price-card {
+    position: relative;
+    padding: 32px 26px;
+    gap: 16px;
+    min-height: 0;
+  }
+  .mg-price-card.is-featured {
+    border-color: var(--ink);
+    box-shadow: var(--shadow-lg);
+  }
+  .mg-price-card.is-custom {
+    background: var(--paper-2);
+  }
+  .mg-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: var(--font-mono), monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+  }
+  .mg-price-head {
+    display: block;
+  }
+  .mg-price-block {
+    margin-top: 14px;
+    min-height: 62px;
+  }
+  .mg-goodfor {
+    margin-top: 14px;
+    min-height: 130px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+  .mg-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .mg-amount,
+  .mg-price-contact {
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .mg-price-contact {
+    font-size: 28px;
+  }
+  .mg-per {
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  .mg-price-note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--ink-3);
+    min-height: 16px;
+  }
+  .mg-price-feats {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .mg-inherit,
+  .mg-cap-feat {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .mg-ast {
+    color: var(--ink-3);
+  }
+  .mg-excl {
+    margin-top: 4px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line-3);
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+
+  /* Self-managed cards have shorter descriptions — relax the min-height */
+  .mg-self-grid .mg-goodfor {
+    min-height: 3.5em;
+  }
+
+  /* ── Pricing FAQ ──────────────────────────────────────────── */
+  .mg-price-faq {
+    max-width: 860px;
+    margin: 64px auto 0;
+  }
+  .mg-price-faq-head {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .mg-price-faq-head .kicker {
+    display: block;
+  }
+
+  /* ── Emphasis band ────────────────────────────────────────── */
+  .mg-emphasis {
+    max-width: 900px;
+    margin: 8px auto 0;
+    padding: 44px 48px;
+    text-align: center;
+    background: var(--surface-accent);
+    color: var(--on-accent);
+    border-radius: var(--radius-lg);
+  }
+  .mg-emphasis-kicker {
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent-2);
+  }
+  .mg-emphasis-title {
+    margin: 10px 0 0;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--on-accent);
+  }
+  .mg-emphasis p {
+    margin: 14px auto 0;
+    max-width: 64ch;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--on-accent-dim);
+  }
+  @media (max-width: 600px) {
+    .mg-emphasis {
+      padding: 32px 24px;
+    }
+  }
+
+  /* ── Compare editions table ───────────────────────────────── */
+  .mg-compare {
+    max-width: 1120px;
+    margin: 72px auto 0;
+  }
+  .mg-compare-head {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .mg-compare-head .kicker {
+    display: block;
+  }
+  .mg-compare-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+  }
+  .mg-compare-table {
+    width: 100%;
+    min-width: 880px;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .mg-compare-table th,
+  .mg-compare-table td {
+    padding: 12px 16px;
+    text-align: center;
+  }
+  .mg-compare-table thead th {
+    background: var(--paper-2);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-3);
+  }
+  .mg-compare-table thead th:first-child,
+  .mg-compare-table tbody th[scope="row"] {
+    text-align: left;
+  }
+  .mg-compare-table thead th:first-child {
+    width: 26%;
+  }
+  .mg-compare-table tbody th[scope="row"] {
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+  .mg-compare-table tbody tr:not(.mg-compare-group) + tr:not(.mg-compare-group),
+  .mg-compare-table tbody tr:not(.mg-compare-group):first-child {
+    border-top: 1px solid var(--line-3);
+  }
+  .mg-compare-group th {
+    text-align: left;
+    background: var(--paper-2);
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    padding-top: 16px;
+    padding-bottom: 10px;
+    border-top: 1px solid var(--line-3);
+  }
+  .mg-yes {
+    display: inline-flex;
+    color: var(--accent);
+  }
+  .mg-no {
+    color: var(--ink-4);
+  }
+  .mg-val {
+    color: var(--ink-2);
+  }
+  .mg-ast-sup {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .mg-compare-foot {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  .mg-compare-note {
+    max-width: 760px;
+    margin: 20px auto 0;
+    padding: 16px 22px;
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius);
+    background: var(--paper-2);
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+</style>
