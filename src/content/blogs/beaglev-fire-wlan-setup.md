@@ -21,7 +21,7 @@ tags:
   - Hardware
 ---
 
-# Porting ESP-Hosted from Raspberry Pi to BeagleV-Fire: A Bring-Up Journey
+## Porting ESP-Hosted from Raspberry Pi to BeagleV-Fire: A Bring-Up Journey
 
 The BeagleV-Fire is a RISC-V SBC built around Microchip's PolarFire SoC. The ESP-Hosted project lets a Linux host treat an ESP32 as its WiFi/Bluetooth radio over SPI, SDIO, or UART. Both are great pieces of hardware. The catch: ESP-Hosted was written, tested, and documented against the Raspberry Pi. Getting it working on a RISC-V board with a PolarFire SoC and an FPGA-routed SPI bus turned out to be a multi-day exercise in peeling back every layer of the Linux device stack — from shell scripts and device-tree compilation, through GPIO controller capabilities, to SPI signal integrity at the physical wire.
 
@@ -35,9 +35,33 @@ This is a write-up of that port. If you're trying to bring ESP-Hosted up on anyt
 - **Gateware:** CAPE-COMMS (a custom FPGA bitstream that routes SPI/I2C/UART out to the P8/P9 headers)
 - **Goal:** A working `wlan0` interface that can scan, associate, and route traffic over WiFi
 
-The ESP-Hosted driver source tree comes with a Raspberry-Pi-flavored `rpi_init.sh`, GPIO numbers like `22` and `27` baked into headers, and a build process that assumes you're cross-compiling against the Pi's kernel. None of that applies on a BeagleV-Fire — but the _driver itself_ is mostly portable C. The work is figuring out which knobs to turn so it talks to the right hardware on the right pins.
+## Changing Gateware on the BeagleV
+
+Since this ESP-HOSTED is based on the SPI communication and BeagleV Fire does not expose these SPI pins with the `DEFAULT` gateware, I had to change to `CAPE-COMMS` gateware.
+
+To change the gateware, I navigated to the gateware directory and list the available gateware options.
+
+```bash
+cd /usr/share/beagleboard/gateware
+ls
+```
+
+Program the comms-cape gateware using the command
+
+```bash
+sudo ./change-gateware.sh cape_comms
+```
+
+The SBC then reboots.
+To verify the gateware after reboot:
+
+```bash
+cat /proc/device-tree/chosen/overlays/*
+```
 
 ## Hardware Pin Connections
+
+The ESP-Hosted driver source tree comes with a Raspberry-Pi-flavored `rpi_init.sh`, GPIO numbers like `22` and `27` baked into headers, and a build process that assumes you're cross-compiling against the Pi's kernel. None of that applies on a BeagleV-Fire — but the _driver itself_ is mostly portable C. The work is figuring out which knobs to turn so it talks to the right hardware on the right pins.
 
 The table below shows the pin connection for this setup:
 
@@ -233,7 +257,7 @@ All `0xFF`. The handshake gate was opening correctly — the ESP was signaling r
 The all-`0xFF` pattern is diagnostic. The other possibilities each have their own signature:
 
 - All `0x00` → MISO grounded or dead bus
-- All `0xFF` → MISO floating, pulled up (which is what we had)
+- All `0xFF` → MISO floating, pulled up (which is what I had)
 - Changing random garbage → signal integrity / clock issue
 - Structured but mangled bytes → mode mismatch or bit-shift
 
@@ -254,7 +278,7 @@ The packet had structure (length-like fields, a header-like pattern) but the byt
 
 ## Layer 5: 10 MHz is too fast for jumper wires
 
-The driver was running at 10 MHz, the default for ESP-Hosted's initial clock. At 10 MHz over loose jumper wires, with no clean ground return next to the CLK line, the receiver mis-samples bits — exactly what we were seeing.
+The driver was running at 10 MHz, the default for ESP-Hosted's initial clock. At 10 MHz over loose jumper wires, with no clean ground return next to the CLK line, the receiver mis-samples bits — exactly what I was seeing.
 
 I dropped `SPI_INITIAL_CLK_MHZ` from 10 to 5, rebuilt, reloaded, and reset the ESP. The next bootup packet came through clean:
 
