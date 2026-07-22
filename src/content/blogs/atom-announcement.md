@@ -17,7 +17,7 @@ tags:
   - open-source
   - multi-tenancy
 category: announcement
-featured: true
+featured: false
 ---
 
 ## Introducing Atom

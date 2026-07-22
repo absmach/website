@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Pricing from "../../components/Pricing.astro";
+import FinalCTA from "../../components/FinalCTA.astro";
+---
+
+<BaseLayout
+  title="Pricing — Managed Magistrala IoT Platform"
+  description="Magistrala pricing across three models: the free, open-source Community Edition, fully managed Private Cloud plans, and self-managed Enterprise licensing. Monthly, annual, or perpetual billing."
+  ogImage="/img/og/og-magistrala.png"
+  ogImageAlt="Magistrala Pricing"
+>
+  <Header />
+  <main>
+    <section class="section" style="padding-bottom:0;">
+      <div class="container-narrow" style="text-align:center;">
+        <span class="kicker">Pricing</span>
+        <h1 class="h-1" style="margin-top:14px;">
+          Choose how you run Magistrala.
+        </h1>
+        <p class="lede" style="margin:20px auto 0;">
+          Free and open source, fully managed in our private cloud, or
+          self-managed in your own environment — the same platform, priced for
+          the way you want to operate it.
+        </p>
+        <div class="btn-row" style="justify-content:center; margin-top:28px;">
+          <a
+            href="https://cloud.magistrala.absmach.eu"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener">Start for Free ↗</a
+          >
+          <a href="/contact" class="btn">Contact Sales →</a>
+        </div>
+      </div>
+    </section>
+
+    <Pricing showHead={false} />
+    <FinalCTA />
+  </main>
+  <Footer />
+</BaseLayout>

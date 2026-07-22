@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
+import AnnouncementBanner from "../../components/AnnouncementBanner.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
 import {
@@ -184,6 +185,7 @@ const faqSchema = JSON.stringify({
   ogImage="/img/og/og-fluxmq.png"
   ogImageAlt="FluxMQ — High-Throughput MQTT & AMQP Broker"
 >
+  <AnnouncementBanner product="fluxmq" />
   <Header />
   <main>
     <!-- Hero -->
@@ -659,16 +661,6 @@ graph TD
             style="color:inherit; text-decoration:underline;">Atom</a
           > for device identity and runtime authorization. Download the binary, read
           the documentation, or explore the source on GitHub.
-        </p>
-        <p style="margin:0 auto 36px; font-size:14px; color:var(--ink-3);">
-          Evaluating brokers? See our detailed comparisons: <a
-            href="/emqx-alternative"
-            style="color:inherit; text-decoration:underline;">FluxMQ vs EMQX</a
-          > and <a
-            href="/mosquitto-alternative"
-            style="color:inherit; text-decoration:underline;"
-            >FluxMQ vs Mosquitto</a
-          >.
         </p>
         <div class="btn-row" style="justify-content:center;">
           <a

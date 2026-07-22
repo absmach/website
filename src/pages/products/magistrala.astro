@@ -1,8 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
+import AnnouncementBanner from "../../components/AnnouncementBanner.astro";
 import Footer from "../../components/Footer.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
+import Pricing from "../../components/Pricing.astro";
 import { deployments } from "../../data/deployments";
 import { solutions } from "../../data/solutions";
 import { Network, ShieldCheck, ChartBar, KeyRound } from "@lucide/astro";
@@ -67,12 +69,13 @@ const gridFeatures = [
   {
     icon: Network,
     name: "Multi-Protocol Messaging",
-    desc: "MQTT, CoAP, HTTP, and WebSocket. Devices speak whatever protocol they need to; Magistrala handles the translation.",
+    desc: "MQTT, CoAP, HTTP, and WebSocket. Devices speak whatever protocol they need to; Magistrala handles the translation, powered by <strong>FluxMQ</strong> - Abstract Machines' high-performance multi-protocol message broker.",
+    href: "/products/fluxmq",
   },
   {
     icon: ShieldCheck,
     name: "Identity & Access Control",
-    desc: "Fine-grained permissions at user, group, domain, client, and channel level, powered by Atom — Magistrala's dedicated auth and identity service.",
+    desc: "Fine-grained permissions at user, group, domain, client, and channel level, powered by <strong>Atom</strong> - Magistrala's dedicated auth and identity service.",
     href: "/products/atom",
   },
   {
@@ -84,37 +87,6 @@ const gridFeatures = [
     icon: KeyRound,
     name: "Personal Access Tokens",
     desc: "Issue scoped tokens for CI/CD pipelines, service accounts, and third-party integrations with configurable expiry and permissions.",
-  },
-];
-
-const sdks = [
-  {
-    lang: "Go",
-    name: "Go SDK",
-    install: "go get github.com/absmach/magistrala",
-    snippet: `sdk := magistrala.NewSDK(\n  magistrala.Config{\n    MsgURL: apiURL,\n  },\n)\nsdk.SendMessages(msg, key)`,
-    href: "https://github.com/absmach/magistrala/tree/main/pkg/sdk",
-  },
-  {
-    lang: "TypeScript",
-    name: "JS / TS SDK",
-    install: "npm install @absmach/magistrala-sdk",
-    snippet: `import { SDK } from\n  "@absmach/magistrala-sdk";\nconst sdk = new SDK({ msgURL });\nawait sdk.messages.send(\n  msg, clientKey\n);`,
-    href: "https://github.com/absmach/magistrala-sdk-ts",
-  },
-  {
-    lang: "Python",
-    name: "Python SDK",
-    install: "pip install magistrala-sdk",
-    snippet: `from magistrala import SDK\nsdk = SDK(msg_url=api_url)\nsdk.messages.send(\n  msg, client_key\n)`,
-    href: "https://github.com/absmach/supermq-sdk-py",
-  },
-  {
-    lang: "Rust",
-    name: "Rust SDK",
-    install: "cargo add magistrala-sdk",
-    snippet: `let sdk = magistrala::SDK::new(\n  api_url\n);\nsdk.messages()\n  .send(&msg, key)\n  .await?;`,
-    href: "https://github.com/absmach/supermq-sdk-rust",
   },
 ];
 
@@ -136,23 +108,21 @@ const integrations = [
 const faqs = [
   {
     q: "Can I self-host Magistrala?",
-    a: "Yes. Magistrala is fully open source under the Apache 2.0 license. You can run it on your own infrastructure, a private cloud, or on-premises. Docker Compose and Kubernetes manifests are provided in the repository.",
+    a: "Yes. The Magistrala backend is open source under the Apache 2.0 license, and the Community Edition — the open-source backend plus a free-to-use UI you deploy as a Docker container — is free to self-host on your own infrastructure, a private cloud, or on-premises (Docker Compose and Kubernetes manifests included). The Enterprise Edition — which adds the rules engine, alarms, reports, audit logs, and dashboards — is a commercial edition. If you would rather not run it yourself, we offer fully managed plans.",
+    link: { href: "/magistrala/pricing/", label: "View managed pricing" },
   },
   {
     q: "What protocols does Magistrala support?",
     a: "Magistrala has native support for MQTT 3.1.1 and 5.0, CoAP, HTTP, and WebSocket. Devices can switch between protocols without any changes on the platform side. LoRa, OPC-UA, and Modbus are supported via adapter services.",
   },
   {
-    q: "Which SDKs are available?",
-    a: "Official SDKs are available for Go, TypeScript/JavaScript, Python, and Rust. Each SDK covers authentication, device management, channel operations, and message publishing.",
-  },
-  {
     q: "Does Magistrala run on edge devices?",
     a: "Yes. The Magistrala Agent runs on edge devices and acts as a bridge to the cloud platform over MQTT. It also manages Node-RED flows, executes remote commands, and handles heartbeat monitoring, giving you full control of the device from the cloud.",
   },
   {
-    q: "Is there a message limit on the free tier?",
-    a: "The free cloud tier includes 10,000 messages per month, with 10 users, 10 clients, 10 channels, and 10 groups. There are no limits on the open-source self-hosted version.",
+    q: "Is there a free option, and what does the managed cloud cost?",
+    a: "The open-source core and Community Edition are free to self-host forever, and you can start for free on the shared cloud to evaluate the platform. For production, managed Private Cloud plans run on dedicated instances — starting at €150/month, up to Enterprise, plus a Custom plan for large or regulated deployments. You can also self-manage Magistrala Enterprise Edition under your own license.",
+    link: { href: "/magistrala/pricing/", label: "See all plans" },
   },
   {
     q: "How is Magistrala different from a plain MQTT broker?",
@@ -177,10 +147,11 @@ const faqSchema = JSON.stringify({
 
 <BaseLayout
   title="Magistrala — Open-Source IoT Platform for Connected Devices"
-  description="Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. SDKs for Go, TypeScript, Python, and Rust."
+  description="Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. GraphQL-native access via Atom."
   ogImage="/img/og/og-magistrala.png"
   ogImageAlt="Magistrala — Open-Source IoT Platform"
 >
+  <AnnouncementBanner product="magistrala" />
   <Header />
   <main>
     <!-- Hero -->
@@ -469,9 +440,11 @@ const faqSchema = JSON.stringify({
                 <div class="name" style="font-size:18px; margin-bottom:10px;">
                   {name}
                 </div>
-                <p class="desc" style="font-size:15px; line-height:1.65;">
-                  {desc}
-                </p>
+                <p
+                  class="desc"
+                  style="font-size:15px; line-height:1.65;"
+                  set:html={desc}
+                />
                 {href && (
                   <a
                     href={href}
@@ -536,52 +509,6 @@ const faqSchema = JSON.stringify({
         </div>
         <div style="margin-top:32px; text-align:center;">
           <a href="/solutions/" class="btn">View all solution packs →</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- SDK section -->
-    <section
-      class="section"
-      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
-    >
-      <div class="container-wide">
-        <div class="section-head">
-          <div class="left">
-            <span class="kicker">Developer SDKs</span>
-            <h2 class="h-2" style="margin-top:14px;">
-              Magistrala SDKs — Go, Python, TypeScript &amp; Rust.
-            </h2>
-          </div>
-          <p class="lede">
-            Official SDKs for Go, TypeScript, Python, and Rust. Connect to
-            Magistrala in minutes from the language your team already uses.
-          </p>
-        </div>
-        <div class="sdk-grid">
-          {
-            sdks.map(({ lang, name, install, snippet, href }) => (
-              <div class="sdk-card">
-                <div class="sdk-lang">{lang}</div>
-                <div class="sdk-name">{name}</div>
-                <div class="sdk-snippet">{snippet}</div>
-                <div style="display:flex; flex-direction:column; gap:6px; margin-top:auto;">
-                  <code style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink-3); background:var(--paper-3); padding:6px 10px; border-radius:var(--radius-sm);">
-                    {install}
-                  </code>
-                  <a
-                    href={href}
-                    class="btn-link"
-                    target="_blank"
-                    rel="noopener"
-                    style="font-size:13px;"
-                  >
-                    View on GitHub ↗
-                  </a>
-                </div>
-              </div>
-            ))
-          }
         </div>
       </div>
     </section>
@@ -751,94 +678,7 @@ const faqSchema = JSON.stringify({
       </div>
     </section>
 
-    <!-- Pricing -->
-    <section class="section">
-      <div class="container-wide">
-        <div class="section-head">
-          <div class="left">
-            <span class="kicker">Pricing</span>
-            <h2 class="h-2" style="margin-top:14px;">
-              Start free. Scale when you're ready.
-            </h2>
-          </div>
-          <p class="lede">
-            Self-host for free forever, or use the managed cloud with a free
-            tier and enterprise options.
-          </p>
-        </div>
-        <div class="mg-pricing-grid">
-          <div
-            class="cta-card"
-            style="padding:40px; gap:20px; display:flex; flex-direction:column;"
-          >
-            <div>
-              <div class="label">Free tier</div>
-              <h3 style="margin-top:8px;">Community</h3>
-              <p
-                style="font-size:36px; font-weight:700; margin:12px 0 0; color:var(--ink);"
-              >
-                $0<span
-                  style="font-size:15px; font-weight:400; color:var(--ink-3);"
-                >
-                  / month</span
-                >
-              </p>
-            </div>
-            <ul
-              style="list-style:none; padding:0; margin:0; flex:1; display:flex; flex-direction:column; gap:9px; font-size:14px; color:var(--ink-2);"
-            >
-              <li>→ 10 users</li>
-              <li>→ 10 clients</li>
-              <li>→ 10 channels</li>
-              <li>→ 10 groups</li>
-              <li>→ 10,000 messages / month</li>
-              <li>→ Community support</li>
-            </ul>
-            <a
-              href="https://cloud.magistrala.absmach.eu"
-              class="btn"
-              target="_blank"
-              rel="noopener"
-              style="margin-top:auto; text-align:center; justify-content:center;"
-              >Start Free ↗</a
-            >
-          </div>
-          <div
-            class="cta-card dark"
-            style="padding:40px; gap:20px; display:flex; flex-direction:column;"
-          >
-            <div>
-              <div class="label">Enterprise</div>
-              <h3 style="margin-top:8px; color:var(--paper);">Enterprise</h3>
-              <p
-                style="font-size:20px; font-weight:600; margin:12px 0 0; color:rgba(246,244,238,0.75);"
-              >
-                Custom pricing
-              </p>
-            </div>
-            <ul
-              style="list-style:none; padding:0; margin:0; flex:1; display:flex; flex-direction:column; gap:9px; font-size:14px; color:rgba(246,244,238,0.8);"
-            >
-              <li>→ Multitenant support</li>
-              <li>→ Unlimited users</li>
-              <li>→ Custom dashboards</li>
-              <li>→ Unlimited clients</li>
-              <li>→ Unlimited channels</li>
-              <li>→ Unlimited groups</li>
-              <li>→ Unlimited messages</li>
-              <li>→ Premium SLA support</li>
-              <li>→ Dedicated infrastructure</li>
-            </ul>
-            <a
-              href="/contact"
-              class="btn"
-              style="margin-top:auto; text-align:center; justify-content:center; background:rgba(246,244,238,0.1); border-color:rgba(246,244,238,0.25); color:var(--paper);"
-              >Contact Sales</a
-            >
-          </div>
-        </div>
-      </div>
-    </section>
+    <Pricing />
 
     <!-- FAQ -->
     <section
@@ -856,31 +696,6 @@ const faqSchema = JSON.stringify({
       </div>
     </section>
 
-    <!-- Architecture guide -->
-    <section class="section" style="border-top:1px solid var(--line-3);">
-      <div class="container-wide">
-        <div style="display:flex; gap:16px; flex-wrap:wrap;">
-          <a
-            href="/iiot-platform-architecture"
-            style="flex:1; min-width:260px; padding:24px; border:1px solid var(--line-3); border-radius:var(--radius); text-decoration:none; color:var(--ink); background:var(--paper-2);"
-          >
-            <div
-              style="font-size:11px; font-family:'JetBrains Mono',monospace; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink-4); margin-bottom:10px;"
-            >
-              Guide
-            </div>
-            <div style="font-weight:600; font-size:15px;">
-              IIoT Platform Architecture Explained →
-            </div>
-            <div style="font-size:13px; color:var(--ink-3); margin-top:6px;">
-              How Magistrala fits into a seven-layer industrial IoT stack:
-              protocols, edge compute, identity, and security.
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
     <!-- CTA -->
     <section class="section">
       <div class="container-narrow" style="text-align:center;">
@@ -891,13 +706,6 @@ const faqSchema = JSON.stringify({
         <p class="lede" style="margin:20px auto 24px;">
           Start with the free tier, self-host the open-source platform, or talk
           to us about enterprise deployments.
-        </p>
-        <p style="margin:0 auto 36px; font-size:14px; color:var(--ink-3);">
-          Planning your IIoT stack? Read our <a
-            href="/iiot-platform-architecture"
-            style="color:inherit; text-decoration:underline;"
-            >IIoT platform architecture guide</a
-          >.
         </p>
         <div class="btn-row" style="justify-content:center;">
           <a
@@ -922,7 +730,7 @@ const faqSchema = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
       "name": "Magistrala",
-      "description": "Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. SDKs for Go, TypeScript, Python, and Rust.",
+      "description": "Open-source IoT platform with multi-protocol messaging, visual dashboards, RBAC, and 400+ production deployments. GraphQL-native access via Atom.",
       "applicationCategory": "IoT",
       "operatingSystem": "Linux",
       "url": "https://www.absmach.eu/products/magistrala",
@@ -997,18 +805,9 @@ const faqSchema = JSON.stringify({
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
-  .mg-pricing-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    max-width: 880px;
-  }
   @media (max-width: 980px) {
     .mg-depl-grid {
       grid-template-columns: 1fr;
-    }
-    .mg-pricing-grid {
-      max-width: 100%;
     }
   }
   @media (max-width: 640px) {
@@ -1019,9 +818,6 @@ const faqSchema = JSON.stringify({
       border-right: none;
     }
     .mg-feat-grid {
-      grid-template-columns: 1fr;
-    }
-    .mg-pricing-grid {
       grid-template-columns: 1fr;
     }
   }
