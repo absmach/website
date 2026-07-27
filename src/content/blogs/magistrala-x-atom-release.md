@@ -17,7 +17,7 @@ tags:
   - edge computing
   - MQTT
 category: announcement
-featured: true
+featured: false
 ---
 
 ## What's New
