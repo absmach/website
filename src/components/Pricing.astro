@@ -52,7 +52,7 @@ const privateTiers = [
       "Reports",
       "Priority support & issue addressing",
       "Dedicated support 2h / month",
-      "Weekly backup, 3-month retention",
+      "Weekly backups, 4 restore points (28 days)",
     ],
   },
   {
@@ -70,7 +70,7 @@ const privateTiers = [
     features: [
       "Higher-priority support & issue addressing",
       "Dedicated support 12h / month (instead of 2)",
-      "Daily backup, 3-month retention (instead of weekly)",
+      "Daily backups instead of weekly, 7 restore points (7 days)",
     ],
   },
   {
@@ -214,7 +214,7 @@ const compareGroups = [
       },
       {
         f: "Backups",
-        cells: [false, false, "Weekly · 3-month", "Daily · 3-month", "Custom"],
+        cells: [false, false, "Weekly · 28 days", "Daily · 7 days", "Custom"],
       },
       {
         f: "Dedicated instance",
@@ -246,6 +246,10 @@ const pricingFaqs = [
   {
     q: "What's included in a Private Cloud plan?",
     a: "Every Private Cloud tier covers license, hosting, deployment, monitoring, dashboards, audit logs, and the updates listed for that tier. Higher tiers add the rules engine, alarms, reports, and scheduled backups. You focus on your devices and data; we run the platform.",
+  },
+  {
+    q: "How do backups work?",
+    a: "Business takes a snapshot of your instance every week and keeps the last four, so you can restore to any of the previous four weekly points, covering 28 days. Enterprise takes one every day and keeps the last seven: at most 24 hours of data is ever at risk, across a 7-day window. Daily is the stronger guarantee even though its window is shorter — what matters in a recovery is how recent your restore point is, not how far back the archive goes. Restores are performed by our team on request. Long-term archiving, point-in-time recovery, and custom retention are part of the Custom plan.",
   },
   {
     q: "What counts as a device?",
