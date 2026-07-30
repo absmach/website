@@ -62,6 +62,8 @@ Splitting the two lets us serve both properly. Community Edition stays exactly w
 
 Community Edition remains free, self-hosted, and licensed under Apache 2.0. There are no artificial limits on clients, channels, groups, or messages. If you're running Magistrala today for device management and multi-protocol messaging, nothing about how you deploy or scale it changes.
 
+The Community UI drops a piece of friction it used to carry, too: running it no longer requires accepting a EULA. Earlier releases needed you to accept an End User License Agreement and set `MG_UI_DOCKER_ACCEPT_EULA=yes` before the UI and it's backend containers would even start. That requirement is gone. The Community UI is free to use with no license gate and no strings attached.
+
 CE covers the primitives every IoT deployment needs:
 
 - **Clients** for device identity and lifecycle management
@@ -131,7 +133,9 @@ For exact tiers, pricing, and what's included at each level, see the full [prici
 
 ## If you're already self-hosting rules, alarms, reports, or dashboards
 
-If your current deployment relies on the Rules Engine, Alarms, Reports, or Dashboards, there's a direct path forward. The Enterprise self-managed license lets you keep running those components on your own infrastructure under a commercial license, with the option to add Abstract Machines-managed operations later if you want it. Nothing has to move off your infrastructure to make this transition. Visit the [pricing page](https://www.absmach.eu/magistrala/pricing/) for self-managed licensing details and migration options.
+If your current deployment relies on the Rules Engine, Alarms, Reports, or Dashboards, there's a direct path forward. The Enterprise self-managed license lets you keep running those components on your own infrastructure under a commercial license, with the option to add Abstract Machines-managed operations later if you want it. Nothing has to move off your infrastructure to make this transition.
+
+One thing to plan around: container artifacts for the Rules Engine, Alarms, Reports, Dashboards, and the commercial UI are being removed from the GitHub Container Registry now that they're Enterprise Edition services. If your deployment pulls those images directly, they won't keep showing up there, so move to an Enterprise self-managed license before that happens. Visit the [pricing page](https://www.absmach.eu/magistrala/pricing/) for self-managed licensing details and migration options.
 
 ## Get started
 
