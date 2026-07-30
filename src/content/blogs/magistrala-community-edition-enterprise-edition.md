@@ -109,6 +109,8 @@ EE fits a few specific situations:
 - Vendors and system integrators who need a white-labeled UI to put in front of their own customers
 - Organizations that need a formal SLA, audit logs, and priority support to satisfy internal compliance or uptime requirements
 
+Community Edition isn't locked out of these features entirely. CE ships a capped, single-instance preview of each: one Rules Engine rule, one Alarm, one Report, and one Dashboard. It's enough to see how each feature works before deciding whether you need more than one of them, which is what Enterprise Edition unlocks.
+
 ### Deployment options
 
 Enterprise Edition is available two ways. Fully managed private cloud comes in four tiers, Prototype, Business, Enterprise, and Custom, each billed monthly or annually. Self-managed is available either as a license you operate yourself, or as a license with Abstract Machines managing the deployment on your own infrastructure.
@@ -119,10 +121,10 @@ Enterprise Edition is available two ways. Fully managed private cloud comes in f
 | ----------------------- | -------------------------------- | ------------------------------------------ |
 | **License**             | Open source, Apache 2.0          | Commercially licensed                      |
 | **Hosting**             | Self-hosted, your infrastructure | Managed private cloud or self-managed      |
-| **Rules Engine**        | Not included                     | Included, with custom message formats      |
-| **Alarms**              | Not included                     | Included                                   |
-| **Reports**             | Not included                     | Included                                   |
-| **Dashboards**          | Not included                     | Included                                   |
+| **Rules Engine**        | Preview: 1 rule                  | Included, with custom message formats      |
+| **Alarms**              | Preview: 1 alarm                 | Included                                   |
+| **Reports**             | Preview: 1 report                | Included                                   |
+| **Dashboards**          | Preview: 1 dashboard             | Included                                   |
 | **UI / white-labeling** | Community UI                     | Commercial UI, white-labeled               |
 | **Audit logs**          | Not included                     | Included                                   |
 | **Support level**       | Community (GitHub, docs, forums) | Priority support, dedicated hours          |
