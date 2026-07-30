@@ -95,7 +95,7 @@ Magistrala is built on top of **[FluxMQ](https://www.absmach.eu/products/fluxmq/
 
 Identity and authorization in Magistrala run on **[Atom](https://www.absmach.eu/products/atom)**. Adopting Atom collapsed several separate concerns into a single layer: identity, policy evaluation, and keeping a policy engine in sync with the rest of the platform. There's no separate policy engine or sync process to keep consistent with the identity store. That has a direct operational payoff: fewer independent services to deploy and monitor for identity and access control than the platform needed before.
 
-Both FluxMQ and Atom are established parts of the Magistrala architecture, not new additions, and both stay fully open source in Community Edition.
+Both FluxMQ and Atom are established parts of the Magistrala architecture, not new additions. Like Magistrala Community Edition itself, they're Abstract Machines projects licensed under Apache 2.0: free to use, self-host, and modify, with no commercial gate in Community Edition.
 
 ## Enterprise Edition: operations and automation, run for you
 
