@@ -15,6 +15,9 @@ tags:
   - iot-platform
   - message-views
 draft: false
+coverImage: "/img/blogs/how-to-save-json-messages-magistrala/rule-json-output.png"
+ogImage:
+  url: "/img/blogs/how-to-save-json-messages-magistrala/rule-json-output.png"
 slug: "how-to-save-json-messages-magistrala"
 ---
 
@@ -59,7 +62,13 @@ return logicFunction()
 
 Nothing about that script is SenML-specific - it works whether `message.payload` is a flat object, a nested one, or an array of objects. That's the point: the JSON output doesn't care about shape, only that the result is JSON-marshalable.
 
-Add an output node. Click **Add Output**, and you'll now see two Internal DB cards side by side: **Internal DB**, labeled "Save data in SenML format", and **Internal DB (JSON)**, labeled "Save data in JSON format". Pick the second one and connect your logic node's output to it. Click **Save**.
+Add an output node. Click **Add Output**, and you'll now see two Internal DB cards side by side: **Internal DB**, labeled "Save data in SenML format", and **Internal DB (JSON)**, labeled "Save data in JSON format".
+
+![Add Output dialog showing the Internal DB and Internal DB (JSON) cards side by side](/img/blogs/how-to-save-json-messages-magistrala/add-output-dialog.png)
+
+Pick the second one and connect your logic node's output to it. Click **Save**. Your rule canvas should now look like this:
+
+![Rule canvas with Channel Subscriber, Code Editor, and Internal DB (JSON) nodes connected](/img/blogs/how-to-save-json-messages-magistrala/rule-json-output.png)
 
 The two are independent outputs - a rule can have both a SenML and a JSON Internal DB node at once if you want the same result saved both ways, capped at one of each.
 
@@ -74,24 +83,19 @@ It also handles routing differently. Internally, the message writer that eventua
 Publish a test payload to the channel your rule subscribes to:
 
 ```bash
-mosquitto_pub -h your-magistrala-host -p 8883 \
-  --cert client.crt --key client.key --cafile ca.crt \
-  -t channels/<channel-id>/messages \
+mosquitto_pub -h your-magistrala-host -p 1883 \
+  -u <client_id> -P <client_secret> \
+  -t m/<domain_id>/c/<channel_id> \
   -m '{"firmware_version": "2.4.1", "battery_pct": 87, "diagnostics": {"last_reboot": "2026-08-01T09:12:00Z", "error_count": 0}}'
 ```
 
 Open the channel's Messages page in the Magistrala UI, and create (or select) a JSON-format Message View. You should see your message show up, with the built-in **Payload** column exposing a read-only, syntax-highlighted view of the full object:
 
-```json
-{
-  "firmware_version": "2.4.1",
-  "battery_pct": 87,
-  "diagnostics": {
-    "last_reboot": "2026-08-01T09:12:00Z",
-    "error_count": 0
-  }
-}
-```
+![JSON-format Message View showing two saved messages with a Payload column](/img/blogs/how-to-save-json-messages-magistrala/json-view-populated.png)
+
+Click a row's **JSON** button to open the payload:
+
+![JSON Payload dialog showing a formatted, syntax-highlighted message](/img/blogs/how-to-save-json-messages-magistrala/json-payload-viewer.png)
 
 If nothing shows up, work through the troubleshooting list below before assuming the rule itself is broken - the most common cause by far is the writer deployment step.
 
