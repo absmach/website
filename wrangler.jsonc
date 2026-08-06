@@ -14,6 +14,12 @@
         "directory": "./dist",
         "binding": "AM_WEBSITE_ASSETS",
     },
+    "r2_buckets": [
+        {
+            "binding": "IMAGES_BUCKET",
+            "bucket_name": "websites-images",
+        },
+    ],
     "vars": {
         "TEAM_CONTACT_EMAIL": "info@absmach.eu",
         "MAIL_FROM_EMAIL": "noreply@absmach.eu",

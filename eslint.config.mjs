@@ -11,6 +11,7 @@ const nodeGlobals = {
   __filename: "readonly",
   Buffer: "readonly",
   console: "readonly",
+  fetch: "readonly",
 };
 
 const cjsGlobals = {
@@ -43,7 +44,7 @@ export default tseslint.config(
   ...astro.configs.recommended,
   prettier,
   {
-    files: ["*.mjs", "*.config.mjs", "astro.config.mjs"],
+    files: ["*.mjs", "*.config.mjs", "astro.config.mjs", "scripts/**/*.mjs"],
     languageOptions: { globals: nodeGlobals },
   },
   {

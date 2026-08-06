@@ -8,6 +8,8 @@ dist
 .dev.vars*
 !.dev.vars.example
 
+!scripts/.env.publish-image.example
+
 .claude
 .wolf
 CLAUDE.md
