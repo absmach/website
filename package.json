@@ -14,7 +14,8 @@
     "lint:fix": "eslint . --fix --report-unused-disable-directives",
     "format": "prettier --write \"**/*.{ts,tsx,mjs,astro,css,md,json}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,mjs,astro,css,md,json}\"",
-    "astro": "astro"
+    "astro": "astro",
+    "publish-image": "node scripts/publish-image.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.12",

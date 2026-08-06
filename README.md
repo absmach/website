@@ -122,6 +122,12 @@ For local Cloudflare Pages function testing, copy `.dev.vars.example` to `.dev.v
 - In Cloudflare Pages project settings: Workers runtime compatibility flags.
 - Or in local dev: `wrangler pages dev dist --compatibility-flag=nodejs_compat`.
 
+## Images
+
+Images are served from Cloudflare R2 (not committed to this repo) via
+`src/pages/img/[...path].ts`, which keeps existing `/img/...` URLs working unchanged.
+Maintainers publishing new/updated images: see [scripts/README.md](scripts/README.md).
+
 ## Blog
 
 See [WRITING.md](WRITING.md) for frontmatter and writing guidelines.
@@ -138,3 +144,4 @@ See [WRITING.md](WRITING.md) for frontmatter and writing guidelines.
 ## Documentation
 
 - [How to Write a Blog Post](WRITING.md)
+- [Publishing Images (maintainers)](scripts/README.md)
