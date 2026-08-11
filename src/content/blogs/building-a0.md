@@ -7,9 +7,9 @@ date: "2026-02-23"
 author:
   name: "Jones Kisaka"
   picture: "https://avatars.githubusercontent.com/u/85192767?v=4"
-coverImage: "/img/blogs/building-the-s0/s0.png"
+coverImage: "/img/blogs/building-the-a0/a0.png"
 ogImage:
-  url: "/img/blogs/building-the-s0/s0.png"
+  url: "/img/blogs/building-the-a0/a0.png"
 category: blog
 tags:
   - A0
@@ -26,7 +26,7 @@ The journey of a thousand miles begins with the first step. When we set out to d
 
 ![A0 board](/img/blogs/building-the-s0/s0.png)
 
-![Baseboard](/img/blogs/building-the-s0/baseboard.png)
+![Baseboard](/img/blogs/building-the-a0/baseboard.png)
 
 ## The Vision
 
@@ -73,7 +73,7 @@ Wrong.
 
 We discovered that our SD card was holding the MISO line even after being deselected. This meant the Ethernet chip couldn’t communicate properly because the SD card was still driving the shared bus. Classic bus contention.
 
-![SPI MISO Isolator](/img/blogs/building-the-s0/spi-miso-isolator.webp)
+![SPI MISO Isolator](/img/blogs/building-the-a0/spi-miso-isolator.webp)
 
 The solution: We implemented a tri-state buffer (essentially an SPI isolator) on the SD card’s MISO line. The buffer’s enable pin connects to the SD card’s chip select, ensuring that when the SD card is deselected, it truly releases the MISO line. Problem solved, and we gained a deeper understanding of proper SPI bus sharing techniques.
 
@@ -90,7 +90,7 @@ The fix: We moved the SPI connections to regular GPIO pins in Rev2. The lesson: 
 Here’s a subtle one that cost us some debugging time. We thought we had correctly connected the SD card to the SPI bus on the Baseboard. The pinout looked right, the connections were there, but nothing worked.
 The issue? SPI domain and SD card domain use different pin naming conventions and mapping. What’s MOSI in SPI world isn’t necessarily CMD in SD card world without proper mapping. We had made assumptions about pin compatibility without verifying the actual protocol requirements.
 
-![SD to SPI Domain Conersion Table](/img/blogs/building-the-s0/sd-to-spi-domain.webp)
+![SD to SPI Domain Conersion Table](/img/blogs/building-the-a0/sd-to-spi-domain.webp)
 
 The takeaway: Don’t rely on “looks right” when dealing with protocol conversions. Verify with datasheets, reference designs, and if possible, official application notes. SPI-to-SD interfacing has specific requirements that must be met.
 
@@ -100,7 +100,7 @@ This challenge taught us perhaps the most important lesson of the entire project
 
 It didn’t work. The MOSFET wouldn’t turn on, and the board wouldn’t power up.
 
-![Mosfet Power Protection](/img/blogs/building-the-s0/power-mosfet.webp)
+![Mosfet Power Protection](/img/blogs/building-the-a0/power-mosfet.webp)
 
 We spent hours debugging, checking gate voltages, trying different MOSFETs, questioning our understanding of transistor physics. Then it hit us: we never simulated this circuit before committing to the PCB.
 
@@ -113,7 +113,7 @@ Overcurrent protection: a fuse (can’t get simpler than that)
 Reverse polarity protection: Schottky diode (low drop, fast, effective)
 Not innovative. But it works, it’s reliable, and anyone debugging the board can understand it instantly.
 
-![Revere Polarity Protection](/img/blogs/building-the-s0/reverse-polarity-protection.webp)
+![Revere Polarity Protection](/img/blogs/building-the-a0/reverse-polarity-protection.webp)
 
 The lesson: Simulate before you fabricate. And remember: a working simple circuit beats a broken clever one every single time. Your future self (and anyone else working on the project) will thank you for choosing clarity over complexity.
 
