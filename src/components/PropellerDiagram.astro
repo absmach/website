@@ -44,27 +44,43 @@
     </div>
   </div>
 
-  <!-- MQTT pipe -->
-  <div class="pt-pipe" aria-hidden="true">
-    <div class="pt-vline">
-      <div class="pt-vbeam"></div>
-      <div class="pt-vbeam pt-vbeam-rev"></div>
+  <!-- MQTT merge: Manager + Kubernetes Operator → Service Mesh -->
+  <div class="pt-pipe-fork pt-pipe-merge" aria-hidden="true">
+    <div class="pt-fork-half">
+      <div class="pt-vline">
+        <div class="pt-vbeam" style="animation-delay:.2s;"></div>
+      </div>
+      <span class="pt-proto-sm">MQTT</span>
     </div>
-    <span class="pt-proto">MQTT</span>
+    <div class="pt-fork-half">
+      <div class="pt-vline">
+        <div class="pt-vbeam" style="animation-delay:.9s;"></div>
+      </div>
+      <span class="pt-proto-sm">MQTT</span>
+    </div>
+    <div class="pt-fork-stem">
+      <div class="pt-vbeam" style="animation-delay:.5s;"></div>
+    </div>
   </div>
 
   <!-- Service Mesh layer -->
   <div class="pt-layer">
     <div class="pt-lbl pt-lbl-accent">Service Mesh</div>
-    <div class="pt-cells">
-      <a href="/products/magistrala" class="pt-cell pt-cell-mesh pt-cell-link">
-        <div class="pt-name">Magistrala</div>
-        <div class="pt-meta">IoT platform</div>
-      </a>
+    <div class="pt-mesh-group">
+      <div class="pt-cells">
+        <a href="/products/fluxmq" class="pt-cell pt-cell-mesh pt-cell-link">
+          <div class="pt-name">FluxMQ</div>
+          <div class="pt-meta">MQTT broker</div>
+        </a>
+        <a href="/products/atom" class="pt-cell pt-cell-mesh pt-cell-link">
+          <div class="pt-name">Atom</div>
+          <div class="pt-meta">IoT platform</div>
+        </a>
+      </div>
     </div>
   </div>
 
-  <!-- MQTT fork: Magistrala → Proplet L & Proplet R (direct connections) -->
+  <!-- MQTT fork: Service Mesh → Proplet L & Proplet R (direct connections) -->
   <div class="pt-pipe-edge-fork" aria-hidden="true">
     <div class="pt-fork-stem-center">
       <div class="pt-vbeam" style="animation-delay:.2s;"></div>
@@ -89,7 +105,7 @@
 
     <div class="pt-cell pt-eg-p1">
       <div class="pt-name">Proplet</div>
-      <div class="pt-meta">Linux · Cloud node</div>
+      <div class="pt-meta">Cloud Node · Linux</div>
       <span class="pt-wasm">Wasm</span>
     </div>
 
@@ -112,7 +128,7 @@
 
     <div class="pt-cell pt-eg-p2">
       <div class="pt-name">Proplet</div>
-      <div class="pt-meta">Zephyr · MCU</div>
+      <div class="pt-meta">MCU · Zephyr RTOS</div>
       <span class="pt-wasm">Wasm</span>
     </div>
 
@@ -126,7 +142,7 @@
     <div class="pt-cell pt-cell-oci pt-eg-oci">
       <div class="pt-name">OCI Registry</div>
       <div class="pt-meta">Artifact store</div>
-      <span class="pt-http">HTTP</span>
+      <span class="pt-http">Wasm Module</span>
     </div>
   </div>
 </div>
@@ -264,6 +280,14 @@
     background: rgba(255, 122, 74, 0.03);
   }
 
+  /* ── Bounding box grouping FluxMQ + Atom under Service Mesh ── */
+  .pt-mesh-group {
+    border: 1px solid rgba(255, 122, 74, 0.3);
+    border-radius: 10px;
+    padding: 6px;
+    background: rgba(255, 122, 74, 0.02);
+  }
+
   .pt-name {
     font-family: "JetBrains Mono", monospace;
     font-size: 13px;
@@ -296,37 +320,6 @@
     align-self: flex-start;
   }
 
-  /* ── Vertical pipe (between layers) ── */
-  .pt-pipe {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 44px;
-    flex-shrink: 0;
-    position: relative;
-    margin: 2px 0;
-  }
-  .pt-pipe::before,
-  .pt-pipe::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    z-index: 3;
-  }
-  .pt-pipe::before {
-    top: 2px;
-    border-bottom: 5px solid rgba(7, 55, 99, 0.3);
-  }
-  .pt-pipe::after {
-    bottom: 2px;
-    border-top: 5px solid rgba(7, 55, 99, 0.3);
-  }
-
   /* ── Shared vertical line ── */
   .pt-vline {
     position: absolute;
@@ -356,10 +349,6 @@
     animation: ptVBeam 2.8s ease-in-out infinite;
     border-radius: 2px;
   }
-  .pt-vbeam-rev {
-    animation-delay: 1.4s;
-    animation-direction: reverse;
-  }
   @keyframes ptVBeam {
     from {
       top: -40%;
@@ -367,22 +356,6 @@
     to {
       top: 140%;
     }
-  }
-
-  /* ── Proto label (main pipes) ── */
-  .pt-proto {
-    position: relative;
-    z-index: 2;
-    background: var(--paper-2);
-    border: 1px solid rgba(7, 55, 99, 0.18);
-    padding: 3px 11px;
-    border-radius: 999px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: rgba(7, 55, 99, 0.6);
   }
 
   /* ── Small proto label (fork pipe branches, HTTP↓) ── */
@@ -489,6 +462,32 @@
     border-right: 4px solid transparent;
     border-top: 5px solid rgba(7, 55, 99, 0.3);
     z-index: 3;
+  }
+
+  /* ── Merge fork — mirrors pt-pipe-fork (Manager + K8s Operator → Service Mesh) ── */
+  /* Branches now run from the top cells down to the junction bar */
+  .pt-pipe-merge .pt-fork-half .pt-vline {
+    top: 0;
+    bottom: 50%;
+  }
+  /* Upward arrowhead pointing into Manager / K8s Operator above */
+  .pt-pipe-merge .pt-fork-half::after {
+    top: 2px;
+    bottom: auto;
+    border-top: none;
+    border-bottom: 5px solid rgba(7, 55, 99, 0.3);
+  }
+  /* Stem now runs from the junction bar down into Service Mesh below */
+  .pt-pipe-merge .pt-fork-stem {
+    top: auto;
+    bottom: 0;
+  }
+  /* Downward arrowhead pointing into Service Mesh */
+  .pt-pipe-merge.pt-pipe-fork::after {
+    top: auto;
+    bottom: 2px;
+    border-bottom: none;
+    border-top: 5px solid rgba(7, 55, 99, 0.3);
   }
 
   /* ── Edge grid (5 columns + OCI below Proxy) ── */
@@ -659,7 +658,7 @@
     z-index: 3;
   }
 
-  /* ── Edge fork: Magistrala → Proplet L & Proplet R ── */
+  /* ── Edge fork: Service Mesh → Proplet L & Proplet R ── */
   /* Uses the same grid-template-columns as pt-edge-grid so branches align exactly */
   .pt-pipe-edge-fork {
     display: grid;
@@ -669,7 +668,7 @@
     margin: 2px 0;
     position: relative;
   }
-  /* Upward arrowhead at top-center pointing toward Magistrala */
+  /* Upward arrowhead at top-center pointing toward Service Mesh */
   .pt-pipe-edge-fork::after {
     content: "";
     position: absolute;
@@ -695,7 +694,7 @@
     transform: translateY(-50%);
     border-radius: 1px;
   }
-  /* Vertical stem from Magistrala center down to the horizontal bar */
+  /* Vertical stem from Service Mesh center down to the horizontal bar */
   .pt-fork-stem-center {
     position: absolute;
     top: 0;
@@ -776,9 +775,6 @@
       font-size: 7px;
       padding: 2px 5px;
       margin-top: 5px;
-    }
-    .pt-pipe {
-      height: 36px;
     }
     .pt-pipe-fork {
       height: 36px;
