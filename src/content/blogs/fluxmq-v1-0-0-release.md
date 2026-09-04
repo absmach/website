@@ -25,6 +25,7 @@ We are pleased to announce **FluxMQ v1.0.0**.
 FluxMQ originated from a practical requirement within **Magistrala**.
 Messaging is a critical part of the Magistrala architecture. Devices publish telemetry and commands, applications consume data, internal services exchange events, and deployments frequently need to bridge multiple protocols and environments.
 As Magistrala deployments grew in scale and complexity, we needed greater control over this infrastructure.
+
 The messaging layer had to remain lightweight and operationally straightforward while supporting reliable MQTT communication, multiple protocols, durable messaging, and horizontal scaling. It also needed clear separation between protocol handling, routing, persistence, and delivery so that each part of the system could evolve independently.
 FluxMQ was developed to meet those requirements.
 What started as an MQTT broker has matured into a **high-performance, multi-protocol messaging platform for IoT, edge, real-time, and event-driven systems**.
@@ -85,6 +86,7 @@ For a distributed messaging system, consistency at these internal boundaries is 
 Horizontal scalability was one of the key requirements that led to FluxMQ.
 As Magistrala deployments grew, the messaging layer needed to scale alongside increasing numbers of devices, connections, and message flows without introducing a disproportionately complex operational stack.
 FluxMQ can operate as a single lightweight broker and scale to clustered deployments as requirements increase.
+
 Clustering provides broker membership, distributed client connections, cross-node routing, session ownership, and client takeover.
 The objective is to allow applications to scale the messaging infrastructure without coupling themselves to the mechanics of the cluster.
 FluxMQ also keeps its core coordination and persistence infrastructure embedded, reducing the number of external systems required to operate a deployment.
