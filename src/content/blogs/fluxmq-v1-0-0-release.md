@@ -37,13 +37,13 @@ With v1.0, FluxMQ establishes stable architectural boundaries and public contrac
 MQTT remains a first-class protocol in FluxMQ, with support for MQTT 3.1.1 and MQTT 5.0, including QoS, retained messages, persistent sessions, shared subscriptions, Last Will messages, and WebSockets.
 FluxMQ also supports:
 
-* MQTT 3.1.1 and MQTT 5.0
-* MQTT over WebSocket
-* AMQP 0.9.1
-* experimental AMQP 1.0
-* HTTP publishing
-* CoAP
-* TLS, mTLS, DTLS, and mDTLS
+- MQTT 3.1.1 and MQTT 5.0
+- MQTT over WebSocket
+- AMQP 0.9.1
+- experimental AMQP 1.0
+- HTTP publishing
+- CoAP
+- TLS, mTLS, DTLS, and mDTLS
 
 The architecture is designed around more than protocol compatibility.
 FluxMQ separates **transport, protocol semantics, broker behavior, routing, and durable delivery** into distinct layers.
@@ -58,12 +58,12 @@ Different workloads require different delivery semantics.
 For low-latency communication, FluxMQ provides publish/subscribe messaging based on topics and subscriptions.
 For workloads that require persistence and stronger delivery guarantees, FluxMQ provides **durable queues** with:
 
-* persistent storage,
-* consumer groups,
-* acknowledgements and redelivery,
-* FIFO ordering,
-* retention policies,
-* and configurable durability.
+- persistent storage,
+- consumer groups,
+- acknowledgements and redelivery,
+- FIFO ordering,
+- retention policies,
+- and configurable durability.
 
 This enables a single messaging platform to support device telemetry, command delivery, backend events, asynchronous processing, and other event-driven workloads.
 Applications can select the delivery model appropriate to their reliability, latency, and persistence requirements.
