@@ -47,7 +47,8 @@ flowchart TD
     MG -->|"Authorize"| ATOM["Atom\nIdentity & Authorization"]
     ATOM -->|"Allow / Deny"| MG
     MG --> EE["Rules · Alarms · Reports · Dashboards\n(Enterprise Edition)"]
-    MG -->|"Response"| Device
+    MG -->|"Response"| FLUXMQ
+    FLUXMQ -->|"Response"| Device
 ```
 
 Magistrala's architecture now has two clear foundations under it. Atom owns identity and authorization. FluxMQ owns message transport. Magistrala itself is the IoT-specific control plane on top: device management, provisioning, storage, rules, alarms, reporting, and observability. That split gives each piece a clear boundary, which makes the whole system easier to reason about, operate, and extend without the core services stepping on each other.
