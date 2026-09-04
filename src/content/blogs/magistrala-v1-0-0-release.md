@@ -1,6 +1,6 @@
 ---
-title: "Magistrala v1.0.0 Is Here"
-description: "Magistrala reaches v1.0.0. The project commits to stable, semver-governed public APIs, built on Atom as its identity and authorization layer and FluxMQ as its messaging foundation."
+title: "Magistrala v1.0.0 LTS Is Here"
+description: "Magistrala reaches v1.0.0 LTS, its first long-term-support release. Stable, semver-governed public APIs, built on Atom as its identity and authorization layer and FluxMQ as its messaging foundation."
 date: "2026-09-04"
 author:
   name: "Abstract Machines"
@@ -12,6 +12,7 @@ slug: "magistrala-v1-0-0-release"
 tags:
   - magistrala
   - release
+  - lts
   - atom
   - fluxmq
   - open-source
@@ -20,17 +21,19 @@ category: announcement
 featured: true
 ---
 
-## Magistrala v1.0.0
+## Magistrala v1.0.0 LTS
 
 Magistrala has been in active development for over a decade, hardened release after release by engineers running it in production rather than designed once and left alone. That decade of engineering is why it holds up today at enterprise scale: over 400 production deployments across more than 50 countries. Along the way it grew from a messaging platform into a full IoT stack: device and user management, multi-tenancy, authorization, provisioning, rules, alarms, reports, edge support, multiple protocol adapters, and a web UI. The last few release cycles brought the [Community Edition / Enterprise Edition split](/blog/magistrala-community-edition-enterprise-edition/), [Atom as the built-in identity layer](/blog/magistrala-x-atom-release/), and a run of hardening releases through [v0.50.0](/blog/magistrala-v0-50-0-release/).
 
-v1.0.0 is where that work lands. Instead of another batch of features, this release is about making the platform's APIs, architecture, and operational behavior stable enough to build on for the long term.
+v1.0.0 is where that work lands. Instead of another batch of features, this release is about making the platform's APIs, architecture, and operational behavior stable enough to build on for the long term. It's also our first LTS release: v1.0.0 LTS.
 
 ---
 
-## What v1.0 Means
+## What v1.0.0 LTS Means
 
 A `1.0` tag carries a different promise than a pre-1.0 one. For Magistrala, it means the documented public interfaces are now stable APIs, and future changes to them follow semantic versioning. A breaking change gets a major version bump, not a silent update.
+
+The LTS designation adds a second commitment on top of that: this is the release line we're supporting long-term, with security fixes and critical bug fixes continuing to land on it. Teams building on Magistrala don't have to jump to every subsequent release just to stay supported. That matters for the kind of multi-year IoT deployments this platform is meant for, where upgrading a fleet of devices and gateways on someone else's release cadence isn't realistic.
 
 It doesn't mean the platform stops moving. New protocols, services, deployment options, and edge capabilities are still coming. What changes is that they now build on top of a fixed architectural base instead of reshaping it. Getting here took a sustained push on API correctness, input validation, authorization, predictable failure behavior, cross-service contracts, and test coverage.
 
@@ -130,7 +133,7 @@ Reaching v1.0 doesn't slow anything down; it changes what the next round of work
 
 ## Get It
 
-Magistrala v1.0.0 would not exist without everyone who has contributed code, filed bugs, tested releases, discussed architecture, written docs, built integrations, and run this in production over the years. Thank you.
+Magistrala v1.0.0 LTS would not exist without everyone who has contributed code, filed bugs, tested releases, discussed architecture, written docs, built integrations, and run this in production over the years. Thank you.
 
 - 🌐 Website: https://www.absmach.eu/products/magistrala
 - ⚙️ GitHub: https://github.com/absmach/magistrala
