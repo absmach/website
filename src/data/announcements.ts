@@ -13,8 +13,8 @@ export const announcements: Partial<Record<string, Announcement>> = {
     href: "/blog/atom-v0-40-0-release/",
   },
   magistrala: {
-    text: "Magistrala v0.40.0 ships with Atom as its built-in identity and authorization layer.",
+    text: "Magistrala v1.0.0 is here: stable APIs, Atom for identity, FluxMQ for messaging.",
     linkText: "Read the announcement",
-    href: "/blog/magistrala-x-atom-release/",
+    href: "/blog/magistrala-v1-0-0-release/",
   },
 };
