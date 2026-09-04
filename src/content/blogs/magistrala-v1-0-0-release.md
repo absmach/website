@@ -56,13 +56,13 @@ Magistrala's architecture now has two clear foundations under it. Atom owns iden
 
 ## Atom: The Identity and Authorization Layer
 
-Users, devices, workspaces, groups, resources, roles, and policies are all represented through Atom's entity and access-control model, and every Magistrala service builds on it instead of running its own identity logic. The mapping is direct:
+Users, devices, workspaces, groups, resources, roles, and policies are all represented through [Atom](https://www.absmach.eu/products/atom)'s entity and access-control model, and every Magistrala service builds on it instead of running its own identity logic. The mapping is direct:
 
 | Magistrala concept | Atom concept                                      |
 | ------------------ | ------------------------------------------------- |
 | Workspace          | Tenant                                            |
 | User               | Entity (human)                                    |
-| Client / Device    | Entity (device)                                   |
+| Client             | Entity (device)                                   |
 | Channel            | Resource                                          |
 | Group              | Hierarchical organization of entities & resources |
 
