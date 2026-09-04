@@ -22,7 +22,7 @@ featured: true
 
 ## Magistrala v1.0.0
 
-Magistrala started as EU-funded distributed systems research and has been running in production ever since, in over 400 deployments across more than 50 countries. Along the way it grew from a messaging platform into a full IoT stack: device and user management, multi-tenancy, authorization, provisioning, rules, alarms, reports, edge support, multiple protocol adapters, and a web UI. The last few release cycles brought the [Community Edition / Enterprise Edition split](/blog/magistrala-community-edition-enterprise-edition/), [Atom as the built-in identity layer](/blog/magistrala-x-atom-release/), and a run of hardening releases through [v0.50.0](/blog/magistrala-v0-50-0-release/).
+Magistrala started as an enthusiast project, built by a small group of people who wanted to make IoT better and learn something new along the way. It's been running in production ever since, in over 400 deployments across more than 50 countries. Along the way it grew from a messaging platform into a full IoT stack: device and user management, multi-tenancy, authorization, provisioning, rules, alarms, reports, edge support, multiple protocol adapters, and a web UI. The last few release cycles brought the [Community Edition / Enterprise Edition split](/blog/magistrala-community-edition-enterprise-edition/), [Atom as the built-in identity layer](/blog/magistrala-x-atom-release/), and a run of hardening releases through [v0.50.0](/blog/magistrala-v0-50-0-release/).
 
 v1.0.0 is where that work lands. Instead of another batch of features, this release is about making the platform's APIs, architecture, and operational behavior stable enough to build on for the long term.
 
@@ -56,11 +56,11 @@ Magistrala's architecture now has two clear foundations under it. Atom owns iden
 
 ## Atom: The Identity and Authorization Layer
 
-Users, devices, tenants, groups, resources, roles, and policies are all represented through Atom's entity and access-control model, and every Magistrala service builds on it instead of running its own identity logic. The mapping is direct:
+Users, devices, workspaces, groups, resources, roles, and policies are all represented through Atom's entity and access-control model, and every Magistrala service builds on it instead of running its own identity logic. The mapping is direct:
 
 | Magistrala concept | Atom concept                                      |
 | ------------------ | ------------------------------------------------- |
-| Domain             | Tenant                                            |
+| Workspace          | Tenant                                            |
 | User               | Entity (human)                                    |
 | Client / Device    | Entity (device)                                   |
 | Channel            | Resource                                          |
