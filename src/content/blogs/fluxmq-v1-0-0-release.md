@@ -1,176 +1,177 @@
 ---
-title: "FluxMQ v1.0.0, multi-protocol IoT messaging"
-description: "FluxMQ v1.0.0 turns Abstract Machines messaging work into a stable broker for MQTT, AMQP, CoAP, HTTP, and durable queues."
+title: "FluxMQ v1.0.0 is Here"
+description: "FluxMQ v1.0.0 stabilizes the public contracts behind a high-performance, multi-protocol messaging platform for IoT, edge, real-time, and event-driven systems."
 date: "2026-09-04"
 author:
   name: "Abstract Machines"
   picture: "https://avatars.githubusercontent.com/u/126989860?s=200&v=4"
+slug: "fluxmq-v1-0-0-release"
 tags:
-  - FluxMQ v1.0.0
-  - FluxMQ
-  - MQTT
-  - IoT
-  - message-streaming
-  - open-source
+  - fluxmq
+  - release
+  - mqtt
+  - amqp
+  - coap
+  - messaging
+  - iot
+  - event-driven
+category: announcement
 featured: false
-draft: false
-slug: "fluxmq-v1-0-0-multi-protocol-iot-messaging"
 ---
 
-# FluxMQ v1.0.0, multi-protocol IoT messaging
+## FluxMQ v1.0.0
 
-## What's new
+We are pleased to announce **FluxMQ v1.0.0**.
 
-FluxMQ v1.0.0 is now available as the semver release tag `v1.0.0`. This release is the point where FluxMQ moves from an MQTT broker shaped by Magistrala messaging requirements into a high-performance, multi-protocol messaging platform for IoT, edge computing, real-time applications, and event-driven systems.
+FluxMQ originated from a practical requirement within **Magistrala**.
 
-The main change in v1.0.0 is stability. The release defines public APIs and contracts, configuration behavior, error handling, durability semantics, and a canonical message envelope used inside the broker. FluxMQ remains open-source, written in Go, and built for cloud-native distributed systems that need MQTT, pub/sub, and message streaming in one operational footprint.
+Messaging is a critical part of the Magistrala architecture. Devices publish telemetry and commands, applications consume data, internal services exchange events, and deployments frequently need to bridge multiple protocols and environments.
 
-## Featured changes
+As Magistrala deployments grew in scale and complexity, we needed greater control over this infrastructure.
 
-### Stable MQTT support for production IoT workloads
+The messaging layer had to remain lightweight and operationally straightforward while supporting reliable MQTT communication, multiple protocols, durable messaging, and horizontal scaling. It also needed clear separation between protocol handling, routing, persistence, and delivery so that each part of the system could evolve independently.
 
-FluxMQ v1.0.0 gives IoT developers a stable MQTT surface for device telemetry, command delivery, and real-time pub/sub traffic. The release covers MQTT 3.1.1 and MQTT 5.0, including QoS 0, QoS 1, QoS 2, retained messages, persistent sessions, shared subscriptions, Last Will messages, and MQTT over WebSocket.
+FluxMQ was developed to meet those requirements.
 
-That matters because MQTT is still the primary protocol for constrained devices and edge deployments. FluxMQ treats MQTT as a first-class protocol, not a compatibility layer wrapped around an unrelated messaging model. That's the right call.
+What started as an MQTT broker has matured into a **high-performance, multi-protocol messaging platform for IoT, edge, real-time, and event-driven systems**.
 
-```bash
-mosquitto_sub -h localhost -p 1883 -t 'devices/+/telemetry' -v
+With v1.0, FluxMQ establishes stable architectural boundaries and public contracts for production deployments and long-term development.
 
-mosquitto_pub -h localhost -p 1883 -t 'devices/device-42/telemetry' -m '{"temp":23.7}'
-```
+---
 
-### Multi-protocol ingress on a shared broker core
+## From MQTT Broker to Messaging Platform
 
-*Multi-Protocol Broker Pipeline*
+MQTT remains a first-class protocol in FluxMQ, with support for MQTT 3.1.1 and MQTT 5.0, including QoS, retained messages, persistent sessions, shared subscriptions, Last Will messages, and WebSockets.
 
-```mermaid
-flowchart LR
-  subgraph Transports[Transport Layer]
-    TCP[TCP or TLS]
-    UDP[UDP or DTLS]
-    WS[WebSocket]
-  end
+FluxMQ also supports:
 
-  subgraph Protocols[Protocol Layer]
-    MQTT[MQTT 3.1.1 and 5.0]
-    AMQP[AMQP 0.9.1 and experimental 1.0]
-    HTTP[HTTP Publishing]
-    COAP[CoAP]
-  end
+* MQTT 3.1.1 and MQTT 5.0
+* MQTT over WebSocket
+* AMQP 0.9.1
+* experimental AMQP 1.0
+* HTTP publishing
+* CoAP
+* TLS, mTLS, DTLS, and mDTLS
 
-  Broker[Shared FluxMQ Broker Core]
-  Routing[Topic and Queue Routing]
-  PubSub[Low-Latency Pub/Sub Delivery]
-  Queue[Durable Queue Storage and Delivery]
+The architecture is designed around more than protocol compatibility.
 
-  TCP --> MQTT
-  TCP --> AMQP
-  UDP --> COAP
-  WS --> MQTT
-  HTTP --> Broker
-  MQTT --> Broker
-  AMQP --> Broker
-  COAP --> Broker
-  Broker --> Routing
-  Routing --> PubSub
-  Routing --> Queue
-```
+FluxMQ separates **transport, protocol semantics, broker behavior, routing, and durable delivery** into distinct layers.
 
+Each protocol retains its own semantics, while shared messaging and queue infrastructure provides a consistent foundation for routing, persistence, and delivery.
 
-Platform engineers can accept traffic from different clients without deploying a separate broker for each protocol. FluxMQ v1.0.0 includes MQTT over TCP, MQTT over WebSocket, AMQP 0.9.1, experimental AMQP 1.0, HTTP publishing, and CoAP.
+This separation allows FluxMQ to support heterogeneous environments without reducing every protocol to a lowest-common-denominator abstraction.
 
-The release keeps protocol boundaries explicit. Transport handling, protocol parsing, broker behavior, routing, and queue delivery each have a defined responsibility. That makes the system easier to reason about under load and during failure analysis.
+---
 
-```text
-Transport -> Protocol -> Broker -> Routing -> Queue
+## Pub/Sub and Durable Messaging
 
-TCP/TLS, UDP/DTLS, WebSocket
-        -> MQTT, AMQP, HTTP, CoAP
-        -> session and protocol behavior
-        -> topic and queue routing
-        -> pub/sub delivery or durable queue storage
-```
+Different workloads require different delivery semantics.
 
-### Durable queues alongside pub/sub routing
+For low-latency communication, FluxMQ provides publish/subscribe messaging based on topics and subscriptions.
 
-FluxMQ v1.0.0 supports both low-latency pub/sub and durable queues, so architects can separate transient fan-out from work that must survive consumer downtime. Queue traffic is documented through reserved topic namespaces, while standard MQTT topics continue to use normal pub/sub routing.
+For workloads that require persistence and stronger delivery guarantees, FluxMQ provides **durable queues** with:
 
-Durable queues are important for command processing, asynchronous workflows, and message streaming pipelines where a subscriber may disconnect or scale horizontally. Shared subscriptions remain available for MQTT load-balanced pub/sub delivery, while queue semantics cover stored work and consumer-group style processing.
+* persistent storage,
+* consumer groups,
+* acknowledgements and redelivery,
+* FIFO ordering,
+* retention policies,
+* and configurable durability.
 
-```text
-sensors/temperature        # normal pub/sub topic
-$share/workers/sensors/#   # MQTT shared subscription
-$queue/orders              # durable queue traffic
-$queue/orders/$ack         # queue acknowledgment topic
-```
+This enables a single messaging platform to support device telemetry, command delivery, backend events, asynchronous processing, and other event-driven workloads.
 
-### Security transports for cloud and edge deployments
+Applications can select the delivery model appropriate to their reliability, latency, and persistence requirements.
 
-Operators can run FluxMQ across encrypted transport paths for both data-center and constrained-device environments. v1.0.0 includes TLS, mTLS, DTLS, and mDTLS support across the relevant transport families.
+---
 
-That security model fits cloud-native IoT systems where devices, gateways, and services often sit on different networks. FluxMQ doesn't make broad claims here. Certificate policy, identity mapping, multitenancy, and authorization rules should be configured and validated against the deployment documentation for the target environment.
+## A Consistent Message Foundation
 
-```yaml
-transport_security:
-  tls: enabled
-  mtls: enabled
-  dtls: enabled
-  mdtls: enabled
-```
+A significant part of the v1.0 work focused on the internal message model.
 
-### Stable contracts and canonical message flow
+FluxMQ now uses a **canonical message envelope** across brokers, queues, persistence, and cluster boundaries.
 
-*Canonical Message Delivery Flow*
+Payloads, timestamps, delivery state, expiry information, publisher identity, and protocol metadata are represented consistently throughout the system.
 
-```mermaid
-flowchart TD
-  Packet[Protocol Packet]
-  Envelope[Canonical Message Envelope]
-  Decision{Routing Decision}
-  Topic[Standard MQTT Topic]
-  Shared[Shared Subscription]
-  Durable[Reserved Queue Namespace]
-  PubSub[Pub/Sub Fan-Out]
-  Balanced[Load-Balanced Subscriber Delivery]
-  Stored[Stored Work Item]
-  Ack[Queue Acknowledgment]
+This provides a stable foundation for protocol interoperability and allows routing, storage, clustering, and future persistence implementations to evolve around the same message contract.
 
-  Packet --> Envelope
-  Envelope --> Decision
-  Decision --> Topic
-  Decision --> Shared
-  Decision --> Durable
-  Topic --> PubSub
-  Shared --> Balanced
-  Durable --> Stored
-  Stored --> Ack
-```
+For a distributed messaging system, consistency at these internal boundaries is essential for predictable behavior at scale.
 
+---
 
-Developers building integrations can now target v1.0.0 contracts with less churn. The release formalizes public APIs, protobuf contracts, configuration behavior, error handling expectations, session ownership rules, and durability semantics.
+## Built to Scale
 
-FluxMQ also standardizes broker-internal message handling around a canonical message envelope. The envelope is described at the contract level in v1.0.0, so this announcement avoids publishing example fields that could be mistaken for a guaranteed schema.
+Horizontal scalability was one of the key requirements that led to FluxMQ.
 
-```text
-Protocol packet -> canonical message envelope -> routing decision -> pub/sub or durable queue delivery
-```
+As Magistrala deployments grew, the messaging layer needed to scale alongside increasing numbers of devices, connections, and message flows without introducing a disproportionately complex operational stack.
 
-## Other improvements and fixes
+FluxMQ can operate as a single lightweight broker and scale to clustered deployments as requirements increase.
 
-- FluxMQ continues to ship as a single binary, which reduces the number of moving parts needed for local development and edge operation.
-- Clustering support is part of the v1.0.0 architecture, with session ownership and distributed broker behavior documented as release contracts instead of informal implementation details.
-- WebSocket support allows browser and dashboard clients to consume MQTT traffic without a custom bridge.
-- CoAP support extends FluxMQ to constrained IoT device patterns where UDP and DTLS are common.
-- Future work will be documented in public roadmap and release notes, including areas adjacent to secure IoT research such as post-quantum topics and EU research programs when they become concrete release artifacts.
+Clustering provides broker membership, distributed client connections, cross-node routing, session ownership, and client takeover.
 
-## Getting started
+The objective is to allow applications to scale the messaging infrastructure without coupling themselves to the mechanics of the cluster.
 
-Use the semver release tag `v1.0.0` when testing or upgrading from source. The project repository and product page are available at [github.com/absmach/fluxmq](https://github.com/absmach/fluxmq) and [FluxMQ](https://www.absmach.eu/products/fluxmq).
+FluxMQ also keeps its core coordination and persistence infrastructure embedded, reducing the number of external systems required to operate a deployment.
+
+Additional distributed queue and replication capabilities will continue to evolve independently of the stable queue API.
+
+The principle remains:
+
+**applications should depend on messaging guarantees, not on the internal topology used to provide them.**
+
+---
+
+## Stable APIs and Architectural Boundaries
+
+The work leading to FluxMQ v1.0 focused heavily on stability rather than feature count.
+
+We reviewed and hardened the public queue APIs, protobuf contracts, configuration model, error behavior, canonical message representation, session ownership, durability semantics, and boundaries between major broker components.
+
+FluxMQ follows a layered architecture:
+
+**Transport → Protocol → Broker → Routing → Queue**
+
+These boundaries make it possible to extend protocols, persistence, routing, and distributed capabilities independently while minimizing impact on existing integrations.
+
+With v1.0, stable public interfaces become explicit contracts. Incompatible changes to those contracts will follow semantic versioning.
+
+For teams integrating FluxMQ into production systems, this provides a predictable foundation for long-lived applications and infrastructure.
+
+---
+
+## Operationally Lightweight
+
+Scalability should not require unnecessary operational complexity.
+
+FluxMQ is written in Go and can be deployed as a single binary.
+
+A local broker can be started with:
 
 ```bash
 git clone https://github.com/absmach/fluxmq.git
 cd fluxmq
-git checkout v1.0.0
+
+make build
+./build/fluxmq --config examples/no-cluster.yaml
 ```
 
-For local builds, follow the repository instructions for your environment and configuration profile. Read the full changelog on [GitHub Releases](https://github.com/absmach/fluxmq/releases) before upgrading production clusters.
+A deployment can begin with a single broker and expand with durable queues, additional protocols, TLS, authorization, and clustering as requirements evolve.
+
+This allows organizations to start with a simple topology while retaining a clear path toward larger distributed deployments.
+
+---
+
+## What Comes After v1.0
+
+FluxMQ v1.0 establishes the baseline for the next phase of development.
+
+We will continue investing in distributed queues, replication, performance, protocol support, observability, operational tooling, and large-scale deployments.
+
+FluxMQ began as infrastructure we needed to build Magistrala reliably at scale.
+
+It has matured into an independent messaging platform designed for organizations building IoT and event-driven systems with demanding requirements around interoperability, performance, durability, and operational control.
+
+**FluxMQ v1.0.0 is available now.**
+
+GitHub: https://github.com/absmach/fluxmq
+
+FluxMQ: https://www.absmach.eu/products/fluxmq
