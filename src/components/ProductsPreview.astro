@@ -9,7 +9,7 @@ const products = [
     description:
       "Device identity, multi-protocol connectivity, and fine-grained access control for IoT deployments at any scale.",
     meta: "MQTT · CoAP · HTTP · WebSocket",
-    badge: "v0.40.0",
+    badge: "V1.0.0 LTS",
   },
   {
     href: "/products/fluxmq",
@@ -18,6 +18,7 @@ const products = [
     name: "FluxMQ",
     description:
       "Durable, low-latency MQTT broker for distributed event streams.",
+    badge: "V1.0.0 LTS",
   },
   {
     href: "/products/atom",
@@ -26,6 +27,7 @@ const products = [
     name: "Atom",
     description:
       "Identity and authorization for every entity, online at runtime.",
+    badge: "V1.0.0 LTS",
   },
   {
     href: "/products/propeller",
@@ -164,6 +166,12 @@ const products = [
     gap: 8px;
     position: relative;
     z-index: 2;
+  }
+  .bento .b .badge {
+    min-width: 118px;
+    justify-content: center;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
   .b-platform-label {
     font-family: "JetBrains Mono", monospace;
