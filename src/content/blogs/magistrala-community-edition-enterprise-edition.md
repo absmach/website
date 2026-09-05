@@ -10,7 +10,6 @@ tags:
   - IoT platform
   - multi-tenancy
   - device-management
-featured: true
 author:
   name: "Abstract Machines"
   picture: "https://avatars.githubusercontent.com/u/126989860?s=200&v=4"
