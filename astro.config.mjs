@@ -11,7 +11,6 @@ export default defineConfig({
   devToolbar: { enabled: false },
 
   redirects: {
-    "/documents/synth-ee": "/documents/synth",
     "/pricing": "/magistrala/pricing/",
     "/products/s0": "/products/a0",
     "/products/s1": "/products/a1",

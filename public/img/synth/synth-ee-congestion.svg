@@ -1,0 +1,422 @@
+<svg data-phx-loc="1095" viewBox="0 0 610 665" class="w-full h-auto bg-slate-950/80 rounded-xl border border-slate-800 shadow-2xl overflow-visible">
+                  <defs data-phx-loc="1099">
+                    <pattern data-phx-loc="1100" id="pcb-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <circle data-phx-loc="1101" cx="1" cy="1" r="1" fill="#1e293b"></circle>
+                    </pattern>
+                  </defs>
+                  <rect data-phx-loc="1104" width="100%" height="100%" fill="url(#pcb-grid)"></rect>
+
+                  <!-- Board Outline dynamically scaled from compiler placement IR -->
+                  <g data-phx-loc="1107" transform="translate(40, 40)">
+                    <rect data-phx-loc="1108" x="0" y="0" width="530.0" height="585.0" rx="20" ry="20" fill="#090d16" stroke="#334155" stroke-width="3" class="drop-shadow-lg"></rect>
+
+                    <!-- Mounting Holes -->
+                    <circle data-phx-loc="1111" cx="20" cy="20" r="12" fill="#0f172a" stroke="#475569" stroke-width="2"></circle>
+                    <circle data-phx-loc="1112" cx="20" cy="20" r="7" fill="#020617"></circle>
+                    <circle data-phx-loc="1113" cx="510.0" cy="20" r="12" fill="#0f172a" stroke="#475569" stroke-width="2"></circle>
+                    <circle data-phx-loc="1114" cx="510.0" cy="20" r="7" fill="#020617"></circle>
+                    <circle data-phx-loc="1115" cx="20" cy="565.0" r="12" fill="#0f172a" stroke="#475569" stroke-width="2"></circle>
+                    <circle data-phx-loc="1116" cx="20" cy="565.0" r="7" fill="#020617"></circle>
+                    <circle data-phx-loc="1117" cx="510.0" cy="565.0" r="12" fill="#0f172a" stroke="#475569" stroke-width="2"></circle>
+                    <circle data-phx-loc="1118" cx="510.0" cy="565.0" r="7" fill="#020617"></circle>
+
+                    <!-- Dynamic Airwires / Ratsnest (Stage 4 Progressive Routing) -->
+
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="60.5" y1="124.39999999999999" x2="59.0" y2="298.0" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="60.5" cy="124.39999999999999" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="59.0" cy="298.0" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="59.0" y1="298.0" x2="175.6" y2="293.8" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="59.0" cy="298.0" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="175.6" cy="293.8" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="175.6" y1="293.8" x2="269.3" y2="244.20000000000002" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="175.6" cy="293.8" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="269.3" cy="244.20000000000002" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="60.5" y1="124.39999999999999" x2="59.0" y2="298.0" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="60.5" cy="124.39999999999999" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="59.0" cy="298.0" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="59.0" y1="298.0" x2="281.5" y2="411.5" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="59.0" cy="298.0" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="281.5" cy="411.5" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="281.5" y1="411.5" x2="270.0" y2="310.0" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="281.5" cy="411.5" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="270.0" cy="310.0" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="270.0" y1="310.0" x2="175.6" y2="293.8" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="270.0" cy="310.0" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="175.6" cy="293.8" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="175.6" y1="293.8" x2="156.3" y2="424.5" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="175.6" cy="293.8" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="156.3" cy="424.5" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="156.3" y1="424.5" x2="269.3" y2="244.20000000000002" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="156.3" cy="424.5" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="269.3" cy="244.20000000000002" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="269.3" y1="244.20000000000002" x2="332.2" y2="181.29999999999998" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="269.3" cy="244.20000000000002" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="332.2" cy="181.29999999999998" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="332.2" y1="181.29999999999998" x2="95.1" y2="485.79999999999995" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="332.2" cy="181.29999999999998" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="95.1" cy="485.79999999999995" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="95.1" y1="485.79999999999995" x2="161.8" y2="231.0" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="95.1" cy="485.79999999999995" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="161.8" cy="231.0" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="59.0" y1="298.0" x2="281.5" y2="411.5" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="59.0" cy="298.0" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="281.5" cy="411.5" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="281.5" y1="411.5" x2="281.5" y2="411.5" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="281.5" cy="411.5" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="281.5" cy="411.5" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="281.5" y1="411.5" x2="270.0" y2="310.0" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="281.5" cy="411.5" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="270.0" cy="310.0" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="270.0" y1="310.0" x2="209.7" y2="168.79999999999998" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="270.0" cy="310.0" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="209.7" cy="168.79999999999998" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="209.7" y1="168.79999999999998" x2="295.0" y2="118.4" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="209.7" cy="168.79999999999998" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="295.0" cy="118.4" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="295.0" y1="118.4" x2="344.20000000000005" y2="279.8" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="295.0" cy="118.4" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="344.20000000000005" cy="279.8" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="344.20000000000005" y1="279.8" x2="156.3" y2="424.5" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="344.20000000000005" cy="279.8" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="156.3" cy="424.5" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="156.3" y1="424.5" x2="332.2" y2="181.29999999999998" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="156.3" cy="424.5" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="332.2" cy="181.29999999999998" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="332.2" y1="181.29999999999998" x2="95.1" y2="485.79999999999995" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="332.2" cy="181.29999999999998" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="95.1" cy="485.79999999999995" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="95.1" y1="485.79999999999995" x2="161.8" y2="231.0" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="95.1" cy="485.79999999999995" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="161.8" cy="231.0" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="281.5" y1="411.5" x2="270.0" y2="310.0" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="281.5" cy="411.5" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="270.0" cy="310.0" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="270.0" y1="310.0" x2="209.7" y2="168.79999999999998" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="270.0" cy="310.0" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="209.7" cy="168.79999999999998" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="281.5" y1="411.5" x2="270.0" y2="310.0" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="281.5" cy="411.5" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="270.0" cy="310.0" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="270.0" y1="310.0" x2="295.0" y2="118.4" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="270.0" cy="310.0" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="295.0" cy="118.4" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+                        <g data-phx-loc="1123" class="airwire-segment">
+                          <line data-phx-loc="1124" x1="281.5" y1="411.5" x2="344.20000000000005" y2="279.8" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 3" opacity="0.85" class="animate-pulse"></line>
+                          <circle data-phx-loc="1135" cx="281.5" cy="411.5" r="3" fill="#f59e0b"></circle>
+                          <circle data-phx-loc="1136" cx="344.20000000000005" cy="279.8" r="3" fill="#f59e0b"></circle>
+                        </g>
+
+
+                    <!-- Bottom Copper Tracks (B.Cu) - Warm Amber -->
+
+
+
+                    <!-- Top Copper Tracks (F.Cu) - Neon Cyan -->
+
+
+
+                    <!-- Through-Hole Drill Vias (Spans F.Cu and B.Cu) -->
+
+
+
+                    <!-- Components with Real SMD Pads and Orientation Rotation -->
+
+                      <g data-phx-loc="1204" transform="translate(281.5, 411.5) rotate(0) translate(-45.0, -45.0)" phx-click="select_component" phx-value-name="U1" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="90.0" height="90.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="45.0" y="48.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+U1
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(270.0, 310.0) rotate(0) translate(-20.0, -20.0)" phx-click="select_component" phx-value-name="U2" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="40.0" height="40.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="20.0" y="23.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+U2
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(59.0, 298.0) rotate(0) translate(-32.5, -20.0)" phx-click="select_component" phx-value-name="U3" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="65.0" height="40.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="32.5" y="23.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+U3
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(60.5, 124.39999999999999) rotate(0) translate(-37.5, -30.0)" phx-click="select_component" phx-value-name="J1" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="75.0" height="60.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="37.5" y="33.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+J1
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(175.6, 293.8) rotate(0) translate(-11.0, -7.0)" phx-click="select_component" phx-value-name="C1" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="22.0" height="14.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+                          <!-- Chip Component Solder Pads -->
+                          <rect data-phx-loc="1235" x="0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+                          <rect data-phx-loc="1236" x="17.0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="11.0" y="10.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+C1
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(156.3, 424.5) rotate(0) translate(-11.0, -7.0)" phx-click="select_component" phx-value-name="C2" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="22.0" height="14.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+                          <!-- Chip Component Solder Pads -->
+                          <rect data-phx-loc="1235" x="0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+                          <rect data-phx-loc="1236" x="17.0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="11.0" y="10.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+C2
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(95.1, 485.79999999999995) rotate(0) translate(-11.0, -7.0)" phx-click="select_component" phx-value-name="C3" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="22.0" height="14.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+                          <!-- Chip Component Solder Pads -->
+                          <rect data-phx-loc="1235" x="0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+                          <rect data-phx-loc="1236" x="17.0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="11.0" y="10.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+C3
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(161.8, 231.0) rotate(0) translate(-11.0, -7.0)" phx-click="select_component" phx-value-name="C4" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="22.0" height="14.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+                          <!-- Chip Component Solder Pads -->
+                          <rect data-phx-loc="1235" x="0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+                          <rect data-phx-loc="1236" x="17.0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="11.0" y="10.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+C4
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(269.3, 244.20000000000002) rotate(0) translate(-11.0, -7.0)" phx-click="select_component" phx-value-name="C5" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="22.0" height="14.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+                          <!-- Chip Component Solder Pads -->
+                          <rect data-phx-loc="1235" x="0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+                          <rect data-phx-loc="1236" x="17.0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="11.0" y="10.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+C5
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(332.2, 181.29999999999998) rotate(0) translate(-11.0, -7.0)" phx-click="select_component" phx-value-name="C6" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="22.0" height="14.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+                          <!-- Chip Component Solder Pads -->
+                          <rect data-phx-loc="1235" x="0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+                          <rect data-phx-loc="1236" x="17.0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="11.0" y="10.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+C6
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(209.7, 168.79999999999998) rotate(0) translate(-11.0, -7.0)" phx-click="select_component" phx-value-name="R1" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="22.0" height="14.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+                          <!-- Chip Component Solder Pads -->
+                          <rect data-phx-loc="1235" x="0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+                          <rect data-phx-loc="1236" x="17.0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="11.0" y="10.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+R1
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(295.0, 118.4) rotate(0) translate(-11.0, -7.0)" phx-click="select_component" phx-value-name="R2" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="22.0" height="14.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+                          <!-- Chip Component Solder Pads -->
+                          <rect data-phx-loc="1235" x="0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+                          <rect data-phx-loc="1236" x="17.0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="11.0" y="10.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+R2
+                      </text>
+                    </g>
+
+                      <g data-phx-loc="1204" transform="translate(344.20000000000005, 279.8) rotate(0) translate(-11.0, -7.0)" phx-click="select_component" phx-value-name="R3" class="cursor-pointer group">
+                      <!-- Courtyard outline -->
+                      <rect data-phx-loc="1211" x="0" y="0" width="22.0" height="14.0" rx="2" fill="#0f172a" stroke="#475569" stroke-width="1.5" class="group-hover:stroke-cyan-400"></rect>
+
+                      <!-- Detailed SMD Pads depending on part footprint -->
+
+
+                          <!-- Chip Component Solder Pads -->
+                          <rect data-phx-loc="1235" x="0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+                          <rect data-phx-loc="1236" x="17.0" y="1" width="5" height="12.0" fill="#e2e8f0"></rect>
+
+
+                      <circle data-phx-loc="1240" cx="4" cy="4" r="2" fill="#f8fafc"></circle>
+                      <text data-phx-loc="1241" x="11.0" y="10.0" text-anchor="middle" fill="#f8fafc" font-size="9.5" font-family="monospace" font-weight="bold">
+R3
+                      </text>
+                    </g>
+
+                </g>
+              </svg>
