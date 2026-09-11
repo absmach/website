@@ -7,18 +7,20 @@ const { compact = false } = Astro.props;
 ---
 
 <span class:list={["synth-logo", { compact }]} aria-label="Synth">
-  <span class="synth-word">SYNTH</span>
+  <img src="/img/products/synth-logo-monochrome.svg" alt="Synth" />
 </span>
 
 <style>
   .synth-logo {
     display: inline-flex;
     align-items: center;
-    color: var(--ink);
-    font: 700 17px var(--font-sans);
-    letter-spacing: 0.04em;
   }
-  .synth-logo.compact {
-    font-size: 13px;
+  .synth-logo img {
+    display: block;
+    width: 150px;
+    height: auto;
+  }
+  .synth-logo.compact img {
+    width: 96px;
   }
 </style>
