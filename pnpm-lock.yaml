@@ -23,9 +23,6 @@ importers:
       astro:
         specifier: ^5.17.1
         version: 5.18.2(@types/node@24.13.1)(jiti@1.21.7)(rollup@4.61.1)(typescript@6.0.3)(yaml@2.9.0)
-      node:
-        specifier: ^25.6.1
-        version: 25.9.0
       nodemailer:
         specifier: ^8.0.1
         version: 8.0.10
@@ -2389,9 +2386,6 @@ packages:
   nlcst-to-string@4.0.0:
     resolution: {integrity: sha512-YKLBCcUYKAg0FNlOBT6aI91qFmSiFKiluk655WzPF+DDMA02qIyy8uiRqI8QXtcFpEvll12LpL5MXqEmAZ+dcA==}
 
-  node-bin-setup@1.1.4:
-    resolution: {integrity: sha512-vWNHOne0ZUavArqPP5LJta50+S8R261Fr5SvGul37HbEDcowvLjwdvd0ZeSr0r2lTSrPxl6okq9QUw8BFGiAxA==}
-
   node-fetch-native@1.6.7:
     resolution: {integrity: sha512-g9yhqoedzIUm0nTnTqAQvueMPVOuIY16bqgAJJC8XOOubYFNwz6IER9qs0Gq2Xd0+CecCKFjtdDTMA4u4xG06Q==}
 
@@ -2401,11 +2395,6 @@ packages:
   node-releases@2.0.47:
     resolution: {integrity: sha512-Uzmd6LXpouKo8EUK68IjH4+E01w/hXyV3R3g/geCJo+rXLNfh1xucB+LOzYEOQPSiUK3h/xZf0cQGcSsmyL2Og==}
     engines: {node: '>=18'}
-
-  node@25.9.0:
-    resolution: {integrity: sha512-tfIfIRJVc32gUI+cQrxwAGWLwTy/EENnB3vF95RuAFosqBGjMTY+o0/3T4oPOipUFrsebQ5WDMsRyAqn65RMFQ==}
-    engines: {npm: '>=5.0.0'}
-    hasBin: true
 
   nodemailer@8.0.10:
     resolution: {integrity: sha512-BLFuSth7QtHOkBzyqTehWWyub0NTRDuK2Q2SQfnGLsrJnzyU+Yeh4WpV1eZGuARFj1xQJHIdnTuJZLP+b9R1GQ==}
@@ -5701,17 +5690,11 @@ snapshots:
     dependencies:
       '@types/nlcst': 2.0.3
 
-  node-bin-setup@1.1.4: {}
-
   node-fetch-native@1.6.7: {}
 
   node-mock-http@1.0.4: {}
 
   node-releases@2.0.47: {}
-
-  node@25.9.0:
-    dependencies:
-      node-bin-setup: 1.1.4
 
   nodemailer@8.0.10: {}
 

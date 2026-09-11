@@ -1,0 +1,118 @@
+board "iot_sensor_board" {
+  layers 4
+  manufacturer "jlcpcb"
+
+  // ---- Power ---------------------------------------------------------------
+  // USB-C → BQ24074 charger → AMS1117 3V3 regulator for logic supply.
+  component J1: connector  "usb_c_receptacle"
+  component U5: regulator  "ams1117_3v3"
+  component C1: capacitor  "c_generic_0805"   // VBUS bulk
+  component C2: capacitor  "c_generic_0805" { placement_hint { near: "U5" priority: hard } }   // AMS1117 input cap
+  component C3: capacitor  "c_generic_0805" { placement_hint { near: "U5" priority: hard } }   // AMS1117 output cap
+  component C9: capacitor  "c_generic_0603" { placement_hint { near: "U5" priority: hard } }   // AMS1117 input decoupler
+
+  component R_CC1: resistor "r_generic_0603" { placement_hint { near: "J1" priority: hard } }   // USB-C CC1 5.1k pull-down
+  component R_CC2: resistor "r_generic_0603" { placement_hint { near: "J1" priority: hard } }   // USB-C CC2 5.1k pull-down
+
+  connect J1.vbus -> C1.p1
+  connect J1.gnd  -> C1.p2
+  connect J1.cc1  -> R_CC1.p1
+  connect J1.gnd  -> R_CC1.p2
+  connect J1.cc2  -> R_CC2.p1
+  connect J1.gnd  -> R_CC2.p2
+  connect J1.vbus -> U4.in
+  connect J1.gnd  -> U4.vss
+  connect U4.out  -> U5.vin
+  connect J1.gnd  -> U5.gnd
+  connect U5.vin  -> C2.p1
+  connect J1.gnd  -> C2.p2
+  connect U5.vin  -> C9.p1
+  connect J1.gnd  -> C9.p2
+  connect U5.vout -> C3.p1
+  connect J1.gnd  -> C3.p2
+
+  // ---- BQ24074 charger (bat output feeds LiPo; out feeds AMS1117) ---------
+  component U4: charger "bq24074"
+  component C4: capacitor "c_generic_0805" { placement_hint { near: "U4" } }   // BAT pin bulk cap
+  component R7: resistor  "r_generic_0603" { placement_hint { near: "U4" } }   // ISET resistor
+  component R8: resistor  "r_generic_0603" { placement_hint { near: "U4" } }   // ILIM resistor
+
+  connect U4.bat  -> C4.p1
+  connect J1.gnd  -> C4.p2
+  connect U4.iset -> R7.p1
+  connect J1.gnd  -> R7.p2
+  connect U4.ilim -> R8.p1
+  connect J1.gnd  -> R8.p2
+
+  // ---- RP2350 MCU ----------------------------------------------------------
+  // Required pins: vdd_io, vdd_core, gnd, run
+  component U1: mcu "rp2350"
+  component C5: capacitor "c_generic_0603" { placement_hint { near: "U1" priority: hard } }   // VDD_IO decoupling
+  component C6: capacitor "c_generic_0603" { placement_hint { near: "U1" priority: hard } }   // VDD_CORE decoupling
+  component R1: resistor  "r_generic_0603" { placement_hint { near: "U1" priority: hard } }   // RUN pullup (active-high enable)
+
+  connect U5.vout -> U1.vdd_io
+  connect U5.vout -> U1.vdd_core
+  connect J1.gnd  -> U1.gnd
+  connect U1.vdd_io  -> C5.p1
+  connect J1.gnd     -> C5.p2
+  connect U1.vdd_core -> C6.p1
+  connect J1.gnd      -> C6.p2
+  connect U1.vdd_io -> R1.p1
+  connect R1.p2     -> U1.run
+
+  // ---- ATECC608 secure element (I2C on GP0/GP1) ----------------------------
+  // Required pins: vcc, gnd, sda, scl
+  component U2: secure_element "atecc608"
+  component C7: capacitor "c_generic_0603" { placement_hint { near: "U2" } }   // ATECC decoupling
+  component R2: resistor  "r_generic_0603" { placement_hint { near: "U2" } }   // SDA pullup
+  component R3: resistor  "r_generic_0603" { placement_hint { near: "U2" } }   // SCL pullup
+
+  connect U5.vout -> U2.vcc
+  connect J1.gnd  -> U2.gnd
+  connect U2.vcc  -> C7.p1
+  connect J1.gnd  -> C7.p2
+  connect U1.gp0  -> U2.sda
+  connect U1.gp1  -> U2.scl
+  connect U1.vdd_io -> R2.p1
+  connect R2.p2     -> U1.gp0
+  connect U1.vdd_io -> R3.p1
+  connect R3.p2     -> U1.gp1
+
+  // ---- BG95 cellular modem (UART on GP2/GP3, antenna via balun + SMA) ----
+  // Required pins: vbatt, gnd, tx, rx, main_ant
+  component U3: modem "bg95"
+  component BAL1: balun "balun_2g4" { placement_hint { near: "U3" priority: hard } }          // RF balun: unbal → BG95, bal → antenna
+  component C8: capacitor "c_generic_0805" { placement_hint { near: "U3" priority: hard } }   // modem bulk cap
+  component R4: resistor  "r_generic_0603"   // PWRKEY pull-down
+  component R5: resistor  "r_generic_0603"   // RESET_N pull-up
+  component R6: resistor  "r_generic_0603" { placement_hint { near: "BAL1" priority: hard } }   // RF matching resistor (bal_a)
+
+  connect U4.bat   -> U3.vbatt    // modem draws >100 mA, runs from battery
+  connect J1.gnd   -> U3.gnd
+  connect U3.vbatt -> C8.p1
+  connect J1.gnd   -> C8.p2
+  connect U1.gp4   -> U3.pwrkey   // MCU drives modem power key (GP4)
+  connect U1.gp2   -> U3.rx       // MCU TX (GP2) -> modem RX
+  connect U3.tx    -> U1.gp3      // modem TX -> MCU RX (GP3)
+  connect U3.main_ant -> BAL1.unbal
+  connect BAL1.bal_a  -> R6.p1
+  connect BAL1.bal_b  -> R6.p2
+  connect BAL1.gnd    -> J1.gnd
+  connect U5.vout    -> R5.p1
+  connect R5.p2      -> U3.reset_n  // RESET_N pulled high (active-low reset)
+  connect U3.pwrkey  -> R4.p1
+  connect J1.gnd     -> R4.p2
+
+  diff_pair u3_main_ant bal1_unbal {
+    impedance 50ohm
+  }
+
+  // ---- USB DP/DN wired to RP2350 USB peripheral ---------------------------
+  connect J1.dp -> U1.usb_dp
+  connect J1.dn -> U1.usb_dn
+
+  // ---- RF keepout zones ---------------------------------------------------
+  keepout antenna    { radius 20mm }
+  keepout rf_section { radius 5mm }
+}

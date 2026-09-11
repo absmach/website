@@ -1,0 +1,26 @@
+---
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<span class:list={["synth-logo", { compact }]} aria-label="Synth">
+  <img src="/img/products/synth-logo-monochrome.svg" alt="Synth" />
+</span>
+
+<style>
+  .synth-logo {
+    display: inline-flex;
+    align-items: center;
+  }
+  .synth-logo img {
+    display: block;
+    width: 150px;
+    height: auto;
+  }
+  .synth-logo.compact img {
+    width: 96px;
+  }
+</style>
