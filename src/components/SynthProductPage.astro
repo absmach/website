@@ -1770,12 +1770,7 @@ const heroDesc =
     --synth-ink: var(--ink);
   }
   .synth-page .synth-hero {
-    background: linear-gradient(
-      130deg,
-      var(--paper-2) 0%,
-      var(--paper) 52%,
-      var(--paper-2) 100%
-    );
+    background: var(--paper-2);
     border-bottom-color: var(--line-3);
   }
   .synth-page .synth-hero-copy h1,
@@ -1784,7 +1779,18 @@ const heroDesc =
   }
   .synth-page .synth-hero-copy .lede,
   .synth-page .synth-hero-notes {
+    color: var(--ink-2);
+  }
+  .synth-page .kicker,
+  .synth-page .synth-edition {
     color: var(--ink-3);
+  }
+  .synth-page .intro-lockup em {
+    color: var(--ink-2);
+  }
+  .synth-page .synth-hero-copy h1 {
+    font-weight: 700;
+    letter-spacing: 0;
   }
   .synth-page .synth-hero-copy .btn-primary {
     background: var(--ink);
@@ -1914,8 +1920,9 @@ const heroDesc =
     color: var(--ink);
   }
   .synth-page .source-callout {
-    border-left-color: var(--accent);
-    background: var(--accent-soft);
+    border-left-color: var(--ink);
+    background: var(--paper-2);
+    color: var(--ink-2);
   }
   .synth-page .evidence-stats,
   .synth-page .evidence-label,
