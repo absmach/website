@@ -39,6 +39,26 @@ export function createR2ProxyRoute(keyPrefix: string): APIRoute {
     const path = params.path;
     if (!path) return notFound();
 
+    // Local R2 storage is empty. Use the published media during development;
+    // files in public/ are still served directly by Astro before this route.
+    if (import.meta.env.DEV) {
+      const url = new URL(request.url);
+      url.protocol = "https:";
+      url.host = "www.absmach.eu";
+      url.port = "";
+      const headers = new Headers();
+      for (const name of [
+        "range",
+        "if-range",
+        "if-none-match",
+        "if-modified-since",
+      ]) {
+        const value = request.headers.get(name);
+        if (value) headers.set(name, value);
+      }
+      return fetch(url, { headers });
+    }
+
     const runtime = (
       locals as {
         runtime?: {

@@ -32,7 +32,7 @@ const products = [
         label: "Synth",
         desc: "AI-Assisted PCB Design",
         href: "/synth",
-        logo: "/img/products/synth-logo-monochrome.svg",
+        logo: "/img/products/synth-symbol.svg",
       },
     ],
   },
@@ -232,7 +232,10 @@ const plainLinks = [
                       <img
                         src={logo}
                         alt=""
-                        class="dropdown-logo"
+                        class:list={[
+                          "dropdown-logo",
+                          { "dropdown-logo-synth": label === "Synth" },
+                        ]}
                         aria-hidden="true"
                       />
                     )}
@@ -706,6 +709,9 @@ const plainLinks = [
     height: 24px;
     object-fit: contain;
     flex-shrink: 0;
+  }
+  .dropdown-logo-synth {
+    padding: 3px;
   }
 
   /* ── Mobile drawer additions ────────────────────────────── */

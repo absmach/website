@@ -26,6 +26,10 @@ npm run dev
 
 Astro runs on `http://localhost:4321` by default.
 
+During development, images and videos missing from `public/` are fetched from
+`https://www.absmach.eu`, so the logo and background animations work without local
+R2 credentials. An internet connection is required for these assets.
+
 ## Build & Preview
 
 ```bash

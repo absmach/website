@@ -1,12 +1,13 @@
 ---
 interface Props {
   compact?: boolean;
+  inverted?: boolean;
 }
 
-const { compact = false } = Astro.props;
+const { compact = false, inverted = false } = Astro.props;
 ---
 
-<span class:list={["synth-logo", { compact }]} aria-label="Synth">
+<span class:list={["synth-logo", { compact, inverted }]} aria-label="Synth">
   <img src="/img/products/synth-logo-monochrome.svg" alt="Synth" />
 </span>
 
@@ -22,5 +23,8 @@ const { compact = false } = Astro.props;
   }
   .synth-logo.compact img {
     width: 96px;
+  }
+  .synth-logo.inverted img {
+    filter: brightness(0) invert(1);
   }
 </style>
