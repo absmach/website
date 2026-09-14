@@ -8,10 +8,8 @@ import {
   ArrowRight,
   Check,
   CircuitBoard,
-  CircleAlert,
   GitBranch,
-  LockKeyhole,
-  Search,
+  ShieldCheck,
   Sparkles,
 } from "@lucide/astro";
 
@@ -19,7 +17,7 @@ const edition = "Community + Enterprise";
 const faqs = [
   {
     q: "What is Synth?",
-    a: "Synth is an open-source AI-assisted PCB design workspace. It helps turn requirements into schematics, component choices, placement, routing suggestions, and reviewable KiCad-ready work—while keeping the engineer in control of the design.",
+    a: "Synth is an open-source circuit compiler built for engineers and AI agents. Agents turn prompts into readable circuit source; Synth compiles it into KiCad schematics, boards, and BOMs with deterministic placement and routing. Compiler diagnostics, electrical-rule checks (ERC), and design-rule checks (DRC) give agents concrete feedback for correction loops and engineers reviewable results.",
   },
   {
     q: "What is the difference between Synth Community and Synth EE?",
@@ -48,75 +46,68 @@ const faqSchema = JSON.stringify({
 const features = [
   {
     icon: CircuitBoard,
-    title: "Design from intent",
-    desc: "Start with a board brief or an existing KiCad project. Synth keeps requirements, interfaces, constraints, and design decisions connected to the board.",
-  },
-  {
-    icon: Search,
-    title: "Parts with context",
-    desc: "Compare component options against availability, electrical requirements, package constraints, and the role each part plays in the circuit.",
-  },
-  {
-    icon: GitBranch,
-    title: "Placement and routing you can review",
-    desc: "Generate candidates, inspect the affected nets, and see what changed. The result is a design conversation—not a black-box export.",
+    title: "Deterministic compilation",
+    desc: "A typed compiler turns circuit source into KiCad schematics, boards, and BOMs. Deterministic placement and routing make results reproducible for the same source, parts, and settings.",
   },
   {
     icon: Sparkles,
-    title: "Model-flexible and open",
-    desc: "Use the right model for the task. Synth keeps project artifacts inspectable and the workflow portable across providers and deployments.",
+    title: "Errors agents can act on",
+    desc: "Agents work as they do with other programming languages: write code, compile, read errors, fix the source, and recompile. Structured diagnostics identify source locations and provide suggested fixes where available.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Electrical and physical checks",
+    desc: "Electrical-rule checks (ERC) flag circuit issues such as missing decoupling. Design-rule checks (DRC) inspect routed boards for clearance, trace-width, drill-size, and courtyard violations.",
+  },
+  {
+    icon: GitBranch,
+    title: "Review the agent’s changes",
+    desc: "Components, connections, and constraints live in readable circuit source. Review the agent’s edits in Git, rerun the compiler and checks, and inspect generated outputs in KiCad.",
   },
 ];
 
 const comparison = [
   [
-    "Primary workflow",
-    "Requirements → schematic → board",
-    "Agent operates EDA tools",
-    "AI schematic + routing workspace",
-    "Automated placement + routing",
+    "Design input",
+    "Prompt → generated circuit specification (.synth)",
+    "Prompt + KiCad project",
+    "Prompt or editor project",
+    "Schematic + board outline",
   ],
   [
-    "KiCad fit",
-    "Open project artifacts + guided flow",
-    "Shown operating KiCad",
-    "KiCad supported in cloud flow",
-    "KiCad import / export",
+    "How designs are built",
+    "AI-written source → deterministic compiler",
+    "LLM-directed edits in KiCad",
+    "LLM-driven design in a PCB editor (non-deterministic)",
+    "Reinforcement-learning layout engine",
   ],
   [
-    "Routing approach",
-    "Constraint-aware candidates + review",
-    "Prompt-led computer use",
-    "AI auto-layout + DRC",
-    "Physics-driven optimization",
+    "Validation and feedback",
+    "The coding loop agents know: compile → fix → recompile, with deterministic compiler checks + ERC/DRC",
+    "KiCad ERC/DRC reports via editor or CLI",
+    "Non-deterministic LLM review + separate DRC checks",
+    "Layout validation + physics-rule checks",
   ],
   [
     "Design traceability",
-    "Requirements, nets, parts, changes",
-    "Session and tool trace",
-    "Workspace history",
-    "Candidate layouts + checks",
+    "Readable circuit source, Git diffs, reproducible builds",
+    "KiCad files + agent session history",
+    "Workspace version history",
+    "Layout candidates + validation reports",
   ],
   [
-    "Deployment model",
-    "Open source / private / self-hosted",
-    "Provider-controlled model",
-    "Cloud platform",
-    "Cloud service",
-  ],
-  [
-    "Best fit",
-    "Repeatable, inspectable engineering work",
-    "Fast visual prototyping",
-    "Integrated cloud EDA",
-    "Offloading layout work",
+    "Compiler / engine access",
+    "Open compiler + MCP; run locally (CE)",
+    "Open-source KiCad; provider AI",
+    "Hosted editor and AI",
+    "Vendor-managed layout engine",
   ],
 ];
 
 const heroLabel = "Synth · AI-assisted PCB design";
 const heroTitle = "From circuit intent to a board you can review.";
 const heroDesc =
-  "Turn requirements into schematics, component choices, placement, and routing suggestions—then inspect every decision in the tools engineers already use. Both editions connect to LLMs; Synth EE adds a deeper agent and simulation toolchain.";
+  "Start with a prompt. Your AI agent writes circuit source; Synth compiles it into KiCad outputs with deterministic placement and routing. Compiler errors, electrical checks, and design-rule checks give the agent concrete feedback to fix and recheck its work.";
 ---
 
 <BaseLayout
@@ -204,12 +195,15 @@ const heroDesc =
 
     <section class="synth-intro section">
       <div class="container-narrow intro-lockup">
-        <span class="kicker">The missing layer</span><h2 class="h-2">
-          Models can draw. Synth helps you ship the board.
+        <span class="kicker">A compiler for AI circuit design</span><h2
+          class="h-2"
+        >
+          Give your agent a compile–check–fix loop.
         </h2><p class="lede">
-          A screenshot of traces is not a finished design. Real PCB work needs
-          constraints, net integrity, part choices, reviewable files, and a
-          clear path from requirement to manufacturing output.
+          Synth turns each design attempt into actionable feedback: compiler
+          errors tied to source, electrical-rule violations, and physical
+          design-rule reports. The agent can correct the source and run the
+          checks again; you review the changes and the resulting board.
         </p>
       </div>
     </section>
@@ -268,14 +262,13 @@ const heroDesc =
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
-            <span class="kicker">One workspace, fewer dead ends</span><h2
-              class="h-2"
-            >
-              From circuit intent to a board you can defend.
+            <span class="kicker">Built for the agent loop</span><h2 class="h-2">
+              Reproducible builds. Actionable errors. Reviewable designs.
             </h2>
           </div><p class="lede">
-            Synth gives the work a shape—without forcing engineering decisions
-            into a chat transcript.
+            Synth gives AI circuit design a compiler workflow: generate source,
+            compile, inspect diagnostics, and correct. Engineers can reproduce
+            the build and review every source change.
           </p>
         </div><div class="synth-feature-grid">
           {
@@ -311,7 +304,7 @@ const heroDesc =
         </div><div class="edition-grid">
           <article class="edition-card">
             <div class="edition-card-top">
-              <SynthLogo compact /><span class="edition-badge"
+              <SynthLogo compact edition="CE" /><span class="edition-badge"
                 >Community Edition</span
               >
             </div><h3 class="h-3">
@@ -334,8 +327,8 @@ const heroDesc =
             >
           </article><article class="edition-card edition-card-enterprise">
             <div class="edition-card-top">
-              <SynthLogo compact inverted /><span class="edition-badge"
-                >Enterprise Edition</span
+              <SynthLogo compact inverted edition="EE" /><span
+                class="edition-badge">Enterprise Edition</span
               >
             </div><h3 class="h-3">
               Managed SaaS with a custom agent harness.
@@ -412,50 +405,37 @@ const heroDesc =
       <div class="container-wide">
         <div class="section-head">
           <div class="left">
-            <span class="kicker">AI-assisted PCB design</span><h2 class="h-2">
-              Where Synth fits in the new EDA stack.
-            </h2>
-          </div><p class="lede">
-            Astra proves that an AI agent can operate KiCad. Flux and Quilter
-            automate important parts of the EDA workflow. Synth is built around
-            the engineering loop that connects intent, constraints, design
-            files, and review.
+            <span class="kicker">AI-assisted PCB design</span>
+            <h2 class="h-2">Where Synth fits in the new EDA stack.</h2>
+          </div>
+          <p class="lede">
+            Design hardware like you write software. The agent writes circuit
+            code, compiles it, reads compiler errors, fixes the source, and
+            recompiles—just as with other programming languages. Synth adds
+            electrical and physical rule checks, with deterministic generation
+            of KiCad outputs.
           </p>
-        </div><div class="compare-shell">
+        </div>
+        <div class="compare-shell">
           <div class="compare-header">
-            <span>Capability</span><span class="synth-column">Synth</span><span
-              >GPT-6 Astra</span
-            ><span>Flux</span><span>Quilter</span>
-          </div>{
-            comparison.map(([label, synth, astra, flux, quilter]) => (
+            <span>Capability</span>
+            <span class="synth-column">Synth</span>
+            <span>Astra + KiCad</span>
+            <span>Other AI PCB workspace</span>
+            <span>Other AI layout service</span>
+          </div>
+          {
+            comparison.map(([label, synth, astra, workspace, layout]) => (
               <div class="compare-row">
-                <>
-                  <b>{label}</b>
-                  <span class="synth-column">
-                    <Check size={15} />
-                    {synth}
-                  </span>
-                  <span class="astra-column">
-                    <CircleAlert size={15} />
-                    {astra}
-                  </span>
-                  <span>
-                    <CircleAlert size={15} />
-                    {flux}
-                  </span>
-                  <span>
-                    <CircleAlert size={15} />
-                    {quilter}
-                  </span>
-                </>
+                <b>{label}</b>
+                <span class="synth-column">{synth}</span>
+                <span>{astra}</span>
+                <span>{workspace}</span>
+                <span>{layout}</span>
               </div>
             ))
           }
-        </div><p class="compare-note">
-          <LockKeyhole size={15} /> The point is not to replace the engineer with
-          a prompt. Synth makes AI-assisted design inspectable enough to earn an engineer’s
-          trust.
-        </p>
+        </div>
       </div>
     </section>
 
@@ -1136,36 +1116,9 @@ const heroDesc =
     color: var(--ink);
     font-weight: 600;
   }
-  .compare-row span {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .compare-row span svg {
-    flex: none;
-    margin-top: 4px;
-  }
   .compare-row .synth-column {
     background: var(--paper-2);
     color: var(--ink);
-  }
-  .compare-row .synth-column svg {
-    color: var(--green);
-  }
-  .astra-column svg {
-    color: var(--warn);
-  }
-  .compare-note {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    color: var(--ink-3);
-    font-size: 13px;
-    margin-top: 20px;
-  }
-  .compare-note svg {
-    flex: none;
-    margin-top: 3px;
   }
   .synth-faq .section-head {
     grid-template-columns: 1fr;

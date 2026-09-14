@@ -2,19 +2,26 @@
 interface Props {
   compact?: boolean;
   inverted?: boolean;
+  edition?: "CE" | "EE";
 }
 
-const { compact = false, inverted = false } = Astro.props;
+const { compact = false, inverted = false, edition } = Astro.props;
 ---
 
-<span class:list={["synth-logo", { compact, inverted }]} aria-label="Synth">
+<span
+  class:list={["synth-logo", { compact, inverted }]}
+  aria-label={edition ? `Synth ${edition}` : "Synth"}
+>
   <img src="/img/products/synth-logo-monochrome.svg" alt="Synth" />
+  {edition && <span class="logo-edition">{edition}</span>}
 </span>
 
 <style>
   .synth-logo {
     display: inline-flex;
     align-items: center;
+    gap: 8px;
+    color: #111111;
   }
   .synth-logo img {
     display: block;
@@ -26,5 +33,17 @@ const { compact = false, inverted = false } = Astro.props;
   }
   .synth-logo.inverted img {
     filter: brightness(0) invert(1);
+  }
+  .synth-logo.inverted {
+    color: #ffffff;
+  }
+  .logo-edition {
+    font:
+      500 24px / 1 var(--font-sans),
+      sans-serif;
+    letter-spacing: 0.1em;
+  }
+  .compact .logo-edition {
+    font-size: 16px;
   }
 </style>
