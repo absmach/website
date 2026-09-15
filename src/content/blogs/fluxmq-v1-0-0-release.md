@@ -5,6 +5,9 @@ date: "2026-09-04"
 author:
   name: "Abstract Machines"
   picture: "https://avatars.githubusercontent.com/u/126989860?s=200&v=4"
+coverImage: "/img/blogs/fluxmq-v1-0-0-release/hero.jpg"
+ogImage:
+  url: "/img/blogs/fluxmq-v1-0-0-release/hero.jpg"
 slug: "fluxmq-v1-0-0-release"
 tags:
   - fluxmq
@@ -15,6 +18,7 @@ tags:
   - messaging
   - iot
   - event-driven
+  - v1.0
 category: announcement
 featured: false
 ---
