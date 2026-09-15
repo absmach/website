@@ -1,0 +1,271 @@
+<svg
+  class="compiler-illustration"
+  viewBox="-12 -14 770 590"
+  role="img"
+  aria-labelledby="synth-flow-title synth-flow-desc"
+>
+  <title id="synth-flow-title">From a prompt to a compiled circuit board</title>
+  <desc id="synth-flow-desc">
+    An AI agent turns a prompt into circuit source. The Synth compiler checks
+    the source and generates a PCB. Compiler diagnostics return to the agent for
+    corrections.
+  </desc>
+  <defs>
+    <linearGradient id="synth-chip-fill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#215b8b"></stop>
+      <stop offset="1" stop-color="#073763"></stop>
+    </linearGradient>
+    <linearGradient id="synth-board-fill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ecf4fa"></stop>
+      <stop offset="1" stop-color="#ccdfed"></stop>
+    </linearGradient>
+    <pattern
+      id="synth-art-grid"
+      width="26"
+      height="26"
+      patternUnits="userSpaceOnUse"
+    >
+      <circle cx="1" cy="1" r="1" fill="#9fb9d1" opacity=".4"></circle>
+    </pattern>
+    <filter id="synth-art-shadow" x="-35%" y="-35%" width="180%" height="180%">
+      <feDropShadow
+        dx="0"
+        dy="14"
+        stdDeviation="14"
+        flood-color="#073763"
+        flood-opacity=".12"></feDropShadow>
+    </filter>
+  </defs>
+
+  <ellipse cx="327" cy="295" rx="277" ry="218" fill="url(#synth-art-grid)"
+  ></ellipse>
+  <g fill="none" stroke="#bdcfdf" stroke-width="1" opacity=".55">
+    <path d="M30 372 310 210 602 378M54 414 333 252 602 407M112 449 379 294"
+    ></path>
+    <path d="m154 107 410 237M99 144l410 237M52 183l410 237" opacity=".45"
+    ></path>
+  </g>
+
+  <!-- A prompt becomes an editable source document. -->
+  <g
+    class="source-sheet"
+    transform="translate(-12 -12)"
+    filter="url(#synth-art-shadow)"
+  >
+    <path d="M42 92h183l26 26v160H42Z" fill="#dae7f1" transform="translate(7 9)"
+    ></path>
+    <path d="M42 92h183l26 26v160H42Z" fill="#fff" stroke="#b7cce0"></path>
+    <path d="M225 92v26h26" fill="#edf4f9" stroke="#b7cce0"></path>
+    <text x="62" y="126" class="label">CIRCUIT SOURCE</text>
+    <g class="code" fill="#446985">
+      <text x="62" y="162">board "sensor" &#123;</text>
+      <text x="76" y="188">layers 4</text>
+      <path
+        d="M77 208h51m10 0h70M77 227h75m10 0h33"
+        stroke="#91aec6"
+        stroke-width="5"
+        stroke-linecap="round"></path>
+      <text x="62" y="255">&#125;</text>
+    </g>
+  </g>
+  <g transform="translate(-12 -12)">
+    <path
+      d="M54 26h239a14 14 0 0 1 14 14v26a14 14 0 0 1-14 14H93L77 93V80H54a14 14 0 0 1-14-14V40a14 14 0 0 1 14-14Z"
+      fill="#073763"></path>
+    <path
+      d="m62 45 6 8-6 8m15 0h8"
+      fill="none"
+      stroke="#b0d6f4"
+      stroke-width="2"
+      stroke-linecap="round"></path>
+    <text x="101" y="59" class="prompt" fill="#fff"
+      >A sensor board with USB-C</text
+    >
+  </g>
+
+  <!-- Traces carry source into the compiler and compiled output to the board. -->
+  <g fill="none" stroke-width="2">
+    <path d="M240 175H284V251H342" stroke="#8eabc4"></path>
+    <path class="signal" d="M240 175H284V251H342" stroke="#397eb5"></path>
+    <path d="M495 287h23l50 50v40" stroke="#8eabc4"></path>
+    <path class="signal output-signal" d="M495 287h23l50 50v40" stroke="#397eb5"
+    ></path>
+    <path d="M383 342v11H149v-76" stroke="#699c8b" stroke-dasharray="5 6"
+    ></path>
+    <path d="m144 284 5-7 5 7" stroke="#699c8b"></path>
+  </g>
+  <g class="feedback-caption">
+    <rect x="143" y="363" width="179" height="31" class="caption-space"></rect>
+    <text x="154" y="383" class="feedback">Errors → source fixes</text>
+  </g>
+
+  <!-- The original Synth symbol sits on the compiler package. -->
+  <g
+    class="compiler-package"
+    transform="translate(80 0)"
+    filter="url(#synth-art-shadow)"
+  >
+    <rect x="289" y="224" width="115" height="112" rx="20" fill="#c0d2e1"
+    ></rect>
+    <rect
+      x="281"
+      y="211"
+      width="115"
+      height="112"
+      rx="20"
+      fill="url(#synth-chip-fill)"
+      stroke="#497ca4"></rect>
+    <rect
+      x="290"
+      y="220"
+      width="97"
+      height="94"
+      rx="13"
+      fill="none"
+      stroke="#709bbb"
+      stroke-opacity=".5"></rect>
+    <image
+      href="/img/products/synth-symbol.svg"
+      x="310"
+      y="237"
+      width="57"
+      height="57"
+      class="compiler-symbol"
+    />
+    <g stroke="#8eaec7" stroke-width="3">
+      <path
+        d="M303 202v-9m18 9v-9m18 9v-9m18 9v-9m18 9v-9M303 333v9m18-9v9m18-9v9m18-9v9m18-9v9M271 233h-9m9 18h-9m9 18h-9m9 18h-9m9 18h-9M406 233h9m-9 18h9m-9 18h9m-9 18h9m-9 18h9"
+      ></path>
+    </g>
+  </g>
+  <g class="compiler-caption">
+    <rect x="316" y="142" width="204" height="49" class="caption-space"></rect>
+    <text x="418" y="164" text-anchor="middle" class="label"
+      >SYNTH COMPILER</text
+    >
+    <text x="418" y="184" text-anchor="middle" class="annotation"
+      >Deterministic by design</text
+    >
+  </g>
+
+  <!-- An illustrated PCB, drawn as copper paths on an isometric substrate. -->
+  <g transform="translate(100 22)" filter="url(#synth-art-shadow)">
+    <path
+      d="m337 407 138-80 129 75v15l-138 80-129-75Z"
+      fill="#9bb8cf"
+      stroke="#779bb9"></path>
+    <path
+      d="m337 407 138-80 129 75-138 80Z"
+      fill="url(#synth-board-fill)"
+      stroke="#7da1bf"></path>
+    <path d="m351 407 124-71 115 66-124 72Z" fill="none" stroke="#a6bfd2"
+    ></path>
+    <g
+      fill="none"
+      stroke="#497ca4"
+      stroke-width="2"
+      stroke-linejoin="round"
+      class="board-traces"
+    >
+      <path
+        d="m377 411 36-21 34 20 42-24 48 28m-48-28 26-15m-68 39-31 18 40 23m-12-52-17-10 28-16m11 50 36 21 47-27m-67-18 25 14 26-15"
+      ></path>
+    </g>
+    <g fill="#e9f1f7" stroke="#497ca4" stroke-width="2">
+      <ellipse cx="377" cy="411" rx="4" ry="2.5"></ellipse><ellipse
+        cx="537"
+        cy="414"
+        rx="4"
+        ry="2.5"></ellipse>
+      <ellipse cx="456" cy="451" rx="4" ry="2.5"></ellipse><ellipse
+        cx="455"
+        cy="373"
+        rx="4"
+        ry="2.5"></ellipse>
+      <ellipse cx="549" cy="417" rx="4" ry="2.5"></ellipse><ellipse
+        cx="527"
+        cy="398"
+        rx="4"
+        ry="2.5"></ellipse>
+    </g>
+    <path d="m424 399 42-24 42 24v12l-42 24-42-24Z" fill="#073763"></path>
+    <path d="m424 399 42-24 42 24-42 24Z" fill="#2b628d" stroke="#7fa5c2"
+    ></path>
+    <path d="m441 399 25-14 25 14-25 14Z" fill="none" stroke="#a4c4dc"></path>
+    <g fill="#fff" stroke="#83a4bf">
+      <path d="m402 383 17-10 14 8-17 10Z"></path><path
+        d="m507 439 17-10 14 8-17 10Z"></path>
+      <path d="m535 383 17-10 14 8-17 10Z"></path>
+    </g>
+  </g>
+  <text x="568" y="543" text-anchor="middle" class="label"
+    >KICAD BOARD + SCHEMATIC</text
+  >
+</svg>
+
+<style>
+  .compiler-illustration {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .label {
+    fill: var(--ink);
+    font: 500 13px var(--font-mono);
+    letter-spacing: 0.08em;
+  }
+  .code {
+    font: 15px var(--font-mono);
+  }
+  .prompt {
+    font: 14px var(--font-sans);
+  }
+  .annotation,
+  .feedback {
+    fill: var(--ink-3);
+    font: 13px var(--font-sans);
+  }
+  .feedback {
+    fill: #437b68;
+  }
+  .caption-space {
+    fill: var(--paper-2);
+  }
+  .compiler-symbol {
+    filter: brightness(0) invert(1);
+  }
+  .signal {
+    stroke-dasharray: 14 160;
+    animation: send-signal 4.8s ease-in-out both;
+  }
+  .output-signal {
+    animation-delay: 0.2s;
+  }
+  .board-traces {
+    animation: reveal-traces 4.8s ease both;
+  }
+  @keyframes send-signal {
+    from {
+      stroke-dashoffset: 175;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes reveal-traces {
+    0%,
+    30% {
+      opacity: 0.2;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .signal,
+    .board-traces {
+      animation: none;
+    }
+  }
+</style>

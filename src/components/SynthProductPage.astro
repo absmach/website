@@ -4,6 +4,7 @@ import Header from "./Header.astro";
 import Footer from "./Footer.astro";
 import FAQAccordion from "./FAQAccordion.astro";
 import SynthLogo from "./SynthLogo.astro";
+import SynthHeroIllustration from "./SynthHeroIllustration.astro";
 import {
   ArrowRight,
   Check,
@@ -14,22 +15,32 @@ import {
 } from "@lucide/astro";
 
 const edition = "Community + Enterprise";
+const quickStartUrl = "https://github.com/absmach/synth#quick-start";
+const agentGuideUrl =
+  "https://github.com/absmach/synth/blob/main/crates/synth-mcp/README.md";
 const faqs = [
   {
-    q: "What is Synth?",
-    a: "Synth is an open-source circuit compiler built for engineers and AI agents. Agents turn prompts into readable circuit source; Synth compiles it into KiCad schematics, boards, and BOMs with deterministic placement and routing. Compiler diagnostics, electrical-rule checks (ERC), and design-rule checks (DRC) give agents concrete feedback for correction loops and engineers reviewable results.",
+    q: "How do I start with Synth?",
+    a: "Build the Community Edition from the repository, then compile an example design or connect your AI agent. Start with a board brief: the agent can look up parts, write the circuit source, and use compiler feedback to refine it.",
+    link: { href: quickStartUrl, label: "Follow the quick start" },
   },
   {
-    q: "What is the difference between Synth Community and Synth EE?",
-    a: "They are two editions of the same Synth product, and both can connect to LLMs. Community is the open-source starting point for individuals and teams. Synth EE is the managed SaaS edition, adding a custom agent harness, MCP tools, access to world-model and EBM capabilities, MCTS-style simulation tools, organisation-wide governance, and support for teams shipping sensitive hardware.",
+    q: "How do I connect my AI agent?",
+    a: "Run Synth’s Model Context Protocol (MCP) server and connect an MCP-compatible agent. It exposes the circuit language reference, part search, validation, fixes, placement, routing, and export. MCP is included in Community; use your own agent and model access.",
+    link: { href: agentGuideUrl, label: "Read the agent integration guide" },
   },
   {
-    q: "Can Synth work with existing EDA tools?",
-    a: "Yes. Synth is designed around open, inspectable project artifacts and can fit alongside KiCad and other ECAD tools. The goal is to accelerate design work without hiding the source files engineers need to verify and ship.",
+    q: "What files does Synth generate?",
+    a: "Synth generates KiCad schematics, PCB layouts, and a bill of materials from .synth circuit source. Open the outputs in KiCad for inspection and downstream work. Keep design changes in the source so they are preserved when you regenerate the outputs.",
   },
   {
-    q: "What does Synth EE include?",
-    a: "Synth EE is delivered as SaaS. It includes the Synth workflow and LLM access, plus a custom agent harness, MCP tools, world-model and EBM access, and MCTS-style simulation capabilities for more advanced PCB design tasks.",
+    q: "Can I review designs in Git and run checks in CI?",
+    a: "Yes. Components, connections, and constraints are stored as readable circuit code. Review source changes in commits and pull requests, and run the compiler and validation commands in your CI pipeline. Pin the compiler, component registry, and settings for reproducible builds.",
+  },
+  {
+    q: "How do Community and Enterprise differ?",
+    a: "Community provides the open-source compiler, CLI, MCP agent tools, electrical and physical checks, and KiCad outputs to run yourself. Enterprise builds on that foundation with a managed service, a custom agent harness, and team support. Talk to us about your workflow and deployment requirements.",
+    link: { href: "/contact", label: "Discuss Synth Enterprise" },
   },
 ];
 
@@ -105,9 +116,9 @@ const comparison = [
 ];
 
 const heroLabel = "Synth · AI-assisted PCB design";
-const heroTitle = "From circuit intent to a board you can review.";
+const heroTitle = "From prompt to PCB. Built on a compiler.";
 const heroDesc =
-  "Start with a prompt. Your AI agent writes circuit source; Synth compiles it into KiCad outputs with deterministic placement and routing. Compiler errors, electrical checks, and design-rule checks give the agent concrete feedback to fix and recheck its work.";
+  "Describe your board. Your AI agent writes the circuit code; Synth checks it and generates KiCad schematics, layouts, and BOMs through a deterministic compiler workflow.";
 ---
 
 <BaseLayout
@@ -128,84 +139,22 @@ const heroDesc =
           <p class="lede">{heroDesc}</p>
           <div class="btn-row" style="margin-top:32px;">
             <a
-              href="https://github.com/absmach/synth"
+              href={quickStartUrl}
               class="btn btn-primary"
               target="_blank"
-              rel="noopener">Explore Synth on GitHub <ArrowRight size={16} /></a
+              rel="noopener">Build your first board <ArrowRight size={16} /></a
             >
             <a href="#editions" class="btn">Compare editions</a>
           </div>
           <div class="synth-hero-notes">
-            <span><Check size={14} /> Constraint-aware</span><span
+            <span><Check size={14} /> Deterministic compiler</span><span
               ><Check size={14} /> Open source</span
             ><span><Check size={14} /> Agent-ready</span>
           </div>
         </div>
-        <div
-          class="document-stage"
-          aria-label="Synth design intelligence illustration"
-        >
-          <div class="stage-topbar">
-            <span class="window-dots"><i></i><i></i><i></i></span><span
-              class="stage-path">SYNTH / DESIGN INTELLIGENCE</span
-            ><span class="stage-status">BOARD CANDIDATE</span>
-          </div>
-          <div class="synth-illustration">
-            <div class="illustration-inputs">
-              <span class="illustration-kicker">DESIGN INPUTS</span><b
-                >USB-C field node</b
-              ><span><i class="input-dot blue"></i>Power budget</span><span
-                ><i class="input-dot orange"></i>Approved parts</span
-              ><span><i class="input-dot green"></i>RF keepout</span>
-            </div>
-            <div class="illustration-board">
-              <div class="board-grid"></div><span
-                class="illustration-chip chip-mcu"
-                >RP2350<small>MCU</small></span
-              ><span class="illustration-chip chip-power"
-                >3V3<small>POWER</small></span
-              ><span class="illustration-chip chip-radio"
-                >BG95<small>MODEM</small></span
-              ><span class="illustration-chip chip-usb"
-                >USB-C<small>EDGE</small></span
-              ><span class="illustration-trace t-one"></span><span
-                class="illustration-trace t-two"></span><span
-                class="illustration-trace t-three"></span><span
-                class="illustration-board-label">4-LAYER BOARD · 50Ω RF</span
-              >
-            </div>
-            <div class="illustration-checks">
-              <span class="illustration-kicker">DESIGN CHECKS</span><b
-                ><Check size={13} /> 18 nets resolved</b
-              ><b><Check size={13} /> 4 constraints held</b><b
-                ><Check size={13} /> KiCad output ready</b
-              >
-            </div>
-          </div>
-          <div class="stage-footer">
-            <span
-              ><span class="pulse-dot"></span> Requirements remain attached to the
-              board</span
-            ><span>SPECIFY · DESIGN · VERIFY</span>
-          </div>
-        </div>
+        <div class="hero-art"><SynthHeroIllustration /></div>
       </div>
       <div class="hero-grid-lines" aria-hidden="true"></div>
-    </section>
-
-    <section class="synth-intro section">
-      <div class="container-narrow intro-lockup">
-        <span class="kicker">A compiler for AI circuit design</span><h2
-          class="h-2"
-        >
-          Give your agent a compile–check–fix loop.
-        </h2><p class="lede">
-          Synth turns each design attempt into actionable feedback: compiler
-          errors tied to source, electrical-rule violations, and physical
-          design-rule reports. The agent can correct the source and run the
-          checks again; you review the changes and the resulting board.
-        </p>
-      </div>
     </section>
 
     <section class="synth-evidence" id="evidence">
@@ -213,7 +162,7 @@ const heroDesc =
         <div class="section-head">
           <div class="left">
             <span class="kicker">Built with Synth EE</span><h2 class="h-2">
-              A board brief that turns into a KiCad board.
+              Explore a board built with Synth.
             </h2>
           </div><p class="lede">
             This Synth field node combines USB-C power and charging, an RP2350
@@ -236,23 +185,26 @@ const heroDesc =
               ><span><b>1</b> secure element</span>
             </div>
           </article><article class="evidence-copy">
-            <span class="kicker">The source is the artifact</span><h3
-              class="h-3"
-            >
-              Not a generated picture of a board.
+            <span class="kicker">Open the design</span><h3 class="h-3">
+              Circuit source. A real KiCad board.
             </h3><p>
-              The field node is authored as a readable <code>.synth</code> design,
-              compiled by Synth EE, and exported as KiCad source. The render is the
-              last step in a chain that still exposes parts, nets, constraints, keepouts,
-              and manufacturing intent.
+              Follow the field node from its readable <code>.synth</code> source to
+              the PCB generated by Synth EE. Inspect the components, connections,
+              and constraints in the source, then open the board in KiCad to explore
+              the layout.
             </p><div class="source-callout">
               <code
                 >diff_pair u3_main_ant bal1_unbal<br />&#123; impedance 50ohm
                 &#125;</code
               ><span>RF constraints stay attached to the design.</span>
-            </div><a href="/synth/orbit-board.synth" class="btn" download
-              >Download the Synth source <ArrowRight size={15} /></a
-            >
+            </div><div class="btn-row evidence-downloads">
+              <a href="/synth/orbit-board.synth" class="btn" download>
+                Download circuit source <ArrowRight size={15} />
+              </a>
+              <a href="/synth/orbit-board.kicad_pcb" class="btn" download>
+                Download KiCad board <ArrowRight size={15} />
+              </a>
+            </div>
           </article>
         </div>
       </div>
@@ -263,12 +215,11 @@ const heroDesc =
         <div class="section-head">
           <div class="left">
             <span class="kicker">Built for the agent loop</span><h2 class="h-2">
-              Reproducible builds. Actionable errors. Reviewable designs.
+              Hardware design, with software discipline.
             </h2>
           </div><p class="lede">
-            Synth gives AI circuit design a compiler workflow: generate source,
-            compile, inspect diagnostics, and correct. Engineers can reproduce
-            the build and review every source change.
+            A shared language for engineers and agents, backed by repeatable
+            builds, explicit design rules, and changes you can inspect.
           </p>
         </div><div class="synth-feature-grid">
           {
@@ -288,6 +239,67 @@ const heroDesc =
       </div>
     </section>
 
+    <section class="synth-workflow" id="agent-workflow">
+      <div class="container-wide workflow-grid">
+        <div>
+          <span class="kicker">A compiler error, a concrete fix</span>
+          <h2 class="h-2">Turn compiler errors into source fixes.</h2>
+          <p class="lede">
+            If an agent invents a pin name, Synth’s resolver reports exactly
+            where the design is wrong. The agent can fix the source and compile
+            again using the same workflow it uses to write software.
+          </p>
+          <div class="workflow-steps">
+            <div>
+              <span>01</span><b>Write</b><p>
+                The agent connects a controller to a secure element in circuit
+                source.
+              </p>
+            </div>
+            <div>
+              <span>02</span><b>Compile</b><p>
+                Synth checks the connection against the component’s defined
+                pins.
+              </p>
+            </div>
+            <div>
+              <span>03</span><b>Correct</b><p>
+                The agent replaces the invalid pin, then reruns compilation and
+                checks.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="diagnostic-example">
+          <div class="example-heading">
+            <span>Compiler example</span><span>Undefined pin</span>
+          </div>
+          <div class="example-code">
+            <span class="example-label">Source with a pin-name typo</span>
+            <pre><code>{`component U1: mcu "rp2350"
+component U2: secure_element "atecc608"
+connect U1.gpo -> U2.sda`}</code></pre>
+          </div>
+          <div class="example-diagnostic">
+            <b>E-SYNTH-COMP-002 · undefined pin</b>
+            <p><code>U1.gpo</code> — part has no pin named <code>gpo</code>.</p>
+          </div>
+          <div class="example-code example-fix">
+            <span class="example-label">Source correction</span>
+            <pre><code><del>- connect U1.gpo -&gt; U2.sda</del><ins>+ connect U1.gp0 -&gt; U2.sda</ins></code></pre>
+          </div>
+          <a
+            class="example-reference"
+            href="https://github.com/absmach/synth/blob/main/docs/diagnostics/E-SYNTH-COMP-002.md"
+            target="_blank"
+            rel="noopener"
+          >
+            Read the compiler diagnostic <ArrowRight size={14} />
+          </a>
+        </div>
+      </div>
+    </section>
+
     <section class="synth-editions" id="editions">
       <div class="container-wide">
         <div class="section-head">
@@ -295,11 +307,12 @@ const heroDesc =
             <span class="kicker">One product, two editions</span><h2
               class="h-2"
             >
-              Start open. Scale with an agent harness.
+              Run it yourself. Or build with us.
             </h2>
           </div><p class="lede">
-            Both editions can use LLMs. Synth EE adds the tools and managed
-            infrastructure for deeper, more autonomous design exploration.
+            Both editions include the compiler and MCP agent tools. Choose
+            Community for a workflow you run yourself, or Enterprise for a
+            managed service and a custom agent harness.
           </p>
         </div><div class="edition-grid">
           <article class="edition-card">
@@ -307,16 +320,17 @@ const heroDesc =
               <SynthLogo compact edition="CE" /><span class="edition-badge"
                 >Community Edition</span
               >
-            </div><h3 class="h-3">
-              Open design intelligence for every engineer.
-            </h3><p>
-              Explore requirements, schematics, parts, placement, and routing
-              with an open foundation you can extend and run yourself.
+            </div><h3 class="h-3">The open compiler and agent tools.</h3><p>
+              Build locally, connect your own AI agent, and keep circuit source
+              in your repository. Extend the compiler and component registry to
+              fit your work.
             </p><ul>
-              <li><Check size={15} /> Open-source foundation</li><li>
-                <Check size={15} /> LLM access
-              </li><li><Check size={15} /> KiCad-friendly project flow</li><li>
-                <Check size={15} /> Model-flexible architecture
+              <li><Check size={15} /> Apache-2.0 circuit compiler</li>
+              <li><Check size={15} /> CLI and MCP tools for your AI agent</li>
+              <li><Check size={15} /> Electrical and physical design checks</li>
+              <li><Check size={15} /> KiCad schematics, boards, and BOMs</li>
+              <li>
+                <Check size={15} /> Local builds and Git-based source review
               </li>
             </ul><a
               href="https://github.com/absmach/synth"
@@ -330,73 +344,19 @@ const heroDesc =
               <SynthLogo compact inverted edition="EE" /><span
                 class="edition-badge">Enterprise Edition</span
               >
-            </div><h3 class="h-3">
-              Managed SaaS with a custom agent harness.
-            </h3><p>
-              Bring repeatable, governed AI-assisted PCB design to your
-              engineering organisation with a deeper toolchain for exploring and
-              validating design choices.
+            </div><h3 class="h-3">A managed workflow for your team.</h3><p>
+              Bring Synth into your engineering organisation with a managed
+              service, a custom agent harness, and support for your team’s
+              design workflow.
             </p><ul>
-              <li><Check size={15} /> Everything in Community</li><li>
-                <Check size={15} /> Custom agent harness + MCP tools
-              </li><li><Check size={15} /> World-model / EBM access</li><li>
-                <Check size={15} /> MCTS-style simulation tools
-              </li><li>
-                <Check size={15} /> Managed SaaS operations and support
-              </li>
+              <li><Check size={15} /> Everything in Community</li>
+              <li><Check size={15} /> Custom agent harness</li>
+              <li><Check size={15} /> Managed SaaS operations</li>
+              <li><Check size={15} /> Engineering team support</li>
             </ul><a href="/contact" class="btn btn-primary"
               >Talk to our team <ArrowRight size={15} /></a
             >
           </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="synth-workflow">
-      <div class="container-wide workflow-grid">
-        <div>
-          <span class="kicker">A calmer way to work</span><h2 class="h-2">
-            The board is the interface.
-          </h2><p class="lede">
-            Synth turns the messy middle of PCB design into a visible,
-            reviewable flow.
-          </p><div class="workflow-steps">
-            <div>
-              <span>01</span><b>Specify</b><p>
-                Bring in requirements, interfaces, constraints, and target
-                parts.
-              </p>
-            </div><div>
-              <span>02</span><b>Design</b><p>
-                Explore schematic, placement, and routing candidates in context.
-              </p>
-            </div><div>
-              <span>03</span><b>Verify</b><p>
-                Review nets, design rules, diffs, and manufacturing readiness.
-              </p>
-            </div>
-          </div>
-        </div><div class="source-map">
-          <div class="map-center">
-            <SynthLogo compact inverted /><b>Board candidate</b><small
-              >18 nets · 6 constraints</small
-            >
-          </div><div class="map-node node-a">
-            <span class="source-dot blue"></span><b>Requirements</b><small
-              >USB · power · size</small
-            >
-          </div><div class="map-node node-b">
-            <span class="source-dot orange"></span><b>Part decisions</b><small
-              >MCU · regulator · passives</small
-            >
-          </div><div class="map-node node-c">
-            <span class="source-dot green"></span><b>Design checks</b><small
-              >DRC · ERC · review</small
-            >
-          </div><svg class="map-lines" viewBox="0 0 500 440" aria-hidden="true"
-            ><path d="M250 210 L95 96 M250 210 L405 96 M250 235 L250 365"
-            ></path></svg
-          >
         </div>
       </div>
     </section>
@@ -409,11 +369,8 @@ const heroDesc =
             <h2 class="h-2">Where Synth fits in the new EDA stack.</h2>
           </div>
           <p class="lede">
-            Design hardware like you write software. The agent writes circuit
-            code, compiles it, reads compiler errors, fixes the source, and
-            recompiles—just as with other programming languages. Synth adds
-            electrical and physical rule checks, with deterministic generation
-            of KiCad outputs.
+            Compare how a prompt becomes a design, how errors are checked, and
+            what you can inspect and run yourself.
           </p>
         </div>
         <div class="compare-shell">
@@ -454,21 +411,24 @@ const heroDesc =
     <section class="synth-cta">
       <div class="container-narrow cta-panel">
         <div>
-          <span class="kicker">Start with the board you already have</span><h2
-            class="h-2"
-          >
-            Give your engineering team a better copilot.
-          </h2><p>
-            Build with the open Synth Community Edition and connect it to
-            LLMs—or talk to us about Synth EE’s managed agent, MCP, world-model,
-            EBM, and MCTS toolchain.
+          <span class="kicker">Put the compiler to work</span>
+          <h2 class="h-2">Build your first board with Synth.</h2>
+          <p>
+            Start with an example, connect your agent, and generate your first
+            KiCad design. For a managed team workflow, talk to us about
+            Enterprise.
           </p>
         </div><div class="btn-row">
           <a
-            href="https://github.com/absmach/synth"
+            href={quickStartUrl}
             class="btn btn-primary"
             target="_blank"
-            rel="noopener">Start with Synth <ArrowRight size={16} /></a
+            rel="noopener"
+          >
+            Follow the quick start <ArrowRight size={16} />
+          </a>
+          <a href="/contact" class="btn"
+            >Talk about Enterprise <ArrowRight size={16} /></a
           >
         </div>
       </div>
@@ -519,214 +479,14 @@ const heroDesc =
   .synth-hero-notes svg {
     color: var(--green);
   }
-  .document-stage {
+  .hero-art {
     min-width: 0;
-    background: var(--surface-accent);
-    color: var(--on-accent);
-    border: 1px solid var(--line-3);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    overflow: hidden;
+    width: 100%;
+    max-width: 640px;
+    margin-inline: auto;
   }
-  .synth-illustration {
-    display: grid;
-    grid-template-columns: 110px minmax(0, 1fr) 120px;
-    gap: 14px;
-    align-items: center;
-    min-height: 424px;
-    padding: 28px 16px;
-    background: var(--paper-2);
-    color: var(--ink);
-  }
-  .illustration-inputs,
-  .illustration-checks {
-    display: grid;
+  .evidence-downloads {
     gap: 12px;
-    align-content: center;
-    font-size: 10px;
-  }
-  .illustration-inputs b,
-  .illustration-checks b {
-    font-size: 11px;
-    line-height: 1.35;
-  }
-  .illustration-kicker {
-    color: var(--ink-3);
-    font: 9px var(--font-mono);
-    letter-spacing: 0.12em;
-  }
-  .illustration-inputs > span:not(.illustration-kicker),
-  .illustration-checks b {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    color: var(--ink-2);
-  }
-  .input-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    flex: none;
-  }
-  .input-dot.blue {
-    background: var(--accent);
-  }
-  .input-dot.orange {
-    background: var(--accent-2);
-  }
-  .input-dot.green {
-    background: var(--green);
-  }
-  .illustration-checks b svg {
-    flex: none;
-    color: var(--green);
-  }
-  .illustration-board {
-    height: 280px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid #547a98;
-    border-radius: 12px;
-    background: #174d4a;
-    box-shadow:
-      inset 0 0 0 7px #113c3b,
-      inset 0 0 0 8px #4b8c7e,
-      0 14px 30px rgba(7, 55, 99, 0.15);
-  }
-  .board-grid {
-    position: absolute;
-    inset: 16px;
-    opacity: 0.26;
-    background-image: radial-gradient(#c1e2d4 1px, transparent 1px);
-    background-size: 16px 16px;
-  }
-  .illustration-chip {
-    position: absolute;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 68px;
-    height: 48px;
-    border: 1px solid #bdd5e3;
-    border-radius: 5px;
-    color: #f4fbff;
-    background: #234c70;
-    box-shadow: 0 5px 14px #09221f88;
-    font: 600 10px var(--font-mono);
-  }
-  .illustration-chip small {
-    margin-top: 4px;
-    color: #b6cedb;
-    font-size: 7px;
-    font-weight: 400;
-  }
-  .chip-mcu {
-    width: 88px;
-    height: 78px;
-    top: 101px;
-    left: 35%;
-    background: #073763;
-  }
-  .chip-power {
-    top: 38px;
-    left: 12%;
-    background: #3f526d;
-  }
-  .chip-radio {
-    top: 46px;
-    right: 10%;
-    background: #46604a;
-    border-color: #bce29a;
-  }
-  .chip-usb {
-    bottom: 38px;
-    left: 10%;
-    background: #64434c;
-    border-color: #dda5ae;
-  }
-  .illustration-trace {
-    position: absolute;
-    z-index: 1;
-    display: block;
-    height: 3px;
-    border-radius: 99px;
-    transform-origin: left center;
-  }
-  .t-one {
-    width: 125px;
-    left: 27%;
-    top: 93px;
-    background: #76c9ff;
-    transform: rotate(19deg);
-  }
-  .t-two {
-    width: 135px;
-    left: 47%;
-    top: 165px;
-    background: #f2a16b;
-    transform: rotate(-29deg);
-  }
-  .t-three {
-    width: 150px;
-    left: 22%;
-    top: 194px;
-    background: #73daa7;
-    transform: rotate(22deg);
-  }
-  .illustration-board-label {
-    position: absolute;
-    z-index: 3;
-    right: 13px;
-    bottom: 12px;
-    padding: 5px 7px;
-    color: #c7e9dc;
-    background: #0b2d2bdd;
-    border-radius: 3px;
-    font: 8px var(--font-mono);
-  }
-
-  .stage-topbar,
-  .stage-footer {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    color: var(--on-accent-dim);
-    font: 10px var(--font-mono);
-    line-height: 1.5;
-    border-bottom: 1px solid var(--dark-border);
-  }
-  .stage-path {
-    flex: 1;
-  }
-  .stage-status {
-    color: var(--on-accent-muted);
-    font-size: 9px;
-  }
-  .stage-footer {
-    justify-content: space-between;
-    flex-wrap: wrap;
-    border: 0;
-  }
-  .window-dots {
-    display: flex;
-    gap: 5px;
-  }
-  .window-dots i {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--on-accent-muted);
-  }
-  .pulse-dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #70d29c;
-    margin-right: 6px;
   }
   .hero-grid-lines {
     position: absolute;
@@ -738,16 +498,6 @@ const heroDesc =
       linear-gradient(90deg, var(--line-3) 1px, transparent 1px);
     background-size: 70px 70px;
     mask-image: linear-gradient(90deg, transparent, black 72%);
-  }
-  .intro-lockup {
-    text-align: center;
-  }
-  .intro-lockup h2 {
-    margin: 14px auto 20px;
-    max-width: 750px;
-  }
-  .intro-lockup .lede {
-    margin: auto;
   }
   .synth-evidence,
   .synth-faq {
@@ -1004,85 +754,76 @@ const heroDesc =
     font-size: 15px;
     line-height: 1.65;
   }
-  .source-map {
-    height: 440px;
-    position: relative;
+  .diagnostic-example {
+    min-width: 0;
     border: 1px solid var(--dark-border);
     border-radius: var(--radius-lg);
     background: var(--dark-input-bg);
+    overflow: hidden;
   }
-  .map-center,
-  .map-node {
-    position: absolute;
-    z-index: 2;
+  .example-heading {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 16px;
-    border: 1px solid var(--dark-border);
-    border-radius: var(--radius);
-    background: var(--surface-accent);
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--dark-border);
+    color: var(--on-accent-muted);
+    font: 11px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
-  .map-center {
-    width: 168px;
-    top: 170px;
-    left: 50%;
-    transform: translateX(-50%);
-    align-items: center;
-    text-align: center;
+  .example-code {
+    padding: 24px;
   }
-  .map-center small,
-  .map-node small {
+  .example-label {
     color: var(--on-accent-dim);
-    font: 10px var(--font-mono);
-  }
-  .map-node {
-    width: 150px;
-  }
-  .map-node b {
     font-size: 12px;
-    font-weight: 600;
   }
-  .node-a {
-    top: 38px;
-    left: 24px;
+  .example-code pre {
+    margin-top: 14px;
+    overflow-x: auto;
   }
-  .node-b {
-    top: 38px;
-    right: 24px;
+  .example-code code {
+    font: 12px/1.9 var(--font-mono);
   }
-  .node-c {
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%);
+  .example-diagnostic {
+    margin: 0 24px;
+    padding: 16px;
+    border-left: 3px solid #edbb81;
+    background: #ffffff08;
   }
-  .source-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    flex: none;
-    display: inline-block;
+  .example-diagnostic b {
+    color: #f2cf9f;
+    font: 12px/1.6 var(--font-mono);
   }
-  .source-dot.blue {
-    background: #60a7ff;
+  .example-diagnostic p {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--on-accent-dim);
   }
-  .source-dot.orange {
-    background: var(--accent-2);
+  .example-fix del,
+  .example-fix ins {
+    display: block;
+    text-decoration: none;
   }
-  .source-dot.green {
-    background: #66c993;
+  .example-fix del {
+    color: #edc5ba;
   }
-  .map-lines {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+  .example-fix ins {
+    color: #9de4bd;
   }
-  .map-lines path {
-    stroke: var(--on-accent-muted);
-    stroke-width: 1.5;
-    stroke-dasharray: 5 6;
-    fill: none;
+  .example-reference {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 18px 24px;
+    border-top: 1px solid var(--dark-border);
+    color: var(--on-accent);
+    font-size: 13px;
+  }
+  .example-reference:hover {
+    text-decoration: underline;
   }
   .compare-shell {
     border: 1px solid var(--line-3);
@@ -1139,31 +880,12 @@ const heroDesc =
   .cta-panel .btn-row {
     justify-content: center;
   }
-  @media (max-width: 1100px) {
-    .synth-illustration {
-      grid-template-columns: 1fr;
-    }
-    .illustration-inputs,
-    .illustration-checks {
-      display: none;
-    }
-  }
   @media (max-width: 980px) {
     .synth-hero-grid,
     .workflow-grid,
     .evidence-grid {
       grid-template-columns: minmax(0, 1fr);
       gap: 36px;
-    }
-    .document-stage {
-      width: 100%;
-    }
-    .synth-illustration {
-      grid-template-columns: 110px minmax(0, 1fr) 120px;
-    }
-    .illustration-inputs,
-    .illustration-checks {
-      display: grid;
     }
     .edition-card {
       padding: 28px;
@@ -1185,25 +907,6 @@ const heroDesc =
     .synth-hero-notes {
       gap: 12px;
     }
-    .stage-topbar {
-      flex-wrap: wrap;
-    }
-    .stage-status,
-    .stage-footer > span:last-child {
-      display: none;
-    }
-    .synth-illustration {
-      grid-template-columns: 1fr;
-      min-height: 300px;
-      padding: 24px 18px;
-    }
-    .illustration-inputs,
-    .illustration-checks {
-      display: none;
-    }
-    .illustration-board {
-      height: 250px;
-    }
     .kicad-render img {
       height: auto;
     }
@@ -1212,19 +915,6 @@ const heroDesc =
     }
     .workflow-steps p {
       grid-column: 2;
-    }
-    .map-node {
-      width: calc(50% - 24px);
-      padding: 12px;
-    }
-    .node-a {
-      left: 12px;
-    }
-    .node-b {
-      right: 12px;
-    }
-    .map-center {
-      width: 150px;
     }
     .btn {
       max-width: 100%;
