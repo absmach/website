@@ -51,10 +51,6 @@ Synth resolves those parts against its component registry, checks the design, an
 
 That changes how a team can work on hardware. A pin reassignment becomes a source diff. A compiler diagnostic points back to the design that caused it. With the compiler, registry, and settings pinned, deterministic placement and routing make builds repeatable.
 
-![KiCad PCB copper view showing routed connections, component footprints, and silkscreen](/img/blogs/synth-core-announcement/synth-pcb-kicad-copper.svg)
-
-The copper view exposes the routed connections, component footprints, and silkscreen for inspection in KiCad. The 3D view below complements it with a physical view of the board and its components.
-
 ![Native KiCad 3D render of a Synth PCB](/img/blogs/synth-core-announcement/synth-pcb-kicad-3d.png)
 
 The 3D view above is generated from a KiCad board artifact, showing the board outline, components, copper, and silkscreen. Electrical and manufacturing review remain part of the workflow.
