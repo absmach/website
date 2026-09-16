@@ -4,7 +4,14 @@ export const prerender = true;
 
 const DEFAULT_SITE = "https://www.absmach.eu";
 
-const DOCS_PRODUCTS = ["magistrala", "propeller", "hardware", "fluxmq", "atom"];
+const DOCS_PRODUCTS = [
+  "magistrala",
+  "propeller",
+  "hardware",
+  "fluxmq",
+  "atom",
+  "synth",
+];
 
 export const GET: APIRoute = ({ site }) => {
   const base = site ? site.href.replace(/\/$/, "") : DEFAULT_SITE;

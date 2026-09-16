@@ -15,9 +15,10 @@ import {
 } from "@lucide/astro";
 
 const edition = "Community + Enterprise";
-const quickStartUrl = "https://github.com/absmach/synth#quick-start";
-const agentGuideUrl =
-  "https://github.com/absmach/synth/blob/main/crates/synth-mcp/README.md";
+const quickStartUrl =
+  "https://www.absmach.eu/docs/synth/user-guide/quick-start";
+const agentGuideUrl = "https://www.absmach.eu/docs/synth/user-guide/mcp-server";
+const docsUrl = "https://www.absmach.eu/docs/synth";
 const faqs = [
   {
     q: "How do I start with Synth?",
@@ -138,12 +139,10 @@ const heroDesc =
           <h1>{heroTitle}</h1>
           <p class="lede">{heroDesc}</p>
           <div class="btn-row" style="margin-top:32px;">
-            <a
-              href={quickStartUrl}
-              class="btn btn-primary"
-              target="_blank"
-              rel="noopener">Build your first board <ArrowRight size={16} /></a
+            <a href={quickStartUrl} class="btn btn-primary"
+              >Build your first board <ArrowRight size={16} /></a
             >
+            <a href={docsUrl} class="btn">Read Documentation</a>
             <a href="#editions" class="btn">Compare editions</a>
           </div>
           <div class="synth-hero-notes">
@@ -332,13 +331,23 @@ connect U1.gpo -> U2.sda`}</code></pre>
               <li>
                 <Check size={15} /> Local builds and Git-based source review
               </li>
-            </ul><a
-              href="https://github.com/absmach/synth"
-              class="btn"
-              target="_blank"
-              rel="noopener"
-              >View the GitHub repository <ArrowRight size={15} /></a
+            </ul>
+            <div
+              class="btn-row"
+              style="margin-top:auto; gap:10px; flex-wrap:wrap;"
             >
+              <a
+                href="https://www.absmach.eu/docs/synth/community"
+                class="btn btn-primary"
+                >Community Docs <ArrowRight size={15} /></a
+              >
+              <a
+                href="https://github.com/absmach/synth"
+                class="btn"
+                target="_blank"
+                rel="noopener">GitHub Repository <ArrowRight size={15} /></a
+              >
+            </div>
           </article><article class="edition-card edition-card-enterprise">
             <div class="edition-card-top">
               <SynthLogo compact inverted edition="EE" /><span
@@ -419,14 +428,12 @@ connect U1.gpo -> U2.sda`}</code></pre>
             Enterprise.
           </p>
         </div><div class="btn-row">
-          <a
-            href={quickStartUrl}
-            class="btn btn-primary"
-            target="_blank"
-            rel="noopener"
-          >
+          <a href={quickStartUrl} class="btn btn-primary">
             Follow the quick start <ArrowRight size={16} />
           </a>
+          <a href={docsUrl} class="btn"
+            >Documentation <ArrowRight size={16} /></a
+          >
           <a href="/contact" class="btn"
             >Talk about Enterprise <ArrowRight size={16} /></a
           >
