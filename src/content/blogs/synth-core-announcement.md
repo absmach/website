@@ -6,9 +6,9 @@ date: "2026-09-16"
 author:
   name: "Sammy Oina"
   picture: "https://avatars.githubusercontent.com/u/44265300?v=4"
-coverImage: "/img/blogs/synth-core-announcement/synth-field-node-kicad.png"
+coverImage: "/img/blogs/synth-core-announcement/hero.png"
 ogImage:
-  url: "/img/blogs/synth-core-announcement/synth-field-node-kicad.png"
+  url: "/img/blogs/synth-core-announcement/hero.png"
 tags:
   - synth
   - synth-ee
@@ -70,6 +70,56 @@ Synth-EE is the experimental layer on top. The goal is not to ask a model to gue
 6. export only when the design passes the required gates.
 
 This separation matters. Synth remains useful as a compiler and language even when no model is involved. Synth-EE can then use the compiler as a feedback-rich environment, much like a programming agent uses a language compiler and test suite.
+
+---
+
+## Where Synth sits in the landscape
+
+Synth is not trying to replace traditional EDA tools. KiCad, Altium, and their peers are mature, capable desktop environments for engineers who need a manual drafting workflow — and KiCad in particular is the tool Synth treats as its primary interoperability target: Synth's native output is the KiCad file format. Traditional EDA tools are where the design goes to be inspected, refined, and manufactured. Synth sits upstream of them.
+
+The more relevant comparison is with a newer category: tools that position AI as a hardware design assistant. These fall into a few distinct patterns.
+
+### The browser schematic editor with AI suggestions
+
+Several tools in this space offer a browser-native schematic editor and have added AI features — autocomplete for component search, routing hints, or a chat panel that proposes changes to the schematic. The design artifact is still fundamentally a GUI schematic: a visual graph that a human draws and an AI nudges.
+
+The problem is not that AI assistance is unhelpful. It is that the schematic is not a stable artifact for the AI to operate on. When the AI suggests a change, it is typically expressed as a natural-language response that the engineer then applies manually. The design and the AI's understanding of it can diverge. There is no compiler between the suggestion and the board.
+
+Synth's position: the `.synth` source file is the design artifact. The AI writes to it, the compiler validates it, and the result is inspectable before any geometry is committed.
+
+### The requirement-to-module selector
+
+Another pattern: the tool accepts high-level requirements (power budget, connectivity, target chip family) and selects or configures existing reference modules or subsystems. The output is a pre-validated module combination rather than a from-scratch board.
+
+This is useful for constrained product families where the design space is well-defined. It is less useful for custom embedded designs, novel sensor integrations, or boards that do not fit an existing module footprint.
+
+Synth's position: the language is general-purpose across board topologies. The compiler validates connectivity and design rules regardless of how the design was produced, not against a pre-approved module set.
+
+### The closed-loop AI PCB generator
+
+A third pattern: the tool claims to generate a routed, manufacturable board from a natural-language prompt in one step. The output is typically a rendered image or a proprietary design file with no structured intermediate representation. There is no compiler. There are no structured diagnostics. The board is either accepted as-is or the process starts over.
+
+This is the approach Synth is most directly structured against. Engineering judgment does not disappear because AI is involved — it gets delegated to a system that may not be able to express what it did or why. A board with no inspectable intermediate artifacts and no structured diagnostic path is difficult to audit, difficult to repair, and difficult to trust.
+
+Synth's position: every step has a typed representation. The compiler produces machine-readable diagnostics with source locations and repair hints. The agent is not the authority on whether a design is valid — the compiler is.
+
+---
+
+### The comparison in brief
+
+| | Browser AI schematic editor | Module selector | AI PCB generator | Synth |
+|---|---|---|---|---|
+| Design artifact | Visual schematic (GUI) | Module spec | Rendered image | Text source (SynthSpec) |
+| AI role | Suggestions in editor | Module matching | Board generation | Source generation + repair |
+| Compiler validation | No | Against module set | No | Yes — structured JSON diagnostics |
+| Machine-readable ERC/DRC | No | Partial | No | Yes |
+| Open source | No | No | No | Yes (Apache 2.0) |
+| KiCad interoperability | Partial | No | No | Native export target |
+| Agent MCP interface | No | No | No | Yes |
+
+Traditional EDA tools (the open-source and commercial desktop editors) belong in a different row entirely — they are the downstream environment Synth produces output for, not a category Synth competes with.
+
+---
 
 ## Why open source it now?
 
