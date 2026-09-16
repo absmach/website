@@ -1,14 +1,14 @@
 ---
 slug: "synth-core-announcement"
-title: "Synth: Open-Source Physical Design for Hardware That Starts as Code"
-description: "We are open-sourcing Synth, a compiler and design language for describing electronic hardware, and previewing Synth-EE, an agentic cockpit for turning intent into inspectable KiCad designs."
+title: "Introducing Synth: An Open-Source Compiler for Circuit Boards"
+description: "Abstract Machines is open-sourcing Synth: design circuit boards as code, give AI agents compiler feedback, and generate KiCad schematics, PCB layouts, and BOMs."
 date: "2026-09-16"
 author:
   name: "Sammy Oina"
   picture: "https://avatars.githubusercontent.com/u/44265300?v=4"
-coverImage: "/img/blogs/synth-core-announcement/hero.png"
+coverImage: "/img/blogs/synth-core-announcement/hero-v2.webp"
 ogImage:
-  url: "/img/blogs/synth-core-announcement/hero.png"
+  url: "/img/blogs/synth-core-announcement/hero-v2.webp"
 tags:
   - synth
   - synth-ee
@@ -20,141 +20,102 @@ category: announcement
 featured: true
 ---
 
-## Hardware should be programmable all the way down
+Today, **Abstract Machines is open-sourcing [Synth](https://github.com/absmach/synth)**, a circuit compiler that turns text-based board designs into KiCad schematics, PCB layouts, and bills of materials. It is available under the Apache-2.0 license, with a command-line interface and tools for AI agents included.
 
-Software engineers can describe a system, compile it, test it, inspect the errors, and iterate. Hardware design still too often begins with a blank schematic canvas, a large component library, and a long chain of manual translation between intent, connectivity, placement, routing, and manufacturing files.
+Our ambition is to bring the software development loop to electronics: describe a design, compile it, inspect the errors, and iterate. Review a circuit change in a pull request. Run checks in CI. Give an AI agent a board brief, then inspect the source it writes and the outputs it generates.
 
-Today we are open-sourcing **Synth**, our first step toward a programmable physical-design stack for electronics. Synth is a compact hardware description language and compiler for expressing boards, components, connections, constraints, and manufacturing intent as source code.
+**Circuit source you can review. Compiler feedback you can act on. KiCad files you can open.**
 
-Alongside it, we are previewing **Synth-EE**: a cockpit for exploring what happens when an agent can work with that source, call design tools, inspect compiler and KiCad diagnostics, and iteratively improve a board.
+[Explore Synth on GitHub](https://github.com/absmach/synth) · [Get started](#try-synth-today)
 
-![KiCad schematic generated from Synth source](/img/blogs/synth-core-announcement/synth-schematic-kicad.png)
+## A circuit board you can read, diff, and build
 
-## Synth core: a small language with a concrete output
+Synth starts with **SynthSpec**, a language for describing components, connections, and board constraints in a `.synth` file. Engineers and agents work on the same readable source.
 
-Synth is deliberately readable. A board can be described with components and explicit connectivity:
+Here is a small fragment showing an RP2350 microcontroller connected to an ATECC608 secure element. It illustrates the syntax; the power connections, pull-ups, and other supporting circuitry are omitted:
 
-```synth
+```text
 board "sensor_node" {
   layers 4
   manufacturer "jlcpcb"
 
   component U1: mcu "rp2350"
   component U2: secure_element "atecc608"
-  component C1: capacitor "c_generic_0603"
 
-  connect U1.vdd_io -> C1.p1
   connect U1.gp0 -> U2.sda
+  connect U1.gp1 -> U2.scl
 }
 ```
 
-The important part is not the syntax by itself. The source is a durable, reviewable design contract. The compiler can resolve parts, check connectivity, derive an intermediate representation, route what it can, and emit real KiCad artifacts for further inspection and manufacturing workflows.
+Synth resolves those parts against its component registry, checks the design, and uses a typed representation of the board for placement, routing, and export. The language also supports placement hints, keepouts, and differential-pair constraints.
 
-## From source to KiCad
+That changes how a team can work on hardware. A pin reassignment becomes a source diff. A compiler diagnostic points back to the design that caused it. With the compiler, registry, and settings pinned, deterministic placement and routing make builds repeatable.
 
-Synth is designed to work with the tools engineers already use. Its output is intended to be opened and checked in KiCad, where the resulting schematic and PCB can be inspected at native fidelity rather than treated as a decorative preview.
+![KiCad 3D render of the Synth field node example](/img/blogs/synth-core-announcement/synth-field-node-kicad.png)
 
-![Fitted KiCad PCB render showing copper, silkscreen, component placement, and routed connectivity](/img/blogs/synth-core-announcement/synth-pcb-kicad-copper.svg)
+The field node above is a larger example from the Synth Enterprise workflow. You can [download its circuit source](/synth/orbit-board.synth) and [open the generated board in KiCad](/synth/orbit-board.kicad_pcb) to explore the design. The render shows generated output; electrical and manufacturing review remain part of the workflow.
 
-The render above is a native KiCad board render from the Synth design workflow, fitted to the actual board extents. It shows the direction we are pursuing: components, copper, silkscreen references, and board geometry should remain visible and auditable throughout the process.
+KiCad is where you inspect the generated schematic and board. Keep circuit changes in the Synth source and part definitions so they survive regeneration: edits made directly to generated KiCad files are overwritten on the next export.
 
-![Native KiCad 3D render of a Synth PCB](/img/blogs/synth-core-announcement/synth-pcb-kicad-3d.png)
+## Give your AI agent a compiler
 
-The 3D view is also generated from the KiCad board artifact, including the board outline, footprints, copper, and silkscreen. It is useful as a quick physical sanity check while the native KiCad files remain the source of truth.
+Coding agents work through a useful feedback loop: write source, run tools, read errors, and revise. Synth brings that loop to circuit design.
 
-## Synth-EE: an agent that can show its work
+The open-source project includes a **Model Context Protocol (MCP) server**. Connect an MCP-compatible agent and it can retrieve the language reference, search for parts and their pin definitions, validate a design, apply fixes, and invoke placement, routing, and export. You choose the agent and model.
 
-Synth-EE is the experimental layer on top. The goal is not to ask a model to guess a finished PCB in one response. The goal is to give it a disciplined engineering loop:
+Consider an agent that writes `U1.gpo` instead of `U1.gp0`. Synth's resolver reports `E-SYNTH-COMP-002`: an undefined pin, with a source location and suggested replacements. The agent can use that feedback to make a focused correction:
 
-1. translate a natural-language requirement into a typed design intent;
-2. generate or revise Synth source;
-3. compile and inspect structured diagnostics;
-4. use constrained repairs for syntax, topology, placement, and routing issues;
-5. preserve each step, artifact, and decision for review;
-6. export only when the design passes the required gates.
+```diff
+- connect U1.gpo -> U2.sda
++ connect U1.gp0 -> U2.sda
+```
 
-This separation matters. Synth remains useful as a compiler and language even when no model is involved. Synth-EE can then use the compiler as a feedback-rich environment, much like a programming agent uses a language compiler and test suite.
+You can review the edit, rerun the checks, and inspect the resulting artifacts. This is the central idea behind Synth: **make hardware design a workflow an agent can participate in and an engineer can verify.**
 
-![Synth-EE cockpit preview for the prompt-to-board workflow](/img/blogs/synth-core-announcement/synth-ee-cockpit-preview.png)
+## What we are open-sourcing
 
-The cockpit is intentionally shown as a preview: it makes the run history, source, diagnostics, and board views visible in one place. Synth-EE is still evolving, but the workflow demonstrates the product direction without asking readers to treat an agent-generated board as automatically production-ready.
+Synth Community Edition includes the tools to run that workflow yourself:
 
----
+- **The language and compiler:** SynthSpec parsing, part resolution, and a typed board representation.
+- **Electrical and physical checks:** electrical-rule checks (ERC), design-rule checks (DRC), and structured diagnostics with source locations and suggested fixes where available.
+- **Placement, routing, and KiCad export:** schematic and PCB generation, plus a bill of materials. Optional fabrication exports use `kicad-cli`.
+- **An extensible component registry:** part definitions, project and user overlays, and import and authoring tools.
+- **CLI and agent tools:** local commands, JSON diagnostics, and the MCP server.
 
-## Where Synth sits in the landscape
+We are also developing **Synth Enterprise** on this foundation, with a managed service, a custom agent harness, and engineering team support. Its cockpit preview brings agent runs, source, diagnostics, and design views together. [Explore the editions](/synth/#editions) or [talk to us about your workflow](/contact).
 
-Synth is not trying to replace traditional EDA tools. KiCad, Altium, and their peers are mature, capable desktop environments for engineers who need a manual drafting workflow — and KiCad in particular is the tool Synth treats as its primary interoperability target: Synth's native output is the KiCad file format. Traditional EDA tools are where the design goes to be inspected, refined, and manufactured. Synth sits upstream of them.
+![Synth Enterprise cockpit preview showing an agent run, circuit source, and design views](/img/blogs/synth-core-announcement/synth-ee-cockpit-preview.png)
 
-The more relevant comparison is with a newer category: tools that position AI as a hardware design assistant. These fall into a few distinct patterns.
+## Why we are opening it now
 
-### The browser schematic editor with AI suggestions
+A circuit compiler becomes more useful with every well-described component, reproducible bug report, and design that tests its assumptions. Opening Synth lets hardware engineers, software developers, and agent builders improve the same foundation.
 
-Several tools in this space offer a browser-native schematic editor and have added AI features — autocomplete for component search, routing hints, or a chat panel that proposes changes to the schematic. The design artifact is still fundamentally a GUI schematic: a visual graph that a human draws and an AI nudges.
+You can inspect how a rule works, extend the registry for your components, and adapt the tools to your own development process. We want circuit design to benefit from the shared tools and review practices that make open-source software productive.
 
-The problem is not that AI assistance is unhelpful. It is that the schematic is not a stable artifact for the AI to operate on. When the AI suggests a change, it is typically expressed as a natural-language response that the engineer then applies manually. The design and the AI's understanding of it can diverge. There is no compiler between the suggestion and the board.
+Synth is early. Component coverage, layout quality, and routing need to improve across a wider range of boards. Passing compiler checks establishes that a design satisfies the implemented rules; engineers still need to review component data, inspect KiCad outputs, and validate the hardware before manufacturing. Expanding that coverage and making failures easier to diagnose are central to the work ahead.
 
-Synth's position: the `.synth` source file is the design artifact. The AI writes to it, the compiler validates it, and the result is inspectable before any geometry is committed.
+## Try Synth today
 
-### The requirement-to-module selector
+With a current stable Rust toolchain and Cargo installed, clone the repository and export the minimal example:
 
-Another pattern: the tool accepts high-level requirements (power budget, connectivity, target chip family) and selects or configures existing reference modules or subsystems. The output is a pre-validated module combination rather than a from-scratch board.
+```bash
+git clone https://github.com/absmach/synth.git
+cd synth
+cargo build -p synth-cli
+cargo run -p synth-cli -- validate fixtures/designs/hello.synth
+cargo run -p synth-cli -- export-kicad fixtures/designs/hello.synth --out output/hello
+```
 
-This is useful for constrained product families where the design space is well-defined. It is less useful for custom embedded designs, novel sensor integrations, or boards that do not fit an existing module footprint.
+This example is an empty two-layer board: a small first check of the compile-and-export path. Open the generated project in KiCad, then explore the [environmental logger and other circuit examples](https://github.com/absmach/synth#examples).
 
-Synth's position: the language is general-purpose across board topologies. The compiler validates connectivity and design rules regardless of how the design was produced, not against a pre-approved module set.
+To connect your own agent, start the MCP server from the same checkout:
 
-### The closed-loop AI PCB generator
+```bash
+cargo run -p synth-cli -- mcp --stdio
+```
 
-A third pattern: the tool claims to generate a routed, manufacturable board from a natural-language prompt in one step. The output is typically a rendered image or a proprietary design file with no structured intermediate representation. There is no compiler. There are no structured diagnostics. The board is either accepted as-is or the process starts over.
+The [MCP guide](https://github.com/absmach/synth/blob/main/crates/synth-mcp/README.md) covers agent integration, and the [KiCad workflow guide](https://github.com/absmach/synth/blob/main/docs/kicad-workflows.md) explains export and review.
 
-This is the approach Synth is most directly structured against. Engineering judgment does not disappear because AI is involved — it gets delegated to a system that may not be able to express what it did or why. A board with no inspectable intermediate artifacts and no structured diagnostic path is difficult to audit, difficult to repair, and difficult to trust.
+**Bring a board you want to build.** Try an example, add a component, or [share a design that challenges the compiler](https://github.com/absmach/synth/issues). Contributions to the compiler, registry, examples, and documentation are welcome.
 
-Synth's position: every step has a typed representation. The compiler produces machine-readable diagnostics with source locations and repair hints. The agent is not the authority on whether a design is valid — the compiler is.
-
----
-
-### The comparison in brief
-
-| | Browser AI schematic editor | Module selector | AI PCB generator | Synth |
-|---|---|---|---|---|
-| Design artifact | Visual schematic (GUI) | Module spec | Rendered image | Text source (SynthSpec) |
-| AI role | Suggestions in editor | Module matching | Board generation | Source generation + repair |
-| Compiler validation | No | Against module set | No | Yes — structured JSON diagnostics |
-| Machine-readable ERC/DRC | No | Partial | No | Yes |
-| Open source | No | No | No | Yes (Apache 2.0) |
-| KiCad interoperability | Partial | No | No | Native export target |
-| Agent MCP interface | No | No | No | Yes |
-
-Traditional EDA tools (the open-source and commercial desktop editors) belong in a different row entirely — they are the downstream environment Synth produces output for, not a category Synth competes with.
-
----
-
-## Why open source it now?
-
-Physical design is too important to hide behind a generated image or a proprietary black box. We want the language, compiler behavior, output artifacts, and failure modes to be inspectable by the people who will rely on them.
-
-Synth is an early project. The compiler and KiCad export path are active work, and Synth-EE is a preview rather than a promise that every board can already be generated autonomously. That is exactly why we are opening the work now: real hardware projects, real compiler errors, and real scrutiny will make the system better.
-
-## What we are building toward
-
-The longer-term direction is a complete, testable loop for electronics design:
-
-- a stable and teachable Synth language;
-- first-class compiler diagnostics with actionable repair hints;
-- part-registry expansion with provenance and review;
-- constraint-aware placement, board sizing, and routing;
-- KiCad-native schematic, PCB, 3D, and fabrication outputs;
-- durable agent runs that can be resumed, audited, and reproduced;
-- human approval at the points where engineering judgment is required.
-
-The model should be able to help with the work, but the compiler and design artifacts must remain the source of truth.
-
-## Try it and follow along
-
-Synth core is open source and available for experimentation today. Synth-EE is being developed alongside it as we work toward a useful agentic hardware-design workflow.
-
-- **Synth core:** [GitHub](https://github.com/absmach/synth)
-- **Synth-EE preview:** [Product page](https://www.absmach.eu/synth/)
-- **Abstract Machines:** [absmach.eu](https://www.absmach.eu)
-
-If you build with Synth, find a compiler edge case, or have a view on how agents should participate in hardware design, we would like to hear from you.
+[Star Synth on GitHub](https://github.com/absmach/synth) and help us build an open foundation for programmable circuit design.
