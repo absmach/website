@@ -6,9 +6,9 @@ date: "2026-09-16"
 author:
   name: "Sammy Oina"
   picture: "https://avatars.githubusercontent.com/u/44265300?v=4"
-coverImage: "/img/blogs/synth-core-announcement/hero-v2.webp"
+coverImage: "/img/blogs/synth-core-announcement/hero.webp"
 ogImage:
-  url: "/img/blogs/synth-core-announcement/hero-v2.webp"
+  url: "/img/blogs/synth-core-announcement/hero.webp"
 tags:
   - synth
   - synth-ee
@@ -51,9 +51,15 @@ Synth resolves those parts against its component registry, checks the design, an
 
 That changes how a team can work on hardware. A pin reassignment becomes a source diff. A compiler diagnostic points back to the design that caused it. With the compiler, registry, and settings pinned, deterministic placement and routing make builds repeatable.
 
-![KiCad 3D render of the Synth field node example](/img/blogs/synth-core-announcement/synth-field-node-kicad.png)
+![KiCad PCB copper view showing routed connections, component footprints, and silkscreen](/img/blogs/synth-core-announcement/synth-pcb-kicad-copper.svg)
 
-The field node above is a larger example from the Synth Enterprise workflow. You can [download its circuit source](/synth/orbit-board.synth) and [open the generated board in KiCad](/synth/orbit-board.kicad_pcb) to explore the design. The render shows generated output; electrical and manufacturing review remain part of the workflow.
+The copper view exposes the routed connections, component footprints, and silkscreen for inspection in KiCad. The 3D view below complements it with a physical view of the board and its components.
+
+![Native KiCad 3D render of a Synth PCB](/img/blogs/synth-core-announcement/synth-pcb-kicad-3d.png)
+
+The 3D view above is generated from a KiCad board artifact, showing the board outline, components, copper, and silkscreen. Electrical and manufacturing review remain part of the workflow.
+
+For a larger example from the Synth Enterprise workflow, you can [download the field node circuit source](/synth/orbit-board.synth) and [open its generated board in KiCad](/synth/orbit-board.kicad_pcb).
 
 KiCad is where you inspect the generated schematic and board. Keep circuit changes in the Synth source and part definitions so they survive regeneration: edits made directly to generated KiCad files are overwritten on the next export.
 
