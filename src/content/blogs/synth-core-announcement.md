@@ -54,9 +54,13 @@ The important part is not the syntax by itself. The source is a durable, reviewa
 
 Synth is designed to work with the tools engineers already use. Its output is intended to be opened and checked in KiCad, where the resulting schematic and PCB can be inspected at native fidelity rather than treated as a decorative preview.
 
-![KiCad PCB render with component placement and routed connectivity](/img/blogs/synth-core-announcement/synth-field-node-kicad.png)
+![Fitted KiCad PCB render showing copper, silkscreen, component placement, and routed connectivity](/img/blogs/synth-core-announcement/synth-pcb-kicad-copper.svg)
 
-The render above is a representative KiCad output from the Synth design workflow. It shows the direction we are pursuing: components, copper, silkscreen references, and board geometry should remain visible and auditable throughout the process.
+The render above is a native KiCad board render from the Synth design workflow, fitted to the actual board extents. It shows the direction we are pursuing: components, copper, silkscreen references, and board geometry should remain visible and auditable throughout the process.
+
+![Native KiCad 3D render of a Synth PCB](/img/blogs/synth-core-announcement/synth-pcb-kicad-3d.png)
+
+The 3D view is also generated from the KiCad board artifact, including the board outline, footprints, copper, and silkscreen. It is useful as a quick physical sanity check while the native KiCad files remain the source of truth.
 
 ## Synth-EE: an agent that can show its work
 
@@ -70,6 +74,10 @@ Synth-EE is the experimental layer on top. The goal is not to ask a model to gue
 6. export only when the design passes the required gates.
 
 This separation matters. Synth remains useful as a compiler and language even when no model is involved. Synth-EE can then use the compiler as a feedback-rich environment, much like a programming agent uses a language compiler and test suite.
+
+![Synth-EE cockpit preview for the prompt-to-board workflow](/img/blogs/synth-core-announcement/synth-ee-cockpit-preview.png)
+
+The cockpit is intentionally shown as a preview: it makes the run history, source, diagnostics, and board views visible in one place. Synth-EE is still evolving, but the workflow demonstrates the product direction without asking readers to treat an agent-generated board as automatically production-ready.
 
 ---
 
