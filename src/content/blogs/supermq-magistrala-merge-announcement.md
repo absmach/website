@@ -143,7 +143,7 @@ Modular, open-source IoT gateway solutions:
 - **Edge computing** — Local processing and data aggregation
 - **Open hardware** — Professionally supported, production-ready designs
 
-The A0 module and Base Board deliver connectivity at the edge.
+The A0 gateway and its expansion modules deliver connectivity at the edge.
 
 ### 4. [Propeller](https://github.com/absmach/propeller) — WebAssembly Orchestrator
 
