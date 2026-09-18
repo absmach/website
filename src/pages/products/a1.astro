@@ -18,9 +18,9 @@ import {
 
 const a0BoardSpecs = [
   "ESP32-C6 RISC-V Core",
+  "Wi-Fi 6, BLE 5 & 802.15.4",
   "Wireless M-Bus (868 MHz)",
   "NB-IoT / LTE-M (SIM7080G)",
-  "WiFi & Bluetooth LE",
   "Zephyr RTOS",
   "Open Source Hardware",
 ];
@@ -53,7 +53,7 @@ const features = [
   {
     icon: Radio,
     name: "Multi-Protocol Wireless",
-    desc: "Inherits the A0 module's multi-protocol connectivity (Wireless M-Bus, NB-IoT, LTE-M, WiFi, and BLE) for versatile IoT deployments.",
+    desc: "Inherits the A0 module's connectivity — native Wi-Fi 6, BLE 5 and 802.15.4 plus Wireless M-Bus, NB-IoT/LTE-M and sub-GHz expansion modules — for versatile IoT deployments.",
   },
   {
     icon: Cloud,
@@ -120,7 +120,7 @@ const faqs = [
   },
   {
     q: "How does A1 connect to Magistrala?",
-    a: "A1 communicates with Magistrala over MQTT, CoAP, or HTTP. The A0 wireless radio module on A1 handles the communication with field devices, while the BeagleV-Fire compute board routes aggregated data to the cloud platform.",
+    a: "A1 communicates with Magistrala over MQTT, CoAP, or HTTP. The A0 board on A1 handles the wireless communication with field devices — via its native Wi-Fi 6, BLE 5 and 802.15.4 radios or a plug-in Wireless M-Bus, NB-IoT/LTE-M or sub-GHz module — while the BeagleV-Fire compute board routes aggregated data to the cloud platform.",
   },
   {
     q: "What is the BeagleV-Fire?",
@@ -182,7 +182,7 @@ const faqSchema = JSON.stringify({
             </p>
             <div class="btn-row" style="margin-top:32px;">
               <a
-                href="https://www.absmach.eu/docs/hardware/s1-gateway"
+                href="https://www.absmach.eu/docs/hardware/a1/"
                 class="btn btn-primary"
                 target="_blank"
                 rel="noopener">Learn More ↗</a
@@ -256,8 +256,9 @@ const faqSchema = JSON.stringify({
               <p class="lede">
                 The <strong>A0 Board</strong> is the wireless connectivity core of
                 the A1 gateway. It handles multi-protocol wireless data collection
-                (Wireless M-Bus, NB-IoT, LTE-M, WiFi, and BLE) and passes data to
-                the <strong>BeagleV-Fire</strong> for Linux-side processing and cloud
+                (Wi-Fi 6, BLE 5, IEEE 802.15.4, Wireless M-Bus, NB-IoT/LTE-M and sub-GHz
+                modules) and passes data to the
+                <strong>BeagleV-Fire</strong> for Linux-side processing and cloud
                 backhaul.
               </p>
               <ul class="a1-spec-list">
@@ -443,7 +444,7 @@ const faqSchema = JSON.stringify({
         </p>
         <div class="btn-row" style="justify-content:center;">
           <a
-            href="https://www.absmach.eu/docs/hardware/s1-gateway"
+            href="https://www.absmach.eu/docs/hardware/a1/"
             class="btn btn-primary"
             target="_blank"
             rel="noopener">Learn More ↗</a

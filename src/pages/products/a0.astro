@@ -1,89 +1,102 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/Header.astro";
-import AnnouncementBanner from "../../components/AnnouncementBanner.astro";
-import Footer from "../../components/Footer.astro";
-import FAQAccordion from "../../components/FAQAccordion.astro";
 import {
-  Radio,
   Battery,
+  Brain,
+  Gauge,
   Layers,
+  LockOpen,
+  MapPin,
+  Radio,
+  Settings2,
   Shield,
   Zap,
-  LockOpen,
-  Gauge,
-  Settings2,
-  MapPin,
-  Brain,
 } from "@lucide/astro";
+import AnnouncementBanner from "../../components/AnnouncementBanner.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const radios = [
   {
     name: "Wi-Fi 6",
-    standard: "802.11ax",
+    standard: "802.11ax · ESP32-C6",
     use: "High-bandwidth cloud backhaul",
   },
   {
     name: "Bluetooth 5",
-    standard: "BLE 5.0 LE",
+    standard: "BLE 5.0 LE · ESP32-C6",
     use: "Sensor pairing & local control",
   },
   {
     name: "IEEE 802.15.4",
-    standard: "Thread / 6LoWPAN",
+    standard: "Thread / Zigbee · ESP32-C6",
     use: "Low-power mesh device networks",
   },
   {
     name: "Wireless M-Bus",
-    standard: "868 MHz / EN 13757",
+    standard: "868 MHz · WMBUS module",
     use: "Utility meter reading",
   },
   {
     name: "NB-IoT / LTE-M",
-    standard: "SIM7080G",
-    use: "Cellular cloud connection",
+    standard: "SIM7080G module",
+    use: "Cellular backhaul + GNSS",
   },
   {
-    name: "Ethernet",
-    standard: "W5500 (Baseboard)",
-    use: "Wired LAN / gateway uplink",
+    name: "Sub-GHz",
+    standard: "400 MHz · E07-400M10S",
+    use: "Long-range sensor links",
   },
 ];
 
-const a0BoardSpecs = [
-  "ESP32-C6 RISC-V Core",
+const a0Specs = [
+  "ESP32-C6 RISC-V @ 160 MHz",
   "Wi-Fi 6 (802.11ax) + BLE 5",
-  "IEEE 802.15.4 (Thread / 6LoWPAN)",
-  "Wireless M-Bus (868 MHz)",
-  "NB-IoT / LTE-M (SIM7080G)",
+  "IEEE 802.15.4 (Thread / Zigbee)",
+  "Two BUS1 / BUS2 expansion slots",
+  "USB-C, VIN & battery power",
   "Zephyr RTOS",
-  "Open Source Hardware",
 ];
 
-const baseboardSpecs = [
-  "W5500 Ethernet Controller",
-  "TSS721A M-Bus Transceiver",
-  "SD Card Data Logging",
-  "24V DC Power Input (18–36V)",
-  "Battery Backup & Charging",
-  "DIN-Rail Mountable",
+const modules = [
+  {
+    name: "SIM7080G",
+    standard: "NB-IoT / LTE-M + GNSS",
+    use: "Cellular backhaul with nano-SIM on module.",
+  },
+  {
+    name: "WMBUS",
+    standard: "868 MHz · EN 13757",
+    use: "Wireless M-Bus metering radio.",
+  },
+  {
+    name: "E07-400M10S",
+    standard: "Sub-GHz · 400 MHz",
+    use: "Long-range sensor and telemetry links.",
+  },
+  {
+    name: "MikroE Click",
+    standard: "Click footprint",
+    use: "Any off-the-shelf Click board fits either slot.",
+  },
 ];
 
 const features = [
   {
     icon: Radio,
-    name: "Six Native Radios",
-    desc: "Wi-Fi 6 (802.11ax), BLE 5, IEEE 802.15.4 (Thread / 6LoWPAN), Wireless M-Bus (868 MHz), NB-IoT / LTE-M, and Ethernet — all sharing one Zephyr networking stack. Connect meters, sensors, and gateways without external bridges.",
+    name: "Multi-Protocol by Design",
+    desc: "Wi-Fi 6, BLE 5 and IEEE 802.15.4 are native on the ESP32-C6. Add Wireless M-Bus, NB-IoT/LTE-M or sub-GHz with plug-in modules on the BUS1/BUS2 slots — all sharing one Zephyr networking stack.",
   },
   {
     icon: Battery,
     name: "Low Power Design",
-    desc: "Ultra-low power operation with battery backup and charging. Perfect for remote deployments.",
+    desc: "Power A0 over USB-C, an external VIN supply, or a single-cell Li-ion battery with on-board MCP73831 charging. Ideal for permanent and battery-backed deployments.",
   },
   {
     icon: Layers,
     name: "Modular Architecture",
-    desc: "ESP32-C6 RISC-V core with expansion options. Add Ethernet, M-Bus, and SD card logging.",
+    desc: "Two MikroE Click-compatible expansion slots take SIM7080G, WMBUS and E07-400M10S modules — or any off-the-shelf Click board — for radio and cellular connectivity.",
   },
   {
     icon: Shield,
@@ -133,9 +146,9 @@ const integrations = [
   "Magistrala",
   "Propeller",
   "Zephyr RTOS",
-  "W5500 Ethernet",
   "SIM7080G (NB-IoT/LTE-M)",
-  "TSS721A (M-Bus)",
+  "WMBUS (Wireless M-Bus)",
+  "E07-400M10S (Sub-GHz)",
 ];
 
 const faqs = [
@@ -148,8 +161,8 @@ const faqs = [
     a: "A0 runs Zephyr RTOS on an ESP32-C6 microcontroller, optimised for low power and constrained environments. A1 runs full Linux on a RISC-V compute board (BeagleV-Fire) and supports containers and heavier workloads.",
   },
   {
-    q: "Do I need the Baseboard to use A0?",
-    a: "No. The A0 Board is fully functional on its own for wireless applications. The Baseboard adds wired Ethernet, M-Bus transceiver, SD card logging, industrial power input, and DIN-rail mounting for more demanding deployments.",
+    q: "What expansion modules can I plug into A0?",
+    a: "A0 has two expansion slots (BUS1 and BUS2) on a MikroE Click-compatible footprint. In-house modules include SIM7080G (NB-IoT/LTE-M + GNSS), WMBUS (Wireless M-Bus) and E07-400M10S (sub-GHz 400 MHz); any off-the-shelf Click board also fits.",
   },
   {
     q: "Can I customise the A0 firmware?",
@@ -173,10 +186,10 @@ const faqSchema = JSON.stringify({
 ---
 
 <BaseLayout
-  title="A0 — Open-Source IoT Module | Wi-Fi 6, BLE, NB-IoT, RISC-V"
-  description="Open-source IoT module with 6 native radios — Wi-Fi 6, BLE 5, IEEE 802.15.4, Wireless M-Bus, NB-IoT/LTE-M, and Ethernet. ESP32-C6 RISC-V, Zephyr RTOS, Wasm-ready. EU-manufactured."
+  title="A0 — Open-Source ESP32-C6 IoT Gateway | Wi-Fi 6, BLE, NB-IoT, RISC-V"
+  description="Open-source ESP32-C6 gateway with Wi-Fi 6, BLE 5 and 802.15.4, expandable with Wireless M-Bus, NB-IoT/LTE-M and sub-GHz modules on two Click-compatible slots. Zephyr RTOS, Wasm-ready, EU-manufactured."
   ogImage="/img/og/og-a0.png"
-  ogImageAlt="A0 — RISC-V Battery-Ready IoT Module"
+  ogImageAlt="A0 — RISC-V Battery-Ready IoT Gateway"
 >
   <AnnouncementBanner product="a0" />
   <Header />
@@ -206,16 +219,17 @@ const faqSchema = JSON.stringify({
               A0 · Edge Gateway · Hardware
             </div>
             <h1 class="tagline">
-              Six Native Radios. RISC-V Battery-Ready IoT Module.
+              ESP32-C6 Gateway. Modular Radios. Battery-Ready.
             </h1>
             <p class="lede" style="margin-top:16px; max-width:48ch;">
-              Wi-Fi 6, BLE 5, IEEE 802.15.4, Wireless M-Bus, NB-IoT/LTE-M, and
-              Ethernet on an open ESP32-C6 RISC-V module running Zephyr RTOS.
-              Battery-backed, Wasm-ready, and manufactured in the EU.
+              Wi-Fi 6, BLE 5 and IEEE 802.15.4 on an open ESP32-C6 RISC-V module
+              running Zephyr RTOS — expandable with Wireless M-Bus, NB-IoT/LTE-M
+              and sub-GHz modules on two Click-compatible slots. Battery-backed,
+              Wasm-ready, and manufactured in the EU.
             </p>
             <div class="btn-row" style="margin-top:32px;">
               <a
-                href="https://www.absmach.eu/docs/hardware/s0-gateway/getting-started"
+                href="https://www.absmach.eu/docs/hardware/a0/getting-started"
                 class="btn btn-primary"
                 target="_blank"
                 rel="noopener">Start Building ↗</a
@@ -225,7 +239,7 @@ const faqSchema = JSON.stringify({
           </div>
           <div class="hero-visual" style="padding:16px;">
             <img
-              src="/img/products/s0-board.webp"
+              src="/img/products/s0-board-detail.webp"
               alt="A0 edge gateway board"
               style="object-fit:contain; max-height:420px;"
             />
@@ -246,8 +260,8 @@ const faqSchema = JSON.stringify({
             <div class="l">RISC-V microcontroller</div>
           </div>
           <div class="metric">
-            <div class="v">6</div>
-            <div class="l">Native wireless radios</div>
+            <div class="v">2</div>
+            <div class="l">BUS1 / BUS2 module slots</div>
           </div>
           <div class="metric">
             <div class="v">Wasm</div>
@@ -267,35 +281,41 @@ const faqSchema = JSON.stringify({
       </div>
     </div>
 
-    <!-- A0 Board + Baseboard components -->
+    <!-- A0 board + expansion modules -->
     <section class="section" style="border-bottom:1px solid var(--line-3);">
       <div class="container-wide">
-        <!-- Component 1: A0 Board -->
+        <!-- A0 -->
         <div class="a0-component">
           <div class="a0-component-header">
-            <span class="kicker">Component 1</span>
-            <h2 class="h-2" style="margin-top:8px;">A0 Board</h2>
+            <span class="kicker">A0</span>
+            <h2 class="h-2" style="margin-top:8px;">
+              One board. Swap-in modules.
+            </h2>
           </div>
           <div class="a0-component-body">
             <div class="a0-img-wrap">
               <img
                 src="/img/products/s0-board-detail.webp"
-                alt="A0 Board"
+                alt="A0 IoT gateway board"
                 class="a0-img"
                 loading="lazy"
               />
             </div>
             <div class="a0-component-text">
               <p class="lede">
-                The <strong>A0 Board</strong> is the wireless compute core of the
-                A0 gateway. Built on the ESP32-C6 RISC-V microcontroller running <strong
-                  >Zephyr RTOS</strong
-                >, it handles multi-protocol wireless data collection and cloud
-                backhaul in a compact, low-power form factor.
+                <strong>A0</strong> is the ESP32-C6 gateway board. Running
+                <strong>Zephyr RTOS</strong>, it provides native Wi-Fi 6, BLE 5
+                and IEEE 802.15.4 with secure boot, flash encryption and a
+                Trusted Execution Environment, plus two <strong
+                  >BUS1/BUS2 expansion slots</strong
+                >
+                (MikroE Click-compatible) for radio and cellular modules. It is powered
+                over USB-C, an external VIN supply, or a single-cell Li-ion battery
+                with on-board charging.
               </p>
               <ul class="a0-spec-list">
                 {
-                  a0BoardSpecs.map((spec) => (
+                  a0Specs.map((spec) => (
                     <li class="a0-spec-item">
                       <span class="a0-check">✓</span>
                       <span>{spec}</span>
@@ -307,47 +327,33 @@ const faqSchema = JSON.stringify({
           </div>
         </div>
 
-        <div class="a0-divider"></div>
+        <div class="a0-divider" style="margin:56px 0;"></div>
 
-        <!-- Component 2: Baseboard -->
-        <div class="a0-component">
-          <div class="a0-component-header">
-            <span class="kicker">Component 2</span>
-            <h2 class="h-2" style="margin-top:8px;">Baseboard</h2>
-          </div>
-          <div class="a0-component-body">
-            <div class="a0-img-wrap">
-              <img
-                src="/img/products/s0-baseboard.webp"
-                alt="A0 Baseboard"
-                class="a0-img"
-                loading="lazy"
-              />
-            </div>
-            <div class="a0-component-text">
-              <p class="lede">
-                The <strong>Baseboard</strong> extends the A0 Board into a complete
-                industrial gateway. It adds wired Ethernet, M-Bus transceiver, SD
-                card logging, 24V DC power, battery backup, and DIN-rail mounting:
-                everything needed for professional smart metering and industrial installations.
-              </p>
-              <ul class="a0-spec-list">
-                {
-                  baseboardSpecs.map((spec) => (
-                    <li class="a0-spec-item">
-                      <span class="a0-check">✓</span>
-                      <span>{spec}</span>
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
-          </div>
+        <!-- Expansion modules -->
+        <div class="a0-component-header">
+          <span class="kicker">Modules</span>
+          <h2 class="h-2" style="margin-top:8px;">Expansion modules.</h2>
+          <p class="lede" style="margin-top:12px; max-width:60ch;">
+            Fit the connectivity a deployment needs in either BUS1 or BUS2.
+            In-house modules cover cellular, metering and sub-GHz, while the
+            Click-compatible footprint opens the wider MikroE ecosystem.
+          </p>
+        </div>
+        <div class="a0-mod-grid">
+          {
+            modules.map(({ name, standard, use }) => (
+              <div class="a0-radio-card">
+                <div class="a0-radio-name">{name}</div>
+                <div class="a0-radio-std">{standard}</div>
+                <div class="a0-radio-use">{use}</div>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
 
-    <!-- Six Radios -->
+    <!-- Radios -->
     <section
       class="section"
       style="background:var(--paper-2); border-bottom:1px solid var(--line-3);"
@@ -357,13 +363,13 @@ const faqSchema = JSON.stringify({
           <div class="left">
             <span class="kicker">Wireless</span>
             <h2 class="h-2" style="margin-top:14px;">
-              Six native radios. One module.
+              Native radios plus plug-in modules.
             </h2>
           </div>
           <p class="lede">
-            No external bridges. Every radio is on-board and shares the same
-            Zephyr networking stack — switch protocols in firmware without
-            hardware changes.
+            Wi-Fi 6, BLE 5 and IEEE 802.15.4 are built into the ESP32-C6, while
+            Wireless M-Bus, NB-IoT/LTE-M and sub-GHz arrive as modules on the
+            BUS1/BUS2 slots — all sharing one Zephyr networking stack.
           </p>
         </div>
         <div class="a0-radio-grid">
@@ -496,17 +502,19 @@ const faqSchema = JSON.stringify({
                 >A1 gateway</a
               >
               — full Linux compute with containers, Node-RED, and local AI, plus A0's
-              six radios for device connectivity.
+              native and modular radios for device connectivity.
             </p>
             <div class="a0-bvf-stack">
-              <div class="a0-bvf-pill">A0 Board · Zephyr · 6 radios</div>
+              <div class="a0-bvf-pill">
+                A0 Board · Zephyr · Wi-Fi 6 / BLE / 802.15.4 + modules
+              </div>
               <span class="a0-bvf-plus">+</span>
               <div class="a0-bvf-pill">
                 BeagleV-Fire · RISC-V Linux · PolarFire FPGA
               </div>
               <span class="a0-bvf-plus">↓</span>
               <div class="a0-bvf-pill a0-bvf-result">
-                A1 Gateway · Full Linux + 6 radios
+                A1 Gateway · Full Linux + A0 radios
               </div>
             </div>
             <a
@@ -636,7 +644,7 @@ const faqSchema = JSON.stringify({
         </p>
         <div class="btn-row" style="justify-content:center;">
           <a
-            href="https://www.absmach.eu/docs/hardware/s0-gateway/getting-started"
+            href="https://www.absmach.eu/docs/hardware/a0/getting-started"
             class="btn btn-primary"
             target="_blank"
             rel="noopener">Start Building ↗</a
@@ -667,7 +675,7 @@ const faqSchema = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Product",
       "name": "A0 Edge Gateway",
-      "description": "Open-source IoT module with 6 native radios — Wi-Fi 6, BLE 5, IEEE 802.15.4, Wireless M-Bus, NB-IoT/LTE-M, and Ethernet. ESP32-C6 RISC-V, Zephyr RTOS, Wasm-ready. EU-manufactured.",
+      "description": "Open-source ESP32-C6 gateway with Wi-Fi 6, BLE 5 and 802.15.4, expandable with Wireless M-Bus, NB-IoT/LTE-M and sub-GHz modules on two Click-compatible slots. Zephyr RTOS, Wasm-ready, EU-manufactured.",
       "url": "https://www.absmach.eu/products/a0",
       "sku": "A0-GATEWAY-V1",
       "category": "IoT Hardware / Edge Gateway",
@@ -832,7 +840,7 @@ const faqSchema = JSON.stringify({
     }
   }
 
-  /* ─── Six Radios ─────────────────────────────────────────────── */
+  /* ─── Radio grid ─────────────────────────────────────────────── */
   .a0-radio-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -872,6 +880,23 @@ const faqSchema = JSON.stringify({
   }
   @media (max-width: 480px) {
     .a0-radio-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ─── Expansion modules ──────────────────────────────────────── */
+  .a0-mod-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  @media (max-width: 980px) {
+    .a0-mod-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 480px) {
+    .a0-mod-grid {
       grid-template-columns: 1fr;
     }
   }
