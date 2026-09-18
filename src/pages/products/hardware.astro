@@ -40,7 +40,7 @@ const hardwareProducts = [
     name: "Quarc",
     description:
       "A post-quantum secure element for hardware-rooted identity, firmware trust, and long-lived device security.",
-    specs: ["ML-KEM", "ML-DSA", "Secure boot", "Open RTL"],
+    specs: ["ML-KEM-768", "ML-DSA-65", "FPGA prototype", "Open toolchain"],
     cta: "Explore Quarc",
   },
 ];
@@ -294,7 +294,7 @@ const capabilities = [
           "item": {
             "@type": "Product",
             "name": "Quarc",
-            "description": "Open-source post-quantum secure element with hardware-accelerated ML-KEM and ML-DSA.",
+            "description": "Open-source, FPGA-prototyped post-quantum secure element implementing ML-KEM-768 and ML-DSA-65 per FIPS 203/204.",
             "url": "https://www.absmach.eu/products/quarc"
           }
         }

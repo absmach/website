@@ -1,50 +1,50 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/Header.astro";
-import AnnouncementBanner from "../../components/AnnouncementBanner.astro";
-import Footer from "../../components/Footer.astro";
-import FAQAccordion from "../../components/FAQAccordion.astro";
 import {
   Cpu,
-  Lock,
-  ShieldCheck,
-  Link,
-  SquareCode,
-  Settings2,
   Landmark,
+  Link,
+  Lock,
   Monitor,
+  Settings2,
+  ShieldCheck,
+  SquareCode,
 } from "@lucide/astro";
+import AnnouncementBanner from "../../components/AnnouncementBanner.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const features = [
   {
     icon: Cpu,
-    name: "Hardware-Accelerated PQC",
-    desc: "Dedicated ML-KEM-768 and ML-DSA-65 engines with a shared NTT core. ≥ 3× faster than software PQC on Cortex-M4.",
+    name: "PQC in Hardware",
+    desc: "ML-KEM-768 and ML-DSA-65 (FIPS 203/204) share one constant-time NTT core and Keccak engine, targeting ≥ 3× software PQC on Cortex-M4. Step 1 runs the algorithms in C over MMIO; Step 2 moves them into fabric.",
   },
   {
     icon: Lock,
     name: "Key Usage Enforcer",
-    desc: "Key bytes never leave the secure store. Per-slot policy bits enforced by hardware — firmware cannot read or misuse key material.",
+    desc: "Per-slot policy bits — SIGN_ONLY, DECAP_ONLY, NO_EXPORT, NO_OVERWRITE — enforced in RTL, not software. Key bytes DMA straight into engine registers and never appear on the bus.",
   },
   {
     icon: ShieldCheck,
-    name: "Anti-Rollback Secure Boot",
-    desc: "Immutable Boot ROM verifies firmware with ML-DSA-65 and checks the hardware monotonic counter. Any failed boot halts the device.",
+    name: "Anti-Rollback Boot ROM",
+    desc: "An immutable Boot ROM verifies firmware with ML-DSA-65 against a hardware monotonic counter and halts on failure. The rollback counter RTL is in place; secure boot is a Phase 8 deliverable.",
   },
   {
     icon: Link,
     name: "Encrypted Host Channel",
-    desc: "SPI channel runs Noise Protocol IK with hybrid ML-KEM-768 + X25519. AES-256-GCM payload encryption with monotonic nonces.",
+    desc: "Noise Protocol IK over SPI with a hybrid ML-KEM-768 + X25519 key exchange and AES-256-GCM payload encryption. Part of the Phase 7 security stack.",
   },
   {
     icon: SquareCode,
     name: "Open & Auditable",
-    desc: "100% open-source toolchain — Yosys, nextpnr, SymbiYosys. Verilog 2005 only. Formally verified bus, KUE, and lifecycle FSM.",
+    desc: "100% open-source toolchain — Yosys, nextpnr, SymbiYosys — and Verilog 2005 only. Formal verification targets cover the bus, Keccak, TRNG health, PMP, KUE policy, and lifecycle FSM.",
   },
   {
     icon: Settings2,
     name: "ASIC-Ready",
-    desc: "No FPGA-specific primitives. The same RTL ports to 40 nm / 22 nm FD-SOI — targeting FIPS 140-3 Level 3 and Common Criteria EAL5+.",
+    desc: "No FPGA-specific primitives in core logic, so the same RTL ports to 40 nm / 22 nm FD-SOI. v2 targets a Common Criteria EAL4+ path and FIPS 140-3 Level 3.",
   },
 ];
 
@@ -64,6 +64,25 @@ const steps = [
     "Anchor trust at runtime",
     "Verify firmware, sign messages, and decapsulate keys through the encrypted SPI channel. Every operation enforced by the KUE — the CPU never holds key bytes.",
   ],
+];
+
+const platforms = [
+  {
+    step: "Step 1",
+    board: "BeagleV-Fire",
+    fpga: "Microchip PolarFire MPFS025T · 23k LE",
+    status: "Bring-up on silicon",
+    detail:
+      "Cape gateware built and flashed; SHA-3 and forward/inverse NTT verified on silicon. ML-KEM-768 runs in C over the SHA-3 + NTT MMIO engines. NTT basemul timing closure is the open blocker.",
+  },
+  {
+    step: "Step 2",
+    board: "ULX3S",
+    fpga: "Lattice ECP5-85K · 84k LUT",
+    status: "Primary dev target",
+    detail:
+      "Moves the ML-KEM/ML-DSA controllers, KUE, keystore and SPI slave into fabric so the C layer becomes a thin driver. The bitstream builds at 27 MHz.",
+  },
 ];
 
 const kuePolicy = [
@@ -176,9 +195,10 @@ const roadmap = [
     label: "FPGA Prototype",
     status: "current",
     items: [
-      "ULX3S · ECP5-85K FPGA",
-      "Hardware-accelerated ML-KEM-768 + ML-DSA-65",
-      "Key Usage Enforcer (KUE)",
+      "Step 1 — BeagleV-Fire, crypto in C over SHA-3 + NTT",
+      "Step 2 — ULX3S, ML-KEM/ML-DSA/KUE/keystore/SPI in fabric",
+      "ML-KEM-768 + ML-DSA-65 (FIPS 203/204)",
+      "Key Usage Enforcer (KUE) — RTL",
       "Device lifecycle FSM (RTL)",
       "Anti-rollback secure boot",
       "Noise IK encrypted SPI channel",
@@ -227,12 +247,16 @@ const faqs = [
     a: "Every byte of the Quarc bitstream is produced by open-source tools: Yosys for synthesis, nextpnr-ecp5 for place-and-route, sv2v for Ibex SystemVerilog conversion, SymbiYosys for formal verification, and Icarus Verilog / Verilator for simulation. No proprietary EDA in the synthesis path. The bitstream is reproducible from the published RTL.",
   },
   {
+    q: "What is the current status of Quarc?",
+    a: "Quarc v1 is an FPGA prototype, not production silicon. Phase 1 (Keccak/SHA-3) and Phase 2 (TRNG/DRBG) are verified, including on silicon; the shared NTT engine is sim-verified with basemul timing closure still open; and ML-KEM-768 passes the full NIST KAT on the software path. ML-DSA, the security-policy formal proofs, the Noise IK channel, and secure boot are not started. The full hardware crypto path exceeds both target FPGAs, so v1 is built as a two-step partition.",
+  },
+  {
     q: "Is Quarc production silicon?",
-    a: "Quarc v1 targets FPGA prototyping on the ULX3S (ECP5-85K). The v2 roadmap targets an ASIC at 40 nm or 22 nm FD-SOI — no RTL rewrite required. v3 extends to a TEE root-of-trust for confidential computing platforms.",
+    a: "No. Quarc v1 is an FPGA prototype built in two steps: Step 1 runs on the BeagleV-Fire (PolarFire MPFS025T, 23k LE) with the algorithms in C over SHA-3 + NTT MMIO engines, and Step 2 moves ML-KEM, ML-DSA, the KUE, keystore and SPI slave back into fabric on the ULX3S (ECP5-85K). The v2 roadmap targets an ASIC at 40 nm or 22 nm FD-SOI with no RTL rewrite, and v3 extends to a TEE root of trust for confidential computing.",
   },
   {
     q: "Can Quarc integrate with existing MCUs?",
-    a: "Yes. Any host MCU — STM32, ESP32, or your own — drives Quarc over SPI. The encrypted Noise IK channel opens with a CHANNEL_INIT command. From the host's perspective, Quarc is an SPI peripheral that handles all post-quantum cryptography.",
+    a: "Yes. Any host MCU — STM32, ESP32, or your own — drives Quarc over SPI. On the BeagleV-Fire the SE is driven by the SoC's own RISC-V cores over an AXI/SPI bridge, replacing the external host of the ULX3S setup. From the host's perspective, Quarc is an SPI peripheral that handles all post-quantum cryptography.",
   },
   {
     q: "Why does post-quantum security matter now?",
@@ -253,7 +277,7 @@ const faqSchema = JSON.stringify({
 
 <BaseLayout
   title="Quarc — Post-Quantum Secure Element for IoT | Open-Source"
-  description="Quarc is an open-source post-quantum cryptography secure element with hardware-accelerated ML-KEM-768 and ML-DSA-65, built for IoT, industrial systems, confidential computing, and long-lived device trust."
+  description="Quarc is an open-source, FPGA-prototyped post-quantum secure element implementing ML-KEM-768 and ML-DSA-65 (FIPS 203/204), built for IoT, industrial systems, and long-lived device trust."
   ogImage="/img/og/og-quarc.png"
   ogImageAlt="Quarc — Post-Quantum Secure Element"
 >
@@ -289,8 +313,8 @@ const faqSchema = JSON.stringify({
             class="lede"
             style="margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;"
           >
-            Hardware-accelerated ML-KEM and ML-DSA on a fully open and auditable
-            RISC-V architecture.
+            An open, auditable post-quantum secure element — ML-KEM-768 and
+            ML-DSA-65 on RISC-V, built entirely with open-source tooling.
           </p>
           <div class="btn-row" style="margin-top:32px; justify-content:center;">
             <a
@@ -320,22 +344,22 @@ const faqSchema = JSON.stringify({
             <div class="l">NIST PQC standards</div>
           </div>
           <div class="metric">
-            <div class="v">&lt;0.5ms</div>
-            <div class="l">ML-KEM operations</div>
+            <div class="v">2-step</div>
+            <div class="l">FPGA prototype path</div>
           </div>
           <div class="metric">
-            <div class="v">≥3× faster</div>
-            <div class="l">vs Cortex-M4 PQC</div>
+            <div class="v">100%</div>
+            <div class="l">open-source toolchain</div>
           </div>
           <div class="metric">
             <div class="v">
               <a
-                href="https://github.com/absmach/propeller"
+                href="https://github.com/absmach/quarc"
                 target="_blank"
-                rel="noopener">Apache 2.0 ↗</a
+                rel="noopener">Apache-2.0 ↗</a
               >
             </div>
-            <div class="l">Toolchain &amp; RTL</div>
+            <div class="l">RTL · CERN-OHL-P</div>
           </div>
         </div>
       </div>
@@ -368,8 +392,8 @@ const faqSchema = JSON.stringify({
             >
               The IoT devices being deployed today will outlive that window. <strong
                 >Quarc closes the gap</strong
-              > — hardware-accelerated ML-KEM-768 and ML-DSA-65, packaged with the
-              full SE feature set IoT silicon vendors expect.
+              > — ML-KEM-768 and ML-DSA-65 packaged with the full SE feature set IoT
+              silicon vendors expect.
             </p>
           </div>
           <div class="quarc-compare-table-wrap">
@@ -415,6 +439,41 @@ const faqSchema = JSON.stringify({
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- v1 platform -->
+    <section class="section" style="border-bottom:1px solid var(--line-3);">
+      <div class="container-wide">
+        <div class="section-head">
+          <div class="left">
+            <span class="kicker">v1 platform</span>
+            <h2 class="h-2" style="margin-top:14px;">
+              An FPGA prototype, in two steps.
+            </h2>
+          </div>
+          <p class="lede">
+            The full hardware crypto path exceeds current FPGAs, so Quarc v1
+            splits the work: algorithms in C on a 23k-LE fabric today, crypto
+            controllers back in fabric on the 84k-LE board next.
+          </p>
+        </div>
+
+        <div class="quarc-status-grid">
+          {
+            platforms.map(({ step, board, fpga, status, detail }) => (
+              <div class="quarc-platform-card">
+                <div class="quarc-platform-top">
+                  <span class="quarc-platform-step">{step}</span>
+                  <span class="quarc-platform-badge">{status}</span>
+                </div>
+                <h3 class="quarc-platform-board">{board}</h3>
+                <p class="quarc-platform-fpga">{fpga}</p>
+                <p class="quarc-platform-detail">{detail}</p>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>
@@ -472,7 +531,9 @@ const faqSchema = JSON.stringify({
         <div class="quarc-arch-outer">
           <!-- Left: Quarc SoC block -->
           <div class="quarc-block-diagram">
-            <div class="quarc-bd-label">Quarc SoC (ECP5-85K v1)</div>
+            <div class="quarc-bd-label">
+              Quarc SoC — Step 2 target (ECP5-85K)
+            </div>
 
             <!-- CPU row -->
             <div class="quarc-bd-cpu">
@@ -592,8 +653,9 @@ const faqSchema = JSON.stringify({
             </h2>
           </div>
           <p class="lede" style="color:rgba(255,255,255,0.65);">
-            Quarc at 50 MHz on ECP5-85K vs pqm4 on Cortex-M4 at 168 MHz. ASIC at
-            200–400 MHz lifts every figure proportionally.
+            Target performance at 50 MHz on ECP5-85K (Step 2) vs pqm4 on
+            Cortex-M4 at 168 MHz. The current ULX3S bitstream closes at 27 MHz;
+            50 MHz is the goal once NTT basemul timing is closed.
           </p>
         </div>
         <div class="quarc-perf-table-wrap">
@@ -637,8 +699,10 @@ const faqSchema = JSON.stringify({
             </h2>
           </div>
           <p class="lede">
-            Quarc assumes firmware can fail. Every security-critical guarantee
-            is enforced directly in RTL — not in software.
+            Quarc assumes firmware can fail: security-critical guarantees are
+            enforced directly in RTL rather than in software. The key-store/KUE
+            boundary and host channel land with the Step 2 fabric, and the
+            formal proofs are a Phase 6 deliverable.
           </p>
         </div>
         <div class="quarc-security-grid">
@@ -831,7 +895,7 @@ const faqSchema = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Product",
       "name": "Quarc",
-      "description": "Open-source post-quantum secure element with hardware-accelerated ML-KEM and ML-DSA, built for IoT, industrial systems, confidential computing, and long-lived device trust.",
+      "description": "Open-source, FPGA-prototyped post-quantum secure element implementing ML-KEM-768 and ML-DSA-65 (FIPS 203/204) on RISC-V, built with a 100% open-source toolchain.",
       "url": "https://www.absmach.eu/products/quarc",
       "brand": { "@type": "Brand", "name": "Abstract Machines" },
       "manufacturer": {
@@ -932,6 +996,64 @@ const faqSchema = JSON.stringify({
   .quarc-yes {
     color: var(--ink) !important;
     font-weight: 600 !important;
+  }
+
+  /* ─── Status ────────────────────────────────────────────────────── */
+  .quarc-status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .quarc-platform-card {
+    border: 1px solid var(--line-3);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    background: var(--paper);
+  }
+  .quarc-platform-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .quarc-platform-step {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent-2);
+  }
+  .quarc-platform-badge {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-2);
+    border: 1px solid var(--line-3);
+    border-radius: 999px;
+    padding: 3px 9px;
+    white-space: nowrap;
+  }
+  .quarc-platform-board {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 4px;
+  }
+  .quarc-platform-fpga {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    margin: 0 0 14px;
+  }
+  .quarc-platform-detail {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin: 0;
   }
 
   /* ─── Architecture block diagram ───────────────────────────────── */
@@ -1315,6 +1437,10 @@ const faqSchema = JSON.stringify({
     .quarc-context-grid {
       grid-template-columns: 1fr;
       gap: 40px;
+    }
+    .quarc-status-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
     }
     .quarc-arch-outer {
       grid-template-columns: 1fr;
