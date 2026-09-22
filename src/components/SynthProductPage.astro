@@ -172,13 +172,13 @@ const heroDesc =
           <article class="evidence-board">
             <div class="evidence-label">
               <span>SYNTH FIELD NODE / 4-LAYER BOARD</span><b
-                >KiCad 3D render · generated output</b
+                >KiCad PCB layout · generated output</b
               >
             </div><div class="kicad-render">
               <img
                 src="/img/synth/synth-field-node-kicad-tight.png"
-                alt="KiCad 3D render of a Synth-generated four-layer field node board with USB-C on the board edge"
-              /><span class="kicad-edge-label">USB-C EDGE</span>
+                alt="KiCad 2D PCB layout of a Synth-generated field node board with RP2350 MCU"
+              />
             </div><div class="evidence-stats">
               <span><b>4</b> layers</span><span><b>50Ω</b> antenna pair</span
               ><span><b>1</b> secure element</span>
@@ -539,30 +539,40 @@ connect U1.gpo -> U2.sda`}</code></pre>
     font-weight: 500;
   }
   .kicad-render {
-    margin: 24px 0;
+    margin: 20px 0 24px;
     position: relative;
     overflow: hidden;
     border-radius: var(--radius);
-    background: #173f32;
+    background-color: #23271c;
+    background-image:
+      radial-gradient(#ffffff0d 1px, transparent 1px),
+      linear-gradient(180deg, #2a2f21 0%, #1c1f16 100%);
+    background-size: 16px 16px, 100% 100%;
+    border: 1px solid #434c34;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
   }
   .kicad-render img {
     display: block;
     width: 100%;
-    height: 350px;
-    object-fit: cover;
+    height: 380px;
+    object-fit: contain;
     object-position: center;
+    padding: 24px 16px;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
   }
   .kicad-edge-label {
     position: absolute;
     left: 15px;
     top: 15px;
-    padding: 6px 8px;
+    padding: 5px 9px;
     border: 1px solid #93dfb7aa;
     border-radius: var(--radius-sm);
     color: #c8f4d8;
-    background: #102a24dd;
-    font: 9px var(--font-mono);
+    background: #102a24ee;
+    font: 10px/1 var(--font-mono);
     letter-spacing: 0.1em;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
   .evidence-stats {
     display: flex;
