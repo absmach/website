@@ -698,9 +698,8 @@ const nextReadPosts = allPosts
   const preBlocks = document.querySelectorAll('pre[data-language="mermaid"]');
   if (preBlocks.length > 0) {
     try {
-      const { default: mermaid } = await import(
-        "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
-      );
+      const { default: mermaid } =
+        await import("https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs");
 
       mermaid.initialize({
         startOnLoad: false,
