@@ -17,7 +17,7 @@ tags:
   - pcb
   - tutorial
 category: tutorial
-featured: false
+featured: true
 ---
 
 What does it take to go from “build me a board” to a PCB that an engineer can actually review?
