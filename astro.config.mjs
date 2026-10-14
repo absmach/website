@@ -20,6 +20,7 @@ export default defineConfig({
     tailwind(),
     sitemap({
       filenameBase: "sitemap-pages",
+      filter: (page) => !new URL(page).pathname.startsWith("/preview/"),
       serialize(item) {
         const path = new URL(item.url).pathname;
 

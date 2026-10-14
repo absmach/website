@@ -1,0 +1,921 @@
+---
+import {
+  ArrowUpRight,
+  ArrowRight,
+  ArrowDown,
+  Plus,
+  Menu,
+  X,
+  Play,
+  Pause,
+} from "@lucide/astro";
+import "../../../styles/identity-preview.css";
+
+const projects = [
+  {
+    name: "Atomic",
+    group: "Applications",
+    summary: "From an idea to a web application.",
+    description:
+      "Generate and revise source, preview changes, browse verified versions, and publish a frontend from a shared workspace.",
+    stage: "In development",
+    href: "/contact",
+    cta: "Discuss Atomic",
+  },
+  {
+    name: "Parallax",
+    group: "Research & development",
+    summary: "Explore a change before making it.",
+    description:
+      "A learned world model explores how a Kubernetes system may respond to a proposed change. Parallax provides advisory predictions and decision evidence; it does not change customer workloads.",
+    stage: "In development",
+    href: "/contact",
+    cta: "Discuss Parallax",
+  },
+  {
+    name: "Motif",
+    group: "Applications",
+    summary: "Turn product knowledge into content.",
+    description:
+      "Content generation, approval workflows, and publishing integrations built around knowledge from product documentation and source code. Formerly Clara; broader go-to-market automation is in development.",
+    stage: "In development",
+    href: "/contact",
+    cta: "Discuss Motif",
+  },
+  {
+    name: "Synth",
+    group: "Applications",
+    summary: "Design circuit boards as code.",
+    description:
+      "An open-source compiler that turns text-based circuit designs into KiCad schematics, PCB layouts, and bills of materials. Structured tools let engineers and AI agents work through the same compiler.",
+    stage: "Open source",
+    href: "/synth",
+    cta: "Explore Synth",
+  },
+  {
+    name: "Capsule",
+    group: "Research & development",
+    summary: "A workspace for controlled execution.",
+    description:
+      "Exploring WebAssembly sandboxes for code execution and persistent workspaces, with an Elixir control plane and Rust workers. Production qualification remains future work.",
+    stage: "Experimental",
+    href: "/contact",
+    cta: "Discuss Capsule",
+  },
+];
+const filters = [
+  "All work",
+  ...new Set(projects.map((project) => project.group)),
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="description"
+      content="An exploration of the next Abstract Machines: AI products, applied research, and the infrastructure behind them."
+    />
+    <title>
+      Engineering intelligent systems — Abstract Machines · Identity preview
+    </title>
+    <link rel="icon" href="/favicon.ico" />
+    <link
+      rel="preload"
+      href="/preview/ai/fonts/manrope.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/preview/ai/fonts/dm-sans.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Abstract Machines home"
+        ><img
+          src="/preview/ai/media/am-logo.png"
+          width="639"
+          height="77"
+          alt="Abstract Machines"
+        /><span class="brand-caption">Engineering intelligence.</span></a
+      >
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#selected-work">Our work</a>
+        <a href="#approach">Our approach</a>
+        <a href="#research">Research</a>
+        <a href="#company">Company</a>
+      </nav>
+      <a class="header-contact" href="/contact"
+        >Let’s talk <ArrowUpRight size={17} /></a
+      >
+      <button
+        class="menu-toggle"
+        aria-label="Open navigation"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+      >
+        <Menu class="menu-open-icon" size={24} /><X
+          class="menu-close-icon"
+          size={24}
+        />
+      </button>
+      <nav
+        id="mobile-nav"
+        class="mobile-nav"
+        aria-label="Mobile navigation"
+        hidden
+      >
+        <a href="#selected-work">Our work <ArrowUpRight size={20} /></a>
+        <a href="#approach">Our approach <ArrowUpRight size={20} /></a>
+        <a href="#research">Research <ArrowUpRight size={20} /></a>
+        <a href="#company">Company <ArrowUpRight size={20} /></a>
+        <a href="/contact">Let’s talk <ArrowUpRight size={20} /></a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <video
+          id="hero-video"
+          class="hero-video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster="/preview/ai/media/hero-poster.webp"
+          aria-hidden="true"
+          tabindex="-1"
+        >
+          <source
+            data-src="/preview/ai/media/hero-video.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-topline">
+          <span>APPLIED AI / ABSTRACT MACHINES</span><span
+            >EUROPEAN ROOTS. OPEN HORIZONS.</span
+          >
+        </div>
+        <div class="hero-content">
+          <div class="hero-copy">
+            <p class="hero-kicker">
+              <span></span> A new chapter in engineering
+            </p><h1 id="hero-title">
+              Intelligence.<br /><span>Engineered.</span>
+            </h1>
+          </div>
+          <div class="hero-aside">
+            <p>
+              AI products. Applied research. The infrastructure to bring
+              ambitious ideas to life.
+            </p><a class="button button-white" href="#selected-work"
+              >Discover our work <ArrowUpRight size={20} /></a
+            >
+          </div>
+        </div>
+        <div class="hero-footer">
+          <a href="#approach" class="scroll-cue"
+            ><span class="circle-arrow"><ArrowDown size={18} /></span> Explore Abstract
+            Machines</a
+          ><div class="hero-film">
+            <span>Ideas need foundations.</span><button
+              id="video-toggle"
+              aria-label="Play background video"
+              hidden
+              ><Play class="play-icon" size={16} /><Pause
+                class="pause-icon"
+                size={16}
+              /></button
+            >
+          </div>
+        </div>
+        <div class="film-progress" aria-hidden="true">
+          <span id="film-progress"></span>
+        </div>
+      </section>
+      <div class="dispatch">
+        <span class="dispatch-label"
+          >IN FOCUS <span class="live-dot"></span></span
+        ><a href="/synth"
+          ><span
+            >Synth — a new way to design circuit boards, built for engineers and
+            AI agents.</span
+          ><span class="dispatch-cta"
+            >Explore the work <ArrowUpRight size={17} /></span
+          ></a
+        >
+      </div>
+
+      <section
+        id="approach"
+        class="intro section-shell"
+        aria-labelledby="intro-title"
+      >
+        <div class="section-label">
+          <span class="label-line"></span> THE NEXT ABSTRACT MACHINES
+        </div>
+        <div class="intro-grid">
+          <h2 id="intro-title">
+            A new era of work.<br /><span>Built on real<br />engineering.</span>
+          </h2><div class="intro-copy">
+            <p class="lead">
+              Intelligence becomes valuable when it can do something useful.
+            </p><p>
+              We build the products and infrastructure that connect AI to real
+              work. From creating software and designing electronics to
+              exploring complex systems, we bring research and engineering
+              together.
+            </p><a class="text-link" href="#portfolio"
+              >Explore our world <ArrowUpRight size={20} /></a
+            >
+          </div>
+        </div>
+        <div class="focus-stories">
+          <a class="focus-story story-wide" href="#selected-work"
+            ><img
+              src="/preview/ai/media/collaboration.webp"
+              alt="People collaborating around a table with laptops"
+              width="1600"
+              height="1067"
+              loading="lazy"
+            /><div class="story-shade"></div><div class="story-top">
+              <span>01 / APPLICATIONS</span><span class="story-arrow"
+                ><ArrowUpRight size={22} /></span
+              >
+            </div><div class="story-copy">
+              <h3>More room<br />for human ambition.</h3><p>
+                AI tools for the way we create and work.
+              </p>
+            </div></a
+          >
+          <a class="focus-story story-narrow" href="#portfolio"
+            ><img
+              src="/preview/ai/media/architecture.webp"
+              alt="A geometric facade of folded blue glass"
+              width="1600"
+              height="900"
+              loading="lazy"
+            /><div class="story-shade"></div><div class="story-top">
+              <span>02 / INFRASTRUCTURE</span><span class="story-arrow"
+                ><ArrowUpRight size={22} /></span
+              >
+            </div><div class="story-copy">
+              <h3>Strong foundations.<br />New possibilities.</h3><p>
+                Control, coordination, and execution.
+              </p>
+            </div></a
+          >
+        </div>
+      </section>
+
+      <section
+        id="selected-work"
+        class="selected-work section-shell"
+        aria-labelledby="work-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="section-label">
+              <span class="small-cross">+</span> Selected work
+            </p><h2 id="work-title">
+              From possibility<br /><span>to something tangible.</span>
+            </h2>
+          </div>
+          <p>
+            Selected products and projects.<br />A closer look at what we’re
+            building.
+          </p>
+        </div>
+        <div
+          class="product-tabs"
+          role="tablist"
+          aria-label="Explore selected products"
+        >
+          <button
+            id="tab-atomic"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-atomic"
+            tabindex="0"
+            ><span>01</span> Atomic <ArrowUpRight size={18} /></button
+          >
+          <button
+            id="tab-parallax"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-parallax"
+            tabindex="-1"
+            ><span>02</span> Parallax <ArrowUpRight size={18} /></button
+          >
+          <button
+            id="tab-synth"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-synth"
+            tabindex="-1"
+            ><span>03</span> Synth <ArrowUpRight size={18} /></button
+          >
+        </div>
+        <div
+          id="panel-atomic"
+          class="product-panel"
+          role="tabpanel"
+          aria-labelledby="tab-atomic"
+          tabindex="0"
+        >
+          <div class="product-copy">
+            <p class="eyebrow">
+              Software creation <span>In development</span>
+            </p><h3>The next idea.<br />Made tangible.</h3><p>
+              Atomic turns prompts into web applications. Generate and revise
+              source, preview your changes, and publish from one workspace.
+            </p><a
+              class="text-link"
+              href="#project-atomic"
+              data-expand-project="atomic"
+              >Discover Atomic <ArrowUpRight size={19} /></a
+            >
+          </div>
+          <figure class="product-visual atomic-visual">
+            <div class="app-window">
+              <div class="window-bar">
+                <span class="window-dots"><i></i><i></i><i></i></span><span
+                  >Atomic / Project workspace</span
+                ><span>↗</span>
+              </div>
+              <div class="builder-layout">
+                <div class="builder-prompt">
+                  <span class="tiny-label">YOUR IDEA</span><p>
+                    A clearer view<br />of every project.
+                  </p><div class="prompt-field">
+                    Build a workspace for our engineering team.<span>↑</span>
+                  </div><div class="builder-note">
+                    <span>✳</span> From a brief to a first version.
+                  </div>
+                </div><div class="app-preview">
+                  <div class="app-preview-nav">
+                    <b>Workspace</b><span>Overview&nbsp;&nbsp; Projects</span><i
+                      >AM</i
+                    >
+                  </div><p class="tiny-label">TEAM OVERVIEW</p><h4>
+                    Room for your<br />next big idea.
+                  </h4><div class="preview-cards">
+                    <div><span>Projects</span><strong>08</strong></div><div>
+                      <span>In progress</span><strong>03</strong>
+                    </div>
+                  </div><div class="preview-row">
+                    <span class="mini-square"></span>Design system <span
+                      >In review</span
+                    >
+                  </div><div class="preview-row">
+                    <span class="mini-square pale"></span>Customer portal <span
+                      >In progress</span
+                    >
+                  </div><div class="preview-row">
+                    <span class="mini-square dark"></span>Research hub <span
+                      >Planning</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <figcaption>
+              Illustrative workspace · Fictional project data
+            </figcaption>
+          </figure>
+        </div>
+        <div
+          id="panel-parallax"
+          class="product-panel"
+          role="tabpanel"
+          aria-labelledby="tab-parallax"
+          tabindex="0"
+          hidden
+        >
+          <div class="product-copy">
+            <p class="eyebrow">
+              Predictive systems <span>In development</span>
+            </p><h3>A view of<br />what could follow.</h3><p>
+              Parallax explores how a Kubernetes system may respond to a
+              proposed change, helping teams examine possible outcomes before
+              acting.
+            </p><a
+              class="text-link"
+              href="#project-parallax"
+              data-expand-project="parallax"
+              >Discover Parallax <ArrowUpRight size={19} /></a
+            >
+          </div>
+          <figure class="product-visual parallax-visual">
+            <div class="prediction-window">
+              <div class="prediction-heading">
+                <span>PARALLAX</span><span>Scenario exploration</span>
+              </div><h4>One change.<br />Possible futures.</h4><svg
+                viewBox="0 0 520 205"
+                role="img"
+                aria-label="Illustrative trajectories showing possible outcomes after a proposed change"
+                ><g stroke="#ffffff18"
+                  ><path d="M0 35H520M0 85H520M0 135H520M0 185H520"></path><path
+                    d="M110 0V205M230 0V205M350 0V205M470 0V205"></path></g
+                ><path
+                  d="M0 147L40 140L77 152L110 133L150 140L185 129L215 138L250 118"
+                  fill="none"
+                  stroke="#b6cde6"
+                  stroke-width="2.5"></path><path
+                  d="M250 118C320 80 380 58 520 28L520 156C390 149 320 145 250 118Z"
+                  fill="#8badde20"></path><path
+                  d="M250 118C330 75 390 58 520 28M250 118C320 130 400 140 520 156"
+                  fill="none"
+                  stroke="#8badde"
+                  stroke-width="1.5"
+                  stroke-dasharray="4 5"></path><path
+                  d="M250 118C330 90 390 115 520 77"
+                  fill="none"
+                  stroke="#9ac7ff"
+                  stroke-width="2.5"></path><path
+                  d="M250 0V205"
+                  stroke="#ffffff55"
+                  stroke-dasharray="3 5"></path><circle
+                  cx="250"
+                  cy="118"
+                  r="5"
+                  fill="#e7efff"></circle></svg
+              ><div class="chart-labels">
+                <span>Observed context</span><span>Proposed change</span><span
+                  >Possible outcomes</span
+                >
+              </div><p>Advisory predictions. Your team decides.</p>
+            </div>
+            <figcaption>
+              Conceptual model illustration · Not measured predictions
+            </figcaption>
+          </figure>
+        </div>
+        <div
+          id="panel-synth"
+          class="product-panel"
+          role="tabpanel"
+          aria-labelledby="tab-synth"
+          tabindex="0"
+          hidden
+        >
+          <div class="product-copy">
+            <p class="eyebrow">Electronic design <span>Open source</span></p><h3
+            >
+              Hardware begins<br />with an idea.
+            </h3><p>
+              Synth turns text-based circuit designs into KiCad schematics, PCB
+              layouts, and bills of materials. Built for engineers and AI
+              agents.
+            </p><a class="text-link" href="/synth"
+              >Explore Synth <ArrowUpRight size={19} /></a
+            >
+          </div>
+          <figure class="product-visual synth-visual">
+            <img
+              src="/img/blogs/synth-core-announcement/synth-pcb-kicad-3d.png"
+              alt="A circuit board generated with Synth and displayed in KiCad’s 3D viewer"
+              width="1200"
+              height="800"
+              loading="lazy"
+            /><figcaption>
+              From the Synth circuit design workflow · KiCad 3D view
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section
+        id="portfolio"
+        class="portfolio section-shell"
+        aria-labelledby="portfolio-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="section-label">
+              <span class="small-cross">+</span> The wider picture
+            </p><h2 id="portfolio-title">
+              One company.<br />Many ways forward.
+            </h2>
+          </div><p>
+            Explore our applications, infrastructure,<br />and work in
+            development.
+          </p>
+        </div>
+        <div class="portfolio-controls">
+          <div
+            class="portfolio-filters"
+            role="group"
+            aria-label="Filter the portfolio"
+          >
+            {
+              filters.map((filter, index) => (
+                <button
+                  data-filter={filter}
+                  aria-pressed={index === 0 ? "true" : "false"}
+                >
+                  {filter}
+                </button>
+              ))
+            }
+          </div><span id="project-count" aria-live="polite"
+            >{String(projects.length).padStart(2, "0")} projects</span
+          >
+        </div>
+        <div class="project-list">
+          {
+            projects.map((project) => (
+              <details
+                id={`project-${project.name.toLowerCase()}`}
+                class="project-row"
+                data-group={project.group}
+              >
+                <summary>
+                  <>
+                    <h3>{project.name}</h3>
+                    <span class="project-summary">{project.summary}</span>
+                    <span class="project-group">{project.group}</span>
+                    <Plus size={22} />
+                  </>
+                </summary>
+                <div class="project-detail">
+                  <div>
+                    <>
+                      <span class="stage-label">{project.stage}</span>
+                      <p>{project.description}</p>
+                      <a class="text-link" href={project.href}>
+                        {project.cta} <ArrowUpRight size={17} />
+                      </a>
+                    </>
+                  </div>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <section id="research" class="research" aria-labelledby="research-title">
+        <figure class="research-image">
+          <img
+            src="/preview/ai/media/engineering.webp"
+            alt="Hands-on electronics work using a magnifying glass and circuit board"
+            width="1600"
+            height="1067"
+            loading="lazy"
+          /><figcaption>
+            PRECISION IN THE DETAILS. AMBITION IN THE WORK.
+          </figcaption>
+        </figure>
+        <div class="research-content">
+          <p class="section-label">
+            <span class="label-line"></span> RESEARCH & COLLABORATION
+          </p><h2 id="research-title">
+            Progress starts<br />with a better<br /><span>question.</span>
+          </h2><p>
+            We explore what comes next through applied research and European
+            partnerships—across computation, security, and the physical world.
+          </p><div class="research-projects">
+            <a href="/projects/elastic"
+              ><div>
+                <span class="eyebrow">Horizon Europe · 2024–2027</span><h3>
+                  ELASTIC
+                </h3>
+              </div><ArrowUpRight size={25} /></a
+            ><a href="/projects/confidential6g"
+              ><div>
+                <span class="eyebrow">Horizon Europe · 2023–2025</span><h3>
+                  CONFIDENTIAL6G
+                </h3>
+              </div><ArrowUpRight size={25} /></a
+            >
+          </div><a class="text-link" href="/projects"
+            >Explore our research partnerships <ArrowRight size={18} /></a
+          >
+        </div>
+      </section>
+
+      <section
+        id="company"
+        class="heritage section-shell"
+        aria-labelledby="heritage-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="section-label">
+              <span class="small-cross">+</span> Our foundations
+            </p><h2 id="heritage-title">
+              Deep roots in<br />connected systems.
+            </h2>
+          </div><div class="heritage-description">
+            <p>
+              Our AI work grows from experience in open-source software,
+              identity, messaging, and edge infrastructure.
+            </p><a class="text-link" href="/products"
+              >Explore our connectivity portfolio <ArrowUpRight size={18} /></a
+            >
+          </div>
+        </div>
+        <div class="heritage-cases">
+          <a href="https://www.nokia.com/networks/data-marketplace/"
+            ><span class="case-company">NOKIA</span><span class="eyebrow"
+              >Magistrala · Data marketplace</span
+            ><h3>
+              Connecting real-time data<br />to the organisations that use it.
+            </h3><span class="text-link"
+              >Explore the project <ArrowUpRight size={18} /></span
+            ></a
+          ><a href="https://github.com/intel/Middleware-Metering"
+            ><span class="case-company intel-wordmark">intel</span><span
+              class="eyebrow">Magistrala · Edge metering</span
+            ><h3>Bringing metering<br />closer to the source.</h3><span
+              class="text-link"
+              >View the engineering <ArrowUpRight size={18} /></span
+            ></a
+          >
+        </div>
+      </section>
+
+      <section class="contact-section" aria-labelledby="contact-title">
+        <img
+          class="contact-image"
+          src="/preview/ai/media/paris.webp"
+          alt="The repeating steel arches of Pont de Bir-Hakeim in Paris"
+          width="1200"
+          height="1600"
+          loading="lazy"
+        /><div class="contact-shade"></div><div class="contact-top">
+          <p class="eyebrow light">BUILT OPENLY IN PARIS.</p><span
+            >WORKING ACROSS BORDERS.</span
+          >
+        </div><div class="contact-bottom">
+          <h2 id="contact-title">
+            The next chapter<br /><span>starts with a conversation.</span>
+          </h2><a
+            class="contact-circle"
+            href="/contact"
+            aria-label="Contact Abstract Machines"><ArrowUpRight size={45} /></a
+          >
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-main">
+        <a class="footer-wordmark" href="#"
+          >abstract machines<span>Engineering intelligence.</span></a
+        ><div class="footer-links">
+          <a href="#selected-work">Our work</a><a href="#research">Research</a
+          ><a href="/contact">Contact</a><a href="https://github.com/absmach"
+            >GitHub <ArrowUpRight size={14} /></a
+          ><a href="https://www.linkedin.com/company/abstract-machines"
+            >LinkedIn <ArrowUpRight size={14} /></a
+          >
+        </div>
+      </div><div class="footer-bottom">
+        <span>© {new Date().getFullYear()} Abstract Machines</span><a href="/"
+          >View current website <ArrowUpRight size={12} /></a
+        ><button id="credits-open">Photography & film</button><a href="/privacy"
+          >Privacy</a
+        ><span class="preview-label">IDENTITY PREVIEW / 02</span>
+      </div>
+    </footer>
+    <dialog id="media-credits" aria-labelledby="credits-title">
+      <div class="credits-top">
+        <h2 id="credits-title">Photography & film</h2><button
+          id="credits-close"
+          aria-label="Close media credits"><X size={22} /></button
+        >
+      </div><p>
+        Selected stock imagery illustrates our areas of work. It does not depict
+        Abstract Machines’ team or offices.
+      </p><ul>
+        <li>
+          Architecture — <a href="https://unsplash.com/photos/A3VVczPvAcw"
+            >Johnyvino / Unsplash</a
+          >
+        </li><li>
+          Collaboration — <a href="https://unsplash.com/photos/QckxruozjRg"
+            >Annie Spratt / Unsplash</a
+          >
+        </li><li>
+          Engineering — <a href="https://unsplash.com/photos/lAbYmLWrT9o"
+            >ThisisEngineering / Unsplash</a
+          >
+        </li><li>
+          Paris — <a href="https://unsplash.com/photos/n6Yjc4FC-Xg"
+            >Stephanie Klepacki / Unsplash</a
+          >
+        </li><li>
+          Architecture film — <a
+            href="https://mixkit.co/free-stock-video/corporate-and-business-buildings-in-the-city-4170/"
+            >Corporate and business buildings in the city / Mixkit</a
+          >
+        </li>
+      </ul><p>
+        Photography under the <a href="https://unsplash.com/license"
+          >Unsplash License</a
+        >. Film under the <a href="https://mixkit.co/license/#videoFree"
+          >Mixkit Stock Video Free License</a
+        >.
+      </p>
+    </dialog>
+
+    <script>
+      const video = document.querySelector<HTMLVideoElement>("#hero-video");
+      const videoToggle =
+        document.querySelector<HTMLButtonElement>("#video-toggle");
+      const progress = document.querySelector<HTMLElement>("#film-progress");
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
+      const saveData = (
+        navigator as Navigator & { connection?: { saveData?: boolean } }
+      ).connection?.saveData;
+      let wantsMotion = !reducedMotion.matches && !saveData;
+      let heroVisible = true;
+      const playVideo = async () => {
+        if (!video) return;
+        const source = video.querySelector("source");
+        if (source && !source.getAttribute("src")) {
+          source.src = source.dataset.src ?? "";
+          video.load();
+        }
+        try {
+          await video.play();
+        } catch {
+          videoToggle?.classList.remove("is-playing");
+        }
+      };
+      if (video && videoToggle) {
+        videoToggle.hidden = false;
+        video.addEventListener("playing", () => {
+          videoToggle.classList.add("is-playing");
+          videoToggle.setAttribute("aria-label", "Pause background video");
+        });
+        video.addEventListener("pause", () => {
+          videoToggle.classList.remove("is-playing");
+          videoToggle.setAttribute("aria-label", "Play background video");
+        });
+        video.addEventListener("timeupdate", () => {
+          if (progress && Number.isFinite(video.duration))
+            progress.style.width = `${(video.currentTime / video.duration) * 100}%`;
+        });
+        videoToggle.addEventListener("click", () => {
+          wantsMotion = video.paused;
+          if (wantsMotion) void playVideo();
+          else video.pause();
+        });
+        new IntersectionObserver(
+          (entries) => {
+            heroVisible = entries[0].isIntersecting;
+            if (!heroVisible) video.pause();
+            else if (wantsMotion && !document.hidden) void playVideo();
+          },
+          { threshold: 0.05 },
+        ).observe(video);
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) video.pause();
+          else if (wantsMotion && heroVisible) void playVideo();
+        });
+        reducedMotion.addEventListener("change", (event) => {
+          if (event.matches) {
+            wantsMotion = false;
+            video.pause();
+          }
+        });
+      }
+      const credits =
+        document.querySelector<HTMLDialogElement>("#media-credits");
+      document
+        .querySelector("#credits-open")
+        ?.addEventListener("click", () => credits?.showModal());
+      document
+        .querySelector("#credits-close")
+        ?.addEventListener("click", () => credits?.close());
+      credits?.addEventListener("click", (event) => {
+        if (event.target === credits) {
+          const bounds = credits.getBoundingClientRect();
+          if (
+            event.clientX < bounds.left ||
+            event.clientX > bounds.right ||
+            event.clientY < bounds.top ||
+            event.clientY > bounds.bottom
+          )
+            credits.close();
+        }
+      });
+      const menuToggle =
+        document.querySelector<HTMLButtonElement>(".menu-toggle");
+      const mobileNav = document.querySelector<HTMLElement>("#mobile-nav");
+      const setMenu = (open: boolean) => {
+        menuToggle?.setAttribute("aria-expanded", String(open));
+        menuToggle?.setAttribute(
+          "aria-label",
+          open ? "Close navigation" : "Open navigation",
+        );
+        if (mobileNav) mobileNav.hidden = !open;
+      };
+      menuToggle?.addEventListener("click", () =>
+        setMenu(menuToggle.getAttribute("aria-expanded") !== "true"),
+      );
+      mobileNav
+        ?.querySelectorAll("a")
+        .forEach((link) =>
+          link.addEventListener("click", () => setMenu(false)),
+        );
+      document.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Escape" &&
+          menuToggle?.getAttribute("aria-expanded") === "true"
+        ) {
+          setMenu(false);
+          menuToggle.focus();
+        }
+      });
+      const desktop = window.matchMedia("(min-width: 801px)");
+      desktop.addEventListener("change", (event) => {
+        if (event.matches) setMenu(false);
+      });
+
+      const tabs = Array.from(
+        document.querySelectorAll<HTMLButtonElement>('[role="tab"]'),
+      );
+      const activateTab = (tab: HTMLButtonElement) => {
+        tabs.forEach((item) => {
+          const selected = item === tab;
+          item.setAttribute("aria-selected", String(selected));
+          item.tabIndex = selected ? 0 : -1;
+          const panel = document.getElementById(
+            item.getAttribute("aria-controls") ?? "",
+          );
+          if (panel) panel.hidden = !selected;
+        });
+      };
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => activateTab(tab));
+        tab.addEventListener("keydown", (event) => {
+          let next = index;
+          if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+          else if (event.key === "ArrowLeft")
+            next = (index + tabs.length - 1) % tabs.length;
+          else if (event.key === "Home") next = 0;
+          else if (event.key === "End") next = tabs.length - 1;
+          else return;
+          event.preventDefault();
+          activateTab(tabs[next]);
+          tabs[next].focus();
+        });
+      });
+
+      const filterButtons = Array.from(
+        document.querySelectorAll<HTMLButtonElement>("[data-filter]"),
+      );
+      const projectRows = Array.from(
+        document.querySelectorAll<HTMLDetailsElement>(".project-row"),
+      );
+      const applyFilter = (filter: string) => {
+        filterButtons.forEach((button) =>
+          button.setAttribute(
+            "aria-pressed",
+            String(button.dataset.filter === filter),
+          ),
+        );
+        let count = 0;
+        projectRows.forEach((row) => {
+          row.hidden = filter !== "All work" && row.dataset.group !== filter;
+          if (!row.hidden) count++;
+        });
+        const counter = document.getElementById("project-count");
+        if (counter)
+          counter.textContent = `${String(count).padStart(2, "0")} projects`;
+      };
+      filterButtons.forEach((button) =>
+        button.addEventListener("click", () =>
+          applyFilter(button.dataset.filter ?? "All work"),
+        ),
+      );
+      document
+        .querySelectorAll<HTMLAnchorElement>("[data-expand-project]")
+        .forEach((link) =>
+          link.addEventListener("click", () => {
+            applyFilter("All work");
+            const target = document.getElementById(
+              `project-${link.dataset.expandProject}`,
+            );
+            if (target instanceof HTMLDetailsElement) target.open = true;
+          }),
+        );
+    </script>
+  </body>
+</html>

@@ -32,6 +32,32 @@ R2 credentials. An internet connection is required for these assets.
 
 ## Build & Preview
 
+### AI identity concept
+
+The `design/ai-identity` branch contains an isolated homepage concept at
+`http://localhost:4321/preview/ai/`. Start it with `npm run dev`.
+The existing homepage remains at `/` for comparison. The concept uses AM blue,
+self-hosted typography, a full-screen architecture film, and editorial photography.
+Its stylesheet is isolated; shared production layouts are unchanged. The concept
+is marked `noindex` and excluded from the sitemap.
+
+This is a working visual prototype: product tabs, portfolio filters, expandable
+project descriptions, mobile navigation, video controls, and media credits work.
+The silent video pauses offscreen and when the tab is hidden. Reduced-motion and
+Save-Data preferences keep the still poster until the visitor chooses to play.
+Atomic and Parallax visuals
+are labelled illustrations; Synth uses an existing product image. Other links
+lead to existing site pages or public resources. Product availability and final
+copy should be reviewed before promoting the design into the main pages.
+
+Media files are served locally from `public/preview/ai/media/`. The optimized
+Mixkit film is approximately 4.2 MB; Unsplash photos are WebP. Attribution and
+source/license records are in `video-source.json` and `photos-sources.json`, with
+visitor-facing credits in the footer. Font license files and source records are
+in `public/preview/ai/fonts/`.
+
+### Production build
+
 ```bash
 npm run build
 npm run preview
