@@ -1,0 +1,647 @@
+---
+import type { IdentityProduct } from "../../data/identity-products";
+import AtomicArtwork from "./AtomicArtwork.astro";
+import SynthArtwork from "./SynthArtwork.astro";
+import "../../styles/identity-products.css";
+
+interface Props {
+  product: IdentityProduct;
+  compact?: boolean;
+  showCaption?: boolean;
+}
+
+const { product, compact = false, showCaption = true } = Astro.props;
+const visualId = `pv-${product.slug}-${compact ? "compact" : "full"}`;
+const labels: Record<string, string> = {
+  atomic:
+    "Conceptual Atomic illustration: individual blue modules assembling into a structured whole, suggesting an idea becoming software",
+  parallax: "Illustrative comparison of possible system trajectories",
+  motif:
+    "Motif brand illustration with its geometric M mark and the words Clarity, from context",
+  synth:
+    "Conceptual Synth illustration: source notation flowing into abstract layered circuitry",
+  atom: "Illustrative identity and access decision workflow",
+  fluxmq: "Diagram of devices and services exchanging messages through FluxMQ",
+  magistrala:
+    "The Magistrala SmartWaterFR dashboard, showing water flow, pressure, battery and alarm views",
+  a0: "The actual A0 ESP32-C6 gateway board",
+  a1: "The BeagleV-Fire compute board used in the A1 gateway architecture",
+  quarc:
+    "Conceptual Quarc FPGA chip with programmable logic, circuit traces, and post-quantum cryptography labels",
+};
+const captions: Record<string, string> = {
+  parallax: "Illustrative scenario",
+  atom: "Identity → policy → decision",
+  fluxmq: "One broker. Connected systems.",
+  magistrala: "Magistrala · actual product interface",
+  a0: "A0 · ESP32-C6 / Zephyr",
+  a1: "A1 · BeagleV-Fire compute board",
+  quarc: "Post-quantum cryptography · FPGA research",
+};
+const caption = captions[product.visual];
+---
+
+<div
+  class:list={[
+    "pv-visual",
+    `pv-visual--${product.visual}`,
+    {
+      "pv-visual--compact": compact,
+    },
+  ]}
+  role="img"
+  aria-label={labels[product.visual]}
+>
+  {product.visual === "atomic" && <AtomicArtwork id={visualId} />}
+  {product.visual === "synth" && <SynthArtwork id={visualId} />}
+
+  {
+    product.visual === "parallax" && (
+      <svg viewBox="0 0 600 400" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient
+            id={`${visualId}-range`}
+            x1="300"
+            y1="120"
+            x2="300"
+            y2="293"
+            gradientUnits="userSpaceOnUse"
+          >
+            <>
+              <stop stop-color="#7da4f4" stop-opacity=".32" />
+              <stop offset="1" stop-color="#7da4f4" stop-opacity=".02" />
+            </>
+          </linearGradient>
+        </defs>
+        <path fill="#0b3155" d="M0 0h600v400H0z" />
+        <text x="40" y="54" fill="#fff" font-size="27" letter-spacing="-.7">
+          One change. Multiple futures.
+        </text>
+        {[105, 156, 207, 258, 309].map((y) => (
+          <path d={`M41 ${y}h517`} stroke="#90aed0" stroke-opacity=".17" />
+        ))}
+        {[41, 127, 213, 299, 385, 471, 557].map((x) => (
+          <path d={`M${x} 105v204`} stroke="#90aed0" stroke-opacity=".1" />
+        ))}
+        <path
+          d="M299 253C342 218 352 189 389 160S463 141 557 102V209C492 221 429 210 387 249S331 275 299 276Z"
+          fill={`url(#${visualId}-range)`}
+        />
+        <path
+          d="M41 275C72 267 92 283 124 265S179 279 213 259 264 271 299 260"
+          stroke="#9db6d2"
+          stroke-width="2.5"
+        />
+        <path
+          d="M299 260C347 258 359 244 398 251S464 257 494 242 531 250 557 238"
+          stroke="#9db6d2"
+          stroke-width="2.5"
+          stroke-dasharray="5 6"
+        />
+        <path
+          d="M299 260C337 244 359 209 390 194S467 186 492 170 529 158 557 154"
+          stroke="#b5ccff"
+          stroke-width="3"
+        />
+        <path
+          d="M299 98v218"
+          stroke="#c1d2e4"
+          stroke-opacity=".54"
+          stroke-dasharray="3 5"
+        />
+        <>
+          <circle cx="299" cy="260" r="5" fill="#e0ebff" />
+          <circle cx="557" cy="154" r="4" fill="#b5ccff" />
+        </>
+        <text x="308" y="93" fill="#c6d7e8" font-size="12" letter-spacing="1.5">
+          PROPOSED CHANGE
+        </text>
+        <>
+          <path d="M42 343h24" stroke="#b5ccff" stroke-width="3" />
+          <text x="76" y="349" fill="#dee8f4" font-size="15">
+            Possible trajectory
+          </text>
+        </>
+        <>
+          <path
+            d="M309 343h24"
+            stroke="#9db6d2"
+            stroke-width="2"
+            stroke-dasharray="4 4"
+          />
+          <text x="343" y="349" fill="#c5d4e5" font-size="15">
+            No-change baseline
+          </text>
+        </>
+      </svg>
+    )
+  }
+
+  {
+    product.visual === "motif" && (
+      <svg viewBox="0 0 600 400" fill="none" aria-hidden="true">
+        <path
+          d="M6 52V16L17 9L30 27V45L18 30V52ZM58 52V16L47 9L34 27V45L46 30V52Z"
+          transform="translate(307 40) scale(5.6)"
+          fill="#7797b8"
+          opacity=".3"
+        />
+        <path
+          d="M6 52V16L17 9L30 27V45L18 30V52ZM58 52V16L47 9L34 27V45L46 30V52Z"
+          transform="translate(36 27) scale(.68)"
+          fill="#143b60"
+        />
+        <text
+          x="89"
+          y="61"
+          fill="#143b60"
+          font-size="32"
+          font-weight="600"
+          letter-spacing="-1"
+        >
+          Motif
+        </text>
+        <text
+          x="40"
+          y="226"
+          fill="#143b60"
+          font-size="44"
+          letter-spacing="-1.5"
+        >
+          Clarity,
+        </text>
+        <text
+          x="40"
+          y="278"
+          fill="#536c86"
+          font-size="44"
+          letter-spacing="-1.5"
+        >
+          from context.
+        </text>
+        <path d="M40 325h520" stroke="#7896b2" stroke-opacity=".3" />
+        <text x="40" y="355" fill="#536c86" font-size="10" letter-spacing="1.5">
+          PRODUCT KNOWLEDGE, PUT TO WORK.
+        </text>
+      </svg>
+    )
+  }
+
+  {
+    product.visual === "atom" && (
+      <svg viewBox="0 0 600 400" fill="none" aria-hidden="true">
+        <path fill="#e6edf3" d="M0 0h600v400H0z" />
+        <text x="39" y="57" fill="#123958" font-size="27" letter-spacing="-.7">
+          Access, with context.
+        </text>
+        <g stroke="#9eb3c8" stroke-width="1.4">
+          <path d="M181 137h35v75h44M181 212h79M181 287h35v-75M455 212h52" />
+        </g>
+        {[
+          { label: "Person", y: 111 },
+          { label: "Service", y: 186 },
+          { label: "AI agent", y: 261 },
+        ].map((item) => (
+          <g>
+            <rect
+              x="39"
+              y={item.y}
+              width="142"
+              height="51"
+              rx="3"
+              fill="#fff"
+              stroke="#b8c8d8"
+            />
+            <rect
+              x="54"
+              y={item.y + 15}
+              width="20"
+              height="20"
+              rx="3"
+              fill="#dae5f2"
+            />
+            <text x="85" y={item.y + 32} fill="#294c6c" font-size="18">
+              {item.label}
+            </text>
+          </g>
+        ))}
+        <rect x="259" y="100" width="197" height="223" rx="4" fill="#073763" />
+        <text x="279" y="133" fill="#fff" font-size="25">
+          Atom
+        </text>
+        <path d="M279 150h156" stroke="#54728f" />
+        <>
+          <text x="279" y="185" fill="#d8e7f6" font-size="17">
+            Identity
+          </text>
+          <text x="279" y="229" fill="#d8e7f6" font-size="17">
+            Permissions
+          </text>
+          <text x="279" y="273" fill="#d8e7f6" font-size="17">
+            Context
+          </text>
+        </>
+        <path
+          d="m420 176 5 5 8-10m-13 49 5 5 8-10m-13 49 5 5 8-10"
+          stroke="#a6c5f9"
+          stroke-width="2"
+        />
+        <circle cx="527" cy="212" r="25" fill="#fff" stroke="#93abc3" />
+        <path d="m516 212 8 8 15-16" stroke="#315f95" stroke-width="2.5" />
+        <text
+          x="527"
+          y="258"
+          text-anchor="middle"
+          fill="#46627b"
+          font-size="13"
+        >
+          Decision
+        </text>
+      </svg>
+    )
+  }
+
+  {
+    product.visual === "fluxmq" && (
+      <svg viewBox="0 0 600 400" fill="none" aria-hidden="true">
+        <path fill="#102e4c" d="M0 0h600v400H0z" />
+        <path d="M0 90h600M0 310h600" stroke="#406082" stroke-opacity=".3" />
+        <path
+          d="M96 141h82l49 59h61M96 260h82l49-60M312 200h61l49-59h82M373 200l49 60h82"
+          stroke="#6f91b5"
+          stroke-width="1.4"
+        />
+        <path
+          d="M100 141h57M182 260l25-30M388 182l34-41h25M432 260h52"
+          stroke="#b5cffe"
+          stroke-width="3"
+        />
+        <rect
+          x="39"
+          y="115"
+          width="122"
+          height="52"
+          rx="4"
+          fill="#214768"
+          stroke="#6281a1"
+        />
+        <rect
+          x="39"
+          y="234"
+          width="122"
+          height="52"
+          rx="4"
+          fill="#214768"
+          stroke="#6281a1"
+        />
+        <rect
+          x="440"
+          y="115"
+          width="122"
+          height="52"
+          rx="4"
+          fill="#214768"
+          stroke="#6281a1"
+        />
+        <rect
+          x="440"
+          y="234"
+          width="122"
+          height="52"
+          rx="4"
+          fill="#214768"
+          stroke="#6281a1"
+        />
+        <>
+          <text
+            x="100"
+            y="148"
+            text-anchor="middle"
+            fill="#e2ecf9"
+            font-size="17"
+          >
+            Devices
+          </text>
+          <text
+            x="100"
+            y="267"
+            text-anchor="middle"
+            fill="#e2ecf9"
+            font-size="17"
+          >
+            Services
+          </text>
+        </>
+        <>
+          <text
+            x="501"
+            y="148"
+            text-anchor="middle"
+            fill="#e2ecf9"
+            font-size="17"
+          >
+            Applications
+          </text>
+          <text
+            x="501"
+            y="267"
+            text-anchor="middle"
+            fill="#e2ecf9"
+            font-size="17"
+          >
+            Data
+          </text>
+        </>
+        <rect x="227" y="127" width="146" height="146" rx="6" fill="#eaf1f9" />
+        <path d="M251 162h99M251 200h99M251 238h99" stroke="#c3d3e4" />
+        <path
+          d="m274 175 17 25-17 25m34-50 17 25-17 25"
+          stroke="#31558f"
+          stroke-width="4"
+        />
+        <text
+          x="300"
+          y="72"
+          text-anchor="middle"
+          fill="#fff"
+          font-size="29"
+          letter-spacing="-.8"
+        >
+          Messages that connect.
+        </text>
+        <text
+          x="300"
+          y="330"
+          text-anchor="middle"
+          fill="#b6cbe3"
+          font-size="16"
+          letter-spacing=".5"
+        >
+          MQTT · WebSocket · HTTP · CoAP
+        </text>
+      </svg>
+    )
+  }
+
+  {
+    product.visual === "magistrala" && (
+      <div class="pv-visual-art" aria-hidden="true">
+        <div class="pv-visual-browser">
+          <div class="pv-visual-browser-bar">
+            <>
+              <i />
+              <i />
+              <i />
+              <span>Magistrala</span>
+            </>
+          </div>
+          <img
+            src={product.image}
+            alt=""
+            width="1600"
+            height="779"
+            loading={compact ? "lazy" : "eager"}
+            decoding="async"
+          />
+        </div>
+      </div>
+    )
+  }
+
+  {
+    product.visual === "quarc" && (
+      <svg viewBox="0 0 600 400" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient
+            id={`${visualId}-package`}
+            x1="238"
+            y1="70"
+            x2="474"
+            y2="318"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#8baec9" />
+            <stop offset=".2" stop-color="#416987" />
+            <stop offset=".65" stop-color="#153d5c" />
+            <stop offset="1" stop-color="#688da9" />
+          </linearGradient>
+          <linearGradient
+            id={`${visualId}-die`}
+            x1="266"
+            y1="106"
+            x2="446"
+            y2="290"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#234e71" />
+            <stop offset="1" stop-color="#0b253e" />
+          </linearGradient>
+          <pattern
+            id={`${visualId}-grid`}
+            width="24"
+            height="24"
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M24 0H0V24" stroke="#8eb8db" stroke-opacity=".08" />
+          </pattern>
+          <pattern
+            id={`${visualId}-logic`}
+            width="20"
+            height="20"
+            patternUnits="userSpaceOnUse"
+          >
+            <rect
+              x="3"
+              y="3"
+              width="14"
+              height="14"
+              rx="1"
+              fill="#78a8cc"
+              fill-opacity=".12"
+              stroke="#8db4d4"
+              stroke-opacity=".25"
+              stroke-width=".6"
+            />
+            <path
+              d="M0 10h3m14 0h3M10 0v3m0 14v3"
+              stroke="#a0c7e4"
+              stroke-opacity=".2"
+              stroke-width=".6"
+            />
+          </pattern>
+        </defs>
+        <path d="M0 0h600v400H0z" fill={`url(#${visualId}-grid)`} />
+        <g stroke="#7faacb" stroke-opacity=".35" stroke-width="1">
+          <path d="M0 143h112l30 30h86M0 206h77l31 31h120M51 316h99l49-49h29M326 0v41l-28 28M393 0v45l25 25M481 136h53l32-32h34M481 216h77l42 42M481 276h28l42 42h49M298 323v30l-47 47M418 323v33l44 44" />
+          <circle cx="112" cy="143" r="3" fill="#163c5b" />
+          <circle cx="77" cy="206" r="3" fill="#163c5b" />
+          <circle cx="150" cy="316" r="3" fill="#163c5b" />
+          <circle cx="534" cy="136" r="3" fill="#163c5b" />
+          <circle cx="551" cy="318" r="3" fill="#163c5b" />
+        </g>
+        <path
+          d="M142 173h55m290 43h45M298 341v12l-19 19"
+          stroke="#c4def1"
+          stroke-opacity=".7"
+          stroke-width="1.6"
+        />
+        <g
+          fill="#a6c6de"
+          font-family="monospace"
+          font-size="10"
+          letter-spacing="1.6"
+        >
+          <text x="39" y="50">
+            POST-QUANTUM
+          </text>
+          <text x="40" y="270">
+            ML-KEM-768
+          </text>
+          <text x="40" y="288">
+            SHA-3 / NTT
+          </text>
+          <text x="525" y="368" font-size="9">
+            01 / Q
+          </text>
+        </g>
+        <text
+          x="36"
+          y="100"
+          fill="#e0edf7"
+          font-size="48"
+          font-weight="300"
+          letter-spacing="-2"
+        >
+          PQC.
+        </text>
+        <rect
+          x="242"
+          y="87"
+          width="236"
+          height="236"
+          rx="5"
+          fill="#031727"
+          fill-opacity=".48"
+        />
+        <g stroke="#729ab9" stroke-width="5" stroke-linecap="square">
+          {Array.from({ length: 14 }, (_, index) => {
+            const position = 264 + index * 14;
+            const vertical = 103 + index * 14;
+            return (
+              <path
+                d={`M${position} 60v18m0 234v18M219 ${vertical}h18m234 0h18`}
+              />
+            );
+          })}
+        </g>
+        <rect
+          x="237"
+          y="78"
+          width="234"
+          height="234"
+          rx="4"
+          fill={`url(#${visualId}-package)`}
+          stroke="#a5bfd3"
+          stroke-opacity=".6"
+        />
+        <rect
+          x="245"
+          y="86"
+          width="218"
+          height="218"
+          rx="2"
+          fill="#0d2d49"
+          stroke="#6286a3"
+        />
+        <rect
+          x="260"
+          y="101"
+          width="188"
+          height="188"
+          fill={`url(#${visualId}-die)`}
+          stroke="#8bb3d2"
+          stroke-opacity=".5"
+        />
+        <rect
+          x="261"
+          y="102"
+          width="186"
+          height="186"
+          fill={`url(#${visualId}-logic)`}
+        />
+        <g stroke="#a2c5e0" stroke-opacity=".45" stroke-width=".8">
+          <path d="M280 101v188M428 101v188M260 122h188M260 268h188" />
+          <path d="M280 142h29v20m119 82h-29v-20M320 101v29h24m44 159v-29h-24" />
+        </g>
+        <rect
+          x="276"
+          y="153"
+          width="156"
+          height="84"
+          rx="1"
+          fill="#10314e"
+          stroke="#87abc8"
+          stroke-opacity=".55"
+        />
+        <text
+          x="354"
+          y="189"
+          text-anchor="middle"
+          fill="#f1f6fa"
+          font-family="Manrope, sans-serif"
+          font-size="28"
+          letter-spacing="3"
+        >
+          QUARC
+        </text>
+        <path d="M296 201h116" stroke="#7398b6" stroke-opacity=".55" />
+        <text
+          x="354"
+          y="221"
+          text-anchor="middle"
+          fill="#bdd3e5"
+          font-family="monospace"
+          font-size="10"
+          letter-spacing="1.5"
+        >
+          FPGA / RISC-V
+        </text>
+        <circle cx="251" cy="296" r="3" fill="#b2cce0" />
+      </svg>
+    )
+  }
+
+  {
+    (product.visual === "a0" || product.visual === "a1") && (
+      <div class="pv-visual-art pv-visual-hardware" aria-hidden="true">
+        <span class="pv-visual-hardware-letter">{product.name}</span>
+        <span class="pv-visual-hardware-guide pv-visual-hardware-guide--one" />
+        <span class="pv-visual-hardware-guide pv-visual-hardware-guide--two" />
+        <img
+          src={product.image}
+          alt=""
+          width={product.visual === "a0" ? "1920" : "1024"}
+          height={product.visual === "a0" ? "2963" : "1536"}
+          loading={compact ? "lazy" : "eager"}
+          decoding="async"
+        />
+        <div class="pv-visual-hardware-note">
+          {product.visual === "a0" ? (
+            <>
+              EMBEDDED
+              <br />
+              CONNECTIVITY
+            </>
+          ) : (
+            <>
+              RISC-V
+              <br />
+              LINUX COMPUTE
+            </>
+          )}
+        </div>
+      </div>
+    )
+  }
+  {showCaption && caption && <span class="pv-visual-caption">{caption}</span>}
+</div>

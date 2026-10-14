@@ -1,0 +1,275 @@
+---
+import { ArrowUpRight, ArrowLeft } from "@lucide/astro";
+import IdentityLayout from "../../../../layouts/IdentityLayout.astro";
+import { identityPhoto } from "../../../../data/identity-photos";
+import { researchBrands } from "../../../../data/identity-research";
+import "../../../../styles/identity-editorial.css";
+
+export function getStaticPaths() {
+  const projects = [
+    {
+      slug: "elastic",
+      name: "ELASTIC",
+      status: "Ongoing",
+      dates: "1 March 2024 – 28 February 2027",
+      years: "2024–2027",
+      coordinator: "Technical University of Crete",
+      grant: "101139067",
+      site: "https://elasticproject.eu/",
+      photo: identityPhoto("research-elastic-detail.webp"),
+      subtitle:
+        "Portable, secure orchestration for the next generation of connected services.",
+      question: "How can a service run where it is needed?",
+      overview:
+        "Connected services increasingly span cloud infrastructure, networks, and constrained devices. Deploying and coordinating workloads across those environments brings questions of portability, security, and control.",
+      scope:
+        "ELASTIC investigates service orchestration for 6G using WebAssembly, Function-as-a-Service, and edge computing. Its research includes executable isolation, confidential computing, and the observation of distributed workloads.",
+      role: "Abstract Machines contributes to the design and development of lightweight orchestration, distributed access control, and execution on constrained devices. Our work connects the project’s research questions with experience in open-source IoT and edge infrastructure.",
+      contributions: [
+        {
+          title: "Lightweight orchestration",
+          text: "Leadership of Task 2.1, covering the design and development of FaaS orchestration, workload scheduling, and supervision.",
+        },
+        {
+          title: "Access and execution",
+          text: "Distributed access control policies and the assessment of WebAssembly execution, with exploration of eBPF/XDP networking.",
+        },
+        {
+          title: "Constrained environments",
+          text: "Leadership of Task 4.4, bringing OP-TEE experience to workload orchestration and exploring stronger WebAssembly support on embedded devices.",
+        },
+      ],
+      themes: [
+        "WebAssembly",
+        "Serverless computing",
+        "Cloud & edge",
+        "Confidential computing",
+      ],
+      next: {
+        slug: "confidential6g",
+        name: "CONFIDENTIAL6G",
+        text: "Explore our work on privacy and security across connected environments.",
+      },
+    },
+    {
+      slug: "confidential6g",
+      name: "CONFIDENTIAL6G",
+      status: "Completed",
+      dates: "1 January 2023 – 31 December 2025",
+      years: "2023–2025",
+      coordinator: "WINGS ICT Solutions",
+      grant: "101096435",
+      site: "https://confidential6g.eu/",
+      photo: identityPhoto("research-confidential-detail.webp"),
+      subtitle:
+        "Confidential computing and privacy-preserving technologies for 6G.",
+      question: "How do we protect data while it is being used?",
+      overview:
+        "As computation moves between the cloud, networks, and connected devices, sensitive data crosses more boundaries. Protecting that data requires attention to the environments in which it is processed, as well as the way it travels.",
+      scope:
+        "CONFIDENTIAL6G researched three connected areas: post-quantum cryptography, confidential computing, and confidential communication. The programme explored privacy in distributed environments, including collaborative and federated AI and machine learning.",
+      role: "Abstract Machines served as technical manager, coordinating technical activities across the project. Our contribution also covered secure IoT integration, confidential computing at the edge, and the integration of cryptographic protocols into connected systems.",
+      contributions: [
+        {
+          title: "Technical coordination",
+          text: "Coordination of technical activities and project milestones across the research collaboration.",
+        },
+        {
+          title: "Privacy at the edge",
+          text: "Work on confidential computing and privacy-preserving protocols for connected devices and edge infrastructure.",
+        },
+        {
+          title: "Secure platforms",
+          text: "Platform development and the integration of cryptographic approaches for privacy-preserving applications.",
+        },
+      ],
+      themes: [
+        "Post-quantum cryptography",
+        "Confidential computing",
+        "Federated AI/ML",
+        "6G security",
+      ],
+      next: {
+        slug: "elastic",
+        name: "ELASTIC",
+        text: "Explore our ongoing work on portable, secure service orchestration.",
+      },
+    },
+  ];
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const brand = researchBrands[project.slug];
+---
+
+<IdentityLayout
+  title={`${project.name} research`}
+  description={project.subtitle}
+  active="research"
+>
+  <section class="ie-project-hero ie-shell">
+    <a class="ie-back" href="/preview/ai/research/"
+      ><ArrowLeft size={16} /> Research & collaboration</a
+    >
+    <div class="ie-project-topline">
+      <p class="ie-eyebrow">Horizon Europe / {project.years}</p><span
+        class:list={[
+          "ie-status",
+          { "ie-status-complete": project.status === "Completed" },
+        ]}>{project.status}</span
+      >
+    </div>
+    <div class="ie-project-heading">
+      <div>
+        <h1
+          class:list={[
+            "ie-project-title",
+            { "ie-project-title--long": project.name.length > 10 },
+          ]}
+        >
+          {project.name}
+        </h1>
+        <p class="ie-project-subtitle">{project.subtitle}</p>
+      </div>
+      <figure class="ie-project-visual">
+        <img {...project.photo} fetchpriority="high" />
+        <div class={`ie-project-brand ie-project-brand--${project.slug}`}>
+          <img
+            src={brand.logo}
+            width={brand.logoWidth}
+            height={brand.logoHeight}
+            alt={`${project.name} project logo`}
+          />
+        </div>
+      </figure>
+    </div>
+    <div class="ie-project-hero-bottom">
+      <span>EUROPEAN RESEARCH / SHARED PROGRESS</span><a
+        class="text-link"
+        href={project.site}
+        >Visit the project website <ArrowUpRight size={18} /></a
+      >
+    </div>
+  </section>
+  <dl class="ie-project-facts ie-shell">
+    <div><dt>Programme</dt><dd>Horizon Europe</dd></div><div>
+      <dt>Project period</dt><dd>{project.dates}</dd>
+    </div><div><dt>Coordinator</dt><dd>{project.coordinator}</dd></div><div>
+      <dt>Grant agreement</dt><dd>
+        <a href={`https://cordis.europa.eu/project/id/${project.grant}`}
+          >{project.grant} <ArrowUpRight size={16} /></a
+        >
+      </dd>
+    </div>
+  </dl>
+
+  <div class="ie-shell ie-section ie-article-layout">
+    <aside class="ie-article-index">
+      <span>In this project</span><nav
+        aria-label={`${project.name} page sections`}
+      >
+        <a href="#overview">The research question</a><a href="#contribution"
+          >Our contribution</a
+        ><a href="#consortium">Consortium partners</a><a href="#context"
+          >Project context</a
+        >
+      </nav><a class="text-link" href="/preview/ai/contact/?topic=research"
+        >Talk research <ArrowUpRight size={17} /></a
+      >
+    </aside>
+    <article class="ie-article">
+      <section id="overview">
+        <p class="ie-eyebrow">The research question</p><h2>
+          {project.question}
+        </h2><p class="ie-lead">{project.overview}</p><p>{project.scope}</p>
+      </section>
+      <section id="contribution">
+        <p class="ie-eyebrow">Abstract Machines’ contribution</p><h2>
+          Engineering at<br /><span>the working edge.</span>
+        </h2><p>{project.role}</p><div class="ie-contributions">
+          {
+            project.contributions.map((item, index) => (
+              <div>
+                <>
+                  <span class="ie-number">0{index + 1}</span>
+                  <div>
+                    <>
+                      <h3>{item.title}</h3>
+                      <p>{item.text}</p>
+                    </>
+                  </div>
+                </>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+      <section
+        id="consortium"
+        class="ie-consortium"
+        aria-labelledby="consortium-title"
+      >
+        <p class="ie-eyebrow">Research in collaboration</p>
+        <h2 id="consortium-title">Selected consortium partners.</h2>
+        <p>
+          {
+            project.status === "Completed"
+              ? `Abstract Machines worked alongside these organisations in ${project.name}, bringing together expertise from industry and research.`
+              : `Abstract Machines works alongside these organisations in ${project.name}, bringing together expertise from industry and research.`
+          }
+        </p>
+        <ul class="ie-consortium-logos">
+          {
+            brand.partners.map((partner) => (
+              <li>
+                <img src={partner.logo} alt={partner.name} loading="lazy" />
+              </li>
+            ))
+          }
+        </ul>
+        <a class="text-link" href={brand.consortiumUrl}
+          >Meet the full consortium <ArrowUpRight size={18} /></a
+        >
+      </section>
+      <section id="context" class="ie-context">
+        <p class="ie-eyebrow">Project context</p><h3>
+          {
+            project.status === "Completed"
+              ? "A completed research collaboration."
+              : "An ongoing research programme."
+          }
+        </h3><p>
+          {
+            project.status === "Completed"
+              ? "The project ran from January 2023 to December 2025. The consortium website and European Commission project record provide further information about its research and published work."
+              : "The programme runs from March 2024 to February 2027. Its research objectives describe the work being pursued across the consortium."
+          }
+        </p><div class="ie-tags">
+          {project.themes.map((theme) => <span>{theme}</span>)}
+        </div><div class="ie-source-links">
+          <a href={project.site}
+            >Consortium website <ArrowUpRight size={17} /></a
+          ><a href={`https://cordis.europa.eu/project/id/${project.grant}`}
+            >European Commission project record <ArrowUpRight size={17} /></a
+          >
+        </div>
+      </section>
+    </article>
+  </div>
+  <section class="ie-next-project ie-shell">
+    <div>
+      <p class="ie-eyebrow">Continue exploring</p><h2>{project.next.name}</h2><p
+      >
+        {project.next.text}
+      </p>
+    </div><a
+      class="ie-circle-link"
+      href={`/preview/ai/research/${project.next.slug}/`}
+      aria-label={`Explore ${project.next.name}`}><ArrowUpRight size={32} /></a
+    >
+  </section>
+</IdentityLayout>

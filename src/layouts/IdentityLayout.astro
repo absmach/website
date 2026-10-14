@@ -1,0 +1,234 @@
+---
+import { ArrowUpRight, Menu, X } from "@lucide/astro";
+import photoCredits from "../../public/preview/ai/media/photos-sources.json";
+import "../styles/identity-preview.css";
+import "../styles/identity-site.css";
+interface Props {
+  title?: string;
+  description?: string;
+  active?: string;
+  headerTone?: "light" | "overlay";
+}
+const {
+  title = "Abstract Machines",
+  description = "AI products, secure infrastructure, and connected systems. Engineering intelligence at Abstract Machines.",
+  active = "",
+  headerTone = "light",
+} = Astro.props;
+const navigation = [
+  { label: "Our work", href: "/preview/ai/work/", key: "work" },
+  { label: "Research", href: "/preview/ai/research/", key: "research" },
+  { label: "Company", href: "/preview/ai/company/", key: "company" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /><meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    /><meta name="robots" content="noindex, nofollow" />
+    <title>{title} — Abstract Machines</title><meta
+      name="description"
+      content={description}
+    />
+    <link rel="icon" href="/favicon.ico" /><link
+      rel="preload"
+      href="/preview/ai/fonts/manrope.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    /><link
+      rel="preload"
+      href="/preview/ai/fonts/dm-sans.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </head>
+  <body class:list={["identity-page", `identity-page--${headerTone}`]}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/preview/ai/" aria-label="Abstract Machines home"
+        ><img
+          src="/preview/ai/media/am-logo.png"
+          width="639"
+          height="77"
+          alt="Abstract Machines"
+        /><span class="brand-caption">Engineering intelligence.</span></a
+      >
+      <nav class="desktop-nav" aria-label="Main navigation">
+        {
+          navigation.map((item) => (
+            <a
+              href={item.href}
+              aria-current={active === item.key ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+      <a class="header-contact" href="/preview/ai/contact/"
+        >Let’s talk <ArrowUpRight size={17} /></a
+      >
+      <button
+        class="menu-toggle"
+        aria-label="Open navigation"
+        aria-controls="mobile-nav"
+        aria-expanded="false"
+        ><Menu class="menu-open-icon" size={24} /><X
+          class="menu-close-icon"
+          size={24}
+        /></button
+      >
+      <nav
+        id="mobile-nav"
+        class="mobile-nav"
+        aria-label="Mobile navigation"
+        hidden
+      >
+        {
+          navigation.map((item) => (
+            <a
+              href={item.href}
+              aria-current={active === item.key ? "page" : undefined}
+            >
+              {item.label}
+              <ArrowUpRight size={20} />
+            </a>
+          ))
+        }<a href="/preview/ai/contact/">Let’s talk <ArrowUpRight size={20} /></a
+        >
+      </nav>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div class="footer-main">
+        <a class="footer-wordmark" href="/preview/ai/"
+          >abstract machines<span>Engineering intelligence.</span></a
+        ><div class="footer-links">
+          <a href="/preview/ai/work/">Our work</a><a
+            href="/preview/ai/research/">Research</a
+          ><a href="/preview/ai/company/">Company</a><a
+            href="/preview/ai/contact/">Contact</a
+          ><a href="https://github.com/absmach"
+            >GitHub <ArrowUpRight size={14} /></a
+          >
+        </div>
+      </div><div class="footer-bottom">
+        <span>© {new Date().getFullYear()} Abstract Machines</span><a href="/"
+          >View current website <ArrowUpRight size={12} /></a
+        ><button id="credits-open">Photography & film</button><a
+          href="https://www.absmach.eu/privacy">Privacy</a
+        ><span class="preview-label">WEBSITE PREVIEW</span>
+      </div>
+    </footer>
+    <dialog id="media-credits" aria-labelledby="credits-title">
+      <div class="credits-top">
+        <h2 id="credits-title">Photography & film</h2><button
+          id="credits-close"
+          aria-label="Close media credits"><X size={22} /></button
+        >
+      </div><p>
+        Selected stock imagery illustrates our areas of work. It does not depict
+        Abstract Machines’ team or offices.
+      </p><ul class="credits-photo-list">
+        {
+          photoCredits.map((photo) => (
+            <li>
+              <>
+                <>
+                  <span>{photo.usage_label}</span>
+                  <a href={photo.source_url}>
+                    {photo.photographer} / {photo.provider ?? "Unsplash"}
+                  </a>
+                </>
+              </>
+            </li>
+          ))
+        }
+        <li>
+          Architecture film — <a
+            href="https://mixkit.co/free-stock-video/corporate-and-business-buildings-in-the-city-4170/"
+            >Corporate and business buildings in the city / Mixkit</a
+          >
+        </li>
+      </ul><p>
+        Photography under the <a href="https://unsplash.com/license"
+          >Unsplash License</a
+        > and <a href="https://www.pexels.com/license/">Pexels License</a>. Film
+        under the <a href="https://mixkit.co/license/#videoFree"
+          >Mixkit Stock Video Free License</a
+        >.
+      </p>
+    </dialog>
+
+    <script>
+      document.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
+        const url = new URL(link.href, window.location.href);
+        if (
+          (url.protocol === "https:" || url.protocol === "http:") &&
+          url.origin !== window.location.origin
+        ) {
+          link.target = "_blank";
+          link.relList.add("noopener", "noreferrer");
+        }
+      });
+
+      const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
+      const nav = document.querySelector<HTMLElement>("#mobile-nav");
+      const setMenu = (open: boolean) => {
+        toggle?.setAttribute("aria-expanded", String(open));
+        toggle?.setAttribute(
+          "aria-label",
+          open ? "Close navigation" : "Open navigation",
+        );
+        if (nav) nav.hidden = !open;
+      };
+      toggle?.addEventListener("click", () =>
+        setMenu(toggle.getAttribute("aria-expanded") !== "true"),
+      );
+      nav
+        ?.querySelectorAll("a")
+        .forEach((link) =>
+          link.addEventListener("click", () => setMenu(false)),
+        );
+      document.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Escape" &&
+          toggle?.getAttribute("aria-expanded") === "true"
+        ) {
+          setMenu(false);
+          toggle.focus();
+        }
+      });
+      window
+        .matchMedia("(min-width: 801px)")
+        .addEventListener("change", (event) => {
+          if (event.matches) setMenu(false);
+        });
+      const credits =
+        document.querySelector<HTMLDialogElement>("#media-credits");
+      document
+        .querySelector("#credits-open")
+        ?.addEventListener("click", () => credits?.showModal());
+      document
+        .querySelector("#credits-close")
+        ?.addEventListener("click", () => credits?.close());
+      credits?.addEventListener("click", (event) => {
+        if (event.target === credits) {
+          const bounds = credits.getBoundingClientRect();
+          if (
+            event.clientX < bounds.left ||
+            event.clientX > bounds.right ||
+            event.clientY < bounds.top ||
+            event.clientY > bounds.bottom
+          )
+            credits.close();
+        }
+      });
+    </script>
+  </body>
+</html>

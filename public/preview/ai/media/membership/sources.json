@@ -1,0 +1,18 @@
+{
+  "verification": {
+    "membership_url": "https://6g-ia.eu/sme/",
+    "association_url": "https://6g-ia.eu/about/",
+    "verified_on": "2026-10-14",
+    "wording": "Member of the 6G Smart Networks and Services Industry Association (6G-IA).",
+    "note": "No membership start year verified. Membership is not evidence of standards authorship or endorsement."
+  },
+  "assets": [
+    {
+      "file": "sixgia-member.png",
+      "source_url": "https://www.absmach.eu/img/logos/6g-ia-long.png",
+      "sha256": "305efb922f377a0f2db8ed06a9aba9e189abdde3b26b9580c877aaf3939f33d6",
+      "downloaded_on": "2026-10-14",
+      "processing": "Original image unchanged"
+    }
+  ]
+}

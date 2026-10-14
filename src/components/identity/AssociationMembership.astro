@@ -1,0 +1,113 @@
+---
+import { ArrowUpRight } from "@lucide/astro";
+
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+const directory = "https://6g-ia.eu/sme/";
+---
+
+{
+  compact ? (
+    <a class="membership-link" href={directory}>
+      <span>Member of 6G-IA</span>
+      <span class="membership-link-context">
+        Europe’s 6G industry community
+      </span>
+      <ArrowUpRight size={17} />
+    </a>
+  ) : (
+    <aside id="membership" class="membership" aria-label="6G-IA membership">
+      <img
+        src="/preview/ai/media/membership/sixgia-member.png"
+        alt="6G-IA member"
+        width="1488"
+        height="346"
+        loading="lazy"
+      />
+      <div>
+        <h2>Part of Europe’s 6G community.</h2>
+        <p>
+          Abstract Machines is a member of the 6G Smart Networks and Services
+          Industry Association (6G-IA), connecting industry and research around
+          the next generation of networks.
+        </p>
+        <a class="text-link" href={directory}>
+          View the membership directory <ArrowUpRight size={17} />
+        </a>
+      </div>
+    </aside>
+  )
+}
+
+<style>
+  .membership {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.2fr);
+    gap: 6vw;
+    align-items: center;
+    padding-top: 60px;
+  }
+  .membership > img {
+    width: 280px;
+    height: auto;
+    justify-self: center;
+  }
+  .membership h2 {
+    font-size: clamp(28px, 2.7vw, 38px);
+    letter-spacing: -0.035em;
+    line-height: 1.25;
+  }
+  .membership p {
+    margin-top: 18px;
+    max-width: 660px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--am-muted);
+  }
+  .membership .text-link {
+    margin-top: 23px;
+    font-size: 12px;
+  }
+  .membership-link {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-top: 30px;
+    font-size: 12px;
+    color: var(--am-ink);
+  }
+  .membership-link-context {
+    color: var(--am-muted);
+    font-size: 11px;
+  }
+  .membership-link svg {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .membership-link:hover > span:first-child {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  @media (min-width: 761px) and (max-width: 1100px) {
+    .membership {
+      gap: 5vw;
+    }
+  }
+  @media (max-width: 760px) {
+    .membership {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      padding-top: 40px;
+    }
+    .membership > img {
+      justify-self: start;
+      width: 240px;
+    }
+    .membership p {
+      font-size: 14px;
+    }
+  }
+</style>

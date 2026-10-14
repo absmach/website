@@ -34,27 +34,62 @@ R2 credentials. An internet connection is required for these assets.
 
 ### AI identity concept
 
-The `design/ai-identity` branch contains an isolated homepage concept at
+An interconnected identity preview is available at
 `http://localhost:4321/preview/ai/`. Start it with `npm run dev`.
 The existing homepage remains at `/` for comparison. The concept uses AM blue,
 self-hosted typography, a full-screen architecture film, and editorial photography.
 Its stylesheet is isolated; shared production layouts are unchanged. The concept
 is marked `noindex` and excluded from the sitemap.
 
-This is a working visual prototype: product tabs, portfolio filters, expandable
-project descriptions, mobile navigation, video controls, and media credits work.
+The preview includes these routes:
+
+- `/preview/ai/`: the editorial homepage, selected work, and compact product index.
+- `/preview/ai/work/`: the photo-led portfolio, with AI, Infrastructure, and Hardware tabs.
+- `/preview/ai/work/{slug}/`: ten product pages, with related work and enquiry links.
+- `/preview/ai/research/`: research programmes and individual project pages.
+- `/preview/ai/company/`: the company, its foundations, and engineering approach.
+- `/preview/ai/stories/{nokia,intel,ericsson,target}/`: sourced engineering stories.
+- `/preview/ai/contact/`: an enquiry draft, with product and topic preselection.
+
+Product tabs, portfolio filters and search, mobile navigation, video controls,
+and media credits work. The homepage product index defaults to four AI products;
+separate Infrastructure and Hardware tabs each show three products. The
+work page uses the same categories, with search within the selected category. The contact form prepares an email draft for the visitor
+to review and send from their own email app; it does not submit to the live API.
 The silent video pauses offscreen and when the tab is hidden. Reduced-motion and
 Save-Data preferences keep the still poster until the visitor chooses to play.
-Atomic and Parallax visuals
-are labelled illustrations; Synth uses an existing product image. Other links
-lead to existing site pages or public resources. Product availability and final
+Atomic and Synth use original conceptual vector illustrations: ideas assembling
+into software, and code becoming circuitry. The same artwork appears on the
+homepage, portfolio cards, and product pages. Motif uses its geometric M mark
+in a restrained brand illustration. Their interfaces and detailed board designs
+are not shown in the preview. Magistrala retains its product dashboard; A0 and
+A1 retain official board photography.
+Quarc has an original chip illustration reflecting its FPGA and
+post-quantum research. Product availability and final
 copy should be reviewed before promoting the design into the main pages.
 
+`IdentityLayout.astro` owns the preview navigation and footer. The product
+catalogue lives in `src/data/identity-products.ts`; product pages and portfolio
+cards share `ProductVisual.astro`. All preview routes stay out of the sitemap.
+
 Media files are served locally from `public/preview/ai/media/`. The optimized
-Mixkit film is approximately 4.2 MB; Unsplash photos are WebP. Attribution and
+Mixkit film is approximately 4.2 MB; seventeen distinct Unsplash and Pexels photos are WebP.
+Each editorial photo has its own placement across the home, work, company, contact,
+research, and story pages. `src/data/identity-photos.ts` supplies image attributes
+from the same manifest used by the footer credits. Attribution and
 source/license records are in `video-source.json` and `photos-sources.json`, with
-visitor-facing credits in the footer. Font license files and source records are
-in `public/preview/ai/fonts/`.
+visitor-facing credits in the footer. Official hardware, Magistrala imagery,
+brand assets, and conceptual artwork are recorded in `media/products/sources.json`.
+Research pages pair editorial photography with official project identities and
+selected consortium partners. `src/data/identity-research.ts` holds the branding
+and membership links; original logos and provenance are in `media/research/`.
+The homepage features Nokia and Intel in a navy foundations section. Magistrala’s
+product page collects all four engineering stories from `src/data/identity-stories.ts`,
+with original company marks recorded in `media/stories/sources.json`. Research
+and the homepage identify AM’s 6G-IA membership and link to the official
+directory; membership verification and badge provenance are in `media/membership/`.
+Font license files and source
+records are in `public/preview/ai/fonts/`.
 
 ### Production build
 

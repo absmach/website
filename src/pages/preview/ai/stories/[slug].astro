@@ -1,0 +1,143 @@
+---
+import { ArrowUpRight, ArrowRight, ArrowLeft } from "@lucide/astro";
+import IdentityLayout from "../../../../layouts/IdentityLayout.astro";
+import { stories } from "../../../../data/identity-stories";
+import "../../../../styles/identity-editorial.css";
+
+export function getStaticPaths() {
+  return stories.map((story) => ({
+    params: { slug: story.slug },
+    props: { story },
+  }));
+}
+const { story } = Astro.props;
+---
+
+<IdentityLayout
+  title={`${story.company}: ${story.subject}`}
+  description={story.subtitle}
+  active="work"
+>
+  <section class="ie-story-hero ie-shell">
+    <a class="ie-back" href="/preview/ai/work/magistrala/#stories"
+      ><ArrowLeft size={16} /> Magistrala stories</a
+    ><div class="ie-story-heading">
+      <div>
+        <p class="ie-eyebrow">{story.eyebrow} / {story.company}</p><h1>
+          {story.title.split("\n").map((line) => <span>{line}</span>)}
+        </h1><p>{story.subtitle}</p>
+      </div><img
+        class="ie-story-logo"
+        src={`/preview/ai/media/stories/${story.slug}.png`}
+        alt={`${story.company} logo`}
+        width="240"
+        height="100"
+      />
+    </div><div class="ie-story-category">
+      <span>{story.subject}</span><span
+        >Connected systems / Magistrala portfolio</span
+      >
+    </div>
+  </section>
+  <figure class="ie-story-panorama">
+    <img {...story.photo} fetchpriority="high" />
+  </figure>
+  <section
+    class="ie-shell ie-section ie-story-overview"
+    aria-labelledby="story-overview-title"
+  >
+    <div>
+      <p class="ie-eyebrow">The engineering context</p><h2
+        id="story-overview-title"
+      >
+        {story.overviewTitle.split("\n").map((line) => <span>{line}</span>)}
+      </h2>
+    </div><div class="ie-prose">
+      {story.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </section>
+  <section
+    class="ie-story-architecture ie-shell ie-section"
+    aria-labelledby="architecture-title"
+  >
+    <div class="ie-section-heading">
+      <div>
+        <p class="ie-eyebrow">A view of the system</p><h2
+          id="architecture-title"
+        >
+          Connections that<br /><span>make the work possible.</span>
+        </h2>
+      </div><p>A conceptual view of the use case.</p>
+    </div><ol class="ie-flow">
+      {
+        story.flow.map((step, index) => (
+          <li>
+            <>
+              <span class="ie-eyebrow">{`0${index + 1} / ${step.label}`}</span>
+              <h3>{step.title}</h3>
+              <p>{step.detail}</p>
+              {index < story.flow.length - 1 && (
+                <ArrowRight size={25} aria-hidden="true" />
+              )}
+            </>
+          </li>
+        ))
+      }
+    </ol><div class="ie-story-details">
+      {
+        story.details.map((detail) => (
+          <div>
+            <>
+              <h3>{detail.title}</h3>
+              <p>{detail.text}</p>
+            </>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+  <section
+    class="ie-shell ie-section ie-story-source"
+    aria-labelledby="story-source-title"
+  >
+    <div>
+      <p class="ie-eyebrow">The primary source</p><h2 id="story-source-title">
+        {story.sourceTitle}
+      </h2>
+    </div><div>
+      <p>{story.sourceDescription}</p>{
+        story.note && <p class="ie-source-note">{story.note}</p>
+      }<a class="text-link" href={story.sourceUrl}
+        >{story.sourceLabel} <ArrowUpRight size={19} /></a
+      >
+      {
+        story.secondarySourceUrl && (
+          <a class="text-link" href={story.secondarySourceUrl}>
+            {story.secondarySourceLabel} <ArrowUpRight size={19} />
+          </a>
+        )
+      }
+    </div>
+  </section>
+  <section class="ie-product-connection ie-shell">
+    <div>
+      <p class="ie-eyebrow">Explore the platform</p><h2>Magistrala</h2><p>
+        Discover the connectivity platform in our current product portfolio.
+      </p>
+    </div><div class="ie-connection-links">
+      <a class="ie-button ie-button-white" href="/preview/ai/work/magistrala/"
+        >Explore Magistrala <ArrowUpRight size={19} /></a
+      ><a class="text-link" href="/preview/ai/contact/?product=Magistrala"
+        >Discuss your connected system <ArrowRight size={18} /></a
+      >
+    </div>
+  </section>
+  <a
+    class="ie-next-story ie-shell"
+    href={`/preview/ai/stories/${story.other.slug}/`}
+    ><div>
+      <span class="ie-eyebrow">Another perspective / {story.other.company}</span
+      ><h2>{story.other.title}</h2>
+    </div><ArrowUpRight size={32} /></a
+  >
+</IdentityLayout>

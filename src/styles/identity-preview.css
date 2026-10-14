@@ -682,11 +682,6 @@ p {
   background: #e2eaf0;
   color: var(--am-ink);
 }
-.atomic-visual {
-  background:
-    linear-gradient(120deg, #d5e3efe8, #adc3d6e8),
-    url("/preview/ai/media/architecture.webp") center/cover;
-}
 .product-visual figcaption {
   position: absolute;
   bottom: 19px;
@@ -695,170 +690,6 @@ p {
   font-size: 10px;
   line-height: 1.5;
   color: #3b566d;
-}
-.app-window {
-  width: 100%;
-  background: white;
-  box-shadow: 0 15px 40px #092b4b14;
-  border: 1px solid #bfcddb;
-  border-radius: 5px;
-  overflow: hidden;
-  transform: perspective(1400px) rotateY(-5deg) rotateX(3deg);
-  transform-origin: center;
-}
-.window-bar {
-  height: 33px;
-  background: #f6f8fa;
-  border-bottom: 1px solid #dbe3e9;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 12px;
-  font-size: 8px;
-  color: #687c8b;
-}
-.window-dots {
-  display: flex;
-  gap: 4px;
-}
-.window-dots i {
-  width: 4px;
-  height: 4px;
-  background: #a2b1bd;
-  border-radius: 50%;
-}
-.builder-layout {
-  display: grid;
-  grid-template-columns: 34% 66%;
-  min-height: 278px;
-}
-.builder-prompt {
-  padding: 25px 14px;
-  background: #f7f9fb;
-  border-right: 1px solid #e2e7ed;
-}
-.tiny-label {
-  font-size: 7px;
-  letter-spacing: 0.1em;
-  color: #64798a;
-  line-height: 1.4;
-}
-.builder-prompt > p {
-  font-size: 17px;
-  line-height: 1.3;
-  letter-spacing: -0.04em;
-  margin-top: 20px;
-}
-.prompt-field {
-  border: 1px solid #c5d2dc;
-  border-radius: 4px;
-  margin-top: 25px;
-  padding: 10px 9px;
-  font-size: 8px;
-  line-height: 1.7;
-  background: #fff;
-}
-.prompt-field > span {
-  display: block;
-  background: var(--am-navy);
-  color: white;
-  width: 17px;
-  height: 17px;
-  text-align: center;
-  margin: 9px 0 0 auto;
-  border-radius: 3px;
-}
-.builder-note {
-  font-size: 6px;
-  margin-top: 13px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #687e8f;
-}
-.builder-note > span {
-  color: #315ec0;
-  font-size: 11px;
-}
-.app-preview {
-  padding: 0 17px 20px;
-}
-.app-preview-nav {
-  height: 38px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid #ecf0f4;
-  margin-bottom: 21px;
-  font-size: 7px;
-}
-.app-preview-nav > b {
-  font-size: 9px;
-  font-weight: 500;
-}
-.app-preview-nav > span {
-  font-size: 6px;
-  color: #61798f;
-  margin-left: auto;
-}
-.app-preview-nav > i {
-  font-size: 5px;
-  font-style: normal;
-  border-radius: 50%;
-  background: #e6edf6;
-  padding: 5px;
-}
-.app-preview h4 {
-  font-size: 24px;
-  font-weight: 400;
-  letter-spacing: -0.05em;
-  line-height: 1.12;
-  margin: 9px 0 18px;
-}
-.preview-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.preview-cards > div {
-  border: 1px solid #dfe7ed;
-  padding: 9px;
-}
-.preview-cards span {
-  font-size: 6px;
-  color: #687d8e;
-  display: block;
-}
-.preview-cards strong {
-  font-weight: 400;
-  font-size: 21px;
-  display: block;
-  margin-top: 6px;
-}
-.preview-row {
-  border-top: 1px solid #e5ebef;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 6px;
-  min-height: 25px;
-}
-.preview-row > span:last-child {
-  margin-left: auto;
-  font-size: 5px;
-  color: #657e95;
-}
-.mini-square {
-  width: 7px;
-  height: 7px;
-  background: #8caccb;
-}
-.mini-square.pale {
-  background: #d2dfec;
-}
-.mini-square.dark {
-  background: #345d83;
 }
 .parallax-visual {
   background: #0e304f;
@@ -905,16 +736,6 @@ p {
   font-size: 8px;
   color: #b5cbe0;
   margin-top: 23px;
-}
-.synth-visual {
-  padding: 25px 25px 55px;
-  background: #e3e8ed;
-}
-.synth-visual > img {
-  width: 100%;
-  height: 330px;
-  object-fit: contain;
-  mix-blend-mode: multiply;
 }
 
 .portfolio {
@@ -1104,55 +925,29 @@ p {
 .heritage {
   padding-top: 110px;
   padding-bottom: 115px;
+  background: var(--am-navy);
+  color: white;
+}
+.heritage .section-label {
+  color: #bfd2e3;
 }
 .heritage-description {
   max-width: 410px;
 }
 .heritage-description p {
   font-size: 16px;
-  color: var(--am-muted);
+  color: #c3d5e5;
   margin-bottom: 25px;
 }
 .heritage-description > .text-link {
   font-size: 12px;
 }
-.heritage-cases {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
-  margin-top: 60px;
-}
-.heritage-cases > a {
-  border-top: 1px solid var(--am-line);
-  padding-top: 35px;
-}
-.case-company {
-  display: block;
-  font-size: 38px;
-  line-height: 1.2;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  color: var(--am-navy);
-  margin-bottom: 35px;
-}
-.case-company.intel-wordmark {
-  font-size: 46px;
-  line-height: 0.99;
-  letter-spacing: -0.05em;
-}
-.heritage-cases .eyebrow {
-  font-size: 10px;
-  letter-spacing: 0.04em;
-  color: var(--am-muted);
-}
-.heritage-cases h3 {
-  font-size: 29px;
-  line-height: 1.25;
-  letter-spacing: -0.035em;
-  margin: 19px 0 30px;
-}
-.heritage-cases .text-link {
-  font-size: 12px;
+.heritage-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #ffffff40;
+  margin-top: 50px;
+  padding-top: 28px;
 }
 .contact-section {
   position: relative;
@@ -1450,17 +1245,6 @@ p {
   .section-heading > p {
     font-size: 13px;
   }
-  .builder-prompt {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  .app-preview {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-  .app-preview-nav > span {
-    display: none;
-  }
   .project-summary {
     font-size: 13px;
   }
@@ -1710,37 +1494,6 @@ p {
     min-height: 390px;
     padding: 37px 35px 55px;
   }
-  .app-window {
-    max-width: 550px;
-  }
-  .builder-layout {
-    min-height: 290px;
-  }
-  .builder-prompt {
-    padding: 25px 17px;
-  }
-  .builder-prompt > p {
-    font-size: 19px;
-  }
-  .prompt-field {
-    font-size: 9px;
-  }
-  .app-preview {
-    padding: 0 20px 20px;
-  }
-  .app-preview-nav > span {
-    display: block;
-  }
-  .app-preview h4 {
-    font-size: 28px;
-  }
-  .preview-cards strong {
-    font-size: 25px;
-  }
-  .preview-row {
-    min-height: 28px;
-    font-size: 7px;
-  }
   .prediction-window {
     max-width: 550px;
   }
@@ -1827,13 +1580,6 @@ p {
   }
   .heritage-description p {
     font-size: 14px;
-  }
-  .heritage-cases {
-    gap: 35px;
-    margin-top: 42px;
-  }
-  .heritage-cases h3 {
-    font-size: 24px;
   }
   .contact-section {
     min-height: 475px;
@@ -2097,75 +1843,6 @@ p {
     bottom: 14px;
     font-size: 10px;
   }
-  .builder-layout {
-    min-height: 230px;
-    grid-template-columns: 34% 66%;
-  }
-  .window-bar {
-    font-size: 6px;
-    height: 25px;
-    padding-inline: 8px;
-  }
-  .builder-prompt {
-    padding: 18px 9px;
-  }
-  .tiny-label {
-    font-size: 5px;
-  }
-  .builder-prompt > p {
-    font-size: 12px;
-    margin-top: 16px;
-  }
-  .prompt-field {
-    font-size: 6px;
-    padding: 7px;
-    margin-top: 19px;
-  }
-  .builder-note {
-    font-size: 5px;
-  }
-  .app-preview {
-    padding: 0 11px 13px;
-  }
-  .app-preview-nav {
-    height: 30px;
-    font-size: 6px;
-    gap: 7px;
-    margin-bottom: 18px;
-  }
-  .app-preview-nav > b {
-    font-size: 7px;
-  }
-  .app-preview-nav > span {
-    display: none;
-  }
-  .app-preview-nav > i {
-    margin-left: auto;
-  }
-  .app-preview h4 {
-    font-size: 20px;
-    margin-bottom: 14px;
-  }
-  .preview-cards > div {
-    padding: 7px;
-  }
-  .preview-cards strong {
-    font-size: 18px;
-  }
-  .preview-cards span {
-    font-size: 5px;
-  }
-  .preview-row {
-    min-height: 21px;
-    font-size: 5px;
-  }
-  .preview-row > span:last-child {
-    font-size: 4px;
-  }
-  .mini-square {
-    width: 5px;
-    height: 5px;
-  }
   .prediction-window {
     padding: 0 6px;
   }
@@ -2183,9 +1860,6 @@ p {
   .prediction-window > p {
     font-size: 7px;
     margin-top: 15px;
-  }
-  .synth-visual > img {
-    height: 225px;
   }
   .portfolio-controls {
     margin-top: 30px;
@@ -2276,27 +1950,6 @@ p {
   .heritage-description > .text-link {
     font-size: 11px;
     gap: 15px;
-  }
-  .heritage-cases {
-    grid-template-columns: 1fr;
-    gap: 35px;
-    margin-top: 35px;
-  }
-  .heritage-cases > a {
-    padding-top: 30px;
-  }
-  .case-company {
-    font-size: 33px;
-    margin-bottom: 27px;
-  }
-  .case-company.intel-wordmark {
-    font-size: 41px;
-  }
-  .heritage-cases h3 {
-    font-size: 25px;
-  }
-  .heritage-cases .eyebrow {
-    font-size: 9px;
   }
   .contact-section {
     min-height: 490px;

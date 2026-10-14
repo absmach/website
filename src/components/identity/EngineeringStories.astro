@@ -1,0 +1,121 @@
+---
+import { ArrowUpRight } from "@lucide/astro";
+import { stories } from "../../data/identity-stories";
+
+interface Props {
+  items?: typeof stories;
+}
+
+const { items = stories } = Astro.props;
+---
+
+<div class="engineering-stories">
+  {
+    items.map((story) => (
+      <a class="engineering-story" href={`/preview/ai/stories/${story.slug}/`}>
+        <span class="story-company">
+          <img
+            src={`/preview/ai/media/stories/${story.slug}.png`}
+            alt={story.company}
+            width="180"
+            height="80"
+            loading="lazy"
+          />
+        </span>
+        <span class="story-kind">{story.kind}</span>
+        <h3>{story.subject}</h3>
+        <p>{story.summary}</p>
+        <span class="text-link">
+          Explore the story <ArrowUpRight size={18} />
+        </span>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .engineering-stories {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 55px 65px;
+    margin-top: 60px;
+    color: white;
+  }
+  .engineering-story {
+    border-top: 1px solid #ffffff40;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .engineering-story:hover {
+    border-color: #ffffffaa;
+  }
+  .story-company {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    margin-bottom: 26px;
+  }
+  .story-company img {
+    width: 180px;
+    height: 80px;
+    object-fit: contain;
+    object-position: left center;
+    filter: brightness(0) invert(1);
+  }
+  .story-company img[src$="/intel.png"] {
+    width: 110px;
+    height: 65px;
+  }
+  .story-company img[src$="/target.png"] {
+    width: 55px;
+    height: 70px;
+  }
+  .story-kind {
+    font-size: 10px;
+    line-height: 1.6;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #bfd2e3;
+  }
+  h3 {
+    font-size: 30px;
+    line-height: 1.25;
+    letter-spacing: -0.035em;
+    margin: 16px 0;
+  }
+  p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #c3d5e5;
+    max-width: 480px;
+    margin-bottom: 28px;
+  }
+  .text-link {
+    font-size: 13px;
+    margin-top: auto;
+  }
+  .engineering-story:hover .text-link :global(svg) {
+    transform: translate(3px, -3px);
+  }
+  @media (max-width: 800px) {
+    .engineering-stories {
+      gap: 40px;
+      margin-top: 42px;
+    }
+    h3 {
+      font-size: 26px;
+    }
+    p {
+      font-size: 14px;
+    }
+  }
+  @media (max-width: 600px) {
+    .engineering-stories {
+      grid-template-columns: 1fr;
+      margin-top: 35px;
+    }
+  }
+</style>

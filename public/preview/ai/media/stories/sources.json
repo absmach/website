@@ -1,0 +1,42 @@
+{
+  "retrieved_on": "2026-10-14",
+  "provenance": "Existing original brand assets from the current Abstract Machines website. Used to identify the documented engineering stories, not as unqualified endorsements.",
+  "assets": [
+    {
+      "file": "nokia.png",
+      "url": "https://www.absmach.eu/img/products/nokia.png",
+      "width": 3840,
+      "height": 2159,
+      "visible_bounds": [122, 669, 3718, 1490],
+      "processing": "Unchanged source file, retains original transparent padding.",
+      "sha256": "a62ce406328d0b4a3b641db105b98edd8979d50a61344cdaecd7f168bfe4472e"
+    },
+    {
+      "file": "intel.png",
+      "url": "https://www.absmach.eu/img/products/intel.png",
+      "width": 2400,
+      "height": 1587,
+      "visible_bounds": [107, 72, 2293, 1514],
+      "processing": "Unchanged source file, retains original transparent padding.",
+      "sha256": "9185023240ca14447e329229a92486057b7d2b7c15f27ccc73bd82970555593f"
+    },
+    {
+      "file": "ericsson.png",
+      "url": "https://www.absmach.eu/img/products/ericsson.png",
+      "width": 3840,
+      "height": 2160,
+      "visible_bounds": [44, 504, 3796, 1656],
+      "processing": "Unchanged source file, retains original transparent padding.",
+      "sha256": "578d1ed139949087fac7aaf5f44346bf1df0fe2be5c26445c660ca15bd4fb064"
+    },
+    {
+      "file": "target.png",
+      "url": "https://www.absmach.eu/img/products/target.png",
+      "width": 2400,
+      "height": 3057,
+      "visible_bounds": [0, 0, 2400, 3057],
+      "processing": "Unchanged source file, retains original transparent padding.",
+      "sha256": "820c03ceaf313c59a2ce3238cb5d39e3cd40565adfd2590f1db77b7e7050f7b8"
+    }
+  ]
+}

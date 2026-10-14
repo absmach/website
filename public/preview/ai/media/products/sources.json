@@ -1,0 +1,88 @@
+{
+  "fetched_on": "2026-10-14",
+  "provenance": "Official Abstract Machines product photography, Magistrala interface imagery, and original product brand marks. Atomic and Synth use original conceptual SVG illustrations embedded in the website.",
+  "assets": [
+    {
+      "product": "A0",
+      "file": "a0.webp",
+      "source_url": "https://www.absmach.eu/img/products/s0-board-detail.webp",
+      "source_page": "https://www.absmach.eu/products/a0/",
+      "local_page": "src/pages/products/a0.astro",
+      "description": "Official photograph of the blue A0 ESP32-C6 board.",
+      "alt": "A0 open-source ESP32-C6 board with two expansion slots",
+      "processing": "Original WebP copied unchanged; original transparency preserved.",
+      "width": 1920,
+      "height": 2963,
+      "mode": "RGBA",
+      "bytes": 317500,
+      "sha256": "b60d77ae206c5a60787dc533da770f24f51e909868c6ca452cf48224bb0d0aa7"
+    },
+    {
+      "product": "A1",
+      "file": "a1.webp",
+      "source_url": "https://www.absmach.eu/img/products/s1-beagle.png",
+      "source_page": "https://www.absmach.eu/products/a1/",
+      "local_page": "src/pages/products/a1.astro",
+      "description": "Official A1 product-page hero photograph showing its BeagleV-Fire compute board. This photograph depicts the compute board, not an assembled A0 plus BeagleV-Fire gateway.",
+      "alt": "BeagleV-Fire RISC-V compute board used in the A1 gateway",
+      "processing": "WebP encoding at quality 86, method 6, from the original official PNG; original dimensions and alpha preserved. No content edits.",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGBA",
+      "bytes": 443254,
+      "sha256": "4d91ea86ccb88c476d18c1102d7b767b1d0d74b820d146e2460f9dbaa735ed6f"
+    },
+    {
+      "product": "Magistrala",
+      "file": "magistrala-dashboard.webp",
+      "source_url": "https://www.absmach.eu/img/magistrala/dashboard-2.png",
+      "source_page": "https://www.absmach.eu/products/magistrala/",
+      "local_page": "src/pages/products/magistrala.astro",
+      "description": "Official Magistrala SmartWaterFR dashboard screenshot with apartment water flow, water pressure, device battery levels, and alarms.",
+      "alt": "Magistrala dashboard showing water flow, pressure, battery levels, and alarms",
+      "processing": "Resized proportionally from 1903×927 to 1600×779 using Lanczos; lossless WebP encoding. No content edits.",
+      "width": 1600,
+      "height": 779,
+      "mode": "RGB",
+      "bytes": 233368,
+      "sha256": "17a4a6d149963f899ca49e3834a48c3d9c1c64031c82eed437e7ae26daf6e409"
+    },
+    {
+      "product": "Motif",
+      "file": "motif-mark.svg",
+      "source_path": "/home/drasko/ideas/clara/preview/assets/motif.svg",
+      "description": "Original Motif geometric M mark. Its canonical path is reused in the abstract brand illustration; no product interface or preview data is displayed.",
+      "processing": "Original standalone SVG preserved; illustration reuses its path with presentation colors.",
+      "sha256": "cdcc307a0ce5b400d52643d95c69c8a0240147b6642dca1a25b86961199fb1c8"
+    },
+    {
+      "product": "Atomic",
+      "file": "atomic-mark.svg",
+      "source_path": "/home/drasko/ideas/vc/atomic/pitch-deck/assets/atomic.svg",
+      "canonical_component": "/home/drasko/ideas/atomic/apps/atomic_web/lib/atomic_web/components/core_components.ex",
+      "description": "Original Atomic orbital logo: three elliptical orbits and a central dot, matching the current product component.",
+      "processing": "Original SVG copied unchanged, preserving geometry and violet brand color.",
+      "sha256": "3cfd2298d917c7cdd9aa1fe5ac3012966bc4e3178e005175393e2fe762bc56c2"
+    },
+    {
+      "product": "Synth",
+      "file": "/img/products/synth.svg",
+      "source_path": "public/img/products/synth.svg",
+      "canonical_source": "/home/drasko/ideas/synth/docs/assets/synth-logo-monochrome.svg",
+      "description": "Original Synth geometric S and SYNTH wordmark, matching the primary logo documented in the product repository.",
+      "processing": "Existing transparent logo reused unchanged; rendered in white on the navy illustration with a presentation filter."
+    }
+  ],
+  "illustrations": [
+    {
+      "product": "Atomic",
+      "source": "src/components/identity/AtomicArtwork.astro",
+      "description": "Original conceptual illustration of blue modules assembling into a structure; not a product interface."
+    },
+    {
+      "product": "Synth",
+      "source": "src/components/identity/SynthArtwork.astro",
+      "description": "Original conceptual source-to-circuit illustration; not a specific schematic or PCB design."
+    }
+  ]
+}

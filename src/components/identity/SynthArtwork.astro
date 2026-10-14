@@ -1,0 +1,202 @@
+---
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<svg viewBox="0 0 600 400" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient
+      id={`${id}-plane`}
+      x1="0"
+      y1="0"
+      x2="240"
+      y2="200"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#375c73" stop-opacity=".7"></stop>
+      <stop offset="1" stop-color="#183d57" stop-opacity=".3"></stop>
+    </linearGradient>
+    <linearGradient
+      id={`${id}-trace`}
+      x1="40"
+      y1="0"
+      x2="240"
+      y2="200"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#e5eef5"></stop>
+      <stop offset="1" stop-color="#89acc5"></stop>
+    </linearGradient>
+    <linearGradient
+      id={`${id}-source`}
+      x1="74"
+      y1="0"
+      x2="290"
+      y2="0"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#bdd4e5" stop-opacity=".85"></stop>
+      <stop offset="1" stop-color="#bdd4e5" stop-opacity=".12"></stop>
+    </linearGradient>
+    <radialGradient id={`${id}-light`} cx=".65" cy=".56" r=".56">
+      <stop stop-color="#406c89" stop-opacity=".22"></stop>
+      <stop offset="1" stop-color="#406c89" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+
+  <path fill={`url(#${id}-light)`} d="M0 0h600v400H0z"></path>
+
+  <!-- A few long construction lines give the artwork scale without becoming a schematic. -->
+  <g stroke="#9ab7cb" stroke-opacity=".09">
+    <path d="M122 72 588 327M35 182l354 194M217 27 598 235"></path>
+    <path d="M69 318 517 73M210 389 598 177"></path>
+  </g>
+
+  <image
+    href="/img/products/synth.svg"
+    x="40"
+    y="30"
+    width="154"
+    height="36"
+    style="filter: brightness(0) invert(1)"
+  />
+  <text x="40" y="90" fill="#bdd3e3" font-size="16" letter-spacing="-.2"
+    >Code into circuitry.</text
+  >
+
+  <!-- Abstract source notation; no product interface or source code is shown. -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <path
+      d="m74 168-20 20 20 20M124 168l20 20-20 20M109 161l-20 54"
+      stroke="#cfdeea"
+      stroke-width="2.5"></path>
+    <g stroke={`url(#${id}-source)`} stroke-width="2">
+      <path d="M76 242h56M76 258h87M91 274h71M91 290h46"></path>
+      <path d="M150 242h19l31-17h59M180 258h23l32-18h34"></path>
+    </g>
+  </g>
+
+  <!-- Layered geometric planes suggest fabrication, rather than an actual board layout. -->
+  <g transform="translate(0 24) matrix(.86 .47 -.86 .47 345 125)">
+    <rect
+      width="240"
+      height="200"
+      rx="7"
+      fill="#0d304a"
+      stroke="#7195ad"
+      stroke-opacity=".26"></rect>
+  </g>
+  <g transform="translate(0 12) matrix(.86 .47 -.86 .47 345 125)">
+    <rect
+      width="240"
+      height="200"
+      rx="7"
+      fill="#163c55"
+      fill-opacity=".75"
+      stroke="#85a9c0"
+      stroke-opacity=".4"></rect>
+  </g>
+  <g transform="matrix(.86 .47 -.86 .47 345 125)">
+    <rect
+      width="240"
+      height="200"
+      rx="7"
+      fill={`url(#${id}-plane)`}
+      stroke="#b9d2e4"
+      stroke-opacity=".65"
+      stroke-width="1.3"></rect>
+    <rect
+      x="11"
+      y="11"
+      width="218"
+      height="178"
+      rx="3"
+      stroke="#b9d2e4"
+      stroke-opacity=".12"></rect>
+
+    <g
+      stroke={`url(#${id}-trace)`}
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M30 46h40l25 25v16"></path>
+      <path d="M62 27v20l23 23h29v17"></path>
+      <path d="M210 44h-47l-30 30v13"></path>
+      <path d="M208 83h-22l-16 16h-15"></path>
+      <path d="M205 143h-37l-22-22"></path>
+      <path d="M164 174v-15l-31-31v-7"></path>
+      <path d="M86 174v-21l27-27v-5"></path>
+      <path d="M31 148h26l38-38"></path>
+    </g>
+
+    <g
+      stroke="#d7bda5"
+      stroke-width="1.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M30 99h31l14-14h19"></path>
+      <path d="M149 27v16l-16 16"></path>
+      <path d="M193 174v-13l-33-33"></path>
+    </g>
+
+    <g fill="#0d3049" stroke="#b8d2e5" stroke-width="2">
+      <circle cx="30" cy="46" r="4"></circle>
+      <circle cx="62" cy="27" r="4"></circle>
+      <circle cx="210" cy="44" r="4"></circle>
+      <circle cx="208" cy="83" r="4"></circle>
+      <circle cx="205" cy="143" r="4"></circle>
+      <circle cx="164" cy="174" r="4"></circle>
+      <circle cx="86" cy="174" r="4"></circle>
+      <circle cx="31" cy="148" r="4"></circle>
+    </g>
+    <g fill="#d7bda5">
+      <circle cx="30" cy="99" r="3"></circle>
+      <circle cx="149" cy="27" r="3"></circle>
+      <circle cx="193" cy="174" r="3"></circle>
+    </g>
+
+    <rect
+      x="89"
+      y="79"
+      width="66"
+      height="50"
+      rx="3"
+      fill="#0b2b43"
+      stroke="#b8d2e5"
+      stroke-opacity=".4"></rect>
+    <rect
+      x="94"
+      y="73"
+      width="56"
+      height="50"
+      rx="3"
+      fill="#244e69"
+      stroke="#c1d9e8"
+      stroke-width="1.3"></rect>
+    <rect
+      x="105"
+      y="84"
+      width="34"
+      height="28"
+      rx="1"
+      fill="#bed4e3"
+      fill-opacity=".12"
+      stroke="#c1d9e8"
+      stroke-opacity=".4"></rect>
+    <path
+      d="m115 92-5 6 5 6m14-12 5 6-5 6m-4-15-6 18"
+      stroke="#e3edf4"
+      stroke-width="1.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+  </g>
+
+  <path d="M40 354h520" stroke="#bdd3e3" stroke-opacity=".18"></path>
+  <circle cx="43" cy="373" r="2" fill="#d7bda5"></circle>
+  <path d="M55 373h64" stroke="#bdd3e3" stroke-opacity=".35"></path>
+</svg>

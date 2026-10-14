@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Motif</title>
+  <style>
+    path { fill: #272334; }
+    @media (prefers-color-scheme: dark) {
+      path { fill: #f2f0f7; }
+    }
+  </style>
+  <path d="M6 52V16L17 9L30 27V45L18 30V52ZM58 52V16L47 9L34 27V45L46 30V52Z" />
+</svg>

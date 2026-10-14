@@ -1,0 +1,271 @@
+---
+import { ArrowUpRight, ArrowRight, ArrowLeft } from "@lucide/astro";
+import IdentityLayout from "../../../../layouts/IdentityLayout.astro";
+import ProductVisual from "../../../../components/identity/ProductVisual.astro";
+import EngineeringStories from "../../../../components/identity/EngineeringStories.astro";
+import {
+  products,
+  type IdentityProduct,
+} from "../../../../data/identity-products";
+import "../../../../styles/identity-product-page.css";
+
+export function getStaticPaths() {
+  return products.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+interface Props {
+  product: IdentityProduct;
+}
+
+const { product } = Astro.props;
+const paragraphs = product.description.split("\n\n");
+const relatedProducts = product.related
+  .map((slug) => products.find((item) => item.slug === slug))
+  .filter((item): item is IdentityProduct => Boolean(item));
+const publicResource = product.resources.find((resource) =>
+  resource.href.startsWith("https://"),
+);
+const contactUrl = `/preview/ai/contact/?product=${encodeURIComponent(product.name)}`;
+const portfolioUrl = `/preview/ai/work/${product.group === "AI" ? "" : `?focus=${product.group.toLowerCase()}`}#portfolio`;
+const groupName =
+  product.group === "AI"
+    ? "AI & applications"
+    : product.group === "Infrastructure"
+      ? "Infrastructure"
+      : "Hardware & engineering";
+---
+
+<IdentityLayout
+  title={product.name}
+  description={product.summary}
+  active="work"
+>
+  <section class="dp-hero dp-shell">
+    <a class="dp-back" href={portfolioUrl}
+      ><ArrowLeft size={16} /> Explore our work</a
+    >
+    <div class="dp-hero-grid">
+      <div class="dp-hero-copy">
+        <p class="dp-eyebrow">{product.eyebrow}</p>
+        <h1>{product.name}</h1>
+        <p class="dp-tagline">{product.tagline}</p>
+        <p class="dp-summary">{product.summary}</p>
+        <span class="dp-stage"
+          ><span aria-hidden="true"></span>{product.stage}</span
+        >
+        <div class="dp-hero-actions">
+          <a class="dp-button" href={contactUrl}
+            >Let’s talk {product.name} <ArrowUpRight size={19} /></a
+          >
+          <a class="dp-inline-link" href="#overview"
+            >Explore the product <ArrowRight size={18} /></a
+          >
+        </div>
+      </div>
+      <div class="dp-hero-visual">
+        <ProductVisual product={product} />
+      </div>
+    </div>
+    <div class="dp-hero-baseline">
+      <span>ABSTRACT MACHINES / {groupName.toUpperCase()}</span><a
+        href="#workflow">See how it works <span aria-hidden="true">↓</span></a
+      >
+    </div>
+  </section>
+
+  <section
+    id="overview"
+    class="dp-shell dp-overview dp-section"
+    aria-labelledby="overview-title"
+  >
+    <div>
+      <p class="dp-eyebrow">The purpose</p><h2 id="overview-title">
+        The idea behind<br /><span>{product.name}.</span>
+      </h2>
+    </div>
+    <div class="dp-description">
+      {
+        paragraphs.map((paragraph, index) => (
+          <p class:list={[{ "dp-description-lead": index === 0 }]}>
+            {paragraph}
+          </p>
+        ))
+      }
+      {
+        publicResource && (
+          <a class="text-link" href={publicResource.href}>
+            {publicResource.label} <ArrowUpRight size={18} />
+          </a>
+        )
+      }
+    </div>
+  </section>
+
+  <section
+    class="dp-shell dp-features dp-section"
+    aria-labelledby="features-title"
+  >
+    <div class="dp-section-heading">
+      <div>
+        <p class="dp-eyebrow">Inside {product.name}</p><h2 id="features-title">
+          A closer look.
+        </h2>
+      </div><p>Explore the capabilities<br />and the thinking behind them.</p>
+    </div>
+    <div class="dp-feature-grid">
+      {
+        product.features.map((feature, index) => (
+          <article>
+            <>
+              <span class="dp-number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
+            </>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section
+    id="workflow"
+    class="dp-shell dp-workflow dp-section"
+    aria-labelledby="workflow-title"
+  >
+    <div class="dp-section-heading">
+      <div>
+        <p class="dp-eyebrow">From intent to action</p><h2 id="workflow-title">
+          How it works.
+        </h2>
+      </div><p>A path through {product.name},<br />one step at a time.</p>
+    </div>
+    <ol class="dp-workflow-steps">
+      {
+        product.workflow.map((step, index) => (
+          <li>
+            <>
+              <div class="dp-step-marker">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+              </div>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section
+    class="dp-shell dp-resources dp-section"
+    aria-labelledby="resources-title"
+  >
+    <div>
+      <p class="dp-eyebrow">Go further</p><h2 id="resources-title">
+        Find your<br /><span>starting point.</span>
+      </h2><p>
+        Read, explore, or start a conversation about what {product.name} could mean
+        for your work.
+      </p>
+    </div>
+    <div class="dp-resource-list">
+      {
+        product.resources.map((resource, index) => (
+          <a href={resource.href}>
+            <>
+              <span class="dp-number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span>{resource.label}</span>
+              {resource.href.startsWith("https://") ? (
+                <ArrowUpRight size={22} />
+              ) : (
+                <ArrowRight size={22} />
+              )}
+            </>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  {
+    product.slug === "magistrala" && (
+      <section
+        id="stories"
+        class="dp-shell dp-stories dp-section"
+        aria-labelledby="product-stories-title"
+      >
+        <div class="dp-section-heading">
+          <div>
+            <p class="dp-eyebrow">Magistrala / Platform history</p>
+            <h2 id="product-stories-title">
+              Connected systems.
+              <br />
+              In practice.
+            </h2>
+          </div>
+          <p>
+            Integrations, open-source engineering, and published research from
+            the platform’s history. Earlier sources refer to Magistrala by its
+            former name, Mainflux.
+          </p>
+        </div>
+        <EngineeringStories />
+      </section>
+    )
+  }
+
+  <section
+    class="dp-shell dp-related dp-section"
+    aria-labelledby="related-title"
+  >
+    <div class="dp-section-heading">
+      <div>
+        <p class="dp-eyebrow">Related work</p><h2 id="related-title">
+          The wider picture.
+        </h2>
+      </div><a class="text-link" href="/preview/ai/work/"
+        >Explore all our work <ArrowUpRight size={18} /></a
+      >
+    </div>
+    <div class="dp-related-grid">
+      {
+        relatedProducts.map((related) => (
+          <a href={`/preview/ai/work/${related.slug}/`}>
+            <>
+              <div class="dp-related-top">
+                <>
+                  <span>{related.eyebrow}</span>
+                  <ArrowUpRight size={23} />
+                </>
+              </div>
+              <h3>{related.name}</h3>
+              <p>{related.summary}</p>
+              <span class="dp-related-stage">{related.stage}</span>
+            </>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="dp-shell dp-contact" aria-labelledby="product-contact-title">
+    <div>
+      <p class="dp-eyebrow">Your next step</p><h2 id="product-contact-title">
+        Where could<br /><span>{product.name} take you?</span>
+      </h2>
+    </div><div>
+      <p>
+        Tell us about your project.<br />Let’s find the right way forward.
+      </p><a class="dp-button dp-button-white" href={contactUrl}
+        >Discuss {product.name} <ArrowUpRight size={20} /></a
+      >
+    </div>
+  </section>
+</IdentityLayout>

@@ -1,0 +1,114 @@
+{
+  "retrieved_on": "2026-10-14",
+  "provenance": "Official project and partner logos, downloaded from consortium websites and preserved unchanged. Membership is verified against the sources below. Logos identify selected fellow consortium members; they are not presented as customer endorsements.",
+  "membership_sources": {
+    "elastic": "https://elasticproject.eu/partners-2/",
+    "confidential6g": "https://confidential6g.eu/partners/"
+  },
+  "assets": [
+    {
+      "file": "tuc.png",
+      "url": "https://elasticproject.eu/wp-content/uploads/2024/04/TUC.png",
+      "width": 500,
+      "height": 229,
+      "mode": "RGBA",
+      "sha256": "6bc4c24a8ffa4bdc9cd69a63b1eab19c0ee643cce6ad8c1b5ce6d7558c4ac18f"
+    },
+    {
+      "file": "ericsson.png",
+      "url": "https://elasticproject.eu/wp-content/uploads/2024/04/ERS.png",
+      "width": 500,
+      "height": 229,
+      "mode": "RGBA",
+      "sha256": "2530bc593e32fad71a4e3207e4a8f9542df053bede6b540bc1121ed2ee4c2f82"
+    },
+    {
+      "file": "telefonica.png",
+      "url": "https://elasticproject.eu/wp-content/uploads/2024/09/TID-removebg-preview.png",
+      "width": 500,
+      "height": 229,
+      "mode": "RGBA",
+      "sha256": "91221acc11367bd146d6b22b5de90ef4683a15c3c9635f8f2f38f4c7b6be76f6"
+    },
+    {
+      "file": "thales.png",
+      "url": "https://elasticproject.eu/wp-content/uploads/2024/04/THALES.png",
+      "width": 500,
+      "height": 229,
+      "mode": "RGBA",
+      "sha256": "5775997a506bccaab0aaf7aecee633a698ca03fd035fe3318e37eeecc891c514"
+    },
+    {
+      "file": "imec.png",
+      "url": "https://elasticproject.eu/wp-content/uploads/2024/04/IMEC.png",
+      "width": 500,
+      "height": 229,
+      "mode": "RGBA",
+      "sha256": "6dfef20dd69bed838c357a0892985d84e5fd9d0a870850793cff034909150285"
+    },
+    {
+      "file": "aalto.png",
+      "url": "https://elasticproject.eu/wp-content/uploads/2024/04/AAL.png",
+      "width": 500,
+      "height": 229,
+      "mode": "RGBA",
+      "sha256": "13f4c31d2886dd2691222d43cfad4eb635c2f10a4abf39ad39e3ddd283bad657"
+    },
+    {
+      "file": "wings.png",
+      "url": "https://confidential6g.eu/wp-content/uploads/2024/12/wings_newlogo-300x125.png",
+      "width": 300,
+      "height": 125,
+      "mode": "RGBA",
+      "sha256": "9818157c39b650c9a95fca2a2c20e91af1b2547728ec17bb4a0a9648d9818bf4"
+    },
+    {
+      "file": "nokia.png",
+      "url": "https://confidential6g.eu/wp-content/uploads/2023/03/Untitled-2.png",
+      "width": 280,
+      "height": 97,
+      "mode": "RGBA",
+      "sha256": "50ca8c9d95fbc862fbf5817e0d92d051a7a5b4c82f75c0cdfd6cc378d2f30754"
+    },
+    {
+      "file": "vtt.png",
+      "url": "https://confidential6g.eu/wp-content/uploads/2023/03/vtt.png",
+      "width": 280,
+      "height": 97,
+      "mode": "RGBA",
+      "sha256": "5403140977b80f504d45cca2ad8360889738a4c2ff3e38d0f74e741d8237c683"
+    },
+    {
+      "file": "tno.png",
+      "url": "https://confidential6g.eu/wp-content/uploads/2023/03/tno.png",
+      "width": 280,
+      "height": 97,
+      "mode": "RGBA",
+      "sha256": "75253ff167e31e13e9fba03a7803e6e37056ee11e34a3c6996c91ab45fde5640"
+    },
+    {
+      "file": "tue.png",
+      "url": "https://confidential6g.eu/wp-content/uploads/2023/03/tue.png",
+      "width": 280,
+      "height": 97,
+      "mode": "RGBA",
+      "sha256": "6ce367e2c8ea2b7512e72de00f179eee9810b997ae8b4e55fd2c5ebc61309f31"
+    },
+    {
+      "file": "elastic.png",
+      "url": "https://elasticproject.eu/wp-content/uploads/2024/04/elastic-logo.png",
+      "width": 522,
+      "height": 209,
+      "mode": "RGBA",
+      "sha256": "3f24b56bb98ce7e27b1ec3fa3bc9ff48849664de7c229aa3ca7ab2e6114bb8a6"
+    },
+    {
+      "file": "confidential6g.png",
+      "url": "https://elasticproject.eu/wp-content/uploads/2025/04/C6G_logo_highRes.png",
+      "width": 1730,
+      "height": 2020,
+      "mode": "RGBA",
+      "sha256": "2acd93466cbb3c2dca669a7f9d12e5dff917b9b6c36aee00983c97c5539fd2be"
+    }
+  ]
+}

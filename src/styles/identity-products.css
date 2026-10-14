@@ -1,0 +1,178 @@
+/* Product artwork is deliberately self-contained so it can be shared by cards and detail pages. */
+.pv-visual {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: 1.5;
+  overflow: hidden;
+  container-type: inline-size;
+  background: #e7eef5;
+  color: #073763;
+}
+.pv-visual > svg,
+.pv-visual-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.pv-visual > svg {
+  font-family: "DM Sans", Arial, sans-serif;
+}
+.pv-visual-caption {
+  position: absolute;
+  left: 6.5%;
+  right: 6.5%;
+  bottom: 4.2%;
+  z-index: 3;
+  font-size: clamp(9px, 2.2cqw, 13px);
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: #536c86;
+}
+.pv-visual--parallax .pv-visual-caption,
+.pv-visual--fluxmq .pv-visual-caption,
+.pv-visual--quarc .pv-visual-caption {
+  color: #c0d2e6;
+}
+.pv-visual--parallax {
+  background: #0b3155;
+}
+.pv-visual--fluxmq {
+  background: #102e4c;
+}
+.pv-visual--motif {
+  background: linear-gradient(130deg, #f0f5fa, #d5e2ef);
+}
+.pv-visual--atomic {
+  background: linear-gradient(130deg, #f0f5fa, #d5e2ef);
+}
+.pv-visual--synth {
+  background: #0a2c49;
+}
+.pv-visual-art {
+  position: relative;
+}
+.pv-visual--magistrala {
+  background: #dce8ef;
+}
+.pv-visual--magistrala .pv-visual-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 5%;
+  background: radial-gradient(ellipse at 85% 0%, #eef6fa, transparent 70%);
+}
+.pv-visual-browser {
+  width: 90%;
+  background: white;
+  border: 1px solid #b1c4d1;
+  box-shadow: 12px 18px 0 #adc1d22b;
+  transform: perspective(1400px) rotateY(-4deg) rotateX(2deg);
+}
+.pv-visual-browser-bar {
+  height: 5cqw;
+  min-height: 16px;
+  max-height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 1%;
+  padding: 0 2.2%;
+  background: #fff;
+  border-bottom: 1px solid #dbe3ec;
+}
+.pv-visual-browser-bar i {
+  height: 1cqw;
+  width: 1cqw;
+  border-radius: 50%;
+  background: #bacbd7;
+}
+.pv-visual-browser-bar span {
+  font-size: 1.8cqw;
+  margin: auto;
+  color: #5d778d;
+  padding-right: 5%;
+}
+.pv-visual-browser img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.pv-visual-hardware {
+  background: radial-gradient(
+    ellipse at 65% 20%,
+    #fff 0%,
+    #eef3f7 50%,
+    #dae5ee 100%
+  );
+}
+.pv-visual-hardware-letter {
+  position: absolute;
+  left: 4%;
+  top: 2%;
+  font-family: Manrope, sans-serif;
+  font-size: 46cqw;
+  line-height: 1;
+  letter-spacing: -0.09em;
+  font-weight: 300;
+  color: #b7cad738;
+}
+.pv-visual-hardware img {
+  position: absolute;
+  height: 84%;
+  width: 58%;
+  left: 32%;
+  top: 3%;
+  object-fit: contain;
+  transform: rotate(22deg);
+  filter: drop-shadow(10px 15px 10px #16324a26);
+}
+.pv-visual-hardware-note {
+  position: absolute;
+  left: 7%;
+  top: 17%;
+  font-size: 1.7cqw;
+  letter-spacing: 0.15em;
+  line-height: 1.9;
+  color: #507089;
+}
+.pv-visual-hardware-guide {
+  position: absolute;
+  width: 72%;
+  height: 1px;
+  left: 14%;
+  background: #adc3d063;
+  transform: rotate(-15deg);
+}
+.pv-visual-hardware-guide--one {
+  top: 25%;
+}
+.pv-visual-hardware-guide--two {
+  bottom: 21%;
+}
+.pv-visual--a1 .pv-visual-hardware {
+  background: radial-gradient(
+    ellipse at 65% 20%,
+    #fff 0%,
+    #f0eff1 50%,
+    #e0e5ec 100%
+  );
+}
+.pv-visual--a1 .pv-visual-hardware img {
+  transform: rotate(-18deg);
+}
+.pv-visual--a1 .pv-visual-hardware-letter {
+  color: #c7c4d238;
+}
+.pv-visual--quarc {
+  background: radial-gradient(ellipse at 62% 35%, #254e70, #0a2944 75%);
+}
+.pv-visual--compact .pv-visual-hardware-note {
+  font-size: 1.9cqw;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pv-visual * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
