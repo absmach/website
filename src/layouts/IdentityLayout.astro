@@ -166,16 +166,18 @@ const navigation = [
     </dialog>
 
     <script>
-      document.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
-        const url = new URL(link.href, window.location.href);
-        if (
-          (url.protocol === "https:" || url.protocol === "http:") &&
-          url.origin !== window.location.origin
-        ) {
-          link.target = "_blank";
-          link.relList.add("noopener", "noreferrer");
-        }
-      });
+      document
+        .querySelectorAll<HTMLAnchorElement>("a[href]")
+        .forEach((link) => {
+          const url = new URL(link.href, window.location.href);
+          if (
+            (url.protocol === "https:" || url.protocol === "http:") &&
+            url.origin !== window.location.origin
+          ) {
+            link.target = "_blank";
+            link.relList.add("noopener", "noreferrer");
+          }
+        });
 
       const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
       const nav = document.querySelector<HTMLElement>("#mobile-nav");

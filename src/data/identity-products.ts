@@ -8,6 +8,7 @@ export type ProductVisualKind =
   | "atom"
   | "fluxmq"
   | "magistrala"
+  | "propeller"
   | "a0"
   | "a1"
   | "quarc";
@@ -471,6 +472,69 @@ export const products: IdentityProduct[] = [
       {
         label: "Explore existing deployments",
         href: "https://deployments.absmach.eu/",
+      },
+    ],
+  },
+  {
+    slug: "propeller",
+    name: "Propeller",
+    group: "Infrastructure",
+    eyebrow: "WebAssembly orchestration",
+    tagline: "Move the workload closer to the work.",
+    summary:
+      "Deploy and manage portable WebAssembly workloads across cloud servers, edge gateways, and microcontrollers.",
+    description:
+      "Some work belongs close to the devices and data it serves. Propeller orchestrates WebAssembly workloads across cloud and edge environments, giving teams a way to deploy application logic where it is needed.\n\nPackage workloads in an OCI registry, assign them through the manager, and run them on distributed workers called proplets. Sandboxed runtimes support local processing, automation, and inference, with WAMR on Zephyr extending the approach to constrained devices.",
+    stage: "Open source",
+    visual: "propeller",
+    features: [
+      {
+        title: "Place work where it matters",
+        description:
+          "Deploy WebAssembly applications across cloud servers, Linux gateways, and supported microcontrollers.",
+      },
+      {
+        title: "Use a familiar delivery path",
+        description:
+          "Store and distribute workloads through OCI-compliant registries, keeping deployment connected to your build workflow.",
+      },
+      {
+        title: "Run in a sandbox",
+        description:
+          "Execute application logic in isolated WebAssembly runtimes, including WAMR on Zephyr for constrained devices.",
+      },
+      {
+        title: "Keep execution in view",
+        description:
+          "Manage jobs and workers, inspect logs, and follow workload status across your deployment.",
+      },
+    ],
+    workflow: [
+      {
+        title: "Build the workload",
+        description:
+          "Compile your processing, automation, or inference logic into a WebAssembly module for the target runtime.",
+      },
+      {
+        title: "Publish and deploy",
+        description:
+          "Push the module to an OCI registry and use Propeller to assign it to the appropriate workers.",
+      },
+      {
+        title: "Observe and update",
+        description:
+          "Review execution status and logs, then deploy revised workloads as your application evolves.",
+      },
+    ],
+    related: ["magistrala", "a0", "a1"],
+    resources: [
+      {
+        label: "Read the documentation",
+        href: "https://www.absmach.eu/docs/propeller/",
+      },
+      {
+        label: "Explore the source on GitHub",
+        href: "https://github.com/absmach/propeller",
       },
     ],
   },

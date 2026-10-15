@@ -527,7 +527,7 @@ const portfolioCategories = [
     categoryTabs.forEach((tab, index) => {
       tab.addEventListener("click", () => activateCategory(tab));
       tab.addEventListener("keydown", (event) => {
-        let next = index;
+        let next: number;
         if (event.key === "ArrowRight")
           next = (index + 1) % categoryTabs.length;
         else if (event.key === "ArrowLeft")
@@ -620,7 +620,7 @@ const portfolioCategories = [
     tabs.forEach((tab, index) => {
       tab.addEventListener("click", () => activateTab(tab));
       tab.addEventListener("keydown", (event) => {
-        let next = index;
+        let next: number;
         if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
         else if (event.key === "ArrowLeft")
           next = (index + tabs.length - 1) % tabs.length;

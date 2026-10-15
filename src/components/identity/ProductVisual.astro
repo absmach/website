@@ -2,6 +2,7 @@
 import type { IdentityProduct } from "../../data/identity-products";
 import AtomicArtwork from "./AtomicArtwork.astro";
 import SynthArtwork from "./SynthArtwork.astro";
+import PropellerArtwork from "./PropellerArtwork.astro";
 import "../../styles/identity-products.css";
 
 interface Props {
@@ -22,6 +23,8 @@ const labels: Record<string, string> = {
     "Conceptual Synth illustration: source notation flowing into abstract layered circuitry",
   atom: "Illustrative identity and access decision workflow",
   fluxmq: "Diagram of devices and services exchanging messages through FluxMQ",
+  propeller:
+    "Illustrative Propeller workflow: WebAssembly workloads distributed from a manager to cloud, gateway, and microcontroller workers",
   magistrala:
     "The Magistrala SmartWaterFR dashboard, showing water flow, pressure, battery and alarm views",
   a0: "The actual A0 ESP32-C6 gateway board",
@@ -33,6 +36,7 @@ const captions: Record<string, string> = {
   parallax: "Illustrative scenario",
   atom: "Identity → policy → decision",
   fluxmq: "One broker. Connected systems.",
+  propeller: "WebAssembly · from cloud to edge",
   magistrala: "Magistrala · actual product interface",
   a0: "A0 · ESP32-C6 / Zephyr",
   a1: "A1 · BeagleV-Fire compute board",
@@ -54,6 +58,7 @@ const caption = captions[product.visual];
 >
   {product.visual === "atomic" && <AtomicArtwork id={visualId} />}
   {product.visual === "synth" && <SynthArtwork id={visualId} />}
+  {product.visual === "propeller" && <PropellerArtwork />}
 
   {
     product.visual === "parallax" && (

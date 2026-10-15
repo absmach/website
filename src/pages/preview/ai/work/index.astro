@@ -201,7 +201,7 @@ const filters = [
         render(true);
       });
       button.addEventListener("keydown", (event) => {
-        let next = index;
+        let next: number;
         if (event.key === "ArrowRight") next = (index + 1) % filters.length;
         else if (event.key === "ArrowLeft")
           next = (index - 1 + filters.length) % filters.length;
