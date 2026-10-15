@@ -12,7 +12,7 @@ const { items = stories } = Astro.props;
 <div class="engineering-stories">
   {
     items.map((story) => (
-      <a class="engineering-story" href={`/preview/ai/stories/${story.slug}/`}>
+      <a class="engineering-story" href={`/stories/${story.slug}/`}>
         <span class="story-company">
           <img
             src={`/preview/ai/media/stories/${story.slug}.png`}

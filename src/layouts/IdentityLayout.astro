@@ -16,10 +16,30 @@ const {
   headerTone = "light",
 } = Astro.props;
 const navigation = [
-  { label: "Our work", href: "/preview/ai/work/", key: "work" },
-  { label: "Research", href: "/preview/ai/research/", key: "research" },
-  { label: "Company", href: "/preview/ai/company/", key: "company" },
+  { label: "Our work", href: "/products/", key: "work" },
+  { label: "Research", href: "/research/", key: "research" },
+  { label: "Company", href: "/company/", key: "company" },
 ];
+const pageTitle =
+  title === "Abstract Machines"
+    ? `${title} — Engineering intelligence`
+    : `${title} — Abstract Machines`;
+const canonicalUrl = new URL(
+  Astro.url.pathname,
+  Astro.site ?? "https://www.absmach.eu/",
+);
+const socialImage = new URL("/preview/ai/media/hero-poster.webp", canonicalUrl);
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Abstract Machines",
+  url: new URL("/", canonicalUrl).href,
+  logo: new URL("/preview/ai/media/am-logo.png", canonicalUrl).href,
+  sameAs: [
+    "https://github.com/absmach",
+    "https://www.linkedin.com/company/abstract-machines",
+  ],
+};
 ---
 
 <!doctype html>
@@ -28,10 +48,33 @@ const navigation = [
     <meta charset="utf-8" /><meta
       name="viewport"
       content="width=device-width, initial-scale=1"
-    /><meta name="robots" content="noindex, nofollow" />
-    <title>{title} — Abstract Machines</title><meta
-      name="description"
-      content={description}
+    />
+    <title>{pageTitle}</title><meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:site_name" content="Abstract Machines" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta
+      property="og:image:alt"
+      content="Looking up at the architecture of London's business district"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Abstract Machines Blog"
+      href="/rss.xml"
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(organization)}
     />
     <link rel="icon" href="/favicon.ico" /><link
       rel="preload"
@@ -50,7 +93,7 @@ const navigation = [
   <body class:list={["identity-page", `identity-page--${headerTone}`]}>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
-      <a class="brand" href="/preview/ai/" aria-label="Abstract Machines home"
+      <a class="brand" href="/" aria-label="Abstract Machines home"
         ><img
           src="/preview/ai/media/am-logo.png"
           width="639"
@@ -70,7 +113,7 @@ const navigation = [
           ))
         }
       </nav>
-      <a class="header-contact" href="/preview/ai/contact/"
+      <a class="header-contact" href="/contact/"
         >Let’s talk <ArrowUpRight size={17} /></a
       >
       <button
@@ -99,30 +142,29 @@ const navigation = [
               <ArrowUpRight size={20} />
             </a>
           ))
-        }<a href="/preview/ai/contact/">Let’s talk <ArrowUpRight size={20} /></a
-        >
+        }<a href="/contact/">Let’s talk <ArrowUpRight size={20} /></a>
       </nav>
     </header>
     <main id="main"><slot /></main>
     <footer class="site-footer">
       <div class="footer-main">
-        <a class="footer-wordmark" href="/preview/ai/"
+        <a class="footer-wordmark" href="/"
           >abstract machines<span>Engineering intelligence.</span></a
         ><div class="footer-links">
-          <a href="/preview/ai/work/">Our work</a><a
-            href="/preview/ai/research/">Research</a
-          ><a href="/preview/ai/company/">Company</a><a
-            href="/preview/ai/contact/">Contact</a
+          <a href="/products/">Our work</a><a href="/research/">Research</a><a
+            href="/company/">Company</a
+          ><a href="/contact/">Contact</a><a href="/blog/">Blog</a><a
+            href="https://www.absmach.eu/docs/magistrala/">Docs</a
           ><a href="https://github.com/absmach"
             >GitHub <ArrowUpRight size={14} /></a
           >
         </div>
       </div><div class="footer-bottom">
-        <span>© {new Date().getFullYear()} Abstract Machines</span><a href="/"
-          >View current website <ArrowUpRight size={12} /></a
-        ><button id="credits-open">Photography & film</button><a
-          href="https://www.absmach.eu/privacy">Privacy</a
-        ><span class="preview-label">WEBSITE PREVIEW</span>
+        <span>© {new Date().getFullYear()} Abstract Machines</span>
+        <button id="credits-open">Photography & film</button>
+        <a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a
+          href="/imprint/">Imprint</a
+        >
       </div>
     </footer>
     <dialog id="media-credits" aria-labelledby="credits-title">

@@ -1,266 +1,227 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-
-const email = "info@absmach.eu";
-const contactApiEndpoint = "/api/contact";
+import { ArrowUpRight } from "@lucide/astro";
+import IdentityLayout from "../layouts/IdentityLayout.astro";
+import { identityPhoto } from "../data/identity-photos";
+import { products } from "../data/identity-products";
 ---
 
-<BaseLayout
-  title="IoT Platform Deployment, Support & Partnerships — Abstract Machines"
-  description="Talk to Abstract Machines about production IoT deployments, integrations, research partnerships, and open-source support. Based in Paris, working globally."
+<IdentityLayout
+  title="Let’s talk"
+  description="Talk with Abstract Machines about AI products, connected systems, and research partnerships."
 >
-  <Header />
-  <main>
-    <section class="page-hero">
-      <div class="container-wide">
-        <div class="grid">
-          <div class="stack stack-md">
-            <span class="kicker">Contact</span>
-            <h1 class="h-display">Start a conversation.</h1>
+  <section class="co-hero">
+    <nav class="is-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Abstract Machines</a><span>/</span> Contact
+    </nav><h1>Every good project<br /><span>starts somewhere.</span></h1><p>
+      Tell us what you’re exploring. A product, an engineering challenge, or a
+      research question—we’d like to hear about it.
+    </p>
+  </section>
+  <section class="co-body">
+    <div>
+      <form
+        id="contact-form"
+        class="co-form"
+        action="/api/contact"
+        method="post"
+      >
+        <h2>What’s on your mind?</h2><fieldset class="co-topic">
+          <legend>I’d like to discuss</legend><div class="co-topic-options">
+            <label
+              ><input type="radio" name="topic" value="product" checked /><span
+                >A product</span
+              ></label
+            ><label
+              ><input type="radio" name="topic" value="engineering" /><span
+                >An engineering project</span
+              ></label
+            ><label
+              ><input type="radio" name="topic" value="research" /><span
+                >A research partnership</span
+              ></label
+            >
           </div>
-          <p class="lede">
-            Whether you're planning a production deployment, evaluating our
-            stack, or exploring a research collaboration, we're direct and
-            straightforward to work with.
+        </fieldset><div class="co-fields">
+          <div class="co-field">
+            <label for="contact-name">Your name</label><input
+              id="contact-name"
+              name="name"
+              autocomplete="name"
+              required
+              minlength="2"
+              maxlength="120"
+            />
+          </div><div class="co-field">
+            <label for="contact-email">Email address</label><input
+              id="contact-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxlength="254"
+            />
+          </div><div class="co-field">
+            <label for="contact-company"
+              >Organisation <span>(optional)</span></label
+            ><input
+              id="contact-company"
+              name="organisation"
+              autocomplete="organization"
+              maxlength="200"
+            />
+          </div><div class="co-field">
+            <label for="contact-product">Product of interest</label><select
+              id="contact-product"
+              name="product"
+              ><option value="">Let’s find the right fit</option>{
+                products.map((product) => (
+                  <option value={product.name} data-slug={product.slug}>
+                    {product.name}
+                  </option>
+                ))
+              }</select
+            >
+          </div><div class="co-field co-full">
+            <label for="contact-message"
+              >What are you building or exploring?</label
+            ><textarea
+              id="contact-message"
+              name="message"
+              required
+              minlength="10"
+              maxlength="4300"
+              rows="6"
+              placeholder="A little context about your project, the challenge, and what you have in mind."
+            ></textarea>
+          </div>
+        </div>
+        <div class="co-honeypot" aria-hidden="true">
+          <label for="contact-website">Website</label>
+          <input
+            id="contact-website"
+            name="company"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+        <div class="co-actions">
+          <button class="is-button" type="submit"
+            ><span>Send message</span> <ArrowUpRight size={19} /></button
+          ><p>
+            We’ll use your details to respond to your enquiry.
+            <a href="/privacy/">Read our privacy policy.</a>
           </p>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container-wide">
-        <div class="contact-grid">
-          <form
-            class="contact-form"
-            method="post"
-            action={contactApiEndpoint}
-            data-contact-form
+        </div><p
+          id="contact-status"
+          class="co-status"
+          role="status"
+          aria-live="polite"
+        >
+        </p>
+      </form>
+    </div><aside class="co-aside">
+      <img
+        class="co-aside-image"
+        {...identityPhoto("contact-paris.webp")}
+        loading="lazy"
+      /><div>
+        <p class="section-label">
+          <span class="label-line"></span> BASED IN PARIS
+        </p><h2>Working across borders.</h2><a
+          class="co-email"
+          href="mailto:info@absmach.eu">info@absmach.eu</a
+        ><address class="co-address">
+          Abstract Machines<br />141 Quai de Valmy<br />75010 Paris, France
+        </address><div class="co-aside-links">
+          <a class="text-link" href="/company/"
+            >Meet the company <ArrowUpRight size={16} /></a
+          ><a class="text-link" href="https://github.com/absmach"
+            >GitHub <ArrowUpRight size={16} /></a
           >
-            <span class="kicker" style="color:rgba(246,244,238,0.6);"
-              >Send a message</span
-            >
-            <h2 class="h-2" style="margin:14px 0 24px; color:var(--paper);">
-              We typically reply in 1-2 business days.
-            </h2>
-            <div class="form-fields-row">
-              <div class="field">
-                <label for="name">Name</label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  autocomplete="name"
-                  placeholder="Jane Doe"
-                  required
-                />
-              </div>
-              <div class="field">
-                <label for="email">Email</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autocomplete="email"
-                  placeholder="jane@company.com"
-                  required
-                />
-              </div>
-            </div>
-            <div class="field">
-              <label for="organization">Company</label>
-              <input
-                id="organization"
-                name="organization"
-                type="text"
-                autocomplete="organization"
-                placeholder="Acme Manufacturing"
-              />
-            </div>
-            <div class="field">
-              <label for="message">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="5"
-                placeholder="What are you building? What do you need help with? Any scale or security constraints?"
-                required></textarea>
-            </div>
-            <div aria-hidden="true" style="position:absolute; left:-5000px;">
-              <label for="company">Company</label>
-              <input
-                id="company"
-                name="company"
-                tabindex="-1"
-                autocomplete="off"
-              />
-            </div>
-            <button
-              type="submit"
-              class="btn"
-              style="width:100%; justify-content:center; background:var(--paper); color:var(--ink); border-color:rgba(255,255,255,0.25);"
-              data-contact-submit
-            >
-              Send message →
-            </button>
-            <p
-              style="min-height:24px; margin:14px 0 0; color:rgba(246,244,238,0.75); font-size:14px;"
-              role="status"
-              aria-live="polite"
-              data-contact-status
-            >
-            </p>
-          </form>
-
-          <div class="contact-side">
-            <div class="card">
-              <span class="kicker">Direct email</span>
-              <h3 class="h-4" style="margin-top:10px;">
-                <a href={`mailto:${email}`}>{email}</a>
-              </h3>
-              <p class="ink-2" style="font-size:14px; margin:8px 0 0;">
-                Best for architecture reviews, production deployments, and
-                security discussions.
-              </p>
-            </div>
-            <div class="card">
-              <h3 class="h-4">Other channels</h3>
-              <ul class="channels">
-                <li>
-                  <span class="lbl">GitHub</span><a
-                    href="https://github.com/absmach"
-                    target="_blank"
-                    rel="noopener noreferrer">github.com/absmach</a
-                  >
-                </li>
-                <li>
-                  <span class="lbl">LinkedIn</span><a
-                    href="https://www.linkedin.com/company/abstract-machines"
-                    target="_blank"
-                    rel="noopener noreferrer">Abstract Machines</a
-                  >
-                </li>
-                <li>
-                  <span class="lbl">Twitter</span><a
-                    href="https://twitter.com/absmach"
-                    target="_blank"
-                    rel="noopener noreferrer">@absmach</a
-                  >
-                </li>
-                <li>
-                  <span class="lbl">YouTube</span><a
-                    href="https://www.youtube.com/@absmach"
-                    target="_blank"
-                    rel="noopener noreferrer">@absmach</a
-                  >
-                </li>
-                <li>
-                  <span class="lbl">Matrix</span><a
-                    href="https://matrix.to/#/#absmach:matrix.org"
-                    target="_blank"
-                    rel="noopener noreferrer">#absmach:matrix.org</a
-                  >
-                </li>
-              </ul>
-            </div>
-            <div class="card card-dark">
-              <span class="kicker" style="color:rgba(246,244,238,0.6);"
-                >Office</span
-              >
-              <p style="margin:12px 0 0; font-size:15px; line-height:1.6;">
-                141 Quai de Valmy<br />75010 Paris, France
-              </p>
-            </div>
-          </div>
         </div>
       </div>
-    </section>
-  </main>
-  <Footer />
-  <script is:inline type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ContactPage",
-      "name": "Contact Abstract Machines",
-      "url": "https://www.absmach.eu/contact",
-      "description": "Contact Abstract Machines for IoT platform deployments, integrations, research partnerships, and support.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Abstract Machines",
-        "url": "https://www.absmach.eu",
-        "email": "info@absmach.eu"
-      }
+    </aside>
+  </section>
+  <script>
+    const form = document.querySelector<HTMLFormElement>("#contact-form");
+    const product =
+      document.querySelector<HTMLSelectElement>("#contact-product");
+    const query = new URLSearchParams(location.search);
+    const requestedProduct = query.get("product")?.toLowerCase();
+    if (product && requestedProduct) {
+      const option = Array.from(product.options).find(
+        (option) =>
+          option.value.toLowerCase() === requestedProduct ||
+          option.dataset.slug === requestedProduct,
+      );
+      if (option) product.value = option.value;
     }
-  </script>
-  <script is:inline>
-    (() => {
-      const form = document.querySelector("[data-contact-form]");
-      if (!(form instanceof HTMLFormElement)) return;
-
-      const statusEl = document.querySelector("[data-contact-status]");
-      const submitButton = form.querySelector("[data-contact-submit]");
-      if (!(statusEl instanceof HTMLElement)) return;
-      if (!(submitButton instanceof HTMLButtonElement)) return;
-
-      const defaultLabel = submitButton.textContent?.trim() || "Send message";
-
-      const setStatus = (text, tone = "muted") => {
-        statusEl.textContent = text;
-        statusEl.style.color =
-          tone === "success"
-            ? "#b8f7c5"
-            : tone === "error"
-              ? "#ffb199"
-              : "rgba(246,244,238,0.75)";
-      };
-
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        submitButton.disabled = true;
-        submitButton.setAttribute("aria-busy", "true");
-        submitButton.textContent = "Sending...";
-        setStatus("Sending your message...");
-
-        try {
-          const response = await fetch(form.action, {
-            method: "POST",
-            body: new FormData(form),
-            headers: { Accept: "application/json" },
-          });
-
-          let payload = null;
-          try {
-            payload = await response.json();
-          } catch {
-            payload = null;
-          }
-
-          if (!response.ok || !payload?.ok) {
-            throw new Error(
-              payload?.error ||
-                "Unable to send your message. Please use direct email.",
-            );
-          }
-
-          form.reset();
-          setStatus(
-            payload?.message || "Thanks. Your message has been sent.",
-            "success",
+    const requestedTopic = query.get("topic");
+    if (
+      requestedTopic &&
+      ["product", "engineering", "research"].includes(requestedTopic)
+    ) {
+      const radio = document.querySelector<HTMLInputElement>(
+        `input[name="topic"][value="${requestedTopic}"]`,
+      );
+      if (radio) radio.checked = true;
+    }
+    const status = document.querySelector<HTMLElement>("#contact-status");
+    const submit = form?.querySelector<HTMLButtonElement>(
+      'button[type="submit"]',
+    );
+    const label = submit?.querySelector("span");
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!submit || submit.disabled || !status || !form.reportValidity())
+        return;
+      const fields = new FormData(form);
+      const context = [
+        `Topic: ${fields.get("topic")}`,
+        fields.get("organisation")
+          ? `Organisation: ${fields.get("organisation")}`
+          : "",
+        fields.get("product") ? `Product: ${fields.get("product")}` : "",
+      ]
+        .filter(Boolean)
+        .join("\n");
+      fields.set(
+        "message",
+        `${String(fields.get("message")).trim()}\n\n${context}`,
+      );
+      submit.disabled = true;
+      submit.setAttribute("aria-busy", "true");
+      if (label) label.textContent = "Sending…";
+      status.textContent = "Sending your message…";
+      delete status.dataset.state;
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: fields,
+          headers: { Accept: "application/json" },
+        });
+        const result = await response.json().catch(() => null);
+        if (!response.ok || !result?.ok) {
+          throw new Error(
+            result?.error ||
+              "Unable to send your message. Please try again or email info@absmach.eu.",
           );
-        } catch (error) {
-          setStatus(
-            error instanceof Error
-              ? error.message
-              : "Unable to send your message. Please use direct email.",
-            "error",
-          );
-        } finally {
-          submitButton.disabled = false;
-          submitButton.removeAttribute("aria-busy");
-          submitButton.textContent = defaultLabel;
         }
-      });
-    })();
+        form.reset();
+        status.dataset.state = "success";
+        status.textContent =
+          result.message || "Thanks. Your message has been sent.";
+      } catch (error) {
+        status.dataset.state = "error";
+        status.textContent =
+          error instanceof Error
+            ? error.message
+            : "Unable to send your message. Please email info@absmach.eu.";
+      } finally {
+        submit.disabled = false;
+        submit.removeAttribute("aria-busy");
+        if (label) label.textContent = "Send message";
+      }
+    });
   </script>
-</BaseLayout>
+</IdentityLayout>

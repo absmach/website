@@ -1,10 +1,10 @@
 ---
 import { ArrowUpRight, ArrowRight } from "@lucide/astro";
-import IdentityLayout from "../../../../layouts/IdentityLayout.astro";
-import AssociationMembership from "../../../../components/identity/AssociationMembership.astro";
-import { identityPhoto } from "../../../../data/identity-photos";
-import { researchBrands } from "../../../../data/identity-research";
-import "../../../../styles/identity-editorial.css";
+import IdentityLayout from "../../layouts/IdentityLayout.astro";
+import AssociationMembership from "../../components/identity/AssociationMembership.astro";
+import { identityPhoto } from "../../data/identity-photos";
+import { researchBrands } from "../../data/identity-research";
+import "../../styles/identity-editorial.css";
 
 const projects = [
   {
@@ -88,7 +88,7 @@ const projects = [
           <>
             <a
               class="ie-programme-photo"
-              href={`/preview/ai/research/${project.slug}/`}
+              href={`/research/${project.slug}/`}
               tabindex="-1"
               aria-hidden="true"
             >
@@ -125,7 +125,7 @@ const projects = [
                   </>
                 </div>
                 <h3>
-                  <a href={`/preview/ai/research/${project.slug}/`}>
+                  <a href={`/research/${project.slug}/`}>
                     {project.name} <ArrowUpRight size={30} />
                   </a>
                 </h3>
@@ -135,10 +135,7 @@ const projects = [
                   <span>Our role</span>
                   {researchBrands[project.slug].role}
                 </p>
-                <a
-                  class="text-link"
-                  href={`/preview/ai/research/${project.slug}/`}
-                >
+                <a class="text-link" href={`/research/${project.slug}/`}>
                   Explore the project <ArrowRight size={18} />
                 </a>
               </>
@@ -165,11 +162,9 @@ const projects = [
         We welcome conversations with research teams, industry partners, and
         consortia working on intelligent software, security, and distributed
         systems.
-      </p><a
-        class="ie-button ie-button-white"
-        href="/preview/ai/contact/?topic=research"
+      </p><a class="ie-button ie-button-white" href="/contact/?topic=research"
         >Discuss a research partnership <ArrowUpRight size={20} /></a
-      ><a class="text-link" href="/preview/ai/company/"
+      ><a class="text-link" href="/company/"
         >Get to know Abstract Machines <ArrowRight size={18} /></a
       >
     </div>

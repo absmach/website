@@ -1,13 +1,10 @@
 ---
 import { ArrowUpRight, ArrowRight, ArrowLeft } from "@lucide/astro";
-import IdentityLayout from "../../../../layouts/IdentityLayout.astro";
-import ProductVisual from "../../../../components/identity/ProductVisual.astro";
-import EngineeringStories from "../../../../components/identity/EngineeringStories.astro";
-import {
-  products,
-  type IdentityProduct,
-} from "../../../../data/identity-products";
-import "../../../../styles/identity-product-page.css";
+import IdentityLayout from "../../layouts/IdentityLayout.astro";
+import ProductVisual from "../../components/identity/ProductVisual.astro";
+import EngineeringStories from "../../components/identity/EngineeringStories.astro";
+import { products, type IdentityProduct } from "../../data/identity-products";
+import "../../styles/identity-product-page.css";
 
 export function getStaticPaths() {
   return products.map((product) => ({
@@ -28,8 +25,8 @@ const relatedProducts = product.related
 const publicResource = product.resources.find((resource) =>
   resource.href.startsWith("https://"),
 );
-const contactUrl = `/preview/ai/contact/?product=${encodeURIComponent(product.name)}`;
-const portfolioUrl = `/preview/ai/work/${product.group === "AI" ? "" : `?focus=${product.group.toLowerCase()}`}#portfolio`;
+const contactUrl = `/contact/?product=${encodeURIComponent(product.name)}`;
+const portfolioUrl = `/products/${product.group === "AI" ? "" : `?focus=${product.group.toLowerCase()}`}#portfolio`;
 const groupName =
   product.group === "AI"
     ? "AI & applications"
@@ -230,14 +227,14 @@ const groupName =
         <p class="dp-eyebrow">Related work</p><h2 id="related-title">
           The wider picture.
         </h2>
-      </div><a class="text-link" href="/preview/ai/work/"
+      </div><a class="text-link" href="/products/"
         >Explore all our work <ArrowUpRight size={18} /></a
       >
     </div>
     <div class="dp-related-grid">
       {
         relatedProducts.map((related) => (
-          <a href={`/preview/ai/work/${related.slug}/`}>
+          <a href={`/products/${related.slug}/`}>
             <>
               <div class="dp-related-top">
                 <>

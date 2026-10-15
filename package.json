@@ -10,6 +10,7 @@
     "cf:dev": "astro build && wrangler pages dev dist",
     "deploy": "astro build && wrangler pages deploy dist",
     "check": "astro check",
+    "check:site": "node scripts/check-public-site.mjs",
     "lint": "eslint . --report-unused-disable-directives",
     "lint:fix": "eslint . --fix --report-unused-disable-directives",
     "format": "prettier --write \"**/*.{ts,tsx,mjs,astro,css,md,json}\"",

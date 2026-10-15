@@ -1,4 +1,4 @@
-/** Content for the local identity preview, grounded in project documentation. */
+/** Content for the public product catalogue, grounded in project documentation. */
 export type ProductGroup = "AI" | "Infrastructure" | "Hardware";
 export type ProductVisualKind =
   | "atomic"
@@ -86,11 +86,11 @@ export const products: IdentityProduct[] = [
     resources: [
       {
         label: "Arrange an Atomic walkthrough",
-        href: "/preview/ai/contact/?product=Atomic",
+        href: "/contact/?product=Atomic",
       },
       {
         label: "Explore the identity foundation",
-        href: "/preview/ai/work/atom/",
+        href: "/products/atom/",
       },
     ],
   },
@@ -149,9 +149,9 @@ export const products: IdentityProduct[] = [
     resources: [
       {
         label: "Discuss a Parallax evaluation",
-        href: "/preview/ai/contact/?product=Parallax",
+        href: "/contact/?product=Parallax",
       },
-      { label: "Explore our research", href: "/preview/ai/research/" },
+      { label: "Explore our research", href: "/research/" },
     ],
   },
   {
@@ -209,9 +209,9 @@ export const products: IdentityProduct[] = [
     resources: [
       {
         label: "Arrange a Motif walkthrough",
-        href: "/preview/ai/contact/?product=Motif",
+        href: "/contact/?product=Motif",
       },
-      { label: "Meet Abstract Machines", href: "/preview/ai/company/" },
+      { label: "Meet Abstract Machines", href: "/company/" },
     ],
   },
   {
@@ -598,7 +598,7 @@ export const products: IdentityProduct[] = [
       },
       {
         label: "Discuss an A0 deployment",
-        href: "/preview/ai/contact/?product=A0",
+        href: "/contact/?product=A0",
       },
     ],
   },
@@ -662,7 +662,7 @@ export const products: IdentityProduct[] = [
       },
       {
         label: "Discuss an A1 deployment",
-        href: "/preview/ai/contact/?product=A1",
+        href: "/contact/?product=A1",
       },
     ],
   },
@@ -725,9 +725,9 @@ export const products: IdentityProduct[] = [
       },
       {
         label: "Discuss Quarc research",
-        href: "/preview/ai/contact/?product=Quarc",
+        href: "/contact/?product=Quarc",
       },
-      { label: "Explore our research", href: "/preview/ai/research/" },
+      { label: "Explore our research", href: "/research/" },
     ],
   },
 ];
