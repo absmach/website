@@ -190,7 +190,6 @@ p {
 }
 .hero {
   height: max(780px, 100svh);
-  max-height: 1100px;
   min-height: 780px;
   position: relative;
   background: var(--am-deep);
@@ -1128,15 +1127,34 @@ p {
   text-underline-offset: 3px;
 }
 @media (min-width: 1800px) {
+  :root {
+    /* Scale the editorial grid on wide screens; preserve the laptop layout. */
+    --am-content-width: clamp(1600px, 75vw, 2160px);
+    --am-gutter: max(100px, calc((100% - var(--am-content-width)) / 2));
+  }
+  .contact-section {
+    /* Keep the closing photograph prominent without filling the viewport. */
+    min-height: clamp(575px, 75svh, 1000px);
+  }
+  h2,
+  .intro h2 {
+    font-size: clamp(72px, 2.6vw, 88px);
+  }
+  .hero h1 {
+    font-size: clamp(155px, 5vw, 172px);
+  }
+  .research {
+    padding-inline: var(--am-gutter);
+  }
   .hero-content {
     bottom: 185px;
   }
   .hero-aside {
-    max-width: 370px;
+    max-width: 400px;
     min-width: 330px;
   }
   .hero-aside > p {
-    font-size: 22px;
+    font-size: 20px;
   }
   .product-panel {
     min-height: 540px;
@@ -1152,6 +1170,60 @@ p {
   }
   .story-narrow {
     height: 560px;
+  }
+  .story-copy h3 {
+    font-size: clamp(47px, 1.6vw, 55px);
+  }
+  .product-copy h3 {
+    font-size: clamp(52px, 1.8vw, 62px);
+  }
+  .research-content h2 {
+    font-size: clamp(62px, 2vw, 70px);
+  }
+  .contact-section h2 {
+    font-size: clamp(86px, 2.8vw, 96px);
+  }
+  .intro-copy {
+    max-width: 560px;
+  }
+  .intro-copy .lead {
+    font-size: 26px;
+  }
+  .intro-copy > p:not(.lead),
+  .product-copy > p:not(.eyebrow),
+  .research-content > p:not(.section-label),
+  .heritage-description p,
+  .story-copy p,
+  .project-summary,
+  .section-heading > p {
+    font-size: 20px;
+  }
+  .product-copy > p:not(.eyebrow),
+  .research-content > p:not(.section-label),
+  .heritage-description {
+    max-width: 480px;
+  }
+  .desktop-nav a,
+  .header-contact,
+  .button,
+  .text-link,
+  .dispatch > a,
+  .portfolio-filters button,
+  .footer-links > a {
+    font-size: 16px;
+  }
+  .brand-caption,
+  .hero-topline,
+  .hero-kicker,
+  .hero-footer,
+  .hero-film > span,
+  .dispatch-label,
+  .section-label,
+  .eyebrow,
+  .story-top,
+  .product-copy .eyebrow,
+  .footer-bottom {
+    font-size: 12px;
   }
 }
 @media (max-width: 1100px) {
@@ -1318,8 +1390,7 @@ p {
   }
   .hero {
     min-height: 780px;
-    max-height: 1000px;
-    height: 95svh;
+    height: 100svh;
   }
   .hero-topline {
     top: 122px;
@@ -1636,7 +1707,6 @@ p {
   .hero {
     height: max(780px, 100svh);
     min-height: 780px;
-    max-height: 950px;
   }
   .hero-video {
     object-position: 55% center;
