@@ -596,6 +596,23 @@
   line-height: 1.6;
   min-height: 21px;
 }
+.co-status[data-state="error"] {
+  color: #a12828;
+}
+.co-status[data-state="success"] {
+  color: #23653f;
+}
+.co-honeypot {
+  position: absolute;
+  left: -5000px;
+}
+.co-actions .is-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+.co-actions p a {
+  text-decoration: underline;
+}
 .co-aside-image {
   height: 270px;
   width: 100%;

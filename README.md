@@ -32,69 +32,55 @@ R2 credentials. An internet connection is required for these assets.
 
 ## Build & Preview
 
-### AI identity concept
+### Public website
 
-An interconnected identity preview is available at
-`http://localhost:4321/preview/ai/`. Start it with `npm run dev`.
-The existing homepage remains at `/` for comparison. The concept uses AM blue,
-self-hosted typography, a full-screen architecture film, and editorial photography.
-Its stylesheet is isolated; shared production layouts are unchanged. The concept
-is marked `noindex` and excluded from the sitemap.
+The applied AI design is the public website at `http://localhost:4321/`.
+It uses AM blue, self-hosted typography, a full-screen architecture film,
+and editorial photography.
 
-The preview includes these routes:
+- `/`: homepage, selected work, and product catalogue.
+- `/products/`: searchable AI, Infrastructure, and Hardware categories.
+- `/products/{slug}/`: eleven product pages, including Propeller.
+- `/research/` and `/research/{elastic,confidential6g}/`: research programmes.
+- `/company/`: company background and engineering approach.
+- `/stories/{nokia,intel,ericsson,target}/`: sourced engineering stories.
+- `/contact/`: enquiry form with product and topic preselection.
 
-- `/preview/ai/`: the editorial homepage, selected work, and compact product index.
-- `/preview/ai/work/`: the photo-led portfolio, with AI, Infrastructure, and Hardware tabs.
-- `/preview/ai/work/{slug}/`: ten product pages, with related work and enquiry links.
-- `/preview/ai/research/`: research programmes and individual project pages.
-- `/preview/ai/company/`: the company, its foundations, and engineering approach.
-- `/preview/ai/stories/{nokia,intel,ericsson,target}/`: sourced engineering stories.
-- `/preview/ai/contact/`: an enquiry draft, with product and topic preselection.
+The contact form submits to the existing `/api/contact` endpoint. SMTP settings
+and delivery requirements are described below. Local browser checks should
+intercept submissions rather than sending real mail.
 
-Product tabs, portfolio filters and search, mobile navigation, video controls,
-and media credits work. The homepage product index defaults to four AI products;
-separate Infrastructure and Hardware tabs each show three products. The
-work page uses the same categories, with search within the selected category. The contact form prepares an email draft for the visitor
-to review and send from their own email app; it does not submit to the live API.
-The silent video pauses offscreen and when the tab is hidden. Reduced-motion and
-Save-Data preferences keep the still poster until the visitor chooses to play.
-Atomic and Synth use original conceptual vector illustrations: ideas assembling
-into software, and code becoming circuitry. The same artwork appears on the
-homepage, portfolio cards, and product pages. Motif uses its geometric M mark
-in a restrained brand illustration. Their interfaces and detailed board designs
-are not shown in the preview. Magistrala retains its product dashboard; A0 and
-A1 retain official board photography.
-Quarc has an original chip illustration reflecting its FPGA and
-post-quantum research. Product availability and final
-copy should be reviewed before promoting the design into the main pages.
+The former `/preview/ai/` page routes redirect permanently to the public pages.
+Existing product URLs continue to resolve; `/synth`, `/projects`, and the two
+project detail URLs redirect to their new counterparts. Redirects cover both trailing-slash forms and are excluded
+from the sitemap. Public pages have canonical URLs, social metadata, and no
+preview-only indexing restriction. Blog posts, guides, solutions, pricing,
+legal pages, RSS, and documentation remain available at their existing URLs.
 
-`IdentityLayout.astro` owns the preview navigation and footer. The product
-catalogue lives in `src/data/identity-products.ts`; product pages and portfolio
-cards share `ProductVisual.astro`. All preview routes stay out of the sitemap.
+`IdentityLayout.astro` owns the main navigation, footer, and public metadata.
+The product catalogue lives in `src/data/identity-products.ts`; product pages
+and portfolio cards share `ProductVisual.astro`. The homepage and portfolio
+show four AI products, four Infrastructure products, and three Hardware products.
 
-Media files are served locally from `public/preview/ai/media/`. The optimized
-Mixkit film is approximately 4.2 MB; seventeen distinct Unsplash and Pexels photos are WebP.
-Each editorial photo has its own placement across the home, work, company, contact,
-research, and story pages. `src/data/identity-photos.ts` supplies image attributes
-from the same manifest used by the footer credits. Attribution and
-source/license records are in `video-source.json` and `photos-sources.json`, with
-visitor-facing credits in the footer. Official hardware, Magistrala imagery,
-brand assets, and conceptual artwork are recorded in `media/products/sources.json`.
-Research pages pair editorial photography with official project identities and
-selected consortium partners. `src/data/identity-research.ts` holds the branding
-and membership links; original logos and provenance are in `media/research/`.
-The homepage features Nokia and Intel in a navy foundations section. Magistrala’s
-product page collects all four engineering stories from `src/data/identity-stories.ts`,
-with original company marks recorded in `media/stories/sources.json`. Research
-and the homepage identify AM’s 6G-IA membership and link to the official
-directory; membership verification and badge provenance are in `media/membership/`.
-Font license files and source
-records are in `public/preview/ai/fonts/`.
+Product tabs, category search, mobile navigation, video controls, and media
+credits work across the public pages. The silent video pauses offscreen and
+when the tab is hidden. Reduced-motion and Save-Data preferences keep the still
+poster until the visitor chooses to play.
+
+Existing media URLs remain at `public/preview/ai/media/` to preserve asset
+caching. The optimized Mixkit film is approximately 4.2 MB; editorial photos are
+WebP. `src/data/identity-photos.ts` supplies image attributes from the manifest
+used by the footer credits. Attribution and source/license records are in
+`video-source.json` and `photos-sources.json`. Product imagery and artwork are
+recorded in `media/products/sources.json`; project, story, and membership
+provenance is stored in their respective media folders. Font licenses and
+source records remain in `public/preview/ai/fonts/`.
 
 ### Production build
 
 ```bash
 npm run build
+npm run check:site
 npm run preview
 ```
 
@@ -123,7 +109,7 @@ Wrangler automatically reads `wrangler.jsonc` when commands are run from the pro
 
 ## Contact Form API (Cloudflare Pages Function)
 
-The contact page submits to `POST /api/contact` via `functions/api/contact.js`.
+The contact page submits to `POST /api/contact` via `src/pages/api/contact.js`.
 The endpoint uses `nodemailer` over SMTP (Google SMTP supported).
 Each successful submission sends:
 

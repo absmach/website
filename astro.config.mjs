@@ -5,22 +5,76 @@ import sitemap from "@astrojs/sitemap";
 
 import cloudflare from "@astrojs/cloudflare";
 
+const siteRedirects = {
+  "/pricing": "/magistrala/pricing/",
+  "/products/s0": "/products/a0",
+  "/products/s1": "/products/a1",
+  "/products/hardware": "/products/?focus=hardware",
+  "/synth": "/products/synth/",
+  "/projects": "/research/",
+  "/projects/elastic": "/research/elastic/",
+  "/projects/confidential6g": "/research/confidential6g/",
+  "/preview/ai": "/",
+  "/preview/ai/company": "/company/",
+  "/preview/ai/contact": "/contact/",
+  "/preview/ai/work": "/products/",
+  ...Object.fromEntries(
+    [
+      "atomic",
+      "parallax",
+      "motif",
+      "synth",
+      "atom",
+      "fluxmq",
+      "magistrala",
+      "propeller",
+      "a0",
+      "a1",
+      "quarc",
+    ].map((slug) => [`/preview/ai/work/${slug}`, `/products/${slug}/`]),
+  ),
+  "/preview/ai/research": "/research/",
+  ...Object.fromEntries(
+    ["elastic", "confidential6g"].map((slug) => [
+      `/preview/ai/research/${slug}`,
+      `/research/${slug}/`,
+    ]),
+  ),
+  ...Object.fromEntries(
+    ["nokia", "intel", "ericsson", "target"].map((slug) => [
+      `/preview/ai/stories/${slug}`,
+      `/stories/${slug}/`,
+    ]),
+  ),
+};
+
 export default defineConfig({
   site: "https://www.absmach.eu",
   output: "static",
   devToolbar: { enabled: false },
 
-  redirects: {
-    "/pricing": "/magistrala/pricing/",
-    "/products/s0": "/products/a0",
-    "/products/s1": "/products/a1",
-  },
+  redirects: siteRedirects,
 
   integrations: [
     tailwind(),
     sitemap({
       filenameBase: "sitemap-pages",
-      filter: (page) => !new URL(page).pathname.startsWith("/preview/"),
+      filter: (page) => {
+        const path = new URL(page).pathname.replace(/\/$/, "");
+        return (
+          !path.startsWith("/preview/") &&
+          ![
+            "/pricing",
+            "/synth",
+            "/products/s0",
+            "/products/s1",
+            "/products/hardware",
+            "/projects",
+            "/projects/elastic",
+            "/projects/confidential6g",
+          ].includes(path)
+        );
+      },
       serialize(item) {
         const path = new URL(item.url).pathname;
 

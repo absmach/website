@@ -1,0 +1,59 @@
+<svg viewBox="0 0 600 400" fill="none" aria-hidden="true">
+  <path fill="#e6edf3" d="M0 0h600v400H0z"></path>
+  <text x="39" y="57" fill="#123958" font-size="27" letter-spacing="-.7">
+    Software, where it is needed.
+  </text>
+  <path
+    d="M300 184v38M112 253v-31h376v31M300 222v31"
+    stroke="#7f9db8"
+    stroke-width="1.5"></path>
+  <rect x="176" y="97" width="248" height="87" rx="4" fill="#073763"></rect>
+  <text x="200" y="132" fill="#fff" font-size="25">Propeller</text>
+  <text x="200" y="161" fill="#c0d2e6" font-size="15">Workload manager</text>
+  <path
+    d="m374 128-10 10 10 10m15-20 10 10-10 10"
+    stroke="#b5cffe"
+    stroke-width="2"></path>
+  {
+    [
+      { x: 39, label: "Cloud", detail: "Server" },
+      { x: 227, label: "Edge", detail: "Gateway" },
+      { x: 415, label: "Device", detail: "Microcontroller" },
+    ].map(({ x, label, detail }) => (
+      <g>
+        <rect
+          x={x}
+          y="253"
+          width="146"
+          height="82"
+          rx="4"
+          fill="#fff"
+          stroke="#b8c8d8"
+        />
+        <path
+          d={`m${x + 67} 243 6 6 6-6`}
+          stroke="#557b9d"
+          stroke-width="1.5"
+        />
+        <text
+          x={x + 73}
+          y="287"
+          text-anchor="middle"
+          fill="#123958"
+          font-size="22"
+        >
+          {label}
+        </text>
+        <text
+          x={x + 73}
+          y="313"
+          text-anchor="middle"
+          fill="#536c86"
+          font-size="14"
+        >
+          {detail}
+        </text>
+      </g>
+    ))
+  }
+</svg>

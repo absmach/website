@@ -1,9 +1,9 @@
 ---
 import { ArrowUpRight, ArrowLeft } from "@lucide/astro";
-import IdentityLayout from "../../../../layouts/IdentityLayout.astro";
-import { identityPhoto } from "../../../../data/identity-photos";
-import { researchBrands } from "../../../../data/identity-research";
-import "../../../../styles/identity-editorial.css";
+import IdentityLayout from "../../layouts/IdentityLayout.astro";
+import { identityPhoto } from "../../data/identity-photos";
+import { researchBrands } from "../../data/identity-research";
+import "../../styles/identity-editorial.css";
 
 export function getStaticPaths() {
   const projects = [
@@ -112,7 +112,7 @@ const brand = researchBrands[project.slug];
   active="research"
 >
   <section class="ie-project-hero ie-shell">
-    <a class="ie-back" href="/preview/ai/research/"
+    <a class="ie-back" href="/research/"
       ><ArrowLeft size={16} /> Research & collaboration</a
     >
     <div class="ie-project-topline">
@@ -177,7 +177,7 @@ const brand = researchBrands[project.slug];
         ><a href="#consortium">Consortium partners</a><a href="#context"
           >Project context</a
         >
-      </nav><a class="text-link" href="/preview/ai/contact/?topic=research"
+      </nav><a class="text-link" href="/contact/?topic=research"
         >Talk research <ArrowUpRight size={17} /></a
       >
     </aside>
@@ -268,7 +268,7 @@ const brand = researchBrands[project.slug];
       </p>
     </div><a
       class="ie-circle-link"
-      href={`/preview/ai/research/${project.next.slug}/`}
+      href={`/research/${project.next.slug}/`}
       aria-label={`Explore ${project.next.name}`}><ArrowUpRight size={32} /></a
     >
   </section>

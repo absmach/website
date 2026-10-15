@@ -1041,6 +1041,16 @@
   color: var(--am-blue);
 }
 
+/* Complete the first desktop viewport beneath the 108px light header. */
+@media (min-width: 801px) {
+  .ie-company-hero,
+  .ie-research-hero {
+    min-height: calc(100svh - 108px);
+  }
+  .ie-research-hero {
+    align-items: center;
+  }
+}
 @media (max-width: 1050px) {
   .ie-section {
     padding-block: 80px;
@@ -1171,6 +1181,15 @@
   }
   .ie-story-details {
     gap: 30px;
+  }
+}
+/* Fit the company caption and link on shorter desktop displays. */
+@media (min-width: 801px) and (max-height: 950px) {
+  .ie-company-hero {
+    padding-block: clamp(24px, 3.5svh, 40px);
+  }
+  .ie-company-photo {
+    min-height: 0;
   }
 }
 @media (max-width: 760px) {
