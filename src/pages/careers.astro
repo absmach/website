@@ -1,9 +1,7 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import FinalCTA from "../components/FinalCTA.astro";
 import {
+  ArrowRight,
+  ArrowUpRight,
   DollarSign,
   FlaskConical,
   GitBranch,
@@ -11,22 +9,25 @@ import {
   TrendingUp,
   Zap,
 } from "@lucide/astro";
+import IdentityLayout from "../layouts/IdentityLayout.astro";
+import "../styles/identity-editorial.css";
+import "../styles/identity-pages.css";
 
 const benefits = [
   {
     ic: Globe,
-    title: "Remote-First",
+    title: "Remote-first",
     desc: "Work from anywhere in Europe with flexible hours. We care about outcomes, not office time.",
   },
   {
     ic: GitBranch,
-    title: "Open Source",
+    title: "Open source",
     desc: "Contribute to projects used by thousands of developers worldwide. Your work ships publicly.",
   },
   {
     ic: FlaskConical,
     title: "Research",
-    desc: "Work on cutting-edge EU Horizon Europe projects in confidential computing and 6G networks.",
+    desc: "Work on Horizon Europe projects in confidential computing, service orchestration, and 6G networks.",
   },
   {
     ic: TrendingUp,
@@ -36,7 +37,7 @@ const benefits = [
   {
     ic: Zap,
     title: "Impact",
-    desc: "Build infrastructure running at Nokia, Intel, and Ericsson scale. What you ship matters.",
+    desc: "Build infrastructure that runs at Nokia, Intel, and Ericsson scale. What you ship matters.",
   },
   {
     ic: DollarSign,
@@ -47,256 +48,139 @@ const benefits = [
 
 const process = [
   {
-    step: "01",
     title: "Apply",
     desc: "Send us your CV and a short note about what interests you. No cover letter required.",
   },
   {
-    step: "02",
     title: "Screen",
     desc: "A 30-minute intro call with someone from the team to discuss your background and interests.",
   },
   {
-    step: "03",
     title: "Interview",
-    desc: "Technical and values assessment, relevant to the role, no whiteboard puzzles.",
+    desc: "A technical and values conversation relevant to the role. No whiteboard puzzles.",
   },
   {
-    step: "04",
     title: "Offer",
-    desc: "We move quickly. If it's a fit, you'll have an offer within a few days of the final round.",
+    desc: "We move quickly. If it is a fit, you will have an offer within a few days of the final round.",
   },
 ];
 ---
 
-<BaseLayout
-  title="Careers — Abstract Machines"
-  description="Join Abstract Machines and help build open-source infrastructure for IoT and edge computing. Remote-first, research-driven, based in Paris."
+<IdentityLayout
+  title="Careers"
+  description="Join Abstract Machines and help build open-source infrastructure for AI, IoT, and edge computing. Remote-first, research-driven, based in Paris."
+  active="company"
 >
-  <Header />
-  <main>
-    <!-- Hero -->
-    <section
-      class="section-tight careers-hero"
-      style="background:var(--paper-2); border-bottom:1px solid var(--line-3); text-align:center;"
-    >
-      <div class="container-wide">
-        <span class="kicker">Careers</span>
-        <h1 class="h-1" style="margin-top:8px;">Build the future with us.</h1>
-        <p
-          class="lede"
-          style="margin-top:16px; max-width:560px; margin-left:auto; margin-right:auto;"
-        >
+  <section class="ip-hero" aria-labelledby="careers-title">
+    <nav class="is-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Abstract Machines</a><span>/</span><a href="/company/"
+        >Company</a
+      ><span>/</span> Careers
+    </nav>
+    <div class="ip-hero-grid">
+      <div>
+        <p class="ie-eyebrow">Careers / Abstract Machines</p>
+        <h1 id="careers-title">
+          Build the future<br /><span>with us.</span>
+        </h1>
+      </div>
+      <div class="ip-hero-aside">
+        <p>
           Join a small, expert team pushing the boundaries of distributed
-          systems, IoT, and edge computing, openly, from wherever you are.
+          systems, applied AI, and edge computing. Openly, from wherever you
+          are.
         </p>
-        <div class="btn-row" style="margin-top:28px; justify-content:center;">
-          <a href="/contact/" class="btn btn-primary">Get in touch</a>
-          <a
-            href="https://github.com/absmach"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn">View our work ↗</a
+        <div class="ip-hero-actions">
+          <a class="ie-button ie-button-white" href="/contact/"
+            >Get in touch <ArrowUpRight size={19} /></a
+          ><a class="text-link" href="https://github.com/absmach"
+            >View our work <ArrowUpRight size={18} /></a
           >
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Benefits -->
-    <section>
-      <div class="container-wide">
-        <div class="section-head">
-          <div class="left">
-            <span class="kicker">Why join us</span>
-            <h2 class="h-2" style="margin-top:10px;">
-              What makes us different
-            </h2>
-            <p class="lede" style="margin-top:10px;">
-              Six reasons people choose to work at Abstract Machines.
-            </p>
-          </div>
-        </div>
-        <div class="ben-grid" style="margin-top:36px;">
-          {
-            benefits.map(({ ic: Ic, title, desc }) => (
-              <div class="card">
-                <div class="ben-icon">
-                  <Ic size={20} />
-                </div>
-                <h3 class="h-3">{title}</h3>
-                <p style="margin-top:8px; font-size:14px; color:var(--ink-2); line-height:1.65;">
-                  {desc}
-                </p>
-              </div>
-            ))
-          }
-        </div>
+  <section class="ip-section" aria-labelledby="why-title">
+    <div class="ip-heading">
+      <div>
+        <p class="ie-eyebrow">Why join us</p>
+        <h2 id="why-title">What makes us<br /><span>different.</span></h2>
       </div>
-    </section>
+      <p>Six reasons people choose to work at Abstract Machines.</p>
+    </div>
+    <div class="ip-grid ip-grid-3">
+      {
+        benefits.map(({ ic: Icon, title, desc }) => (
+          <article class="ip-card">
+            <span class="ip-card-icon">
+              <Icon size={20} />
+            </span>
+            <h3>{title}</h3>
+            <p>{desc}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
 
-    <!-- Hiring status callout -->
-    <section
-      class="section-tight"
-      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
-    >
-      <div class="container-narrow">
-        <div class="hiring-callout">
-          <div class="hiring-status">
-            <span class="hiring-dot"></span>
-            <span class="hiring-label">Hiring status</span>
-          </div>
-          <h2 class="h-2" style="margin-top:14px;">No open roles right now</h2>
-          <p
-            style="margin-top:12px; font-size:15px; color:var(--ink-2); line-height:1.65; max-width:520px;"
-          >
-            We don't have active listings, but we're always interested in
-            hearing from strong engineers, researchers, and solutions
-            architects. Send us a note; if there's a fit, we'll make room.
-          </p>
-          <div class="btn-row" style="margin-top:24px;">
-            <a href="/contact/" class="btn btn-primary">Send a note</a>
-            <a href="mailto:info@absmach.eu" class="btn">info@absmach.eu</a>
-          </div>
-        </div>
+  <section class="ip-section ip-section--soft" aria-labelledby="hiring-title">
+    <div class="ip-panel">
+      <span class="ip-status">Hiring status</span>
+      <h2 id="hiring-title">No open roles right now.</h2>
+      <p>
+        We have no active listings, but we are always interested in hearing from
+        strong engineers, researchers, and solutions architects. Send us a note.
+        If there is a fit, we will make room.
+      </p>
+      <div class="ip-actions">
+        <a class="ie-button" href="/contact/"
+          >Send a note <ArrowUpRight size={19} /></a
+        ><a class="text-link" href="mailto:info@absmach.eu"
+          >info@absmach.eu <ArrowRight size={18} /></a
+        >
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Process -->
-    <section>
-      <div class="container-wide">
-        <div class="section-head">
-          <div class="left">
-            <span class="kicker">Process</span>
-            <h2 class="h-2" style="margin-top:10px;">What to expect</h2>
-            <p class="lede" style="margin-top:10px;">
-              A straightforward, respectful hiring process. No surprises.
-            </p>
-          </div>
-        </div>
-        <div class="process-grid" style="margin-top:36px;">
-          {
-            process.map((p) => (
-              <div class="card">
-                <span class="step-num">{p.step}</span>
-                <h3 class="h-3" style="margin-top:12px;">
-                  {p.title}
-                </h3>
-                <p style="margin-top:8px; font-size:13px; color:var(--ink-2); line-height:1.65;">
-                  {p.desc}
-                </p>
-              </div>
-            ))
-          }
-        </div>
+  <section class="ip-section" aria-labelledby="process-title">
+    <div class="ip-heading">
+      <div>
+        <p class="ie-eyebrow">Process</p>
+        <h2 id="process-title">What to expect.</h2>
       </div>
-    </section>
+      <p>A straightforward, respectful hiring process. No surprises.</p>
+    </div>
+    <ol class="ip-steps">
+      {
+        process.map((step, i) => (
+          <li>
+            <span class="ie-number">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{step.title}</h3>
+            <p>{step.desc}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
 
-    <FinalCTA
-      title="Don't see a fit?"
-      subtitle="We're always interested in hearing from talented people. Send us your details and let's talk."
-      primary={{ label: "Get in touch", href: "/contact/" }}
-      secondary={null}
-    />
-  </main>
-  <Footer />
-</BaseLayout>
-
-<style>
-  /* ── Benefits ───────────────────────────────────────────────── */
-  @media (max-width: 600px) {
-    .careers-hero {
-      text-align: left !important;
-    }
-    .careers-hero .lede {
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-    }
-    .careers-hero .btn-row {
-      justify-content: flex-start !important;
-    }
-  }
-
-  .ben-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  .ben-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-sm);
-    background: var(--paper-2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--ink-2);
-    margin-bottom: 14px;
-  }
-
-  /* ── Hiring status ──────────────────────────────────────────── */
-  .hiring-callout {
-    background: var(--paper);
-    border: 1px solid var(--line-3);
-    border-radius: var(--radius);
-    padding: 36px 40px;
-  }
-  .hiring-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: color-mix(in srgb, var(--ink-3) 8%, transparent);
-    border: 1px solid var(--line-3);
-    border-radius: 999px;
-    padding: 5px 12px;
-  }
-  .hiring-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--ink-3);
-    flex-shrink: 0;
-  }
-  .hiring-label {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--ink-3);
-  }
-
-  /* ── Process ────────────────────────────────────────────────── */
-  .process-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-  .step-num {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--ink-4);
-    letter-spacing: 0.1em;
-  }
-
-  /* ── Responsive ─────────────────────────────────────────────── */
-  @media (max-width: 980px) {
-    .ben-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .process-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .hiring-callout {
-      padding: 28px 24px;
-    }
-  }
-  @media (max-width: 600px) {
-    .ben-grid {
-      grid-template-columns: 1fr;
-    }
-    .process-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
+  <section class="ip-cta" aria-labelledby="careers-cta-title">
+    <div>
+      <p class="ie-eyebrow">Open conversation</p>
+      <h2 id="careers-cta-title">Don’t see<br /><span>a fit?</span></h2>
+    </div>
+    <div>
+      <p>
+        We are always interested in hearing from talented people. Send us your
+        details and let’s talk.
+      </p>
+      <div class="ip-actions">
+        <a class="ie-button ie-button-white" href="/contact/"
+          >Get in touch <ArrowUpRight size={19} /></a
+        ><a class="text-link" href="/company/"
+          >Get to know Abstract Machines <ArrowRight size={18} /></a
+        >
+      </div>
+    </div>
+  </section>
+</IdentityLayout>
