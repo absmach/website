@@ -1,137 +1,117 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
+import { ArrowRight, ArrowUpRight } from "@lucide/astro";
+import IdentityLayout from "../../layouts/IdentityLayout.astro";
+import SolutionCard from "../../components/identity/SolutionCard.astro";
 import { solutions } from "../../data/solutions";
+import "../../styles/identity-editorial.css";
+import "../../styles/identity-pages.css";
 ---
 
-<BaseLayout
-  title="IoT Solution Packs for Water, Energy & Smart Cities — Abstract Machines"
-  description="Industry-specific IoT solution packs for water, energy, smart cities, agriculture, and more. Pre-built dashboards, rules, and alerts — powered by Magistrala."
+<IdentityLayout
+  title="Solutions"
+  description="Industry-specific IoT solution packs for water, energy, smart cities, agriculture, and more. Pre-built dashboards, rules, and alerts, powered by Magistrala."
+  active="work"
 >
-  <Header />
-  <main>
-    <!-- Hero -->
-    <section class="page-hero">
-      <div class="container-wide">
-        <span class="kicker">Solutions</span>
-        <h1 class="h-1" style="margin-top:14px; max-width:18ch;">
-          Pick a solution. Deploy in minutes.
+  <section class="ip-hero" aria-labelledby="solutions-title">
+    <nav class="is-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Abstract Machines</a><span>/</span><a href="/products/"
+        >Our work</a
+      ><span>/</span> Solutions
+    </nav>
+    <div class="ip-hero-grid">
+      <div>
+        <p class="ie-eyebrow">Solution packs / Magistrala</p>
+        <h1 id="solutions-title">
+          Pick a solution.<br /><span>Deploy in minutes.</span>
         </h1>
-        <p class="lede" style="margin-top:20px; max-width:52ch;">
-          Pre-configured solution packs built on Magistrala. Pre-wired
-          dashboards, detection rules, and compliance reports, ready to deploy
-          in minutes, not months.
+      </div>
+      <div class="ip-hero-aside">
+        <p>
+          Pre-configured solution packs built on Magistrala. Dashboards,
+          detection rules, and compliance reports are wired up and ready to
+          deploy in minutes, not months.
         </p>
-      </div>
-    </section>
-
-    <!-- Solutions grid -->
-    <section>
-      <div class="container-wide">
-        <div class="sol-img-grid">
-          {
-            solutions.map((sol) => (
-              <a href={`/solutions/${sol.slug}/`} class="sol-img-card">
-                <div class="sol-img-wrap">
-                  <img
-                    src={sol.image}
-                    alt={`${sol.title} dashboard preview`}
-                    width="600"
-                    height="400"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <div class="sol-img-body">
-                  <h3 class="sol-img-title">{sol.title}</h3>
-                  <p class="sol-img-desc">{sol.summary}</p>
-                  <span
-                    class="btn-link"
-                    style="font-size:13px; margin-top:auto;"
-                  >
-                    Explore solution →
-                  </span>
-                </div>
-              </a>
-            ))
-          }
+        <div class="ip-hero-actions">
+          <a
+            class="ie-button ie-button-white"
+            href="/contact/?product=Magistrala"
+            >Talk to us <ArrowUpRight size={19} /></a
+          ><a class="text-link" href="/products/magistrala/"
+            >About the platform <ArrowRight size={18} /></a
+          >
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Proof bar -->
-    <section
-      class="section-tight"
-      style="background:var(--surface-accent); color:var(--on-accent); border-top:1px solid var(--line-3);"
-    >
-      <div class="container-wide">
-        <div class="sol-stats-bar">
-          <div class="sol-stats-bar-cell">
-            <div class="h-2" style="color:var(--on-accent);">400+</div>
-            <div
-              style="margin-top:4px; font-size:13px; color:var(--on-accent-muted);"
-            >
-              Production deployments
-            </div>
-          </div>
-          <div class="sol-stats-bar-cell">
-            <div class="h-2" style="color:var(--on-accent);">8</div>
-            <div
-              style="margin-top:4px; font-size:13px; color:var(--on-accent-muted);"
-            >
-              Industry verticals
-            </div>
-          </div>
-          <div class="sol-stats-bar-cell">
-            <div class="h-2" style="color:var(--on-accent);">Minutes</div>
-            <div
-              style="margin-top:4px; font-size:13px; color:var(--on-accent-muted);"
-            >
-              Time-to-first-dashboard
-            </div>
-          </div>
-        </div>
+  <section class="ip-section" aria-labelledby="packs-title">
+    <div class="ip-heading">
+      <div>
+        <p class="ie-eyebrow">{solutions.length} packs</p>
+        <h2 id="packs-title">
+          Built for the industries<br /><span>we work in.</span>
+        </h2>
       </div>
-    </section>
+      <p>
+        Each pack bundles the devices, dashboards, rules, and reports a
+        deployment needs on day one. Open one to see how it works.
+      </p>
+    </div>
+    <div class="ip-grid ip-grid-3">
+      {
+        solutions.map((solution, index) => (
+          <SolutionCard solution={solution} eager={index < 3} />
+        ))
+      }
+    </div>
+  </section>
 
-    <!-- CTA -->
-    <section class="section-tight">
-      <div class="container-narrow" style="text-align:center;">
-        <h2 class="h-2">Don't see your industry?</h2>
-        <p class="lede" style="margin-top:12px;">
-          Our team builds custom solution packs. Bring your requirements and
-          we'll scope a deployment together.
-        </p>
-        <div class="btn-row" style="margin-top:28px; justify-content:center;">
-          <a href="/contact/" class="btn btn-primary">Talk to us</a>
-          <a href="/services/" class="btn">View services</a>
-        </div>
+  <section class="ip-section ip-section--navy" aria-labelledby="proof-title">
+    <div class="ip-heading">
+      <div>
+        <p class="ie-eyebrow">In the field</p>
+        <h2 id="proof-title">
+          The same platform,<br /><span>many deployments.</span>
+        </h2>
       </div>
-    </section>
-  </main>
-  <Footer />
-</BaseLayout>
+      <p>
+        Every pack runs on the Magistrala platform that already carries
+        production workloads across utilities, cities, and industry.
+      </p>
+    </div>
+    <div class="ip-stats">
+      <div><strong>400+</strong><span>Production deployments</span></div>
+      <div>
+        <strong>{solutions.length}</strong><span>Industry verticals</span>
+      </div>
+      <div>
+        <strong>Minutes</strong><span>Time to the first dashboard</span>
+      </div>
+      <div>
+        <strong>Open source</strong><span>Apache 2.0 platform core</span>
+      </div>
+    </div>
+  </section>
 
-<style>
-  .sol-img-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-  @media (max-width: 1100px) {
-    .sol-img-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  @media (max-width: 760px) {
-    .sol-img-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (max-width: 500px) {
-    .sol-img-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
+  <section class="ip-cta" aria-labelledby="solutions-cta-title">
+    <div>
+      <p class="ie-eyebrow">Custom packs</p>
+      <h2 id="solutions-cta-title">
+        Don’t see<br /><span>your industry?</span>
+      </h2>
+    </div>
+    <div>
+      <p>
+        Our team builds custom solution packs. Bring your requirements and we
+        will scope a deployment together.
+      </p>
+      <div class="ip-actions">
+        <a class="ie-button ie-button-white" href="/contact/"
+          >Talk to us <ArrowUpRight size={19} /></a
+        ><a class="text-link" href="/services/"
+          >View our services <ArrowRight size={18} /></a
+        >
+      </div>
+    </div>
+  </section>
+</IdentityLayout>
