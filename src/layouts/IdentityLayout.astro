@@ -22,8 +22,8 @@ const navigation = [
 ];
 const pageTitle =
   title === "Abstract Machines"
-    ? `${title} — Engineering intelligence`
-    : `${title} — Abstract Machines`;
+    ? `${title} | Engineering intelligence`
+    : `${title} | Abstract Machines`;
 const canonicalUrl = new URL(
   Astro.url.pathname,
   Astro.site ?? "https://www.absmach.eu/",
@@ -192,7 +192,7 @@ const organization = {
           ))
         }
         <li>
-          Architecture film — <a
+          <span>Architecture film</span><a
             href="https://mixkit.co/free-stock-video/corporate-and-business-buildings-in-the-city-4170/"
             >Corporate and business buildings in the city / Mixkit</a
           >
