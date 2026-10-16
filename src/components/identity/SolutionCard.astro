@@ -1,0 +1,31 @@
+---
+import { ArrowUpRight } from "@lucide/astro";
+import type { Solution } from "../../data/solutions";
+
+interface Props {
+  solution: Solution;
+  /** Heading level: the solutions index uses h2, embedded lists use h3. */
+  level?: 2 | 3;
+  eager?: boolean;
+}
+const { solution, level = 2, eager = false } = Astro.props;
+const Heading = level === 3 ? "h3" : "h2";
+const href = `/solutions/${solution.slug}/`;
+---
+
+<article class="ip-solution-card">
+  <a class="ip-solution-visual" href={href} tabindex="-1" aria-hidden="true">
+    <img
+      src={solution.image}
+      alt=""
+      width="600"
+      height="400"
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+    />
+    <span class="ip-solution-arrow"><ArrowUpRight size={18} /></span>
+  </a>
+  <span class="ip-kicker">Magistrala solution pack</span>
+  <Heading><a href={href}>{solution.title}</a></Heading>
+  <p>{solution.summary}</p>
+</article>

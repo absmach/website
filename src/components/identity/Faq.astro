@@ -1,0 +1,51 @@
+---
+import { ArrowRight, Plus } from "@lucide/astro";
+
+interface Props {
+  items: {
+    q: string;
+    a: string;
+    points?: string[];
+    bullets?: { label: string; text: string }[];
+    link?: { href: string; label: string };
+  }[];
+}
+const { items } = Astro.props;
+---
+
+<div class="ip-faq">
+  {
+    items.map((item) => (
+      <details>
+        <summary>
+          {item.q}
+          <Plus size={22} aria-hidden="true" />
+        </summary>
+        <div class="ip-faq-body">
+          <p>{item.a}</p>
+          {item.points && item.points.length > 0 && (
+            <ol>
+              {item.points.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ol>
+          )}
+          {item.bullets && item.bullets.length > 0 && (
+            <ul>
+              {item.bullets.map((bullet) => (
+                <li>
+                  <strong>{bullet.label}:</strong> {bullet.text}
+                </li>
+              ))}
+            </ul>
+          )}
+          {item.link && (
+            <a class="text-link" href={item.link.href}>
+              {item.link.label} <ArrowRight size={16} />
+            </a>
+          )}
+        </div>
+      </details>
+    ))
+  }
+</div>

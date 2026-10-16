@@ -338,7 +338,7 @@ export const solutions: Solution[] = [
       },
     ],
     metaDescription:
-      "Deploy a smart city IoT platform in minutes. Pre-configured traffic, lighting, waste, and energy monitoring on Magistrala — ready out of the box.",
+      "Deploy a smart city IoT platform in minutes. Pre-configured traffic, lighting, waste, and energy monitoring on Magistrala, ready out of the box.",
   },
 
   {
