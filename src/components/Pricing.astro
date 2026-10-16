@@ -923,8 +923,13 @@ const pricingFaqs = [
   .mp-faq {
     margin-top: 110px;
   }
-  .mp-faq :global(.ip-faq) {
+  .mp-faq :global(.ip-faq),
+  .mp-faq :global(.ip-faq-body) {
     max-width: none;
+  }
+  .mp-faq :global(.ip-faq-body p),
+  .mp-faq :global(.ip-faq-body li) {
+    font-size: 18px;
   }
   .mp-table {
     min-width: 860px;
