@@ -15,7 +15,7 @@
 }
 .credits-photo-list > li > span {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--am-muted);
   margin-bottom: 3px;
 }
@@ -53,7 +53,7 @@
   margin-top: 30px;
 }
 .home-portfolio-footer .text-link {
-  font-size: 13px;
+  font-size: 15px;
 }
 @media (max-width: 800px) {
   .home-product-link {
@@ -73,7 +73,7 @@
   .home-product-link .project-summary {
     grid-column: 1;
     grid-row: 2;
-    font-size: 12px;
+    font-size: 14px;
   }
   .home-product-link > svg {
     grid-column: 2;
@@ -131,11 +131,11 @@
   gap: 30px;
 }
 .home-work-footer p {
-  font-size: 13px;
+  font-size: 15px;
   color: #c8d9e8;
 }
 .home-work-footer .text-link {
-  font-size: 13px;
+  font-size: 15px;
   color: white;
 }
 #selected-work .product-visual--illustration {
@@ -151,7 +151,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--am-muted);
   margin-bottom: 40px;
 }
@@ -170,7 +170,7 @@
   background: var(--am-navy);
   color: white;
   padding: 17px 21px;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.4;
   border: 1px solid var(--am-navy);
 }
@@ -253,7 +253,7 @@
 }
 .wi-intro .section-label {
   margin-bottom: 22px;
-  font-size: 10px;
+  font-size: 12px;
   color: #d5e2ed;
   letter-spacing: 0.12em;
 }
@@ -270,14 +270,14 @@
 }
 .wi-hero-bottom > p {
   max-width: 460px;
-  font-size: 15px;
+  font-size: 16px;
   color: #e1ebf3;
   line-height: 1.65;
 }
 .wi-hero-bottom .text-link {
   flex-shrink: 0;
   color: white;
-  font-size: 12px;
+  font-size: 14px;
   border-color: #c2dbefaa;
 }
 .wi-catalogue {
@@ -306,7 +306,7 @@
   background: transparent;
   border: 1px solid transparent;
   color: var(--am-muted);
-  font-size: 12px;
+  font-size: 14px;
   transition:
     background 0.2s,
     color 0.2s;
@@ -321,7 +321,7 @@
   border-color: var(--am-navy);
 }
 .wi-filter-count {
-  font-size: 10px;
+  font-size: 12px;
   font-variant-numeric: tabular-nums;
   opacity: 0.65;
 }
@@ -340,7 +340,7 @@
   background: none;
   color: var(--am-ink);
   font: inherit;
-  font-size: 13px;
+  font-size: 15px;
   outline-offset: 7px;
 }
 .wi-search input::placeholder {
@@ -351,7 +351,7 @@
   justify-content: space-between;
   gap: 25px;
   color: var(--am-muted);
-  font-size: 11px;
+  font-size: 13px;
   margin-bottom: 28px;
 }
 .wi-grid {
@@ -399,15 +399,17 @@
   align-items: center;
   gap: 10px;
   margin: 20px 0 12px;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--am-muted);
 }
 .wi-card-meta > span:last-child {
-  font-size: 9px;
+  font-size: 11px;
   text-transform: none;
   letter-spacing: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
   border: 1px solid var(--am-line);
   padding: 3px 6px;
 }
@@ -417,7 +419,7 @@
   line-height: 1.2;
 }
 .wi-card p {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--am-muted);
   line-height: 1.6;
   max-width: 360px;
@@ -426,7 +428,7 @@
 .wi-card > .text-link {
   align-self: flex-start;
   margin-top: 20px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .wi-empty {
   padding: 65px 0;
@@ -443,7 +445,7 @@
   background: none;
   border-bottom: 1px solid var(--am-navy);
   padding: 5px 0;
-  font-size: 13px;
+  font-size: 15px;
 }
 .wi-connections {
   padding: 65px var(--am-gutter);
@@ -456,12 +458,12 @@
   font-size: clamp(35px, 3.3vw, 51px);
 }
 .wi-connections p {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--am-muted);
   margin-bottom: 22px;
 }
 .wi-connections .text-link {
-  font-size: 12px;
+  font-size: 14px;
 }
 .co-hero {
   padding: 48px var(--am-gutter) 63px;
@@ -514,7 +516,7 @@
 }
 .co-field > label,
 .co-topic legend {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--am-ink);
 }
@@ -528,7 +530,7 @@
   background: white;
   border-radius: 0;
   font: inherit;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.5;
 }
 .co-field textarea {
@@ -569,7 +571,7 @@
   display: block;
   border: 1px solid #bacbd8;
   padding: 10px 12px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .co-topic input:checked + span {
   background: var(--am-navy);
@@ -584,13 +586,13 @@
   margin-top: 25px;
 }
 .co-actions > p {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--am-muted);
   margin-top: 14px;
   max-width: 420px;
 }
 .co-status {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--am-navy);
   margin-top: 16px;
   line-height: 1.6;
@@ -634,7 +636,7 @@
 .co-address {
   margin: 24px 0;
   color: var(--am-muted);
-  font-size: 14px;
+  font-size: 15px;
   font-style: normal;
   line-height: 1.8;
 }
@@ -646,7 +648,7 @@
   flex-wrap: wrap;
 }
 .co-aside-links .text-link {
-  font-size: 12px;
+  font-size: 14px;
 }
 .co-draft {
   grid-column: 1/-1;
@@ -660,7 +662,7 @@
   margin-bottom: 12px;
 }
 .co-draft p {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--am-muted);
   margin-bottom: 20px;
 }
@@ -672,7 +674,7 @@
   background: white;
   color: var(--am-ink);
   font: inherit;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.6;
   resize: vertical;
 }
@@ -687,7 +689,7 @@
   background: none;
   border-bottom: 1px solid var(--am-navy);
   padding: 8px 0;
-  font-size: 12px;
+  font-size: 14px;
 }
 @media (max-width: 1100px) {
   .wi-filters button {
@@ -701,11 +703,11 @@
     font-size: 27px;
   }
   .wi-card-meta {
-    font-size: 8px;
+    font-size: 11px;
     gap: 7px;
   }
   .wi-card-meta > span:last-child {
-    font-size: 8px;
+    font-size: 11px;
   }
   .wi-connections {
     gap: 55px;
@@ -809,20 +811,20 @@
     height: 88px;
   }
   .home-work-footer p {
-    font-size: 12px;
+    font-size: 14px;
   }
   .home-work-footer .text-link {
-    font-size: 12px;
+    font-size: 14px;
   }
   .is-breadcrumb {
-    font-size: 10px;
+    font-size: 12px;
     gap: 8px;
   }
   .wi-intro h1 {
     font-size: clamp(35px, 9.6vw, 50px);
   }
   .wi-hero-bottom > p {
-    font-size: 14px;
+    font-size: 15px;
   }
   .wi-hero {
     min-height: 480px;
@@ -842,7 +844,7 @@
     margin-bottom: 28px;
   }
   .wi-intro .section-label {
-    font-size: 9px;
+    font-size: 11px;
     margin-bottom: 18px;
   }
   .wi-filters {
@@ -852,13 +854,13 @@
     flex-wrap: nowrap;
   }
   .wi-filters button {
-    font-size: 10px;
+    font-size: 12px;
     padding: 10px 8px;
     gap: 7px;
     white-space: nowrap;
   }
   .wi-filter-count {
-    font-size: 8px;
+    font-size: 11px;
   }
   .wi-meta > span:last-child {
     display: none;
@@ -868,7 +870,7 @@
     padding-bottom: 22px;
   }
   .wi-meta {
-    font-size: 10px;
+    font-size: 12px;
   }
   .wi-grid {
     grid-template-columns: 1fr;
@@ -878,17 +880,17 @@
     aspect-ratio: 1.5;
   }
   .wi-card-meta {
-    font-size: 9px;
+    font-size: 11px;
     margin-top: 18px;
   }
   .wi-card-meta > span:last-child {
-    font-size: 9px;
+    font-size: 11px;
   }
   .wi-card h2 {
     font-size: 29px;
   }
   .wi-card p {
-    font-size: 14px;
+    font-size: 15px;
   }
   .wi-card > .text-link {
     margin-top: 17px;
@@ -902,13 +904,13 @@
     font-size: 36px;
   }
   .wi-connections p {
-    font-size: 14px;
+    font-size: 15px;
   }
   .co-hero h1 {
     font-size: 48px;
   }
   .co-hero > p {
-    font-size: 14px;
+    font-size: 15px;
     margin-top: 23px;
   }
   .co-fields {
@@ -919,7 +921,7 @@
     grid-column: auto;
   }
   .co-topic span {
-    font-size: 10px;
+    font-size: 12px;
     padding: 10px;
   }
   .co-aside {
@@ -939,7 +941,7 @@
     font-size: 23px;
   }
   .co-draft .is-button {
-    font-size: 12px;
+    font-size: 14px;
     gap: 22px;
   }
 }

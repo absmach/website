@@ -33,7 +33,7 @@
   margin-top: 28px;
   padding-top: 18px;
   border-top: 1px solid #c9d6df;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--am-muted);
@@ -56,14 +56,14 @@
 }
 .il-related > span {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--am-muted);
   margin-bottom: 14px;
 }
 .il-related .text-link {
-  font-size: 12px;
+  font-size: 14px;
   gap: 14px;
 }
 .il-related .text-link + .text-link {
@@ -94,7 +94,7 @@
   display: block;
   margin-bottom: 14px;
   font-family: "DM Sans", sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.04em;
   color: #6f879b;
 }
@@ -125,7 +125,7 @@
 .il-article li {
   position: relative;
   padding-left: 26px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.75;
   color: var(--am-muted);
 }
@@ -160,7 +160,7 @@
 }
 .il-card p {
   margin-top: 0;
-  font-size: 15px;
+  font-size: 16px;
 }
 .il-card p + p {
   margin-top: 12px;
@@ -172,7 +172,7 @@
   margin: 0;
 }
 .il-card dt {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--am-muted);
@@ -180,7 +180,7 @@
 }
 .il-card dd {
   margin: 0;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
   color: var(--am-ink);
 }
@@ -202,7 +202,7 @@
   color: #a7c4e0;
 }
 .il-closing p:not(.ie-eyebrow) {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.75;
   color: #d0deea;
   max-width: 440px;
