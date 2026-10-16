@@ -1,511 +1,347 @@
 ---
-import { Image } from "astro:assets";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
+import { ArrowUpRight, ChevronDown, Rss, Search } from "@lucide/astro";
 import { getCollection } from "astro:content";
+import IdentityLayout from "../../layouts/IdentityLayout.astro";
+import BlogCard from "../../components/identity/BlogCard.astro";
+import {
+  PRODUCT_CATEGORIES,
+  sortPosts,
+  summarizePost,
+  type BlogSummary,
+} from "../../lib/blog";
+import "../../styles/identity-editorial.css";
+import "../../styles/identity-blog.css";
 
-const posts = await getCollection("blogs", ({ data }) => !data.draft);
+const entries = await getCollection("blogs", ({ data }) => !data.draft);
+const posts = sortPosts(entries.map(summarizePost));
 
-const getBadgeChips = (category = "", featured = false) => {
-  const chips = [];
-  const normalizedCategory = category.toLowerCase().trim();
-  if (normalizedCategory === "announcement") chips.push("announcement");
-  if (!normalizedCategory) chips.push("blog");
-  if (featured) chips.push("featured");
-  return chips;
+const normalize = (value: string) => value.trim().toLowerCase();
+const matchesProduct = (post: BlogSummary, matchers: string[]) => {
+  const tags = new Set(post.tags.map(normalize));
+  const text = normalize(
+    `${post.title} ${post.description} ${post.tags.join(" ")}`,
+  );
+  return matchers.some(
+    (matcher) => tags.has(matcher) || text.includes(matcher),
+  );
 };
+const productFilters = [
+  { key: "", label: "All", count: posts.length },
+  ...PRODUCT_CATEGORIES.map((category) => ({
+    key: category.key,
+    label: category.label,
+    count: posts.filter((post) => matchesProduct(post, category.matchTags))
+      .length,
+  })),
+].filter((filter) => filter.count > 0);
 
-const getBadgeClass = (tag: string) =>
-  tag === "featured"
-    ? "inline-flex rounded border border-accent bg-accent-soft px-2.5 py-1 text-xs font-semibold capitalize text-accent"
-    : tag === "blog"
-      ? "inline-flex rounded border border-line-3 bg-paper-2 px-2.5 py-1 text-xs font-semibold capitalize text-ink-3"
-      : "inline-flex rounded border border-accent/35 bg-accent/15 px-2.5 py-1 text-xs font-semibold capitalize text-accent";
-
-const PRODUCT_CATEGORIES = [
-  { key: "MG", label: "Magistrala", matchTags: ["mg", "magistrala"] },
-  { key: "ATOM", label: "Atom", matchTags: ["atom"] },
-  { key: "FLUXMQ", label: "FluxMQ", matchTags: ["fluxmq"] },
-  { key: "PROPELLER", label: "Propeller", matchTags: ["propeller"] },
-  { key: "A0", label: "A0", matchTags: ["a0", "a0 gateway"] },
-  { key: "A1", label: "A1", matchTags: ["a1", "a1 gateway"] },
-];
-
-const categoryTagSet = new Set(
-  PRODUCT_CATEGORIES.flatMap((category) => category.matchTags).map((tag) =>
-    tag.toLowerCase().trim(),
-  ),
+const productTags = new Set(
+  PRODUCT_CATEGORIES.flatMap((category) => category.matchTags),
 );
-
-const normalized = posts
-  .map((p) => {
-    const d = new Date(p.data.date);
-    return {
-      title: p.data.title,
-      description: p.data.description,
-      date: d,
-      dateISO: d.toISOString(),
-      tags: p.data.tags ?? [],
-      category: p.data.category ?? "",
-      featured: p.data.featured ?? false,
-      author: p.data.author?.name ?? "",
-      authorPicture: p.data.author?.picture ?? "",
-      slug: p.data.slug ?? p.slug,
-      coverImage: p.data.coverImage ?? p.data.heroImage ?? "",
-      href: `/blog/${p.data.slug ?? p.slug}/`,
-      badgeChips: getBadgeChips(
-        p.data.category ?? "",
-        p.data.featured ?? false,
-      ),
-    };
-  })
-  .sort((a, b) => {
-    if (a.featured !== b.featured) {
-      return Number(b.featured) - Number(a.featured);
-    }
-    return b.date.getTime() - a.date.getTime();
-  });
-
-const blogData = JSON.stringify(normalized).replace(/</g, "\\u003c");
-
-const allTags = Array.from(new Set(normalized.flatMap((p) => p.tags)))
-  .filter((tag) => !categoryTagSet.has(tag.toLowerCase().trim()))
+const allTags = Array.from(new Set(posts.flatMap((post) => post.tags)))
+  .filter((tag) => !productTags.has(normalize(tag)))
   .sort((a, b) => a.localeCompare(b));
+
+const blogData = JSON.stringify({
+  posts: posts.map((post) => ({
+    href: post.href,
+    title: post.title,
+    description: post.description,
+    author: post.author,
+    tags: post.tags,
+  })),
+  products: Object.fromEntries(
+    PRODUCT_CATEGORIES.map((category) => [
+      category.key,
+      { label: category.label, matchers: category.matchTags },
+    ]),
+  ),
+}).replace(/</g, "\\u003c");
 ---
 
-<BaseLayout
-  title="IoT Engineering Blog — Abstract Machines"
+<IdentityLayout
+  title="Engineering blog"
   description="Technical articles on IoT, MQTT, edge computing, open-source infrastructure, and product updates from the Abstract Machines engineering team."
 >
-  <Header />
-  <main>
-    <section class="section-tight">
-      <div class="container-wide">
-        <!-- page title -->
-        <div class="mb-10">
-          <span class="kicker">Blog</span>
-          <h1 class="h-1 mt-2">IoT Engineering Blog</h1>
-          <p class="lede mt-3">
-            Technical articles, product announcements, and open-source deep
-            dives from the Abstract Machines team.
-          </p>
-        </div>
-
-        <div class="flex flex-col gap-8 lg:flex-row lg:items-start">
-          <!-- sidebar -->
-          <aside
-            class="w-full self-start lg:sticky lg:top-24 lg:z-40 lg:w-72 lg:flex-shrink-0"
+  <section class="ib-hero" aria-labelledby="blog-title">
+    <nav class="is-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Abstract Machines</a><span>/</span> Blog
+    </nav>
+    <div class="ib-hero-grid">
+      <h1 id="blog-title">
+        Notes from<br /><span>the engineering team.</span>
+      </h1>
+      <div class="ib-hero-aside">
+        <p>
+          Technical articles, product announcements, and open-source deep dives
+          from the people building Abstract Machines.
+        </p>
+        <div class="ib-hero-links">
+          <span>{posts.length} articles</span><a
+            class="text-link"
+            href="/rss.xml">Subscribe with RSS <Rss size={16} /></a
           >
-            <div class="card">
-              <p class="text-sm font-semibold text-ink-3">Search</p>
-              <input
-                id="blog-search"
-                type="text"
-                placeholder="Title, description, author…"
-                class="blog-search mt-2"
-              />
-
-              <p class="mt-5 text-sm font-semibold text-ink-3">Categories</p>
-              <div
-                id="category-chips"
-                class="mt-2 flex gap-1.5 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible"
-              >
-                {
-                  PRODUCT_CATEGORIES.map((category) => (
-                    <button
-                      type="button"
-                      class="product-chip"
-                      data-product={category.key}
-                      aria-pressed="false"
-                    >
-                      {category.label}
-                    </button>
-                  ))
-                }
-              </div>
-
-              <div class="mt-5 flex items-center justify-between gap-3">
-                <p id="result-count" class="text-sm font-semibold text-ink-3">
-                  {normalized.length} post(s)
-                </p>
-                <button
-                  id="clear-filters"
-                  type="button"
-                  class="btn btn-ghost text-sm"
-                >
-                  Clear
-                </button>
-              </div>
-
-              <div class="mt-4">
-                <p
-                  id="applied-tags-label"
-                  class="hidden text-xs font-semibold text-ink-3"
-                >
-                  Active filters
-                </p>
-                <div
-                  id="applied-tags"
-                  class="mt-2 hidden flex-wrap items-center gap-2"
-                >
-                </div>
-              </div>
-
-              <div
-                id="tag-panel"
-                class="mt-5 rounded border border-line-3 bg-paper-2 p-3 overflow-x-auto overflow-y-hidden lg:p-4 lg:max-h-72 lg:overflow-auto"
-              >
-                <p class="hidden text-sm font-semibold text-ink-3 lg:block">
-                  Tags
-                </p>
-                <div
-                  class="flex flex-nowrap gap-2 whitespace-nowrap lg:mt-3 lg:flex-wrap"
-                  id="tag-chips"
-                >
-                  {
-                    allTags.map((t) => (
-                      <button
-                        type="button"
-                        class="tag-chip"
-                        data-tag={t}
-                        aria-pressed="false"
-                      >
-                        {t}
-                      </button>
-                    ))
-                  }
-                </div>
-              </div>
-            </div>
-          </aside>
-
-          <!-- post grid -->
-          <div class="min-w-0 flex-1">
-            <div class="grid gap-6 md:grid-cols-2" id="blog-results">
-              {
-                normalized.map((p, index) => (
-                  <a
-                    href={p.href}
-                    class={`card block overflow-hidden !p-0 hover:shadow ${
-                      p.featured ? "md:col-span-2" : ""
-                    }`}
-                    data-post-href={p.href}
-                  >
-                    {p.coverImage && (
-                      <div
-                        class={`overflow-hidden border-b border-line-3 ${
-                          p.featured
-                            ? "aspect-[16/7] md:aspect-[16/6]"
-                            : "aspect-video"
-                        }`}
-                      >
-                        <Image
-                          src={p.coverImage}
-                          alt={p.title}
-                          width={1280}
-                          height={720}
-                          class="cover-image h-full w-full"
-                          loading={index < 2 ? "eager" : "lazy"}
-                          decoding="async"
-                        />
-                      </div>
-                    )}
-                    <div class="p-6">
-                      {p.badgeChips?.length > 0 && (
-                        <div class="mb-3 flex flex-wrap gap-2">
-                          {p.badgeChips.map((chip) => (
-                            <span class={getBadgeClass(chip)}>{chip}</span>
-                          ))}
-                        </div>
-                      )}
-                      <h2 class="text-xl font-semibold leading-snug">
-                        {p.title}
-                      </h2>
-                      <p class="mt-2 text-ink-3">{p.description}</p>
-                      <div class="mt-4 flex items-center gap-3 text-sm text-ink-3">
-                        {p.authorPicture && (
-                          <img
-                            src={p.authorPicture}
-                            alt={
-                              p.author
-                                ? `${p.author} profile photo`
-                                : "Author profile photo"
-                            }
-                            class="h-8 w-8 rounded-full border border-line-3 object-cover"
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        )}
-                        <div class="flex flex-wrap items-center gap-2">
-                          <span>
-                            {p.date.toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </span>
-                          {p.author && (
-                            <>
-                              <span>•</span>
-                              <span>{p.author}</span>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                      {p.tags?.length > 0 && (
-                        <div class="mt-4 flex flex-wrap gap-2">
-                          {p.tags.map((t) => (
-                            <span class="rounded-full border border-line-3 bg-paper-2 px-3 py-1 text-xs font-semibold text-ink-3">
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </a>
-                ))
-              }
-              <div id="blog-empty-state" class="card md:col-span-2 hidden">
-                <p class="text-ink-3">No posts match your filters.</p>
-              </div>
-            </div>
-          </div>
         </div>
-
-        <script type="application/json" id="blog-data" set:html={blogData} />
-
-        <script is:inline>
-          (() => {
-            const $ = (s) => document.querySelector(s);
-
-            const data = JSON.parse($("#blog-data")?.textContent || "[]");
-            const resultsEl = $("#blog-results");
-            const searchEl = $("#blog-search");
-            const countEl = $("#result-count");
-            const clearBtn = $("#clear-filters");
-            const appliedTagsLabelEl = $("#applied-tags-label");
-            const appliedTagsEl = $("#applied-tags");
-            const emptyStateEl = $("#blog-empty-state");
-            const productChipEls = Array.from(
-              document.querySelectorAll(".product-chip"),
-            );
-            const cardEls = Array.from(
-              resultsEl?.querySelectorAll("[data-post-href]") || [],
-            );
-            const chipEls = Array.from(document.querySelectorAll(".tag-chip"));
-
-            const PRODUCT_MATCHERS = {
-              MG: ["mg", "magistrala"],
-              ATOM: ["atom"],
-              FLUXMQ: ["fluxmq"],
-              PROPELLER: ["propeller", "properller"],
-              A0: ["a0", "a0 gateway"],
-              A1: ["a1", "a1 gateway"],
-            };
-            const PRODUCT_KEYS = new Set(Object.keys(PRODUCT_MATCHERS));
-            const normalize = (value) =>
-              (value || "").toString().trim().toLowerCase();
-            const state = { q: "", tags: new Set(), product: "" };
-
-            function syncAppliedTags() {
-              if (!appliedTagsEl) return;
-              const tags = Array.from(state.tags);
-              const filters = state.product
-                ? [`Category: ${state.product}`, ...tags]
-                : tags;
-              appliedTagsEl.replaceChildren();
-              if (!filters.length) {
-                appliedTagsEl.classList.add("hidden");
-                appliedTagsLabelEl?.classList.add("hidden");
-                return;
-              }
-              appliedTagsEl.classList.remove("hidden");
-              appliedTagsLabelEl?.classList.remove("hidden");
-              const limit = window.matchMedia("(min-width: 640px)").matches
-                ? 4
-                : 2;
-              const shown = filters.slice(0, limit);
-              const remaining = filters.length - shown.length;
-              shown.forEach((filter) => {
-                const el = document.createElement("span");
-                el.className = "tag";
-                el.textContent = filter;
-                appliedTagsEl.appendChild(el);
-              });
-              if (remaining > 0) {
-                const el = document.createElement("span");
-                el.className = "tag";
-                el.textContent = `+${remaining}`;
-                appliedTagsEl.appendChild(el);
-              }
-            }
-
-            function applyChipState(el, on) {
-              el.setAttribute("aria-pressed", on ? "true" : "false");
-            }
-            function applyProductChipState(el, on) {
-              el.setAttribute("aria-pressed", on ? "true" : "false");
-            }
-
-            function postMatchesCategory(post, productKey) {
-              const matchers = PRODUCT_MATCHERS[productKey] || [];
-              if (!matchers.length) return true;
-              const tagSet = new Set((post.tags || []).map(normalize));
-              const searchableText = normalize(
-                `${post.title} ${post.description} ${(post.tags || []).join(" ")}`,
-              );
-              return matchers.some(
-                (matcher) =>
-                  tagSet.has(matcher) || searchableText.includes(matcher),
-              );
-            }
-
-            function readFromURL() {
-              const params = new URLSearchParams(location.search);
-              state.q = params.get("q") || "";
-              const tags = (params.get("tags") || "")
-                .split(",")
-                .map((s) => s.trim())
-                .filter(Boolean);
-              state.tags = new Set(tags);
-              const product = (params.get("product") || "").toUpperCase();
-              state.product = PRODUCT_KEYS.has(product) ? product : "";
-              if (searchEl) searchEl.value = state.q;
-              chipEls.forEach((el) => {
-                const tag = el.dataset.tag;
-                applyChipState(el, state.tags.has(tag));
-              });
-              productChipEls.forEach((el) => {
-                const productKey = (el.dataset.product || "").toUpperCase();
-                applyProductChipState(el, state.product === productKey);
-              });
-              syncAppliedTags();
-            }
-
-            function writeToURL() {
-              const params = new URLSearchParams();
-              if (state.q) params.set("q", state.q);
-              if (state.tags.size)
-                params.set("tags", Array.from(state.tags).join(","));
-              if (state.product) params.set("product", state.product);
-              const qs = params.toString();
-              const base = location.pathname.endsWith("/")
-                ? location.pathname
-                : location.pathname + "/";
-              history.replaceState(null, "", qs ? `${base}?${qs}` : base);
-            }
-
-            function matches(post) {
-              const q = state.q.toLowerCase().trim();
-              const hay = (
-                post.title +
-                " " +
-                post.description +
-                " " +
-                post.author +
-                " " +
-                (post.tags || []).join(" ")
-              ).toLowerCase();
-              if (q && !hay.includes(q)) return false;
-              if (state.product && !postMatchesCategory(post, state.product))
-                return false;
-              if (state.tags.size) {
-                const ptags = new Set(post.tags || []);
-                for (const t of state.tags) if (!ptags.has(t)) return false;
-              }
-              return true;
-            }
-
-            function render() {
-              const filtered = data.filter(matches);
-              if (countEl) countEl.textContent = `${filtered.length} post(s)`;
-              if (!resultsEl) return;
-              const visibleHrefs = new Set(filtered.map((p) => p.href));
-              cardEls.forEach((card) => {
-                const href = card.dataset.postHref;
-                const isVisible = href ? visibleHrefs.has(href) : false;
-                card.classList.toggle("hidden", !isVisible);
-              });
-              if (emptyStateEl) {
-                emptyStateEl.classList.toggle("hidden", filtered.length !== 0);
-              }
-              writeToURL();
-            }
-
-            searchEl?.addEventListener("input", () => {
-              state.q = searchEl.value;
-              render();
-            });
-
-            chipEls.forEach((el) => {
-              el.addEventListener("click", () => {
-                const tag = el.dataset.tag;
-                if (state.tags.has(tag)) state.tags.delete(tag);
-                else state.tags.add(tag);
-                applyChipState(el, state.tags.has(tag));
-                syncAppliedTags();
-                render();
-              });
-            });
-
-            productChipEls.forEach((el) => {
-              el.addEventListener("click", () => {
-                const productKey = (el.dataset.product || "").toUpperCase();
-                state.product = state.product === productKey ? "" : productKey;
-                productChipEls.forEach((chip) => {
-                  const chipKey = (chip.dataset.product || "").toUpperCase();
-                  applyProductChipState(chip, state.product === chipKey);
-                });
-                syncAppliedTags();
-                render();
-              });
-            });
-
-            clearBtn?.addEventListener("click", () => {
-              state.q = "";
-              state.tags.clear();
-              state.product = "";
-              if (searchEl) searchEl.value = "";
-              chipEls.forEach((el) => applyChipState(el, false));
-              productChipEls.forEach((el) => applyProductChipState(el, false));
-              syncAppliedTags();
-              render();
-            });
-
-            readFromURL();
-            render();
-          })();
-        </script>
       </div>
-    </section>
-  </main>
-  <Footer />
-</BaseLayout>
+    </div>
+  </section>
 
-<style>
-  .cover-image {
-    object-fit: cover;
-  }
-</style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const coverImages = document.querySelectorAll(".cover-image");
-    coverImages.forEach((img) => {
-      if (img instanceof HTMLImageElement) {
-        const checkOrientation = () => {
-          if (img.naturalHeight > img.naturalWidth) {
-            img.style.objectFit = "contain";
-            const parent = img.parentElement;
-            if (parent) parent.style.backgroundColor = "transparent";
-          } else {
-            img.style.objectFit = "cover";
-          }
-        };
-        if (img.complete) checkOrientation();
-        else img.addEventListener("load", checkOrientation);
+  <section class="ib-catalogue" aria-label="Articles">
+    <div class="ib-toolbar">
+      <div class="ib-filters" aria-label="Filter by product">
+        {
+          productFilters.map((filter) => (
+            <button
+              type="button"
+              class="ib-product"
+              data-product={filter.key}
+              aria-pressed={filter.key === "" ? "true" : "false"}
+            >
+              {filter.label}
+              <span class="ib-filter-count" aria-hidden="true">
+                {String(filter.count).padStart(2, "0")}
+              </span>
+            </button>
+          ))
+        }
+      </div>
+      <label class="ib-search"
+        ><Search size={18} /><input
+          id="blog-search"
+          type="search"
+          aria-label="Search articles"
+          placeholder="Search articles"
+          autocomplete="off"
+        /></label
+      >
+    </div>
+    <details class="ib-tags" id="tag-panel">
+      <summary>
+        <span>Filter by tag · {allTags.length} tags</span><ChevronDown
+          size={16}
+        />
+      </summary>
+      <div class="ib-tag-list">
+        {
+          allTags.map((tag) => (
+            <button
+              type="button"
+              class="ib-tag"
+              data-tag={tag}
+              aria-pressed="false"
+            >
+              {tag}
+            </button>
+          ))
+        }
+      </div>
+    </details>
+    <div class="ib-meta">
+      <div>
+        <span id="result-count" aria-live="polite">{posts.length} articles</span
+        ><div id="applied-filters" class="ib-active-filters" hidden></div>
+      </div>
+      <button type="button" class="ib-clear" data-clear hidden
+        >Clear filters</button
+      >
+    </div>
+    <div class="ib-grid" id="blog-results">
+      {
+        posts.map((post, index) => (
+          <BlogCard
+            post={post}
+            featured={post.featured && index === 0}
+            eager={index < 2}
+          />
+        ))
       }
+    </div>
+    <div id="blog-empty-state" class="ib-empty" hidden>
+      <h2>No matches yet.</h2>
+      <p>Try another search or clear the filters.</p>
+      <button type="button" class="ib-clear" data-clear>Clear filters</button>
+    </div>
+  </section>
+
+  <section class="is-page-cta">
+    <h2>Working on something similar?</h2>
+    <a class="is-button" href="/contact/"
+      >Start a conversation <ArrowUpRight size={20} /></a
+    >
+  </section>
+
+  <script type="application/json" id="blog-data" set:html={blogData} />
+  <script>
+    interface BlogPost {
+      href: string;
+      title: string;
+      description: string;
+      author: string;
+      tags: string[];
+    }
+    interface BlogData {
+      posts: BlogPost[];
+      products: Record<string, { label: string; matchers: string[] }>;
+    }
+    const data: BlogData = JSON.parse(
+      document.querySelector("#blog-data")?.textContent || "{}",
+    );
+    const posts = data.posts ?? [];
+    const products = data.products ?? {};
+    const cards = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-post-href]"),
+    );
+    const productButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>(".ib-product"),
+    );
+    const tagButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>(".ib-tag"),
+    );
+    const clearButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>("[data-clear]"),
+    );
+    const search = document.querySelector<HTMLInputElement>("#blog-search");
+    const count = document.querySelector("#result-count");
+    const applied = document.querySelector<HTMLElement>("#applied-filters");
+    const empty = document.querySelector<HTMLElement>("#blog-empty-state");
+    const tagPanel = document.querySelector<HTMLDetailsElement>("#tag-panel");
+
+    const normalize = (value: string) => value.trim().toLowerCase();
+    const state = { q: "", tags: new Set<string>(), product: "" };
+
+    const matchesProduct = (post: BlogPost) => {
+      const matchers = products[state.product]?.matchers ?? [];
+      if (!matchers.length) return true;
+      const tags = new Set(post.tags.map(normalize));
+      const text = normalize(
+        `${post.title} ${post.description} ${post.tags.join(" ")}`,
+      );
+      return matchers.some(
+        (matcher) => tags.has(matcher) || text.includes(matcher),
+      );
+    };
+    const matches = (post: BlogPost) => {
+      const query = normalize(state.q);
+      const haystack = normalize(
+        `${post.title} ${post.description} ${post.author} ${post.tags.join(" ")}`,
+      );
+      if (query && !haystack.includes(query)) return false;
+      if (!matchesProduct(post)) return false;
+      for (const tag of state.tags) if (!post.tags.includes(tag)) return false;
+      return true;
+    };
+
+    const syncControls = () => {
+      productButtons.forEach((button) =>
+        button.setAttribute(
+          "aria-pressed",
+          String((button.dataset.product ?? "") === state.product),
+        ),
+      );
+      tagButtons.forEach((button) =>
+        button.setAttribute(
+          "aria-pressed",
+          String(state.tags.has(button.dataset.tag ?? "")),
+        ),
+      );
+      const filters = [
+        ...(state.product ? [products[state.product]?.label ?? ""] : []),
+        ...state.tags,
+      ].filter(Boolean);
+      if (applied) {
+        applied.replaceChildren(
+          ...filters.map((label) => {
+            const chip = document.createElement("span");
+            chip.textContent = label;
+            return chip;
+          }),
+        );
+        applied.hidden = filters.length === 0;
+      }
+      const active = filters.length > 0 || state.q.trim() !== "";
+      clearButtons.forEach((button) => (button.hidden = !active));
+    };
+
+    const writeUrl = () => {
+      const params = new URLSearchParams();
+      if (state.q.trim()) params.set("q", state.q.trim());
+      if (state.tags.size) params.set("tags", Array.from(state.tags).join(","));
+      if (state.product) params.set("product", state.product);
+      const query = params.toString();
+      history.replaceState(
+        null,
+        "",
+        query ? `${location.pathname}?${query}` : location.pathname,
+      );
+    };
+
+    const render = () => {
+      const visible = new Set(posts.filter(matches).map((post) => post.href));
+      cards.forEach((card) => {
+        card.hidden = !visible.has(card.dataset.postHref ?? "");
+      });
+      if (count)
+        count.textContent = `${visible.size} ${visible.size === 1 ? "article" : "articles"}`;
+      if (empty) empty.hidden = visible.size > 0;
+      syncControls();
+      writeUrl();
+    };
+
+    const readUrl = () => {
+      const params = new URLSearchParams(location.search);
+      state.q = params.get("q") ?? "";
+      state.tags = new Set(
+        (params.get("tags") ?? "")
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean),
+      );
+      const product = (params.get("product") ?? "").toUpperCase();
+      state.product = product in products ? product : "";
+      if (search) search.value = state.q;
+      if (tagPanel && state.tags.size) tagPanel.open = true;
+    };
+
+    search?.addEventListener("input", () => {
+      state.q = search.value;
+      render();
     });
-  });
-</script>
+    productButtons.forEach((button) =>
+      button.addEventListener("click", () => {
+        const key = button.dataset.product ?? "";
+        state.product = state.product === key ? "" : key;
+        render();
+      }),
+    );
+    tagButtons.forEach((button) =>
+      button.addEventListener("click", () => {
+        const tag = button.dataset.tag ?? "";
+        if (state.tags.has(tag)) state.tags.delete(tag);
+        else state.tags.add(tag);
+        render();
+      }),
+    );
+    clearButtons.forEach((button) =>
+      button.addEventListener("click", () => {
+        state.q = "";
+        state.tags.clear();
+        state.product = "";
+        if (search) search.value = "";
+        render();
+        search?.focus();
+      }),
+    );
+
+    document.querySelectorAll<HTMLImageElement>(".ib-cover").forEach((img) => {
+      const fit = () => {
+        if (img.naturalHeight > img.naturalWidth)
+          img.style.objectFit = "contain";
+      };
+      if (img.complete) fit();
+      else img.addEventListener("load", fit);
+    });
+
+    readUrl();
+    render();
+  </script>
+</IdentityLayout>

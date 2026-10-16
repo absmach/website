@@ -8,12 +8,22 @@ interface Props {
   description?: string;
   active?: string;
   headerTone?: "light" | "overlay";
+  /** Social image path; defaults to the architecture hero poster. */
+  image?: string;
+  imageAlt?: string;
+  type?: "website" | "article";
+  /** Canonical path or absolute URL; defaults to the current path. */
+  canonical?: string;
 }
 const {
   title = "Abstract Machines",
   description = "AI products, secure infrastructure, and connected systems. Engineering intelligence at Abstract Machines.",
   active = "",
   headerTone = "light",
+  image = "/preview/ai/media/hero-poster.webp",
+  imageAlt = "Looking up at the architecture of London's business district",
+  type = "website",
+  canonical,
 } = Astro.props;
 const navigation = [
   { label: "Our work", href: "/products/", key: "work" },
@@ -25,10 +35,10 @@ const pageTitle =
     ? `${title} | Engineering intelligence`
     : `${title} | Abstract Machines`;
 const canonicalUrl = new URL(
-  Astro.url.pathname,
+  canonical ?? Astro.url.pathname,
   Astro.site ?? "https://www.absmach.eu/",
 );
-const socialImage = new URL("/preview/ai/media/hero-poster.webp", canonicalUrl);
+const socialImage = new URL(image, canonicalUrl);
 const organization = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -52,15 +62,12 @@ const organization = {
     <title>{pageTitle}</title><meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta property="og:site_name" content="Abstract Machines" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={socialImage} />
-    <meta
-      property="og:image:alt"
-      content="Looking up at the architecture of London's business district"
-    />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
@@ -89,6 +96,7 @@ const organization = {
       type="font/woff2"
       crossorigin
     />
+    <slot name="head" />
   </head>
   <body class:list={["identity-page", `identity-page--${headerTone}`]}>
     <a class="skip-link" href="#main">Skip to content</a>

@@ -1,0 +1,65 @@
+---
+import { ArrowUpRight } from "@lucide/astro";
+import type { BlogSummary } from "../../lib/blog";
+
+interface Props {
+  post: BlogSummary;
+  /** Wide, two-column presentation for featured posts. */
+  featured?: boolean;
+  /** Heading level: the index uses h2, related-post lists use h3. */
+  level?: 2 | 3;
+  eager?: boolean;
+}
+const { post, featured = false, level = 2, eager = false } = Astro.props;
+const Heading = level === 3 ? "h3" : "h2";
+---
+
+<article
+  class:list={["ib-card", { "ib-card--featured": featured }]}
+  data-post-href={post.href}
+>
+  <a class="ib-card-visual" href={post.href} tabindex="-1" aria-hidden="true">
+    {
+      post.coverImage ? (
+        <img
+          class="ib-cover"
+          src={post.coverImage}
+          alt=""
+          width="1280"
+          height="720"
+          loading={eager ? "eager" : "lazy"}
+          decoding="async"
+        />
+      ) : (
+        <span class="ib-card-placeholder">Abstract Machines</span>
+      )
+    }
+    <span class="ib-card-arrow"><ArrowUpRight size={18} /></span>
+  </a>
+  <div class="ib-card-body">
+    <div class="ib-card-meta">
+      <span>
+        {post.categoryLabel}
+        {post.featured && <span class="ib-card-flag">Featured</span>}
+      </span>
+      <time datetime={post.dateISO}>{post.dateLabel}</time>
+    </div>
+    <Heading><a href={post.href}>{post.title}</a></Heading>
+    <p>{post.description}</p>
+    <div class="ib-card-author">
+      {
+        post.authorPicture && (
+          <img
+            src={post.authorPicture}
+            alt=""
+            width="26"
+            height="26"
+            loading="lazy"
+            decoding="async"
+          />
+        )
+      }
+      <span>{post.author}</span><span>{post.readingMinutes} min read</span>
+    </div>
+  </div>
+</article>
