@@ -15,7 +15,7 @@ tags:
   - Abstract Machines
   - Magistrala
   - BeagleV Fire
-  - S1
+  - A1
   - IoT
   - MQTT
   - CoAP
