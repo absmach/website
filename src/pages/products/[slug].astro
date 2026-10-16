@@ -58,12 +58,22 @@ const groupName =
           ><span aria-hidden="true"></span>{product.stage}</span
         >
         <div class="dp-hero-actions">
-          <a class="dp-button" href={contactUrl}
-            >Let’s talk {product.name} <ArrowUpRight size={19} /></a
-          >
-          <a class="dp-inline-link" href="#overview"
-            >Explore the product <ArrowRight size={18} /></a
-          >
+          {
+            product.pricing ? (
+              <>
+                <a class="dp-button" href={product.pricing}>
+                  See pricing <ArrowRight size={19} />
+                </a>
+                <a class="dp-inline-link" href={contactUrl}>
+                  Let’s talk {product.name} <ArrowUpRight size={18} />
+                </a>
+              </>
+            ) : (
+              <a class="dp-button" href={contactUrl}>
+                Let’s talk {product.name} <ArrowUpRight size={19} />
+              </a>
+            )
+          }
         </div>
       </div>
       <div class="dp-hero-visual">

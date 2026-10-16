@@ -24,6 +24,7 @@ export interface IdentityProduct {
   stage: string;
   visual: ProductVisualKind;
   image?: string;
+  pricing?: string;
   features: Array<{ title: string; description: string }>;
   workflow: Array<{ title: string; description: string }>;
   related: string[];
@@ -420,6 +421,7 @@ export const products: IdentityProduct[] = [
     stage: "Community + Enterprise",
     visual: "magistrala",
     image: "/preview/ai/media/products/magistrala-dashboard.webp",
+    pricing: "/magistrala/pricing/",
     features: [
       {
         title: "Connect a varied fleet",
