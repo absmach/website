@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.6;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -27,7 +27,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--am-muted);
 }
 .dp-back:hover {
@@ -42,7 +42,7 @@
   color: white;
   background: var(--am-navy);
   padding: 17px 20px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
   transition: background 0.2s;
 }
@@ -63,7 +63,7 @@
   display: inline-flex;
   align-items: center;
   gap: 15px;
-  font-size: 12px;
+  font-size: 14px;
   padding-bottom: 6px;
   border-bottom: 1px solid currentColor;
 }
@@ -114,7 +114,7 @@
   gap: 8px;
   padding: 7px 10px;
   border: 1px solid #b9cbd9;
-  font-size: 10px;
+  font-size: 12px;
   margin-top: 24px;
 }
 .dp-stage > span {
@@ -154,7 +154,7 @@
   border-top: 1px solid #d2dfe8;
 }
 .dp-hero-baseline > span {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.07em;
   color: var(--am-muted);
 }
@@ -162,7 +162,7 @@
   display: inline-flex;
   align-items: center;
   gap: 24px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .dp-overview {
   display: grid;
@@ -206,7 +206,7 @@
   font-size: clamp(39px, 4.1vw, 61px);
 }
 .dp-section-heading > p {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.7;
   color: var(--am-muted);
   max-width: 300px;
@@ -223,7 +223,7 @@
   padding: 30px 0 0 50px;
 }
 .dp-number {
-  font-size: 11px;
+  font-size: 13px;
   color: #728b9e;
   letter-spacing: 0.04em;
 }
@@ -240,7 +240,7 @@
   max-width: 460px;
 }
 .dp-feature-grid p {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.85;
   color: var(--am-muted);
   max-width: 470px;
@@ -276,7 +276,7 @@
   width: 40px;
   border: 1px solid #6a8da9;
   border-radius: 50%;
-  font-size: 11px;
+  font-size: 13px;
   flex-shrink: 0;
 }
 .dp-step-marker::after {
@@ -294,7 +294,7 @@
 }
 .dp-workflow-steps p {
   color: #c5d7e6;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.8;
   max-width: 350px;
 }
@@ -311,7 +311,7 @@
 }
 .dp-resources > div > p:not(.dp-eyebrow) {
   margin-top: 27px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--am-muted);
   max-width: 390px;
 }
@@ -376,7 +376,7 @@
   margin-bottom: 25px;
 }
 .dp-related-top > span {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--am-muted);
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -392,12 +392,12 @@
 }
 .dp-related-grid p {
   color: var(--am-muted);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.75;
   margin-bottom: 27px;
 }
 .dp-related-stage {
-  font-size: 10px;
+  font-size: 12px;
   padding-top: 17px;
   border-top: 1px solid var(--am-line);
   margin-top: auto;
@@ -440,7 +440,7 @@
     font-size: 29px;
   }
   .dp-summary {
-    font-size: 14px;
+    font-size: 15px;
   }
   .dp-hero-visual {
     aspect-ratio: 0.85;
@@ -460,7 +460,7 @@
     font-size: 19px;
   }
   .dp-description > p {
-    font-size: 15px;
+    font-size: 16px;
   }
   .dp-feature-grid {
     gap: 35px 45px;
@@ -478,7 +478,7 @@
     font-size: 23px;
   }
   .dp-workflow-steps p {
-    font-size: 13px;
+    font-size: 15px;
   }
   .dp-related-grid {
     gap: 20px;
@@ -490,10 +490,10 @@
     font-size: 30px;
   }
   .dp-related-top > span {
-    font-size: 8px;
+    font-size: 11px;
   }
   .dp-related-grid p {
-    font-size: 12px;
+    font-size: 14px;
   }
   .dp-resource-list > a {
     font-size: 16px;
@@ -537,10 +537,10 @@
     aspect-ratio: 1.25;
   }
   .dp-hero-baseline > span {
-    font-size: 8px;
+    font-size: 11px;
   }
   .dp-hero-baseline > a {
-    font-size: 10px;
+    font-size: 12px;
     gap: 12px;
     white-space: nowrap;
   }
@@ -573,7 +573,7 @@
     font-size: 23px;
   }
   .dp-feature-grid p {
-    font-size: 13px;
+    font-size: 15px;
   }
   .dp-section-heading {
     gap: 28px;
@@ -607,7 +607,7 @@
   .dp-step-marker > span {
     width: 35px;
     height: 35px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .dp-step-marker::after {
     display: none;
@@ -617,7 +617,7 @@
     margin-bottom: 13px;
   }
   .dp-workflow-steps p {
-    font-size: 14px;
+    font-size: 15px;
     max-width: 550px;
   }
   .dp-resources {
@@ -647,13 +647,13 @@
     margin-bottom: 20px;
   }
   .dp-related-top > span {
-    font-size: 10px;
+    font-size: 12px;
   }
   .dp-related-grid h3 {
     font-size: 34px;
   }
   .dp-related-grid p {
-    font-size: 14px;
+    font-size: 15px;
     max-width: 550px;
     margin-bottom: 23px;
   }
@@ -677,10 +677,10 @@
     font-size: 27px;
   }
   .dp-summary {
-    font-size: 14px;
+    font-size: 15px;
   }
   .dp-eyebrow {
-    font-size: 9px;
+    font-size: 11px;
     gap: 9px;
   }
   .dp-hero-actions {
@@ -703,7 +703,7 @@
     font-size: 19px;
   }
   .dp-description > p {
-    font-size: 14px;
+    font-size: 15px;
   }
   .dp-section {
     padding-block: 52px;
@@ -722,7 +722,7 @@
     font-size: 24px;
   }
   .dp-feature-grid p {
-    font-size: 14px;
+    font-size: 15px;
   }
   .dp-workflow-steps > li {
     padding-left: 48px;
@@ -731,10 +731,10 @@
     font-size: 23px;
   }
   .dp-workflow-steps p {
-    font-size: 13px;
+    font-size: 15px;
   }
   .dp-resource-list > a {
-    font-size: 15px;
+    font-size: 16px;
     grid-template-columns: 20px 1fr 20px;
     gap: 12px;
   }
@@ -747,4 +747,19 @@
   .dp-contact h2 {
     font-size: 38px;
   }
+}
+
+/* Solution packs (Magistrala only) */
+.dp-solutions {
+  border-top: 1px solid var(--am-line);
+}
+.dp-solutions-intro {
+  max-width: 560px;
+  margin-top: 26px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--am-muted);
+}
+.dp-solutions .ip-grid {
+  margin-top: 45px;
 }

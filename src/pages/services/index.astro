@@ -1,25 +1,28 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
+import { ArrowRight, ArrowUpRight } from "@lucide/astro";
+import IdentityLayout from "../../layouts/IdentityLayout.astro";
+import "../../styles/identity-editorial.css";
+import "../../styles/identity-pages.css";
 
-const serviceLines: [string, string, string[]][] = [
-  [
-    "Managed Deployments",
-    "End-to-end deployment and operations for your infrastructure.",
-    [
+const serviceLines = [
+  {
+    title: "Managed deployments",
+    description:
+      "End-to-end deployment and operations for your infrastructure.",
+    bullets: [
       "Infrastructure setup",
-      "Monitoring & alerting",
+      "Monitoring and alerting",
       "Performance optimisation",
       "Security updates",
-      "Backup & DR",
+      "Backup and disaster recovery",
       "SLA-backed support",
     ],
-  ],
-  [
-    "Custom Development",
-    "Tailored software for unique integration and extension requirements.",
-    [
+  },
+  {
+    title: "Custom development",
+    description:
+      "Tailored software for unique integration and extension requirements.",
+    bullets: [
       "Custom protocols",
       "System integrations",
       "Feature development",
@@ -27,11 +30,11 @@ const serviceLines: [string, string, string[]][] = [
       "API design",
       "Performance optimisation",
     ],
-  ],
-  [
-    "Architecture & Consulting",
-    "Expert guidance for infrastructure design and security.",
-    [
+  },
+  {
+    title: "Architecture and consulting",
+    description: "Expert guidance for infrastructure design and security.",
+    bullets: [
       "Architecture review",
       "Stack selection",
       "Security audit",
@@ -39,180 +42,188 @@ const serviceLines: [string, string, string[]][] = [
       "Migration strategies",
       "Best practices",
     ],
-  ],
-  [
-    "Training & Support",
-    "Empower your team to operate and extend the stack independently.",
-    [
-      "On-site & remote training",
+  },
+  {
+    title: "Training and support",
+    description:
+      "Empower your team to operate and extend the stack independently.",
+    bullets: [
+      "On-site and remote training",
       "Documentation",
       "Workshops",
       "Dedicated support",
       "Knowledge transfer",
       "Community access",
     ],
-  ],
+  },
 ];
 
 const process = [
-  [
-    "01",
-    "Discovery",
-    "We review your requirements, existing stack, and goals to scope the right engagement.",
-  ],
-  [
-    "02",
-    "Planning",
-    "Technical specifications, timeline, and resource allocation, agreed before work begins.",
-  ],
-  [
-    "03",
-    "Delivery",
-    "Iterative development and deployment with regular milestone reviews.",
-  ],
-  [
-    "04",
-    "Support",
-    "Ongoing maintenance, monitoring, and optimisation to keep things running well.",
-  ],
+  {
+    title: "Discovery",
+    desc: "We review your requirements, existing stack, and goals to scope the right engagement.",
+  },
+  {
+    title: "Planning",
+    desc: "Technical specifications, timeline, and resource allocation, agreed before work begins.",
+  },
+  {
+    title: "Delivery",
+    desc: "Iterative development and deployment with regular milestone reviews.",
+  },
+  {
+    title: "Support",
+    desc: "Ongoing maintenance, monitoring, and optimisation to keep things running well.",
+  },
+];
+
+const models = [
+  {
+    kicker: "One-time",
+    title: "Project-based",
+    desc: "Fixed scope and timeline with clear deliverables. Good for well-defined integrations or builds.",
+    featured: false,
+  },
+  {
+    kicker: "Monthly",
+    title: "Retainer",
+    desc: "Ongoing support and development at a predictable monthly cost. Our most common engagement.",
+    featured: true,
+  },
+  {
+    kicker: "Hourly",
+    title: "Time and materials",
+    desc: "Flexible engagement for evolving requirements or exploratory work.",
+    featured: false,
+  },
 ];
 ---
 
-<BaseLayout
-  title="IoT Deployment, Development & Consulting Services — Abstract Machines"
-  description="Managed deployments, custom development, architecture consulting, and training for open-source IoT infrastructure — delivered by the engineers who built it."
+<IdentityLayout
+  title="Services"
+  description="Managed deployments, custom development, architecture consulting, and training for open-source IoT and AI infrastructure, delivered by the engineers who built it."
+  active="work"
 >
-  <Header />
-  <main>
-    <section class="page-hero">
-      <div class="container-wide">
-        <span class="kicker">Services</span>
-        <h1 class="h-1" style="margin-top:14px; max-width:18ch;">
-          From requirements to running systems.
+  <section class="ip-hero" aria-labelledby="services-title">
+    <nav class="is-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Abstract Machines</a><span>/</span> Services
+    </nav>
+    <div class="ip-hero-grid">
+      <div>
+        <p class="ie-eyebrow">Services / Engineering</p>
+        <h1 id="services-title">
+          From requirements<br /><span>to running systems.</span>
         </h1>
-        <p class="lede" style="margin-top:20px; max-width:52ch;">
+      </div>
+      <div class="ip-hero-aside">
+        <p>
           We deploy, extend, and maintain the Abstract Machines stack for
           production environments. Every engagement is with the engineers who
           built it.
         </p>
-      </div>
-    </section>
-
-    <section>
-      <div class="container-wide">
-        <div class="section-head">
-          <div class="left">
-            <span class="kicker">What we do</span>
-            <h2 class="h-2" style="margin-top:14px;">Four service lines.</h2>
-          </div>
-        </div>
-        <div class="val-grid">
-          {
-            serviceLines.map(([title, description, bullets], index) => (
-              <div class="val">
-                <div class="num">{String(index + 1).padStart(2, "0")}</div>
-                <div style="flex:1;">
-                  <h4>{title}</h4>
-                  <p style="margin-bottom:14px;">{description}</p>
-                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 18px; font-size:13px; color:var(--ink-2);">
-                    {bullets.map((bullet) => (
-                      <div>→ {bullet}</div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <section
-      style="background:var(--paper-2); border-top:1px solid var(--line-3); border-bottom:1px solid var(--line-3);"
-    >
-      <div class="container-wide">
-        <div class="section-head">
-          <div class="left">
-            <span class="kicker">Process</span>
-            <h2 class="h-2" style="margin-top:14px;">
-              From discovery to delivery.
-            </h2>
-          </div>
-        </div>
-        <div class="process-grid">
-          {
-            process.map(([number, title, description]) => (
-              <div class="proc-card">
-                <div class="num">{number}</div>
-                <h4>{title}</h4>
-                <p>{description}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container-wide">
-        <div class="section-head">
-          <div class="left">
-            <span class="kicker">Engagement models</span>
-            <h2 class="h-2" style="margin-top:14px;">
-              Pick the shape that fits.
-            </h2>
-          </div>
-        </div>
-        <div class="depl-grid">
-          <div class="depl-card">
-            <div class="company">One-time</div>
-            <h3 class="title">Project-Based</h3>
-            <p class="desc">
-              Fixed scope and timeline with clear deliverables. Good for
-              well-defined integrations or builds.
-            </p>
-          </div>
-          <div
-            class="depl-card"
-            style="background:var(--surface-accent); color:var(--on-accent); border-color:var(--surface-accent);"
+        <div class="ip-hero-actions">
+          <a class="ie-button ie-button-white" href="/contact/"
+            >Start a conversation <ArrowUpRight size={19} /></a
+          ><a class="text-link" href="/products/"
+            >Explore our work <ArrowRight size={18} /></a
           >
-            <span
-              class="badge"
-              style="background:var(--on-accent); color:var(--surface-accent); border-color:var(--dark-border); align-self:flex-start;"
-              >Most common</span
-            >
-            <div class="company" style="color:var(--on-accent-muted);">
-              Monthly
-            </div>
-            <h3 class="title" style="color:var(--on-accent);">Retainer</h3>
-            <p class="desc" style="color:var(--on-accent-dim);">
-              Ongoing support and development at a predictable monthly cost.
-              Most common engagement.
-            </p>
-          </div>
-          <div class="depl-card">
-            <div class="company">Hourly</div>
-            <h3 class="title">Time & Materials</h3>
-            <p class="desc">
-              Flexible engagement for evolving requirements or exploratory work.
-            </p>
-          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section
-      style="background:var(--paper-2); border-top:1px solid var(--line-3);"
-    >
-      <div class="container-wide">
-        <div class="callout">
-          <span class="kicker">Ready to scope an engagement?</span>
-          <h3 style="margin-top:14px;">Tell us what you're building.</h3>
-          <p>We will come back with a concrete proposal within a few days.</p>
-          <a href="/contact" class="btn btn-primary">Start a conversation →</a>
-        </div>
+  <section class="ip-section" aria-labelledby="lines-title">
+    <div class="ip-heading">
+      <div>
+        <p class="ie-eyebrow">What we do</p>
+        <h2 id="lines-title">Four<br /><span>service lines.</span></h2>
       </div>
-    </section>
-  </main>
-  <Footer />
-</BaseLayout>
+      <p>
+        From first deployment to long-term operations, each line is staffed by
+        the people who build the products.
+      </p>
+    </div>
+    <ol class="ip-steps ip-steps-2">
+      {
+        serviceLines.map((line, i) => (
+          <li>
+            <span class="ie-number">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{line.title}</h3>
+            <p>{line.description}</p>
+            <ul class="ip-list ip-list-2" style="margin-top: 22px;">
+              {line.bullets.map((bullet) => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="ip-section ip-section--soft" aria-labelledby="process-title">
+    <div class="ip-heading">
+      <div>
+        <p class="ie-eyebrow">Process</p>
+        <h2 id="process-title">
+          From discovery<br /><span>to delivery.</span>
+        </h2>
+      </div>
+    </div>
+    <ol class="ip-steps">
+      {
+        process.map((step, i) => (
+          <li>
+            <span class="ie-number">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{step.title}</h3>
+            <p>{step.desc}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="ip-section" aria-labelledby="models-title">
+    <div class="ip-heading">
+      <div>
+        <p class="ie-eyebrow">Engagement models</p>
+        <h2 id="models-title">Pick the shape<br /><span>that fits.</span></h2>
+      </div>
+    </div>
+    <div class="ip-grid ip-grid-3">
+      {
+        models.map((model) => (
+          <article
+            class:list={["ip-card", { "ip-card--navy": model.featured }]}
+          >
+            <div class="ip-card-top">
+              <span class="ip-kicker">{model.kicker}</span>
+              {model.featured && <span class="ip-kicker">Most common</span>}
+            </div>
+            <h3>{model.title}</h3>
+            <p>{model.desc}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="ip-cta" aria-labelledby="services-cta-title">
+    <div>
+      <p class="ie-eyebrow">Ready to scope an engagement?</p>
+      <h2 id="services-cta-title">
+        Tell us what<br /><span>you’re building.</span>
+      </h2>
+    </div>
+    <div>
+      <p>We will come back with a concrete proposal within a few days.</p>
+      <div class="ip-actions">
+        <a class="ie-button ie-button-white" href="/contact/"
+          >Start a conversation <ArrowUpRight size={19} /></a
+        ><a class="text-link" href="/solutions/"
+          >See our solution packs <ArrowRight size={18} /></a
+        >
+      </div>
+    </div>
+  </section>
+</IdentityLayout>

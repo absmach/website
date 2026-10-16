@@ -142,7 +142,7 @@ p {
 }
 .brand-caption {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.02em;
   color: #dce5ed;
   margin-top: 8px;
@@ -154,7 +154,7 @@ p {
   margin-left: auto;
 }
 .desktop-nav a {
-  font-size: 13px;
+  font-size: 15px;
   padding: 12px 0;
   position: relative;
 }
@@ -172,7 +172,7 @@ p {
   width: 100%;
 }
 .header-contact {
-  font-size: 13px;
+  font-size: 15px;
   border: 1px solid #ffffff8a;
   display: flex;
   align-items: center;
@@ -228,7 +228,7 @@ p {
   right: var(--am-gutter);
   display: flex;
   justify-content: space-between;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   color: #e4edf6;
 }
@@ -243,7 +243,7 @@ p {
   gap: 45px;
 }
 .hero-kicker {
-  font-size: 12px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -282,7 +282,7 @@ p {
   justify-content: space-between;
   gap: 45px;
   padding: 18px 22px;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.4;
   transition: background 0.2s;
 }
@@ -303,7 +303,7 @@ p {
   justify-content: space-between;
   border-top: 1px solid #ffffff44;
   padding-top: 25px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .scroll-cue {
   display: flex;
@@ -325,7 +325,7 @@ p {
   color: #e0eaf5;
 }
 .hero-film > span {
-  font-size: 11px;
+  font-size: 13px;
 }
 .hero-film button {
   display: grid;
@@ -369,7 +369,7 @@ p {
   border-bottom: 1px solid #e0e7ed;
 }
 .dispatch-label {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   white-space: nowrap;
   display: flex;
@@ -388,7 +388,7 @@ p {
   justify-content: space-between;
   width: 100%;
   gap: 25px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .dispatch-cta {
   display: flex;
@@ -404,7 +404,7 @@ p {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.5;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -448,14 +448,14 @@ p {
   margin-bottom: 24px;
 }
 .intro-copy > p:not(.lead) {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--am-muted);
 }
 .text-link {
   display: inline-flex;
   align-items: center;
   gap: 25px;
-  font-size: 13px;
+  font-size: 15px;
   border-bottom: 1px solid currentColor;
   padding-bottom: 8px;
   line-height: 1.5;
@@ -525,7 +525,7 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.06em;
 }
 .story-arrow {
@@ -553,7 +553,7 @@ p {
   letter-spacing: -0.04em;
 }
 .story-copy p {
-  font-size: 13px;
+  font-size: 15px;
   color: #dfeaf5;
   margin-top: 20px;
 }
@@ -573,7 +573,7 @@ p {
   margin-bottom: 26px;
 }
 .section-heading > p {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.7;
   color: var(--am-muted);
   padding-bottom: 5px;
@@ -607,7 +607,7 @@ p {
 }
 .product-tabs button > span {
   font-family: "DM Sans", sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   color: #aac3d9;
 }
 .product-tabs button > svg {
@@ -642,7 +642,7 @@ p {
   align-items: flex-start;
 }
 .product-copy .eyebrow {
-  font-size: 10px;
+  font-size: 12px;
   flex-wrap: wrap;
   gap: 10px;
   color: #c0d3e4;
@@ -660,7 +660,7 @@ p {
   margin: 35px 0 25px;
 }
 .product-copy > p:not(.eyebrow) {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.8;
   color: #c7d6e3;
   max-width: 350px;
@@ -686,7 +686,7 @@ p {
   bottom: 19px;
   left: 28px;
   right: 20px;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.5;
   color: #3b566d;
 }
@@ -760,7 +760,7 @@ p {
 }
 .portfolio-filters button {
   padding: 10px 15px;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.5;
   background: white;
   color: var(--am-muted);
@@ -774,7 +774,7 @@ p {
   color: white;
 }
 .portfolio-controls > span {
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
   color: var(--am-muted);
 }
@@ -802,11 +802,11 @@ p {
   letter-spacing: -0.035em;
 }
 .project-summary {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--am-muted);
 }
 .project-group {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--am-muted);
 }
 .project-row > summary > svg {
@@ -829,17 +829,17 @@ p {
   display: inline-block;
   padding: 5px 9px;
   background: #edf2f7;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.5;
   color: var(--am-navy);
 }
 .project-detail p {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--am-muted);
   margin: 17px 0 20px;
 }
 .project-detail .text-link {
-  font-size: 12px;
+  font-size: 14px;
 }
 .research {
   display: grid;
@@ -872,7 +872,7 @@ p {
   left: 40px;
   right: 30px;
   color: white;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   z-index: 1;
 }
@@ -880,7 +880,7 @@ p {
   padding: 75px clamp(35px, 5.5vw, 100px);
 }
 .research-content .section-label {
-  font-size: 9px;
+  font-size: 11px;
   white-space: nowrap;
 }
 .research-content h2 {
@@ -890,7 +890,7 @@ p {
   color: #67839a;
 }
 .research-content > p:not(.section-label) {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--am-muted);
   max-width: 390px;
   margin: 25px 0 35px;
@@ -904,7 +904,7 @@ p {
   border-top: 1px solid #b8cad8;
 }
 .research-projects .eyebrow {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--am-muted);
   letter-spacing: 0.03em;
 }
@@ -917,7 +917,7 @@ p {
   color: #3c6bb4;
 }
 .research-content > .text-link {
-  font-size: 12px;
+  font-size: 14px;
   margin-top: 20px;
   gap: 15px;
 }
@@ -939,7 +939,7 @@ p {
   margin-bottom: 25px;
 }
 .heritage-description > .text-link {
-  font-size: 12px;
+  font-size: 14px;
 }
 .heritage-footer {
   display: flex;
@@ -981,7 +981,7 @@ p {
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   color: #d7e5f1;
 }
@@ -1039,7 +1039,7 @@ p {
 .footer-wordmark > span {
   display: block;
   font-family: "DM Sans", sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0;
   font-weight: 400;
   color: var(--am-muted);
@@ -1052,7 +1052,7 @@ p {
   padding-top: 6px;
 }
 .footer-links > a {
-  font-size: 12px;
+  font-size: 14px;
   display: flex;
   gap: 8px;
   align-items: center;
@@ -1063,7 +1063,7 @@ p {
   border-top: 1px solid var(--am-line);
   padding-top: 24px;
   gap: 27px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--am-muted);
   align-items: center;
 }
@@ -1075,13 +1075,13 @@ p {
 .footer-bottom > button {
   padding: 0;
   background: none;
-  font-size: 10px;
+  font-size: inherit;
 }
 .footer-bottom > a:nth-child(2) {
   margin-left: auto;
 }
 .preview-label {
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.07em;
   color: #73899b;
 }
@@ -1113,13 +1113,13 @@ p {
   padding: 7px;
 }
 #media-credits p {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--am-muted);
 }
 #media-credits ul {
   padding-left: 18px;
   margin: 25px 0;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 2;
 }
 #media-credits a {
@@ -1223,7 +1223,7 @@ p {
   .story-top,
   .product-copy .eyebrow,
   .footer-bottom {
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 @media (max-width: 1100px) {
@@ -1236,12 +1236,12 @@ p {
     gap: 20px;
   }
   .desktop-nav a {
-    font-size: 12px;
+    font-size: 14px;
   }
   .header-contact {
     margin-left: 0;
     gap: 20px;
-    font-size: 12px;
+    font-size: 14px;
   }
   .hero {
     min-height: 760px;
@@ -1264,7 +1264,7 @@ p {
     bottom: 155px;
   }
   .hero .button {
-    font-size: 12px;
+    font-size: 14px;
     gap: 28px;
   }
   .intro-grid {
@@ -1275,7 +1275,7 @@ p {
     font-size: 21px;
   }
   .intro-copy > p:not(.lead) {
-    font-size: 14px;
+    font-size: 15px;
   }
   .story-wide {
     height: 460px;
@@ -1292,7 +1292,7 @@ p {
     font-size: 33px;
   }
   .story-copy p {
-    font-size: 12px;
+    font-size: 14px;
   }
   .story-top {
     left: 27px;
@@ -1306,7 +1306,7 @@ p {
     min-height: 430px;
   }
   .product-copy > p:not(.eyebrow) {
-    font-size: 14px;
+    font-size: 15px;
   }
   .product-copy h3 {
     font-size: 38px;
@@ -1315,13 +1315,13 @@ p {
     gap: 35px;
   }
   .section-heading > p {
-    font-size: 13px;
+    font-size: 15px;
   }
   .project-summary {
-    font-size: 13px;
+    font-size: 15px;
   }
   .project-group {
-    font-size: 10px;
+    font-size: 12px;
   }
   .research-content {
     padding: 60px 40px;
@@ -1336,7 +1336,7 @@ p {
     max-width: 340px;
   }
   .heritage-description p {
-    font-size: 15px;
+    font-size: 16px;
   }
   .footer-links {
     gap: 19px;
@@ -1394,7 +1394,7 @@ p {
   }
   .hero-topline {
     top: 122px;
-    font-size: 8px;
+    font-size: 11px;
   }
   .hero-topline > span:last-child {
     display: none;
@@ -1404,7 +1404,7 @@ p {
     display: block;
   }
   .hero-kicker {
-    font-size: 11px;
+    font-size: 13px;
     margin-bottom: 23px;
   }
   .hero h1 {
@@ -1420,7 +1420,7 @@ p {
     padding: 0;
   }
   .hero-aside > p {
-    font-size: 15px;
+    font-size: 16px;
     margin: 0;
   }
   .hero-aside > p br:nth-child(2) {
@@ -1441,17 +1441,17 @@ p {
   .hero-footer {
     bottom: 25px;
     padding-top: 21px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .hero-film > span {
-    font-size: 10px;
+    font-size: 12px;
   }
   .dispatch {
     padding-block: 20px;
     gap: 20px;
   }
   .dispatch > a {
-    font-size: 11px;
+    font-size: 13px;
   }
   .dispatch-cta {
     font-size: 0;
@@ -1480,7 +1480,7 @@ p {
     margin-bottom: 18px;
   }
   .intro-copy > p:not(.lead) {
-    font-size: 14px;
+    font-size: 15px;
   }
   .focus-stories {
     gap: 20px;
@@ -1498,7 +1498,7 @@ p {
     left: 22px;
     right: 20px;
     top: 23px;
-    font-size: 8px;
+    font-size: 11px;
     gap: 8px;
   }
   .story-arrow {
@@ -1518,7 +1518,7 @@ p {
     font-size: 28px;
   }
   .story-copy p {
-    font-size: 11px;
+    font-size: 13px;
     max-width: 200px;
     margin-top: 16px;
   }
@@ -1528,7 +1528,7 @@ p {
   }
   .section-heading > p {
     max-width: 210px;
-    font-size: 12px;
+    font-size: 14px;
     padding-top: 47px;
   }
   .section-heading h2 {
@@ -1556,7 +1556,7 @@ p {
   }
   .product-copy > p:not(.eyebrow) {
     max-width: 520px;
-    font-size: 15px;
+    font-size: 16px;
   }
   .product-copy > .text-link {
     padding-top: 23px;
@@ -1576,11 +1576,11 @@ p {
     gap: 4px;
   }
   .portfolio-filters button {
-    font-size: 10px;
+    font-size: 12px;
     padding: 9px 10px;
   }
   .portfolio-controls > span {
-    font-size: 10px;
+    font-size: 12px;
     padding-top: 10px;
   }
   .project-row > summary {
@@ -1594,7 +1594,7 @@ p {
     font-size: 25px;
   }
   .project-summary {
-    font-size: 12px;
+    font-size: 14px;
   }
   .project-detail {
     grid-template-columns: 25% 1fr;
@@ -1610,7 +1610,7 @@ p {
     padding: 45px 28px;
   }
   .research-content .section-label {
-    font-size: 8px;
+    font-size: 11px;
     white-space: normal;
     gap: 8px;
   }
@@ -1622,24 +1622,24 @@ p {
     font-size: 36px;
   }
   .research-content > p:not(.section-label) {
-    font-size: 13px;
+    font-size: 15px;
   }
   .research-content > .text-link {
-    font-size: 11px;
+    font-size: 13px;
     gap: 10px;
   }
   .research-projects h3 {
     font-size: 19px;
   }
   .research-projects .eyebrow {
-    font-size: 8px;
+    font-size: 11px;
   }
   .research-projects > a > svg {
     width: 20px;
     flex-shrink: 0;
   }
   .research-image > figcaption {
-    font-size: 8px;
+    font-size: 11px;
     left: 25px;
   }
   .heritage .section-heading {
@@ -1650,7 +1650,7 @@ p {
     max-width: 540px;
   }
   .heritage-description p {
-    font-size: 14px;
+    font-size: 15px;
   }
   .contact-section {
     min-height: 475px;
@@ -1658,10 +1658,10 @@ p {
     padding-bottom: 45px;
   }
   .contact-top {
-    font-size: 8px;
+    font-size: 11px;
   }
   .contact-top .eyebrow {
-    font-size: 8px;
+    font-size: 11px;
   }
   .contact-section h2 {
     font-size: 49px;
@@ -1687,7 +1687,7 @@ p {
   }
   .footer-bottom {
     gap: 18px;
-    font-size: 9px;
+    font-size: 11px;
   }
   .footer-bottom > a:nth-child(2) {
     margin-left: 0;
@@ -1696,7 +1696,7 @@ p {
     margin-left: auto;
   }
   .footer-bottom > button {
-    font-size: 9px;
+    font-size: inherit;
   }
 }
 @media (max-width: 520px) {
@@ -1713,7 +1713,7 @@ p {
   }
   .hero-topline {
     top: 113px;
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.08em;
   }
   .hero-content {
@@ -1724,7 +1724,7 @@ p {
     line-height: 1.075;
   }
   .hero-kicker {
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 24px;
   }
   .hero-aside {
@@ -1733,7 +1733,7 @@ p {
     min-width: 0;
   }
   .hero-aside > p {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.6;
     max-width: 290px;
   }
@@ -1742,12 +1742,12 @@ p {
   }
   .hero .button {
     margin-top: 25px;
-    font-size: 12px;
+    font-size: 14px;
     padding: 16px 19px;
     gap: 50px;
   }
   .hero-footer {
-    font-size: 9px;
+    font-size: 11px;
     bottom: 24px;
     gap: 18px;
     padding-top: 22px;
@@ -1773,12 +1773,12 @@ p {
     padding-bottom: 20px;
   }
   .dispatch-label {
-    font-size: 8px;
+    font-size: 11px;
     gap: 8px;
     padding-top: 3px;
   }
   .dispatch > a {
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.65;
     gap: 14px;
   }
@@ -1790,7 +1790,7 @@ p {
     padding-bottom: 60px;
   }
   .section-label {
-    font-size: 8px;
+    font-size: 11px;
     gap: 10px;
     margin-bottom: 27px;
     letter-spacing: 0.07em;
@@ -1807,10 +1807,10 @@ p {
     margin-bottom: 20px;
   }
   .intro-copy > p:not(.lead) {
-    font-size: 14px;
+    font-size: 15px;
   }
   .text-link {
-    font-size: 12px;
+    font-size: 14px;
   }
   .intro-copy > .text-link {
     margin-top: 24px;
@@ -1833,7 +1833,7 @@ p {
     top: 23px;
     left: 24px;
     right: 24px;
-    font-size: 9px;
+    font-size: 11px;
   }
   .story-copy {
     left: 25px;
@@ -1844,7 +1844,7 @@ p {
     font-size: 34px;
   }
   .story-copy p {
-    font-size: 12px;
+    font-size: 14px;
     max-width: none;
   }
   .story-arrow {
@@ -1861,7 +1861,7 @@ p {
   }
   .section-heading > p {
     max-width: none;
-    font-size: 13px;
+    font-size: 15px;
     padding: 0;
   }
   .section-heading > p br {
@@ -1876,7 +1876,7 @@ p {
     padding: 17px 9px 17px 0;
   }
   .product-tabs button > span {
-    font-size: 8px;
+    font-size: 11px;
   }
   .product-tabs button > svg {
     width: 14px;
@@ -1893,7 +1893,7 @@ p {
     padding-bottom: 30px;
   }
   .product-copy .eyebrow {
-    font-size: 10px;
+    font-size: 12px;
     gap: 8px;
     letter-spacing: 0.02em;
   }
@@ -1901,7 +1901,7 @@ p {
     font-size: 36px;
   }
   .product-copy > p:not(.eyebrow) {
-    font-size: 14px;
+    font-size: 15px;
   }
   .product-visual {
     padding: 27px 13px 50px;
@@ -1911,7 +1911,7 @@ p {
     left: 16px;
     right: 13px;
     bottom: 14px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .prediction-window {
     padding: 0 6px;
@@ -1939,13 +1939,13 @@ p {
   }
   .portfolio-controls > span {
     padding: 0;
-    font-size: 10px;
+    font-size: 12px;
   }
   .portfolio-filters {
     gap: 4px;
   }
   .portfolio-filters button {
-    font-size: 10px;
+    font-size: 12px;
     padding: 8px;
   }
   .project-row > summary {
@@ -1959,7 +1959,7 @@ p {
     grid-row: 1;
   }
   .project-summary {
-    font-size: 13px;
+    font-size: 15px;
     grid-column: 1;
     grid-row: 2;
   }
@@ -1973,7 +1973,7 @@ p {
     padding-bottom: 25px;
   }
   .project-detail p {
-    font-size: 13px;
+    font-size: 15px;
   }
   .research {
     grid-template-columns: 1fr;
@@ -1987,14 +1987,14 @@ p {
   }
   .research-image > figcaption {
     bottom: 25px;
-    font-size: 8px;
+    font-size: 11px;
     left: 24px;
   }
   .research-content {
     padding: 50px var(--am-gutter) 55px;
   }
   .research-content .section-label {
-    font-size: 8px;
+    font-size: 11px;
   }
   .research-content h2 {
     font-size: 40px;
@@ -2002,23 +2002,26 @@ p {
   .research-content h2 br:nth-of-type(2) {
     display: none;
   }
+  .research-content h2 > span::before {
+    content: " ";
+  }
   .research-content > p:not(.section-label) {
-    font-size: 14px;
+    font-size: 15px;
   }
   .research-projects h3 {
     font-size: 23px;
   }
   .research-projects .eyebrow {
-    font-size: 9px;
+    font-size: 11px;
   }
   .research-content > .text-link {
-    font-size: 12px;
-  }
-  .heritage-description p {
     font-size: 14px;
   }
+  .heritage-description p {
+    font-size: 15px;
+  }
   .heritage-description > .text-link {
-    font-size: 11px;
+    font-size: 13px;
     gap: 15px;
   }
   .contact-section {
@@ -2030,7 +2033,7 @@ p {
     display: none;
   }
   .contact-top .eyebrow {
-    font-size: 9px;
+    font-size: 11px;
   }
   .contact-bottom {
     display: block;
@@ -2063,21 +2066,21 @@ p {
     font-size: 26px;
   }
   .footer-wordmark > span {
-    font-size: 11px;
+    font-size: 13px;
   }
   .footer-links {
     gap: 20px;
   }
   .footer-links > a {
-    font-size: 11px;
+    font-size: 13px;
   }
   .footer-bottom {
     gap: 16px 20px;
-    font-size: 9px;
+    font-size: 11px;
   }
   .preview-label {
     margin-left: 0;
-    font-size: 8px;
+    font-size: 11px;
   }
   .footer-bottom > span:first-child {
     width: 100%;

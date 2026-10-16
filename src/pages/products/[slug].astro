@@ -3,8 +3,11 @@ import { ArrowUpRight, ArrowRight, ArrowLeft } from "@lucide/astro";
 import IdentityLayout from "../../layouts/IdentityLayout.astro";
 import ProductVisual from "../../components/identity/ProductVisual.astro";
 import EngineeringStories from "../../components/identity/EngineeringStories.astro";
+import SolutionCard from "../../components/identity/SolutionCard.astro";
 import { products, type IdentityProduct } from "../../data/identity-products";
+import { solutions } from "../../data/solutions";
 import "../../styles/identity-product-page.css";
+import "../../styles/identity-pages.css";
 
 export function getStaticPaths() {
   return products.map((product) => ({
@@ -27,6 +30,7 @@ const publicResource = product.resources.find((resource) =>
 );
 const contactUrl = `/contact/?product=${encodeURIComponent(product.name)}`;
 const portfolioUrl = `/products/${product.group === "AI" ? "" : `?focus=${product.group.toLowerCase()}`}#portfolio`;
+const featuredSolutions = solutions.slice(0, 4);
 const groupName =
   product.group === "AI"
     ? "AI & applications"
@@ -54,12 +58,22 @@ const groupName =
           ><span aria-hidden="true"></span>{product.stage}</span
         >
         <div class="dp-hero-actions">
-          <a class="dp-button" href={contactUrl}
-            >Let’s talk {product.name} <ArrowUpRight size={19} /></a
-          >
-          <a class="dp-inline-link" href="#overview"
-            >Explore the product <ArrowRight size={18} /></a
-          >
+          {
+            product.pricing ? (
+              <>
+                <a class="dp-button" href={product.pricing}>
+                  See pricing <ArrowRight size={19} />
+                </a>
+                <a class="dp-inline-link" href={contactUrl}>
+                  Let’s talk {product.name} <ArrowUpRight size={18} />
+                </a>
+              </>
+            ) : (
+              <a class="dp-button" href={contactUrl}>
+                Let’s talk {product.name} <ArrowUpRight size={19} />
+              </a>
+            )
+          }
         </div>
       </div>
       <div class="dp-hero-visual">
@@ -157,6 +171,40 @@ const groupName =
       }
     </ol>
   </section>
+
+  {
+    product.slug === "magistrala" && (
+      <section
+        id="solutions"
+        class="dp-shell dp-solutions dp-section"
+        aria-labelledby="product-solutions-title"
+      >
+        <div class="dp-section-heading">
+          <div>
+            <p class="dp-eyebrow">Solution packs</p>
+            <h2 id="product-solutions-title">
+              Ready-made
+              <br />
+              starting points.
+            </h2>
+          </div>
+          <a class="text-link" href="/solutions/">
+            Explore all solutions <ArrowRight size={18} />
+          </a>
+        </div>
+        <p class="dp-solutions-intro">
+          Pre-configured packs built on Magistrala for water, energy, cities,
+          agriculture, and more. Dashboards, detection rules, and reports are
+          wired up and ready to deploy.
+        </p>
+        <div class="ip-grid ip-grid-4">
+          {featuredSolutions.map((solution) => (
+            <SolutionCard solution={solution} level={3} />
+          ))}
+        </div>
+      </section>
+    )
+  }
 
   <section
     class="dp-shell dp-resources dp-section"

@@ -1,83 +1,146 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import Hero from "../components/Hero.astro";
-import Section from "../components/Section.astro";
+import { ArrowRight, ArrowUpRight } from "@lucide/astro";
+import IdentityLayout from "../layouts/IdentityLayout.astro";
+import "../styles/identity-editorial.css";
+import "../styles/identity-pages.css";
+
+const principles = [
+  {
+    title: "Transparency",
+    desc: "Audit the full stack. No hidden control planes or data paths.",
+  },
+  {
+    title: "Portability",
+    desc: "Run on your infrastructure and keep your options open.",
+  },
+  {
+    title: "Longevity",
+    desc: "Adopt infrastructure that will still exist in five years.",
+  },
+];
+
+const governance = [
+  {
+    title: "Public roadmaps",
+    desc: "Decisions are documented and shared with operators and contributors.",
+  },
+  {
+    title: "Safe adoption",
+    desc: "Companies can adopt with clear visibility into changes and security posture.",
+  },
+];
 ---
 
-<BaseLayout
-  title="Open Source | Abstract Machines"
-  description="Open-source infrastructure for event-driven systems."
+<IdentityLayout
+  title="Open source"
+  description="Open-source infrastructure for event-driven systems. We build in the open so teams can adopt critical infrastructure without lock-in."
+  active="company"
 >
-  <Header />
-  <main>
-    <Hero
-      eyebrow="Open Source"
-      title="Infrastructure you can audit, extend, and trust"
-      subtitle="We build in the open so teams can adopt critical infrastructure without lock-in. Transparent by default and designed for long-term use."
-      primary={{
-        label: "View on GitHub",
-        href: "https://github.com/absmach",
-        external: true,
-      }}
-      secondary={{ label: "Talk to Us", href: "/contact" }}
-      backgroundClass="hero-grid"
-    >
-      <p class="section-label">Why open matters</p>
-      <p class="mt-4 text-muted">
+  <section class="ip-hero" aria-labelledby="oss-title">
+    <nav class="is-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Abstract Machines</a><span>/</span><a href="/company/"
+        >Company</a
+      ><span>/</span> Open source
+    </nav>
+    <div class="ip-hero-grid">
+      <div>
+        <p class="ie-eyebrow">Open source / Abstract Machines</p>
+        <h1 id="oss-title">
+          Infrastructure you can<br /><span>audit, extend, and trust.</span>
+        </h1>
+      </div>
+      <div class="ip-hero-aside">
+        <p>
+          We build in the open so teams can adopt critical infrastructure
+          without lock-in. Transparent by default and designed for long-term
+          use.
+        </p>
+        <div class="ip-hero-actions">
+          <a class="ie-button ie-button-white" href="https://github.com/absmach"
+            >View on GitHub <ArrowUpRight size={19} /></a
+          ><a class="text-link" href="/contact/"
+            >Talk to us <ArrowRight size={18} /></a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ip-section ip-section--tight" aria-label="Why open matters">
+    <div class="ip-note">
+      <p class="ie-eyebrow">Why open matters</p>
+      <p>
         Security reviews, governance, and portability are easier when the code
         is open.
       </p>
-    </Hero>
+    </div>
+  </section>
 
-    <Section
-      eyebrow="Principles"
-      title="Open source is a business decision"
-      subtitle="It protects you from risk."
-    >
-      <div class="grid gap-6 md:grid-cols-3">
-        <div class="card-base">
-          <h3 class="text-xl font-semibold">Transparency</h3>
-          <p class="mt-3 text-muted">
-            Audit the full stack. No hidden control planes or data paths.
-          </p>
-        </div>
-        <div class="card-base">
-          <h3 class="text-xl font-semibold">Portability</h3>
-          <p class="mt-3 text-muted">
-            Run on your infrastructure and keep your options open.
-          </p>
-        </div>
-        <div class="card-base">
-          <h3 class="text-xl font-semibold">Longevity</h3>
-          <p class="mt-3 text-muted">
-            Adopt infrastructure that will still exist in five years.
-          </p>
-        </div>
+  <section class="ip-section" aria-labelledby="principles-title">
+    <div class="ip-heading">
+      <div>
+        <p class="ie-eyebrow">Principles</p>
+        <h2 id="principles-title">
+          Open source is<br /><span>a business decision.</span>
+        </h2>
       </div>
-    </Section>
+      <p>It protects you from risk.</p>
+    </div>
+    <div class="ip-grid ip-grid-3">
+      {
+        principles.map((item) => (
+          <article class="ip-card">
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
 
-    <Section
-      title="Governance mindset"
-      subtitle="We treat governance as product work."
-    >
-      <div class="grid gap-6 md:grid-cols-2">
-        <div class="card-base">
-          <h3 class="text-xl font-semibold">Public roadmaps</h3>
-          <p class="mt-3 text-muted">
-            Decisions are documented and shared with operators and contributors.
-          </p>
-        </div>
-        <div class="card-base">
-          <h3 class="text-xl font-semibold">Safe adoption</h3>
-          <p class="mt-3 text-muted">
-            Companies can adopt with clear visibility into changes and security
-            posture.
-          </p>
-        </div>
+  <section
+    class="ip-section ip-section--soft"
+    aria-labelledby="governance-title"
+  >
+    <div class="ip-heading">
+      <div>
+        <p class="ie-eyebrow">Governance</p>
+        <h2 id="governance-title">
+          Governance is<br /><span>product work.</span>
+        </h2>
       </div>
-    </Section>
-  </main>
-  <Footer />
-</BaseLayout>
+    </div>
+    <div class="ip-grid ip-grid-2">
+      {
+        governance.map((item) => (
+          <article class="ip-card">
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="ip-cta" aria-labelledby="oss-cta-title">
+    <div>
+      <p class="ie-eyebrow">Get involved</p>
+      <h2 id="oss-cta-title">
+        Browse, open an issue,<br /><span>or contribute.</span>
+      </h2>
+    </div>
+    <div>
+      <p>
+        All core products are open source. Browse the repositories, open an
+        issue, or send a pull request.
+      </p>
+      <div class="ip-actions">
+        <a class="ie-button ie-button-white" href="https://github.com/absmach"
+          >github.com/absmach <ArrowUpRight size={19} /></a
+        ><a class="text-link" href="/products/"
+          >Explore our work <ArrowRight size={18} /></a
+        >
+      </div>
+    </div>
+  </section>
+</IdentityLayout>

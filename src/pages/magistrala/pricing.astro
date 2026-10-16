@@ -1,44 +1,71 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
+import { ArrowRight, ArrowUpRight } from "@lucide/astro";
+import IdentityLayout from "../../layouts/IdentityLayout.astro";
 import Pricing from "../../components/Pricing.astro";
-import FinalCTA from "../../components/FinalCTA.astro";
+import "../../styles/identity-editorial.css";
+import "../../styles/identity-pages.css";
 ---
 
-<BaseLayout
-  title="Pricing — Managed Magistrala IoT Platform"
+<IdentityLayout
+  title="Magistrala pricing"
   description="Magistrala pricing across three models: the free, open-source Community Edition, fully managed Private Cloud plans, and self-managed Enterprise licensing. Monthly, annual, or perpetual billing."
-  ogImage="/img/og/og-magistrala.png"
-  ogImageAlt="Magistrala Pricing"
+  image="/img/og/og-magistrala.png"
+  imageAlt="Magistrala pricing"
+  active="work"
 >
-  <Header />
-  <main>
-    <section class="section" style="padding-bottom:0;">
-      <div class="container-narrow" style="text-align:center;">
-        <span class="kicker">Pricing</span>
-        <h1 class="h-1" style="margin-top:14px;">
-          Choose how you run Magistrala.
+  <section class="ip-hero" aria-labelledby="pricing-title">
+    <nav class="is-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Abstract Machines</a><span>/</span><a
+        href="/products/magistrala/">Magistrala</a
+      ><span>/</span> Pricing
+    </nav>
+    <div class="ip-hero-grid">
+      <div>
+        <p class="ie-eyebrow">Pricing / Magistrala</p>
+        <h1 id="pricing-title">
+          Choose how you<br /><span>run Magistrala.</span>
         </h1>
-        <p class="lede" style="margin:20px auto 0;">
+      </div>
+      <div class="ip-hero-aside">
+        <p>
           Free and open source, fully managed in our private cloud, or
-          self-managed in your own environment — the same platform, priced for
+          self-managed in your own environment. The same platform, priced for
           the way you want to operate it.
         </p>
-        <div class="btn-row" style="justify-content:center; margin-top:28px;">
+        <div class="ip-hero-actions">
           <a
+            class="ie-button ie-button-white"
             href="https://github.com/absmach/magistrala"
-            class="btn btn-primary"
-            target="_blank"
-            rel="noopener">Start for Free ↗</a
+            >Start for free <ArrowUpRight size={19} /></a
+          ><a class="text-link" href="/contact/?product=Magistrala"
+            >Contact sales <ArrowRight size={18} /></a
           >
-          <a href="/contact" class="btn">Contact Sales →</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <Pricing showHead={false} />
-    <FinalCTA />
-  </main>
-  <Footer />
-</BaseLayout>
+  <Pricing />
+
+  <section class="ip-cta" aria-labelledby="pricing-cta-title">
+    <div>
+      <p class="ie-eyebrow">Your next step</p>
+      <h2 id="pricing-cta-title">
+        Not sure which<br /><span>plan fits?</span>
+      </h2>
+    </div>
+    <div>
+      <p>
+        Tell us about your devices, message volumes, and where you want to run
+        the platform. We will recommend the right starting point.
+      </p>
+      <div class="ip-actions">
+        <a class="ie-button ie-button-white" href="/contact/?product=Magistrala"
+          >Talk to sales <ArrowUpRight size={19} /></a
+        ><a class="text-link" href="/products/magistrala/"
+          >Explore Magistrala <ArrowRight size={18} /></a
+        >
+      </div>
+    </div>
+  </section>
+</IdentityLayout>

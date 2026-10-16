@@ -12,7 +12,7 @@ Astro + Tailwind source for the [Abstract Machines](https://www.absmach.eu/) web
 - `src/pages/`: Routes (Astro pages).
 - `src/components/`: Shared UI components.
 - `src/layouts/`: Page layouts.
-- `src/styles/`: Global CSS (design tokens + utilities).
+- `src/styles/`: Identity stylesheets (`identity-*.css`) shared by the layout and pages.
 - `src/content/blogs/`: Blog posts (Markdown).
 - `src/content.config.ts`: Blog frontmatter schema.
 - `public/`: Static assets (images, favicons, etc).
