@@ -208,7 +208,7 @@ p {
   object-position: 48% 54%;
 }
 .hero-video[data-camera] {
-  --hero-camera-start: 1.62;
+  --hero-camera-start: 1.52;
   --hero-camera-end: 1.96;
   left: 8.5%;
   transform: scale(var(--hero-camera-start)) rotate(-0.4deg);
@@ -1497,7 +1497,7 @@ p {
     );
   }
   .hero-video[data-camera] {
-    --hero-camera-start: 1.16;
+    --hero-camera-start: 1.14;
     --hero-camera-end: 1.38;
     left: 4%;
   }
