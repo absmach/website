@@ -1,4 +1,8 @@
 import nodemailer from "nodemailer";
+import {
+  buildConfirmationEmail,
+  buildInquiryEmail,
+} from "../../lib/contact-emails.js";
 
 export const prerender = false;
 
@@ -38,14 +42,6 @@ const json = (payload, status = 200, extraHeaders = {}) =>
   });
 
 const getString = (value) => (typeof value === "string" ? value.trim() : "");
-
-const escapeHtml = (value) =>
-  value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
 
 const parseBoolean = (value) => value.toLowerCase() === "true";
 
@@ -152,67 +148,6 @@ const sendEmail = async ({
   });
 };
 
-const buildInquiryEmail = ({ name, email, message, ip, userAgent }) => {
-  const safeName = escapeHtml(name);
-  const safeEmail = escapeHtml(email);
-  const safeMessage = escapeHtml(message).replaceAll("\n", "<br />");
-  const safeIp = escapeHtml(ip || "unknown");
-  const safeUserAgent = escapeHtml(userAgent || "unknown");
-
-  return {
-    subject: `New contact request from ${name}`,
-    html: `
-      <h2>New website inquiry</h2>
-      <p><strong>Name:</strong> ${safeName}</p>
-      <p><strong>Email:</strong> ${safeEmail}</p>
-      <p><strong>Message:</strong><br />${safeMessage}</p>
-      <hr />
-      <p><strong>IP:</strong> ${safeIp}</p>
-      <p><strong>User-Agent:</strong> ${safeUserAgent}</p>
-    `,
-    text: [
-      "New website inquiry",
-      `Name: ${name}`,
-      `Email: ${email}`,
-      "",
-      "Message:",
-      message,
-      "",
-      `IP: ${ip || "unknown"}`,
-      `User-Agent: ${userAgent || "unknown"}`,
-    ].join("\n"),
-  };
-};
-
-const buildConfirmationEmail = ({ name, message }) => {
-  const safeName = escapeHtml(name);
-  const safeMessage = escapeHtml(message).replaceAll("\n", "<br />");
-
-  return {
-    subject: "We received your message - Abstract Machines",
-    html: `
-      <p>Hi ${safeName},</p>
-      <p>Thanks for contacting Abstract Machines. This is a confirmation copy of your submission.</p>
-      <p><strong>Your message:</strong><br />${safeMessage}</p>
-      <p>Our team typically responds within 1-2 business days.</p>
-      <p>Best regards,<br />Abstract Machines</p>
-    `,
-    text: [
-      `Hi ${name},`,
-      "",
-      "Thanks for contacting Abstract Machines. This is a confirmation copy of your submission.",
-      "",
-      "Your message:",
-      message,
-      "",
-      "Our team typically responds within 1-2 business days.",
-      "",
-      "Best regards,",
-      "Abstract Machines",
-    ].join("\n"),
-  };
-};
-
 const getRuntimeEnv = (locals) =>
   locals?.runtime?.env ?? globalThis.process?.env ?? {};
 
@@ -314,8 +249,6 @@ const handlePost = async ({ request, locals }) => {
     name,
     email,
     message,
-    ip: clientIp,
-    userAgent: request.headers.get("user-agent") || "unknown",
   });
 
   try {
@@ -333,7 +266,11 @@ const handlePost = async ({ request, locals }) => {
     return json({ ok: false, error: ERROR_MESSAGES.sendFailed }, 502);
   }
 
-  const confirmation = buildConfirmationEmail({ name, message });
+  const confirmation = buildConfirmationEmail({
+    name,
+    message,
+    contactEmail: teamContactEmail,
+  });
 
   try {
     await sendEmail({
