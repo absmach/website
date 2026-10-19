@@ -203,8 +203,15 @@ const organization = {
           ))
         }
         <li>
-          <span>Paris architecture film</span><a href={heroFilm.source_url}
+          <span>Paris architecture photograph</span><a
+            href={heroFilm.source_url}
             >{heroFilm.title} / {heroFilm.creator} / {heroFilm.provider}</a
+          >
+        </li>
+        <li>
+          <span>Cloud footage</span><a href={heroFilm.cloud_source.source_url}
+            >{heroFilm.cloud_source.title} / {heroFilm.cloud_source.creator} /
+            {heroFilm.cloud_source.provider}</a
           >
         </li>
       </ul><p>

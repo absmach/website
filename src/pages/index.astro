@@ -47,6 +47,7 @@ const portfolioCategories = [
     <video
       id="hero-video"
       class="hero-video"
+      data-camera
       muted
       loop
       playsinline
@@ -57,6 +58,7 @@ const portfolioCategories = [
     >
       <source data-src={heroFilm.video_path} type="video/mp4" />
     </video>
+    <div class="hero-tint" aria-hidden="true"></div>
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-topline">
       <span>APPLIED AI / ABSTRACT MACHINES</span><span
@@ -566,10 +568,12 @@ const portfolioCategories = [
     if (video && videoToggle) {
       videoToggle.hidden = false;
       video.addEventListener("playing", () => {
+        video.dataset.motion = "playing";
         videoToggle.classList.add("is-playing");
         videoToggle.setAttribute("aria-label", "Pause background video");
       });
       video.addEventListener("pause", () => {
+        video.dataset.motion = "paused";
         videoToggle.classList.remove("is-playing");
         videoToggle.setAttribute("aria-label", "Play background video");
       });
