@@ -3,6 +3,10 @@ import { ArrowUpRight } from "@lucide/astro";
 import IdentityLayout from "../layouts/IdentityLayout.astro";
 import { identityPhoto } from "../data/identity-photos";
 import { products } from "../data/identity-products";
+
+// The Turnstile sitekey is public; override it per build if needed.
+const turnstileSitekey =
+  import.meta.env.PUBLIC_TURNSTILE_SITEKEY || "0x4AAAAAAFbLpwW1uw-esU1M";
 ---
 
 <IdentityLayout
@@ -104,6 +108,12 @@ import { products } from "../data/identity-products";
             autocomplete="off"
           />
         </div>
+        <div
+          id="contact-turnstile"
+          class="co-turnstile"
+          data-sitekey={turnstileSitekey}
+        >
+        </div>
         <div class="co-actions">
           <button class="is-button" type="submit"
             ><span>Send message</span> <ArrowUpRight size={19} /></button
@@ -143,6 +153,40 @@ import { products } from "../data/identity-products";
     </aside>
   </section>
   <script>
+    type TurnstileApi = {
+      render: (
+        container: HTMLElement,
+        options: { sitekey: string; action: string; theme: "light" },
+      ) => string;
+      getResponse: (widgetId: string) => string | undefined;
+      reset: (widgetId: string) => void;
+    };
+
+    const turnstileWindow = window as Window & { turnstile?: TurnstileApi };
+    const turnstileContainer =
+      document.querySelector<HTMLElement>("#contact-turnstile");
+    let turnstileWidgetId: string | undefined;
+
+    const renderTurnstile = () => {
+      if (!turnstileWindow.turnstile || !turnstileContainer) return;
+      turnstileWidgetId = turnstileWindow.turnstile.render(turnstileContainer, {
+        sitekey: turnstileContainer.dataset.sitekey!,
+        action: "contact",
+        theme: "light",
+      });
+    };
+
+    if (turnstileWindow.turnstile) {
+      renderTurnstile();
+    } else {
+      const turnstileScript = document.createElement("script");
+      turnstileScript.src =
+        "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      turnstileScript.async = true;
+      turnstileScript.addEventListener("load", renderTurnstile, { once: true });
+      document.head.appendChild(turnstileScript);
+    }
+
     const form = document.querySelector<HTMLFormElement>("#contact-form");
     const product =
       document.querySelector<HTMLSelectElement>("#contact-product");
@@ -175,6 +219,15 @@ import { products } from "../data/identity-products";
       event.preventDefault();
       if (!submit || submit.disabled || !status || !form.reportValidity())
         return;
+      if (
+        turnstileWidgetId === undefined ||
+        !turnstileWindow.turnstile?.getResponse(turnstileWidgetId)
+      ) {
+        status.dataset.state = "error";
+        status.textContent =
+          "Please complete the verification check before sending.";
+        return;
+      }
       const fields = new FormData(form);
       const context = [
         `Topic: ${fields.get("topic")}`,
@@ -218,6 +271,9 @@ import { products } from "../data/identity-products";
             ? error.message
             : "Unable to send your message. Please email info@absmach.eu.";
       } finally {
+        if (turnstileWidgetId !== undefined) {
+          turnstileWindow.turnstile?.reset(turnstileWidgetId);
+        }
         submit.disabled = false;
         submit.removeAttribute("aria-busy");
         if (label) label.textContent = "Send message";

@@ -582,6 +582,10 @@
   outline: 3px solid #5b8cff;
   outline-offset: 3px;
 }
+.co-turnstile {
+  margin-top: 25px;
+  min-height: 65px;
+}
 .co-actions {
   margin-top: 25px;
 }

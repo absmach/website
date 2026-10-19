@@ -7,6 +7,9 @@ SMTP_USER=
 SMTP_PASS=
 MAIL_FROM_EMAIL=info@absmach.eu
 TEAM_CONTACT_EMAIL=info@absmach.eu
+# Turnstile: real widget secret (widget must list localhost/127.0.0.1 as domains)
+TURNSTILE_SECRET=
+TURNSTILE_HOSTNAMES=localhost,127.0.0.1
 
 # Production example (Google SMTP / Gmail Workspace)
 # SMTP_HOST=smtp.gmail.com
