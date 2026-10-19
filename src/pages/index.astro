@@ -12,6 +12,7 @@ import AssociationMembership from "../components/identity/AssociationMembership.
 import EngineeringStories from "../components/identity/EngineeringStories.astro";
 import { products } from "../data/identity-products";
 import { stories } from "../data/identity-stories";
+import heroFilm from "../../public/preview/ai/media/video-source.json";
 
 const atomic = products.find((product) => product.slug === "atomic")!;
 const synth = products.find((product) => product.slug === "synth")!;
@@ -50,11 +51,11 @@ const portfolioCategories = [
       loop
       playsinline
       preload="none"
-      poster="/preview/ai/media/hero-poster.webp"
+      poster={heroFilm.poster_path}
       aria-hidden="true"
       tabindex="-1"
     >
-      <source data-src="/preview/ai/media/hero-video.mp4" type="video/mp4" />
+      <source data-src={heroFilm.video_path} type="video/mp4" />
     </video>
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-topline">

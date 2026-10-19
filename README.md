@@ -35,7 +35,7 @@ R2 credentials. An internet connection is required for these assets.
 ### Public website
 
 The applied AI design is the public website at `http://localhost:4321/`.
-It uses AM blue, self-hosted typography, a full-screen architecture film,
+It uses AM blue, self-hosted typography, a full-screen Paris architecture film,
 and editorial photography.
 
 - `/`: homepage, selected work, and product catalogue.
@@ -68,7 +68,7 @@ when the tab is hidden. Reduced-motion and Save-Data preferences keep the still
 poster until the visitor chooses to play.
 
 Existing media URLs remain at `public/preview/ai/media/` to preserve asset
-caching. The optimized Mixkit film is approximately 4.2 MB; editorial photos are
+caching. The optimized Paris film is approximately 2.9 MB; editorial photos are
 WebP. `src/data/identity-photos.ts` supplies image attributes from the manifest
 used by the footer credits. Attribution and source/license records are in
 `video-source.json` and `photos-sources.json`. Product imagery and artwork are

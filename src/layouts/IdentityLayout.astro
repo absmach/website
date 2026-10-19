@@ -1,6 +1,7 @@
 ---
 import { ArrowUpRight, Menu, X } from "@lucide/astro";
 import photoCredits from "../../public/preview/ai/media/photos-sources.json";
+import heroFilm from "../../public/preview/ai/media/video-source.json";
 import "../styles/identity-preview.css";
 import "../styles/identity-site.css";
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
   description?: string;
   active?: string;
   headerTone?: "light" | "overlay";
-  /** Social image path; defaults to the architecture hero poster. */
+  /** Social image path; defaults to the Paris hero film poster. */
   image?: string;
   imageAlt?: string;
   type?: "website" | "article";
@@ -20,8 +21,8 @@ const {
   description = "AI products, secure infrastructure, and connected systems. Engineering intelligence at Abstract Machines.",
   active = "",
   headerTone = "light",
-  image = "/preview/ai/media/hero-poster.webp",
-  imageAlt = "Looking up at the architecture of London's business district",
+  image = heroFilm.poster_path,
+  imageAlt = heroFilm.poster_alt,
   type = "website",
   canonical,
 } = Astro.props;
@@ -202,18 +203,15 @@ const organization = {
           ))
         }
         <li>
-          <span>Architecture film</span><a
-            href="https://mixkit.co/free-stock-video/corporate-and-business-buildings-in-the-city-4170/"
-            >Corporate and business buildings in the city / Mixkit</a
+          <span>Paris architecture film</span><a href={heroFilm.source_url}
+            >{heroFilm.title} / {heroFilm.creator} / {heroFilm.provider}</a
           >
         </li>
       </ul><p>
         Photography under the <a href="https://unsplash.com/license"
           >Unsplash License</a
         > and <a href="https://www.pexels.com/license/">Pexels License</a>. Film
-        under the <a href="https://mixkit.co/license/#videoFree"
-          >Mixkit Stock Video Free License</a
-        >.
+        under the <a href={heroFilm.license_url}>{heroFilm.license_name}</a>.
       </p>
     </dialog>
 
