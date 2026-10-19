@@ -33,6 +33,7 @@ const workersGlobals = {
   crypto: "readonly",
   atob: "readonly",
   btoa: "readonly",
+  AbortSignal: "readonly",
 };
 
 export default tseslint.config(

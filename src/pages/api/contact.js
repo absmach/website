@@ -9,6 +9,11 @@ const NAME_MAX_LENGTH = 120;
 const MESSAGE_MIN_LENGTH = 10;
 const MESSAGE_MAX_LENGTH = 5000;
 
+const TURNSTILE_VERIFY_URL =
+  "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+const TURNSTILE_ACTION = "contact";
+const TURNSTILE_TOKEN_MAX_LENGTH = 2048;
+
 const ERROR_MESSAGES = {
   invalidPayload: "Invalid request payload.",
   invalidName: `Please provide your name (${NAME_MIN_LENGTH} to ${NAME_MAX_LENGTH} characters).`,
@@ -18,6 +23,8 @@ const ERROR_MESSAGES = {
     "Contact form is not configured yet. Please use direct email for now.",
   sendFailed:
     "Unable to send your message right now. Please try again or use direct email.",
+  verificationFailed:
+    "We could not verify that you are human. Please complete the check and try again.",
 };
 
 const json = (payload, status = 200, extraHeaders = {}) =>
@@ -56,6 +63,7 @@ const parseRequestBody = async (request) => {
     email: formData.get("email"),
     message: formData.get("message"),
     company: formData.get("company"),
+    "cf-turnstile-response": formData.get("cf-turnstile-response"),
   };
 };
 
@@ -64,6 +72,7 @@ const normalizeInput = (payload) => ({
   email: getString(payload.email).toLowerCase(),
   message: getString(payload.message),
   company: getString(payload.company),
+  turnstileToken: getString(payload["cf-turnstile-response"]),
 });
 
 const getTeamContactEmail = (env) =>
@@ -207,6 +216,41 @@ const buildConfirmationEmail = ({ name, message }) => {
 const getRuntimeEnv = (locals) =>
   locals?.runtime?.env ?? globalThis.process?.env ?? {};
 
+const getTurnstileHostnames = (env) =>
+  new Set(
+    getString(env?.TURNSTILE_HOSTNAMES)
+      .split(",")
+      .map((hostname) => hostname.trim())
+      .filter(Boolean),
+  );
+
+const verifyTurnstile = async ({ token, secret, hostnames, ip }) => {
+  if (!token || token.length > TURNSTILE_TOKEN_MAX_LENGTH) return false;
+
+  const body = new URLSearchParams({ secret, response: token });
+  if (ip !== "unknown") body.set("remoteip", ip);
+
+  try {
+    const response = await fetch(TURNSTILE_VERIFY_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body,
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!response.ok) throw new Error(`siteverify ${response.status}`);
+
+    const result = await response.json();
+    return (
+      result.success === true &&
+      result.action === TURNSTILE_ACTION &&
+      hostnames.has(result.hostname)
+    );
+  } catch (error) {
+    console.error("Turnstile verification failed", error);
+    return false;
+  }
+};
+
 const getClientIp = (request) => {
   const cfIp = request.headers.get("cf-connecting-ip");
   if (cfIp) return cfIp;
@@ -227,7 +271,8 @@ const handlePost = async ({ request, locals }) => {
     return json({ ok: false, error: ERROR_MESSAGES.invalidPayload }, 400);
   }
 
-  const { name, email, message, company } = normalizeInput(payload);
+  const { name, email, message, company, turnstileToken } =
+    normalizeInput(payload);
 
   if (company) {
     return json({ ok: true, message: "Message sent." });
@@ -236,6 +281,25 @@ const handlePost = async ({ request, locals }) => {
   const validationError = validateInput({ name, email, message });
   if (validationError) {
     return json({ ok: false, error: validationError }, 400);
+  }
+
+  const turnstileSecret = getString(env?.TURNSTILE_SECRET);
+  const turnstileHostnames = getTurnstileHostnames(env);
+
+  if (!turnstileSecret || turnstileHostnames.size === 0) {
+    return json({ ok: false, error: ERROR_MESSAGES.notConfigured }, 503);
+  }
+
+  const clientIp = getClientIp(request);
+  const verified = await verifyTurnstile({
+    token: turnstileToken,
+    secret: turnstileSecret,
+    hostnames: turnstileHostnames,
+    ip: clientIp,
+  });
+
+  if (!verified) {
+    return json({ ok: false, error: ERROR_MESSAGES.verificationFailed }, 403);
   }
 
   const mailFromEmail = getMailFromEmail(env);
@@ -250,7 +314,7 @@ const handlePost = async ({ request, locals }) => {
     name,
     email,
     message,
-    ip: getClientIp(request),
+    ip: clientIp,
     userAgent: request.headers.get("user-agent") || "unknown",
   });
 
