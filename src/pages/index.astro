@@ -98,9 +98,6 @@ const portfolioCategories = [
         >
       </div>
     </div>
-    <div class="film-progress" aria-hidden="true">
-      <span id="film-progress"></span>
-    </div>
   </section>
   <div class="dispatch">
     <span class="dispatch-label">IN FOCUS <span class="live-dot"></span></span
@@ -545,7 +542,6 @@ const portfolioCategories = [
     const video = document.querySelector<HTMLVideoElement>("#hero-video");
     const videoToggle =
       document.querySelector<HTMLButtonElement>("#video-toggle");
-    const progress = document.querySelector<HTMLElement>("#film-progress");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const saveData = (
       navigator as Navigator & { connection?: { saveData?: boolean } }
@@ -576,10 +572,6 @@ const portfolioCategories = [
         video.dataset.motion = "paused";
         videoToggle.classList.remove("is-playing");
         videoToggle.setAttribute("aria-label", "Play background video");
-      });
-      video.addEventListener("timeupdate", () => {
-        if (progress && Number.isFinite(video.duration))
-          progress.style.width = `${(video.currentTime / video.duration) * 100}%`;
       });
       videoToggle.addEventListener("click", () => {
         wantsMotion = video.paused;

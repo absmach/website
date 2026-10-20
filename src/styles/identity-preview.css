@@ -402,20 +402,6 @@ p {
 .hero-film button.is-playing .play-icon {
   display: none;
 }
-.film-progress {
-  height: 3px;
-  background: #ffffff18;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-.film-progress span {
-  display: block;
-  height: 100%;
-  width: 0;
-  background: #90bfff;
-}
 .dispatch {
   padding: 23px var(--am-gutter);
   display: flex;
