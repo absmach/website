@@ -178,12 +178,14 @@ const structuredData = {
         <figure>
           {coverVideo ? (
             coverVideoIframeSrc ? (
-              <iframe
-                src={coverVideoIframeSrc}
-                title={`${post.data.title} cover video`}
-                allow="autoplay; encrypted-media; picture-in-picture; web-share"
-                allowfullscreen
-              />
+              <a
+                class="text-link"
+                href={coverVideo}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Watch this video on YouTube (opens an external site)
+              </a>
             ) : (
               <video
                 src={coverVideo}

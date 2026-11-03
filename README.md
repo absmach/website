@@ -196,3 +196,18 @@ See [WRITING.md](WRITING.md) for frontmatter and writing guidelines.
 
 - [How to Write a Blog Post](WRITING.md)
 - [Publishing Images (maintainers)](scripts/README.md)
+
+## Legal document scope
+
+The company website’s `/terms/` covers website use, not all product contracts.
+Atomic terms and privacy information remain on `atomicapp.dev/legal/`.
+`/privacy/` describes company-site visits and enquiries. `/imprint/` identifies
+the publisher and host. General and legal enquiries use `info@absmach.eu`; privacy
+requests use `privacy@absmach.eu`. No voluntary uptime, support, return or warranty
+period is offered by these website documents. Existing accepted customer agreements
+are not amended by these edits.
+
+Supplier transfer arrangements, actual mailbox/log retention and edge-injected
+tracking must be checked against production configuration. A public company business
+telephone remains to be supplied; the publisher’s private number is not published.
+These content corrections do not certify operational compliance.

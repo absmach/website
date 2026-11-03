@@ -2,470 +2,74 @@
 import LegalPage from "../components/identity/LegalPage.astro";
 
 const sections = [
-  { id: "definitions", label: "Definitions" },
-  { id: "eligibility", label: "Eligibility and account registration" },
-  { id: "license", label: "License and restrictions" },
-  { id: "payment", label: "Orders, payment, and billing" },
-  { id: "availability", label: "Service availability and support" },
-  { id: "data", label: "Data and content" },
-  { id: "acceptable-use", label: "Acceptable use policy" },
-  { id: "delivery", label: "Delivery and performance" },
-  { id: "termination", label: "Term and termination" },
-  { id: "intellectual-property", label: "Intellectual property" },
-  { id: "warranties", label: "Warranties and disclaimers" },
-  { id: "liability", label: "Limitation of liability" },
-  { id: "indemnification", label: "Indemnification" },
-  { id: "changes", label: "Changes to terms" },
-  { id: "governing-law", label: "Governing law and disputes" },
-  { id: "general", label: "General provisions" },
-  { id: "contact", label: "Contact information" },
+  { id: "scope", label: "Scope" },
+  { id: "use", label: "Use and content" },
+  { id: "responsibility", label: "Responsibility" },
+  { id: "changes", label: "Changes and disputes" },
 ];
 ---
 
 <LegalPage
-  title="Terms of Service"
-  description="Terms of Service for Abstract Machines. Rules and regulations for using our website and services."
+  title="Website Terms"
+  description="Terms for using the Abstract Machines company website."
   sections={sections}
-  meta={[{ label: "Effective date", value: "06/08/2025" }]}
+  meta={[{ label: "Updated", value: "3 November 2026" }]}
 >
   <Fragment slot="lead">
     <p>
-      These Terms of Service ("Terms") govern your access to and use of the
-      products, services, and websites provided by Abstract Machines SAS
-      ("Abstract Machines," "we," "us," or "our"), a French company specializing
-      in IoT infrastructure and security solutions. By accessing or using our
-      Services, you agree to be bound by these Terms and our Privacy Policy.
+      These terms concern the Abstract Machines company website. Our identity
+      and contact details appear in the <a href="/imprint/">legal notice</a>.
     </p>
   </Fragment>
-
-  <section id="definitions">
-    <h2>Definitions</h2>
-    <ul>
-      <li>
-        <strong>"Services"</strong> means all products, software, hardware, consulting
-        services, and websites provided by Abstract Machines, including but not limited
-        to:
-        <ul>
-          <li>Software products: Magistrala, SuperMQ, Propeller</li>
-          <li>Hardware products: A0 Low Power Gateway, A1 Linux Gateway</li>
-          <li>Consulting and professional services</li>
-          <li>Websites and online resources</li>
-        </ul>
-      </li>
-      <li>
-        <strong>"Customer" or "You"</strong> means the company or individual who purchases,
-        uses, or accesses our Services.
-      </li>
-      <li>
-        <strong>"User"</strong> means any person authorized by the Customer to access
-        or use the Services.
-      </li>
-      <li>
-        <strong>"Agreement"</strong> means the contract formed by these Terms, any
-        applicable service-specific terms, and your order or purchase.
-      </li>
-      <li>
-        <strong>"Content"</strong> means any data, information, software, or materials
-        provided through or uploaded to our Services.
-      </li>
-    </ul>
-  </section>
-
-  <section id="eligibility">
-    <h2>Eligibility and account registration</h2>
-    <h3>2.1 Eligibility</h3>
-    <p>To use our Services, you must:</p>
-    <ul>
-      <li>Be at least 18 years old (or the legal age in your jurisdiction)</li>
-      <li>Have the legal capacity to enter into binding agreements</li>
-      <li>Not be prohibited from using our Services under applicable laws</li>
-    </ul>
-    <h3>2.2 Account registration</h3>
-    <p>For Services requiring an account, you must:</p>
-    <ul>
-      <li>Provide accurate, current, and complete registration information</li>
-      <li>Maintain and update your information as necessary</li>
-      <li>Maintain the confidentiality of your credentials</li>
-      <li>Notify us immediately of any unauthorized use</li>
-    </ul>
-    <p>You are responsible for all activities that occur under your account.</p>
-  </section>
-
-  <section id="license">
-    <h2>License and restrictions</h2>
-    <h3>3.1 License grant</h3>
+  <section id="scope">
+    <h2>Scope</h2>
     <p>
-      Subject to these Terms, Abstract Machines grants you a limited,
-      non-exclusive, non-transferable, revocable license to access and use our
-      Services in accordance with the applicable service terms and your
-      purchased plan or agreement.
-    </p>
-    <h3>3.2 Restrictions</h3>
-    <p>You may not:</p>
-    <ul>
-      <li>
-        Reverse engineer, decompile, or disassemble our software or hardware
-      </li>
-      <li>Copy, modify, or create derivative works of our Services</li>
-      <li>
-        Rent, lease, sublicense, sell, or redistribute access to our Services
-      </li>
-      <li>
-        Circumvent usage limits, security controls, or access restrictions
-      </li>
-      <li>
-        Use our Services for competitive analysis or to develop competing
-        products
-      </li>
-      <li>Remove or modify any proprietary notices or labels</li>
-    </ul>
-  </section>
-
-  <section id="payment">
-    <h2>Orders, payment, and billing</h2>
-    <h3>4.1 Orders and pricing</h3>
-    <p>
-      Pricing for our Services is available on our website or through direct
-      quotation. All prices are in Euros (EUR) unless otherwise specified and
-      exclude applicable taxes.
-    </p>
-    <h3>4.2 Payment terms</h3>
-    <ul>
-      <li>
-        <strong>Software services:</strong> Subscription fees are billed in advance
-        according to your selected billing cycle
-      </li>
-      <li>
-        <strong>Hardware products:</strong> Payment is due upon order confirmation
-        unless otherwise agreed
-      </li>
-      <li>
-        <strong>Consulting services:</strong> Billed according to the statement of
-        work or service agreement
-      </li>
-    </ul>
-    <h3>4.3 Refunds and cancellations</h3>
-    <ul>
-      <li>
-        Software subscriptions may be cancelled at any time, with service
-        continuing until the end of the current billing period
-      </li>
-      <li>
-        Hardware products may be returned within 30 days if unused and in
-        original condition
-      </li>
-      <li>
-        Consulting services are generally non-refundable once work has commenced
-      </li>
-      <li>
-        Refunds are processed according to French consumer protection laws where
-        applicable
-      </li>
-    </ul>
-  </section>
-
-  <section id="availability">
-    <h2>Service availability and support</h2>
-    <h3>5.1 Service availability</h3>
-    <p>We strive to maintain high availability for our Services:</p>
-    <ul>
-      <li>
-        <strong>Software services:</strong> We aim for 99.5% monthly uptime, excluding
-        planned maintenance and force majeure events
-      </li>
-      <li>
-        <strong>Hardware products:</strong> Availability depends on manufacturing
-        and supply chain factors
-      </li>
-      <li>
-        <strong>Support services:</strong> Available during business hours (CET) unless
-        otherwise agreed
-      </li>
-    </ul>
-    <h3>5.2 Support</h3>
-    <p>
-      Support levels vary by Service type and plan. Enterprise customers may
-      receive enhanced support under separate service level agreements.
+      Browsing this website or sending an enquiry does not purchase a service.
+      Product purchases, subscriptions and professional services are governed by
+      the offer and terms accepted for that service. <a
+        href="https://atomicapp.dev/legal/"
+        >Atomic has its own legal documents</a
+      >. Existing customer agreements are not amended by this page.
     </p>
   </section>
-
-  <section id="data">
-    <h2>Data and content</h2>
-    <h3>6.1 Your data</h3>
-    <ul>
-      <li>
-        You retain all rights, title, and interest in your data and content
-      </li>
-      <li>
-        You grant us a limited license to process your data as necessary to
-        provide the Services
-      </li>
-      <li>
-        You are responsible for the accuracy, legality, and appropriateness of
-        your data
-      </li>
-      <li>
-        You must have necessary rights and permissions for any data you provide
-      </li>
-    </ul>
-    <h3>6.2 Data processing</h3>
+  <section id="use">
+    <h2>Use and content</h2>
     <p>
-      We process your data in accordance with our Privacy Policy and applicable
-      data protection laws. We will not access or share your data except to:
+      Do not use the site unlawfully, infringe others’ rights, disrupt its
+      operation or attempt unauthorized access. Website content remains subject
+      to its applicable intellectual-property rights. Open-source licences,
+      credited third-party licences and exceptions permitted by law remain
+      applicable.
     </p>
-    <ul>
-      <li>Provide the Services you requested</li>
-      <li>Provide technical support (with your permission)</li>
-      <li>Comply with legal obligations</li>
-      <li>Protect our rights or the rights of others</li>
-    </ul>
-  </section>
-
-  <section id="acceptable-use">
-    <h2>Acceptable use policy</h2>
-    <p>You agree to use our Services responsibly and not to:</p>
-    <h3>7.1 Legal compliance</h3>
-    <ul>
-      <li>Violate any applicable laws, regulations, or third-party rights</li>
-      <li>Engage in fraudulent, deceptive, or misleading activities</li>
-      <li>Violate export control or sanctions laws</li>
-    </ul>
-    <h3>7.2 Technical restrictions</h3>
-    <ul>
-      <li>Interfere with or disrupt our Services or infrastructure</li>
-      <li>Attempt to gain unauthorized access to our systems</li>
-      <li>Transmit viruses, malware, or other harmful code</li>
-      <li>Overload our systems or networks</li>
-    </ul>
-    <h3>7.3 Content restrictions</h3>
-    <ul>
-      <li>Upload or transmit illegal, harmful, or offensive content</li>
-      <li>Send unsolicited communications (spam)</li>
-      <li>Infringe intellectual property rights</li>
-    </ul>
     <p>
-      We reserve the right to suspend or terminate access for violations of this
-      policy.
+      Personal information is handled as described in our <a href="/privacy/"
+        >privacy notice</a
+      >.
     </p>
   </section>
-
-  <section id="delivery">
-    <h2>Delivery and performance</h2>
-    <h3>8.1 Software services</h3>
+  <section id="responsibility">
+    <h2>Responsibility</h2>
     <p>
-      Software services are delivered electronically and are generally available
-      immediately upon account activation and payment confirmation.
-    </p>
-    <h3>8.2 Hardware products</h3>
-    <p>
-      Hardware products are shipped according to the delivery terms specified in
-      your order. Delivery times may vary based on product availability and
-      shipping location.
-    </p>
-    <h3>8.3 Consulting services</h3>
-    <p>
-      Consulting services are delivered according to the agreed statement of
-      work, timeline, and deliverables specified in the service agreement.
+      Website descriptions do not create a service-level guarantee or a
+      commercial warranty. Availability, support, delivery, payment and
+      cancellation conditions belong to the applicable accepted offer. Each
+      party remains responsible under applicable law; mandatory consumer
+      guarantees and other statutory rights are preserved.
     </p>
   </section>
-
-  <section id="termination">
-    <h2>Term and termination</h2>
-    <h3>9.1 Term</h3>
-    <p>
-      These Terms remain in effect while you use our Services or until
-      terminated according to these provisions.
-    </p>
-    <h3>9.2 Termination by you</h3>
-    <ul>
-      <li>
-        You may terminate software subscriptions at any time through your
-        account settings
-      </li>
-      <li>
-        Hardware purchases are final unless returned according to our return
-        policy
-      </li>
-      <li>
-        Consulting agreements may be terminated according to their specific
-        terms
-      </li>
-    </ul>
-    <h3>9.3 Termination by us</h3>
-    <p>We may suspend or terminate your access if you:</p>
-    <ul>
-      <li>Violate these Terms or our policies</li>
-      <li>Fail to pay applicable fees</li>
-      <li>Engage in activities that harm our business or other users</li>
-    </ul>
-    <h3>9.4 Effect of termination</h3>
-    <p>
-      Upon termination, your access to Services will cease, and your data will
-      be handled according to our data retention policy and Privacy Policy.
-    </p>
-  </section>
-
-  <section id="intellectual-property">
-    <h2>Intellectual property</h2>
-    <h3>10.1 Our intellectual property</h3>
-    <p>
-      All Services, including software, hardware designs, documentation,
-      trademarks, and related intellectual property, are owned by Abstract
-      Machines or our licensors. These Terms do not transfer any ownership
-      rights to you.
-    </p>
-    <h3>10.2 Your intellectual property</h3>
-    <p>
-      You retain ownership of your pre-existing intellectual property. Any
-      improvements or modifications we make to our Services based on your
-      feedback remain our property.
-    </p>
-    <h3>10.3 Open source</h3>
-    <p>
-      Some of our software may include open source components governed by their
-      respective licenses. These licenses are available in the relevant product
-      documentation.
-    </p>
-  </section>
-
-  <section id="warranties">
-    <h2>Warranties and disclaimers</h2>
-    <h3>11.1 Limited warranties</h3>
-    <p>We warrant that:</p>
-    <ul>
-      <li>
-        Our Services will perform substantially in accordance with their
-        documentation
-      </li>
-      <li>
-        Hardware products will be free from material defects for 12 months from
-        delivery
-      </li>
-      <li>We will provide Services with reasonable skill and care</li>
-    </ul>
-    <h3>11.2 Disclaimers</h3>
-    <p>
-      Except as expressly stated, our Services are provided "as is" and "as
-      available." We disclaim all other warranties, express or implied,
-      including warranties of merchantability, fitness for a particular purpose,
-      and non-infringement.
-    </p>
-  </section>
-
-  <section id="liability">
-    <h2>Limitation of liability</h2>
-    <p>To the maximum extent permitted by law:</p>
-    <ul>
-      <li>
-        We are not liable for indirect, incidental, special, consequential, or
-        punitive damages
-      </li>
-      <li>
-        Our total liability for any claim is limited to the fees paid by you in
-        the 12 months preceding the claim
-      </li>
-      <li>
-        These limitations apply regardless of the legal theory and even if we
-        have been advised of the possibility of such damages
-      </li>
-    </ul>
-    <p>
-      Some jurisdictions do not allow certain limitations, so these may not
-      apply to you.
-    </p>
-  </section>
-
-  <section id="indemnification">
-    <h2>Indemnification</h2>
-    <p>
-      You agree to indemnify and hold harmless Abstract Machines from any
-      claims, damages, or expenses arising from:
-    </p>
-    <ul>
-      <li>Your use of our Services in violation of these Terms</li>
-      <li>Your violation of applicable laws or third-party rights</li>
-      <li>Your data or content provided to our Services</li>
-    </ul>
-  </section>
-
   <section id="changes">
-    <h2>Changes to terms</h2>
-    <p>We may update these Terms from time to time. We will:</p>
-    <ul>
-      <li>Post updated Terms on our website with a new effective date</li>
-      <li>Notify you via email or through our Services for material changes</li>
-      <li>Provide reasonable notice before changes take effect</li>
-    </ul>
+    <h2>Changes and disputes</h2>
     <p>
-      Your continued use of our Services after the effective date constitutes
-      acceptance of the updated Terms.
+      We may update these website terms and their revision date. Publication
+      does not amend an existing service contract or replace any legally
+      required notice or consent.
     </p>
-  </section>
-
-  <section id="governing-law">
-    <h2>Governing law and disputes</h2>
-    <h3>15.1 Governing law</h3>
     <p>
-      These Terms are governed by and construed in accordance with the laws of
-      France, without regard to conflict of law principles.
+      French law applies, without depriving consumers of mandatory protection in
+      their country of habitual residence. Jurisdiction follows applicable law.
+      For enquiries or complaints, write to <a href="mailto:info@absmach.eu"
+        >info@absmach.eu</a
+      > or our registered office.
     </p>
-    <h3>15.2 Dispute resolution</h3>
-    <p>
-      Any disputes arising from these Terms or our Services shall be resolved
-      through:
-    </p>
-    <ul>
-      <li>Good faith negotiations between the parties</li>
-      <li>If unresolved, mediation in Paris, France</li>
-      <li>
-        As a last resort, litigation in the competent courts of Paris, France
-      </li>
-    </ul>
-    <h3>15.3 Consumer rights</h3>
-    <p>
-      If you are a consumer under French law, you retain all rights provided by
-      applicable consumer protection legislation.
-    </p>
-  </section>
-
-  <section id="general">
-    <h2>General provisions</h2>
-    <h3>16.1 Entire agreement</h3>
-    <p>
-      These Terms, together with our Privacy Policy and any applicable
-      service-specific terms, constitute the entire agreement between you and
-      Abstract Machines.
-    </p>
-    <h3>16.2 Severability</h3>
-    <p>
-      If any provision of these Terms is found to be unenforceable, the
-      remaining provisions will remain in full force and effect.
-    </p>
-    <h3>16.3 Assignment</h3>
-    <p>
-      You may not assign these Terms without our written consent. We may assign
-      these Terms in connection with a merger, acquisition, or sale of assets.
-    </p>
-  </section>
-
-  <section id="contact">
-    <h2>Contact information</h2>
-    <p>For questions about these Terms or our Services, please contact us:</p>
-    <div class="il-card">
-      <dl>
-        <dt>Company</dt>
-        <dd>
-          Abstract Machines SAS<br />141 Quai de Valmy<br />75010 Paris, France
-        </dd>
-        <dt>Legal</dt>
-        <dd>
-          <a href="mailto:legal@abstractmachines.dev"
-            >legal@abstractmachines.dev</a
-          >
-        </dd>
-        <dt>General inquiries</dt>
-        <dd><a href="mailto:info@absmach.eu">info@absmach.eu</a></dd>
-      </dl>
-    </div>
   </section>
 </LegalPage>
